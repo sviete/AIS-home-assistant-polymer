@@ -101,7 +101,7 @@ class HaSidebar extends
     </style>
 
     <app-toolbar>
-      <div main-title="">Home Assistant</div>
+      <div main-title="">AIS dom</div>
       <paper-icon-button icon="hass:chevron-left" hidden\$="[[narrow]]" on-click="toggleMenu"></paper-icon-button>
     </app-toolbar>
 
@@ -117,11 +117,12 @@ class HaSidebar extends
           <span class="item-text">[[computePanelName(localize, item)]]</span>
         </paper-icon-item>
       </template>
-
+      <!--
       <paper-icon-item on-click="menuClicked" data-panel="logout" class="logout">
         <ha-icon slot="item-icon" icon="hass:exit-to-app"></ha-icon>
         <span class="item-text">[[localize('ui.sidebar.log_out')]]</span>
       </paper-icon-item>
+      -->
     </paper-listbox>
 
     <div>

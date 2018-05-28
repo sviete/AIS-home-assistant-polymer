@@ -144,7 +144,7 @@ class HaVoiceCommandDialog extends DialogMixin(PolymerElement) {
       _conversation: {
         type: Array,
         value: function () {
-          return [{ who: 'hass', text: 'How can I help?' }];
+          return [{ who: 'hass', text: 'W czym mogę pomóc?' }];
         },
         observer: '_scrollMessagesBottom',
       }
@@ -169,7 +169,7 @@ class HaVoiceCommandDialog extends DialogMixin(PolymerElement) {
       var text = this.results.final || this.results.interim;
       this.results = null;
       if (text === '') {
-        text = '<Home Assistant did not hear anything>';
+        text = 'nic nie słyszę...';
       }
       this.push('_conversation', { who: 'user', text: text, error: true });
     }.bind(this);
