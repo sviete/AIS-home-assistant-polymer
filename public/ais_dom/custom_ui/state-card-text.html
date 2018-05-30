@@ -1,0 +1,138 @@
+<!--
+https://github.com/home-assistant/home-assistant-polymer/blob/master/src/state-summary/state-card-display.html
+https://github.com/home-assistant/home-assistant-polymer/blob/master/src/components/entity/state-badge.html
+-->
+
+<dom-module id="state-card-text">
+  <template>
+
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style>
+      .normal {
+        @apply(--paper-font-body1);
+        color: var(--primary-text-color);
+        margin-left: 8px;
+        text-align: left;
+        line-height: 20px;
+      }
+      .bold {
+        @apply(--paper-font-body1);
+        color: var(--primary-text-color);
+        font-weight: bold;
+        margin-left: 8px;
+        text-align: left;
+        line-height: 20px;
+      }
+      .comment {
+        @apply(--paper-font-body1);
+        color: var(--primary-text-color);
+        margin-left: 8px;
+        text-align: left;
+        line-height: 10px;
+        font-style: italic;
+      }
+      .red {
+        @apply(--paper-font-body1);
+        color: var(--google-red-500);
+        margin-left: 8px;
+        text-align: left;
+        line-height: 20px;
+      }
+      .red-bold {
+        @apply(--paper-font-body1);
+        color: var(--google-red-500);
+        margin-left: 8px;
+        text-align: left;
+        line-height: 20px;
+        border-color: #ccc;
+        background-color: #ddddddad;
+        border: 2px solid #dedede;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px 0;
+      }
+      .console-text {
+        @apply(--paper-font-body1);
+        color: #7ff506;
+        margin-left: 8px;
+        text-align: left;
+        line-height: 20px;
+        border-color: #323232;
+        background-color: #646464;
+        border: 2px solid #dedede;
+        border-radius: 5px;
+        padding: 12px;
+        margin: 10px 0;
+        font-weight: 500;
+        font-size: small;
+      }
+      .green {
+        @apply(--paper-font-body1);
+        color: var(--google-green-500);
+        margin-left: 8px;
+        text-align: left;
+        line-height: 20px;
+      }
+    </style>
+    <div class='grid' on-click='stopPropagation'>
+      <template is="dom-repeat" items="[[computeStateDisplay(stateObj)]]">
+        <div class$="[[computeClass(item)]]">[[computeItem(item)]]</div>
+      </template>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+Polymer({
+  is: 'state-card-text',
+
+  properties: {
+    hass: {
+      type: Object,
+    },
+
+    stateObj: {
+      type: Object,
+    },
+  },
+
+  computeStateDisplay: function (stateObj) {
+    var text = stateObj.attributes.text;
+    if (text == null) { text = stateObj.state };
+    return text.split("\n");
+  },
+
+  computeItem: function (item) {
+      var value = item.trim();
+
+      switch(value.substring(0,1)) {
+      case "*":
+      case "!":
+      case "+":
+      case "#":
+      case "@":
+      case "$":
+          return value.substring(1);
+      default:
+          return value;
+      }
+  },
+
+  computeClass: function (item) {
+      switch(item.trim().substring(0,1)) {
+      case "*": return "bold";
+      case "!": return "red";
+      case "+": return "green";
+      case "#": return "red-bold";
+      case "@": return "console-text";
+      case "$": return "comment";
+      default:  return "normal";
+      }
+  },
+
+  stopPropagation: function (ev) {
+    ev.stopPropagation();
+  },
+
+});
+</script>

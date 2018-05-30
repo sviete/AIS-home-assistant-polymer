@@ -1,0 +1,150 @@
+<dom-module id='state-card-ais-microphone'>
+  <template>
+    <style>
+    :host {
+      position: relative;
+      display: inline-block;
+      color: var(--paper-item-icon-color, #44739e);
+      border-radius: 50%;
+      text-align: center;
+      background-size: cover;
+      line-height: 40px;
+    }
+
+    ha-state-icon {
+      transition: color .3s ease-in-out;
+    }
+
+    mic-state-badge {
+      float:left;
+      width: 40px;
+      height: 40px;
+    }
+
+    /* Color the mic icon if it's on */
+    ha-state-icon[data-domain=binary_sensor][data-state=on] {
+      color: #ff0000;
+    }
+
+    /* Color the icon if unavailable */
+    ha-state-icon[data-state=unavailable] {
+      color: var(--disabled-text-color);
+    }
+
+    .info {
+      margin-left:56px;
+    }
+    .name {
+      white-space: var(--paper-font-common-nowrap_-_white-space);
+      overflow: var(--paper-font-common-nowrap_-_overflow);
+      text-overflow: var(--paper-font-common-nowrap_-_text-overflow);
+      color:var(--primary-text-color);
+      line-height:40px;
+      text-align: left;
+      float: left;
+    }
+
+    .state {
+      font-family: var(--paper-font-body1_-_font-family);
+      -webkit-font-smoothing: var(--paper-font-body1_-_-webkit-font-smoothing);
+      font-size: var(--paper-font-body1_-_font-size);
+      font-weight: var(--paper-font-body1_-_font-weight);
+      line-height: var(--paper-font-body1_-_line-height);
+      color: var(--primary-text-color);
+      margin-left: 16px;
+      text-align: right;
+      line-height: 40px;
+      float: left;
+    }
+
+    .name[in-dialog], :host([secondary-line]) .name {
+      line-height:20px;
+    }
+
+    .time-ago, ::slotted(*) {
+      white-space: var(--paper-font-common-nowrap_-_white-space);
+      overflow: var(--paper-font-common-nowrap_-_overflow);
+      text-overflow: var(--paper-font-common-nowrap_-_text-overflow);
+      color:var(--secondary-text-color);
+    }
+    div.width_100{
+      width: 100%
+    }
+    </style>
+    <div class="width_100">
+      <mic-state-badge>
+        <ha-state-icon
+          id='icon'
+          state-obj='[[stateObj]]'
+          data-domain$='[[computeDomain(stateObj)]]'
+          data-state$='[[stateObj.state]]'>
+        </ha-state-icon>
+      </mic-state-badge>
+        <div class="info width_100">
+            <div class="width_100">
+              <div class="name">
+                [[stateObj.attributes.friendly_name]]
+              </div>
+              <div class="state">
+                [[stateObj.state]]
+              </div>
+          </div>
+        </div>
+    </div>
+        <!-- <paper-icon-button
+          icon="mdi:microphone"
+          on-tap="handleListenClick">
+        </paper-icon-button> -->
+  </template>
+</dom-module>
+
+<script>
+  class StateCardAisMicrophone extends Polymer.Element {
+    static get is() {
+      return 'state-card-ais-microphone';
+    }
+    static get properties() {
+      return {
+        hass: Object,
+        // inDialog is true if shown as more-info-card
+        inDialog: {
+          type: Boolean,
+          value: false,
+        },
+        stateObj: {
+          type: Object,
+          observer: 'updateOnChange',
+        },
+      };
+    }
+
+    computeDomain(stateObj) {
+      return stateObj.entity_id.split('.')[0];
+    }
+
+
+    /**
+     * Called when an attribute changes
+     */
+    updateOnChange(newVal) {
+      // update icon color
+      if (newVal.state === 'on') {
+        // turn microphone on
+        console.log('handleListenClick');
+        this.handleListenClick();
+      }
+    }
+
+    // turn microphone on
+    handleListenClick() {
+      console.log('hass-start-voice');
+
+      if (document.querySelector('body > home-assistant').shadowRoot.querySelector('home-assistant-main').shadowRoot.querySelector('#voiceDialog').style['display'] === 'none') {
+        this.fire('hass-start-voice');
+      } else {
+        document.querySelector('body > home-assistant').shadowRoot.querySelector('home-assistant-main').shadowRoot.querySelector('#voiceDialog').shadowRoot.querySelector('div.content').querySelector('div.icon').querySelector('paper-icon-button').click()
+      }
+    }
+  }
+  customElements.define(StateCardAisMicrophone.is, StateCardAisMicrophone);
+</script>

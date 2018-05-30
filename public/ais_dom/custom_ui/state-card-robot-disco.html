@@ -1,0 +1,133 @@
+<!--
+https://github.com/home-assistant/home-assistant-polymer/blob/master/src/state-summary/state-card-display.html
+https://github.com/home-assistant/home-assistant-polymer/blob/master/src/components/entity/state-badge.html
+-->
+
+<dom-module id="state-card-robot-disco">
+  <template>
+
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style>
+      .normal {
+        @apply(--paper-font-body1);
+        color: var(--primary-text-color);
+        margin-left: 8px;
+        text-align: left;
+        line-height: 20px;
+      }
+      .bold {
+        @apply(--paper-font-body1);
+        color: var(--primary-text-color);
+        font-style: italic;
+        margin-left: 8px;
+        text-align: left;
+        line-height: 20px;
+      }
+      .red {
+        @apply(--paper-font-body1);
+        color: var(--google-red-500);
+        margin-left: 8px;
+        text-align: left;
+        line-height: 20px;
+      }
+      .green {
+        @apply(--paper-font-body1);
+        color: var(--google-green-500);
+        margin-left: 8px;
+        text-align: left;
+        line-height: 20px;
+      }
+      .ip {
+        @apply(--paper-font-body1);
+        margin-left: 8px;
+        text-align: left;
+        line-height: 20px;
+      }
+    </style>
+    <div class='grid' on-click='stopPropagation'>
+      <template is="dom-repeat" items="[[computeStateDisplay(stateObj)]]">
+        <div class$="[[computeClass(item)]]" on-click="linkClicked">[[computeItem(item)]]
+          <a href$='[[computeUrl(item)]]' target='_blank'>[[computeUrlText(item)]]</a>
+        </div>
+      </template>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+Polymer({
+  is: 'state-card-robot-disco',
+
+  properties: {
+    hass: {
+      type: Object,
+    },
+
+    stateObj: {
+      type: Object,
+    },
+  },
+
+  computeStateDisplay: function (stateObj) {
+    var text = stateObj.attributes.text;
+    if (text == null) { text = stateObj.state };
+    return text.split("\n");
+  },
+
+  computeUrl: function (item) {
+    var r = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,4}\b/;
+    var ip = item.match(r);
+    return "http://" + ip;
+  },
+
+  computeUrlText: function (item) {
+    switch(item.substring(0,1)) {
+    case "#":
+        return "link";
+    default:
+        return "";
+    }
+  },
+
+  computeItem: function (item) {
+      var value = item.trim();
+      switch(item.substring(0,1)) {
+      case "#":
+        var r = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,4}\b/;
+        var ip = value.match(r);
+        var value = value.replace(ip, "");
+      default:
+          value = value;
+      }
+
+      switch(value.substring(0,1)) {
+      case "*":
+      case "!":
+      case "+":
+      case "#":
+          return value.substring(1);
+      default:
+          return value;
+      }
+  },
+
+  computeClass: function (item) {
+      switch(item.trim().substring(0,1)) {
+      case "*": return "bold";
+      case "!": return "red";
+      case "+": return "green";
+      case "#": return "ip";
+      default:  return "normal";
+      }
+  },
+
+  linkClicked: function (ev) {
+    ev.stopPropagation();
+  },
+
+  stopPropagation: function (ev) {
+    ev.stopPropagation();
+  },
+
+});
+</script>
