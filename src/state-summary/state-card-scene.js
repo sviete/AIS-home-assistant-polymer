@@ -12,7 +12,7 @@ import LocalizeMixin from '../mixins/localize-mixin.js';
 class StateCardScene extends LocalizeMixin(PolymerElement) {
   static get template() {
     return html`
-    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style include="iron-flex iron-flex-alignment"></style>
     <style>
       paper-button {
         color: var(--primary-color);
@@ -24,9 +24,15 @@ class StateCardScene extends LocalizeMixin(PolymerElement) {
     </style>
 
     <div class="horizontal justified layout">
-      <state-info state-obj="[[stateObj]]" in-dialog="[[inDialog]]"></state-info>
+      ${this.stateInfoTemplate}
       <paper-button on-click="activateScene">[[localize('ui.card.scene.activate')]]</paper-button>
     </div>
+`;
+  }
+
+  static get stateInfoTemplate() {
+    return html`
+    <state-info hass="[[hass]]" state-obj="[[stateObj]]" in-dialog="[[inDialog]]"></state-info>
 `;
   }
 
