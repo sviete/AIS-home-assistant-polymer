@@ -8,7 +8,7 @@ import '../components/ha-climate-state.js';
 class StateCardClimate extends PolymerElement {
   static get template() {
     return html`
-    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style include="iron-flex iron-flex-alignment"></style>
     <style>
       :host {
         @apply --paper-font-body1;
@@ -22,14 +22,21 @@ class StateCardClimate extends PolymerElement {
     </style>
 
     <div class="horizontal justified layout">
-      <state-info state-obj="[[stateObj]]" in-dialog="[[inDialog]]"></state-info>
-      <ha-climate-state state-obj="[[stateObj]]"></ha-climate-state>
+      ${this.stateInfoTemplate}
+      <ha-climate-state hass="[[hass]]" state-obj="[[stateObj]]"></ha-climate-state>
     </div>
+`;
+  }
+
+  static get stateInfoTemplate() {
+    return html`
+    <state-info hass="[[hass]]" state-obj="[[stateObj]]" in-dialog="[[inDialog]]"></state-info>
 `;
   }
 
   static get properties() {
     return {
+      hass: Object,
       stateObj: Object,
       inDialog: {
         type: Boolean,

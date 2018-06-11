@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 const config = require('./config.js');
 
 const version = fs.readFileSync('../setup.py', 'utf8').match(/\d{8}[^']*/);
@@ -29,6 +30,15 @@ if (isProdBuild) {
       mangle: false,
     }
   }));
+  plugins.push(new CompressionPlugin({
+    cache: true,
+    exclude: [
+      /\.js\.map$/,
+      /\.LICENSE$/,
+      /\.py$/,
+      /\.txt$/,
+    ]
+  }));
 }
 
 module.exports = {
@@ -37,7 +47,7 @@ module.exports = {
   // Was source-map
   devtool: isProdBuild ? 'none' : 'inline-source-map',
   entry: {
-    app: './src/hassio-app.js',
+    entrypoint: './src/entrypoint.js',
   },
   module: {
     rules: [

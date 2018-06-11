@@ -3,6 +3,9 @@ const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
+const translationMetadata = require('./build-translations/translationMetadata.json');
 
 const version = fs.readFileSync('setup.py', 'utf8').match(/\d{8}[^']*/);
 if (!version) {
@@ -18,6 +21,7 @@ function createConfig(isProdBuild, latestBuild) {
     app: './src/entrypoints/app.js',
     authorize: './src/entrypoints/authorize.js',
     core: './src/entrypoints/core.js',
+    'custom-panel': './src/entrypoints/custom-panel.js',
   };
 
   const babelOptions = {
@@ -34,7 +38,8 @@ function createConfig(isProdBuild, latestBuild) {
   };
 
   const copyPluginOpts = [
-    { from: 'gulp/service-worker.js.tmpl', to: 'service_worker.js' },
+    // Leave here until Hass.io no longer references the ES5 build.
+    'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js'
   ];
 
   const plugins = [
@@ -42,6 +47,7 @@ function createConfig(isProdBuild, latestBuild) {
       __DEV__: JSON.stringify(!isProdBuild),
       __BUILD__: JSON.stringify(latestBuild ? 'latest' : 'es5'),
       __VERSION__: JSON.stringify(VERSION),
+      __PUBLIC_PATH__: JSON.stringify(publicPath),
     }),
     new CopyWebpackPlugin(copyPluginOpts),
     // Ignore moment.js locales
@@ -59,14 +65,17 @@ function createConfig(isProdBuild, latestBuild) {
   ];
 
   if (latestBuild) {
+    copyPluginOpts.push({ from: 'public', to: '.' });
     copyPluginOpts.push({ from: 'build-translations/output', to: `translations` });
     copyPluginOpts.push({ from: 'node_modules/@polymer/font-roboto-local/fonts', to: 'fonts' });
     copyPluginOpts.push('node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js')
+    copyPluginOpts.push('node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js.map')
     copyPluginOpts.push({ from: 'node_modules/leaflet/dist/leaflet.css', to: `images/leaflet/` });
     copyPluginOpts.push({ from: 'node_modules/leaflet/dist/images', to: `images/leaflet/` });
     entry['hass-icons'] = './src/entrypoints/hass-icons.js';
+    entry['service-worker-hass'] = './src/entrypoints/service-worker-hass.js';
   } else {
-    copyPluginOpts.push('node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js');
+    copyPluginOpts.push('public/__init__.py');
     babelOptions.presets = [
       ['es2015', { modules: false }]
     ];
@@ -82,7 +91,56 @@ function createConfig(isProdBuild, latestBuild) {
         mangle: false,
       }
     }));
+    plugins.push(new CompressionPlugin({
+      cache: true,
+      exclude: [
+        /\.js\.map$/,
+        /\.LICENSE$/,
+        /\.py$/,
+        /\.txt$/,
+      ]
+    }));
   }
+
+  plugins.push(new WorkboxPlugin.InjectManifest({
+    swSrc: './src/entrypoints/service-worker-bootstrap.js',
+    swDest: 'service_worker.js',
+    importWorkboxFrom: 'local',
+    include: [
+      /core.js$/,
+      /app.js$/,
+      /custom-panel.js$/,
+      /hass-icons.js$/,
+      /\.chunk\.js$/,
+    ],
+    // Static assets get cached during runtime. But these we want to explicetely cache
+    // Need to be done using templatedUrls because prefix is /static
+    globDirectory: '.',
+    globIgnores: [],
+    modifyUrlPrefix: {
+      'hass_frontend': '/static'
+    },
+    templatedUrls: {
+      [`/static/translations/${translationMetadata['translations']['en']['fingerprints']['en']}`]: [
+        'build-translations/output/en.json'
+      ],
+      '/static/icons/favicon-192x192.png': [
+        'public/icons/favicon-192x192.png'
+      ],
+      '/static/fonts/roboto/Roboto-Light.ttf': [
+        'node_modules/@polymer/font-roboto-local/fonts/roboto/Roboto-Light.ttf'
+      ],
+      '/static/fonts/roboto/Roboto-Medium.ttf': [
+        'node_modules/@polymer/font-roboto-local/fonts/roboto/Roboto-Medium.ttf'
+      ],
+      '/static/fonts/roboto/Roboto-Regular.ttf': [
+        'node_modules/@polymer/font-roboto-local/fonts/roboto/Roboto-Regular.ttf'
+      ],
+      '/static/fonts/roboto/Roboto-Bold.ttf': [
+        'node_modules/@polymer/font-roboto-local/fonts/roboto/Roboto-Bold.ttf'
+      ],
+    }
+  }));
 
   const chunkFilename = isProdBuild ?
     '[chunkhash].chunk.js' : '[name].chunk.js';

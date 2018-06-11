@@ -5,7 +5,7 @@ const documentContainer = document.createElement('template');
 documentContainer.setAttribute('style', 'display: none;');
 
 documentContainer.innerHTML = `<custom-style>
-  <style is="custom-style">/* remove is= on Polymer 2 */
+  <style>
     /*
       Home Assistant default styles.
 
@@ -151,7 +151,7 @@ documentContainer.innerHTML = `<custom-style>
       app-header, app-toolbar {
         background-color: var(--primary-color);
         font-weight: 400;
-        color: white;
+        color: var(--text-primary-color, white);
       }
 
       app-toolbar ha-menu-button + [main-title],

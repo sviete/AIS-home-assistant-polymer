@@ -238,20 +238,20 @@
             }
         },
         "weather": {
-            "clear_night": "Clair, nuit",
+            "clear_night": "Nuit dégagée",
             "cloudy": "Nuageux",
             "fog": "Brouillard",
             "hail": "Grêle",
-            "lightning": "Foudre",
-            "lightning_rainy": "Foudre, pluvieux",
+            "lightning": "Orage",
+            "lightning_rainy": "Orage \/ Pluie",
             "partlycloudy": "Partiellement nuageux",
             "pouring": "Averses",
-            "rainy": "Pluvieux",
-            "snowy": "Neigeux",
-            "snowy_rainy": "Neigeux, pluvieux",
-            "sunny": "Ensoleillé",
-            "windy": "Venteux",
-            "windy_variant": "Venteux"
+            "rainy": "Pluie",
+            "snowy": "Neige",
+            "snowy_rainy": "Neige \/ Pluie",
+            "sunny": "Soleil",
+            "windy": "Vent",
+            "windy_variant": "Vent"
         }
     },
     "state_badge": {
@@ -499,8 +499,8 @@
                                     "label": "Condition"
                                 },
                                 "event": {
-                                    "label": "Déclencher l'événement",
-                                    "event": "Événement :",
+                                    "label": "Déclencher l'évènement",
+                                    "event": "Évènement :",
                                     "service_data": "Données du service"
                                 }
                             }
@@ -528,7 +528,9 @@
         "duration": {
             "day": "{count} {count, plural,\none {jour}\nother {jours}\n}",
             "week": "{count} {count, plural,\none {semaine}\nother {semaines}\n}",
-            "second": "{count} {count, plural,\none {seconde}\nother {secondes}\n}"
+            "second": "{count} {count, plural,\none {seconde}\nother {secondes}\n}",
+            "minute": "{count} {count, plural,\none {minute}\nother {minutes}\n}",
+            "hour": "{count} {count, plural,\none {heure}\nother {heures}\n}"
         },
         "login-form": {
             "password": "Mot de passe",
@@ -550,7 +552,7 @@
             },
             "weather": {
                 "attributes": {
-                    "air_pressure": "Pression de l'air",
+                    "air_pressure": "Pression atmosphérique",
                     "humidity": "Humidité",
                     "temperature": "Température",
                     "visibility": "Visibilité",
@@ -558,23 +560,68 @@
                 },
                 "cardinal_direction": {
                     "e": "E",
-                    "ene": "ENE",
-                    "ese": "ESE",
+                    "ene": "E-NE",
+                    "ese": "E-SE",
                     "n": "N",
                     "ne": "NE",
-                    "nne": "NNE",
+                    "nne": "N-NE",
                     "nw": "NW",
-                    "nnw": "NNW",
+                    "nnw": "N-NW",
                     "s": "S",
                     "se": "SE",
-                    "sse": "SSE",
-                    "ssw": "SSO",
+                    "sse": "S-SE",
+                    "ssw": "S-SO",
                     "sw": "SO",
                     "w": "O",
-                    "wnw": "ONO",
-                    "wsw": "OSO"
+                    "wnw": "O-NO",
+                    "wsw": "O-SO"
                 },
                 "forecast": "Prévisions"
+            },
+            "alarm_control_panel": {
+                "code": "Code",
+                "clear_code": "Effacer",
+                "disarm": "Désarmer",
+                "arm_home": "Armer (domicile)",
+                "arm_away": "Armer (absent)"
+            },
+            "automation": {
+                "last_triggered": "Dernier déclenchement",
+                "trigger": "Déclencheur"
+            },
+            "cover": {
+                "position": "Emplacement",
+                "tilt_position": "Inclinaison"
+            },
+            "fan": {
+                "speed": "Vitesse",
+                "oscillate": "Osciller",
+                "direction": "Direction"
+            },
+            "light": {
+                "brightness": "Luminosité",
+                "color_temperature": "Température de couleur",
+                "white_value": "Niveau de blanc",
+                "effect": "Effet"
+            },
+            "media_player": {
+                "text_to_speak": "Texte à lire"
+            },
+            "climate": {
+                "currently": "Actuellement",
+                "on_off": "Allumé \/ Éteint",
+                "target_temperature": "Température cible",
+                "target_humidity": "Humidité cible",
+                "operation": "Opération",
+                "fan_mode": "Mode de ventilation",
+                "swing_mode": "Mode de balancement",
+                "away_mode": "Mode \"Absent\"",
+                "aux_heat": "Chauffage d'appoint"
+            },
+            "lock": {
+                "code": "Code",
+                "lock": "Verrouiller",
+                "unlock": "Déverrouiller"
             }
         },
         "components": {
@@ -585,7 +632,23 @@
             },
             "service-picker": {
                 "service": "Service"
+            },
+            "relative_time": {
+                "past": "{time} auparavant",
+                "future": "Dans {time}",
+                "never": "Jamais"
+            },
+            "history_charts": {
+                "loading_history": "Chargement de l'historique des valeurs ...",
+                "no_history_found": "Aucun historique des valeurs trouvé."
             }
+        },
+        "notification_toast": {
+            "entity_turned_on": "Allumage de \"{entity}\".",
+            "entity_turned_off": "Extinction de \"{entity}\".",
+            "service_called": "Service \"{service}\" appelé.",
+            "service_call_failed": "Échec d'appel du service \"{service}\".",
+            "connection_lost": "Connexion perdue. Reconnexion en cours ..."
         }
     },
     "domain": {

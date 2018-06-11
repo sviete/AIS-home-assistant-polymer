@@ -9,6 +9,8 @@ import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
+import LocalizeMixin from '../mixins/localize-mixin.js';
+
 import {
   ERR_INVALID_AUTH,
   subscribeEntities,
@@ -46,7 +48,7 @@ window.removeInitMsg = function () {
   }
 };
 
-class HomeAssistant extends PolymerElement {
+class HomeAssistant extends LocalizeMixin(PolymerElement) {
   static get template() {
     return html`
     <ha-pref-storage hass="[[hass]]" id="storage"></ha-pref-storage>
@@ -121,12 +123,17 @@ class HomeAssistant extends PolymerElement {
     if (!this.hass.language) return;
 
     const language = this.hass.selectedLanguage || this.hass.language;
-    this.hass.callApi('get', `translations/${language}`).then((result) => {
-      // If we've switched selected languages just ignore this response
-      if ((this.hass.selectedLanguage || this.hass.language) !== language) return;
 
-      this._updateResources(language, result.resources);
-    });
+    this.hass.connection.sendMessagePromise({
+      type: 'frontend/get_translations',
+      language,
+    })
+      .then((resp) => {
+      // If we've switched selected languages just ignore this response
+        if ((this.hass.selectedLanguage || this.hass.language) !== language) return;
+
+        this._updateResources(language, resp.result.resources);
+      });
   }
 
   _updateResources(language, data) {
@@ -182,23 +189,36 @@ class HomeAssistant extends PolymerElement {
         conn.callService(domain, service, serviceData || {})
           .then(
             () => {
-              var message;
-              var name;
+              let message;
+              let name;
               if (serviceData.entity_id && this.hass.states &&
                 this.hass.states[serviceData.entity_id]) {
                 name = computeStateName(this.hass.states[serviceData.entity_id]);
               }
               if (service === 'turn_on' && serviceData.entity_id) {
-                message = 'Turned on ' + (name || serviceData.entity_id) + '.';
+                message = this.localize(
+                  'ui.notification_toast.entity_turned_on',
+                  'entity', name || serviceData.entity_id
+                );
               } else if (service === 'turn_off' && serviceData.entity_id) {
-                message = 'Turned off ' + (name || serviceData.entity_id) + '.';
+                message = this.localize(
+                  'ui.notification_toast.entity_turned_off',
+                  'entity', name || serviceData.entity_id
+                );
               } else {
-                message = 'Service ' + domain + '/' + service + ' called.';
+                message = this.localize(
+                  'ui.notification_toast.service_called',
+                  'service', `${domain}/${service}`
+                );
               }
               notifications.showNotification(message);
             },
             function () {
-              notifications.showNotification('Failed to call service ' + domain + '/' + service);
+              const msg = this.localize(
+                'ui.notification_toast.service_call_failed',
+                'service', `${domain}/${service}`
+              );
+              notifications.showNotification(msg);
               return Promise.reject();
             }
           ),
@@ -257,15 +277,19 @@ class HomeAssistant extends PolymerElement {
 
     var unsubThemes;
 
-    this.hass.callApi('get', 'themes').then((themes) => {
-      this._updateHass({ themes: themes });
+
+    this.hass.connection.sendMessagePromise({
+      type: 'frontend/get_themes',
+    }).then((resp) => {
+      this._updateHass({ themes: resp.result });
       applyThemesOnElement(
         document.documentElement,
-        themes,
+        resp.result,
         this.hass.selectedTheme,
         true
       );
     });
+
     conn.subscribeEvents((event) => {
       this._updateHass({ themes: event.data });
       applyThemesOnElement(
