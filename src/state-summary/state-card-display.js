@@ -17,9 +17,9 @@ class StateCardDisplay extends LocalizeMixin(PolymerElement) {
     <style>
 
       :host {
-        @apply(--layout-horizontal);
-        @apply(--layout-justified);
-        @apply(--layout-baseline);
+        @apply --layout-horizontal;
+        @apply --layout-justified;
+        @apply --layout-baseline;
       }
 
       state-info {
@@ -40,7 +40,7 @@ class StateCardDisplay extends LocalizeMixin(PolymerElement) {
     </style>
 
     ${this.stateInfoTemplate}
-    <div class\$="[[computeClassNames(stateObj)]]">[[computeStateDisplay(localize, stateObj, language)]]</div>
+    <div class$="[[computeClassNames(stateObj)]]">[[computeStateDisplay(localize, stateObj, language)]]</div>
 `;
   }
 

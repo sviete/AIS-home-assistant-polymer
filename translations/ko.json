@@ -12,7 +12,8 @@
         "dev-events": "이벤트",
         "dev-templates": "템플릿",
         "dev-mqtt": "MQTT",
-        "dev-info": "정보"
+        "dev-info": "정보",
+        "calendar": "캘린더"
     },
     "state": {
         "default": {
@@ -605,14 +606,16 @@
                 "effect": "효과"
             },
             "media_player": {
-                "text_to_speak": "음성합성 내용 입력 (TTS)"
+                "text_to_speak": "음성합성 내용 입력 (TTS)",
+                "source": "입력 소스",
+                "sound_mode": "사운드 모드"
             },
             "climate": {
                 "currently": "현재 온도",
                 "on_off": "켜기 \/ 끄기",
                 "target_temperature": "희망 온도",
                 "target_humidity": "희망 습도",
-                "operation": "운전",
+                "operation": "운전 모드",
                 "fan_mode": "송풍 모드",
                 "swing_mode": "회전 모드",
                 "away_mode": "외출 모드",
@@ -649,6 +652,12 @@
             "service_called": "{service} 서비스가 호출되었습니다.",
             "service_call_failed": "{service} 서비스를 호출하지 못했습니다.",
             "connection_lost": "서버와 연결이 끊어졌습니다. 다시 연결 중..."
+        },
+        "dialogs": {
+            "more_info_settings": {
+                "save": "저장",
+                "name": "이름"
+            }
         }
     },
     "domain": {

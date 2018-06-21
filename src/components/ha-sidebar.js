@@ -101,8 +101,8 @@ class HaSidebar extends
     </style>
 
     <app-toolbar>
-      <div main-title="">AIS dom</div>
-      <paper-icon-button icon="hass:chevron-left" hidden\$="[[narrow]]" on-click="toggleMenu"></paper-icon-button>
+      <div main-title="">Asystent domowy</div>
+      <paper-icon-button icon="hass:chevron-left" hidden$="[[narrow]]" on-click="toggleMenu"></paper-icon-button>
     </app-toolbar>
 
     <paper-listbox attr-for-selected="data-panel" selected="[[hass.panelUrl]]">
@@ -172,7 +172,7 @@ class HaSidebar extends
   }
 
   computePanels(hass) {
-    var panels = hass.config.panels;
+    var panels = hass.panels;
     var sortValue = {
       map: 1,
       logbook: 2,

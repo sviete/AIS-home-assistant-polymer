@@ -25,21 +25,35 @@ class HassioAddonView extends PolymerElement {
       }
       .content {
         padding: 24px 0 32px;
-        max-width: 600px;
-        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
       hassio-addon-info,
       hassio-addon-network,
       hassio-addon-audio,
       hassio-addon-config {
         margin-bottom: 24px;
+        width: 600px;
+      }
+      hassio-addon-logs {
+        min-width: 600px;
+      }
+      @media only screen and (max-width: 600px) {
+        hassio-addon-info,
+        hassio-addon-network,
+        hassio-addon-audio,
+        hassio-addon-config,
+        hassio-addon-logs {
+          max-width: 100%;
+        }
       }
     </style>
     <app-route route="[[route]]" pattern="/addon/:slug" data="{{routeData}}" active="{{routeMatches}}"></app-route>
     <app-header-layout has-scrolling-region="">
       <app-header fixed="" slot="header">
         <app-toolbar>
-          <ha-menu-button narrow="[[narrow]]" show-menu="[[showMenu]]"></ha-menu-button>
+          <ha-menu-button hassio narrow="[[narrow]]" show-menu="[[showMenu]]"></ha-menu-button>
           <paper-icon-button icon="hassio:arrow-left" on-click="backTapped"></paper-icon-button>
           <div main-title="">Hass.io: add-on details</div>
         </app-toolbar>

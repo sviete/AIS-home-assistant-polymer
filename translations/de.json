@@ -12,7 +12,8 @@
         "dev-events": "Ereignisse",
         "dev-templates": "Templates",
         "dev-mqtt": "MQTT",
-        "dev-info": "Info"
+        "dev-info": "Info",
+        "calendar": "Kalender"
     },
     "state": {
         "default": {
@@ -582,7 +583,7 @@
                 "code": "Code",
                 "clear_code": "Löschen",
                 "disarm": "Deaktivieren",
-                "arm_home": "Aktivieren, zu Hause",
+                "arm_home": "Aktivieren, Zuhause",
                 "arm_away": "Aktivieren, unterwegs"
             },
             "automation": {
@@ -605,13 +606,20 @@
                 "effect": "Effekt"
             },
             "media_player": {
-                "text_to_speak": "Text zum Sprechen"
+                "text_to_speak": "Text zum Sprechen",
+                "source": "Quelle",
+                "sound_mode": "Sound-Modus"
             },
             "climate": {
                 "currently": "Aktuell",
                 "on_off": "An \/ aus",
-                "target_temperature": "Solltemperatur",
-                "target_humidity": "Soll-Luftfeuchtigkeit"
+                "target_temperature": "Soll-Temperatur",
+                "target_humidity": "Soll-Luftfeuchtigkeit",
+                "operation": "Aktion",
+                "fan_mode": "Ventilator-Modus",
+                "swing_mode": "Schwenk-Modus",
+                "away_mode": "Abwesenheitsmodus",
+                "aux_heat": "Hilfswärme"
             },
             "lock": {
                 "code": "Code",
@@ -644,6 +652,12 @@
             "service_called": "Dienst {service} aufgerufen.",
             "service_call_failed": "Fehler beim Aufrufen des Service {service}.",
             "connection_lost": "Verbindung getrennt. Verbinde erneut..."
+        },
+        "dialogs": {
+            "more_info_settings": {
+                "save": "Speichern",
+                "name": "Name"
+            }
         }
     },
     "domain": {
