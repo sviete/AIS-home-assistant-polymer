@@ -121,7 +121,7 @@ class HaPanelDevInfo extends PolymerElement {
         <div class='about'>
           <p class='version'>
             <a href='https://www.ai-speaker.com'><img src="/static/icons/favicon-192x192.png" height="192" /></a><br />
-            AIS dom<br />
+            Domowy asystent<br />
             [[hass.config.core.version]]
           </p>
           <p>
@@ -138,7 +138,7 @@ class HaPanelDevInfo extends PolymerElement {
             <a href='https://www.home-assistant.io'>Home Assistant</a>,
             <a href='https://www.python.org'>Python 3</a>,
             <a href='https://www.polymer-project.org' target='_blank'>Polymer</a>,
-            Ikony <a href='https://www.google.com/design/icons/' target='_blank'>Google</a> and <a href='https://MaterialDesignIcons.com' target='_blank'>MaterialDesignIcons.com</a>.
+            ikony <a href='https://www.google.com/design/icons/' target='_blank'>Google</a> i <a href='https://MaterialDesignIcons.com' target='_blank'>MaterialDesignIcons.com</a>.
           </p>
           <p>
             Frontend JavaScript wersja: [[jsVersion]]
