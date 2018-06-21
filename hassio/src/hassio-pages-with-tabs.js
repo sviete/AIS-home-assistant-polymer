@@ -34,7 +34,7 @@ class HassioPagesWithTabs extends NavigateMixin(PolymerElement) {
     <app-header-layout has-scrolling-region="">
       <app-header fixed="" slot="header">
         <app-toolbar>
-          <ha-menu-button narrow="[[narrow]]" show-menu="[[showMenu]]"></ha-menu-button>
+          <ha-menu-button hassio narrow="[[narrow]]" show-menu="[[showMenu]]"></ha-menu-button>
           <div main-title="">Hass.io</div>
           <template is="dom-if" if="[[showRefreshButton(page)]]">
             <paper-icon-button icon="hassio:refresh" on-click="refreshClicked"></paper-icon-button>

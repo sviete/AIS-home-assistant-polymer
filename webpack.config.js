@@ -48,6 +48,7 @@ function createConfig(isProdBuild, latestBuild) {
       __BUILD__: JSON.stringify(latestBuild ? 'latest' : 'es5'),
       __VERSION__: JSON.stringify(VERSION),
       __PUBLIC_PATH__: JSON.stringify(publicPath),
+      'process.env.NODE_ENV': JSON.stringify(isProdBuild ? 'production' : 'development'),
     }),
     new CopyWebpackPlugin(copyPluginOpts),
     // Ignore moment.js locales
@@ -70,6 +71,7 @@ function createConfig(isProdBuild, latestBuild) {
     copyPluginOpts.push({ from: 'node_modules/@polymer/font-roboto-local/fonts', to: 'fonts' });
     copyPluginOpts.push('node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js')
     copyPluginOpts.push('node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js.map')
+    copyPluginOpts.push({ from: 'node_modules/react-big-calendar/lib/css/react-big-calendar.css', to: `panels/calendar/` });
     copyPluginOpts.push({ from: 'node_modules/leaflet/dist/leaflet.css', to: `images/leaflet/` });
     copyPluginOpts.push({ from: 'node_modules/leaflet/dist/images', to: `images/leaflet/` });
     entry['hass-icons'] = './src/entrypoints/hass-icons.js';
@@ -77,7 +79,7 @@ function createConfig(isProdBuild, latestBuild) {
   } else {
     copyPluginOpts.push('public/__init__.py');
     babelOptions.presets = [
-      ['es2015', { modules: false }]
+      [require('babel-preset-env').default, { modules: false }]
     ];
     entry.compatibility = './src/entrypoints/compatibility.js';
   }
@@ -175,6 +177,16 @@ function createConfig(isProdBuild, latestBuild) {
       chunkFilename: chunkFilename,
       path: path.resolve(__dirname, buildPath),
       publicPath,
+    },
+    resolve: {
+      alias: {
+        'react': 'preact-compat',
+        'react-dom': 'preact-compat',
+        // Not necessary unless you consume a module using `createClass`
+        'create-react-class': 'preact-compat/lib/create-react-class',
+        // Not necessary unless you consume a module requiring `react-dom-factories`
+        'react-dom-factories': 'preact-compat/lib/react-dom-factories'
+      }
     }
   }
 }

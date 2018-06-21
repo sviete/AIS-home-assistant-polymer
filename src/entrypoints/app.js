@@ -8,6 +8,7 @@ import '@polymer/paper-styles/typography.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 
 import LocalizeMixin from '../mixins/localize-mixin.js';
 
@@ -25,6 +26,8 @@ import { getActiveTranslation, getTranslation } from '../util/hass-translation.j
 import '../util/legacy-support';
 import '../util/roboto.js';
 import hassCallApi from '../util/hass-call-api.js';
+import makeDialogManager from '../dialogs/dialog-manager.js';
+import registerServiceWorker from '../util/register-service-worker.js';
 
 import computeStateName from '../common/entity/compute_state_name.js';
 import applyThemesOnElement from '../common/dom/apply_themes_on_element.js';
@@ -96,15 +99,21 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
     };
   }
 
+  constructor() {
+    super();
+    makeDialogManager(this);
+  }
+
   ready() {
     super.ready();
     this.addEventListener('settheme', e => this.setTheme(e));
     this.addEventListener('hass-language-select', e => this.selectLanguage(e));
     this.loadResources();
+    afterNextRender(null, registerServiceWorker);
   }
 
   computeShowMain(hass) {
-    return hass && hass.states && hass.config;
+    return hass && hass.states && hass.config && hass.panels;
   }
 
   computeShowLoading(connectionPromise, hass) {
@@ -113,27 +122,25 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
       || (hass && hass.connection && (!hass.states || !hass.config)));
   }
 
-  loadResources(fragment) {
-    getTranslation(fragment).then((result) => {
-      this._updateResources(result.language, result.data);
-    });
+  async loadResources(fragment) {
+    const result = await getTranslation(fragment);
+    this._updateResources(result.language, result.data);
   }
 
-  loadBackendTranslations() {
+  async loadBackendTranslations() {
     if (!this.hass.language) return;
 
     const language = this.hass.selectedLanguage || this.hass.language;
 
-    this.hass.connection.sendMessagePromise({
+    const resp = await this.hass.connection.sendMessagePromise({
       type: 'frontend/get_translations',
       language,
-    })
-      .then((resp) => {
-      // If we've switched selected languages just ignore this response
-        if ((this.hass.selectedLanguage || this.hass.language) !== language) return;
+    });
 
-        this._updateResources(language, resp.result.resources);
-      });
+    // If we've switched selected languages just ignore this response
+    if ((this.hass.selectedLanguage || this.hass.language) !== language) return;
+
+    this._updateResources(language, resp.result.resources);
   }
 
   _updateResources(language, data) {
@@ -176,6 +183,7 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
       states: null,
       config: null,
       themes: null,
+      panels: null,
       panelUrl: this.panelUrl,
 
       language: getActiveTranslation(),
@@ -185,61 +193,62 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
       translationMetadata: translationMetadata,
       dockedSidebar: false,
       moreInfoEntityId: null,
-      callService: (domain, service, serviceData) =>
-        conn.callService(domain, service, serviceData || {})
-          .then(
-            () => {
-              let message;
-              let name;
-              if (serviceData.entity_id && this.hass.states &&
-                this.hass.states[serviceData.entity_id]) {
-                name = computeStateName(this.hass.states[serviceData.entity_id]);
-              }
-              if (service === 'turn_on' && serviceData.entity_id) {
-                message = this.localize(
-                  'ui.notification_toast.entity_turned_on',
-                  'entity', name || serviceData.entity_id
-                );
-              } else if (service === 'turn_off' && serviceData.entity_id) {
-                message = this.localize(
-                  'ui.notification_toast.entity_turned_off',
-                  'entity', name || serviceData.entity_id
-                );
-              } else {
-                message = this.localize(
-                  'ui.notification_toast.service_called',
-                  'service', `${domain}/${service}`
-                );
-              }
-              notifications.showNotification(message);
-            },
-            function () {
-              const msg = this.localize(
-                'ui.notification_toast.service_call_failed',
-                'service', `${domain}/${service}`
-              );
-              notifications.showNotification(msg);
-              return Promise.reject();
-            }
-          ),
-      callApi: (method, path, parameters) => {
+      callService: async (domain, service, serviceData) => {
+        try {
+          await conn.callService(domain, service, serviceData || {});
+
+          let message;
+          let name;
+          if (serviceData.entity_id && this.hass.states &&
+            this.hass.states[serviceData.entity_id]) {
+            name = computeStateName(this.hass.states[serviceData.entity_id]);
+          }
+          if (service === 'turn_on' && serviceData.entity_id) {
+            message = this.localize(
+              'ui.notification_toast.entity_turned_on',
+              'entity', name || serviceData.entity_id
+            );
+          } else if (service === 'turn_off' && serviceData.entity_id) {
+            message = this.localize(
+              'ui.notification_toast.entity_turned_off',
+              'entity', name || serviceData.entity_id
+            );
+          } else {
+            message = this.localize(
+              'ui.notification_toast.service_called',
+              'service', `${domain}/${service}`
+            );
+          }
+          notifications.showNotification(message);
+        } catch (err) {
+          const msg = this.localize(
+            'ui.notification_toast.service_call_failed',
+            'service', `${domain}/${service}`
+          );
+          notifications.showNotification(msg);
+          throw err;
+        }
+      },
+      callApi: async (method, path, parameters) => {
         const host = window.location.protocol + '//' + window.location.host;
         const auth = conn.options;
-        return hassCallApi(host, auth, method, path, parameters).catch((err) => {
-          if (err.status_code !== 401 || !auth.accessToken) throw err;
+        try {
+          return await hassCallApi(host, auth, method, path, parameters);
+        } catch (err) {
+          if (!err || err.status_code !== 401 || !auth.accessToken) throw err;
 
           // If we connect with access token and get 401, refresh token and try again
-          return window.refreshToken().then((accessToken) => {
-            conn.options.accessToken = accessToken;
-            return hassCallApi(host, auth, method, path, parameters);
-          });
-        });
+          const accessToken = await window.refreshToken();
+          conn.options.accessToken = accessToken;
+          return await hassCallApi(host, auth, method, path, parameters);
+        }
       },
     }, this.$.storage.getStoredState());
 
     var reconnected = () => {
       this._updateHass({ connected: true });
       this.loadBackendTranslations();
+      this._loadPanels();
     };
 
     const disconnected = () => {
@@ -250,16 +259,16 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
 
     // If we reconnect after losing connection and access token is no longer
     // valid.
-    conn.addEventListener('reconnect-error', (_conn, err) => {
+    conn.addEventListener('reconnect-error', async (_conn, err) => {
       if (err !== ERR_INVALID_AUTH) return;
       disconnected();
       this.unsubConnection();
-      window.refreshToken().then(accessToken =>
-        this.handleConnectionPromise(window.createHassConnection(null, accessToken)));
+      const accessToken = await window.refreshToken();
+      this.handleConnectionPromise(window.createHassConnection(null, accessToken));
     });
     conn.addEventListener('disconnected', disconnected);
 
-    var unsubEntities;
+    let unsubEntities;
 
     subscribeEntities(conn, (states) => {
       this._updateHass({ states: states });
@@ -267,7 +276,7 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
       unsubEntities = unsub;
     });
 
-    var unsubConfig;
+    let unsubConfig;
 
     subscribeConfig(conn, (config) => {
       this._updateHass({ config: config });
@@ -275,8 +284,9 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
       unsubConfig = unsub;
     });
 
-    var unsubThemes;
+    this._loadPanels();
 
+    let unsubThemes;
 
     this.hass.connection.sendMessagePromise({
       type: 'frontend/get_themes',
@@ -322,14 +332,14 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
     this.loadTranslationFragment(newPanelUrl);
   }
 
-  handleConnectionPromise(prom) {
+  async handleConnectionPromise(prom) {
     if (!prom) return;
 
-    prom.then((conn) => {
-      this.connection = conn;
-    }, () => {
+    try {
+      this.connection = await prom;
+    } catch (err) {
       this.connectionPromise = null;
-    });
+    }
   }
 
   handleMoreInfo(ev) {
@@ -378,6 +388,14 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
       this.loadResources(panelUrl);
     }
   }
+
+  async _loadPanels() {
+    const msg = await this.connection.sendMessagePromise({
+      type: 'get_panels'
+    });
+    this._updateHass({ panels: msg.result });
+  }
+
 
   _updateHass(obj) {
     this.hass = Object.assign({}, this.hass, obj);

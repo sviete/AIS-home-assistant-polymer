@@ -4,6 +4,7 @@ import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import './hass-loading-screen.js';
+import './hass-error-screen.js';
 import { importHref } from '../resources/html-import/import-href';
 
 import dynamicContentUpdater from '../common/dom/dynamic_content_updater.js';
@@ -49,6 +50,10 @@ function ensureLoaded(panel) {
       imported = import(/* webpackChunkName: "panel-dev-template" */ '../panels/dev-template/ha-panel-dev-template.js');
       break;
 
+    case 'lovelace':
+      imported = import(/* webpackChunkName: "panel-lovelace" */ '../panels/lovelace/ha-panel-lovelace.js');
+      break;
+
     case 'history':
       imported = import(/* webpackChunkName: "panel-history" */ '../panels/history/ha-panel-history.js');
       break;
@@ -77,6 +82,10 @@ function ensureLoaded(panel) {
       imported = import(/* webpackChunkName: "panel-shopping-list" */ '../panels/shopping-list/ha-panel-shopping-list.js');
       break;
 
+    case 'calendar':
+      imported = import(/* webpackChunkName: "panel-calendar" */ '../panels/calendar/ha-panel-calendar.js');
+      break;
+
     default:
       imported = null;
   }
@@ -101,11 +110,19 @@ class PartialPanelResolver extends NavigateMixin(PolymerElement) {
     </style>
     <app-route route="{{route}}" pattern="/:panel" data="{{routeData}}" tail="{{routeTail}}"></app-route>
 
-    <template is="dom-if" if="[[!resolved]]">
+    <template is="dom-if" if="[[_equal(_state, 'loading')]]">
       <hass-loading-screen narrow="[[narrow]]" show-menu="[[showMenu]]"></hass-loading-screen>
     </template>
+    <template is="dom-if" if="[[_equal(_state, 'error')]]">
+      <hass-error-screen
+        title=''
+        error="Error while loading this panel."
+        narrow="[[narrow]]"
+        show-menu="[[showMenu]]"
+      ></hass-error-screen>
+    </template>
 
-    <span id="panel" hidden\$="[[!resolved]]"></span>
+    <span id="panel" hidden$="[[!_equal(_state, 'loaded')]]"></span>
 `;
   }
 
@@ -133,9 +150,9 @@ class PartialPanelResolver extends NavigateMixin(PolymerElement) {
         type: Object,
         observer: 'updateAttributes',
       },
-      resolved: {
-        type: Boolean,
-        value: false,
+      _state: {
+        type: String,
+        value: 'loading',
       },
       panel: {
         type: Object,
@@ -153,7 +170,7 @@ class PartialPanelResolver extends NavigateMixin(PolymerElement) {
       return;
     }
 
-    this.resolved = false;
+    this._state = 'loading';
 
     let loadingProm;
     if (panel.url) {
@@ -163,7 +180,7 @@ class PartialPanelResolver extends NavigateMixin(PolymerElement) {
     }
 
     if (loadingProm === null) {
-      this.panelLoadError(panel);
+      this._state = 'error';
       return;
     }
 
@@ -176,31 +193,10 @@ class PartialPanelResolver extends NavigateMixin(PolymerElement) {
           route: this.routeTail,
           panel: panel,
         });
-        this.resolved = true;
+        this._state = 'loaded';
       },
-
-      (err) => {
-        /* eslint-disable-next-line */
-        console.error('Error loading panel', err);
-        // a single retry of importHref in the error callback fixes a webkit refresh issue
-        if (!this.retrySetPanelForWebkit(panel)) {
-          this.panelLoadError(panel);
-        }
-      },
+      () => { this._state = 'error'; },
     );
-  }
-
-  panelLoadError(panel) {
-    alert(`I don't know how to resolve panel ${panel.component_name}`);
-    this.navigate('/states');
-  }
-
-  retrySetPanelForWebkit(panel) {
-    if (this._retryingPanelChanged) {
-      return false;
-    }
-    this._retryingPanelChanged = true;
-    return this.panelChanged(panel);
   }
 
   updateAttributes() {
@@ -213,7 +209,11 @@ class PartialPanelResolver extends NavigateMixin(PolymerElement) {
   }
 
   computeCurrentPanel(hass) {
-    return hass.config.panels[hass.panelUrl];
+    return hass.panels[hass.panelUrl];
+  }
+
+  _equal(a, b) {
+    return a === b;
   }
 }
 

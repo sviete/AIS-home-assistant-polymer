@@ -22,6 +22,9 @@ class HaEntitiesCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
       ha-card {
         padding: 16px;
       }
+      .states {
+        margin: -4px 0;
+      }
       .state {
         padding: 4px 0;
       }
@@ -46,7 +49,7 @@ class HaEntitiesCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
 
     <ha-card>
       <template is="dom-if" if="[[title]]">
-        <div class\$="[[computeTitleClass(groupEntity)]]" on-click="entityTapped">
+        <div class$="[[computeTitleClass(groupEntity)]]" on-click="entityTapped">
           <div class="flex name">[[title]]</div>
           <template is="dom-if" if="[[showGroupToggle(groupEntity, states)]]">
             <ha-entity-toggle hass="[[hass]]" state-obj="[[groupEntity]]"></ha-entity-toggle>
@@ -55,7 +58,7 @@ class HaEntitiesCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
       </template>
       <div class="states">
         <template is="dom-repeat" items="[[states]]" on-dom-change="addTapEvents">
-          <div class\$="[[computeStateClass(item)]]">
+          <div class$="[[computeStateClass(item)]]">
             <state-card-content hass="[[hass]]" class="state-card" state-obj="[[item]]"></state-card-content>
           </div>
         </template>

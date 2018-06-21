@@ -12,7 +12,8 @@
         "dev-events": "事件",
         "dev-templates": "模板",
         "dev-mqtt": "MQTT",
-        "dev-info": "信息"
+        "dev-info": "信息",
+        "calendar": "日历"
     },
     "state": {
         "default": {
@@ -605,15 +606,17 @@
                 "effect": "效果"
             },
             "media_player": {
-                "text_to_speak": "要朗读的文本"
+                "text_to_speak": "要朗读的文本",
+                "source": "信号源",
+                "sound_mode": "声音模式"
             },
             "climate": {
                 "currently": "当前",
                 "on_off": "开\/关",
                 "target_temperature": "设定温度",
                 "target_humidity": "设定湿度",
-                "operation": "操作",
-                "fan_mode": "送风模式",
+                "operation": "运行模式",
+                "fan_mode": "风速",
                 "swing_mode": "扫风模式",
                 "away_mode": "离开模式",
                 "aux_heat": "辅热"
@@ -649,6 +652,12 @@
             "service_called": "服务 {service} 已调用。 ",
             "service_call_failed": "调用服务 {service} 失败。",
             "connection_lost": "连接中断。正在重新连接..."
+        },
+        "dialogs": {
+            "more_info_settings": {
+                "save": "保存",
+                "name": "名称"
+            }
         }
     },
     "domain": {

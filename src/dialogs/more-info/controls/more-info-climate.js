@@ -29,9 +29,6 @@ class MoreInfoClimate extends LocalizeMixin(EventsMixin(PolymerElement)) {
     <style>
       :host {
         color: var(--primary-text-color);
-        --paper-input-container-input: {
-          text-transform: capitalize;
-        }
       }
 
       .container-on,
@@ -109,13 +106,10 @@ class MoreInfoClimate extends LocalizeMixin(EventsMixin(PolymerElement)) {
       .single-row {
         padding: 8px 0;
       }
-
-      .capitalize {
-        text-transform: capitalize;
       }
     </style>
 
-    <div class\$="[[computeClassNames(stateObj)]]">
+    <div class$="[[computeClassNames(stateObj)]]">
 
       <template is="dom-if" if="[[supportsOn(stateObj)]]">
         <div class="container-on">
@@ -128,8 +122,8 @@ class MoreInfoClimate extends LocalizeMixin(EventsMixin(PolymerElement)) {
       </template>
 
       <div class="container-temperature">
-        <div class\$="[[stateObj.attributes.operation_mode]]">
-          <div hidden\$="[[!supportsTemperatureControls(stateObj)]]">[[localize('ui.card.climate.target_temperature')]]</div>
+        <div class$="[[stateObj.attributes.operation_mode]]">
+          <div hidden$="[[!supportsTemperatureControls(stateObj)]]">[[localize('ui.card.climate.target_temperature')]]</div>
           <template is="dom-if" if="[[supportsTemperature(stateObj)]]">
             <ha-climate-control value="[[stateObj.attributes.temperature]]" units="[[stateObj.attributes.unit_of_measurement]]" step="[[computeTemperatureStepSize(stateObj)]]" min="[[stateObj.attributes.min_temp]]" max="[[stateObj.attributes.max_temp]]" on-change="targetTemperatureChanged">
             </ha-climate-control>
@@ -157,10 +151,10 @@ class MoreInfoClimate extends LocalizeMixin(EventsMixin(PolymerElement)) {
       <template is="dom-if" if="[[supportsOperationMode(stateObj)]]">
         <div class="container-operation_list">
           <div class="controls">
-            <paper-dropdown-menu class="capitalize" label-float="" dynamic-align="" label="[[localize('ui.card.climate.operation')]]">
+            <paper-dropdown-menu label-float="" dynamic-align="" label="[[localize('ui.card.climate.operation')]]">
               <paper-listbox slot="dropdown-content" selected="{{operationIndex}}">
                 <template is="dom-repeat" items="[[stateObj.attributes.operation_list]]" on-dom-change="handleOperationListUpdate">
-                  <paper-item class="capitalize">[[item]]</paper-item>
+                  <paper-item>[[_localizeOperationMode(localize, item)]]</paper-item>
                 </template>
               </paper-listbox>
             </paper-dropdown-menu>
@@ -462,6 +456,10 @@ class MoreInfoClimate extends LocalizeMixin(EventsMixin(PolymerElement)) {
       .then(() => {
         this.stateObjChanged(this.stateObj);
       });
+  }
+
+  _localizeOperationMode(localize, mode) {
+    return localize(`state.climate.${mode}`) || mode;
   }
 }
 

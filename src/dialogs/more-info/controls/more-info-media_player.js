@@ -17,6 +17,7 @@ import EventsMixin from '../../../mixins/events-mixin.js';
 import LocalizeMixin from '../../../mixins/localize-mixin.js';
 
 /*
+ * @appliesMixin LocalizeMixin
  * @appliesMixin EventsMixin
  */
 class MoreInfoMediaPlayer extends LocalizeMixin(EventsMixin(PolymerElement)) {
@@ -62,34 +63,34 @@ class MoreInfoMediaPlayer extends LocalizeMixin(EventsMixin(PolymerElement)) {
     }
   </style>
 
-  <div class\$="[[computeClassNames(stateObj)]]">
+  <div class$="[[computeClassNames(stateObj)]]">
     <div class="layout horizontal">
       <div class="flex">
-        <paper-icon-button icon="hass:power" highlight\$="[[playerObj.isOff]]" on-click="handleTogglePower" hidden\$="[[computeHidePowerButton(playerObj)]]"></paper-icon-button>
+        <paper-icon-button icon="hass:power" highlight$="[[playerObj.isOff]]" on-click="handleTogglePower" hidden$="[[computeHidePowerButton(playerObj)]]"></paper-icon-button>
       </div>
       <div>
         <template is="dom-if" if="[[computeShowPlaybackControls(playerObj)]]">
-          <paper-icon-button icon="hass:skip-previous" on-click="handlePrevious" hidden\$="[[!playerObj.supportsPreviousTrack]]"></paper-icon-button>
-          <paper-icon-button icon="[[computePlaybackControlIcon(playerObj)]]" on-click="handlePlaybackControl" hidden\$="[[!computePlaybackControlIcon(playerObj)]]" highlight=""></paper-icon-button>
-          <paper-icon-button icon="hass:skip-next" on-click="handleNext" hidden\$="[[!playerObj.supportsNextTrack]]"></paper-icon-button>
+          <paper-icon-button icon="hass:skip-previous" on-click="handlePrevious" hidden$="[[!playerObj.supportsPreviousTrack]]"></paper-icon-button>
+          <paper-icon-button icon="[[computePlaybackControlIcon(playerObj)]]" on-click="handlePlaybackControl" hidden$="[[!computePlaybackControlIcon(playerObj)]]" highlight=""></paper-icon-button>
+          <paper-icon-button icon="hass:skip-next" on-click="handleNext" hidden$="[[!playerObj.supportsNextTrack]]"></paper-icon-button>
         </template>
       </div>
     </div>
     <!-- VOLUME -->
-    <div class="volume_buttons center horizontal layout" hidden\$="[[computeHideVolumeButtons(playerObj)]]">
+    <div class="volume_buttons center horizontal layout" hidden$="[[computeHideVolumeButtons(playerObj)]]">
       <paper-icon-button on-click="handleVolumeTap" icon="hass:volume-off"></paper-icon-button>
-      <paper-icon-button id="volumeDown" disabled\$="[[playerObj.isMuted]]" on-mousedown="handleVolumeDown" on-touchstart="handleVolumeDown" icon="hass:volume-medium"></paper-icon-button>
-      <paper-icon-button id="volumeUp" disabled\$="[[playerObj.isMuted]]" on-mousedown="handleVolumeUp" on-touchstart="handleVolumeUp" icon="hass:volume-high"></paper-icon-button>
+      <paper-icon-button id="volumeDown" disabled$="[[playerObj.isMuted]]" on-mousedown="handleVolumeDown" on-touchstart="handleVolumeDown" icon="hass:volume-medium"></paper-icon-button>
+      <paper-icon-button id="volumeUp" disabled$="[[playerObj.isMuted]]" on-mousedown="handleVolumeUp" on-touchstart="handleVolumeUp" icon="hass:volume-high"></paper-icon-button>
     </div>
-    <div class="volume center horizontal layout" hidden\$="[[!playerObj.supportsVolumeSet]]">
-      <paper-icon-button on-click="handleVolumeTap" hidden\$="[[playerObj.supportsVolumeButtons]]" icon="[[computeMuteVolumeIcon(playerObj)]]"></paper-icon-button>
-      <ha-paper-slider disabled\$="[[playerObj.isMuted]]" min="0" max="100" value="[[playerObj.volumeSliderValue]]" on-change="volumeSliderChanged" class="flex" ignore-bar-touch="">
+    <div class="volume center horizontal layout" hidden$="[[!playerObj.supportsVolumeSet]]">
+      <paper-icon-button on-click="handleVolumeTap" hidden$="[[playerObj.supportsVolumeButtons]]" icon="[[computeMuteVolumeIcon(playerObj)]]"></paper-icon-button>
+      <ha-paper-slider disabled$="[[playerObj.isMuted]]" min="0" max="100" value="[[playerObj.volumeSliderValue]]" on-change="volumeSliderChanged" class="flex" ignore-bar-touch="">
       </ha-paper-slider>
     </div>
     <!-- SOURCE PICKER -->
-    <div class="controls layout horizontal justified" hidden\$="[[computeHideSelectSource(playerObj)]]">
+    <div class="controls layout horizontal justified" hidden$="[[computeHideSelectSource(playerObj)]]">
       <iron-icon class="source-input" icon="hass:login-variant"></iron-icon>
-      <paper-dropdown-menu class="flex source-input" dynamic-align="" label-float="" label="Source">
+      <paper-dropdown-menu class="flex source-input" dynamic-align="" label-float="" label="[[localize('ui.card.media_player.source')]]">
         <paper-listbox slot="dropdown-content" selected="{{sourceIndex}}">
           <template is="dom-repeat" items="[[playerObj.sourceList]]">
             <paper-item>[[item]]</paper-item>
@@ -97,8 +98,21 @@ class MoreInfoMediaPlayer extends LocalizeMixin(EventsMixin(PolymerElement)) {
         </paper-listbox>
       </paper-dropdown-menu>
     </div>
+    <!-- SOUND MODE PICKER -->
+    <template is='dom-if' if='[[!computeHideSelectSoundMode(playerObj)]]'>
+      <div class="controls layout horizontal justified">
+        <iron-icon class="source-input" icon="hass:music-note"></iron-icon>
+        <paper-dropdown-menu class="flex source-input" dynamic-align label-float label="[[localize('ui.card.media_player.sound_mode')]]">
+          <paper-listbox slot="dropdown-content" attr-for-selected="item-name" selected="{{SoundModeInput}}">
+            <template is='dom-repeat' items='[[playerObj.soundModeList]]'>
+              <paper-item item-name$="[[item]]">[[item]]</paper-item>
+            </template>
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </div>
+    </template>
     <!-- TTS -->
-    <div hidden\$="[[computeHideTTS(ttsLoaded, playerObj)]]" class="layout horizontal end">
+    <div hidden$="[[computeHideTTS(ttsLoaded, playerObj)]]" class="layout horizontal end">
       <paper-input id="ttsInput" label="[[localize('ui.card.media_player.text_to_speak')]]" class="flex" value="{{ttsMessage}}" on-keydown="ttsCheckForEnter"></paper-input>
       <paper-icon-button icon="hass:send" on-click="sendTTS"></paper-icon-button>
     </div>
@@ -122,6 +136,12 @@ class MoreInfoMediaPlayer extends LocalizeMixin(EventsMixin(PolymerElement)) {
         observer: 'handleSourceChanged',
       },
 
+      SoundModeInput: {
+        type: String,
+        value: '',
+        observer: 'handleSoundModeChanged',
+      },
+
       ttsLoaded: {
         type: Boolean,
         computed: 'computeTTSLoaded(hass)',
@@ -142,6 +162,10 @@ class MoreInfoMediaPlayer extends LocalizeMixin(EventsMixin(PolymerElement)) {
   playerObjChanged(newVal, oldVal) {
     if (newVal && newVal.sourceList !== undefined) {
       this.sourceIndex = newVal.sourceList.indexOf(newVal.source);
+    }
+
+    if (newVal && newVal.soundModeList !== undefined) {
+      this.SoundModeInput = newVal.soundMode;
     }
 
     if (oldVal) {
@@ -180,6 +204,10 @@ class MoreInfoMediaPlayer extends LocalizeMixin(EventsMixin(PolymerElement)) {
 
   computeHideSelectSource(playerObj) {
     return playerObj.isOff || !playerObj.supportsSelectSource || !playerObj.sourceList;
+  }
+
+  computeHideSelectSoundMode(playerObj) {
+    return playerObj.isOff || !playerObj.supportsSelectSoundMode || !playerObj.soundModeList;
   }
 
   computeHideTTS(ttsLoaded, playerObj) {
@@ -225,6 +253,15 @@ class MoreInfoMediaPlayer extends LocalizeMixin(EventsMixin(PolymerElement)) {
     }
 
     this.playerObj.selectSource(sourceInput);
+  }
+
+  handleSoundModeChanged(newVal, oldVal) {
+    if (oldVal
+        && newVal !== this.playerObj.soundMode
+        && this.playerObj.supportsSelectSoundMode
+    ) {
+      this.playerObj.selectSoundMode(newVal);
+    }
   }
 
   handleVolumeTap() {

@@ -12,7 +12,8 @@
         "dev-events": "Evenementer",
         "dev-templates": "Modeller",
         "dev-mqtt": "MQTT",
-        "dev-info": "Info"
+        "dev-info": "Info",
+        "calendar": "Kalenner"
     },
     "state": {
         "default": {
@@ -529,8 +530,8 @@
             "day": "{count} {count, plural,\none {dag}\nother {deeg}\n}",
             "week": "{count} {count, plural,\none {woch}\nother {woche}\n}",
             "second": "{count} {count, plural,\none {sekonn}\nother {sekonne}\n}",
-            "minute": "{count} {count, plural,\neng {minute}\nméi {minutes}\n}",
-            "hour": "{count} {count, plural,\neng {hour}\nméi {hours}\n}"
+            "minute": "{count} {count, plural,\n  one {minutt}\n  other {minutten}\n}",
+            "hour": "{count} {count, plural,\n  one {stonn}\n  other {stonnen}\n}"
         },
         "login-form": {
             "password": "Passwuert",
@@ -595,6 +596,7 @@
             },
             "fan": {
                 "speed": "Vitesse",
+                "oscillate": "Pendele",
                 "direction": "Richtung"
             },
             "light": {
@@ -604,13 +606,19 @@
                 "effect": "Effekt"
             },
             "media_player": {
-                "text_to_speak": "Text zu Sprooch"
+                "text_to_speak": "Text zu Sprooch",
+                "source": "Quell",
+                "sound_mode": "Toun Modus"
             },
             "climate": {
                 "currently": "Momentan",
                 "on_off": "Un \/ Aus",
                 "target_temperature": "Zieltemperatur",
                 "target_humidity": "Zielfiichtegkeet",
+                "operation": "Aktioun",
+                "fan_mode": "Ventilatioun Modus",
+                "swing_mode": "Schwenk Modus",
+                "away_mode": "Modus Keen Doheem",
                 "aux_heat": "Zousätzlech Heizung"
             },
             "lock": {
@@ -644,6 +652,12 @@
             "service_called": "Service {service} operuff",
             "service_call_failed": "Fehler beim opruffen vun {service}",
             "connection_lost": "Verbindung verluer. Verbindung gëtt nees opgebaut..."
+        },
+        "dialogs": {
+            "more_info_settings": {
+                "save": "Späicheren",
+                "name": "Numm"
+            }
         }
     },
     "domain": {
