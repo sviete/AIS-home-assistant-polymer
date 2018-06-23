@@ -121,7 +121,7 @@ class HaPanelDevInfo extends PolymerElement {
         <div class='about'>
           <p class='version'>
             <a href='https://www.ai-speaker.com'><img src="/static/icons/favicon-192x192.png" height="192" /></a><br />
-            Domowy asystent<br />
+            Asystent domowy<br />
             [[hass.config.core.version]]
           </p>
           <p>
