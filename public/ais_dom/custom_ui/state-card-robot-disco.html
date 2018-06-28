@@ -75,9 +75,9 @@ Polymer({
   },
 
   computeUrl: function (item) {
-    var r = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,4}\b/;
+    var r = /\bhttps?\:\/\/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,4}\b/;
     var ip = item.match(r);
-    return "http://" + ip;
+    return "" + ip;
   },
 
   computeUrlText: function (item) {
@@ -93,8 +93,8 @@ Polymer({
       var value = item.trim();
       switch(item.substring(0,1)) {
       case "#":
-        var r = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,4}\b/;
-        var ip = value.match(r);
+        var r = /\bhttps?\:\/\/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,4}\b/;
+        var ip = item.match(r);
         var value = value.replace(ip, "");
       default:
           value = value;
