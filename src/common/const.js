@@ -49,7 +49,8 @@ export const DOMAINS_HIDE_MORE_INFO = [
   'input_number',
   'input_select',
   'input_text',
-  'scene'
+  'scene',
+  'weblink'
 ];
 
 /** Domains that should have the history hidden in the more info dialog. */
@@ -58,14 +59,6 @@ export const DOMAINS_MORE_INFO_NO_HISTORY = [
   'configurator',
   'history_graph',
   'scene',
-];
-
-/** States that we consider "on". */
-export const STATES_ON = [
-  'home',
-  'on',
-  'open',
-  'unlocked'
 ];
 
 /** States that we consider "off". */

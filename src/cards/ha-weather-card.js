@@ -1,8 +1,8 @@
-import '@polymer/iron-icon/iron-icon.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import '../components/ha-card.js';
+import '../components/ha-icon.js';
 
 import EventsMixin from '../mixins/events-mixin.js';
 import LocalizeMixin from '../mixins/localize-mixin.js';
@@ -23,7 +23,7 @@ class HaWeatherCard extends
           padding: 0 20px 20px;
         }
 
-        iron-icon {
+        ha-icon {
           color: var(--paper-item-icon-color);
         }
 
@@ -40,7 +40,7 @@ class HaWeatherCard extends
           margin-right: 32px;
         }
 
-        .main iron-icon {
+        .main ha-icon {
           --iron-icon-height: 72px;
           --iron-icon-width: 72px;
           margin-right: 8px;
@@ -94,7 +94,7 @@ class HaWeatherCard extends
           <div class="now">
             <div class="main">
               <template is="dom-if" if="[[showWeatherIcon(stateObj.state)]]">
-                <iron-icon icon="[[getWeatherIcon(stateObj.state)]]"></iron-icon>
+                <ha-icon icon="[[getWeatherIcon(stateObj.state)]]"></ha-icon>
               </template>
               <div class="temp">
                 [[stateObj.attributes.temperature]]<span>[[getUnit('temperature')]]</span>
@@ -104,7 +104,7 @@ class HaWeatherCard extends
               <template is="dom-if" if="[[_showValue(stateObj.attributes.pressure)]]">
                 <div>
                   [[localize('ui.card.weather.attributes.air_pressure')]]:
-                  [[stateObj.attributes.pressure]] hPa
+                  [[stateObj.attributes.pressure]] [[getUnit('air_pressure')]]
                 </div>
               </template>
               <template is="dom-if" if="[[_showValue(stateObj.attributes.humidity)]]">
@@ -135,7 +135,7 @@ class HaWeatherCard extends
                   </div>
                   <template is="dom-if" if="[[item.condition]]">
                     <div class="icon">
-                      <iron-icon icon="[[getWeatherIcon(item.condition)]]"></iron-icon>
+                      <ha-icon icon="[[getWeatherIcon(item.condition)]]"></ha-icon>
                     </div>
                   </template>
                   <div class="temp">[[item.temperature]] [[getUnit('temperature')]]</div>
@@ -203,10 +203,17 @@ class HaWeatherCard extends
   }
 
   getUnit(measure) {
-    if (measure === 'precipitation') {
-      return this.getUnit('length') === 'km' ? 'mm' : 'in';
+    const lengthUnit = this.hass.config.core.unit_system.length || '';
+    switch (measure) {
+      case 'air_pressure':
+        return lengthUnit === 'km' ? 'hPa' : 'inHg';
+      case 'length':
+        return lengthUnit;
+      case 'precipitation':
+        return lengthUnit === 'km' ? 'mm' : 'in';
+      default:
+        return this.hass.config.core.unit_system[measure] || '';
     }
-    return this.hass.config.core.unit_system[measure] || '';
   }
 
   computeState(state, localize) {
