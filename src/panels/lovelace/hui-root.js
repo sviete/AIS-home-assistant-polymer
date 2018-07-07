@@ -1,24 +1,35 @@
 import '@polymer/app-layout/app-header-layout/app-header-layout.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
+import '@polymer/app-route/app-route.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
+import '@polymer/paper-item/paper-item.js';
+import '@polymer/paper-listbox/paper-listbox.js';
+import '@polymer/paper-menu-button/paper-menu-button.js';
 import '@polymer/paper-tabs/paper-tab.js';
 import '@polymer/paper-tabs/paper-tabs.js';
-import '@polymer/iron-icon/iron-icon.js';
 
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
+import scrollToTarget from '../../common/dom/scroll-to-target.js';
+
 import EventsMixin from '../../mixins/events-mixin.js';
+import NavigateMixin from '../../mixins/navigate-mixin.js';
+
 import '../../layouts/ha-app-layout.js';
 import '../../components/ha-start-voice-button.js';
+import '../../components/ha-icon.js';
 import { loadModule, loadJS } from '../../common/dom/load_resource.js';
+import './hui-unused-entities.js';
 import './hui-view.js';
+
+import createCardElement from './common/create-card-element.js';
 
 // JS should only be imported once. Modules and HTML are safe.
 const JS_CACHE = {};
 
-class HUIRoot extends EventsMixin(PolymerElement) {
+class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
   static get template() {
     return html`
     <style include='ha-style'>
@@ -39,28 +50,51 @@ class HUIRoot extends EventsMixin(PolymerElement) {
       app-toolbar a {
         color: var(--text-primary-color, white);
       }
+      #view {
+        min-height: calc(100vh - 112px);
+        /** 
+         * Since we only set min-height, if child nodes need percentage 
+         * heights they must use absolute positioning so we need relative 
+         * positioning here.
+         *  
+         * https://www.w3.org/TR/CSS2/visudet.html#the-height-property 
+         */
+        position: relative;
+      }
+      #view.tabs-hidden {
+        min-height: calc(100vh - 64px);
+      }
     </style>
+    <app-route route="[[route]]" pattern="/:view" data="{{routeData}}"></app-route>
     <ha-app-layout id="layout">
       <app-header slot="header" fixed>
         <app-toolbar>
           <ha-menu-button narrow='[[narrow]]' show-menu='[[showMenu]]'></ha-menu-button>
           <div main-title>[[_computeTitle(config)]]</div>
-          <a href='https://developers.home-assistant.io/docs/en/lovelace_index.html' tabindex='-1' target='_blank'>
-            <paper-icon-button icon='hass:help-circle-outline'></paper-icon-button>
-          </a>
-          <paper-icon-button icon='hass:refresh' on-click='_handleRefresh'></paper-icon-button>
           <ha-start-voice-button hass="[[hass]]"></ha-start-voice-button>
+          <paper-menu-button
+            no-animations
+            horizontal-align="right"
+            horizontal-offset="-5"
+          >
+            <paper-icon-button icon="hass:dots-vertical" slot="dropdown-trigger"></paper-icon-button>
+            <paper-listbox on-iron-select="_deselect" slot="dropdown-content">
+              <paper-item on-click="_handleRefresh">Refresh</paper-item>
+              <paper-item on-click="_handleUnusedEntities">Unused entities</paper-item>
+              <paper-item on-click="_handleHelp">Help</paper-item>
+            </paper-listbox>
+          </paper-menu-button>
         </app-toolbar>
 
         <div sticky hidden$="[[_computeTabsHidden(config.views)]]">
           <paper-tabs scrollable selected="[[_curView]]" on-iron-activate="_handleViewSelected">
             <template is="dom-repeat" items="[[config.views]]">
-              <paper-tab on-click="_scrollToTop">
-                <template is="dom-if" if="[[item.tab_icon]]">
-                  <iron-icon title$="[[item.name]]" icon="[[item.tab_icon]]"></iron-icon>
+              <paper-tab>
+                <template is="dom-if" if="[[item.icon]]">
+                  <ha-icon title$="[[item.title]]" icon="[[item.icon]]"></ha-icon>
                 </template>
-                <template is="dom-if" if="[[!item.tab_icon]]">
-                  [[_computeTabTitle(item)]]
+                <template is="dom-if" if="[[!item.icon]]">
+                  [[_computeTabTitle(item.title)]]
                 </template>
               </paper-tab>
             </template>
@@ -68,7 +102,7 @@ class HUIRoot extends EventsMixin(PolymerElement) {
         </div>
       </app-header>
 
-      <span id='view'></span>
+      <div id='view'></div>
     </app-header-layout>
     `;
   }
@@ -93,33 +127,72 @@ class HUIRoot extends EventsMixin(PolymerElement) {
       _curView: {
         type: Number,
         value: 0,
-      }
+      },
+
+      route: {
+        type: Object,
+        observer: '_routeChanged'
+      },
+      routeData: Object
     };
   }
 
-  ready() {
-    super.ready();
-    this._selectView(0);
+  _routeChanged(route) {
+    const views = this.config && this.config.views;
+    if (route.path === '' && route.prefix === '/lovelace' && views) {
+      this.navigate(`/lovelace/${views[0].id || 0}`, true);
+    } else if (this.routeData.view) {
+      const view = this.routeData.view;
+      let index = 0;
+      for (let i = 0; i < views.length; i++) {
+        if (views[i].id === view || i === parseInt(view)) {
+          index = i;
+          break;
+        }
+      }
+      if (index !== this._curView) this._selectView(index);
+    }
+  }
+
+  _computeViewId(id, index) {
+    return id || index;
   }
 
   _computeTitle(config) {
-    return config.name || 'Home Assistant';
+    return config.title || 'Home Assistant';
   }
 
   _computeTabsHidden(views) {
     return views.length < 2;
   }
 
-  _computeTabTitle(view) {
-    return view.tab_title || view.name || 'Unnamed View';
+  _computeTabTitle(title) {
+    return title || 'Unnamed view';
   }
 
   _handleRefresh() {
     this.fire('config-refresh');
   }
 
+  _handleUnusedEntities() {
+    this._selectView('unused');
+  }
+
+  _deselect(ev) {
+    ev.target.selected = null;
+  }
+
+  _handleHelp() {
+    window.open('https://developers.home-assistant.io/docs/en/lovelace_index.html', '_blank');
+  }
+
   _handleViewSelected(ev) {
-    this._selectView(ev.detail.selected);
+    const index = ev.detail.selected;
+    if (index !== this._curView) {
+      const id = this.config.views[index].id || index;
+      this.navigate(`/lovelace/${id}`);
+    }
+    scrollToTarget(this, this.$.layout.header.scrollTarget);
   }
 
   _selectView(viewIndex) {
@@ -130,12 +203,29 @@ class HUIRoot extends EventsMixin(PolymerElement) {
     if (root.lastChild) {
       root.removeChild(root.lastChild);
     }
-    const view = document.createElement('hui-view');
-    view.setProperties({
-      hass: this.hass,
-      config: this.config.views[this._curView],
-      columns: this.columns,
-    });
+
+    let view;
+    let background = this.config.background || '';
+
+    if (viewIndex === 'unused') {
+      view = document.createElement('hui-unused-entities');
+      view.config = this.config;
+    } else {
+      const viewConfig = this.config.views[this._curView];
+      if (viewConfig.panel) {
+        view = createCardElement(viewConfig.cards[0]);
+        view.isPanel = true;
+      } else {
+        view = document.createElement('hui-view');
+        view.config = viewConfig;
+        view.columns = this.columns;
+      }
+      if (viewConfig.background) background = viewConfig.background;
+    }
+
+    this.$.view.style.background = background;
+
+    view.hass = this.hass;
     root.appendChild(view);
   }
 
@@ -148,6 +238,7 @@ class HUIRoot extends EventsMixin(PolymerElement) {
     this._loadResources(config.resources || []);
     // On config change, recreate the view from scratch.
     this._selectView(this._curView);
+    this.$.view.classList.toggle('tabs-hidden', config.views.length < 2);
   }
 
   _columnsChanged(columns) {
@@ -177,45 +268,6 @@ class HUIRoot extends EventsMixin(PolymerElement) {
           console.warn('Unknown resource type specified: ${resource.type}');
       }
     });
-  }
-
-  /**
-   * Scroll to a specific y coordinate.
-   *
-   * Copied from paper-scroll-header-panel.
-   *
-   * @method scroll
-   * @param {number} top The coordinate to scroll to, along the y-axis.
-   * @param {boolean} smooth true if the scroll position should be smoothly adjusted.
-   */
-  _scrollToTop() {
-    // the scroll event will trigger _updateScrollState directly,
-    // However, _updateScrollState relies on the previous `scrollTop` to update the states.
-    // Calling _updateScrollState will ensure that the states are synced correctly.
-    var top = 0;
-    var scroller = this.$.layout.header.scrollTarget;
-    var easingFn = function easeOutQuad(t, b, c, d) {
-      /* eslint-disable no-param-reassign, space-infix-ops, no-mixed-operators */
-      t /= d;
-      return -c * t*(t-2) + b;
-      /* eslint-enable no-param-reassign, space-infix-ops, no-mixed-operators */
-    };
-    var animationId = Math.random();
-    var duration = 200;
-    var startTime = Date.now();
-    var currentScrollTop = scroller.scrollTop;
-    var deltaScrollTop = top - currentScrollTop;
-    this._currentAnimationId = animationId;
-    (function updateFrame() {
-      var now = Date.now();
-      var elapsedTime = now - startTime;
-      if (elapsedTime > duration) {
-        scroller.scrollTop = top;
-      } else if (this._currentAnimationId === animationId) {
-        scroller.scrollTop = easingFn(elapsedTime, currentScrollTop, deltaScrollTop, duration);
-        requestAnimationFrame(updateFrame.bind(this));
-      }
-    }).call(this);
   }
 }
 

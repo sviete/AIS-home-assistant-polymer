@@ -2,6 +2,8 @@ import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import applyThemesOnElement from '../../common/dom/apply_themes_on_element.js';
+import debounce from '../../common/util/debounce.js';
+
 import createCardElement from './common/create-card-element';
 
 class HUIView extends PolymerElement {
@@ -51,9 +53,10 @@ class HUIView extends PolymerElement {
         }
       }
       </style>
-      <div id='columns'></div>
+      <div id='columns' on-rebuild-view='_debouncedConfigChanged'></div>
     `;
   }
+
   static get properties() {
     return {
       hass: {
@@ -63,33 +66,25 @@ class HUIView extends PolymerElement {
 
       columns: {
         type: Number,
-        observer: '_configChanged',
       },
 
       config: {
         type: Object,
-        observer: '_configChanged',
       },
     };
+  }
+
+  static get observers() {
+    return [
+      // Put all properties in 1 observer so we only call configChanged once
+      '_configChanged(columns, config)'
+    ];
   }
 
   constructor() {
     super();
     this._elements = [];
-    this._whenDefined = {};
-    this.elementNotDefinedCallback = this.elementNotDefinedCallback.bind(this);
-  }
-
-  _getElements(cards) {
-    const elements = [];
-
-    for (let i = 0; i < cards.length; i++) {
-      const element = createCardElement(cards[i], this.elementNotDefinedCallback, null);
-      element.hass = this.hass;
-      elements.push(element);
-    }
-
-    return elements;
+    this._debouncedConfigChanged = debounce(this._configChanged, 100);
   }
 
   _configChanged() {
@@ -105,7 +100,11 @@ class HUIView extends PolymerElement {
       return;
     }
 
-    const elements = this._getElements(config.cards);
+    const elements = config.cards.map((cardConfig) => {
+      const element = createCardElement(cardConfig);
+      element.hass = this.hass;
+      return element;
+    });
 
     let columns = [];
     const columnEntityCount = [];
@@ -133,6 +132,11 @@ class HUIView extends PolymerElement {
     }
 
     elements.forEach((el) => {
+      // Trigger custom elements to build up DOM. This is needed for some elements
+      // that use the DOM to decide their height. We don't have to clean this up
+      // because a DOM element can only be in 1 position, so it will be removed from
+      // 'this' and added to the correct column afterwards.
+      this.appendChild(el);
       const cardSize = typeof el.getCardSize === 'function' ? el.getCardSize() : 1;
       columns[getColumnIndex(cardSize)].push(el);
     });
@@ -157,13 +161,6 @@ class HUIView extends PolymerElement {
   _hassChanged(hass) {
     for (let i = 0; i < this._elements.length; i++) {
       this._elements[i].hass = hass;
-    }
-  }
-
-  elementNotDefinedCallback(tag) {
-    if (!(tag in this._whenDefined)) {
-      this._whenDefined[tag] = customElements.whenDefined(tag)
-        .then(() => this._configChanged());
     }
   }
 }

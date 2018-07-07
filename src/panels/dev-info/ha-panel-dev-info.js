@@ -153,7 +153,10 @@ class HaPanelDevInfo extends PolymerElement {
               </div>
             </template>
           </p>
-          <p><a href='/lovelace'>Try out the new Lovelace UI (experimental)</a></p>
+          <p>
+            <a href='/lovelace'>Try out the new Lovelace UI (experimental)</a>
+            <div id="love" style="cursor:pointer;" on-click="_toggleDefaultPage">[[_defaultPageText()]]</div
+          </p>
         </div>
 
         <div class="system-log-intro">
@@ -329,6 +332,20 @@ class HaPanelDevInfo extends PolymerElement {
         this.items = items;
         this.updating = false;
       });
+  }
+
+  _defaultPageText() {
+    return `>> ${localStorage.defaultPage === 'lovelace' ?
+      'Remove' : 'Set'} lovelace as default page on this device <<`;
+  }
+
+  _toggleDefaultPage() {
+    if (localStorage.defaultPage === 'lovelace') {
+      delete localStorage.defaultPage;
+    } else {
+      localStorage.defaultPage = 'lovelace';
+    }
+    this.$.love.innerText = this._defaultPageText();
   }
 }
 

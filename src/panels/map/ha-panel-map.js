@@ -1,16 +1,17 @@
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
-import '@polymer/iron-icon/iron-icon.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import Leaflet from 'leaflet';
 
 import '../../components/ha-menu-button.js';
+import '../../components/ha-icon.js';
 
 import './ha-entity-marker.js';
 
 import computeStateDomain from '../../common/entity/compute_state_domain.js';
 import computeStateName from '../../common/entity/compute_state_name.js';
 import LocalizeMixin from '../../mixins/localize-mixin.js';
+import setupLeafletMap from '../../common/dom/setup-leaflet-map.js';
 
 Leaflet.Icon.Default.imagePath = '/static/images/leaflet';
 
@@ -57,21 +58,7 @@ class HaPanelMap extends LocalizeMixin(PolymerElement) {
 
   connectedCallback() {
     super.connectedCallback();
-    var map = this._map = Leaflet.map(this.$.map);
-    var style = document.createElement('link');
-    style.setAttribute('href', '/static/images/leaflet/leaflet.css');
-    style.setAttribute('rel', 'stylesheet');
-    this.$.map.parentNode.appendChild(style);
-    map.setView([51.505, -0.09], 13);
-    Leaflet.tileLayer(
-      `https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}${Leaflet.Browser.retina ? '@2x.png' : '.png'}`,
-      {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        minZoom: 0,
-        maxZoom: 20,
-      }
-    ).addTo(map);
+    var map = this._map = setupLeafletMap(this.$.map);
 
     this.drawEntities(this.hass);
 
@@ -79,6 +66,12 @@ class HaPanelMap extends LocalizeMixin(PolymerElement) {
       map.invalidateSize();
       this.fitMap();
     }, 1);
+  }
+
+  disconnectedCallback() {
+    if (this._map) {
+      this._map.remove();
+    }
   }
 
   fitMap() {
@@ -126,8 +119,9 @@ class HaPanelMap extends LocalizeMixin(PolymerElement) {
         // create icon
         var iconHTML = '';
         if (entity.attributes.icon) {
-          iconHTML = (
-            "<iron-icon icon='" + entity.attributes.icon + "'></iron-icon>");
+          const el = document.createElement('ha-icon');
+          el.setAttribute('icon', entity.attributes.icon);
+          iconHTML = el.outerHTML;
         } else {
           iconHTML = title;
         }

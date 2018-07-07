@@ -5,8 +5,10 @@ import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import stateCardType from '../../../common/entity/state_card_type.js';
 import computeDomain from '../../../common/entity/compute_domain.js';
 import { DOMAINS_HIDE_MORE_INFO } from '../../../common/const.js';
+import processConfigEntities from '../common/process-config-entities.js';
 
 import '../../../components/ha-card.js';
+import '../components/hui-entities-toggle.js';
 
 // just importing this now as shortcut to import correct state-card-*
 import '../../../state-summary/state-card-content.js';
@@ -36,6 +38,8 @@ class HuiEntitiesCard extends EventsMixin(PolymerElement) {
         line-height: 40px;
         color: var(--primary-text-color);
         padding: 4px 0 12px;
+        display: flex;
+        justify-content: space-between;
       }
       .header .name {
         @apply --paper-font-common-nowrap;
@@ -46,9 +50,14 @@ class HuiEntitiesCard extends EventsMixin(PolymerElement) {
     </style>
 
     <ha-card>
-      <div class='header'>
-        <div class="name">[[_computeTitle(config)]]</div>
-      </div>
+      <template is='dom-if' if='[[_showHeader(_config)]]'>
+        <div class='header'>
+          <div class="name">[[_config.title]]</div>
+          <template is="dom-if" if="[[_showHeaderToggle(_config.show_header_toggle)]]">
+            <hui-entities-toggle hass="[[hass]]" entities="[[_config.entities]]"></hui-entities-toggle>
+          </template>
+        </div>
+      </template>
       <div id="states"></div>
     </ha-card>
 `;
@@ -60,10 +69,7 @@ class HuiEntitiesCard extends EventsMixin(PolymerElement) {
         type: Object,
         observer: '_hassChanged',
       },
-      config: {
-        type: Object,
-        observer: '_configChanged',
-      }
+      _config: Object,
     };
   }
 
@@ -72,17 +78,35 @@ class HuiEntitiesCard extends EventsMixin(PolymerElement) {
     this._elements = [];
   }
 
+  ready() {
+    super.ready();
+    if (this._config) this._buildConfig();
+  }
+
   getCardSize() {
     // +1 for the header
-    return 1 + (this.config ? this.config.entities.length : 0);
+    return 1 + (this._config ? this._config.entities.length : 0);
   }
 
-  _computeTitle(config) {
-    return config.title;
+  _showHeaderToggle(show) {
+    // If show is undefined, we treat it as true
+    return show !== false;
   }
 
-  _configChanged(config) {
+  _showHeader(config) {
+    // Show header if either title or toggle configured to show in it
+    return config.title || config.show_header_toggle;
+  }
+
+  setConfig(config) {
+    this._config = config;
+    this._configEntities = processConfigEntities(config.entities);
+    if (this.$) this._buildConfig();
+  }
+
+  _buildConfig() {
     const root = this.$.states;
+    const entities = this._configEntities;
 
     while (root.lastChild) {
       root.removeChild(root.lastChild);
@@ -90,8 +114,9 @@ class HuiEntitiesCard extends EventsMixin(PolymerElement) {
 
     this._elements = [];
 
-    for (let i = 0; i < config.entities.length; i++) {
-      const entityId = config.entities[i];
+    for (let i = 0; i < entities.length; i++) {
+      const entity = entities[i];
+      const entityId = entity.entity;
       if (!(entityId in this.hass.states)) continue;
       const stateObj = this.hass.states[entityId];
       const tag = stateObj ? `state-card-${stateCardType(this.hass, stateObj)}` : 'state-card-display';
@@ -102,6 +127,9 @@ class HuiEntitiesCard extends EventsMixin(PolymerElement) {
       }
       element.stateObj = stateObj;
       element.hass = this.hass;
+      if (entity.name) {
+        element.overrideName = entity.name;
+      }
       this._elements.push({ entityId, element });
       const container = document.createElement('div');
       container.appendChild(element);

@@ -12,20 +12,23 @@ class HuiErrorCard extends PolymerElement {
           padding: 8px;
         }
       </style>
-      [[error]]
-      <pre>[[_toStr(config)]]</pre>
+      [[_config.error]]
+      <pre>[[_toStr(_config.origConfig)]]</pre>
     `;
   }
 
   static get properties() {
     return {
-      config: Object,
-      error: String
+      _config: Object,
     };
   }
 
+  setConfig(config) {
+    this._config = config;
+  }
+
   getCardSize() {
-    return 1;
+    return 4;
   }
 
   _toStr(obj) {

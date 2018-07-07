@@ -3,6 +3,7 @@ import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import computeStateDisplay from '../../../common/entity/compute_state_display.js';
 import computeStateName from '../../../common/entity/compute_state_name.js';
+import processConfigEntities from '../common/process-config-entities';
 
 import '../../../components/entity/state-badge.js';
 import '../../../components/ha-card.js';
@@ -21,16 +22,8 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
         ha-card {
           padding: 16px;
         }
-        .header {
-          @apply --paper-font-headline;
-          /* overwriting line-height +8 because entity-toggle can be 40px height,
-            compensating this with reduced padding */
-          line-height: 40px;
-          color: var(--primary-text-color);
-          padding: 4px 0 12px;
-        }
-        .header .name {
-          @apply --paper-font-common-nowrap;
+        ha-card[header] {
+          padding-top: 0;
         }
         .entities {
           padding: 4px 0;
@@ -55,19 +48,11 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        .error {
-          background-color: red;
-          color: white;
-          text-align: center;
-        }
       </style>
 
-      <ha-card>
-        <div class="header">
-          <div class="name">[[_computeTitle(config)]]</div>
-        </div>
+      <ha-card header$="[[_config.title]]">
         <div class="entities">
-          <template is="dom-repeat" items="[[_entities]]">
+          <template is="dom-repeat" items="[[_configEntities]]">
             <template is="dom-if" if="[[_showEntity(item, hass.states)]]">
               <div class="entity" on-click="_openDialog">
                 <div>[[_computeName(item, hass.states)]]</div>
@@ -77,9 +62,6 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
             </template>
           </template>
         </div>
-        <template is="dom-if" if="[[_error]]">
-          <div class="error">[[_error]]</div>
-        </template>
       </ha-card>
     `;
   }
@@ -87,12 +69,8 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
   static get properties() {
     return {
       hass: Object,
-      config: Object,
-      _entities: {
-        type: Array,
-        computed: '_computeEntities(config)'
-      },
-      _error: String
+      _config: Object,
+      _configEntities: Array,
     };
   }
 
@@ -100,37 +78,29 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
     return 3;
   }
 
-  _computeTitle(config) {
-    return config.title;
-  }
-
-  _computeEntities(config) {
-    if (config && config.entities && Array.isArray(config.entities)) {
-      this._error = null;
-      return config.entities;
-    }
-    this._error = 'Error in card configuration.';
-    return [];
+  setConfig(config) {
+    this._config = config;
+    this._configEntities = processConfigEntities(config.entities);
   }
 
   _showEntity(item, states) {
-    return item in states;
+    return item.entity in states;
   }
 
   _computeName(item, states) {
-    return computeStateName(states[item]);
+    return item.name || computeStateName(states[item.entity]);
   }
 
   _computeStateObj(item, states) {
-    return states[item];
+    return states[item.entity];
   }
 
   _computeState(item, states) {
-    return computeStateDisplay(this.localize, states[item]);
+    return computeStateDisplay(this.localize, states[item.entity]);
   }
 
   _openDialog(ev) {
-    this.fire('hass-more-info', { entityId: ev.model.item });
+    this.fire('hass-more-info', { entityId: ev.model.item.entity });
   }
 }
 
