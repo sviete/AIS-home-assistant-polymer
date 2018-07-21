@@ -5,6 +5,9 @@ import computeStateDisplay from '../../../common/entity/compute_state_display.js
 import computeStateName from '../../../common/entity/compute_state_name.js';
 import processConfigEntities from '../common/process-config-entities';
 
+import toggleEntity from '../common/entity/toggle-entity.js';
+import turnOnOffEntity from '../common/entity/turn-on-off-entity.js';
+
 import '../../../components/entity/state-badge.js';
 import '../../../components/ha-card.js';
 
@@ -26,7 +29,6 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
           padding-top: 0;
         }
         .entities {
-          padding: 4px 0;
           display: flex;
           margin-bottom: -12px;
           flex-wrap: wrap;
@@ -39,7 +41,7 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
           align-items: center;
           cursor: pointer;
           margin-bottom: 12px;
-          width: 20%;
+          width: var(--glance-column-width, 20%);
         }
         .entity div {
           width: 100%;
@@ -54,10 +56,14 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
         <div class="entities">
           <template is="dom-repeat" items="[[_configEntities]]">
             <template is="dom-if" if="[[_showEntity(item, hass.states)]]">
-              <div class="entity" on-click="_openDialog">
-                <div>[[_computeName(item, hass.states)]]</div>
+              <div class="entity" on-click="_handleClick">
+                <template is="dom-if" if="[[_showInfo(_config.show_name)]]">
+                  <div>[[_computeName(item, hass.states)]]</div>
+                </template>
                 <state-badge state-obj="[[_computeStateObj(item, hass.states)]]"></state-badge>
-                <div>[[_computeState(item, hass.states)]]</div>
+                <template is="dom-if" if="[[_showInfo(_config.show_state)]]">
+                  <div>[[_computeState(item, hass.states)]]</div>
+                </template>
               </div>
             </template>
           </template>
@@ -80,11 +86,16 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
 
   setConfig(config) {
     this._config = config;
+    this.updateStyles({ '--glance-column-width': (config && config.column_width) || '20%' });
     this._configEntities = processConfigEntities(config.entities);
   }
 
   _showEntity(item, states) {
     return item.entity in states;
+  }
+
+  _showInfo(info) {
+    return info !== false;
   }
 
   _computeName(item, states) {
@@ -99,8 +110,18 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
     return computeStateDisplay(this.localize, states[item.entity]);
   }
 
-  _openDialog(ev) {
-    this.fire('hass-more-info', { entityId: ev.model.item.entity });
+  _handleClick(ev) {
+    const entityId = ev.model.item.entity;
+    switch (ev.model.item.tap_action) {
+      case 'toggle':
+        toggleEntity(this.hass, entityId);
+        break;
+      case 'turn-on':
+        turnOnOffEntity(this.hass, entityId, true);
+        break;
+      default:
+        this.fire('hass-more-info', { entityId });
+    }
   }
 }
 

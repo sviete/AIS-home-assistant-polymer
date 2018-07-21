@@ -24,7 +24,7 @@ import '../resources/ha-style.js';
 import '../util/ha-pref-storage.js';
 import { getActiveTranslation, getTranslation } from '../util/hass-translation.js';
 import '../util/legacy-support';
-import '../util/roboto.js';
+import '../resources/roboto.js';
 import hassCallApi from '../util/hass-call-api.js';
 import makeDialogManager from '../dialogs/dialog-manager.js';
 import registerServiceWorker from '../util/register-service-worker.js';
@@ -132,7 +132,7 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
 
     const language = this.hass.selectedLanguage || this.hass.language;
 
-    const resp = await this.hass.connection.sendMessagePromise({
+    const { resources } = await this.hass.callWS({
       type: 'frontend/get_translations',
       language,
     });
@@ -140,7 +140,7 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
     // If we've switched selected languages just ignore this response
     if ((this.hass.selectedLanguage || this.hass.language) !== language) return;
 
-    this._updateResources(language, resp.result.resources);
+    this._updateResources(language, resources);
   }
 
   _updateResources(language, data) {
@@ -173,6 +173,9 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
         moreInfoEntityId: null,
         callService: null,
         callApi: null,
+        sendWS: null,
+        callWS: null,
+        user: null,
       });
       return;
     }
@@ -233,15 +236,45 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
         const host = window.location.protocol + '//' + window.location.host;
         const auth = conn.options;
         try {
+          // Refresh token if it will expire in 30 seconds
+          if (auth.accessToken && Date.now() + 30000 > auth.expires) {
+            const accessToken = await window.refreshToken();
+            conn.options.accessToken = accessToken.access_token;
+            conn.options.expires = accessToken.expires;
+          }
           return await hassCallApi(host, auth, method, path, parameters);
         } catch (err) {
           if (!err || err.status_code !== 401 || !auth.accessToken) throw err;
 
           // If we connect with access token and get 401, refresh token and try again
           const accessToken = await window.refreshToken();
-          conn.options.accessToken = accessToken;
+          conn.options.accessToken = accessToken.access_token;
+          conn.options.expires = accessToken.expires;
           return await hassCallApi(host, auth, method, path, parameters);
         }
+      },
+      // For messages that do not get a response
+      sendWS: (msg) => {
+        // eslint-disable-next-line
+        if (__DEV__) console.log('Sending', msg);
+        conn.sendMessage(msg);
+      },
+      // For messages that expect a response
+      callWS: (msg) => {
+        /* eslint-disable no-console */
+        if (__DEV__) console.log('Sending', msg);
+
+        const resp = conn.sendMessagePromise(msg);
+
+        if (__DEV__) {
+          resp.then(
+            result => console.log('Received', result),
+            err => console.log('Error', err),
+          );
+        }
+        // In the future we'll do this as a breaking change
+        // inside home-assistant-js-websocket
+        return resp.then(result => result.result);
       },
     }, this.$.storage.getStoredState());
 
@@ -288,17 +321,24 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
 
     let unsubThemes;
 
-    this.hass.connection.sendMessagePromise({
+    this.hass.callWS({
       type: 'frontend/get_themes',
-    }).then((resp) => {
-      this._updateHass({ themes: resp.result });
+    }).then((themes) => {
+      this._updateHass({ themes });
       applyThemesOnElement(
         document.documentElement,
-        resp.result,
+        themes,
         this.hass.selectedTheme,
         true
       );
     });
+
+    // only for new auth
+    if (conn.options.accessToken) {
+      this.hass.callWS({
+        type: 'auth/current_user',
+      }).then(user => this._updateHass({ user }), () => {});
+    }
 
     conn.subscribeEvents((event) => {
       this._updateHass({ themes: event.data });
@@ -390,10 +430,10 @@ class HomeAssistant extends LocalizeMixin(PolymerElement) {
   }
 
   async _loadPanels() {
-    const msg = await this.connection.sendMessagePromise({
+    const panels = await this.hass.callWS({
       type: 'get_panels'
     });
-    this._updateHass({ panels: msg.result });
+    this._updateHass({ panels });
   }
 
 

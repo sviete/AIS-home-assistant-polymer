@@ -2,8 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>AIS dom</title>
+    <meta name='viewport' content='width=device-width, user-scalable=no'>
+    <link rel='preload' href='/static/fonts/roboto/Roboto-Regular.ttf' as='font' crossorigin />
+    <link rel='preload' href='/static/fonts/roboto/Roboto-Medium.ttf' as='font' crossorigin />
+    <title>Asystent domowy</title>
     <!--EXTRA_SCRIPTS-->
+    <style>
+      body {
+        font-family: 'Roboto', 'Noto', sans-serif;
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+      }
+    </style>
   </head>
   <body>
     <ha-authorize>Loading</ha-authorize>
@@ -18,5 +32,6 @@
     }
     </script>
     <script src="/frontend_latest/authorize.js"></script>
+    <script src='/frontend_latest/hass-icons.js' async></script>
   </body>
 </html>
