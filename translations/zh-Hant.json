@@ -239,20 +239,20 @@
             }
         },
         "weather": {
-            "clear_night": "晴空、夜間",
+            "clear-night": "晴空、夜間",
             "cloudy": "多雲",
             "fog": "有霧",
             "hail": "冰雹",
             "lightning": "有雷",
-            "lightning_rainy": "有雷雨",
+            "lightning-rainy": "有雷雨",
             "partlycloudy": "局部多雲",
             "pouring": "大雨",
             "rainy": "有雨",
             "snowy": "有雪",
-            "snowy_rainy": "有雪、有雨",
+            "snowy-rainy": "有雪、有雨",
             "sunny": "晴天",
             "windy": "有風",
-            "windy_variant": "有風"
+            "windy-variant": "有風"
         }
     },
     "state_badge": {
@@ -515,6 +515,20 @@
                 "zwave": {
                     "caption": "Z-Wave",
                     "description": "管理 Z-Wave 網絡"
+                },
+                "users": {
+                    "caption": "用戶",
+                    "description": "管理用戶",
+                    "picker": {
+                        "title": "用戶"
+                    },
+                    "editor": {
+                        "rename_user": "重命名用戶",
+                        "change_password": "更改密碼",
+                        "activate_user": "激活用戶",
+                        "deactivate_user": "停用用戶",
+                        "delete_user": "刪除用戶"
+                    }
                 }
             }
         },
@@ -623,7 +637,7 @@
             },
             "lock": {
                 "code": "密碼",
-                "lock": "鎖定",
+                "lock": "鎖",
                 "unlock": "解鎖"
             }
         },
@@ -639,7 +653,14 @@
             "relative_time": {
                 "past": "{time}前",
                 "future": "{time}後",
-                "never": "未執行"
+                "never": "未執行",
+                "duration": {
+                    "second": "{count} {count, plural,\n  one {秒}\n  other {秒}\n}",
+                    "minute": "{count} {count, plural,\n  one {分鐘}\n  other {分鐘}\n}",
+                    "hour": "{count} {count, plural,\n  one {小時}\n  other {小時}\n}",
+                    "day": "{count} {count, plural,\n  one {天}\n  other {天}\n}",
+                    "week": "{count} {count, plural,\n  one {週}\n  other {週}\n}"
+                }
             },
             "history_charts": {
                 "loading_history": "正在載入狀態歷史...",

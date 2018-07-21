@@ -10,6 +10,12 @@ import EventsMixin from '../mixins/events-mixin.js';
 class HaAuthFlow extends EventsMixin(PolymerElement) {
   static get template() {
     return html`
+    <style>
+      .action {
+        margin: 32px 0;
+        text-align: center;
+      }
+    </style>
     <template is="dom-if" if="[[_equals(_state, &quot;loading&quot;)]]">
       Please wait
     </template>
@@ -26,7 +32,9 @@ class HaAuthFlow extends EventsMixin(PolymerElement) {
       <template is="dom-if" if="[[_equals(_step.type, &quot;form&quot;)]]">
         <ha-form data="{{_stepData}}" schema="[[_step.data_schema]]" error="[[_step.errors]]"></ha-form>
       </template>
-      <paper-button on-click="_handleSubmit">[[_computeSubmitCaption(_step.type)]]</paper-button>
+      <div class='action'>
+        <paper-button raised on-click="_handleSubmit">[[_computeSubmitCaption(_step.type)]]</paper-button>
+      </div>
     </template>
 `;
   }
@@ -35,7 +43,6 @@ class HaAuthFlow extends EventsMixin(PolymerElement) {
     return {
       authProvider: Object,
       clientId: String,
-      clientSecret: String,
       redirectUri: String,
       oauth2State: String,
       _state: {
@@ -49,15 +56,24 @@ class HaAuthFlow extends EventsMixin(PolymerElement) {
       _step: Object,
     };
   }
+
+  async ready() {
+    super.ready();
+
+    this.addEventListener('keypress', (ev) => {
+      if (ev.keyCode === 13) {
+        this._handleSubmit();
+      }
+    });
+  }
+
   connectedCallback() {
     super.connectedCallback();
 
     fetch('/auth/login_flow', {
       method: 'POST',
-      headers: {
-        Authorization: `Basic ${btoa(`${this.clientId}:${this.clientSecret}`)}`
-      },
       body: JSON.stringify({
+        client_id: this.clientId,
         handler: [this.authProvider.type, this.authProvider.id],
         redirect_uri: this.redirectUri,
       })
@@ -79,7 +95,7 @@ class HaAuthFlow extends EventsMixin(PolymerElement) {
   }
 
   _computeSubmitCaption(stepType) {
-    return stepType === 'form' ? 'Submit' : 'Start over';
+    return stepType === 'form' ? 'Next' : 'Start over';
   }
 
   _handleSubmit() {
@@ -89,12 +105,13 @@ class HaAuthFlow extends EventsMixin(PolymerElement) {
     }
     this._state = 'loading';
 
+    const postData = Object.assign({}, this._stepData, {
+      client_id: this.clientId,
+    });
+
     fetch(`/auth/login_flow/${this._step.flow_id}`, {
       method: 'POST',
-      headers: {
-        Authorization: `Basic ${btoa(`${this.clientId}:${this.clientSecret}`)}`
-      },
-      body: JSON.stringify(this._stepData)
+      body: JSON.stringify(postData)
     }).then((response) => {
       if (!response.ok) throw new Error();
       return response.json();

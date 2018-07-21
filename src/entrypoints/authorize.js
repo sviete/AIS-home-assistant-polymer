@@ -4,6 +4,9 @@ import '@polymer/polymer/lib/elements/dom-repeat.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
+import '../components/ha-iconset-svg.js';
+import '../resources/roboto.js';
+
 import '../auth/ha-auth-flow.js';
 import '../auth/ha-pick-auth-provider.js';
 
@@ -12,18 +15,48 @@ class HaAuthorize extends PolymerElement {
     return html`
     <style include="iron-flex iron-positioning"></style>
     <style>
-      .layout {
-        padding-top: 20px;
+      .content {
+        padding: 20px 16px;
+        max-width: 360px;
+        margin: 0 auto;
       }
+
+      .header {
+        text-align: center;
+        font-size: 1.96em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 300;
+      }
+
+      .header img {
+        margin-right: 16px;
+      }
+
     </style>
-    <div class="layout vertical center fit">
-      <img src="/static/icons/favicon-192x192.png" height="192">
+    <div class="content layout vertical fit">
+      <div class='header'>
+        <img src="/static/icons/favicon-192x192.png" height="52">
+        Home Assistant
+      </div>
+
+      <p>Logging in to <b>[[clientId]]</b>.</p>
 
       <template is="dom-if" if="[[_authProvider]]">
-        <ha-auth-flow client-id="[[clientId]]" client-secret="[[clientSecret]]" redirect-uri="[[redirectUri]]" oauth2-state="[[oauth2State]]" auth-provider="[[_authProvider]]" on-reset="_handleReset">
-      </ha-auth-flow></template>
+        <ha-auth-flow
+          client-id="[[clientId]]"
+          redirect-uri="[[redirectUri]]"
+          oauth2-state="[[oauth2State]]"
+          auth-provider="[[_authProvider]]"
+          on-reset="_handleReset"
+        ></ha-auth-flow>
+      </template>
       <template is="dom-if" if="[[!_authProvider]]">
-        <ha-pick-auth-provider client-id="[[clientId]]" client-secret="[[clientSecret]]" on-pick="_handleAuthProviderPick"></ha-pick-auth-provider>
+        <ha-pick-auth-provider
+          client-id="[[clientId]]"
+          on-pick="_handleAuthProviderPick"
+        ></ha-pick-auth-provider>
       </template>
     </div>
 `;
@@ -36,7 +69,6 @@ class HaAuthorize extends PolymerElement {
         value: null,
       },
       clientId: String,
-      clientSecret: String,
       redirectUri: String,
       oauth2State: String,
     };
@@ -53,7 +85,6 @@ class HaAuthorize extends PolymerElement {
     }
     const props = {};
     if (query.client_id) props.clientId = query.client_id;
-    if (query.client_secret) props.clientSecret = query.client_secret;
     if (query.redirect_uri) props.redirectUri = query.redirect_uri;
     if (query.state) props.oauth2State = query.state;
     this.setProperties(props);
