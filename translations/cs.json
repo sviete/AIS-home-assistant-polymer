@@ -253,6 +253,16 @@
             "sunny": "Slunečno",
             "windy": "Větrno",
             "windy-variant": "Větrno"
+        },
+        "vacuum": {
+            "cleaning": "Čistí",
+            "docked": "V stanici",
+            "error": "Chyba",
+            "idle": "Nečinný",
+            "off": "Off",
+            "on": "On",
+            "paused": "Pozastaveno",
+            "returning": "Návrat do stanice"
         }
     },
     "state_badge": {
@@ -544,8 +554,8 @@
             "day": "{count} {count, plural,\none {den}\nother {dny}\n}",
             "week": "{count} {count, plural,\none {týden}\nother {týdnů}\n}",
             "second": "{count} {count, plural,\none {vteřina}\nfew {vteřiny}\nother {vteřin}\n}",
-            "minute": "{count} {count, plural,\none {minuta}\nfew {minuty}\nother {minuty}\n}",
-            "hour": "{count} {count, plural,\none {hodina}\nfew {hodiny}\nother {hodin}\n}"
+            "minute": "{count} {count, plural,\none {minutou}\nother {minuty}\n}",
+            "hour": "{count} {count, plural,\n  one {hodinou}\n  other {hodiny}\n}"
         },
         "login-form": {
             "password": "Heslo",
@@ -639,6 +649,15 @@
                 "code": "Kód",
                 "lock": "Zamknout",
                 "unlock": "Odemknout"
+            },
+            "vacuum": {
+                "actions": {
+                    "resume_cleaning": "Pokračovat v čištění",
+                    "return_to_base": "Vrátit do stanice",
+                    "start_cleaning": "Zahájit čištění",
+                    "turn_on": "Zapnout",
+                    "turn_off": "Vypnout"
+                }
             }
         },
         "components": {
@@ -657,7 +676,7 @@
                 "duration": {
                     "second": "{count} {count, plural,\none {sekundu}\nother {sekund}\n}",
                     "minute": "{count} {count, plural,\none {minutu}\nother {minut}\n}",
-                    "hour": "{count} {count, plural,\none {hodinu}\nother {hodin}\n}",
+                    "hour": "{count} {count, plural,\none {hodinu}\nother {hodiny}\n}",
                     "day": "{count} {count, plural,\none {dnů}\nother {dnů}\n}",
                     "week": "{count} {count, plural,\none {týden}\nother {týdnů}\n}"
                 }
@@ -677,7 +696,8 @@
         "dialogs": {
             "more_info_settings": {
                 "save": "Uložit",
-                "name": "Název"
+                "name": "Název",
+                "entity_id": "Entity ID"
             }
         }
     },
@@ -716,7 +736,8 @@
         "switch": "Spínač",
         "updater": "Aktualizátor",
         "weblink": "Webový odkaz",
-        "zwave": "Z-Wave"
+        "zwave": "Z-Wave",
+        "vacuum": "Vysavač"
     },
     "attribute": {
         "weather": {

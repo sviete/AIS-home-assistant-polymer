@@ -6,10 +6,10 @@ import computeStateName from '../../../common/entity/compute_state_name.js';
 import processConfigEntities from '../common/process-config-entities';
 
 import toggleEntity from '../common/entity/toggle-entity.js';
-import turnOnOffEntity from '../common/entity/turn-on-off-entity.js';
 
 import '../../../components/entity/state-badge.js';
 import '../../../components/ha-card.js';
+import '../../../components/ha-icon.js';
 
 import EventsMixin from '../../../mixins/events-mixin.js';
 import LocalizeMixin from '../../../mixins/localize-mixin.js';
@@ -27,6 +27,10 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
         }
         ha-card[header] {
           padding-top: 0;
+        }
+        ha-icon {
+          padding: 8px;
+          color: var(--paper-item-icon-color);
         }
         .entities {
           display: flex;
@@ -50,6 +54,9 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
           overflow: hidden;
           text-overflow: ellipsis;
         }
+        .name {
+          min-height: var(--paper-font-body1_-_line-height, 20px);
+        }
       </style>
 
       <ha-card header$="[[_config.title]]">
@@ -58,9 +65,14 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
             <template is="dom-if" if="[[_showEntity(item, hass.states)]]">
               <div class="entity" on-click="_handleClick">
                 <template is="dom-if" if="[[_showInfo(_config.show_name)]]">
-                  <div>[[_computeName(item, hass.states)]]</div>
+                  <div class="name">[[_computeName(item, hass.states)]]</div>
                 </template>
-                <state-badge state-obj="[[_computeStateObj(item, hass.states)]]"></state-badge>
+                <template is="dom-if" if="[[!item.icon]]">
+                  <state-badge state-obj="[[_computeStateObj(item, hass.states)]]"></state-badge>
+                </template>
+                <template is="dom-if" if="[[item.icon]]">
+                  <ha-icon icon="[[item.icon]]"></ha-icon>
+                </template>
                 <template is="dom-if" if="[[_showInfo(_config.show_state)]]">
                   <div>[[_computeState(item, hass.states)]]</div>
                 </template>
@@ -99,7 +111,7 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
   }
 
   _computeName(item, states) {
-    return item.name || computeStateName(states[item.entity]);
+    return 'name' in item ? item.name : computeStateName(states[item.entity]);
   }
 
   _computeStateObj(item, states) {
@@ -111,14 +123,21 @@ class HuiGlanceCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
   }
 
   _handleClick(ev) {
-    const entityId = ev.model.item.entity;
-    switch (ev.model.item.tap_action) {
+    const config = ev.model.item;
+    const entityId = config.entity;
+    switch (config.tap_action) {
       case 'toggle':
         toggleEntity(this.hass, entityId);
         break;
-      case 'turn-on':
-        turnOnOffEntity(this.hass, entityId, true);
+      case 'call-service': {
+        const [domain, service] = config.service.split('.', 2);
+        const serviceData = Object.assign(
+          {}, { entity_id: entityId },
+          config.service_data
+        );
+        this.hass.callService(domain, service, serviceData);
         break;
+      }
       default:
         this.fire('hass-more-info', { entityId });
     }

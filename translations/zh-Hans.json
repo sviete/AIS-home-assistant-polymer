@@ -253,6 +253,16 @@
             "sunny": "晴",
             "windy": "有风",
             "windy-variant": "有风"
+        },
+        "vacuum": {
+            "cleaning": "正在清扫",
+            "docked": "停靠",
+            "error": "错误",
+            "idle": "空闲",
+            "off": "关闭",
+            "on": "开启",
+            "paused": "已暂停",
+            "returning": "正在返回"
         }
     },
     "state_badge": {
@@ -639,6 +649,15 @@
                 "code": "密码",
                 "lock": "锁定",
                 "unlock": "解锁"
+            },
+            "vacuum": {
+                "actions": {
+                    "resume_cleaning": "恢复清扫",
+                    "return_to_base": "返回底座",
+                    "start_cleaning": "开始清扫",
+                    "turn_on": "打开",
+                    "turn_off": "关闭"
+                }
             }
         },
         "components": {
@@ -677,7 +696,8 @@
         "dialogs": {
             "more_info_settings": {
                 "save": "保存",
-                "name": "名称"
+                "name": "名称",
+                "entity_id": "设备\/实体 ID"
             }
         }
     },
@@ -716,7 +736,8 @@
         "switch": "开关",
         "updater": "更新提示",
         "weblink": "网址",
-        "zwave": "Z-Wave"
+        "zwave": "Z-Wave",
+        "vacuum": "扫地机"
     },
     "attribute": {
         "weather": {
