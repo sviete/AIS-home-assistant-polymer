@@ -20,6 +20,7 @@ export const DOMAINS_WITH_CARD = [
   'scene',
   'script',
   'timer',
+  'vacuum',
   'weblink',
 ];
 
@@ -68,6 +69,14 @@ export const STATES_OFF = [
   'locked',
   'off'
 ];
+
+/** Domains where we allow toggle in Lovelace. */
+export const DOMAINS_TOGGLE = new Set([
+  'fan',
+  'input_boolean',
+  'light',
+  'switch'
+]);
 
 /** Temperature units. */
 export const UNIT_C = '°C';

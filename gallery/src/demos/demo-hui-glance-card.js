@@ -95,12 +95,13 @@ const CONFIGS = [
     `
   },
   {
-    heading: 'Custom name',
+    heading: 'Custom name, custom icon',
     config: `
 - type: glance
   entities:
     - entity: device_tracker.demo_paulus
       name: ¯\\_(ツ)_/¯
+      icon: mdi:home-assistant
     - media_player.living_room
     - sun.sun
     - cover.kitchen_window
@@ -117,11 +118,26 @@ const CONFIGS = [
     - entity: lock.kitchen_door
       tap_action: toggle
     - entity: light.ceiling_lights
-      tap_action: turn-on
+      tap_action: call-service
+      service: light.turn_on
     - device_tracker.demo_paulus
     - media_player.living_room
     - sun.sun
     - cover.kitchen_window
+    - light.kitchen_lights
+    `
+  },
+  {
+    heading: 'Selectively hidden name',
+    config: `
+- type: glance
+  entities:
+    - device_tracker.demo_paulus
+    - entity: media_player.living_room
+      name:
+    - sun.sun
+    - entity: cover.kitchen_window
+      name:
     - light.kitchen_lights
     `
   },
