@@ -338,21 +338,6 @@
                                 "restart": "Ponovni zagon",
                                 "stop": "Ustavi"
                             }
-                        },
-                        "push_notifications": {
-                            "header": "Nastavite push obvestila",
-                            "introduction": "To nastavitev omogočite za prejemanje potisnih obvestil v tej napravi",
-                            "push_notifications": "Push obvestila"
-                        },
-                        "translation": {
-                            "header": "Izberite jezik",
-                            "introduction": "Izberite jezik za Home Assistenta na tej napravi",
-                            "language": "Jezik"
-                        },
-                        "themes": {
-                            "header": "Nastavi temo",
-                            "introduction": "Izberite \"Backend-selected\", da uporabite samodejno izbrano temo ali izberite temo za to napravo",
-                            "theme": "Tema"
                         }
                     }
                 },
@@ -540,6 +525,27 @@
                         "delete_user": "Izbriši uporabnika"
                     }
                 }
+            },
+            "profile": {
+                "push_notifications": {
+                    "header": "Push obvestila",
+                    "description": "Prikazuj obvestila na tej napravi",
+                    "error_load_platform": "Konfiguriraj notify.html5 (push obvestila).",
+                    "error_use_https": "Zahteva SSL za Frontend.",
+                    "push_notifications": "Push obvestila",
+                    "link_promo": "Preberite več"
+                },
+                "language": {
+                    "header": "Jezik",
+                    "link_promo": "Pomagajte pri prevodu",
+                    "dropdown_label": "Jezik"
+                },
+                "themes": {
+                    "header": "Tema",
+                    "error_no_theme": "Teme niso na voljo.",
+                    "link_promo": "Preberite več o temah",
+                    "dropdown_label": "Tema"
+                }
             }
         },
         "sidebar": {
@@ -675,7 +681,7 @@
                 "never": "Nikoli",
                 "duration": {
                     "second": "{count} {count, plural,\none {sekunda}\nother {sekund}\n}",
-                    "minute": "{count} {count, plural,\n  ena {minuta}\n  other {minut}\n}",
+                    "minute": "{count} {count, plural,\n  one {minuta}\n  other {minut}\n}",
                     "hour": "{count} {count, plural,\n  one {Ura}\n  other {Ur}\n}",
                     "day": "{count} {count, plural,\none {Dan}\nother {Dni}\n}",
                     "week": "{count} {count, plural,\none {Teden}\nother {Tednov}\n}"

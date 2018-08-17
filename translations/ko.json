@@ -338,21 +338,6 @@
                                 "restart": "재시작",
                                 "stop": "중지"
                             }
-                        },
-                        "push_notifications": {
-                            "header": "푸시 알림 설정",
-                            "introduction": "이 장치에서 푸시 알림을 받으려면 이 항목을 활성화 합니다",
-                            "push_notifications": "푸시 알림"
-                        },
-                        "translation": {
-                            "header": "언어 선택",
-                            "introduction": "이 장치의 Home Assistant 인터페이스 언어를 선택합니다",
-                            "language": "언어"
-                        },
-                        "themes": {
-                            "header": "테마 설정",
-                            "introduction": "백엔드에서 선택한 테마를 사용하거나 이 장치의 테마를 선택하려면 '백엔드-선택'을 선택합니다",
-                            "theme": "테마"
                         }
                     }
                 },
@@ -540,6 +525,27 @@
                         "delete_user": "사용자 삭제"
                     }
                 }
+            },
+            "profile": {
+                "push_notifications": {
+                    "header": "푸시 알림",
+                    "description": "이 기기에 알림 보내기",
+                    "error_load_platform": "notify.html5 를 구성해주세요.",
+                    "error_use_https": "프론트 엔드에는 SSL 사용이 필요합니다.",
+                    "push_notifications": "푸시 알림",
+                    "link_promo": "더 알아보기"
+                },
+                "language": {
+                    "header": "언어",
+                    "link_promo": "번역 도와주기",
+                    "dropdown_label": "언어"
+                },
+                "themes": {
+                    "header": "테마",
+                    "error_no_theme": "사용할 수 있는 테마가 없습니다.",
+                    "link_promo": "테마에 대해 알아보기",
+                    "dropdown_label": "테마"
+                }
             }
         },
         "sidebar": {
@@ -699,6 +705,11 @@
                 "name": "이름",
                 "entity_id": "구성요소 ID"
             }
+        },
+        "auth_store": {
+            "ask": "현재 로그인을 저장 하시겠습니까?",
+            "decline": "아니요, 괜찮습니다",
+            "confirm": "저장해주세요"
         }
     },
     "domain": {
