@@ -338,21 +338,6 @@
                                 "restart": "Reiniciar",
                                 "stop": "Aturar"
                             }
-                        },
-                        "push_notifications": {
-                            "header": "Configurar notificacions push",
-                            "introduction": "Habiliteu aquesta opció per rebre notificacions push en aquest dispositiu",
-                            "push_notifications": "Notificacions push"
-                        },
-                        "translation": {
-                            "header": "Triar una llengua",
-                            "introduction": "Trieu una llengua per a la interfície de Home Assistant en aquest dispositiu",
-                            "language": "Llengua"
-                        },
-                        "themes": {
-                            "header": "Estableix un tema",
-                            "introduction": "Trieu 'Backend-selected' per utilitzar el tema per defecte o trieu un tema desitjat per a aquest dispositiu",
-                            "theme": "Tema"
                         }
                     }
                 },
@@ -540,6 +525,27 @@
                         "delete_user": "Eliminar usuari"
                     }
                 }
+            },
+            "profile": {
+                "push_notifications": {
+                    "header": "Notificacions push",
+                    "description": "Envia notificacions a aquest dispositiu",
+                    "error_load_platform": "Configurar notify.html5.",
+                    "error_use_https": "Requereix tenir SSL habilitat a la interfície (frontend).",
+                    "push_notifications": "Notificacions push",
+                    "link_promo": "Més informació"
+                },
+                "language": {
+                    "header": "Idioma",
+                    "link_promo": "Ajuda a traduir",
+                    "dropdown_label": "Idioma"
+                },
+                "themes": {
+                    "header": "Tema",
+                    "error_no_theme": "No hi ha temes disponibles.",
+                    "link_promo": "Més informació sobre temes",
+                    "dropdown_label": "Tema"
+                }
             }
         },
         "sidebar": {
@@ -699,6 +705,11 @@
                 "name": "Nom",
                 "entity_id": "ID de l'entitat"
             }
+        },
+        "auth_store": {
+            "ask": "Voleu desar aquest inici de sessió?",
+            "decline": "No, gràcies",
+            "confirm": "Desar inici de sessió"
         }
     },
     "domain": {

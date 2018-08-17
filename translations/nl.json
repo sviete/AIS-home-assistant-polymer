@@ -338,21 +338,6 @@
                                 "restart": "Herstarten",
                                 "stop": "Stop"
                             }
-                        },
-                        "push_notifications": {
-                            "header": "Configureer pushmeldingen",
-                            "introduction": "Schakel deze instelling in om pushmeldingen op dit apparaat te ontvangen",
-                            "push_notifications": "Pushmeldingen"
-                        },
-                        "translation": {
-                            "header": "Kies een taal",
-                            "introduction": "Kies een taal voor de Home Assistant interface op dit apparaat",
-                            "language": "Taal"
-                        },
-                        "themes": {
-                            "header": "Stel een thema in",
-                            "introduction": "Kies 'gekozen in beheeromgeving' om het thema te gebruiken dat is gekozen in de beheeromgeving of kies een thema voor dit apparaat",
-                            "theme": "Thema"
                         }
                     }
                 },
@@ -675,7 +660,7 @@
                 "never": "Nooit",
                 "duration": {
                     "second": "{count} {count, plural,\none {seconde}\nother {seconden}\n}",
-                    "minute": "{count} {count, plural,\néén {minuut}\nandere {minuten}\n}",
+                    "minute": "{count} {count, plural,\none {minuut}\nother {minuten}\n}",
                     "hour": "{count} {count, plural,\none {uur}\nother {uur}\n}",
                     "day": "{count} {count, plural,\none {dag}\nother {dagen}\n}",
                     "week": "{count} {count, plural,\none {week}\nother {weken}\n}"

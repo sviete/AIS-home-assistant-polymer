@@ -338,21 +338,6 @@
                                 "restart": "Repornire",
                                 "stop": "Oprire"
                             }
-                        },
-                        "push_notifications": {
-                            "header": "Configurați notificările push",
-                            "introduction": "Activați această setare pentru a primi notificări push pe acest dispozitiv",
-                            "push_notifications": "Notificări push"
-                        },
-                        "translation": {
-                            "header": "Alegeți o limbă",
-                            "introduction": "Alegeți limba pentru interfața Home Assistant de pe acest dispozitiv",
-                            "language": "Limba"
-                        },
-                        "themes": {
-                            "header": "Setați o temă",
-                            "introduction": "Alegeți \"Backend-selected\" pentru a utiliza orice temă pe care o alege opțiunea de backend sau alegeți o temă pentru acest dispozitiv",
-                            "theme": "Temă"
                         }
                     }
                 },
@@ -674,8 +659,8 @@
                 "future": "În {time}",
                 "never": "Niciodată",
                 "duration": {
-                    "second": "{count} {count, plural,\no {second}\nalta {seconds}\n}",
-                    "minute": "{count}{count, plural,\n  un { minute }\n  alte { minutes }\n}",
+                    "second": "{count} {count, plural,\none {secunda}\nother {secunde}\n}",
+                    "minute": "{count} {count, plural,\n  one { minut }\n  other { minute }\n}",
                     "hour": "{count}{count, plural,\n  one { zi }\n  other { zile }\n}",
                     "day": "{count}{count, plural,\n  one { zi }\n  other { zile }\n}",
                     "week": "{count}{count, plural,\n  one { săptămână }\n  other { săptămâni }\n}"
