@@ -19,9 +19,9 @@
 		  <state-info state-obj="[[stateObj]]"></state-info>
 		  <paper-button-group>
 		      <paper-button style="[[btnOffstyle]]" on-click='handleOffTap'>Wył</paper-button>
-		      <paper-button style="[[btnLowstyle]]" on-click='handleLowTap'>Woln</paper-button>
-		      <paper-button style="[[btnMedstyle]]" on-click='handleMedTap'>Śred</paper-button>
-		      <paper-button style="[[btnHighstyle]]" on-click='handleHighTap'>Mocn</paper-button>
+		      <paper-button style="[[btnLowstyle]]" on-click='handleLowTap'>Wol</paper-button>
+		      <paper-button style="[[btnMedstyle]]" on-click='handleMedTap'>Śre</paper-button>
+		      <paper-button style="[[btnHighstyle]]" on-click='handleHighTap'>Szy</paper-button>
 		  </paper-button-group>
 		</div>
 </template>
@@ -60,34 +60,36 @@
           },
           stateObjChanged: function (newVal) {
             if (newVal) {
-              if (newVal.attributes.speed == 'off') {
+              if (newVal.state == 'off') {
                 this.statusValue = 'off';
                 this.btnOffstyle = 'background-color: #ff9800;';
                 this.btnLowstyle = '';
                 this.btnMedstyle = '';
                 this.btnHighstyle = '';
                 this.updateStyles({'--status-text-color': 'gray'});
-              } else if (newVal.attributes.speed == 'low') {
-                this.statusValue = 'low';
-                this.btnOffstyle = '';
-                this.btnLowstyle = 'background-color: #ff9800;';
-                this.btnMedstyle = '';
-                this.btnHighstyle = '';
-                this.updateStyles({'--status-text-color': 'blue'});
-              } else if (newVal.attributes.speed == 'medium') {
-                this.statusValue = 'medium';
-                this.btnOffstyle = '';
-                this.btnLowstyle = '';
-                this.btnMedstyle = 'background-color: #ff9800;';
-                this.btnHighstyle = '';
-                this.updateStyles({'--status-text-color': 'yellow'});
-              } else if (newVal.attributes.speed == 'high') {
-                this.statusValue = 'high';
-                this.btnOffstyle = '';
-                this.btnLowstyle = '';
-                this.btnMedstyle = '';
-                this.btnHighstyle = 'background-color: #ff9800;';
-                this.updateStyles({'--status-text-color': 'red'});
+              } else {
+                if (newVal.attributes.speed == 'low') {
+                  this.statusValue = 'low';
+                  this.btnOffstyle = '';
+                  this.btnLowstyle = 'background-color: #ff9800;';
+                  this.btnMedstyle = '';
+                  this.btnHighstyle = '';
+                  this.updateStyles({'--status-text-color': 'blue'});
+                } else if (newVal.attributes.speed == 'medium') {
+                  this.statusValue = 'medium';
+                  this.btnOffstyle = '';
+                  this.btnLowstyle = '';
+                  this.btnMedstyle = 'background-color: #ff9800;';
+                  this.btnHighstyle = '';
+                  this.updateStyles({'--status-text-color': 'yellow'});
+                } else if (newVal.attributes.speed == 'high') {
+                  this.statusValue = 'high';
+                  this.btnOffstyle = '';
+                  this.btnLowstyle = '';
+                  this.btnMedstyle = '';
+                  this.btnHighstyle = 'background-color: #ff9800;';
+                  this.updateStyles({'--status-text-color': 'red'});
+                }
               }
             }
           },
