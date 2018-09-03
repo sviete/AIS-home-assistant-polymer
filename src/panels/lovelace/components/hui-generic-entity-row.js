@@ -17,11 +17,14 @@ class HuiGenericEntityRow extends PolymerElement {
         }
         .flex {
           flex: 1;
-          overflow: hidden;
           margin-left: 16px;
           display: flex;
           justify-content: space-between;
           align-items: center;
+          min-width: 0;
+        }
+        .info {
+          flex: 1 0 60px;
         }
         .info,
         .info > * {
@@ -31,29 +34,27 @@ class HuiGenericEntityRow extends PolymerElement {
         }
         .flex ::slotted(*) {
           margin-left: 8px;
+          min-width: 0;
         }
         .secondary,
         ha-relative-time {
           display: block;
           color: var(--secondary-text-color);
         }
-        ha-icon {
-          padding: 8px;
-          color: var(--paper-item-icon-color);
-        }
         .not-found {
           flex: 1;
           background-color: yellow;
           padding: 8px;
         }
+        state-badge {
+          flex: 0 0 40px;
+        }
       </style>
       <template is="dom-if" if="[[_stateObj]]">
-        <template is="dom-if" if="[[!config.icon]]">
-          <state-badge state-obj="[[_stateObj]]"></state-badge>
-        </template>
-        <template is="dom-if" if="[[config.icon]]">
-          <ha-icon icon="[[config.icon]]"></ha-icon>
-        </template>
+        <state-badge
+          state-obj="[[_stateObj]]"
+          override-icon="[[config.icon]]"
+        ></state-badge>
         <div class="flex">
           <div class="info">
             [[_computeName(config.name, _stateObj)]]

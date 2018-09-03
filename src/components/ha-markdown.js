@@ -3,6 +3,12 @@ import EventsMixin from '../mixins/events-mixin.js';
 
 let loaded = null;
 
+/**
+ * White list allowed svg tag.
+ * Only put in the tag used in QR code, can be extend in future.
+ */
+const svgWhiteList = ['svg', 'path'];
+
 /*
  * @appliesMixin EventsMixin
  */
@@ -12,7 +18,11 @@ class HaMarkdown extends EventsMixin(PolymerElement) {
       content: {
         type: String,
         observer: '_render',
-      }
+      },
+      allowSvg: {
+        type: Boolean,
+        value: false,
+      },
     };
   }
 
@@ -50,7 +60,11 @@ class HaMarkdown extends EventsMixin(PolymerElement) {
           gfm: true,
           tables: true,
           breaks: true
-        }));
+        }), {
+          onIgnoreTag: this.allowSvg
+            ? (tag, html) => (svgWhiteList.indexOf(tag) >= 0 ? html : null)
+            : null
+        });
         this._resize();
 
         const walker = document.createTreeWalker(this, 1 /* SHOW_ELEMENT */, null, false);

@@ -17,14 +17,14 @@ const VERSION = version[0];
 const generateJSPage = (entrypoint, latestBuild) => {
   return new HtmlWebpackPlugin({
     inject: false,
-    template: './src/html/extra_page.html.template',
+    template: `./src/html/${entrypoint}.html.template`,
     // Default templateParameterGenerator code
     // https://github.com/jantimon/html-webpack-plugin/blob/master/index.js#L719
     templateParameters: (compilation, assets, option) => ({
       latestBuild,
-      tag: `ha-${entrypoint}`,
       compatibility: assets.chunks.compatibility.entry,
       entrypoint: assets.chunks[entrypoint].entry,
+      hassIconsJS: assets.chunks['hass-icons'].entry,
     }),
     filename: `${entrypoint}.html`,
   });
@@ -96,12 +96,11 @@ function createConfig(isProdBuild, latestBuild) {
         __DEV__: JSON.stringify(!isProdBuild),
         __BUILD__: JSON.stringify(latestBuild ? 'latest' : 'es5'),
         __VERSION__: JSON.stringify(VERSION),
-        __PUBLIC_PATH__: JSON.stringify(publicPath),
+        __STATIC_PATH__: '/static/',
         'process.env.NODE_ENV': JSON.stringify(isProdBuild ? 'production' : 'development'),
       }),
       new CopyWebpackPlugin([
-        // Leave here until Hass.io no longer references the ES5 build.
-        'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
+        latestBuild && 'node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
         latestBuild && { from: 'public', to: '.' },
         latestBuild && { from: 'build-translations/output', to: `translations` },
         latestBuild && { from: 'node_modules/@polymer/font-roboto-local/fonts', to: 'fonts' },

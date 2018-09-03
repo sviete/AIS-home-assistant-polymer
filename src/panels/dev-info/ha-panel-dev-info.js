@@ -126,7 +126,6 @@ class HaPanelDevInfo extends PolymerElement {
           </p>
           <p>
             Konfiguracja: [[hass.config.core.config_dir]]
-          </p>
           <p>
             licencja Apache 2.0<br />
             Zródła:

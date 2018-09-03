@@ -312,11 +312,11 @@
                 "introduction": "Her er det mulig å konfigurere dine komponenter og Home Assistant. Ikke alt er mulig å konfigurere fra brukergrensesnittet enda, men vi jobber med det.",
                 "core": {
                     "caption": "Generelt",
-                    "description": "Validere konfigurasjonsfilen din og kontroller serveren",
+                    "description": "Valider konfigurasjonsfilen din og kontroller serveren",
                     "section": {
                         "core": {
                             "header": "Konfigurasjon og serverkontroll",
-                            "introduction": "Endringer i konfigurasjonen kan være en slitsom prosess, vi vet det. Denne delen vil forsøke å gjøre livet ditt litt lettere.",
+                            "introduction": "Endring av konfigurasjonen kan være en slitsom prosess, det vet vi. Denne delen vil forsøke å gjøre livet ditt litt lettere.",
                             "validation": {
                                 "heading": "Konfigurasjonsvalidering",
                                 "introduction": "Sjekk konfigurasjon din hvis du nylig har gjort noen endringer og ønsker å være sikker på at den er gyldig ved å kjøre en valideringstest",
@@ -334,7 +334,7 @@
                             },
                             "server_management": {
                                 "heading": "Serveradministrasjon",
-                                "introduction": "Kontroller Home Assistant fra Home Assistant.",
+                                "introduction": "Kontroller din Home Assistant server...fra Home Assistant.",
                                 "restart": "Start på nytt",
                                 "stop": "Stopp"
                             }
@@ -359,7 +359,7 @@
                         "introduction": "Bruk automatiseringer for å få liv i hjemmet ditt",
                         "default_name": "Ny automatisering",
                         "save": "Lagre",
-                        "unsaved_confirm": "Du har ulagrede endringer. Er du sikker på at du vil forlate?",
+                        "unsaved_confirm": "Du har endringer som ikke er lagret. Er du sikker på at du vil forlate?",
                         "alias": "Navn",
                         "triggers": {
                             "header": "Utløsere",
@@ -546,6 +546,95 @@
                     "link_promo": "Lær om temaer",
                     "dropdown_label": "Tema"
                 }
+            },
+            "page-authorize": {
+                "initializing": "Initialiserer",
+                "authorizing_client": "Du er i ferd med å gi {clientId} tilgang til din Home Assistant",
+                "logging_in_with": "Logg inn med ** {authProviderName} **.",
+                "pick_auth_provider": "Eller logg inn med",
+                "abort_intro": "Innlogging avbrutt",
+                "form": {
+                    "working": "Vennligst vent",
+                    "unknown_error": "Noe gikk galt",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Brukernavn",
+                                        "password": "Passord"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "To-faktor autentiseringskode"
+                                    },
+                                    "description": "Åpne ** {mfa_module_name} ** på enheten din for å se din tofaktors autentiseringskode og bekrefte identiteten din:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Ugyldig brukernavn eller passord",
+                                "invalid_code": "Ugyldig autentiseringskode"
+                            },
+                            "abort": {
+                                "login_expired": "Økten er utløpt, vennligst logg inn på nytt"
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "API-passord"
+                                    },
+                                    "description": "Vennligst skriv inn API-passordet i http-konfigurasjonen din:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "To-faktor autentiseringskode"
+                                    },
+                                    "description": "Åpne **{mfa_module_name}** på din enhet for å vise to-faktor autentiseringkode og vertifiser din identitet."
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Ugyldig API-passord",
+                                "invalid_code": "Ugyldig autentiseringskode"
+                            },
+                            "abort": {
+                                "no_api_password_set": "Du har ikke konfigurert et API-passord.",
+                                "login_expired": "Sesjonen har utløpt, vennligst logg inn igjen: "
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Bruker"
+                                    },
+                                    "description": "Vennligst velg en bruker du vil logge inn som:"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "Datamaskinen din er ikke hvitlistet."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Er du klar til å vekke hjemmet ditt, gjenvinne ditt privatliv og bli med i et verdensomspennende samfunn av tinkerers?",
+                "user": {
+                    "intro": "La oss begynne med å opprette en brukerkonto.",
+                    "required_field": "Kreves",
+                    "data": {
+                        "name": "Navn",
+                        "username": "Brukernavn",
+                        "password": "Passord"
+                    },
+                    "create_account": "Opprett konto",
+                    "error": {
+                        "required_fields": "Fyll ut alle nødvendige felt"
+                    }
+                }
             }
         },
         "sidebar": {
@@ -654,7 +743,7 @@
             "lock": {
                 "code": "Kode",
                 "lock": "Lås",
-                "unlock": "Låse opp"
+                "unlock": "Lås opp"
             },
             "vacuum": {
                 "actions": {
@@ -689,7 +778,7 @@
             },
             "history_charts": {
                 "loading_history": "Laster statushistorikk...",
-                "no_history_found": "Ingen status history funnet."
+                "no_history_found": "Ingen statushistorikk funnet."
             }
         },
         "notification_toast": {
@@ -710,6 +799,11 @@
             "ask": "Ønsker du å lagre denne påloggingen?",
             "decline": "Nei takk",
             "confirm": "Lagre pålogging"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Klikk på knappen for å konfigurere {entity}",
+            "empty": "Ingen varsler",
+            "title": "Varsler"
         }
     },
     "domain": {
@@ -746,7 +840,7 @@
         "sun": "Sol",
         "switch": "Bryter",
         "updater": "Oppdateringer",
-        "weblink": "Nettlink",
+        "weblink": "Lenke",
         "zwave": "Z-Wave",
         "vacuum": "Støvsuger"
     },

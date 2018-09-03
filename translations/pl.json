@@ -350,7 +350,7 @@
                     "description": "Twórz i edytuj automatyzacje",
                     "picker": {
                         "header": "Edytor automatyzacji",
-                        "introduction": "Edytor automatyzacji pozwala tworzyć i edytować automatyzację. Przeczytaj [instrukcje] (https:\/\/home-assistant.io\/docs\/automation\/editor\/), aby upewnić się, że poprawnie skonfigurowałeś Home Assistant.",
+                        "introduction": "Edytor automatyzacji pozwala tworzyć i edytować automatyzację. Przeczytaj [instrukcje](https:\/\/home-assistant.io\/docs\/automation\/editor\/), aby upewnić się, że poprawnie skonfigurowałeś Home Assistant.",
                         "pick_automation": "Wybierz automatyzację do edycji",
                         "no_automations": "Nie znaleziono żadnych edytowalnych automatyzacji",
                         "add_automation": "Dodaj automatyzację"
@@ -363,7 +363,7 @@
                         "alias": "Nazwa",
                         "triggers": {
                             "header": "Wyzwalacze",
-                            "introduction": "Wyzwalacze uruchamiają przetwarzanie reguły automatyzacji. Możliwe jest określenie wielu wyzwalaczy dla tej samej reguły. Po uruchomieniu wyzwalacza Home Assistant potwierdzi ewentualne warunki i wywoła akcję. \n\n [Dowiedz się więcej o wyzwalaczach.] (Https:\/\/home-assistant.io\/docs\/automation\/trigger\/)",
+                            "introduction": "Wyzwalacze uruchamiają przetwarzanie reguły automatyzacji. Możliwe jest określenie wielu wyzwalaczy dla tej samej reguły. Po uruchomieniu wyzwalacza Home Assistant potwierdzi ewentualne warunki i wywoła akcję. \n\n[Dowiedz się więcej o wyzwalaczach.](Https:\/\/home-assistant.io\/docs\/automation\/trigger\/)",
                             "add": "Dodaj wyzwalacz",
                             "duplicate": "Duplikuj",
                             "delete": "Usuń",
@@ -425,7 +425,7 @@
                         },
                         "conditions": {
                             "header": "Warunki",
-                            "introduction": "Warunki są opcjonalną częścią reguły automatyzacji i można ich użyć, aby zapobiec działaniom po uruchomieniu. Warunki wyglądają bardzo podobnie do wyzwalaczy, ale są bardzo różne. Wyzwalacz będzie analizował zdarzenia zachodzące w systemie, a warunek będzie dotyczył tylko tego, jak wygląda teraz system. Wyzwalacz może zaobserwować, że przełącznik jest włączony. Warunek może tylko sprawdzić, czy przełącznik jest aktualnie włączony lub wyłączony. \n\n [Dowiedz się więcej o warunkach.] (Https:\/\/home-assistant.io\/docs\/scripts\/conditions\/)",
+                            "introduction": "Warunki są opcjonalną częścią reguły automatyzacji i można ich użyć, aby zapobiec działaniom po uruchomieniu. Warunki wyglądają bardzo podobnie do wyzwalaczy, ale są bardzo różne. Wyzwalacz będzie analizował zdarzenia zachodzące w systemie, a warunek będzie dotyczył tylko tego, jak wygląda teraz system. Wyzwalacz może zaobserwować, że przełącznik jest włączony. Warunek może tylko sprawdzić, czy przełącznik jest aktualnie włączony lub wyłączony. \n\n[Dowiedz się więcej o warunkach.](Https:\/\/home-assistant.io\/docs\/scripts\/conditions\/)",
                             "add": "Dodaj warunek",
                             "duplicate": "Duplikuj",
                             "delete": "Usuń",
@@ -470,7 +470,7 @@
                         },
                         "actions": {
                             "header": "Akcje",
-                            "introduction": "Akcje są wykonywane przez Home Assistant po uruchomieniu automatyki. \n\n [Dowiedz się więcej o akcjach.] (Https:\/\/home-assistant.io\/docs\/automation\/action\/)",
+                            "introduction": "Akcje są wykonywane przez Home Assistant po uruchomieniu automatyki. \n\n[Dowiedz się więcej o akcjach.](Https:\/\/home-assistant.io\/docs\/automation\/action\/)",
                             "add": "Dodaj akcję",
                             "duplicate": "Duplikuj",
                             "delete": "Usuń",
@@ -504,7 +504,7 @@
                     }
                 },
                 "script": {
-                    "caption": "Skrypt",
+                    "caption": "Skrypty",
                     "description": "Twórz i edytuj skrypty"
                 },
                 "zwave": {
@@ -523,6 +523,116 @@
                         "activate_user": "Aktywuj użytkownika",
                         "deactivate_user": "Dezaktywuj użytkownika",
                         "delete_user": "Usuń użytkownika"
+                    }
+                }
+            },
+            "profile": {
+                "push_notifications": {
+                    "header": "Powiadomienia push",
+                    "description": "Wysyłaj powiadomienia na to urządzenie",
+                    "error_load_platform": "Skonfiguruj notify.html5.",
+                    "error_use_https": "Wymagany protokół SSL dla interfejsu użytkownika.",
+                    "push_notifications": "Powiadomienia push",
+                    "link_promo": "Dowiedz się więcej"
+                },
+                "language": {
+                    "header": "Język",
+                    "link_promo": "Pomóż w tłumaczeniu",
+                    "dropdown_label": "Język"
+                },
+                "themes": {
+                    "header": "Motyw",
+                    "error_no_theme": "Brak dostępnych motywów.",
+                    "link_promo": "Dowiedz się więcej o motywch",
+                    "dropdown_label": "Motyw"
+                }
+            },
+            "page-authorize": {
+                "initializing": "Inicjowanie",
+                "authorizing_client": "Czy na pewno chcesz dać dostęp {clientId} do Twojej instancji Home Assistant.",
+                "logging_in_with": "Logowanie za pomocą ** {authProviderName} **.",
+                "pick_auth_provider": "Lub zaloguj się za pomocą",
+                "abort_intro": "Logowanie przerwane",
+                "form": {
+                    "working": "Proszę czekać",
+                    "unknown_error": "Coś poszło nie tak",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Nazwa użytkownika",
+                                        "password": "Hasło"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Dwuskładnikowy kod uwierzytelniający"
+                                    },
+                                    "description": "Otwórz ** {mfa_module_name} ** na urządzeniu, aby wyświetlić dwuskładnikowy kod uwierzytelniający i zweryfikować swoją tożsamość:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Nieprawidłowa nazwa użytkownika lub hasło",
+                                "invalid_code": "Nieprawidłowy kod uwierzytelniający"
+                            },
+                            "abort": {
+                                "login_expired": "Sesja wygasła, zaloguj się ponownie."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "Hasło API"
+                                    },
+                                    "description": "Proszę wprowadzić hasło API w Twoim configu http:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Dwuskładnikowy kod uwierzytelniający"
+                                    },
+                                    "description": "Otwórz ** {mfa_module_name} ** na urządzeniu, aby wyświetlić dwuskładnikowy kod uwierzytelniający i zweryfikować swoją tożsamość:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Nieprawidłowe hasło API",
+                                "invalid_code": "Nieprawidłowy kod uwierzytelniający"
+                            },
+                            "abort": {
+                                "no_api_password_set": "Nie masz skonfigurowanego hasła interfejsu API.",
+                                "login_expired": "Sesja wygasła, zaloguj się ponownie."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Użytkownik"
+                                    },
+                                    "description": "Proszę wybrać użytkownika, na którego chcesz się zalogować jako:"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "Twój komputer nie znajduje się na białej liście."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Czy jesteś gotowy, aby obudzić swój dom, odzyskać prywatność i dołączyć do światowej społeczności majsterkowiczów?",
+                "user": {
+                    "intro": "Zacznijmy od utworzenia konta użytkownika.",
+                    "required_field": "Wymagane",
+                    "data": {
+                        "name": "Imię",
+                        "username": "Nazwa użytkownika",
+                        "password": "Hasło"
+                    },
+                    "create_account": "Utwórz konto",
+                    "error": {
+                        "required_fields": "Wypełnij wszystkie wymagane pola"
                     }
                 }
             }
@@ -596,8 +706,8 @@
                 "arm_away": "Uzbrojony (nieobecny)"
             },
             "automation": {
-                "last_triggered": "Ostatnio uruchomione",
-                "trigger": "Wyzwalacz"
+                "last_triggered": "Ostatnie uruchomienie",
+                "trigger": "Uruchom"
             },
             "cover": {
                 "position": "Pozycja",
@@ -684,6 +794,16 @@
                 "name": "Nazwa",
                 "entity_id": "Identyfikator encji"
             }
+        },
+        "auth_store": {
+            "ask": "Czy chcesz zapamiętać dane logowania?",
+            "decline": "Nie, dziękuję",
+            "confirm": "Zapamiętaj"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Kliknij przycisk, aby skonfigurować {entity}",
+            "empty": "Brak powiadomień",
+            "title": "Powiadomienia"
         }
     },
     "domain": {
