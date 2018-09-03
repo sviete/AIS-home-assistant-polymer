@@ -546,6 +546,95 @@
                     "link_promo": "Més informació sobre temes",
                     "dropdown_label": "Tema"
                 }
+            },
+            "page-authorize": {
+                "initializing": "S'està inicialitzant",
+                "authorizing_client": "Esteu a punt de permetre l'accés a la vostra instància de Home Assistant al client {clientId}.",
+                "logging_in_with": "Iniciant sessió amb **{authProviderName}**.",
+                "pick_auth_provider": "O bé inicieu sessió amb",
+                "abort_intro": "S'ha avortat l'inici de sessió",
+                "form": {
+                    "working": "Si us plau, espereu",
+                    "unknown_error": "Alguna cosa no ha anat bé",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Nom d'usuari",
+                                        "password": "Contrasenya"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Codi de verificació en dos passos"
+                                    },
+                                    "description": "Obriu el **{mfa_module_name}** al vostre dispositiu per veure el codi de verificació en dos passos i verificar la vostra identitat:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Nom d'usuari o contrasenya incorrectes",
+                                "invalid_code": "El codi d'autenticació no és vàlid"
+                            },
+                            "abort": {
+                                "login_expired": "La sessió ha caducat, torneu a iniciar la sessió."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "Contrasenya API"
+                                    },
+                                    "description": "Introduïu la contrasenya API en la vostra configuració http:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Codi de verificació en dos passos"
+                                    },
+                                    "description": "Obriu el **{mfa_module_name}** al vostre dispositiu per veure el codi de verificació en dos passos i verificar la vostra identitat:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Contrasenya API no vàlida",
+                                "invalid_code": "El codi d'autenticació no és vàlid"
+                            },
+                            "abort": {
+                                "no_api_password_set": "No teniu una contrasenya API configurada.",
+                                "login_expired": "La sessió ha caducat, torneu a iniciar la sessió."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Usuari"
+                                    },
+                                    "description": "Seleccioneu l'usuari amb el qual iniciar la sessió:"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "El teu ordinador no es troba accessible a la llista."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Estàs preparat donar vida pròpia a la teva llar, recuperar la teva privacitat i unir-te a una comunitat mundial de \"tinkerers\"?",
+                "user": {
+                    "intro": "Comencem creant un nou compte d'usuari.",
+                    "required_field": "Obligatori",
+                    "data": {
+                        "name": "Nom",
+                        "username": "Nom d'usuari",
+                        "password": "Contrasenya"
+                    },
+                    "create_account": "Crear un compte",
+                    "error": {
+                        "required_fields": "Ompliu tots els camps obligatoris"
+                    }
+                }
             }
         },
         "sidebar": {
@@ -710,6 +799,11 @@
             "ask": "Voleu desar aquest inici de sessió?",
             "decline": "No, gràcies",
             "confirm": "Desar inici de sessió"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Prem el botó per configurar {entity}",
+            "empty": "No hi ha notificacions",
+            "title": "Notificacions"
         }
     },
     "domain": {

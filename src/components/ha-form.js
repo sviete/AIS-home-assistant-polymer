@@ -23,7 +23,7 @@ class HaForm extends EventsMixin(PolymerElement) {
     </style>
     <template is="dom-if" if="[[_isArray(schema)]]" restamp="">
       <template is="dom-if" if="[[error.base]]">
-          [[computeError(error.base, schema)]]
+          <div class='error'>[[computeError(error.base, schema)]]</div>
       </template>
 
       <template is="dom-repeat" items="[[schema]]">
@@ -155,7 +155,10 @@ class HaForm extends EventsMixin(PolymerElement) {
   }
 
   _getValue(obj, item) {
-    return obj[item.name];
+    if (obj) {
+      return obj[item.name];
+    }
+    return null;
   }
 
   _valueChanged(ev) {
