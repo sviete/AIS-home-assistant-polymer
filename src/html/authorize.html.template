@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Home Assistant</title>
+    <title>Asystent domowy</title>
     <link rel='preload' href='/static/fonts/roboto/Roboto-Light.ttf' as='font' crossorigin />
     <link rel='preload' href='/static/fonts/roboto/Roboto-Regular.ttf' as='font' crossorigin />
     <%= require('raw-loader!./_header.html.template') %>
@@ -29,7 +29,7 @@
     <div class="content">
       <div class='header'>
         <img src="/static/icons/favicon-192x192.png" height="52">
-        Home Assistant
+        Asystent domowy
       </div>
       <ha-authorize><p>Initializing</p></ha-authorize>
     </div>

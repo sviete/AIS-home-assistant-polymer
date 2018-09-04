@@ -30,7 +30,7 @@
     <div class="content">
       <div class='header'>
         <img src="/static/icons/favicon-192x192.png" height="52">
-        Home Assistant
+        Asystent domowy
       </div>
 
       <ha-onboarding>Initializing…</ha-onboarding>
