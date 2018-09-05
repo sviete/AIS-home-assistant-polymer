@@ -122,10 +122,10 @@ class HaPanelDevInfo extends PolymerElement {
           <p class='version'>
             <a href='https://www.ai-speaker.com'><img src="/static/icons/favicon-192x192.png" height="192" /></a><br />
             Asystent domowy<br />
-            [[hass.config.core.version]]
+            [[hass.config.version]]
           </p>
           <p>
-            Konfiguracja: [[hass.config.core.config_dir]]
+            Konfiguracja: [[hass.config.config_dir]]
           <p>
             licencja Apache 2.0<br />
             Zródła:
