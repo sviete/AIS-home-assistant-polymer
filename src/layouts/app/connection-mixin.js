@@ -13,6 +13,7 @@ import EventsMixin from '../../mixins/events-mixin.js';
 
 import { getState } from '../../util/ha-pref-storage.js';
 import { getActiveTranslation } from '../../util/hass-translation.js';
+import { fetchWithAuth } from '../../util/fetch-with-auth.js';
 import hassCallApi from '../../util/hass-call-api.js';
 import computeStateName from '../../common/entity/compute_state_name.js';
 import { subscribePanels } from '../../data/ws-panels';
@@ -25,7 +26,16 @@ export default superClass =>
     }
 
     async _handleConnProm() {
-      const [auth, conn] = await Promise.all([window.hassAuth, window.hassConnection]);
+      let auth;
+      let conn;
+      try {
+        const result = await window.hassConnection;
+        auth = result.auth;
+        conn = result.conn;
+      } catch (err) {
+        this._error = true;
+        return;
+      }
 
       this.hass = Object.assign({
         auth,
@@ -80,23 +90,9 @@ export default superClass =>
             throw err;
           }
         },
-        callApi: async (method, path, parameters) => {
-          const host = window.location.protocol + '//' + window.location.host;
-
-          try {
-            if (auth.expired) await auth.refreshAccessToken();
-          } catch (err) {
-            if (err === ERR_INVALID_AUTH) {
-              // Trigger auth flow
-              location.reload();
-              // ensure further JS is not executed
-              await new Promise(() => {});
-            }
-            throw err;
-          }
-
-          return await hassCallApi(host, auth, method, path, parameters);
-        },
+        callApi: async (method, path, parameters) =>
+          hassCallApi(auth, method, path, parameters),
+        fetchWithAuth: (path, init) => fetchWithAuth(auth, `${auth.data.hassUrl}${path}`, init),
         // For messages that do not get a response
         sendWS: (msg) => {
           // eslint-disable-next-line

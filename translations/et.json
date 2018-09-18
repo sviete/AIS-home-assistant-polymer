@@ -545,6 +545,121 @@
                     "error_no_theme": "Teemasid pole saadaval.",
                     "link_promo": "Lisateave teemade kohta",
                     "dropdown_label": "Teema"
+                },
+                "refresh_tokens": {
+                    "header": "Ajutised juurdepääsutõendid",
+                    "description": "Iga ajutine juurdepääsutõend kehtib ühe seansi jaoks. Ajutised juurdepääsutõendid kustutatakse automaatselt pärast välja logimist. Sinu konto jaoks on praegu aktiivsed järgmised ajutised juurdepääsutõendid.",
+                    "token_title": "Ajutine juurdepääsutõend {clientId} jaoks",
+                    "created_at": "Loodud {date}",
+                    "confirm_delete": "Oled kindel, et soovid kustutada ajutise juurdepääsutõendi {nimi} jaoks?",
+                    "delete_failed": "Ajutise juurdepääsutõendi kustutamine ebaõnnestus.",
+                    "last_used": "Viimati kasutatud {date} asukohast {location}",
+                    "not_used": "Pole kunagi kasutatud",
+                    "current_token_tooltip": "Ei saa kustutada seda ajutist juurdepääsutõendit"
+                },
+                "long_lived_access_tokens": {
+                    "header": "Pikaajalised juurdepääsutõendid",
+                    "description": "Loo pikaajalised juurdepääsutõendid, mis võimaldavad sinu skriptidel suhelda sinu Home Assistant serveriga. Iga juurdepääsutõend kehtib kümme aastat loomisest alates. Praegu on aktiivsed järgmised pikaajalised juurdepääsutõendid.",
+                    "learn_auth_requests": "Loe, kuidas teha tõendatud päringuid.",
+                    "created_at": "Loodud {date}",
+                    "confirm_delete": "Oled kindel, et soovid kustutada juurdepääsutõendi {nimi} jaoks?",
+                    "delete_failed": "Juurdepääsutõendi kustutamine ebaõnnestus.",
+                    "create": "Loo juurdepääsutõend",
+                    "create_failed": "Juurdepääsutõendi loomine ebaõnnestus.",
+                    "prompt_name": "Nimi?",
+                    "prompt_copy_token": "Kopeeri oma juurdepääsutõend. Seda ei näidata rohkem.",
+                    "empty_state": "Sul pole veel pikaajalisi juurdepääsutõendeid.",
+                    "last_used": "Viimati kasutatud {date} asukohast {location}",
+                    "not_used": "Pole kunagi kasutatud"
+                }
+            },
+            "page-authorize": {
+                "initializing": "Lähtestan",
+                "authorizing_client": "Kavatsed anda {clientId} jaoks juurdepääsu oma Home Assistant serverile.",
+                "logging_in_with": "Login sisse **{authProviderName}** abil.",
+                "pick_auth_provider": "Või logi sisse, kasutades",
+                "abort_intro": "Sisselogimine katkestatud",
+                "form": {
+                    "working": "Palun oota",
+                    "unknown_error": "Midagi läks valesti",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Kasutajanimi",
+                                        "password": "Salasõna"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Kaheastmeline autentimiskood"
+                                    },
+                                    "description": "Ava oma seadmes **{mfa_module_name}**, et näha oma kahetasemelise autentimise koodi ja tõendada oma isikut:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Vale kasutajanimi või salasõna",
+                                "invalid_code": "Vigane autentimiskood"
+                            },
+                            "abort": {
+                                "login_expired": "Sessioon aegus, palun logi uuesti sisse."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "API salasõna"
+                                    },
+                                    "description": "Palun seadista http seadetes oma API salasõna:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Kaheastmeline autentimiskood"
+                                    },
+                                    "description": "Ava oma seadmes **{mfa_module_name}**, et näha oma kahetasemelise autentimise koodi ja tõendada oma isikut:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Vale API salasõna",
+                                "invalid_code": "Vigane autentimiskood"
+                            },
+                            "abort": {
+                                "no_api_password_set": "Sul pole API salasõna seadistatud",
+                                "login_expired": "Sessioon aegus, palun logi uuesti sisse."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Kasutaja"
+                                    },
+                                    "description": "Palun vali kasutaja, kellena soovid sisse logida:"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "Sinu arvuti ei ole lubatute nimekirjas."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Kas oled valmis oma kodu ellu äratama, oma privaatsust tagasi võitma ja ühinema ülemaailmse nokitsejate kogukonnaga?",
+                "user": {
+                    "intro": "Alustame kasutajakonto loomisega.",
+                    "required_field": "Nõutud",
+                    "data": {
+                        "name": "Nimi",
+                        "username": "Kasutajanimi",
+                        "password": "Salasõna"
+                    },
+                    "create_account": "Loo konto",
+                    "error": {
+                        "required_fields": "Täida kõik nõutud väljad"
+                    }
                 }
             }
         },
@@ -710,6 +825,11 @@
             "ask": "Kas soovid selle sisselogimise salvestada?",
             "decline": "Tänan ei",
             "confirm": "Salvesta sisselogimine"
+        },
+        "notification_drawer": {
+            "click_to_configure": "{entity} seadistamiseks klõpsa nuppu",
+            "empty": "Teavitusi pole",
+            "title": "Teavitused"
         }
     },
     "domain": {

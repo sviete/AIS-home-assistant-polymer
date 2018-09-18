@@ -545,14 +545,18 @@
                     "error_no_theme": "Inga teman finns tillgängliga.",
                     "link_promo": "Läs mer om teman",
                     "dropdown_label": "Tema"
+                },
+                "long_lived_access_tokens": {
+                    "last_used": "Användes senast den {date} från {location} ",
+                    "not_used": "Har aldrig använts"
                 }
             },
             "page-authorize": {
                 "initializing": "Initierar",
-                "authorizing_client": "Du håller på att ge {clientid} behörighet till din Home Assistant.",
+                "authorizing_client": "Du håller på att ge {clientId} behörighet till din Home Assistant.",
                 "logging_in_with": "Loggar in med **{authProviderName}**.",
                 "pick_auth_provider": "Eller logga in med",
-                "abort_intro": "Login avbruten",
+                "abort_intro": "Inloggning avbruten",
                 "form": {
                     "working": "Vänligen vänta",
                     "unknown_error": "Något gick fel",
@@ -568,7 +572,8 @@
                                 "mfa": {
                                     "data": {
                                         "code": "Tvåfaktorsautentiseringskod"
-                                    }
+                                    },
+                                    "description": "Öppna **{mfa_module_name}** på din enhet för att visa din tvåfaktors autentiseringskod och verifiera din identitet:"
                                 }
                             },
                             "error": {
@@ -589,18 +594,18 @@
                                 },
                                 "mfa": {
                                     "data": {
-                                        "code": "Tvåfaktorsautentiseringskod:"
+                                        "code": "Tvåfaktorsautentiseringskod"
                                     },
-                                    "description": "Öppna **(mfa_module_name)** på din enhet för att se din tvåfaktorsautentiseringskod och verifiera din identitet:"
+                                    "description": "Öppna **{mfa_module_name}** på din enhet för att visa din tvåfaktors autentiseringskod och verifiera din identitet:"
                                 }
                             },
                             "error": {
                                 "invalid_auth": "Ogiltigt API-lösenord",
-                                "invalid_code": "Felaktig autentiserings kod"
+                                "invalid_code": "Ogiltig autentiseringskod"
                             },
                             "abort": {
                                 "no_api_password_set": "Du har inget API lösenord konfigurerat",
-                                "login_expired": "Sessionen avslutades, logga in igen."
+                                "login_expired": "Sessionen avslutades. Logga in igen."
                             }
                         },
                         "trusted_networks": {
@@ -620,6 +625,7 @@
                 }
             },
             "page-onboarding": {
+                "intro": "Är du redo att väcka ditt hem, återta din integritet och gå med i en världsomspännande gemenskap av hemmafixare?",
                 "user": {
                     "intro": "Låt oss börja med att skapa ett användarkonto",
                     "required_field": "Krävs",
@@ -628,7 +634,10 @@
                         "username": "Användarnamn",
                         "password": "Lösenord"
                     },
-                    "create_account": "Skapa konto"
+                    "create_account": "Skapa konto",
+                    "error": {
+                        "required_fields": "Fyll i alla fält som krävs"
+                    }
                 }
             }
         },
@@ -797,7 +806,7 @@
         },
         "notification_drawer": {
             "click_to_configure": "Klicka på knappen för att konfigurera {entity}",
-            "empty": "Ingra notiser",
+            "empty": "Inga notiser",
             "title": "Notiser"
         }
     },
