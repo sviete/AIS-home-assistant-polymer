@@ -21,7 +21,6 @@ import './zwave-groups.js';
 import './zwave-log.js';
 import './zwave-network.js';
 import './zwave-node-config.js';
-import './zwave-node-information.js';
 import './zwave-usercodes.js';
 import './zwave-values.js';
 import './zwave-node-protection.js';
@@ -29,12 +28,14 @@ import './zwave-node-protection.js';
 import sortByName from '../../../common/entity/states_sort_by_name.js';
 import computeStateName from '../../../common/entity/compute_state_name.js';
 import computeStateDomain from '../../../common/entity/compute_state_domain.js';
+import EventsMixin from '../../../mixins/events-mixin.js';
 import LocalizeMixin from '../../../mixins/localize-mixin.js';
 
 /*
  * @appliesMixin LocalizeMixin
+ * @appliesMixin EventsMixin
  */
-class HaConfigZwave extends LocalizeMixin(PolymerElement) {
+class HaConfigZwave extends LocalizeMixin(EventsMixin(PolymerElement)) {
   static get template() {
     return html`
     <style include="iron-flex ha-style ha-form-style">
@@ -203,13 +204,14 @@ class HaConfigZwave extends LocalizeMixin(PolymerElement) {
               service="test_node"
               hidden$="[[!showHelp]]">
             </ha-service-description>
+            <paper-button on-click="_nodeMoreInfo">Node Information</paper-button>
           </div>
 
            <div class="device-picker">
             <paper-dropdown-menu label="Entities of this node" dynamic-align="" class="flex">
               <paper-listbox slot="dropdown-content" selected="{{selectedEntity}}">
                 <template is="dom-repeat" items="[[entities]]" as="state">
-                  <paper-item>[[computeSelectCaptionEnt(state)]]</paper-item>
+                  <paper-item>[[state.entity_id]]</paper-item>
                 </template>
               </paper-listbox>
             </paper-dropdown-menu>
@@ -229,6 +231,7 @@ class HaConfigZwave extends LocalizeMixin(PolymerElement) {
                service="refresh_entity"
                hidden$="[[!showHelp]]">
              </ha-service-description>
+             <paper-button on-click="_entityMoreInfo">Entity Information</paper-button>
            </div>
            <div class="form-group">
              <paper-checkbox checked="{{entityIgnored}}" class="form-control">
@@ -251,30 +254,12 @@ class HaConfigZwave extends LocalizeMixin(PolymerElement) {
                Save
              </ha-call-service-button>
            </div>
-           <div class="content">
-             <div class="card-actions">
-               <paper-button toggles="" raised="" noink="" active="{{entityInfoActive}}">Entity Attributes</paper-button>
-             </div>
-             <template is="dom-if" if="{{entityInfoActive}}">
-               <template is="dom-repeat" items="[[selectedEntityAttrs]]" as="state">
-                 <div class="node-info">
-                   <span>[[state]]</span>
-                 </div>
-               </template>
-             </template>
-           </div>
 
            </template>
           </template>
         </paper-card>
 
         <template is="dom-if" if="[[computeIsNodeSelected(selectedNode)]]">
-          <!--Node info card-->
-          <zwave-node-information
-            id="zwave-node-information"
-            nodes="[[nodes]]"
-            selected-node="[[selectedNode]]"
-          ></zwave-node-information>
 
           <!--Value card-->
           <zwave-values
@@ -360,17 +345,10 @@ class HaConfigZwave extends LocalizeMixin(PolymerElement) {
         computed: 'computeEntities(selectedNode)',
       },
 
-      entityInfoActive: Boolean,
-
       selectedEntity: {
         type: Number,
         value: -1,
         observer: 'selectedEntityChanged',
-      },
-
-      selectedEntityAttrs: {
-        type: Array,
-        computed: 'computeSelectedEntityAttrs(selectedEntity)'
       },
 
       values: {
@@ -509,16 +487,6 @@ class HaConfigZwave extends LocalizeMixin(PolymerElement) {
       });
   }
 
-  computeSelectedEntityAttrs(selectedEntity) {
-    if (selectedEntity === -1) return 'No entity selected';
-    const entityAttrs = this.entities[selectedEntity].attributes;
-    const att = [];
-    Object.keys(entityAttrs).forEach((key) => {
-      att.push(key + ': ' + entityAttrs[key]);
-    });
-    return att.sort();
-  }
-
   computeSelectCaption(stateObj) {
     return computeStateName(stateObj) + ' (Node:' +
       stateObj.attributes.node_id + ' ' +
@@ -561,6 +529,13 @@ class HaConfigZwave extends LocalizeMixin(PolymerElement) {
       value_id: this.entities[this.selectedEntity].attributes.value_id,
       poll_intensity: parseInt(entityPollingIntensity),
     };
+  }
+
+  _nodeMoreInfo() {
+    this.fire('hass-more-info', { entityId: this.nodes[this.selectedNode].entity_id });
+  }
+  _entityMoreInfo() {
+    this.fire('hass-more-info', { entityId: this.entities[this.selectedEntity].entity_id });
   }
 
   _saveEntity() {

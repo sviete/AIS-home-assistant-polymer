@@ -94,6 +94,12 @@ class HaAuthorize extends LocalizeLiteMixin(PolymerElement) {
       const response = await window.providersPromise;
       const authProviders = await response.json();
 
+      // Forward to main screen which will redirect to right onboarding page.
+      if (response.status === 400 && authProviders.code === 'onboarding_required') {
+        location.href = '/';
+        return;
+      }
+
       if (authProviders.length === 0) {
         alert('No auth providers returned. Unable to finish login.');
         return;
