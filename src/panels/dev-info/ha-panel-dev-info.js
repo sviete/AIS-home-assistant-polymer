@@ -17,7 +17,11 @@ import '../../resources/ha-style.js';
 import formatDateTime from '../../common/datetime/format_date_time.js';
 import formatTime from '../../common/datetime/format_time.js';
 
-class HaPanelDevInfo extends PolymerElement {
+import EventsMixin from '../../mixins/events-mixin.js';
+
+let registeredDialog = false;
+
+class HaPanelDevInfo extends EventsMixin(PolymerElement) {
   static get template() {
     return html`
     <style include="iron-positioning ha-style">
@@ -125,7 +129,14 @@ class HaPanelDevInfo extends PolymerElement {
             [[hass.config.version]]
           </p>
           <p>
-            Konfiguracja: [[hass.config.config_dir]]
+            configuration.yaml: [[hass.config.config_dir]]
+            <br><a href="#" on-click="_showComponents">[[loadedComponents.length]] Komponenty</a>
+          </p>
+          <p class='develop'>
+            <a href='https://www.ai-speaker.com' target='_blank'>
+              ai-speaker.com
+            </a>
+          </p>
           <p>
             licencja Apache 2.0<br />
             Zródła:
@@ -258,6 +269,11 @@ class HaPanelDevInfo extends PolymerElement {
         type: Array,
         value: window.CUSTOM_UI_LIST || [],
       },
+
+      loadedComponents: {
+        type: Array,
+        value: [],
+      }
     };
   }
 
@@ -286,6 +302,17 @@ class HaPanelDevInfo extends PolymerElement {
     super.connectedCallback();
     this.$.scrollable.dialogElement = this.$.showlog;
     this._fetchData();
+    this.loadedComponents = this.hass.config.components;
+
+    if (!registeredDialog) {
+      registeredDialog = true;
+      this.fire('register-dialog', {
+        dialogShowEvent: 'show-loaded-components',
+        dialogTag: 'ha-loaded-components',
+        dialogImport: () => import('./ha-loaded-components.js'),
+      });
+    }
+
     if (!window.CUSTOM_UI_LIST) {
       // Give custom UI an opportunity to load.
       setTimeout(() => {
@@ -315,8 +342,8 @@ class HaPanelDevInfo extends PolymerElement {
     const dateTime = new Date(date * 1000);
     const dateTimeDay = new Date(date * 1000).setHours(0, 0, 0, 0);
 
-    return dateTimeDay < today ?
-      formatDateTime(dateTime) : formatTime(dateTime);
+    return dateTimeDay < today
+      ? formatDateTime(dateTime) : formatTime(dateTime);
   }
 
   openLog(event) {
@@ -334,8 +361,8 @@ class HaPanelDevInfo extends PolymerElement {
   }
 
   _defaultPageText() {
-    return `>> ${localStorage.defaultPage === 'lovelace' ?
-      'Remove' : 'Set'} lovelace as default page on this device <<`;
+    return `>> ${localStorage.defaultPage === 'lovelace'
+      ? 'Remove' : 'Set'} lovelace as default page on this device <<`;
   }
 
   _toggleDefaultPage() {
@@ -345,6 +372,12 @@ class HaPanelDevInfo extends PolymerElement {
       localStorage.defaultPage = 'lovelace';
     }
     this.$.love.innerText = this._defaultPageText();
+  }
+
+  _showComponents() {
+    this.fire('show-loaded-components', {
+      hass: this.hass
+    });
   }
 }
 

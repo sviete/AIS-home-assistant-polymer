@@ -82,7 +82,7 @@ class HaConfigCloudLogin extends
             <p>
               Home Assistant Cloud is a subscription service with a free one month trial. No payment information necessary.
             </p>
-            <p><a href="https://www.nabucasa.com/cloud/" target="_blank">Learn more about Home Assistant Cloud</a></p>
+            <p><a href="https://www.nabucasa.com" target="_blank">Learn more about Home Assistant Cloud</a></p>
           </div>
 
           <paper-card hidden$="[[!flashMessage]]">
@@ -155,9 +155,8 @@ class HaConfigCloudLogin extends
     super.connectedCallback();
     if (this.flashMessage) {
       // Wait for DOM to be drawn
-      requestAnimationFrame(() =>
-        requestAnimationFrame(() =>
-          this.$.flashRipple.simulatedRipple()));
+      requestAnimationFrame(() => requestAnimationFrame(() =>
+        this.$.flashRipple.simulatedRipple()));
     }
   }
 
@@ -200,8 +199,8 @@ class HaConfigCloudLogin extends
     this.hass.callApi('post', 'cloud/login', {
       email: this.email,
       password: this._password,
-    }).then((account) => {
-      this.fire('ha-account-refreshed', { account: account });
+    }).then(() => {
+      this.fire('ha-refresh-cloud-status');
       this.setProperties({
         email: '',
         _password: '',

@@ -17,7 +17,6 @@ import(/* webpackChunkName: "panel-config-dashboard" */ './dashboard/ha-config-d
 import(/* webpackChunkName: "panel-config-script" */ './script/ha-config-script.js');
 import(/* webpackChunkName: "panel-config-users" */ './users/ha-config-users.js');
 import(/* webpackChunkName: "panel-config-zwave" */ './zwave/ha-config-zwave.js');
-import(/* webpackChunkName: "panel-config-overview" */ './overview/ha-config-overview.js');
 
 /*
  * @appliesMixin NavigateMixin
@@ -50,7 +49,7 @@ class HaPanelConfig extends NavigateMixin(PolymerElement) {
         route='[[route]]'
         hass='[[hass]]'
         is-wide='[[isWide]]'
-        account='[[account]]'
+        cloud-status='[[_cloudStatus]]'
       ></ha-config-cloud>
     </template>
 
@@ -59,7 +58,7 @@ class HaPanelConfig extends NavigateMixin(PolymerElement) {
         page-name='dashboard'
         hass='[[hass]]'
         is-wide='[[isWide]]'
-        account='[[account]]'
+        cloud-status='[[_cloudStatus]]'
         narrow='[[narrow]]'
         show-menu='[[showMenu]]'
       ></ha-config-dashboard>
@@ -101,6 +100,7 @@ class HaPanelConfig extends NavigateMixin(PolymerElement) {
 
     <template is="dom-if" if='[[_equals(_routeData.page, "integrations")]]' restamp>
       <ha-config-entries
+        route='[[route]]'
         page-name='integrations'
         hass='[[hass]]'
         is-wide='[[isWide]]'
@@ -114,14 +114,6 @@ class HaPanelConfig extends NavigateMixin(PolymerElement) {
         hass='[[hass]]'
       ></ha-config-users>
     </template>
-
-    <template is="dom-if" if='[[_equals(_routeData.page, "overview")]]' restamp>
-      <ha-config-overview
-        page-name='overview'
-        route='[[route]]'
-        hass='[[hass]]'
-      ></ha-config-overview>
-    </template>
     `;
   }
 
@@ -130,7 +122,7 @@ class HaPanelConfig extends NavigateMixin(PolymerElement) {
       hass: Object,
       narrow: Boolean,
       showMenu: Boolean,
-      account: {
+      _cloudStatus: {
         type: Object,
         value: null,
       },
@@ -155,12 +147,19 @@ class HaPanelConfig extends NavigateMixin(PolymerElement) {
   ready() {
     super.ready();
     if (isComponentLoaded(this.hass, 'cloud')) {
-      this.hass.callApi('get', 'cloud/account')
-        .then((account) => { this.account = account; }, () => {});
+      this._updateCloudStatus();
     }
-    this.addEventListener('ha-account-refreshed', (ev) => {
-      this.account = ev.detail.account;
-    });
+    this.addEventListener(
+      'ha-refresh-cloud-status', () => this._updateCloudStatus()
+    );
+  }
+
+  async _updateCloudStatus() {
+    this._cloudStatus = await this.hass.callWS({ type: 'cloud/status' });
+
+    if (this._cloudStatus.cloud === 'connecting') {
+      setTimeout(() => this._updateCloudStatus(), 5000);
+    }
   }
 
   computeIsWide(showMenu, wideSidebar, wide) {

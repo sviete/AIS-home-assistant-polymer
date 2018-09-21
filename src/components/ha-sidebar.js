@@ -6,7 +6,7 @@ import '@polymer/paper-item/paper-item.js';
 import '@polymer/paper-listbox/paper-listbox.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '../components/ha-icon.js';
+import './ha-icon.js';
 
 import '../util/hass-translation.js';
 import LocalizeMixin from '../mixins/localize-mixin.js';
@@ -47,7 +47,7 @@ class HaSidebar extends LocalizeMixin(PolymerElement) {
       }
 
       paper-listbox {
-        padding-bottom: 0;
+        padding: 0;
       }
 
       paper-listbox > a {
@@ -59,15 +59,37 @@ class HaSidebar extends LocalizeMixin(PolymerElement) {
         };
       }
 
+      paper-icon-item {
+        margin: 8px;
+        padding-left: 9px;
+        border-radius: 4px;
+        --paper-item-min-height: 40px;
+      }
+
+      .iron-selected paper-icon-item:before {
+        border-radius: 4px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        pointer-events: none;
+        content: "";
+        background-color: var(--sidebar-selected-icon-color);
+        opacity: 0.12;
+        transition: opacity 15ms linear;
+        will-change: opacity;
+      }
+
+      .iron-selected paper-icon-item[pressed]:before {
+        opacity: 0.37;
+      }
+
       paper-icon-item span {
         @apply --sidebar-text;
       }
 
       a.iron-selected {
-        --paper-icon-item: {
-          background-color: var(--sidebar-selected-background-color, var(--paper-grey-200));
-        };
-
         --paper-item-icon: {
           color: var(--sidebar-selected-icon-color);
         };
@@ -283,9 +305,9 @@ class HaSidebar extends LocalizeMixin(PolymerElement) {
 
       if (aBuiltIn && bBuiltIn) {
         return sortValue[a.component_name] - sortValue[b.component_name];
-      } else if (aBuiltIn) {
+      } if (aBuiltIn) {
         return -1;
-      } else if (bBuiltIn) {
+      } if (bBuiltIn) {
         return 1;
       }
       // both not built in, sort by title
