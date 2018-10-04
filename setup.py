@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='ais-dom-frontend',
-      version='20180928.0',
+      version='20181002.0',
       description='AIS dom frontend',
       url='https://github.com/sviete/home-assistant/home-assistant-polymer',
       author='Andrzej Raczkowski',

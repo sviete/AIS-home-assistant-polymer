@@ -13,12 +13,13 @@
         "dev-templates": "Szablony",
         "dev-mqtt": "MQTT",
         "dev-info": "Informacje",
-        "calendar": "Kalendarz"
+        "calendar": "Kalendarz",
+        "profile": "Profil"
     },
     "state": {
         "default": {
             "off": "wyłączony",
-            "on": "Włączony",
+            "on": "włączony",
             "unknown": "nieznany",
             "unavailable": "niedostępny"
         },
@@ -41,7 +42,7 @@
         "binary_sensor": {
             "default": {
                 "off": "wyłączony",
-                "on": "Włączony"
+                "on": "włączony"
             },
             "moisture": {
                 "off": "sucho",
@@ -88,7 +89,7 @@
                 "on": "rozładowana"
             },
             "problem": {
-                "off": "OK",
+                "off": "ok",
                 "on": "problem"
             },
             "connectivity": {
@@ -116,13 +117,13 @@
                 "on": "otwarte"
             },
             "lock": {
-                "off": "Zamknięty",
-                "on": "Otwarty"
+                "off": "zamknięty",
+                "on": "otwarty"
             }
         },
         "calendar": {
             "off": "wyłączony",
-            "on": "Włączony"
+            "on": "włączony"
         },
         "camera": {
             "recording": "nagrywanie",
@@ -131,7 +132,7 @@
         },
         "climate": {
             "off": "wyłączony",
-            "on": "Włączony",
+            "on": "włączony",
             "heat": "ogrzewanie",
             "cool": "chłodzenie",
             "idle": "nieaktywny",
@@ -150,9 +151,9 @@
             "configured": "skonfigurowany"
         },
         "cover": {
-            "open": "Otwarta",
+            "open": "otwarta",
             "opening": "otwieranie",
-            "closed": "Zamknięta",
+            "closed": "zamknięta",
             "closing": "zamykanie",
             "stopped": "zatrzymany"
         },
@@ -162,7 +163,7 @@
         },
         "fan": {
             "off": "wyłączony",
-            "on": "Włączony"
+            "on": "włączony"
         },
         "group": {
             "off": "wyłączony",
@@ -176,12 +177,12 @@
             "stopped": "zatrzymany",
             "locked": "zablokowany",
             "unlocked": "odblokowany",
-            "ok": "OK",
+            "ok": "ok",
             "problem": "problem"
         },
         "input_boolean": {
             "off": "wyłączony",
-            "on": "Włączony"
+            "on": "włączony"
         },
         "light": {
             "off": "wyłączony",
@@ -193,49 +194,49 @@
         },
         "media_player": {
             "off": "wyłączony",
-            "on": "Włączony",
+            "on": "włączony",
             "playing": "odtwarzanie",
             "paused": "pauza",
             "idle": "nieaktywny",
             "standby": "tryb czuwania"
         },
         "plant": {
-            "ok": "OK",
+            "ok": "ok",
             "problem": "problem"
         },
         "remote": {
             "off": "wyłączony",
-            "on": "Włączony"
+            "on": "włączony"
         },
         "scene": {
             "scening": "sceny"
         },
         "script": {
             "off": "wyłączony",
-            "on": "Włączony"
+            "on": "włączony"
         },
         "sensor": {
             "off": "wyłączony",
-            "on": "Włączony"
+            "on": "włączony"
         },
         "sun": {
-            "above_horizon": "Powyżej horyzontu",
-            "below_horizon": "Poniżej horyzontu"
+            "above_horizon": "powyżej horyzontu",
+            "below_horizon": "poniżej horyzontu"
         },
         "switch": {
-            "off": "Wyłączony",
-            "on": "Włączony"
+            "off": "wyłączony",
+            "on": "włączony"
         },
         "zwave": {
             "default": {
-                "initializing": "Inicjalizacja",
-                "dead": "Nieaktywny",
-                "sleeping": "Uśpiony",
-                "ready": "Gotowy"
+                "initializing": "inicjalizacja",
+                "dead": "martwy",
+                "sleeping": "uśpiony",
+                "ready": "gotowy"
             },
             "query_stage": {
                 "initializing": "inicjalizacja ({query_stage})",
-                "dead": "Nieaktywny ({query_stage})"
+                "dead": "martwy ({query_stage})"
             }
         },
         "weather": {
@@ -549,7 +550,7 @@
                 "refresh_tokens": {
                     "header": "Tokeny",
                     "description": "Każdy token reprezentuje sesję logowania. Tokeny zostaną automatycznie usunięte po wylogowaniu. Następujące tokeny są obecnie aktywne dla Twojego konta.",
-                    "token_title": "Odśwież token dla {clientId}",
+                    "token_title": "Token dla {clientId}",
                     "created_at": "Utworzony {date}",
                     "confirm_delete": "Czy na pewno chcesz usunąć token dla {name}?",
                     "delete_failed": "Nie udało się usunąć tokena.",
@@ -571,6 +572,30 @@
                     "empty_state": "Nie masz jeszcze żadnych żadnych tokenów.",
                     "last_used": "Ostatnio używany {date} z {location}",
                     "not_used": "Nigdy nie był używany"
+                },
+                "current_user": "Jesteś obecnie zalogowany jako {fullName}.",
+                "is_owner": "Jesteś właścicielem.",
+                "logout": "Wyloguj",
+                "change_password": {
+                    "header": "Zmień hasło",
+                    "current_password": "Bieżące hasło",
+                    "new_password": "Nowe hasło",
+                    "confirm_new_password": "Potwierdź nowe hasło",
+                    "error_required": "Wymagane",
+                    "submit": "Zatwierdź"
+                },
+                "mfa": {
+                    "header": "Moduły uwierzytelniania wieloskładnikowego",
+                    "disable": "Wyłącz",
+                    "enable": "Włącz",
+                    "confirm_disable": "Jesteś pewny, że chcesz wyłączyć {name}?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Przerwano",
+                    "title_success": "Powodzenie!",
+                    "step_done": "Konfiguracja wykonana dla {step}",
+                    "close": "Zamknij",
+                    "submit": "Zatwierdź"
                 }
             },
             "page-authorize": {
