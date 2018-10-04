@@ -11,21 +11,26 @@
         <p class="loading" style="font-size:1.4em;color:#ff9603"><span>uruchamianie na tv</span><span>.</span><span>.</span><span>.</span></p>
         <div class="shapeshifter play" style="background-image: url(logo/sprite_60fps.svg)"/>
     </div>
-
-
     <footer>
-        <p style="margin-bottom:0px;padding-bottom:0px;color:#f49706">zródła systemu: <a style="color:#ffbd77" href="https://github.com/sviete">
-            github.com/sviete</a></p>
+
+      <p style="margin-bottom:0px;padding-bottom:0px;color:#f49706">zródła systemu: <a style="color:#ffbd77" href="https://github.com/sviete">
+            github.com/sviete</a>
+          <p style="font-size:80%; color:#a4a4a4;" id="the_url"></p>
+        </p>
         <p style="font-size:0.6em; margin-top:0px; padding-top:0px; color:#f49706">
-            v 0.77
+            v 0.78
         </p>
     </footer>
 </body>
-<script type="text/javascript">
+  <script type="text/javascript">
+        var TheUrl = window.JavascriptHandler.showTheUrl();
+        window.onload = function(){
+            document.getElementById("the_url").innerHTML = TheUrl;
+        }
         function goToAis() {
             console.log("go to AIS ...");
-            document.location.href = "https://127.0.0.1:8123/kiosk/group.tv";
+            document.location.href = TheUrl;
         }
-        setInterval(goToAis, 5000);
+        setInterval(goToAis, 8000);
     </script>
 </html>
