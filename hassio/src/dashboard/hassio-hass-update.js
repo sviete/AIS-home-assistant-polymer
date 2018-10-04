@@ -19,6 +19,9 @@ class HassioHassUpdate extends PolymerElement {
         color: var(--google-red-500);
         margin-top: 16px;
       }
+      a {
+        color: var(--primary-color);
+      }
     </style>
     <template is="dom-if" if="[[computeUpdateAvailable(hassInfo)]]">
       <div class="content">
@@ -30,6 +33,7 @@ class HassioHassUpdate extends PolymerElement {
               <template is="dom-if" if="[[error]]">
                 <div class="error">Error: [[error]]</div>
               </template>
+              <p><a href='https://www.home-assistant.io/latest-release-notes/' target='_blank'>Read the release notes</a></p>
             </div>
             <div class="card-actions">
               <ha-call-api-button hass="[[hass]]" path="hassio/homeassistant/update">Update</ha-call-api-button>

@@ -4,9 +4,10 @@ import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 
 import './entity/ha-chart-base.js';
 
+import LocalizeMixin from '../mixins/localize-mixin.js';
 import formatDateTime from '../common/datetime/format_date_time.js';
 
-class StateHistoryChartLine extends PolymerElement {
+class StateHistoryChartLine extends LocalizeMixin(PolymerElement) {
   static get template() {
     return html`
     <style>
@@ -136,7 +137,7 @@ class StateHistoryChartLine extends PolymerElement {
         });
       }
 
-      if (domain === 'thermostat' || domain === 'climate') {
+      if (domain === 'thermostat' || domain === 'climate' || domain === 'water_heater') {
         // We differentiate between thermostats that have a target temperature
         // range versus ones that have just a target temperature
 
@@ -240,7 +241,7 @@ class StateHistoryChartLine extends PolymerElement {
       const item = items[0];
       const date = data.datasets[item.datasetIndex].data[item.index].x;
 
-      return formatDateTime(date);
+      return formatDateTime(date, this.language);
     };
 
     const chartOptions = {

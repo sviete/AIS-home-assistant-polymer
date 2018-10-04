@@ -13,7 +13,8 @@
         "dev-templates": "Plantilles",
         "dev-mqtt": "MQTT",
         "dev-info": "Informació",
-        "calendar": "Calendari"
+        "calendar": "Calendari",
+        "profile": "Perfil"
     },
     "state": {
         "default": {
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Estat",
                                     "from": "Des de",
-                                    "to": "A"
+                                    "to": "A",
+                                    "for": "Per"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -524,6 +526,31 @@
                         "deactivate_user": "Desactivar usuari",
                         "delete_user": "Eliminar usuari"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Sessió iniciada com a {email}",
+                    "description_not_login": "No has iniciat sessió"
+                },
+                "integrations": {
+                    "caption": "Integracions",
+                    "description": "Gestioneu dispositius i serveis connectats",
+                    "discovered": "Descobert",
+                    "configured": "Configurat",
+                    "new": "Configureu una nova integració",
+                    "configure": "Configurar",
+                    "none": "Encara no hi ha res configurat",
+                    "config_entry": {
+                        "no_devices": "Aquesta integració no té dispositius.",
+                        "no_device": "Entitats sense dispositius",
+                        "delete_confirm": "Esteu segur que voleu suprimir aquesta integració?",
+                        "restart_confirm": "Reinicieu el Home Assistant per acabar d'eliminar aquesta integració",
+                        "manuf": "per {manufacturer}",
+                        "hub": "Connectat a través de",
+                        "firmware": "Firmware: {version}",
+                        "device_unavailable": "dispositiu no disponible",
+                        "entity_unavailable": "entitat no disponible"
+                    }
                 }
             },
             "profile": {
@@ -571,6 +598,30 @@
                     "empty_state": "Encara no tens testimonis d'autenticaciós d'accés de llarga durada.",
                     "last_used": "Darrer ús el {date} des de {location}",
                     "not_used": "Mai no s'ha utilitzat"
+                },
+                "current_user": "Heu iniciat la sessió com a {fullName}.",
+                "is_owner": "Sou propietari.",
+                "logout": "Tancar sessió",
+                "change_password": {
+                    "header": "Canvi de contrasenya",
+                    "current_password": "Contrasenya actual",
+                    "new_password": "Contrasenya nova",
+                    "confirm_new_password": "Confirmar contrasenya nova",
+                    "error_required": "Obligatori",
+                    "submit": "Enviar"
+                },
+                "mfa": {
+                    "header": "Mòduls d'autenticació amb múltiples passos",
+                    "disable": "Desactiva",
+                    "enable": "Activa",
+                    "confirm_disable": "Esteu segur que voleu desactivar {name}?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "S'ha avortat",
+                    "title_success": "Correcte!",
+                    "step_done": "Configuració feta per a {step}",
+                    "close": "Tanca",
+                    "submit": "Enviar"
                 }
             },
             "page-authorize": {
@@ -779,6 +830,13 @@
                     "turn_on": "Encendre",
                     "turn_off": "Apagar"
                 }
+            },
+            "water_heater": {
+                "currently": "Actual",
+                "on_off": "On \/ Off",
+                "target_temperature": "Temperatura desitjada",
+                "operation": "Funcionament",
+                "away_mode": "Mode absent"
             }
         },
         "components": {

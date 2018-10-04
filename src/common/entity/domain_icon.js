@@ -6,6 +6,7 @@
 import { DEFAULT_DOMAIN_ICON } from '../const.js';
 
 const fixedIcons = {
+  alert: 'hass:alert',
   automation: 'hass:playlist-play',
   calendar: 'hass:calendar',
   camera: 'hass:video',
@@ -38,6 +39,7 @@ const fixedIcons = {
   timer: 'hass:timer',
   updater: 'hass:cloud-upload',
   vacuum: 'hass:robot-vacuum',
+  water_heater: 'hass:thermometer',
   weblink: 'hass:open-in-new',
 };
 
@@ -83,7 +85,7 @@ export default function domainIcon(domain, state) {
         case 'initializing':
           return 'hass:timer-sand';
         default:
-          return 'hass:nfc';
+          return 'hass:z-wave';
       }
 
     default:
