@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
-setup(name='ais-dom-frontend',
-      version='20181002.0',
-      description='AIS dom frontend',
-      url='https://github.com/sviete/home-assistant/home-assistant-polymer',
-      author='Andrzej Raczkowski',
-      author_email='info@sviete.pl',
+setup(name='home-assistant-frontend',
+      version='20181014.0',
+      description='The Home Assistant frontend',
+      url='https://github.com/home-assistant/home-assistant-polymer',
+      author='The Home Assistant Authors',
+      author_email='hello@home-assistant.io',
       license='Apache License 2.0',
       packages=find_packages(include=[
           'hass_frontend',
