@@ -171,7 +171,7 @@ class HaVoiceCommandDialog extends DialogMixin(PolymerElement) {
       var text = this.results.final || this.results.interim;
       this.results = null;
       if (text === "") {
-        text = "<nic nie słyszę...>";
+        text = "nic nie słyszę...";
       }
       this.push("_conversation", { who: "user", text: text, error: true });
     }.bind(this);

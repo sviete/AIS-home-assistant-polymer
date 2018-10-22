@@ -190,6 +190,9 @@ class HaConfigCloudAccount extends EventsMixin(LocalizeMixin(PolymerElement)) {
 
   async _fetchSubscriptionInfo() {
     this._subscription = await this.hass.callWS({ type: "cloud/subscription" });
+    if (this._subscription.provider && this.cloudStatus.cloud !== "connected") {
+      this.fire("ha-refresh-cloud-status");
+    }
   }
 
   handleLogout() {
@@ -199,15 +202,23 @@ class HaConfigCloudAccount extends EventsMixin(LocalizeMixin(PolymerElement)) {
   }
 
   _formatSubscription(subInfo) {
-    return subInfo === null
-      ? "Fetching subscription…"
-      : subInfo.human_description.replace(
-          "{periodEnd}",
-          formatDateTime(
-            new Date(subInfo.subscription.current_period_end * 1000),
-            this.language
-          )
-        );
+    if (subInfo === null) {
+      return "Fetching subscription…";
+    }
+
+    let description = subInfo.human_description;
+
+    if (subInfo.plan_renewal_date) {
+      description = description.replace(
+        "{periodEnd}",
+        formatDateTime(
+          new Date(subInfo.plan_renewal_date * 1000),
+          this.hass.language
+        )
+      );
+    }
+
+    return description;
   }
 
   _alexaChanged(ev) {

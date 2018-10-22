@@ -1,10 +1,10 @@
-import { html, LitElement, PropertyDeclarations } from "@polymer/lit-element";
+import { html, LitElement } from "@polymer/lit-element";
 import { classMap } from "lit-html/directives/classMap.js";
-import { repeat } from "lit-html/directives/repeat";
 
 import computeStateDisplay from "../../../common/entity/compute_state_display.js";
 import computeStateName from "../../../common/entity/compute_state_name.js";
 import processConfigEntities from "../common/process-config-entities";
+import applyThemesOnElement from "../../../common/dom/apply_themes_on_element.js";
 
 import toggleEntity from "../common/entity/toggle-entity.js";
 
@@ -30,28 +30,29 @@ interface Config extends LovelaceConfig {
   show_name?: boolean;
   show_state?: boolean;
   title?: string;
-  column_width?: string;
-  theming?: "primary";
+  theme?: string;
   entities: EntityConfig[];
 }
 
-class HuiGlanceCard extends HassLocalizeLitMixin(LitElement)
+export class HuiGlanceCard extends HassLocalizeLitMixin(LitElement)
   implements LovelaceCard {
-  static get properties(): PropertyDeclarations {
-    return {
-      hass: {},
-    };
-  }
   protected hass?: HomeAssistant;
   protected config?: Config;
   protected configEntities?: EntityConfig[];
 
+  static get properties() {
+    return {
+      hass: {},
+      config: {},
+    };
+  }
+
   public getCardSize() {
-    return 3;
+    return (this.config!.title ? 1 : 0) + Math.ceil(this.configEntities!.length / 5);
   }
 
   public setConfig(config: Config) {
-    this.config = config;
+    this.config = { theme: "default", ...config };
     const entities = processConfigEntities(config.entities);
 
     for (const entity of entities) {
@@ -62,17 +63,10 @@ class HuiGlanceCard extends HassLocalizeLitMixin(LitElement)
       }
     }
 
-    this.style.setProperty(
-      "--glance-column-width",
-      config.column_width || "20%"
-    );
+    const columnWidth =
+      config.entities.length > 4 ? "20%" : `${100 / config.entities.length}%`;
 
-    if (config.theming) {
-      if (typeof config.theming !== "string") {
-        throw new Error("Incorrect theming config.");
-      }
-      this.classList.add(`theme-${config.theming}`);
-    }
+    this.style.setProperty("--glance-column-width", columnWidth);
 
     this.configEntities = entities;
 
@@ -86,20 +80,14 @@ class HuiGlanceCard extends HassLocalizeLitMixin(LitElement)
       return html``;
     }
     const { title } = this.config;
-    const states = this.hass.states;
-    const entities = this.configEntities!.filter(
-      (conf) => conf.entity in states
-    );
+
+    applyThemesOnElement(this, this.hass!.themes, this.config.theme);
 
     return html`
       ${this.renderStyle()}
       <ha-card .header="${title}">
         <div class="entities ${classMap({ "no-header": !title })}">
-          ${repeat<EntityConfig>(
-            entities,
-            (entityConf) => entityConf.entity,
-            (entityConf) => this.renderEntity(entityConf)
-          )}
+          ${this.configEntities!.map(entityConf => this.renderEntity(entityConf))}
         </div>
       </ha-card>
     `;
@@ -108,11 +96,6 @@ class HuiGlanceCard extends HassLocalizeLitMixin(LitElement)
   private renderStyle() {
     return html`
       <style>
-        :host(.theme-primary) {
-          --paper-card-background-color:var(--primary-color);
-          --paper-item-icon-color:var(--text-primary-color);
-          color:var(--text-primary-color);
-        }
         .entities {
           display: flex;
           padding: 0 16px 4px;
@@ -144,12 +127,22 @@ class HuiGlanceCard extends HassLocalizeLitMixin(LitElement)
         state-badge {
           margin: 8px 0;
         }
+        .not-found {
+          background-color: yellow;
+          text-align: center;
+        }
       </style>
     `;
   }
 
   private renderEntity(entityConf) {
     const stateObj = this.hass!.states[entityConf.entity];
+
+    if (!stateObj) {
+      return html`<div class="entity not-found"><div class="name">${
+        entityConf.entity
+      }</div>Entity Not Available</div>`;
+    }
 
     return html`
       <div

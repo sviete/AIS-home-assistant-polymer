@@ -17,6 +17,7 @@
   "author": "Paulus Schoutsen <Paulus@PaulusSchoutsen.nl> (http://paulusschoutsen.nl)",
   "license": "Apache-2.0",
   "dependencies": {
+    "@material/mwc-ripple": "^0.3.1",
     "@mdi/svg": "^2.7.94",
     "@polymer/app-layout": "^3.0.1",
     "@polymer/app-localize-behavior": "^3.0.1",
@@ -91,7 +92,6 @@
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-external-helpers": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-transform-react-jsx": "^7.0.0",
@@ -165,9 +165,14 @@
     }
   },
   "lint-staged": {
-    "*.{js,json,css,md}": [
-      "prettier --write",
-      "git add"
+    "linters": {
+      "*.{js,json,css,md}": [
+        "prettier --write",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "translations/**"
     ]
   },
   "prettier": {
