@@ -13,7 +13,8 @@
         "dev-templates": "Predloge",
         "dev-mqtt": "MQTT",
         "dev-info": "Info",
-        "calendar": "Koledar"
+        "calendar": "Koledar",
+        "profile": "Profil"
     },
     "state": {
         "default": {
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Stanje",
                                     "from": "Od",
-                                    "to": "Za"
+                                    "to": "Za",
+                                    "for": "Za"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -524,6 +526,31 @@
                         "deactivate_user": "Deaktiviraj uporabnika",
                         "delete_user": "Izbriši uporabnika"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Prijavljen kot {email}",
+                    "description_not_login": "Niste prijavljeni"
+                },
+                "integrations": {
+                    "caption": "Integracije",
+                    "description": "Upravljanje povezanih naprav in storitev",
+                    "discovered": "Odkrito",
+                    "configured": "Konfigurirano",
+                    "new": "Nastavite novo integracijo",
+                    "configure": "Konfiguriraj",
+                    "none": "Nič še ni konfigurirano",
+                    "config_entry": {
+                        "no_devices": "Ta integracija je brez naprav.",
+                        "no_device": "Subjekti brez naprav",
+                        "delete_confirm": "Ali ste prepričani, da želite izbrisati to integracijo?",
+                        "restart_confirm": "Znova zaženite Home Assistent-a, da dokončate odstranitev te integracije",
+                        "manuf": "po {manufacturer}",
+                        "hub": "Povezan prek",
+                        "firmware": "Firmware: {version}",
+                        "device_unavailable": "naprava ni na voljo",
+                        "entity_unavailable": "subjekt ni na voljo"
+                    }
                 }
             },
             "profile": {
@@ -571,6 +598,30 @@
                     "empty_state": "Nimate dostopnih žetonov z daljšim rokom trajanja.",
                     "last_used": "Nazadnje uporabljen {date} iz {location}",
                     "not_used": "Nikoli ni bil uporabljen"
+                },
+                "current_user": "Trenutno ste prijavljeni kot {fullName} .",
+                "is_owner": "Ste lastnik.",
+                "logout": "Odjava",
+                "change_password": {
+                    "header": "Spremeni geslo",
+                    "current_password": "Trenutno geslo",
+                    "new_password": "Novo geslo",
+                    "confirm_new_password": "Potrdite novo geslo",
+                    "error_required": "Zahtevano",
+                    "submit": "Pošlji"
+                },
+                "mfa": {
+                    "header": "Večfaktorski moduli za preverjanje pristnosti",
+                    "disable": "Onemogoči",
+                    "enable": "Omogoči",
+                    "confirm_disable": "Ali ste prepričani, da želite onemogočiti {name} ?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Prekinjeno",
+                    "title_success": "Uspeh!",
+                    "step_done": "Nastavitev je bila opravljena za {step}",
+                    "close": "Zapri",
+                    "submit": "Pošlji"
                 }
             },
             "page-authorize": {
@@ -779,6 +830,13 @@
                     "turn_on": "Vklopite",
                     "turn_off": "Izklopite"
                 }
+            },
+            "water_heater": {
+                "currently": "Trenutno",
+                "on_off": "Vključen \/ izključen",
+                "target_temperature": "Ciljna temperatura",
+                "operation": "Delovanje",
+                "away_mode": "Način odsotnosti"
             }
         },
         "components": {

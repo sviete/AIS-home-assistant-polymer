@@ -1,47 +1,55 @@
-import fireEvent from '../../../common/dom/fire_event.js';
+import { fireEvent } from "../../../common/dom/fire_event.js";
 
-import '../cards/hui-conditional-card.js';
-import '../cards/hui-entities-card.js';
-import '../cards/hui-entity-filter-card.js';
-import '../cards/hui-error-card.js';
-import '../cards/hui-glance-card';
-import '../cards/hui-history-graph-card.js';
-import '../cards/hui-horizontal-stack-card.js';
-import '../cards/hui-iframe-card.js';
-import '../cards/hui-map-card.js';
-import '../cards/hui-markdown-card.js';
-import '../cards/hui-media-control-card.js';
-import '../cards/hui-picture-card.js';
-import '../cards/hui-picture-elements-card';
-import '../cards/hui-picture-entity-card';
-import '../cards/hui-picture-glance-card';
-import '../cards/hui-plant-status-card.js';
-import '../cards/hui-vertical-stack-card.js';
-import '../cards/hui-weather-forecast-card';
+import "../cards/hui-alarm-panel-card.js";
+import "../cards/hui-conditional-card.js";
+import "../cards/hui-entities-card.js";
+import "../cards/hui-entity-button-card.ts";
+import "../cards/hui-entity-filter-card.js";
+import "../cards/hui-error-card.js";
+import "../cards/hui-glance-card.ts";
+import "../cards/hui-history-graph-card.js";
+import "../cards/hui-horizontal-stack-card.js";
+import "../cards/hui-iframe-card.ts";
+import "../cards/hui-map-card.js";
+import "../cards/hui-markdown-card.ts";
+import "../cards/hui-media-control-card.js";
+import "../cards/hui-picture-card.js";
+import "../cards/hui-picture-elements-card";
+import "../cards/hui-picture-entity-card";
+import "../cards/hui-picture-glance-card";
+import "../cards/hui-plant-status-card.js";
+import "../cards/hui-sensor-card.js";
+import "../cards/hui-vertical-stack-card.js";
+import "../cards/hui-weather-forecast-card";
+import "../cards/hui-gauge-card.js";
 
-import createErrorCardConfig from './create-error-card-config.js';
+import createErrorCardConfig from "./create-error-card-config.js";
 
 const CARD_TYPES = new Set([
-  'conditional',
-  'entities',
-  'entity-filter',
-  'error',
-  'glance',
-  'history-graph',
-  'horizontal-stack',
-  'iframe',
-  'map',
-  'markdown',
-  'media-control',
-  'picture',
-  'picture-elements',
-  'picture-entity',
-  'picture-glance',
-  'plant-status',
-  'vertical-stack',
-  'weather-forecast'
+  "alarm-panel",
+  "conditional",
+  "entities",
+  "entity-button",
+  "entity-filter",
+  "error",
+  "gauge",
+  "glance",
+  "history-graph",
+  "horizontal-stack",
+  "iframe",
+  "map",
+  "markdown",
+  "media-control",
+  "picture",
+  "picture-elements",
+  "picture-entity",
+  "picture-glance",
+  "plant-status",
+  "sensor",
+  "vertical-stack",
+  "weather-forecast",
 ]);
-const CUSTOM_TYPE_PREFIX = 'custom:';
+const CUSTOM_TYPE_PREFIX = "custom:";
 const TIMEOUT = 2000;
 
 function _createElement(tag, config) {
@@ -58,12 +66,12 @@ function _createElement(tag, config) {
 }
 
 function _createErrorElement(error, config) {
-  return _createElement('hui-error-card', createErrorCardConfig(error, config));
+  return _createElement("hui-error-card", createErrorCardConfig(error, config));
 }
 
 export default function createCardElement(config) {
-  if (!config || typeof config !== 'object' || !config.type) {
-    return _createErrorElement('No card type configured.', config);
+  if (!config || typeof config !== "object" || !config.type) {
+    return _createErrorElement("No card type configured.", config);
   }
 
   if (config.type.startsWith(CUSTOM_TYPE_PREFIX)) {
@@ -72,20 +80,28 @@ export default function createCardElement(config) {
     if (customElements.get(tag)) {
       return _createElement(tag, config);
     }
-    const element = _createErrorElement(`Custom element doesn't exist: ${tag}.`, config);
-    element.style.display = 'None';
-    const timer = window.setTimeout(() => { element.style.display = ''; }, TIMEOUT);
+    const element = _createErrorElement(
+      `Custom element doesn't exist: ${tag}.`,
+      config
+    );
+    element.style.display = "None";
+    const timer = window.setTimeout(() => {
+      element.style.display = "";
+    }, TIMEOUT);
 
     customElements.whenDefined(tag).then(() => {
       clearTimeout(timer);
-      fireEvent(element, 'rebuild-view');
+      fireEvent(element, "rebuild-view");
     });
 
     return element;
   }
 
   if (!CARD_TYPES.has(config.type)) {
-    return _createErrorElement(`Unknown card type encountered: ${config.type}.`, config);
+    return _createErrorElement(
+      `Unknown card type encountered: ${config.type}.`,
+      config
+    );
   }
 
   return _createElement(`hui-${config.type}-card`, config);

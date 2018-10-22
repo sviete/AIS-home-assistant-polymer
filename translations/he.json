@@ -13,7 +13,8 @@
         "dev-templates": "תבניות",
         "dev-mqtt": "MQTT",
         "dev-info": "מידע",
-        "calendar": "לוח שנה"
+        "calendar": "לוח שנה",
+        "profile": "פרופיל"
     },
     "state": {
         "default": {
@@ -80,8 +81,8 @@
                 "on": "לא בטוח"
             },
             "presence": {
-                "off": "לא נמצא",
-                "on": "בבית"
+                "off": "לא נוכח",
+                "on": "נוכח"
             },
             "battery": {
                 "off": "נורמלי",
@@ -100,12 +101,12 @@
                 "on": "קַר"
             },
             "door": {
-                "off": "סגור",
-                "on": "פתוח"
+                "off": "סגורה",
+                "on": "פתוחה"
             },
             "garage_door": {
-                "off": "סגור",
-                "on": "פתוח"
+                "off": "סגורה",
+                "on": "פתוחה"
             },
             "heat": {
                 "off": "רגיל",
@@ -275,7 +276,7 @@
             "disarmed": "לא דרוך",
             "armed_home": "מופעל",
             "armed_away": "מופעל",
-            "armed_night": "מופעל לילה",
+            "armed_night": "מופעל",
             "pending": "ממתין",
             "arming": "דורך",
             "disarming": "מבטל",
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "מצב",
                                     "from": "מ",
-                                    "to": "ל"
+                                    "to": "ל",
+                                    "for": "למשך"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -524,6 +526,31 @@
                         "deactivate_user": "בטל את המשתמש",
                         "delete_user": "מחיקת משתמש"
                     }
+                },
+                "cloud": {
+                    "caption": "ענן Home Assistant",
+                    "description_login": "מחובר בתור {email} מה",
+                    "description_not_login": "לא מחובר"
+                },
+                "integrations": {
+                    "caption": "אינטגרציות",
+                    "description": "ניהול התקנים ושירותים מחוברים",
+                    "discovered": "זוהו",
+                    "configured": "הוגדר",
+                    "new": "הגדר אינטגריצה ",
+                    "configure": "הגדר",
+                    "none": "כלום אינו הוגדר עדיין",
+                    "config_entry": {
+                        "no_devices": "לאינטגרציה זו אין התקנים.",
+                        "no_device": "ישויות ללא מכשירים",
+                        "delete_confirm": "האם אתה בטוח שברצונך למחוק אינטגרציה זו?",
+                        "restart_confirm": "הפעל מחדש את Home Assistant כדי להשלים את הסרת האינטגרציה",
+                        "manuf": "על ידי {manufacturer}",
+                        "hub": "מחובר באמצעות",
+                        "firmware": "קושחה: {version}",
+                        "device_unavailable": "התקן אינו זמין",
+                        "entity_unavailable": "ישות לא זמינה"
+                    }
                 }
             },
             "profile": {
@@ -559,7 +586,7 @@
                 },
                 "long_lived_access_tokens": {
                     "header": "אסימוני גישה ארוכים חיים",
-                    "description": "צור אסימוני גישה ארוכי טווח כדי לאפשר לסקריפטים שלך כדי לקיים אינטראקציה עם Home Assistant.\nאסימונים אלו פועלים כיום:",
+                    "description": "צור אסימוני גישה ארוכי טווח כדי לאפשר לסקריפטים שלך לקיים אינטראקציה עם Home Assistant.\nאסימונים אלו פועלים כיום:",
                     "learn_auth_requests": "למד כיצד לבצע בקשות מאומתות.",
                     "created_at": "נוצר בתאריך {date}",
                     "confirm_delete": "האם אתה בטוח שברצונך למחוק את אסימון הגישה עבור {name} ?",
@@ -569,8 +596,31 @@
                     "prompt_name": "שֵׁם?",
                     "prompt_copy_token": "העתק את אסימון הגישה שלך. הוא לא יוצג שוב.",
                     "empty_state": "אין לך עדיין אסימוני גישה ארוכים.",
-                    "last_used": "נעשה שימוש לאחרונה {date} מ{location}",
+                    "last_used": "נעשה שימוש לאחרונה  {date} מ{location}",
                     "not_used": "לא היה בשימוש\n"
+                },
+                "current_user": "אתה מחובר כעת כ- {fullName} .",
+                "is_owner": "אתה הבעלים.",
+                "logout": "התנתק",
+                "change_password": {
+                    "header": "שינוי סיסמה",
+                    "current_password": "סיסמה נוכחית",
+                    "new_password": "סיסמה חדשה",
+                    "confirm_new_password": "אשר סיסמה חדשה",
+                    "error_required": "נדרש",
+                    "submit": "שלח"
+                },
+                "mfa": {
+                    "header": "מודלי אימות מרובה גורמים",
+                    "disable": "בטל",
+                    "enable": "הפעל",
+                    "confirm_disable": "האם אתה בטוח שברצונך להשבית  {name}"
+                },
+                "mfa_setup": {
+                    "title_aborted": "הופסק",
+                    "title_success": "הצליח!",
+                    "close": "סגור",
+                    "submit": "שלח"
                 }
             },
             "page-authorize": {
@@ -779,6 +829,9 @@
                     "turn_on": "הדלק",
                     "turn_off": "כבה"
                 }
+            },
+            "water_heater": {
+                "target_temperature": "טמפרטורת היעד"
             }
         },
         "components": {

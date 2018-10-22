@@ -13,7 +13,8 @@
         "dev-templates": "Modelli",
         "dev-mqtt": "MQTT",
         "dev-info": "Informazioni",
-        "calendar": "Calendario"
+        "calendar": "Calendario",
+        "profile": "Profilo"
     },
     "state": {
         "default": {
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Stato",
                                     "from": "Da",
-                                    "to": "A"
+                                    "to": "A",
+                                    "for": "Per"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -524,6 +526,31 @@
                         "deactivate_user": "Disattiva utente",
                         "delete_user": "Elimina utente"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Connesso come {email}",
+                    "description_not_login": "Accesso non effettuato"
+                },
+                "integrations": {
+                    "caption": "integrazioni",
+                    "description": "Gestisci dispositivi e servizi connessi",
+                    "discovered": "Scoperto",
+                    "configured": "Configura",
+                    "new": "Configura una nuova integrazione",
+                    "configure": "Configura",
+                    "none": "Non hai ancora configurato niente",
+                    "config_entry": {
+                        "no_devices": "Questa integrazione non ha dispositivi.",
+                        "no_device": "Entità senza dispositivi",
+                        "delete_confirm": "Sei sicuro di voler eliminare questa integrazione?",
+                        "restart_confirm": "Riavvia Home Assistant per terminare la rimozione di questa integrazione",
+                        "manuf": "da {produttore}",
+                        "hub": "Connesso via",
+                        "firmware": "Firmware: {versione}",
+                        "device_unavailable": "dispositivo non disponibile",
+                        "entity_unavailable": "entità non disponibile"
+                    }
                 }
             },
             "profile": {
@@ -545,6 +572,56 @@
                     "error_no_theme": "Nessun tema disponibile.",
                     "link_promo": "Per saperne di più sui temi",
                     "dropdown_label": "Tema"
+                },
+                "refresh_tokens": {
+                    "header": "Aggiorna i token",
+                    "description": "Ogni token di aggiornamento rappresenta una sessione di accesso. I token di aggiornamento verranno rimossi automaticamente quando si fa clic su Disconnetti. I seguenti token di aggiornamento sono attualmente attivi per il tuo account.",
+                    "token_title": "Aggiorna token per {clientId}",
+                    "created_at": "Creato il {date}",
+                    "confirm_delete": "Sei sicuro di voler eliminare il token di aggiornamento per {name} ?",
+                    "delete_failed": "Impossibile eliminare il token di aggiornamento.",
+                    "last_used": "Utilizzato l'ultima volta il {date} da {location}",
+                    "not_used": "Non è mai stato usato",
+                    "current_token_tooltip": "Impossibile eliminare il token di aggiornamento corrente"
+                },
+                "long_lived_access_tokens": {
+                    "header": "Token di accesso a lunga vita",
+                    "description": "Crea token di accesso di lunga durata per consentire agli script di interagire con l'istanza di Home Assistant. Ogni token sarà valido per 10 anni dalla creazione. I seguenti token di accesso a vita lunga sono attualmente attivi.",
+                    "learn_auth_requests": "Scopri come effettuare richieste autenticate.",
+                    "created_at": "Creato il {date}",
+                    "confirm_delete": "Sei sicuro di voler eliminare il token di accesso per {name} ?",
+                    "delete_failed": "Impossibile eliminare il token di accesso.",
+                    "create": "Crea token",
+                    "create_failed": "Impossibile creare il token di accesso.",
+                    "prompt_name": "Nome?",
+                    "prompt_copy_token": "Copia il tuo token di accesso. Non verrà più mostrato.",
+                    "empty_state": "Non hai ancora token di accesso di lunga durata.",
+                    "last_used": "Utilizzato l'ultima volta il {date} da {location}",
+                    "not_used": "Non è mai stato usato"
+                },
+                "current_user": "Sei attualmente connesso come {fullName} .",
+                "is_owner": "Sei un proprietario.",
+                "logout": "Esci",
+                "change_password": {
+                    "header": "Cambia password",
+                    "current_password": "Password corrente",
+                    "new_password": "Nuova password",
+                    "confirm_new_password": "Conferma la nuova password",
+                    "error_required": "Richiesto",
+                    "submit": "Invia"
+                },
+                "mfa": {
+                    "header": "Codice di autenticazione a più fattori",
+                    "disable": "Disattivare",
+                    "enable": "Abilita",
+                    "confirm_disable": "Sei sicuro di voler disabilitare {name} ?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Interrotto",
+                    "title_success": "Completata con Successo",
+                    "step_done": "Installazione completata per {step}",
+                    "close": "Chiudi",
+                    "submit": "Invia"
                 }
             },
             "page-authorize": {
@@ -753,6 +830,13 @@
                     "turn_on": "Accendere",
                     "turn_off": "Spegnere"
                 }
+            },
+            "water_heater": {
+                "currently": "Attualmente",
+                "on_off": "Acceso \/ Spento",
+                "target_temperature": "Temperatura di riferimento",
+                "operation": "Operazione",
+                "away_mode": "Modalità Assente"
             }
         },
         "components": {
@@ -790,7 +874,7 @@
         },
         "dialogs": {
             "more_info_settings": {
-                "save": "Salve",
+                "save": "Salva",
                 "name": "Nome",
                 "entity_id": "ID Entità"
             }

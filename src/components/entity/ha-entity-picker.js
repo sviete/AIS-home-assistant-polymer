@@ -1,17 +1,16 @@
-import '@polymer/paper-icon-button/paper-icon-button.js';
-import '@polymer/paper-input/paper-input.js';
-import '@polymer/paper-item/paper-icon-item.js';
-import '@polymer/paper-item/paper-item-body.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '@vaadin/vaadin-combo-box/vaadin-combo-box-light.js';
+import "@polymer/paper-icon-button/paper-icon-button.js";
+import "@polymer/paper-input/paper-input.js";
+import "@polymer/paper-item/paper-icon-item.js";
+import "@polymer/paper-item/paper-item-body.js";
+import { html } from "@polymer/polymer/lib/utils/html-tag.js";
+import { PolymerElement } from "@polymer/polymer/polymer-element.js";
+import "@vaadin/vaadin-combo-box/vaadin-combo-box-light.js";
 
+import "./state-badge.js";
 
-import './state-badge.js';
-
-import computeStateName from '../../common/entity/compute_state_name.js';
-import LocalizeMixin from '../../mixins/localize-mixin.js';
-import EventsMixin from '../../mixins/events-mixin.js';
+import computeStateName from "../../common/entity/compute_state_name.js";
+import LocalizeMixin from "../../mixins/localize-mixin.js";
+import EventsMixin from "../../mixins/events-mixin.js";
 
 /*
  * @appliesMixin LocalizeMixin
@@ -39,7 +38,16 @@ class HaEntityPicker extends EventsMixin(LocalizeMixin(PolymerElement)) {
       allow-custom-value="[[allowCustomEntity]]"
       on-change='_fireChanged'
     >
-      <paper-input autofocus="[[autofocus]]" label="[[_computeLabel(label, localize)]]" class="input" value="[[value]]" disabled="[[disabled]]">
+      <paper-input 
+        autofocus="[[autofocus]]"
+        label="[[_computeLabel(label, localize)]]"
+        class="input"
+        autocapitalize='none'
+        autocomplete='off'
+        autocorrect='off'
+        spellcheck='false'
+        value="[[value]]"
+        disabled="[[disabled]]">
         <paper-icon-button slot="suffix" class="clear-button" icon="hass:close" no-ripple="" hidden$="[[!value]]">Clear</paper-icon-button>
         <paper-icon-button slot="suffix" class="toggle-button" icon="[[_computeToggleIcon(opened)]]" hidden="[[!_states.length]]">Toggle</paper-icon-button>
       </paper-input>
@@ -69,12 +77,12 @@ class HaEntityPicker extends EventsMixin(LocalizeMixin(PolymerElement)) {
       },
       hass: {
         type: Object,
-        observer: '_hassChanged',
+        observer: "_hassChanged",
       },
       _hass: Object,
       _states: {
         type: Array,
-        computed: '_computeStates(_hass, domainFilter, entityFilter)',
+        computed: "_computeStates(_hass, domainFilter, entityFilter)",
       },
       autofocus: Boolean,
       label: {
@@ -87,7 +95,7 @@ class HaEntityPicker extends EventsMixin(LocalizeMixin(PolymerElement)) {
       opened: {
         type: Boolean,
         value: false,
-        observer: '_openedChanged',
+        observer: "_openedChanged",
       },
       domainFilter: {
         type: String,
@@ -103,7 +111,7 @@ class HaEntityPicker extends EventsMixin(LocalizeMixin(PolymerElement)) {
 
   _computeLabel(label, localize) {
     return label === undefined
-      ? localize('ui.components.entity.entity-picker.entity')
+      ? localize("ui.components.entity.entity-picker.entity")
       : label;
   }
 
@@ -113,10 +121,12 @@ class HaEntityPicker extends EventsMixin(LocalizeMixin(PolymerElement)) {
     let entityIds = Object.keys(hass.states);
 
     if (domainFilter) {
-      entityIds = entityIds.filter(eid => eid.substr(0, eid.indexOf('.')) === domainFilter);
+      entityIds = entityIds.filter(
+        (eid) => eid.substr(0, eid.indexOf(".")) === domainFilter
+      );
     }
 
-    let entities = entityIds.sort().map(key => hass.states[key]);
+    let entities = entityIds.sort().map((key) => hass.states[key]);
 
     if (entityFilter) {
       entities = entities.filter(entityFilter);
@@ -142,13 +152,13 @@ class HaEntityPicker extends EventsMixin(LocalizeMixin(PolymerElement)) {
   }
 
   _computeToggleIcon(opened) {
-    return opened ? 'hass:menu-up' : 'hass:menu-down';
+    return opened ? "hass:menu-up" : "hass:menu-down";
   }
 
   _fireChanged(ev) {
     ev.stopPropagation();
-    this.fire('change');
+    this.fire("change");
   }
 }
 
-customElements.define('ha-entity-picker', HaEntityPicker);
+customElements.define("ha-entity-picker", HaEntityPicker);

@@ -27,12 +27,13 @@
             "armed": "Охорона",
             "disarmed": "Знято",
             "armed_home": "Будинкова охорона",
-            "armed_away": "Охорона двору",
+            "armed_away": "Охорона (не вдома)",
             "armed_night": "Нічна охорона",
             "pending": "Очікую",
             "arming": "Ставлю на охорону",
             "disarming": "Зняття",
-            "triggered": "Тривога"
+            "triggered": "Тривога",
+            "armed_custom_bypass": "Охорона з винятками"
         },
         "automation": {
             "off": "Вимкнено",
@@ -79,6 +80,14 @@
                 "off": "Безпека",
                 "on": "Небезпечно"
             },
+            "presence": {
+                "off": "Не вдома",
+                "on": "Вдома"
+            },
+            "battery": {
+                "off": "Нормальний",
+                "on": "Низький"
+            },
             "problem": {
                 "off": "ОК",
                 "on": "Проблема"
@@ -98,6 +107,10 @@
             "garage_door": {
                 "off": "Зачинено",
                 "on": "Відкрито"
+            },
+            "heat": {
+                "off": "Норма",
+                "on": "Нагрівання"
             },
             "window": {
                 "off": "Зачинено",
@@ -229,6 +242,9 @@
         "weather": {
             "clear-night": "Ясно, ніч",
             "cloudy": "Хмарно",
+            "fog": "Туман",
+            "hail": "Град",
+            "lightning": "Блискавка",
             "lightning-rainy": "Блискавка, дощ",
             "partlycloudy": "Невелика хмарність",
             "rainy": "Дощова",
@@ -253,7 +269,8 @@
             "pending": "Очік",
             "arming": "Ставлю",
             "disarming": "Зняття",
-            "triggered": "Тривога"
+            "triggered": "Тривога",
+            "armed_custom_bypass": "Під охороною"
         },
         "device_tracker": {
             "home": "Вдома",
@@ -342,7 +359,12 @@
                         "unsaved_confirm": "У вас є незбережені зміни. Ви впевнені, що хочете вийти?",
                         "alias": "Назва",
                         "triggers": {
-                            "header": "Тригери"
+                            "header": "Тригери",
+                            "type": {
+                                "state": {
+                                    "for": "Протягом"
+                                }
+                            }
                         }
                     }
                 },
@@ -366,6 +388,31 @@
                         "deactivate_user": "Деактивувати користувача",
                         "delete_user": "Видалити користувача"
                     }
+                },
+                "cloud": {
+                    "caption": "Хмара Home Assistant",
+                    "description_login": "Увійшли в систему як {email}",
+                    "description_not_login": "Не ввійшли в систему"
+                },
+                "integrations": {
+                    "caption": "Інтеграція",
+                    "description": "Керування підключеними пристроями та службами",
+                    "discovered": "Виявлено",
+                    "configured": "Налаштовано",
+                    "new": "Налаштуйте нову інтеграцію",
+                    "configure": "Налаштувати",
+                    "none": "Ще нічого не налаштовано",
+                    "config_entry": {
+                        "no_devices": "Ця інтеграція не має пристроїв.",
+                        "no_device": "Об'єкти без пристроїв",
+                        "delete_confirm": "Ви впевнені, що хочете видалити цю інтеграцію?",
+                        "restart_confirm": "Перезавантажте Home Assistant, щоб завершити видалення цієї інтеграції",
+                        "manuf": "від {manufacturer}",
+                        "hub": "Підключено через",
+                        "firmware": "Прошивка: {version}",
+                        "device_unavailable": "пристрій недоступний",
+                        "entity_unavailable": "Недоступний"
+                    }
                 }
             },
             "profile": {
@@ -388,10 +435,61 @@
                     "link_promo": "Дізнайтеся про теми",
                     "dropdown_label": "Тема"
                 },
-                "current_user": "В даний час ви увійшли як {fullName}."
+                "refresh_tokens": {
+                    "header": "Токени Оновлення ",
+                    "description": "Кожен токен оновлення відображає сеанс входу в систему. Токени оновлення автоматично видалятимуться, коли ви натиснете вийти. Наступні токени оновлення доступні для вашого облікового запису.",
+                    "token_title": "Оновити токен для {clientId}",
+                    "created_at": "Створений в {date}",
+                    "confirm_delete": "Ви впевнені, що хочете видалити токен оновлення для {name} ?",
+                    "delete_failed": "Не вдалося видалити токен оновлення.",
+                    "last_used": "Останнє використання в {date} з {location}",
+                    "not_used": "Ніколи не використовувався",
+                    "current_token_tooltip": "Неможливо видалити поточний токен оновлення"
+                },
+                "long_lived_access_tokens": {
+                    "header": "Токени довготермінового доступу",
+                    "description": "Створюйте довгоживі токени доступу, щоб ваші сценарії могли взаємодіяти з Home Assistant. Кожен токен буде дійсним протягом 10 років. Наступні довгоживучі токени доступу наразі активні.",
+                    "learn_auth_requests": "Дізнайтеся, як зробити аутентифіковані запити.",
+                    "created_at": "Створено в {date}",
+                    "confirm_delete": "Ви впевнені, що хочете видалити токен доступу для {name} ?",
+                    "delete_failed": "Не вдалося видалити токен доступу.",
+                    "create": "Створити токен",
+                    "create_failed": "Не вдалося створити токен доступу.",
+                    "prompt_name": "Назва",
+                    "prompt_copy_token": "Скопіюйте ваш токен доступу. Знову він не буде показаний.",
+                    "empty_state": "У вас немає довгоіснуючих токенів доступу.",
+                    "last_used": "Останнє використання в {date} з {location}",
+                    "not_used": "Ніколи не використовувався"
+                },
+                "current_user": "В даний час ви увійшли як {fullName}.",
+                "is_owner": "Ви є власником.",
+                "logout": "Вийти",
+                "change_password": {
+                    "header": "Змінити пароль",
+                    "current_password": "Поточний пароль",
+                    "new_password": "Новий пароль",
+                    "confirm_new_password": "Підтвердіть Новий Пароль",
+                    "error_required": "Необхідно",
+                    "submit": "Відправити"
+                },
+                "mfa": {
+                    "header": "Багатофакторна перевірка справжності модулів",
+                    "disable": "Вимкнути",
+                    "enable": "Увімкнути",
+                    "confirm_disable": "Ви впевнені, що хочете вимкнути {name} ?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Скасовано",
+                    "title_success": "Успішно!",
+                    "step_done": "Налаштування виконано для {step}",
+                    "close": "Закрити",
+                    "submit": "Відправити"
+                }
             },
             "page-authorize": {
                 "initializing": "Ініціалізація",
+                "authorizing_client": "Ви збираєтеся надати {clientId} доступ до Home Assistant.",
+                "logging_in_with": "Вхід з **{authProviderName}**.",
                 "pick_auth_provider": "Або увійти з",
                 "abort_intro": "Логін скасовано",
                 "form": {
@@ -441,7 +539,8 @@
                                 "init": {
                                     "data": {
                                         "user": "Користувач"
-                                    }
+                                    },
+                                    "description": "Будь-ласка, виберіть користувача, яким ви хочете увійти:"
                                 }
                             },
                             "abort": {
@@ -452,9 +551,12 @@
                 }
             },
             "page-onboarding": {
+                "intro": "Ви готові розбудити свій будинок, повернути вашу конфіденційність і приєднатися до світової спільноти майстрів?",
                 "user": {
+                    "intro": "Давайте почнемо з створення облікового запису користувача.",
                     "required_field": "Необхідні",
                     "data": {
+                        "name": "Ім'я",
                         "username": "Імя користувача",
                         "password": "Пароль"
                     },
@@ -490,7 +592,15 @@
                     "temperature": "Температура",
                     "visibility": "Видимість",
                     "wind_speed": "Швидкість вітру"
-                }
+                },
+                "forecast": "Прогноз"
+            },
+            "alarm_control_panel": {
+                "code": "Код",
+                "clear_code": "Очистити",
+                "disarm": "Зняття з охорони",
+                "arm_home": "Поставити на охорону",
+                "arm_away": "Охорона (не вдома)"
             },
             "automation": {
                 "last_triggered": "Спрацьовано",
@@ -519,16 +629,24 @@
             "climate": {
                 "currently": "В даний час",
                 "on_off": "Вкл \/ викл",
-                "target_temperature": "Цільова температура",
+                "target_temperature": "Задана температура",
                 "target_humidity": "Цільова вологість",
                 "operation": "Режим",
                 "fan_mode": "Режим вентилятора",
                 "swing_mode": "Режим гойдання",
-                "away_mode": "Режим відсутності"
+                "away_mode": "Режиму очікування"
             },
             "lock": {
+                "code": "Код",
                 "lock": "Блокувати",
                 "unlock": "Розблокувати"
+            },
+            "water_heater": {
+                "currently": "В даний час",
+                "on_off": "Вкл \/ викл",
+                "target_temperature": "Задана температура",
+                "operation": "Операція",
+                "away_mode": "Режиму очікування"
             }
         },
         "components": {

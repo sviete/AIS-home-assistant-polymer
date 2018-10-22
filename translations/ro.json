@@ -13,7 +13,8 @@
         "dev-templates": "Sabloane",
         "dev-mqtt": "MQTT",
         "dev-info": "Info",
-        "calendar": "Calendar"
+        "calendar": "Calendar",
+        "profile": "Profil"
     },
     "state": {
         "default": {
@@ -319,7 +320,7 @@
                             "introduction": "Modificarea configurației poate fi un proces obositor. Noi stim. Această secțiune va încerca să vă facă viața un pic mai ușoară.",
                             "validation": {
                                 "heading": "Validare configurație",
-                                "introduction": "Validați configurația dvs. dacă ați făcut recent unele modificări și doriți să vă asigurați că aceasta este validă",
+                                "introduction": "Validați configurația dvs, dacă ați făcut recent unele modificări și doriți să vă asigurați că aceasta este validă.",
                                 "check_config": "Verificați configurația",
                                 "valid": "Configurația este validă!",
                                 "invalid": "Configurația este invalidă"
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Status",
                                     "from": "De la",
-                                    "to": "La"
+                                    "to": "La",
+                                    "for": "Pentru"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -531,14 +533,23 @@
                     "description_not_login": "Nu sunteți conectat (ă)"
                 },
                 "integrations": {
+                    "caption": "Integrări",
                     "description": "Gestionați dispozitivele și serviciile conectate",
+                    "discovered": "Descoperit",
                     "configured": "Configurat",
+                    "new": "Configurați o nouă integrare",
+                    "configure": "Configurează",
                     "none": "Nimic nu a fost configurat încă",
                     "config_entry": {
+                        "no_devices": "Această integrare nu are dispozitive.",
+                        "no_device": "Entități fără dispozitive",
                         "delete_confirm": "Sigur doriți să ștergeți această integrare?",
                         "restart_confirm": "Reporniți Home Assistant pentru a termina eliminarea acestei integrări",
+                        "manuf": "de {manufacturer}",
                         "hub": "Conectat prin",
-                        "device_unavailable": "dispozitiv indisponibil"
+                        "firmware": "Firmware: {version}",
+                        "device_unavailable": "dispozitiv indisponibil",
+                        "entity_unavailable": "Entitatea nu este disponibilă"
                     }
                 }
             },
@@ -590,12 +601,27 @@
                 },
                 "current_user": "În prezent sunteți conectat ca {fullName} .",
                 "is_owner": "Sunteți proprietar.",
+                "logout": "Deconectați-vă",
+                "change_password": {
+                    "header": "Schimbaţi parola",
+                    "current_password": "Parola Curentă",
+                    "new_password": "Parolă Nouă",
+                    "confirm_new_password": "Confirmați Noua Parolă",
+                    "error_required": "Necesar",
+                    "submit": "Trimite"
+                },
                 "mfa": {
+                    "header": "Autentificare cu doi factori",
+                    "disable": "Dezactivați",
+                    "enable": "Activați",
                     "confirm_disable": "Sigur doriți să dezactivați {name} ?"
                 },
                 "mfa_setup": {
+                    "title_aborted": "Anulat",
                     "title_success": "Succes!",
-                    "close": "Închide"
+                    "step_done": "Configurarea făcută pentru {step}",
+                    "close": "Închide",
+                    "submit": "Trimite"
                 }
             },
             "page-authorize": {
@@ -806,8 +832,11 @@
                 }
             },
             "water_heater": {
+                "currently": "În prezent",
                 "on_off": "Pornit \/ Oprit",
-                "target_temperature": "Temperatura țintă"
+                "target_temperature": "Temperatura țintă",
+                "operation": "Operație",
+                "away_mode": "Plecat"
             }
         },
         "components": {

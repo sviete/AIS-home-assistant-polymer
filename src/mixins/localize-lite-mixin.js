@@ -1,52 +1,75 @@
 /**
  * Lite mixin to add localization without depending on the Hass object.
  */
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
-import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
-import { AppLocalizeBehavior } from '../util/app-localize-behavior.js';
-import { getActiveTranslation, getTranslation } from '../util/hass-translation.js';
+import { dedupingMixin } from "@polymer/polymer/lib/utils/mixin.js";
+import { LocalizeBaseMixin } from "./localize-base-mixin";
+import {
+  getActiveTranslation,
+  getTranslation,
+} from "../util/hass-translation.js";
 
 /**
  * @polymerMixin
- * @appliesMixin AppLocalizeBehavior
  */
-export default dedupingMixin(superClass =>
-  class extends mixinBehaviors([AppLocalizeBehavior], superClass) {
-    static get properties() {
-      return {
-        language: {
-          type: String,
-          value: getActiveTranslation(),
-        },
-        resources: Object,
-        // The fragment to load.
-        translationFragment: String,
-      };
-    }
-
-    async ready() {
-      super.ready();
-
-      if (this.resources) {
-        return;
+export default dedupingMixin(
+  (superClass) =>
+    class extends LocalizeBaseMixin(superClass) {
+      static get properties() {
+        return {
+          language: {
+            type: String,
+            value: getActiveTranslation(),
+          },
+          resources: Object,
+          // The fragment to load.
+          translationFragment: String,
+          /**
+           * Translates a string to the current `language`. Any parameters to the
+           * string should be passed in order, as follows:
+           * `localize(stringKey, param1Name, param1Value, param2Name, param2Value)`
+           */
+          localize: {
+            type: Function,
+            computed: "__computeLocalize(language, resources, formats)",
+          },
+        };
       }
 
-      if (!this.translationFragment) {
-      // In dev mode, we will issue a warning if after a second we are still
-      // not configured correctly.
-        if (__DEV__) {
-        // eslint-disable-next-line
-          setTimeout(() => !this.resources && console.error(
-            'Forgot to pass in resources or set translationFragment for',
-            this.nodeName
-          ), 1000);
+      ready() {
+        super.ready();
+
+        if (this.resources) {
+          return;
         }
-        return;
+
+        if (!this.translationFragment) {
+          // In dev mode, we will issue a warning if after a second we are still
+          // not configured correctly.
+          if (__DEV__) {
+            /* eslint-disable no-console */
+            setTimeout(
+              () =>
+                !this.resources &&
+                console.error(
+                  "Forgot to pass in resources or set translationFragment for",
+                  this.nodeName
+                ),
+              1000
+            );
+          }
+          return;
+        }
+
+        this._updateResources();
       }
 
-      const { language, data } = await getTranslation(this.translationFragment);
-      this.resources = {
-        [language]: data
-      };
+      async _updateResources() {
+        const { language, data } = await getTranslation(
+          this.translationFragment
+        );
+        this.resources = {
+          [language]: data,
+        };
+      }
     }
-  });
+);

@@ -13,7 +13,8 @@
         "dev-templates": "Šablony",
         "dev-mqtt": "MQTT",
         "dev-info": "Informace",
-        "calendar": "Kalendář"
+        "calendar": "Kalendář",
+        "profile": "Profil"
     },
     "state": {
         "default": {
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Stav",
                                     "from": "Od",
-                                    "to": "Do"
+                                    "to": "Do",
+                                    "for": "Po dobu"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -524,6 +526,31 @@
                         "deactivate_user": "Deaktivovat uživatele",
                         "delete_user": "Odstranit uživatele"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Přihlášen jako {email}",
+                    "description_not_login": "Nepřihlášen"
+                },
+                "integrations": {
+                    "caption": "Integrace",
+                    "description": "Spravovat připojená zařízení a služby",
+                    "discovered": "Objeveno",
+                    "configured": "Zkonfigurováno",
+                    "new": "Nastavte novou integraci",
+                    "configure": "Konfigurovat",
+                    "none": "Zatím nic nezkonfigurováno",
+                    "config_entry": {
+                        "no_devices": "Tato integrace nemá žádná zařízení.",
+                        "no_device": "Entity bez zařízení",
+                        "delete_confirm": "Opravdu že chcete odstranit tuto integraci?",
+                        "restart_confirm": "Restartujte Home Assistant pro odstranění této integrace",
+                        "manuf": "od {manufacturer}",
+                        "hub": "Připojeno přes",
+                        "firmware": "Firmware: {version}",
+                        "device_unavailable": "zařízení není k dispozici",
+                        "entity_unavailable": "entita není k dispozici"
+                    }
                 }
             },
             "profile": {
@@ -546,7 +573,20 @@
                     "link_promo": "Další info o motivech",
                     "dropdown_label": "Motiv"
                 },
+                "refresh_tokens": {
+                    "header": "Obnovit tokeny",
+                    "description": "Každý obnovovací token představuje relaci přihlášení. Aktualizační tokeny budou automaticky odstraněny po klepnutí na tlačítko Odhlásit. Následující tokeny obnovení jsou v současné době aktivní pro váš účet.",
+                    "token_title": "Obnovit token pro {clientId}",
+                    "created_at": "Vytvořeno {date}",
+                    "confirm_delete": "Opravdu že chcete odstranit token pro {název}?",
+                    "delete_failed": "Nepodařilo se smazat token.",
+                    "last_used": "Naposledy použito {date} z {location}",
+                    "not_used": "Nikdy nebylo použito",
+                    "current_token_tooltip": "Nelze odstranit aktuální obnovení tokenu"
+                },
                 "long_lived_access_tokens": {
+                    "header": "Tokeny s dlouhou životností",
+                    "description": "Vytvořit přístupové tokeny s dlouhou životností, aby vaše skripty mohli komunikovat s Home Assistant instancí. Každý token bude platný po dobu 10 let od vytvoření. Tyto tokeny s dlouhou životností jsou v současné době aktivní.",
                     "learn_auth_requests": "Naučte se, jak posílat ověřené requesty.",
                     "created_at": "Vytvořeno {date}",
                     "confirm_delete": "Opravdu chcete smazat přístupový token pro {name} ?",
@@ -559,10 +599,29 @@
                     "last_used": "Naposledy použito {date} z {location}",
                     "not_used": "Nikdy nebylo použito"
                 },
-                "refresh_tokens": {
-                    "last_used": "Naposledy použito {date} z {location}",
-                    "not_used": "Nikdy nebylo použito",
-                    "current_token_tooltip": "Nelze odstranit aktuální obnovení tokenu"
+                "current_user": "Nyní jste přihlášeni jako {fullName}.",
+                "is_owner": "Jste vlastník.",
+                "logout": "Odhlásit se",
+                "change_password": {
+                    "header": "Změnit heslo",
+                    "current_password": "Současné heslo",
+                    "new_password": "Nové heslo",
+                    "confirm_new_password": "Potvrďte nové heslo",
+                    "error_required": "Povinný",
+                    "submit": "Odeslat"
+                },
+                "mfa": {
+                    "header": "Multifaktorové autentizační moduly",
+                    "disable": "Zakázat",
+                    "enable": "Povolit",
+                    "confirm_disable": "Opravdu chcete zakázat {name} ?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Zrušeno",
+                    "title_success": "Úspěch!",
+                    "step_done": "Dokončen krok {step}",
+                    "close": "Zavřít",
+                    "submit": "Odeslat"
                 }
             },
             "page-authorize": {
@@ -771,6 +830,13 @@
                     "turn_on": "Zapnout",
                     "turn_off": "Vypnout"
                 }
+            },
+            "water_heater": {
+                "currently": "Momentálně",
+                "on_off": "Zapnout \/ vypnout",
+                "target_temperature": "Cílová teplota",
+                "operation": "Provoz",
+                "away_mode": "Prázdninový režim"
             }
         },
         "components": {
