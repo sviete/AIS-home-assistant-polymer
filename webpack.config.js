@@ -10,7 +10,7 @@ const zopfli = require("@gfx/zopfli");
 const translationMetadata = require("./build-translations/translationMetadata.json");
 const { babelLoaderConfig } = require("./config/babel.js");
 
-const version = fs.readFileSync("setup.py", "utf8").match(/\d{8}[^']*/);
+const version = fs.readFileSync("setup.py", "utf8").match(/\d{8}\.\d+/);
 if (!version) {
   throw Error("Version not found");
 }
@@ -63,6 +63,10 @@ function createConfig(isProdBuild, latestBuild) {
     module: {
       rules: [
         babelLoaderConfig({ latestBuild }),
+        {
+          test: /\.css$/,
+          use: "raw-loader",
+        },
         {
           test: /\.(html)$/,
           use: {

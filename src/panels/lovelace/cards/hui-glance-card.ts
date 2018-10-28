@@ -13,15 +13,17 @@ import "../../../components/ha-card.js";
 import "../../../components/ha-icon.js";
 
 import { fireEvent } from "../../../common/dom/fire_event.js";
-import { HassLocalizeLitMixin } from "../../../mixins/lit-localize-mixin";
+import { hassLocalizeLitMixin } from "../../../mixins/lit-localize-mixin";
 import { HomeAssistant } from "../../../types.js";
 import { LovelaceCard, LovelaceConfig } from "../types.js";
+import { longPress } from "../common/directives/long-press-directive";
 
 interface EntityConfig {
   name: string;
   icon: string;
   entity: string;
   tap_action: "toggle" | "call-service" | "more-info";
+  hold_action?: "toggle" | "call-service" | "more-info";
   service?: string;
   service_data?: object;
 }
@@ -32,11 +34,12 @@ interface Config extends LovelaceConfig {
   title?: string;
   theme?: string;
   entities: EntityConfig[];
+  columns?: number;
 }
 
-export class HuiGlanceCard extends HassLocalizeLitMixin(LitElement)
+export class HuiGlanceCard extends hassLocalizeLitMixin(LitElement)
   implements LovelaceCard {
-  protected hass?: HomeAssistant;
+  public hass?: HomeAssistant;
   protected config?: Config;
   protected configEntities?: EntityConfig[];
 
@@ -48,7 +51,9 @@ export class HuiGlanceCard extends HassLocalizeLitMixin(LitElement)
   }
 
   public getCardSize() {
-    return (this.config!.title ? 1 : 0) + Math.ceil(this.configEntities!.length / 5);
+    return (
+      (this.config!.title ? 1 : 0) + Math.ceil(this.configEntities!.length / 5)
+    );
   }
 
   public setConfig(config: Config) {
@@ -56,17 +61,19 @@ export class HuiGlanceCard extends HassLocalizeLitMixin(LitElement)
     const entities = processConfigEntities(config.entities);
 
     for (const entity of entities) {
-      if (entity.tap_action === "call-service" && !entity.service) {
+      if (
+        (entity.tap_action === "call-service" ||
+          entity.hold_action === "call-service") &&
+        !entity.service
+      ) {
         throw new Error(
-          'Missing required property "service" when tap_action is call-service'
+          'Missing required property "service" when tap_action or hold_action is call-service'
         );
       }
     }
 
-    const columnWidth =
-      config.entities.length > 4 ? "20%" : `${100 / config.entities.length}%`;
-
-    this.style.setProperty("--glance-column-width", columnWidth);
+    const columns = config.columns || Math.min(config.entities.length, 5);
+    this.style.setProperty("--glance-column-width", `${100 / columns}%`);
 
     this.configEntities = entities;
 
@@ -87,7 +94,9 @@ export class HuiGlanceCard extends HassLocalizeLitMixin(LitElement)
       ${this.renderStyle()}
       <ha-card .header="${title}">
         <div class="entities ${classMap({ "no-header": !title })}">
-          ${this.configEntities!.map(entityConf => this.renderEntity(entityConf))}
+          ${this.configEntities!.map((entityConf) =>
+            this.renderEntity(entityConf)
+          )}
         </div>
       </ha-card>
     `;
@@ -148,7 +157,9 @@ export class HuiGlanceCard extends HassLocalizeLitMixin(LitElement)
       <div
         class="entity"
         .entityConf="${entityConf}"
-        @click="${this.handleClick}"
+        @ha-click="${(ev) => this.handleClick(ev, false)}"
+        @ha-hold="${(ev) => this.handleClick(ev, true)}"
+        .longPress="${longPress()}"
       >
         ${
           this.config!.show_name !== false
@@ -172,21 +183,23 @@ export class HuiGlanceCard extends HassLocalizeLitMixin(LitElement)
     `;
   }
 
-  private handleClick(ev: MouseEvent) {
+  private handleClick(ev: MouseEvent, hold) {
     const config = (ev.currentTarget as any).entityConf as EntityConfig;
     const entityId = config.entity;
-    switch (config.tap_action) {
+    const action = hold ? config.hold_action : config.tap_action || "more-info";
+    switch (action) {
       case "toggle":
         toggleEntity(this.hass, entityId);
         break;
-      case "call-service": {
+      case "call-service":
         const [domain, service] = config.service!.split(".", 2);
         const serviceData = { entity_id: entityId, ...config.service_data };
         this.hass!.callService(domain, service, serviceData);
         break;
-      }
-      default:
+      case "more-info":
         fireEvent(this, "hass-more-info", { entityId });
+        break;
+      default:
     }
   }
 }

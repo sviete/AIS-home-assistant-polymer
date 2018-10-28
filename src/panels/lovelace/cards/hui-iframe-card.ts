@@ -2,7 +2,6 @@ import { html, LitElement } from "@polymer/lit-element";
 
 import "../../../components/ha-card.js";
 
-import { HassLocalizeLitMixin } from "../../../mixins/lit-localize-mixin";
 import { LovelaceCard, LovelaceConfig } from "../types.js";
 
 interface Config extends LovelaceConfig {
@@ -11,8 +10,7 @@ interface Config extends LovelaceConfig {
   url: string;
 }
 
-export class HuiIframeCard extends HassLocalizeLitMixin(LitElement)
-  implements LovelaceCard {
+export class HuiIframeCard extends LitElement implements LovelaceCard {
   protected config?: Config;
 
   static get properties() {

@@ -90,6 +90,7 @@ class HaCards extends PolymerElement {
     .badges {
       font-size: 85%;
       text-align: center;
+      padding-top: 16px;
     }
 
     .column {
@@ -251,7 +252,10 @@ class HaCards extends PolymerElement {
       entities.forEach((entity) => {
         const domain = computeStateDomain(entity);
 
-        if (domain in DOMAINS_WITH_CARD) {
+        if (
+          domain in DOMAINS_WITH_CARD &&
+          !entity.attributes.custom_ui_state_card
+        ) {
           owncard.push(entity);
           size += DOMAINS_WITH_CARD[domain];
         } else {
