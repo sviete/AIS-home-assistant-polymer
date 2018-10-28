@@ -1,6 +1,7 @@
 import { fireEvent } from "../../../src/common/dom/fire_event.js";
 
-import demoConfig from "./demo_config.js";
+import { demoConfig } from "./demo_config.js";
+import { demoServices } from "./demo_services";
 import demoResources from "./demo_resources.js";
 
 const ensureArray = (val) => (Array.isArray(val) ? val : [val]);
@@ -9,6 +10,7 @@ export default (elements, { initialStates = {} } = {}) => {
   elements = ensureArray(elements);
 
   const wsCommands = {};
+  const restResponses = {};
   let hass;
   const entities = {};
 
@@ -22,9 +24,11 @@ export default (elements, { initialStates = {} } = {}) => {
   updateHass({
     // Home Assistant properties
     config: demoConfig,
+    services: demoServices,
     language: "en",
     resources: demoResources,
     states: initialStates,
+    themes: {},
 
     // Mock properties
     mockEntities: entities,
@@ -66,6 +70,14 @@ export default (elements, { initialStates = {} } = {}) => {
       console.log("sendWS", msg);
     },
 
+    async callApi(method, path, parameters) {
+      const callback = restResponses[path];
+
+      return callback
+        ? callback(method, path, parameters)
+        : Promise.reject(`Mock for {path} is not implemented`);
+    },
+
     // Mock functions
     updateHass,
     updateStates(newStates) {
@@ -81,6 +93,12 @@ export default (elements, { initialStates = {} } = {}) => {
         states[ent.entityId] = ent.toState();
       });
       this.updateStates(states);
+    },
+    mockWS(type, callback) {
+      wsCommands[type] = callback;
+    },
+    mockAPI(path, callback) {
+      restResponses[path] = callback;
     },
   });
 

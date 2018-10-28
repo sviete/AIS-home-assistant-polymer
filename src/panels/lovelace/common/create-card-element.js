@@ -1,14 +1,14 @@
 import { fireEvent } from "../../../common/dom/fire_event.js";
 
 import "../cards/hui-alarm-panel-card.js";
-import "../cards/hui-conditional-card.js";
-import "../cards/hui-entities-card.js";
+import "../cards/hui-conditional-card.ts";
+import "../cards/hui-entities-card.ts";
 import "../cards/hui-entity-button-card.ts";
 import "../cards/hui-entity-filter-card.js";
-import "../cards/hui-error-card.js";
+import "../cards/hui-error-card.ts";
 import "../cards/hui-glance-card.ts";
 import "../cards/hui-history-graph-card.js";
-import "../cards/hui-horizontal-stack-card.js";
+import "../cards/hui-horizontal-stack-card.ts";
 import "../cards/hui-iframe-card.ts";
 import "../cards/hui-map-card.js";
 import "../cards/hui-markdown-card.ts";
@@ -19,7 +19,8 @@ import "../cards/hui-picture-entity-card";
 import "../cards/hui-picture-glance-card";
 import "../cards/hui-plant-status-card.js";
 import "../cards/hui-sensor-card.js";
-import "../cards/hui-vertical-stack-card.js";
+import "../cards/hui-vertical-stack-card.ts";
+import "../cards/hui-thermostat-card.ts";
 import "../cards/hui-weather-forecast-card";
 import "../cards/hui-gauge-card.js";
 
@@ -46,6 +47,7 @@ const CARD_TYPES = new Set([
   "picture-glance",
   "plant-status",
   "sensor",
+  "thermostat",
   "vertical-stack",
   "weather-forecast",
 ]);
