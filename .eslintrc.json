@@ -1,8 +1,6 @@
 {
   "extends": "./.eslintrc-hound.json",
-  "plugins": [
-    "react"
-  ],
+  "plugins": ["react"],
   "env": {
     "browser": true
   },

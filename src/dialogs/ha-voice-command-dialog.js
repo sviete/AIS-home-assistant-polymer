@@ -1,10 +1,10 @@
-import "@polymer/iron-icon/iron-icon.js";
-import "@polymer/paper-dialog-behavior/paper-dialog-shared-styles.js";
-import "@polymer/paper-icon-button/paper-icon-button.js";
-import { html } from "@polymer/polymer/lib/utils/html-tag.js";
-import { PolymerElement } from "@polymer/polymer/polymer-element.js";
+import "@polymer/iron-icon/iron-icon";
+import "@polymer/paper-dialog-behavior/paper-dialog-shared-styles";
+import "@polymer/paper-icon-button/paper-icon-button";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import DialogMixin from "../mixins/dialog-mixin.js";
+import DialogMixin from "../mixins/dialog-mixin";
 
 /*
  * @appliesMixin DialogMixin
@@ -171,7 +171,7 @@ class HaVoiceCommandDialog extends DialogMixin(PolymerElement) {
       var text = this.results.final || this.results.interim;
       this.results = null;
       if (text === "") {
-        text = "nic nie słyszę...";
+        text = "<nic nie słyszę...>";
       }
       this.push("_conversation", { who: "user", text: text, error: true });
     }.bind(this);

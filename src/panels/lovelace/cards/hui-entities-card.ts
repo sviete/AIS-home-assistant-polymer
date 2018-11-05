@@ -1,17 +1,24 @@
-import { html, LitElement, PropertyDeclarations } from "@polymer/lit-element";
+import {
+  html,
+  LitElement,
+  PropertyDeclarations,
+  PropertyValues,
+} from "@polymer/lit-element";
+import { TemplateResult } from "lit-html";
 
-import "../../../components/ha-card.js";
-import "../components/hui-entities-toggle.js";
+import "../../../components/ha-card";
+import "../components/hui-entities-toggle";
 
-import { fireEvent } from "../../../common/dom/fire_event.js";
-import { DOMAINS_HIDE_MORE_INFO } from "../../../common/const.js";
+import { fireEvent } from "../../../common/dom/fire_event";
+import { DOMAINS_HIDE_MORE_INFO } from "../../../common/const";
 import { hassLocalizeLitMixin } from "../../../mixins/lit-localize-mixin";
-import { LovelaceCard, LovelaceConfig } from "../types.js";
-import createRowElement from "../common/create-row-element.js";
-import computeDomain from "../../../common/entity/compute_domain.js";
+import { HomeAssistant } from "../../../types";
+import { EntityConfig, EntityRow } from "../entity-rows/types";
+import { LovelaceCard, LovelaceConfig } from "../types";
 import processConfigEntities from "../common/process-config-entities";
-import { HomeAssistant } from "../../../types.js";
-import { EntityConfig, EntityRow } from "../entity-rows/types.js";
+import createRowElement from "../common/create-row-element";
+import computeDomain from "../../../common/entity/compute_domain";
+import applyThemesOnElement from "../../../common/dom/apply_themes_on_element";
 
 interface ConfigEntity extends EntityConfig {
   type?: string;
@@ -26,6 +33,7 @@ interface Config extends LovelaceConfig {
   show_header_toggle?: boolean;
   title?: string;
   entities: ConfigEntity[];
+  theme?: string;
 }
 
 class HuiEntitiesCard extends hassLocalizeLitMixin(LitElement)
@@ -34,13 +42,19 @@ class HuiEntitiesCard extends hassLocalizeLitMixin(LitElement)
   protected _config?: Config;
   protected _configEntities?: ConfigEntity[];
 
-  set hass(hass) {
+  set hass(hass: HomeAssistant) {
     this._hass = hass;
-    this.shadowRoot!.querySelectorAll("#states > *").forEach(
+    this.shadowRoot!.querySelectorAll("#states > div > *").forEach(
       (element: unknown) => {
         (element as EntityRow).hass = hass;
       }
     );
+    const entitiesToggle = this.shadowRoot!.querySelector(
+      "hui-entities-toggle"
+    );
+    if (entitiesToggle) {
+      (entitiesToggle as any).hass = hass;
+    }
   }
 
   static get properties(): PropertyDeclarations {
@@ -49,7 +63,7 @@ class HuiEntitiesCard extends hassLocalizeLitMixin(LitElement)
     };
   }
 
-  public getCardSize() {
+  public getCardSize(): number {
     if (!this._config) {
       return 0;
     }
@@ -57,31 +71,20 @@ class HuiEntitiesCard extends hassLocalizeLitMixin(LitElement)
     return (this._config.title ? 1 : 0) + this._config.entities.length;
   }
 
-  public setConfig(config: Config) {
+  public setConfig(config: Config): void {
     const entities = processConfigEntities(config.entities);
-    for (const entity of entities) {
-      if (
-        entity.type === "call-service" &&
-        (!entity.service ||
-          !entity.name ||
-          !entity.icon ||
-          !entity.service_data ||
-          !entity.action_name)
-      ) {
-        throw new Error("Missing required property when type is call-service");
-      } else if (
-        entity.type === "weblink" &&
-        (!entity.name || !entity.icon || !entity.url)
-      ) {
-        throw new Error("Missing required property when type is weblink");
-      }
-    }
 
-    this._config = config;
+    this._config = { theme: "default", ...config };
     this._configEntities = entities;
   }
 
-  protected render() {
+  protected updated(_changedProperties: PropertyValues): void {
+    if (this._hass && this._config) {
+      applyThemesOnElement(this, this._hass.themes, this._config.theme);
+    }
+  }
+
+  protected render(): TemplateResult {
     if (!this._config || !this._hass) {
       return html``;
     }
@@ -105,8 +108,7 @@ class HuiEntitiesCard extends hassLocalizeLitMixin(LitElement)
                     .entities="${this._configEntities!.map(
                       (conf) => conf.entity
                     )}"
-                  >
-                  </hui-entities-toggle>`
+                  ></hui-entities-toggle>`
               }
             </div>`
         }
@@ -119,7 +121,7 @@ class HuiEntitiesCard extends hassLocalizeLitMixin(LitElement)
     `;
   }
 
-  private renderStyle() {
+  private renderStyle(): TemplateResult {
     return html`
       <style>
         ha-card {
@@ -129,9 +131,9 @@ class HuiEntitiesCard extends hassLocalizeLitMixin(LitElement)
           margin: -4px 0;
         }
         #states > * {
-          margin: 4px 0;
+          margin: 8px 0;
         }
-        #states > * {
+        #states > div > * {
           overflow: hidden;
         }
         .header {
@@ -154,7 +156,7 @@ class HuiEntitiesCard extends hassLocalizeLitMixin(LitElement)
     `;
   }
 
-  private renderEntity(entityConf) {
+  private renderEntity(entityConf: ConfigEntity): TemplateResult {
     const element = createRowElement(entityConf);
     if (this._hass) {
       element.hass = this._hass;
@@ -167,12 +169,11 @@ class HuiEntitiesCard extends hassLocalizeLitMixin(LitElement)
       element.addEventListener("click", () => this._handleClick(entityConf));
     }
 
-    return element;
+    return html`<div>${element}</div>`;
   }
 
-  private _handleClick(entityConf: ConfigEntity) {
+  private _handleClick(entityConf: ConfigEntity): void {
     const entityId = entityConf.entity;
-
     fireEvent(this, "hass-more-info", { entityId });
   }
 }

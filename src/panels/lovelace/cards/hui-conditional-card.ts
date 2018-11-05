@@ -1,7 +1,7 @@
-import computeCardSize from "../common/compute-card-size.js";
-import createCardElement from "../common/create-card-element.js";
-import { HomeAssistant } from "../../../types.js";
-import { LovelaceCard, LovelaceConfig } from "../types.js";
+import computeCardSize from "../common/compute-card-size";
+import createCardElement from "../common/create-card-element";
+import { HomeAssistant } from "../../../types";
+import { LovelaceCard, LovelaceConfig } from "../types";
 
 interface Condition {
   entity: string;
@@ -15,8 +15,9 @@ interface Config extends LovelaceConfig {
 }
 
 class HuiConditionalCard extends HTMLElement implements LovelaceCard {
-  protected config?: Config;
-  protected card?: LovelaceCard;
+  private _hass?: HomeAssistant;
+  private _config?: Config;
+  private _card?: LovelaceCard;
 
   public setConfig(config) {
     if (
@@ -28,18 +29,27 @@ class HuiConditionalCard extends HTMLElement implements LovelaceCard {
       throw new Error("Error in card configuration.");
     }
 
-    this.config = config;
-    this.card = createCardElement(config.card);
-    if (this.card) {
-      this.appendChild(this.card);
-      this.card.hass = this.hass;
+    if (this._card && this._card.parentElement) {
+      this.removeChild(this._card);
+    }
+
+    this._config = config;
+    this._card = createCardElement(config.card);
+    if (this._hass) {
+      this.hass = this._hass;
     }
   }
 
   set hass(hass: HomeAssistant) {
+    this._hass = hass;
+
+    if (!this._card) {
+      return;
+    }
+
     const visible =
-      this.config &&
-      this.config.conditions.every((c) => {
+      this._config &&
+      this._config.conditions.every((c) => {
         if (!(c.entity in hass.states)) {
           return false;
         }
@@ -49,15 +59,18 @@ class HuiConditionalCard extends HTMLElement implements LovelaceCard {
         return hass.states[c.entity].state !== c.state_not;
       });
 
-    if (visible && this.card) {
-      this.card.hass = hass;
+    if (visible) {
+      this._card.hass = hass;
+      if (!this._card.parentElement) {
+        this.appendChild(this._card);
+      }
+    } else if (this._card.parentElement) {
+      this.removeChild(this._card);
     }
-
-    this.style.setProperty("display", visible ? "" : "none");
   }
 
   public getCardSize() {
-    return computeCardSize(this.card);
+    return computeCardSize(this._card);
   }
 }
 
