@@ -1,10 +1,10 @@
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../components/hui-generic-entity-row.js';
+import "../components/hui-generic-entity-row";
 
-import timerTimeRemaining from '../../../common/entity/timer_time_remaining.js';
-import secondsToDuration from '../../../common/datetime/seconds_to_duration.js';
+import timerTimeRemaining from "../../../common/entity/timer_time_remaining";
+import secondsToDuration from "../../../common/datetime/seconds_to_duration";
 
 class HuiTimerEntityRow extends PolymerElement {
   static get template() {
@@ -13,10 +13,16 @@ class HuiTimerEntityRow extends PolymerElement {
         hass="[[hass]]"
         config="[[_config]]"
       >
-        <div>
-          [[_computeDisplay(_stateObj, _timeRemaining)]]
-        </div>
+        ${this.timerControlTemplate}
       </hui-generic-entity-row>
+    `;
+  }
+
+  static get timerControlTemplate() {
+    return html`
+      <div>
+        [[_computeDisplay(_stateObj, _timeRemaining)]]
+      </div>
     `;
   }
 
@@ -26,10 +32,10 @@ class HuiTimerEntityRow extends PolymerElement {
       _config: Object,
       _stateObj: {
         type: Object,
-        computed: '_computeStateObj(hass.states, _config.entity)',
-        observer: '_stateObjChanged'
+        computed: "_computeStateObj(hass.states, _config.entity)",
+        observer: "_stateObjChanged",
       },
-      _timeRemaining: Number
+      _timeRemaining: Number,
     };
   }
 
@@ -57,8 +63,11 @@ class HuiTimerEntityRow extends PolymerElement {
     this._clearInterval();
     this._calculateRemaining(stateObj);
 
-    if (stateObj.state === 'active') {
-      this._updateRemaining = setInterval(() => this._calculateRemaining(this._stateObj), 1000);
+    if (stateObj.state === "active") {
+      this._updateRemaining = setInterval(
+        () => this._calculateRemaining(this._stateObj),
+        1000
+      );
     }
   }
 
@@ -67,12 +76,14 @@ class HuiTimerEntityRow extends PolymerElement {
   }
 
   _computeDisplay(stateObj, time) {
-    if (stateObj.state === 'idle' || time === 0) return stateObj.state;
+    if (!stateObj) return null;
+
+    if (stateObj.state === "idle" || time === 0) return stateObj.state;
 
     let display = secondsToDuration(time);
 
-    if (stateObj.state === 'paused') {
-      display += ' (paused)';
+    if (stateObj.state === "paused") {
+      display += " (paused)";
     }
 
     return display;
@@ -84,9 +95,9 @@ class HuiTimerEntityRow extends PolymerElement {
 
   setConfig(config) {
     if (!config || !config.entity) {
-      throw new Error('Entity not configured.');
+      throw new Error("Entity not configured.");
     }
     this._config = config;
   }
 }
-customElements.define('hui-timer-entity-row', HuiTimerEntityRow);
+customElements.define("hui-timer-entity-row", HuiTimerEntityRow);

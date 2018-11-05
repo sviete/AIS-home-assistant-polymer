@@ -13,7 +13,8 @@
         "dev-templates": "Predloge",
         "dev-mqtt": "MQTT",
         "dev-info": "Info",
-        "calendar": "Koledar"
+        "calendar": "Koledar",
+        "profile": "Profil"
     },
     "state": {
         "default": {
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Stanje",
                                     "from": "Od",
-                                    "to": "Za"
+                                    "to": "Za",
+                                    "for": "Za"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -524,6 +526,31 @@
                         "deactivate_user": "Deaktiviraj uporabnika",
                         "delete_user": "Izbriši uporabnika"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Prijavljen kot {email}",
+                    "description_not_login": "Niste prijavljeni"
+                },
+                "integrations": {
+                    "caption": "Integracije",
+                    "description": "Upravljanje povezanih naprav in storitev",
+                    "discovered": "Odkrito",
+                    "configured": "Konfigurirano",
+                    "new": "Nastavite novo integracijo",
+                    "configure": "Konfiguriraj",
+                    "none": "Nič še ni konfigurirano",
+                    "config_entry": {
+                        "no_devices": "Ta integracija je brez naprav.",
+                        "no_device": "Subjekti brez naprav",
+                        "delete_confirm": "Ali ste prepričani, da želite izbrisati to integracijo?",
+                        "restart_confirm": "Znova zaženite Home Assistent-a, da dokončate odstranitev te integracije",
+                        "manuf": "po {manufacturer}",
+                        "hub": "Povezan prek",
+                        "firmware": "Firmware: {version}",
+                        "device_unavailable": "naprava ni na voljo",
+                        "entity_unavailable": "subjekt ni na voljo"
+                    }
                 }
             },
             "profile": {
@@ -545,6 +572,145 @@
                     "error_no_theme": "Teme niso na voljo.",
                     "link_promo": "Preberite več o temah",
                     "dropdown_label": "Tema"
+                },
+                "refresh_tokens": {
+                    "header": "Osvežilni žetoni",
+                    "description": "Vsak osvežilni žeton predstavlja sejo za prijavo. Osvežilni žetoni se samodejno odstranijo, ko kliknete odjava. Za vaš račun so trenutno aktivni naslednji žetoni za osveževanje.",
+                    "token_title": "Žeton za osveževanje za {clientId}",
+                    "created_at": "Ustvarjen na {date}",
+                    "confirm_delete": "Ali ste prepričani, da želite izbrisati žeton za osveževanje za {name} ?",
+                    "delete_failed": "Žetonov za osveževanje ni bilo mogoče izbrisati.",
+                    "last_used": "Nazadnje uporabljen {date} iz {location}",
+                    "not_used": "Nikoli ni bil uporabljen",
+                    "current_token_tooltip": "Trenutni  žeton ni mogoče izbrisati"
+                },
+                "long_lived_access_tokens": {
+                    "header": "Dolgotrajni dostopni žetoni",
+                    "description": "Ustvarite dolgožive žetone dostopa, s katerimi lahko skripte komunicirajo z vašim primerkom Home Assistenta. Vsak žeton bo veljaven 10 let od nastanka. Trenutno so aktivni naslednji dolgotrajni dostopni žetoni.",
+                    "learn_auth_requests": "Naučite se, kako naredite preverjene zahteve.",
+                    "created_at": "Ustvarjen na {date}",
+                    "confirm_delete": "Ali ste prepričani, da želite izbrisati žeton za dostop za {name} ?",
+                    "delete_failed": "Ni bilo mogoče ustvariti žetona za dostop.",
+                    "create": "Ustvari žeton",
+                    "create_failed": "Ni bilo mogoče ustvariti žetona za dostop.",
+                    "prompt_name": "Ime?",
+                    "prompt_copy_token": "Kopirate žeton za dostop. Ta ne bo prikazan znova.",
+                    "empty_state": "Nimate dostopnih žetonov z daljšim rokom trajanja.",
+                    "last_used": "Nazadnje uporabljen {date} iz {location}",
+                    "not_used": "Nikoli ni bil uporabljen"
+                },
+                "current_user": "Trenutno ste prijavljeni kot {fullName} .",
+                "is_owner": "Ste lastnik.",
+                "logout": "Odjava",
+                "change_password": {
+                    "header": "Spremeni geslo",
+                    "current_password": "Trenutno geslo",
+                    "new_password": "Novo geslo",
+                    "confirm_new_password": "Potrdite novo geslo",
+                    "error_required": "Zahtevano",
+                    "submit": "Pošlji"
+                },
+                "mfa": {
+                    "header": "Večfaktorski moduli za preverjanje pristnosti",
+                    "disable": "Onemogoči",
+                    "enable": "Omogoči",
+                    "confirm_disable": "Ali ste prepričani, da želite onemogočiti {name} ?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Prekinjeno",
+                    "title_success": "Uspeh!",
+                    "step_done": "Nastavitev je bila opravljena za {step}",
+                    "close": "Zapri",
+                    "submit": "Pošlji"
+                }
+            },
+            "page-authorize": {
+                "initializing": "Inicializacija",
+                "authorizing_client": "Dali boste {clientId} dostop do vašega Home assistenta.",
+                "logging_in_with": "Prijava z **{authProviderName}**.",
+                "pick_auth_provider": "Ali se prijavite z",
+                "abort_intro": "Prijava prekinjena",
+                "form": {
+                    "working": "Prosimo počakajte",
+                    "unknown_error": "Nekaj ​​je šlo narobe",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Uporabniško ime",
+                                        "password": "Geslo"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Dvofaktorska koda za avtorizacijo"
+                                    },
+                                    "description": "V svoji napravi odprite **{mfa_module_name}**, da si ogledate svojo dvofaktorsko kodo za preverjanje pristnosti in preverite svojo identiteto:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Neveljavno uporabniško ime ali geslo",
+                                "invalid_code": "Neveljavna avtorizacijska koda"
+                            },
+                            "abort": {
+                                "login_expired": "Seja je potekla, prosimo, prijavite se znova."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "API Geslo"
+                                    },
+                                    "description": "Prosimo vnesite API geslo v vašem http config-u:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Dvofaktorska koda za avtorizacijo"
+                                    },
+                                    "description": "V svoji napravi odprite **{mfa_module_name}**, da si ogledate svojo dvofaktorsko kodo za preverjanje pristnosti in preverite svojo identiteto:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Neveljavna API geslo",
+                                "invalid_code": "Neveljavna avtorizacijska koda"
+                            },
+                            "abort": {
+                                "no_api_password_set": "Nimate nastavljenega gesla API-ja.",
+                                "login_expired": "Seja je potekla, prosimo, prijavite se znova."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Uporabnik"
+                                    },
+                                    "description": "Izberite uporabnika s katerim se želite prijaviti:"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "Vaš računalnik ni dodan med zaupanja vredne."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Ali ste pripravljeni prebuditi svoj dom, povrniti svojo zasebnost in se pridružiti svetovni skupnosti ustvarjalcev?",
+                "user": {
+                    "intro": "Začnite tako, da ustvarite uporabniški račun.",
+                    "required_field": "Zahtevano",
+                    "data": {
+                        "name": "Ime",
+                        "username": "Uporabniško ime",
+                        "password": "Geslo"
+                    },
+                    "create_account": "Ustvarite račun",
+                    "error": {
+                        "required_fields": "Izpolnite vsa zahtevana polja"
+                    }
                 }
             }
         },
@@ -664,6 +830,13 @@
                     "turn_on": "Vklopite",
                     "turn_off": "Izklopite"
                 }
+            },
+            "water_heater": {
+                "currently": "Trenutno",
+                "on_off": "Vključen \/ izključen",
+                "target_temperature": "Ciljna temperatura",
+                "operation": "Delovanje",
+                "away_mode": "Način odsotnosti"
             }
         },
         "components": {
@@ -705,6 +878,16 @@
                 "name": "Ime",
                 "entity_id": "ID subjekta"
             }
+        },
+        "auth_store": {
+            "ask": "Ali želite shraniti to prijavo?",
+            "decline": "Ne hvala",
+            "confirm": "Shrani prijavo"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Kliknite gumb, da konfigurirate {entity}",
+            "empty": "Ni obvestil",
+            "title": "Obvestila"
         }
     },
     "domain": {

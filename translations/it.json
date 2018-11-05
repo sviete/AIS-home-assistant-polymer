@@ -13,7 +13,8 @@
         "dev-templates": "Modelli",
         "dev-mqtt": "MQTT",
         "dev-info": "Informazioni",
-        "calendar": "Calendario"
+        "calendar": "Calendario",
+        "profile": "Profilo"
     },
     "state": {
         "default": {
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Stato",
                                     "from": "Da",
-                                    "to": "A"
+                                    "to": "A",
+                                    "for": "Per"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -524,6 +526,191 @@
                         "deactivate_user": "Disattiva utente",
                         "delete_user": "Elimina utente"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Connesso come {email}",
+                    "description_not_login": "Non loggato"
+                },
+                "integrations": {
+                    "caption": "integrazioni",
+                    "description": "Gestisci dispositivi e servizi connessi",
+                    "discovered": "Scoperto",
+                    "configured": "Configurato",
+                    "new": "Configura una nuova integrazione",
+                    "configure": "Configura",
+                    "none": "Non hai ancora configurato niente",
+                    "config_entry": {
+                        "no_devices": "Questa integrazione non ha dispositivi.",
+                        "no_device": "Entità senza dispositivi",
+                        "delete_confirm": "Sei sicuro di voler eliminare questa integrazione?",
+                        "restart_confirm": "Riavvia Home Assistant per terminare la rimozione di questa integrazione",
+                        "manuf": "da {produttore}",
+                        "hub": "Connesso via",
+                        "firmware": "Firmware: {versione}",
+                        "device_unavailable": "dispositivo non disponibile",
+                        "entity_unavailable": "entità non disponibile"
+                    }
+                }
+            },
+            "profile": {
+                "push_notifications": {
+                    "header": "Notifiche push",
+                    "description": "Invia notifiche a questo dispositivo.",
+                    "error_load_platform": "Configura notify.html5.",
+                    "error_use_https": "Richiede SSL abilitato per il frontend.",
+                    "push_notifications": "Notifiche push",
+                    "link_promo": "Per saperne di più"
+                },
+                "language": {
+                    "header": "Lingua",
+                    "link_promo": "Aiuta a tradurre",
+                    "dropdown_label": "Lingua"
+                },
+                "themes": {
+                    "header": "Tema",
+                    "error_no_theme": "Nessun tema disponibile.",
+                    "link_promo": "Per saperne di più sui temi",
+                    "dropdown_label": "Tema"
+                },
+                "refresh_tokens": {
+                    "header": "Token di aggiornamento",
+                    "description": "Ogni token di aggiornamento rappresenta una sessione di accesso. I token di aggiornamento verranno rimossi automaticamente quando si fa clic su Disconnetti. I seguenti token di aggiornamento sono attualmente attivi per il tuo account.",
+                    "token_title": "Token di aggiornamento per {clientId}",
+                    "created_at": "Creato il {date}",
+                    "confirm_delete": "Sei sicuro di voler eliminare il token di aggiornamento per {name} ?",
+                    "delete_failed": "Impossibile eliminare il token di aggiornamento.",
+                    "last_used": "Utilizzato l'ultima volta il {date} da {location}",
+                    "not_used": "Non è mai stato usato",
+                    "current_token_tooltip": "Impossibile eliminare il token di aggiornamento corrente"
+                },
+                "long_lived_access_tokens": {
+                    "header": "Token di accesso a lunga vita",
+                    "description": "Crea token di accesso di lunga durata per consentire agli script di interagire con l'istanza di Home Assistant. Ogni token sarà valido per 10 anni dalla creazione. I seguenti token di accesso a vita lunga sono attualmente attivi.",
+                    "learn_auth_requests": "Scopri come effettuare richieste autenticate.",
+                    "created_at": "Creato il {date}",
+                    "confirm_delete": "Sei sicuro di voler eliminare il token di accesso per {name} ?",
+                    "delete_failed": "Impossibile eliminare il token di accesso.",
+                    "create": "Crea token",
+                    "create_failed": "Impossibile creare il token di accesso.",
+                    "prompt_name": "Nome?",
+                    "prompt_copy_token": "Copia il tuo token di accesso. Non verrà più mostrato.",
+                    "empty_state": "Non hai ancora token di accesso di lunga durata.",
+                    "last_used": "Utilizzato l'ultima volta il {date} da {location}",
+                    "not_used": "Non è mai stato usato"
+                },
+                "current_user": "Sei attualmente connesso come {fullName} .",
+                "is_owner": "Sei un proprietario.",
+                "logout": "Esci",
+                "change_password": {
+                    "header": "Cambia password",
+                    "current_password": "Password corrente",
+                    "new_password": "Nuova password",
+                    "confirm_new_password": "Conferma la nuova password",
+                    "error_required": "Richiesto",
+                    "submit": "Invia"
+                },
+                "mfa": {
+                    "header": "Codice di autenticazione a più fattori",
+                    "disable": "Disattivare",
+                    "enable": "Abilita",
+                    "confirm_disable": "Sei sicuro di voler disabilitare {name} ?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Interrotto",
+                    "title_success": "Completata con Successo",
+                    "step_done": "Installazione completata per {step}",
+                    "close": "Chiudi",
+                    "submit": "Invia"
+                }
+            },
+            "page-authorize": {
+                "initializing": "Inizializzazione",
+                "authorizing_client": "Stai per dare accesso {clientId} alla tua istanza di Assistente Home.",
+                "logging_in_with": "Accesso con **{authProviderName}**.",
+                "pick_auth_provider": "Oppure accedi con",
+                "abort_intro": "Login interrotto",
+                "form": {
+                    "working": "Attendere prego",
+                    "unknown_error": "Qualcosa è andato storto",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Nome utente",
+                                        "password": "Password"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Codice di autenticazione a due fattori"
+                                    },
+                                    "description": "Apri il **{mfa_module_name}** sul tuo dispositivo per visualizzare il codice di autenticazione a due fattori e verificare la tua identità:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Nome utente o password errati",
+                                "invalid_code": "Codice di autenticazione non valido"
+                            },
+                            "abort": {
+                                "login_expired": "Sessione scaduta, effettua nuovamente il login."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "Password API"
+                                    },
+                                    "description": "Inserisci l'API password nella configurazione http:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Codice di autenticazione a due fattori"
+                                    },
+                                    "description": "Apri il **{mfa_module_name}** sul tuo dispositivo per visualizzare il codice di autenticazione a due fattori e verificare la tua identità:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Password API non valida",
+                                "invalid_code": "Codice di autenticazione non valido"
+                            },
+                            "abort": {
+                                "no_api_password_set": "Non hai una password API configurata.",
+                                "login_expired": "Sessione scaduta, effettua nuovamente il login."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Utente"
+                                    },
+                                    "description": "Perfavore, scegli l'utente con cui vuoi effettuare l'accesso:"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "Il tuo computer non è nella whitelist."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Sei pronto per risvegliare la tua casa, reclamare la tua privacy e far parte di una comunità mondiale di smanettoni?",
+                "user": {
+                    "intro": "Cominciamo con la creazione di un account utente.",
+                    "required_field": "Necessario",
+                    "data": {
+                        "name": "Nome",
+                        "username": "Nome utente",
+                        "password": "Password"
+                    },
+                    "create_account": "Crea un Account",
+                    "error": {
+                        "required_fields": "Compila tutti i campi richiesti"
+                    }
                 }
             }
         },
@@ -643,6 +830,13 @@
                     "turn_on": "Accendere",
                     "turn_off": "Spegnere"
                 }
+            },
+            "water_heater": {
+                "currently": "Attualmente",
+                "on_off": "Acceso \/ Spento",
+                "target_temperature": "Temperatura di riferimento",
+                "operation": "Operazione",
+                "away_mode": "Modalità Assente"
             }
         },
         "components": {
@@ -668,7 +862,7 @@
             },
             "history_charts": {
                 "loading_history": "Caricamento storico",
-                "no_history_found": "Nesuno storico trovato"
+                "no_history_found": "Nessuno storico trovato"
             }
         },
         "notification_toast": {
@@ -680,10 +874,20 @@
         },
         "dialogs": {
             "more_info_settings": {
-                "save": "Salve",
+                "save": "Salva",
                 "name": "Nome",
                 "entity_id": "ID Entità"
             }
+        },
+        "auth_store": {
+            "ask": "Vuoi salvare questo login?",
+            "decline": "No grazie",
+            "confirm": "Salva login"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Fare clic sul pulsante per configurare {entity}",
+            "empty": "Nessuna notifica",
+            "title": "Notifiche"
         }
     },
     "domain": {

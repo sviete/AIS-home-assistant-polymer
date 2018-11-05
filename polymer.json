@@ -18,13 +18,10 @@
     "src/panels/mailbox/ha-panel-mailbox.js",
     "hassio/src/entrypoint.js"
   ],
-  "sources": [
-    "src/**/*",
-    "!src/translations/*"
-  ],
+  "sources": ["src/**/*", "!src/translations/*"],
   "lint": {
     "rules": ["polymer-3"],
-    "ignoreWarnings": ["could-not-resolve-reference"],
+    "ignoreWarnings": ["could-not-resolve-reference", "could-not-load"],
     "filesToIgnore": [
       "**/*.html",
       "**/src/panels/config/js/**/*.js",

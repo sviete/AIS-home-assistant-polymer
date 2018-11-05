@@ -1,21 +1,22 @@
-import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
-import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-resizable-behavior.js';
-import '@polymer/paper-input/paper-input.js';
-import '@polymer/paper-slider/paper-slider.js';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/iron-flex-layout/iron-flex-layout-classes";
+import { IronResizableBehavior } from "@polymer/iron-resizable-behavior/iron-resizable-behavior";
+import "@polymer/paper-input/paper-input";
+import { mixinBehaviors } from "@polymer/polymer/lib/legacy/class";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../components/entity/state-info.js';
+import "../components/entity/state-info";
+import "../components/ha-slider";
 
-class StateCardInputNumber extends mixinBehaviors([
-  IronResizableBehavior
-], PolymerElement) {
+class StateCardInputNumber extends mixinBehaviors(
+  [IronResizableBehavior],
+  PolymerElement
+) {
   static get template() {
     return html`
     <style include="iron-flex iron-flex-alignment"></style>
     <style>
-      paper-slider {
+      ha-slider {
         margin-left: auto;
       }
       .state {
@@ -28,7 +29,7 @@ class StateCardInputNumber extends mixinBehaviors([
       .sliderstate {
           min-width: 45px;
       }
-      paper-slider[hidden] {
+      ha-slider[hidden] {
         display: none !important;
       }
       paper-input {
@@ -39,8 +40,8 @@ class StateCardInputNumber extends mixinBehaviors([
 
     <div class="horizontal justified layout" id="input_number_card">
       ${this.stateInfoTemplate}
-      <paper-slider min="[[min]]" max="[[max]]" value="{{value}}" step="[[step]]" hidden="[[hiddenslider]]" pin="" on-change="selectedValueChanged" on-click="stopPropagation" id="slider" ignore-bar-touch="">
-      </paper-slider>
+      <ha-slider min="[[min]]" max="[[max]]" value="{{value}}" step="[[step]]" hidden="[[hiddenslider]]" pin="" on-change="selectedValueChanged" on-click="stopPropagation" id="slider" ignore-bar-touch="">
+      </ha-slider>
       <paper-input no-label-float="" auto-validate="" pattern="[0-9]+([\\.][0-9]+)?" step="[[step]]" min="[[min]]" max="[[max]]" value="{{value}}" type="number" on-change="selectedValueChanged" on-click="stopPropagation" hidden="[[hiddenbox]]">
       </paper-input>
       <div class="state" hidden="[[hiddenbox]]">[[stateObj.attributes.unit_of_measurement]]</div>
@@ -61,7 +62,7 @@ class StateCardInputNumber extends mixinBehaviors([
 
   ready() {
     super.ready();
-    if (typeof ResizeObserver === 'function') {
+    if (typeof ResizeObserver === "function") {
       const ro = new ResizeObserver((entries) => {
         entries.forEach(() => {
           this.hiddenState();
@@ -69,7 +70,7 @@ class StateCardInputNumber extends mixinBehaviors([
       });
       ro.observe(this.$.input_number_card);
     } else {
-      this.addEventListener('iron-resize', this.hiddenState);
+      this.addEventListener("iron-resize", this.hiddenState);
     }
   }
 
@@ -90,7 +91,7 @@ class StateCardInputNumber extends mixinBehaviors([
       },
       stateObj: {
         type: Object,
-        observer: 'stateObjectChanged',
+        observer: "stateObjectChanged",
       },
       min: {
         type: Number,
@@ -102,16 +103,16 @@ class StateCardInputNumber extends mixinBehaviors([
       },
       maxlength: {
         type: Number,
-        value: 3
+        value: 3,
       },
       step: Number,
       value: Number,
-      mode: String
+      mode: String,
     };
   }
 
   hiddenState() {
-    if (this.mode !== 'slider') return;
+    if (this.mode !== "slider") return;
     const sliderwidth = this.$.slider.offsetWidth;
     if (sliderwidth < 100) {
       this.$.sliderstate.hidden = true;
@@ -129,10 +130,10 @@ class StateCardInputNumber extends mixinBehaviors([
       value: Number(newVal.state),
       mode: String(newVal.attributes.mode),
       maxlength: String(newVal.attributes.max).length,
-      hiddenbox: (newVal.attributes.mode !== 'box'),
-      hiddenslider: (newVal.attributes.mode !== 'slider'),
+      hiddenbox: newVal.attributes.mode !== "box",
+      hiddenslider: newVal.attributes.mode !== "slider",
     });
-    if (this.mode === 'slider' && prevMode !== 'slider') {
+    if (this.mode === "slider" && prevMode !== "slider") {
       this.hiddenState();
     }
   }
@@ -141,7 +142,7 @@ class StateCardInputNumber extends mixinBehaviors([
     if (this.value === Number(this.stateObj.state)) {
       return;
     }
-    this.hass.callService('input_number', 'set_value', {
+    this.hass.callService("input_number", "set_value", {
       value: this.value,
       entity_id: this.stateObj.entity_id,
     });
@@ -152,4 +153,4 @@ class StateCardInputNumber extends mixinBehaviors([
   }
 }
 
-customElements.define('state-card-input_number', StateCardInputNumber);
+customElements.define("state-card-input_number", StateCardInputNumber);

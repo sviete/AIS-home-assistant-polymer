@@ -13,7 +13,8 @@
         "dev-templates": "模板",
         "dev-mqtt": "MQTT",
         "dev-info": "信息",
-        "calendar": "日历"
+        "calendar": "日历",
+        "profile": "用户资料"
     },
     "state": {
         "default": {
@@ -343,7 +344,7 @@
                 },
                 "customize": {
                     "caption": "自定义",
-                    "description": "自定义设备"
+                    "description": "自定义实体"
                 },
                 "automation": {
                     "caption": "自动化",
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "状态",
                                     "from": "从",
-                                    "to": "变为"
+                                    "to": "变为",
+                                    "for": "持续"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -524,6 +526,31 @@
                         "deactivate_user": "停用用户",
                         "delete_user": "删除用户"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "登录为 {email}",
+                    "description_not_login": "未登录"
+                },
+                "integrations": {
+                    "caption": "集成",
+                    "description": "管理连接的设备和服务",
+                    "discovered": "已发现",
+                    "configured": "已配置",
+                    "new": "设置新集成",
+                    "configure": "配置",
+                    "none": "尚未配置任何集成",
+                    "config_entry": {
+                        "no_devices": "此集成没有设备。",
+                        "no_device": "无设备关联的实体",
+                        "delete_confirm": "您确定要删除此集成吗？",
+                        "restart_confirm": "重启 Home Assistant 以完成此集成的删除",
+                        "manuf": "by {manufacturer}",
+                        "hub": "链接于",
+                        "firmware": "固件：{version}",
+                        "device_unavailable": "设备不可用",
+                        "entity_unavailable": "实体不可用"
+                    }
                 }
             },
             "profile": {
@@ -545,6 +572,145 @@
                     "error_no_theme": "没有可用的主题。",
                     "link_promo": "了解主题",
                     "dropdown_label": "主题"
+                },
+                "refresh_tokens": {
+                    "header": "刷新令牌",
+                    "description": "每个刷新令牌代表一个登录会话。注销登录时将自动删除刷新令牌。下列为目前您的用户名下激活的刷新令牌。",
+                    "token_title": "{clientId} 的刷新令牌",
+                    "created_at": "创建于 {date}",
+                    "confirm_delete": "确定要删除 {name} 的刷新令牌吗？",
+                    "delete_failed": "无法删除刷新令牌。",
+                    "last_used": "上次使用于 {date} 来自 {location}",
+                    "not_used": "从未使用过",
+                    "current_token_tooltip": "不能删除当前使用的刷新令牌"
+                },
+                "long_lived_access_tokens": {
+                    "header": "长期访问令牌",
+                    "description": "创建长期访问令牌以允许脚本与 Home Assistant 实例进行交互。每个令牌在创建后有效期为 10 年。以下是处于激活状态的长期访问令牌。",
+                    "learn_auth_requests": "了解如何创建经过身份验证的请求。",
+                    "created_at": "创建于 {date}",
+                    "confirm_delete": "确定要删除 {name} 的访问令牌吗？",
+                    "delete_failed": "无法删除访问令牌。",
+                    "create": "创建令牌",
+                    "create_failed": "无法创建访问令牌。",
+                    "prompt_name": "名称？",
+                    "prompt_copy_token": "请复制你的访问令牌。它不会再显示出来。",
+                    "empty_state": "您还没有长期访问令牌。",
+                    "last_used": "上次使用于 {date} 来自 {location}",
+                    "not_used": "从未使用过"
+                },
+                "current_user": "您目前以 {fullName} 的身份登录。",
+                "is_owner": "您拥有所有者权限。",
+                "logout": "退出",
+                "change_password": {
+                    "header": "更改密码",
+                    "current_password": "当前密码",
+                    "new_password": "新密码",
+                    "confirm_new_password": "确认新密码",
+                    "error_required": "必填",
+                    "submit": "提交"
+                },
+                "mfa": {
+                    "header": "多因素身份验证模块",
+                    "disable": "禁用",
+                    "enable": "启用",
+                    "confirm_disable": "您确定要禁用 {name} 吗？"
+                },
+                "mfa_setup": {
+                    "title_aborted": "中止",
+                    "title_success": "成功！",
+                    "step_done": "{step} 设置完成",
+                    "close": "关闭",
+                    "submit": "提交"
+                }
+            },
+            "page-authorize": {
+                "initializing": "正在初始化",
+                "authorizing_client": "您即将授权 {clientId} 访问 Home Assistant 实例。",
+                "logging_in_with": "正在用 **{authProviderName}** 登录。",
+                "pick_auth_provider": "或者用以下方式登录",
+                "abort_intro": "登录中断",
+                "form": {
+                    "working": "请稍候",
+                    "unknown_error": "出现了一些问题",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "用户名",
+                                        "password": "密码"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "双重认证口令"
+                                    },
+                                    "description": "在设备上打开 **{mfa_module_name}** 来查看双重认证口令以验证您的身份:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "无效的用户名或密码",
+                                "invalid_code": "无效口令"
+                            },
+                            "abort": {
+                                "login_expired": "会话已过期，请重新登录。"
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "API 密码"
+                                    },
+                                    "description": "请输入 http 配置中的 API 密码:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "双重认证口令"
+                                    },
+                                    "description": "在设备上打开 **{mfa_module_name}** 来查看双重认证口令以验证您的身份:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "无效的 API 密码",
+                                "invalid_code": "无效口令"
+                            },
+                            "abort": {
+                                "no_api_password_set": "您还没有配置 API 密码。",
+                                "login_expired": "会话已过期，请重新登录。"
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "用户"
+                                    },
+                                    "description": "请选择要登录的用户："
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "您的电脑不在白名单内。"
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "准备好唤醒你的家、找回你的隐私，并加入世界级的极客社区了吗？",
+                "user": {
+                    "intro": "让我们从创建用户帐户开始吧。",
+                    "required_field": "必填",
+                    "data": {
+                        "name": "姓名",
+                        "username": "用户名",
+                        "password": "密码"
+                    },
+                    "create_account": "创建帐户",
+                    "error": {
+                        "required_fields": "请填写所有必填字段"
+                    }
                 }
             }
         },
@@ -664,12 +830,19 @@
                     "turn_on": "打开",
                     "turn_off": "关闭"
                 }
+            },
+            "water_heater": {
+                "currently": "当前",
+                "on_off": "开\/关",
+                "target_temperature": "设定温度",
+                "operation": "操作",
+                "away_mode": "离开模式"
             }
         },
         "components": {
             "entity": {
                 "entity-picker": {
-                    "entity": "设备\/实体"
+                    "entity": "实体"
                 }
             },
             "service-picker": {
@@ -703,13 +876,18 @@
             "more_info_settings": {
                 "save": "保存",
                 "name": "名称",
-                "entity_id": "设备\/实体 ID"
+                "entity_id": "实体 ID"
             }
         },
         "auth_store": {
-            "ask": "您想保存此登录信息吗？",
+            "ask": "是否保存本次登录？",
             "decline": "不，谢谢",
             "confirm": "保存"
+        },
+        "notification_drawer": {
+            "click_to_configure": "单击按钮可以配置{entity}",
+            "empty": "没有任何通知",
+            "title": "通知"
         }
     },
     "domain": {

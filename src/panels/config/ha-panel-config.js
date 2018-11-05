@@ -1,27 +1,29 @@
-import '@polymer/app-route/app-route.js';
-import '@polymer/iron-media-query/iron-media-query.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/app-route/app-route";
+import "@polymer/iron-media-query/iron-media-query";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../../layouts/hass-error-screen.js';
+import "../../layouts/hass-error-screen";
 
-import './automation/ha-config-automation.js';
-import './cloud/ha-config-cloud.js';
-import './config-entries/ha-config-entries.js';
-import './core/ha-config-core.js';
-import './customize/ha-config-customize.js';
-import './dashboard/ha-config-dashboard.js';
-import './script/ha-config-script.js';
-import './users/ha-config-users.js';
-import './zwave/ha-config-zwave.js';
+import isComponentLoaded from "../../common/config/is_component_loaded";
+import EventsMixin from "../../mixins/events-mixin";
+import NavigateMixin from "../../mixins/navigate-mixin";
 
-import isComponentLoaded from '../../common/config/is_component_loaded.js';
-import NavigateMixin from '../../mixins/navigate-mixin.js';
+import(/* webpackChunkName: "panel-config-automation" */ "./automation/ha-config-automation");
+import(/* webpackChunkName: "panel-config-cloud" */ "./cloud/ha-config-cloud");
+import(/* webpackChunkName: "panel-config-config" */ "./config-entries/ha-config-entries");
+import(/* webpackChunkName: "panel-config-core" */ "./core/ha-config-core");
+import(/* webpackChunkName: "panel-config-customize" */ "./customize/ha-config-customize");
+import(/* webpackChunkName: "panel-config-dashboard" */ "./dashboard/ha-config-dashboard");
+import(/* webpackChunkName: "panel-config-script" */ "./script/ha-config-script");
+import(/* webpackChunkName: "panel-config-users" */ "./users/ha-config-users");
+import(/* webpackChunkName: "panel-config-zwave" */ "./zwave/ha-config-zwave");
 
 /*
+ * @appliesMixin EventsMixin
  * @appliesMixin NavigateMixin
  */
-class HaPanelConfig extends NavigateMixin(PolymerElement) {
+class HaPanelConfig extends EventsMixin(NavigateMixin(PolymerElement)) {
   static get template() {
     return html`
     <app-route
@@ -49,7 +51,7 @@ class HaPanelConfig extends NavigateMixin(PolymerElement) {
         route='[[route]]'
         hass='[[hass]]'
         is-wide='[[isWide]]'
-        account='[[account]]'
+        cloud-status='[[_cloudStatus]]'
       ></ha-config-cloud>
     </template>
 
@@ -58,7 +60,7 @@ class HaPanelConfig extends NavigateMixin(PolymerElement) {
         page-name='dashboard'
         hass='[[hass]]'
         is-wide='[[isWide]]'
-        account='[[account]]'
+        cloud-status='[[_cloudStatus]]'
         narrow='[[narrow]]'
         show-menu='[[showMenu]]'
       ></ha-config-dashboard>
@@ -100,9 +102,11 @@ class HaPanelConfig extends NavigateMixin(PolymerElement) {
 
     <template is="dom-if" if='[[_equals(_routeData.page, "integrations")]]' restamp>
       <ha-config-entries
+        route='[[route]]'
         page-name='integrations'
         hass='[[hass]]'
         is-wide='[[isWide]]'
+        narrow='[[narrow]]'
       ></ha-config-entries>
     </template>
 
@@ -121,11 +125,14 @@ class HaPanelConfig extends NavigateMixin(PolymerElement) {
       hass: Object,
       narrow: Boolean,
       showMenu: Boolean,
-      account: Object,
+      _cloudStatus: {
+        type: Object,
+        value: null,
+      },
 
       route: {
         type: Object,
-        observer: '_routeChanged',
+        observer: "_routeChanged",
       },
 
       _routeData: Object,
@@ -135,19 +142,27 @@ class HaPanelConfig extends NavigateMixin(PolymerElement) {
 
       isWide: {
         type: Boolean,
-        computed: 'computeIsWide(showMenu, wideSidebar, wide)'
+        computed: "computeIsWide(showMenu, wideSidebar, wide)",
       },
     };
   }
 
   ready() {
     super.ready();
-    if (isComponentLoaded(this.hass, 'cloud')) {
-      this.hass.callApi('get', 'cloud/account').then((account) => { this.account = account; });
+    if (isComponentLoaded(this.hass, "cloud")) {
+      this._updateCloudStatus();
     }
-    this.addEventListener('ha-account-refreshed', (ev) => {
-      this.account = ev.detail.account;
-    });
+    this.addEventListener("ha-refresh-cloud-status", () =>
+      this._updateCloudStatus()
+    );
+  }
+
+  async _updateCloudStatus() {
+    this._cloudStatus = await this.hass.callWS({ type: "cloud/status" });
+
+    if (this._cloudStatus.cloud === "connecting") {
+      setTimeout(() => this._updateCloudStatus(), 5000);
+    }
   }
 
   computeIsWide(showMenu, wideSidebar, wide) {
@@ -155,9 +170,10 @@ class HaPanelConfig extends NavigateMixin(PolymerElement) {
   }
 
   _routeChanged(route) {
-    if (route.path === '' && route.prefix === '/config') {
-      this.navigate('/config/dashboard', true);
+    if (route.path === "" && route.prefix === "/config") {
+      this.navigate("/config/dashboard", true);
     }
+    this.fire("iron-resize");
   }
 
   _equals(a, b) {
@@ -165,4 +181,4 @@ class HaPanelConfig extends NavigateMixin(PolymerElement) {
   }
 }
 
-customElements.define('ha-panel-config', HaPanelConfig);
+customElements.define("ha-panel-config", HaPanelConfig);

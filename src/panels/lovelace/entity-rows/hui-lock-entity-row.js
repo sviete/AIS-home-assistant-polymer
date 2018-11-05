@@ -1,16 +1,28 @@
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '@polymer/paper-button/paper-button.js';
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
+import "@polymer/paper-button/paper-button";
 
-import '../components/hui-generic-entity-row.js';
+import "../components/hui-generic-entity-row";
 
-import LocalizeMixin from '../../../mixins/localize-mixin.js';
+import LocalizeMixin from "../../../mixins/localize-mixin";
 
 /*
  * @appliesMixin LocalizeMixin
  */
 class HuiLockEntityRow extends LocalizeMixin(PolymerElement) {
   static get template() {
+    return html`
+      ${this.styleTemplate}
+      <hui-generic-entity-row
+        hass="[[hass]]"
+        config="[[_config]]"
+      >
+        ${this.lockControlTemplate}
+      </hui-generic-entity-row>
+    `;
+  }
+
+  static get styleTemplate() {
     return html`
       <style>
         paper-button {
@@ -19,14 +31,14 @@ class HuiLockEntityRow extends LocalizeMixin(PolymerElement) {
           margin-right: -.57em;
         }
       </style>
-      <hui-generic-entity-row
-        hass="[[hass]]"
-        config="[[_config]]"
-      >
-        <paper-button on-click="_callService">
-          [[_computeButtonTitle(_stateObj.state)]]
-        </paper-button>
-      </hui-generic-entity-row>
+    `;
+  }
+
+  static get lockControlTemplate() {
+    return html`
+      <paper-button on-click="_callService">
+        [[_computeButtonTitle(_stateObj.state)]]
+      </paper-button>
     `;
   }
 
@@ -36,8 +48,8 @@ class HuiLockEntityRow extends LocalizeMixin(PolymerElement) {
       _config: Object,
       _stateObj: {
         type: Object,
-        computed: '_computeStateObj(hass.states, _config.entity)'
-      }
+        computed: "_computeStateObj(hass.states, _config.entity)",
+      },
     };
   }
 
@@ -47,21 +59,25 @@ class HuiLockEntityRow extends LocalizeMixin(PolymerElement) {
 
   setConfig(config) {
     if (!config || !config.entity) {
-      throw new Error('Entity not configured.');
+      throw new Error("Entity not configured.");
     }
     this._config = config;
   }
 
   _computeButtonTitle(state) {
-    return state === 'locked' ?
-      this.localize('ui.card.lock.unlock') : this.localize('ui.card.lock.lock');
+    return state === "locked"
+      ? this.localize("ui.card.lock.unlock")
+      : this.localize("ui.card.lock.lock");
   }
 
   _callService(ev) {
     ev.stopPropagation();
     const stateObj = this._stateObj;
-    this.hass.callService('lock', stateObj.state === 'locked' ?
-      'unlock' : 'lock', { entity_id: stateObj.entity_id });
+    this.hass.callService(
+      "lock",
+      stateObj.state === "locked" ? "unlock" : "lock",
+      { entity_id: stateObj.entity_id }
+    );
   }
 }
-customElements.define('hui-lock-entity-row', HuiLockEntityRow);
+customElements.define("hui-lock-entity-row", HuiLockEntityRow);

@@ -13,7 +13,8 @@
         "dev-templates": "Modelos",
         "dev-mqtt": "MQTT",
         "dev-info": "Informações",
-        "calendar": "Calendário"
+        "calendar": "Calendário",
+        "profile": "Perfil"
     },
     "state": {
         "default": {
@@ -359,7 +360,7 @@
                         "introduction": "Crie automatizações para tornar a sua casa viva",
                         "default_name": "Nova Automação",
                         "save": "Guardar",
-                        "unsaved_confirm": "Você tem alterações não guardas. Tem a certeza de que quer sair?",
+                        "unsaved_confirm": "Existem alterações não guardas. Tem a certeza de que quer sair?",
                         "alias": "Nome",
                         "triggers": {
                             "header": "Gatilhos",
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Estado",
                                     "from": "De",
-                                    "to": "Para"
+                                    "to": "Para",
+                                    "for": "Durante"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -396,7 +398,7 @@
                                     "label": "Estado numérico",
                                     "above": "Acima",
                                     "below": "Abaixo",
-                                    "value_template": "Modelo do valor (opcional)"
+                                    "value_template": "Valor para o modelo (opcional)"
                                 },
                                 "sun": {
                                     "label": "Sol",
@@ -441,7 +443,7 @@
                                     "label": "Estado numérico",
                                     "above": "Acima",
                                     "below": "Abaixo",
-                                    "value_template": "Modelo do valor (opcional)"
+                                    "value_template": "Valor para o modelo (opcional)"
                                 },
                                 "sun": {
                                     "label": "Sol",
@@ -520,9 +522,194 @@
                     "editor": {
                         "rename_user": "Alterar nome do utilizador",
                         "change_password": "Alterar palavra-passe",
-                        "activate_user": "Activar utilizador",
-                        "deactivate_user": "Desactivar utilizador",
+                        "activate_user": "Ativar utilizador",
+                        "deactivate_user": "Desativar utilizador",
                         "delete_user": "Apagar utilizador"
+                    }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Ligado como {email}",
+                    "description_not_login": "Não está ligado"
+                },
+                "integrations": {
+                    "caption": "Integrações",
+                    "description": "Gerir dispositivos e serviços ligados",
+                    "discovered": "Detetados",
+                    "configured": "Configurado",
+                    "new": "Configurar uma nova integração",
+                    "configure": "Configurar",
+                    "none": "Nada configurado ainda",
+                    "config_entry": {
+                        "no_devices": "Esta integração não possui dispositivos.",
+                        "no_device": "Entidades sem dispositivos",
+                        "delete_confirm": "Tem a certeza que pretende apagar esta integração?",
+                        "restart_confirm": "Reinicie o Home Assistant para concluir a remoção desta integração",
+                        "manuf": "por {manufacturer}",
+                        "hub": "Ligado via",
+                        "firmware": "Firmware: {version}",
+                        "device_unavailable": "Dispositivo indisponível",
+                        "entity_unavailable": "Entidade indisponível"
+                    }
+                }
+            },
+            "profile": {
+                "push_notifications": {
+                    "header": "Notificações push",
+                    "description": "Enviar notificações para este dispositivo.",
+                    "error_load_platform": "Configurar notify.html5.",
+                    "error_use_https": "Requer interface com utilizador, com SSL activo.",
+                    "push_notifications": "Notificações push",
+                    "link_promo": "Saiba mais"
+                },
+                "language": {
+                    "header": "Idioma",
+                    "link_promo": "Ajude a traduzir",
+                    "dropdown_label": "Idioma"
+                },
+                "themes": {
+                    "header": "Tema",
+                    "error_no_theme": "Não há temas disponíveis.",
+                    "link_promo": "Saiba mais sobre temas",
+                    "dropdown_label": "Tema"
+                },
+                "refresh_tokens": {
+                    "header": "Atualizar Tokens",
+                    "description": "Cada \"refresh token\" representa a uma sessão de utilizador. Os \"refresh tokens\" serão automáticamente removidos quando clicar sair. Os seguintes \"refresh tokens\" estão activos para a sua conta.",
+                    "token_title": "Atualizar o token de {clientId}",
+                    "created_at": "Criado a {date}",
+                    "confirm_delete": "Tem certeza de que deseja apagar o \"refresh token\" de {name} ?",
+                    "delete_failed": "Falha ao apagar o \"refresh token\"",
+                    "last_used": "Última utilização a {date} em {location}",
+                    "not_used": "Nunca foi utilizado",
+                    "current_token_tooltip": "Não é possível eliminar o \"refresh token\" actual"
+                },
+                "long_lived_access_tokens": {
+                    "header": "Tokens de acesso de longa duração",
+                    "description": "Crie tokens de acesso de longa duração para permitir que os seus scripts possam interagir com a sua instancia do Home Assistant. Cada token será válido durante 10 anos após criação. Os seguintes tokens de acesso de longa duração estão actualmente activos.",
+                    "learn_auth_requests": "Aprenda a fazer pedidos autenticados.",
+                    "created_at": "Criado a {date}",
+                    "confirm_delete": "Tem certeza de que deseja apagar o token de acesso de {name} ?",
+                    "delete_failed": "Falha ao criar o token de acesso.",
+                    "create": "Criar Token",
+                    "create_failed": "Falha ao criar o token de acesso.",
+                    "prompt_name": "Nome?",
+                    "prompt_copy_token": "Copie seu token de acesso. Não será mostrado novamente.",
+                    "empty_state": "Ainda não tem um token de longa duração",
+                    "last_used": "Última utilização a {date} em {location}",
+                    "not_used": "Nunca foi utilizado"
+                },
+                "current_user": "Esta actualmente ligado como {fullName}",
+                "is_owner": "Você é o proprietário.",
+                "logout": "Sair",
+                "change_password": {
+                    "header": "Alterar palavra-passe",
+                    "current_password": "Palavra-passe actual",
+                    "new_password": "Nova palavra-passe",
+                    "confirm_new_password": "Confirmar nova palavra-passe",
+                    "error_required": "Obrigatório",
+                    "submit": "Enviar"
+                },
+                "mfa": {
+                    "header": "Módulos de autenticação por multíplos-factores",
+                    "disable": "Desactivar",
+                    "enable": "Activar",
+                    "confirm_disable": "Tem certeza de que deseja desativar {name} ?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Abortado",
+                    "title_success": "Sucesso!",
+                    "step_done": "Configuração concluída para {step}",
+                    "close": "Fechar",
+                    "submit": "Enviar"
+                }
+            },
+            "page-authorize": {
+                "initializing": "A inicializar",
+                "authorizing_client": "Está prestes a dar acesso a {clientId} à sua instância do Home Assistant.",
+                "logging_in_with": "Iniciar a sessão com **{authProviderName}**.",
+                "pick_auth_provider": "Ou faça login com",
+                "abort_intro": "Login abortado",
+                "form": {
+                    "working": "Por favor, aguarde",
+                    "unknown_error": "Algo de errado aconteceu",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Utilizador",
+                                        "password": "Palavra-passe"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Código de autenticação por dois factores"
+                                    },
+                                    "description": "Abra o **{mfa_module_name}** no seu dispositivo para ver o código de autenticação por dois factores e verificar a sua identidade."
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Nome de utilizador ou palavra-passe inválida",
+                                "invalid_code": "Código de autenticação inválido"
+                            },
+                            "abort": {
+                                "login_expired": "Sessão expirou, por favor entre novamente."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "Palavra-passe para API"
+                                    },
+                                    "description": "Por favor, insira a palavra-passe da API na sua configuração http:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Código de autenticação por dois factores"
+                                    },
+                                    "description": "Abra o **{mfa_module_name}** no seu dispositivo para ver o código de autenticação por dois factores e verificar a sua identidade."
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Palavra-passe para API inválida",
+                                "invalid_code": "Código de autenticação inválido"
+                            },
+                            "abort": {
+                                "no_api_password_set": "Não tem uma palavra-passe para a API configurada.",
+                                "login_expired": "Sessão expirou, por favor entre novamente."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Utilizador"
+                                    },
+                                    "description": "Por favor seleccione o utilizador com o qual pretende entrar:"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "O seu computador não está na lista de endereços permitidos."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Está pronto para despertar a sua casa, reclamar a sua privacidade e juntar a uma comunidade mundial de tecnólogos?",
+                "user": {
+                    "intro": "Vamos começar por criar um utilizador.",
+                    "required_field": "Obrigatório",
+                    "data": {
+                        "name": "Nome",
+                        "username": "Utilizador",
+                        "password": "Palavra-passe"
+                    },
+                    "create_account": "Criar conta",
+                    "error": {
+                        "required_fields": "Preencha todos os campos obrigatórios"
                     }
                 }
             }
@@ -569,22 +756,22 @@
                     "wind_speed": "Vel. do vento"
                 },
                 "cardinal_direction": {
-                    "e": "",
-                    "ene": "",
-                    "ese": "",
-                    "n": "",
-                    "ne": "",
-                    "nne": "",
-                    "nw": "",
-                    "nnw": "",
-                    "s": "",
-                    "se": "",
-                    "sse": "",
-                    "ssw": "",
-                    "sw": "",
-                    "w": "",
-                    "wnw": "",
-                    "wsw": ""
+                    "e": "E",
+                    "ene": "ENE",
+                    "ese": "ESE",
+                    "n": "N",
+                    "ne": "NE",
+                    "nne": "NNE",
+                    "nw": "NW",
+                    "nnw": "NNW",
+                    "s": "S",
+                    "se": "SE",
+                    "sse": "SSE",
+                    "ssw": "SSW",
+                    "sw": "SW",
+                    "w": "W",
+                    "wnw": "WNW",
+                    "wsw": "WSW"
                 },
                 "forecast": "Previsão"
             },
@@ -621,7 +808,7 @@
             },
             "climate": {
                 "currently": "Atualmente",
-                "on_off": "Lig. \/ Des.",
+                "on_off": "Ligado \/ desligado",
                 "target_temperature": "Temperatura pretendida",
                 "target_humidity": "Humidade pretendida",
                 "operation": "Operação",
@@ -643,6 +830,13 @@
                     "turn_on": "Ligar",
                     "turn_off": "Desligar"
                 }
+            },
+            "water_heater": {
+                "currently": "Atualmente",
+                "on_off": "Ligado \/ desligado",
+                "target_temperature": "Temperatura pretendida",
+                "operation": "Operação",
+                "away_mode": "Modo ausente"
             }
         },
         "components": {
@@ -684,6 +878,16 @@
                 "name": "Nome",
                 "entity_id": "ID da entidade"
             }
+        },
+        "auth_store": {
+            "ask": "Deseja guardar este login?",
+            "decline": "Não, obrigado",
+            "confirm": "Guardar login"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Clique no botão para configurar {entity}",
+            "empty": "Sem Notificações",
+            "title": "Notificações"
         }
     },
     "domain": {

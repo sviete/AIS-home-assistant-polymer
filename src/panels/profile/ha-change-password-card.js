@@ -1,13 +1,18 @@
-import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-dialog/paper-dialog.js';
-import '@polymer/paper-spinner/paper-spinner.js';
-import '@polymer/paper-card/paper-card.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/paper-button/paper-button";
+import "@polymer/paper-dialog/paper-dialog";
+import "@polymer/paper-spinner/paper-spinner";
+import "@polymer/paper-card/paper-card";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../../resources/ha-style.js';
+import LocalizeMixin from "../../mixins/localize-mixin";
 
-class HaChangePasswordCard extends PolymerElement {
+import "../../resources/ha-style";
+
+/*
+ * @appliesMixin LocalizeMixin
+ */
+class HaChangePasswordCard extends LocalizeMixin(PolymerElement) {
   static get template() {
     return html`
     <style include="ha-style">
@@ -29,7 +34,7 @@ class HaChangePasswordCard extends PolymerElement {
       }
     </style>
     <div>
-      <paper-card heading="Change Password">
+      <paper-card heading="[[localize('ui.panel.profile.change_password.header')]]">
         <div class="card-content">
           <template is="dom-if" if="[[_errorMsg]]">
             <div class='error'>[[_errorMsg]]</div>
@@ -38,30 +43,30 @@ class HaChangePasswordCard extends PolymerElement {
             <div class="status">[[_statusMsg]]</div>
           </template>
           <paper-input
-            class='currentPassword'
-            label='Current Password'
-            type='password'
-            value='{{_currentPassword}}'
+            class="currentPassword"
+            label="[[localize('ui.panel.profile.change_password.current_password')]]"
+            type="password"
+            value="{{_currentPassword}}"
             required
             auto-validate
-            error-message='Required'
+            error-message="[[localize('ui.panel.profile.change_password.error_required')]]"
           ></paper-input>
-          <template is='dom-if' if='[[_currentPassword]]'>
+          <template is="dom-if" if="[[_currentPassword]]">
             <paper-input
-              label='New Password'
-              type='password'
-              value='{{_password1}}'
+              label="[[localize('ui.panel.profile.change_password.new_password')]]"
+              type="password"
+              value="{{_password1}}"
               required
               auto-validate
-              error-message='Required'
+              error-message="[[localize('ui.panel.profile.change_password.error_required')]]"
             ></paper-input>
             <paper-input
-              label='Confirm New Password'
-              type='password'
-              value='{{_password2}}'
+              label="[[localize('ui.panel.profile.change_password.confirm_new_password')]]"
+              type="password"
+              value="{{_password2}}"
               required
               auto-validate
-              error-message='Required'
+              error-message="[[localize('ui.panel.profile.change_password.error_required')]]"
             ></paper-input>
           </template>
         </div>
@@ -70,7 +75,9 @@ class HaChangePasswordCard extends PolymerElement {
             <div><paper-spinner active></paper-spinner></div>
           </template>
           <template is="dom-if" if="[[!_loading]]">
-            <paper-button on-click="_changePassword">Submit</paper-button>
+            <paper-button
+              on-click="_changePassword"
+            >[[localize('ui.panel.profile.change_password.submit')]]</paper-button>
           </template>
         </div>
       </paper-card>
@@ -99,7 +106,7 @@ class HaChangePasswordCard extends PolymerElement {
 
   ready() {
     super.ready();
-    this.addEventListener('keypress', (ev) => {
+    this.addEventListener("keypress", (ev) => {
       this._statusMsg = null;
       if (ev.keyCode === 13) {
         this._changePassword();
@@ -117,7 +124,7 @@ class HaChangePasswordCard extends PolymerElement {
     }
 
     if (this._currentPassword === this._password1) {
-      this._errorMsg = 'New password must be different than current password';
+      this._errorMsg = "New password must be different than current password";
       return;
     }
 
@@ -126,16 +133,16 @@ class HaChangePasswordCard extends PolymerElement {
 
     try {
       await this.hass.callWS({
-        type: 'config/auth_provider/homeassistant/change_password',
+        type: "config/auth_provider/homeassistant/change_password",
         current_password: this._currentPassword,
         new_password: this._password1,
       });
 
       this.setProperties({
-        _statusMsg: 'Password changed successfully',
+        _statusMsg: "Password changed successfully",
         _currentPassword: null,
         _password1: null,
-        _password2: null
+        _password2: null,
       });
     } catch (err) {
       this._errorMsg = err.message;
@@ -145,4 +152,4 @@ class HaChangePasswordCard extends PolymerElement {
   }
 }
 
-customElements.define('ha-change-password-card', HaChangePasswordCard);
+customElements.define("ha-change-password-card", HaChangePasswordCard);

@@ -13,7 +13,8 @@
         "dev-templates": "Modelos",
         "dev-mqtt": "",
         "dev-info": "Informações",
-        "calendar": "Calendário"
+        "calendar": "Calendário",
+        "profile": "Perfil"
     },
     "state": {
         "default": {
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Estado",
                                     "from": "De",
-                                    "to": "Para"
+                                    "to": "Para",
+                                    "for": "Para"
                                 },
                                 "homeassistant": {
                                     "label": "",
@@ -524,6 +526,31 @@
                         "deactivate_user": "Desativar usuário",
                         "delete_user": "Excluir usuário"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Conectado como {email}",
+                    "description_not_login": "Não logado"
+                },
+                "integrations": {
+                    "caption": "Integrações",
+                    "description": "Gerenciar dispositivos e serviços conectados",
+                    "discovered": "Descoberto",
+                    "configured": "Configurado",
+                    "new": "Configurar uma nova integração",
+                    "configure": "Configurar",
+                    "none": "Nada configurado ainda",
+                    "config_entry": {
+                        "no_devices": "Esta integração não possui dispositivos.",
+                        "no_device": "Entidades sem dispositivos",
+                        "delete_confirm": "Tem certeza de que deseja excluir essa integração?",
+                        "restart_confirm": "Reinicie o Home Assistant para concluir a remoção dessa integração",
+                        "manuf": "por {manufacturer}",
+                        "hub": "Conectado via",
+                        "firmware": "Firmware: {version}",
+                        "device_unavailable": "dispositivo indisponível",
+                        "entity_unavailable": "entidade indisponível"
+                    }
                 }
             },
             "profile": {
@@ -545,6 +572,145 @@
                     "error_no_theme": "Não há temas disponíveis.",
                     "link_promo": "Aprenda sobre temas",
                     "dropdown_label": "Tema"
+                },
+                "refresh_tokens": {
+                    "header": "Atualizar tokens",
+                    "description": "Cada token de atualização representa uma sessão de login. Os tokens de atualização serão removidos automaticamente quando você clicar em efetuar logout. Os tokens de atualização a seguir estão ativos na sua conta no momento.",
+                    "token_title": "Atualizar o token para {clientId}",
+                    "created_at": "Criado em {date}",
+                    "confirm_delete": "Tem certeza de que deseja excluir o token de acesso para {name} ?",
+                    "delete_failed": "Falha ao excluir o token de acesso.",
+                    "last_used": "Usado pela última vez em {data} em {localização}",
+                    "not_used": "Nunca foi usado",
+                    "current_token_tooltip": "Não é possível excluir o token de atualização atual"
+                },
+                "long_lived_access_tokens": {
+                    "header": "Tokens de acesso de longa duração",
+                    "description": "Crie tokens de acesso de longa duração para permitir que seus scripts interajam com sua instância do Home Assistant. Cada token será válido por 10 anos a partir da criação. Os seguintes tokens de acesso de longa duração estão atualmente ativos.",
+                    "learn_auth_requests": "Aprenda como fazer solicitações autenticadas.",
+                    "created_at": "Criado em {date}",
+                    "confirm_delete": "Tem certeza de que deseja excluir o token de acesso para {name} ?",
+                    "delete_failed": "Falha ao excluir o token de acesso.",
+                    "create": "Criar token",
+                    "create_failed": "Falha ao criar o token de acesso.",
+                    "prompt_name": "Nome?",
+                    "prompt_copy_token": "Copie seu token de acesso. Ele não será mostrado novamente.",
+                    "empty_state": "Você ainda não tem tokens de acesso de longa duração.",
+                    "last_used": "Usado pela última vez em {data} em {localização}",
+                    "not_used": "Nunca foi usado"
+                },
+                "current_user": "Você está logado como {fullName} .",
+                "is_owner": "Você é um proprietário.",
+                "logout": "Sair",
+                "change_password": {
+                    "header": "Alterar senha",
+                    "current_password": "Senha atual",
+                    "new_password": "Nova Senha",
+                    "confirm_new_password": "Confirme a nova senha",
+                    "error_required": "Obrigatório",
+                    "submit": "Enviar"
+                },
+                "mfa": {
+                    "header": "Módulos de Autenticação Multifator",
+                    "disable": "Desabilitar",
+                    "enable": "Habilitar",
+                    "confirm_disable": "Tem certeza de que deseja desativar {name} ?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Abortado",
+                    "title_success": "Sucesso!",
+                    "step_done": "Configuração feita para {step}",
+                    "close": "Fechar",
+                    "submit": "Enviar"
+                }
+            },
+            "page-authorize": {
+                "initializing": "Iniciando",
+                "authorizing_client": "Você está prestes a dar acesso pra {clientId} à sua instância do Home Assistant.",
+                "logging_in_with": "Fazendo login com **{authProviderName}**.",
+                "pick_auth_provider": "Ou entre com",
+                "abort_intro": "Login cancelado",
+                "form": {
+                    "working": "Aguarde",
+                    "unknown_error": "Alguma coisa saiu errada",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Usuário",
+                                        "password": "Senha"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Código de autenticação de dois fatores"
+                                    },
+                                    "description": "Abra o ** {mfa_module_name} ** no seu dispositivo para ver seu código de autenticação de dois fatores e confirmar sua identidade:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Usuário ou senha inválidos",
+                                "invalid_code": "Código de autenticação inválido"
+                            },
+                            "abort": {
+                                "login_expired": "Sessão expirada, por favor fazer o login novamente."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "Senha de API"
+                                    },
+                                    "description": "Por favor insira a senha da API em sua configuração http:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Código de autenticação de dois fatores"
+                                    },
+                                    "description": "Abra o ** {mfa_module_name} ** no seu dispositivo para ver seu código de autenticação de dois fatores e confirmar sua identidade:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Senha de API inválida",
+                                "invalid_code": "Código de autenticação inválido"
+                            },
+                            "abort": {
+                                "no_api_password_set": "Você não tem uma senha de API configurada.",
+                                "login_expired": "Sessão expirada, por favor fazer o login novamente."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Usuário"
+                                    },
+                                    "description": "Por favor, selecione o usuário que você quer fazer o login como:"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "Seu computador não está na lista de permissões."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Você está pronto para despertar sua casa, recuperar sua privacidade e se juntar a uma comunidade mundial de consertadores?",
+                "user": {
+                    "intro": "Vamos começar criando uma conta de usuário.",
+                    "required_field": "Obrigatório",
+                    "data": {
+                        "name": "Nome",
+                        "username": "Usuário",
+                        "password": "Senha"
+                    },
+                    "create_account": "Criar Conta",
+                    "error": {
+                        "required_fields": "Preencha todos os campos obrigatórios"
+                    }
                 }
             }
         },
@@ -664,6 +830,13 @@
                     "turn_on": "Ligar",
                     "turn_off": "Desligar"
                 }
+            },
+            "water_heater": {
+                "currently": "Atualmente",
+                "on_off": "Lig. \/ Des.",
+                "target_temperature": "Temperatura alvo",
+                "operation": "Operação",
+                "away_mode": "Modo ausente"
             }
         },
         "components": {
@@ -705,6 +878,16 @@
                 "name": "Nome",
                 "entity_id": "ID da entidade"
             }
+        },
+        "auth_store": {
+            "ask": "Você quer salvar este login?",
+            "decline": "Não, obrigado",
+            "confirm": "Salvar login"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Clique no botão para configurar {entity}",
+            "empty": "Sem notificações",
+            "title": "Notificações"
         }
     },
     "domain": {

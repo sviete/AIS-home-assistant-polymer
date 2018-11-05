@@ -13,7 +13,8 @@
         "dev-templates": "Skabeloner",
         "dev-mqtt": "MQTT",
         "dev-info": "Udvikler Information",
-        "calendar": "Kalender"
+        "calendar": "Kalender",
+        "profile": "Profil"
     },
     "state": {
         "default": {
@@ -246,12 +247,17 @@
             "lightning": "Lyn",
             "lightning-rainy": "Lyn, regnvejr",
             "partlycloudy": "Delvist overskyet",
+            "pouring": "Regnvejr",
             "rainy": "Regnfuldt",
             "snowy": "Snedækket",
-            "snowy-rainy": "Snedækket, regnfuldt"
+            "snowy-rainy": "Snedækket, regnfuldt",
+            "sunny": "Solrig",
+            "windy": "Blæsende",
+            "windy-variant": "Blæsende"
         },
         "vacuum": {
             "cleaning": "Rengøring",
+            "docked": "I dock",
             "error": "Fejl",
             "idle": "Inaktiv",
             "off": "Off",
@@ -321,7 +327,7 @@
                             },
                             "reloading": {
                                 "heading": "Genindlæsning af konfiguration",
-                                "introduction": "Nogle dele af Home Assistant kan genindlæse uden at kræve en genstart. Tryk på reload vil af montere deres nuværende konfiguration og indlæse den nye.",
+                                "introduction": "Nogle dele af Home Assistant kan genindlæse uden at kræve en genstart. Tryk på \"genindlæs\" vil afmontere deres nuværende konfiguration og indlæse den nye.",
                                 "core": "Genindlæs system",
                                 "group": "Genindlæs grupper",
                                 "automation": "Genindlæs automatiseringer",
@@ -344,6 +350,8 @@
                     "caption": "Automatisering",
                     "description": "Opret og rediger automatiseringer",
                     "picker": {
+                        "header": "Automatiserings editor",
+                        "introduction": "Automatiserings editoren giver dig mulighed for at oprette og redigere automatiseringer. Læs venligst [instruktionerne] (https:\/\/home-assistant.io\/docs\/automation\/editor\/) for at sikre dig, at du har konfigureret Home Assistant korrekt.",
                         "pick_automation": "Vælg automatisering for at redigere",
                         "no_automations": "Vi kunne ikke finde nogen redigerbare automatiseringer",
                         "add_automation": "Tilføj automatisering"
@@ -356,6 +364,7 @@
                         "alias": "Navn",
                         "triggers": {
                             "header": "Udløser",
+                            "introduction": "Udløsere er, hvad der begynder behandlingen af en automatiseringsregel. Det er muligt at angive flere udløsere for samme regel. Når en udløser starter, vil Home Assistant validere betingelserne, hvis nogen, og udføre handlingen. \n\n [Lær mere om udløsere.] (Https:\/\/home-assistant.io\/docs\/automation\/trigger\/)",
                             "add": "Tilføj udløser",
                             "duplicate": "Kopier",
                             "delete": "Slet",
@@ -371,7 +380,8 @@
                                 "state": {
                                     "label": "Tilstand",
                                     "from": "Fra",
-                                    "to": "Til"
+                                    "to": "Til",
+                                    "for": "Varighed"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -381,16 +391,21 @@
                                 },
                                 "mqtt": {
                                     "label": "MQTT",
-                                    "topic": "Emne"
+                                    "topic": "Emne",
+                                    "payload": "Indhold (valgfri)"
                                 },
                                 "numeric_state": {
+                                    "label": "Numerisk tilstand",
                                     "above": "Over",
-                                    "below": "Under"
+                                    "below": "Under",
+                                    "value_template": "Værdi-skabelon"
                                 },
                                 "sun": {
                                     "label": "Sol",
+                                    "event": "Begivenhed",
                                     "sunrise": "Solopgang",
-                                    "sunset": "Solnedgang"
+                                    "sunset": "Solnedgang",
+                                    "offset": "Timeout (valgfri)"
                                 },
                                 "template": {
                                     "label": "Skabelon",
@@ -401,7 +416,9 @@
                                     "at": "Klokken"
                                 },
                                 "zone": {
+                                    "label": "Zone",
                                     "entity": "Enhed med placering",
+                                    "zone": "Zone",
                                     "event": "Begivenhed",
                                     "enter": "Ankom",
                                     "leave": "Forlade"
@@ -410,6 +427,7 @@
                         },
                         "conditions": {
                             "header": "Betingelser",
+                            "introduction": "Betingelser er en valgfri del af en automatiseringsregel og kan bruges til at forhindre, at en handling sker, når den udløses. Betingelser ligner meget udløsere, men er meget forskellige. En udløser vil se på begivenheder der sker i systemet, mens en tilstand kun ser på, hvordan systemet ser ud lige nu. En udløser kan observere, at der er tændt for en kontakt. En tilstand kan kun se, om en switch er i øjeblikket til eller fra. \n\n [Lær mere om betingelser.] (Https:\/\/home-assistant.io\/docs\/scripts\/conditions\/)",
                             "add": "Tilføj betingelse",
                             "duplicate": "Kopier",
                             "delete": "Slet",
@@ -422,6 +440,7 @@
                                     "state": "Tilstand"
                                 },
                                 "numeric_state": {
+                                    "label": "Numerisk stadie",
                                     "above": "Over",
                                     "below": "Under",
                                     "value_template": "Værdi skabelon (ikke krævet)"
@@ -430,38 +449,56 @@
                                     "label": "Sol",
                                     "before": "Før:",
                                     "after": "Efter:",
+                                    "before_offset": "Forskydning før",
+                                    "after_offset": "Forskydning efter",
                                     "sunrise": "Solopgang",
                                     "sunset": "Solnedgang"
                                 },
                                 "template": {
-                                    "label": "Skabelon"
+                                    "label": "Skabelon",
+                                    "value_template": "Værdi-skabelon"
                                 },
                                 "time": {
                                     "label": "Tid",
                                     "after": "Efter",
                                     "before": "Før"
+                                },
+                                "zone": {
+                                    "label": "Zone",
+                                    "entity": "Enhed med placering",
+                                    "zone": "Zone"
                                 }
                             }
                         },
                         "actions": {
+                            "header": "Handlinger",
+                            "introduction": "Handlingerne er, hvad Home Assistant skal gøre, når automatiseringen udløses. \n\n [Lær mere om handlinger.] (https:\/\/home-assistant.io\/docs\/automation\/action\/)",
+                            "add": "Tilføj automatisering",
                             "duplicate": "Kopier",
                             "delete": "Slet",
                             "delete_confirm": "Er du sikker på du vil slette?",
+                            "unsupported_action": "Ikke-understøttet handling: {action}",
+                            "type_select": "Begivenhedstype",
                             "type": {
                                 "service": {
-                                    "label": "Kald service"
+                                    "label": "Kald service",
+                                    "service_data": "Service data"
                                 },
                                 "delay": {
                                     "label": "Forsinkelse",
                                     "delay": "Forsinkelse"
                                 },
                                 "wait_template": {
-                                    "label": "Vent"
+                                    "label": "Vent",
+                                    "wait_template": "Vente-skabelon",
+                                    "timeout": "Timeout (valgfri)"
                                 },
                                 "condition": {
                                     "label": "Betingelse"
                                 },
                                 "event": {
+                                    "label": "Afsend hændelse",
+                                    "event": "Hændelse:",
                                     "service_data": "Service data"
                                 }
                             }
@@ -477,6 +514,7 @@
                     "description": "Administrer dit Z-Wave netværk"
                 },
                 "users": {
+                    "caption": "Brugere",
                     "description": "Administrer brugere",
                     "picker": {
                         "title": "Brugere"
@@ -487,6 +525,31 @@
                         "activate_user": "Aktivér bruger",
                         "deactivate_user": "Deaktiver bruger",
                         "delete_user": "Slet bruger"
+                    }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Logget ind som {email}",
+                    "description_not_login": "Ikke logget ind"
+                },
+                "integrations": {
+                    "caption": "Integrationer",
+                    "description": "Administrer tilsluttede enheder og tjenester",
+                    "discovered": "Opdaget",
+                    "configured": "Konfigureret",
+                    "new": "Opret en ny integration",
+                    "configure": "Konfigurer",
+                    "none": "Ikke konfigureret",
+                    "config_entry": {
+                        "no_devices": "Denne integration har ingen enheder",
+                        "no_device": "Entiteter uden enhed",
+                        "delete_confirm": "Er du sikker på, at du vil fjerne denne integration?",
+                        "restart_confirm": "Genstart Home Assistant for at afslutte fjernelsen af denne integration",
+                        "manuf": "af {manufacturer}",
+                        "hub": "Forbundet via",
+                        "firmware": "Firmware: {version}",
+                        "device_unavailable": "enhed utilgængelig",
+                        "entity_unavailable": "entitet utilgængelig"
                     }
                 }
             },
@@ -509,6 +572,131 @@
                     "error_no_theme": "Ingen temaer til rådighed.",
                     "link_promo": "Lær om temaer",
                     "dropdown_label": "Tema"
+                },
+                "refresh_tokens": {
+                    "header": "Opdater tokens",
+                    "description": "Hver opdateringstoken repræsenterer en login session. Tokens fjernes automatisk, når du klikker på log ud. Følgende opdateringstoken er aktuelt aktiv for din konto.",
+                    "token_title": "Opdater token for {clientId}",
+                    "created_at": "Oprettet den {date}",
+                    "confirm_delete": "Er du sikker på, at du vil slette adgangstoken til {name} ?",
+                    "delete_failed": "Kan ikke slette adgangstokenet.",
+                    "last_used": "Sidst anvendt den {date} af {location}",
+                    "not_used": "Har aldrig været brugt",
+                    "current_token_tooltip": "Kan ikke slette nuværende opdateringstoken"
+                },
+                "long_lived_access_tokens": {
+                    "header": "Langtids Access Tokens",
+                    "description": "Opret langtids adgangstokener, så dine scripts kan forbinde med din Home Assistant instans. Hver token er gyldig i 10 år fra oprettelsen. Følgende langtids adgangstokener er i øjeblikket aktive.",
+                    "learn_auth_requests": "Lær, hvordan du laver godkendte forespørgsler.",
+                    "created_at": "Oprettet den {date}",
+                    "confirm_delete": "Er du sikker på, at du vil slette adgangstoken til {name} ?",
+                    "delete_failed": "Kan ikke slette adgangstokenet.",
+                    "create": "Opret Token",
+                    "create_failed": "Kunne ikke oprette adgangstoken.",
+                    "prompt_name": "Navn?",
+                    "prompt_copy_token": "Kopier din adgangstoken. Den vil ikke blive vist igen.",
+                    "empty_state": "Du har ingen langtids adgangstokens endnu.",
+                    "last_used": "Sidst anvendt den {date} af {location}",
+                    "not_used": "Har aldrig været brugt"
+                },
+                "current_user": "Du er logget ind som {fullName} .",
+                "is_owner": "Du er ejer.",
+                "logout": "Log af",
+                "mfa_setup": {
+                    "title_aborted": "Afbrudt",
+                    "title_success": "Succes!",
+                    "step_done": "Opsætning af {step} færdig",
+                    "close": "Luk",
+                    "submit": "Gem og afslut"
+                }
+            },
+            "page-authorize": {
+                "initializing": "Initialiserer",
+                "authorizing_client": "Du er ved at give {clientId} adgang til din Home Assistant-instans.",
+                "logging_in_with": "Log ind med **{authProviderName}**.",
+                "pick_auth_provider": "Eller log ind med",
+                "abort_intro": "Login afbrudt",
+                "form": {
+                    "working": "Vent venligst",
+                    "unknown_error": "Noget gik galt",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Brugernavn",
+                                        "password": "Password"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "To-faktor godkendelseskode"
+                                    },
+                                    "description": "Åbn **{mfa_module_name}** på din enhed for at se din to-faktor godkendelseskode og bekræft din identitet:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Ugyldigt brugernavn eller password",
+                                "invalid_code": "Ugyldig godkendelseskode"
+                            },
+                            "abort": {
+                                "login_expired": "Session er udløbet, log ind igen."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "API password"
+                                    },
+                                    "description": "Indtast venligst API-adgangskoden fra din http-konfiguration:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "To-faktor godkendelseskode"
+                                    },
+                                    "description": "Åbn **{mfa_module_name}** på din enhed for at se din to-faktor godkendelseskode og bekræft din identitet:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Ugyldig API password",
+                                "invalid_code": "Ugyldig godkendelseskode"
+                            },
+                            "abort": {
+                                "no_api_password_set": "Du har ikke konfigureret en API-adgangskode.",
+                                "login_expired": "Session er udløbet, log ind igen."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Bruger"
+                                    },
+                                    "description": "Vælg venligst den bruger, du vil logge ind som:"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "Din computer er ikke whitelistet."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Er du klar til at vække din hjem, genvinde dit privatliv og deltage i et verdensomspændende fællesskab af tinkerers?",
+                "user": {
+                    "intro": "Lad os komme i gang ved at oprette en brugerkonto.",
+                    "required_field": "Nødvendig",
+                    "data": {
+                        "name": "Navn",
+                        "username": "Brugernavn",
+                        "password": "Password"
+                    },
+                    "create_account": "Opret konto",
+                    "error": {
+                        "required_fields": "Udfyld alle obligatoriske felter"
+                    }
                 }
             }
         },
@@ -546,7 +734,26 @@
                 "execute": "Udfør"
             },
             "weather": {
+                "attributes": {
+                    "air_pressure": "Lufttryk",
+                    "humidity": "Fugtighed",
+                    "temperature": "Temperatur",
+                    "visibility": "Sigtbarhed",
+                    "wind_speed": "Vindhastighed"
+                },
                 "cardinal_direction": {
+                    "e": "Ø",
+                    "ene": "ØNØ",
+                    "ese": "ØSØ",
+                    "n": "N",
+                    "ne": "NØ",
+                    "nne": "NNØ",
+                    "nw": "NV",
+                    "nnw": "NNV",
+                    "s": "S",
+                    "se": "SØ",
+                    "sse": "SSØ",
+                    "ssw": "SSV",
                     "sw": "SV",
                     "w": "V",
                     "wnw": "VNV",
@@ -577,19 +784,29 @@
             "light": {
                 "brightness": "Lysstyrke",
                 "color_temperature": "Farvetemperatur",
+                "white_value": "Hvidværdi",
                 "effect": "Effekt"
             },
+            "media_player": {
+                "text_to_speak": "Tekst til tale",
+                "source": "Kilde",
+                "sound_mode": "Lydtilstand"
+            },
             "climate": {
+                "currently": "Lige nu",
                 "on_off": "On \/ off",
-                "fan_mode": "Ventilator tilstand"
+                "target_temperature": "Ønsket temperatur",
+                "target_humidity": "Ønsket luftfugtighed",
+                "operation": "Drift",
+                "fan_mode": "Ventilator tilstand",
+                "swing_mode": "Swing tilstand",
+                "away_mode": "Ude af huset-modus",
+                "aux_heat": "Støtte-varme"
             },
             "lock": {
                 "code": "Kode",
                 "lock": "Lås",
                 "unlock": "Lås op"
-            },
-            "media_player": {
-                "source": "Kilde"
             },
             "vacuum": {
                 "actions": {
@@ -599,6 +816,13 @@
                     "turn_on": "Tænd",
                     "turn_off": "Sluk"
                 }
+            },
+            "water_heater": {
+                "currently": "Lige nu",
+                "on_off": "Tænd \/ sluk",
+                "target_temperature": "Ønsket temperatur",
+                "operation": "Drift",
+                "away_mode": "Ikke til stede"
             }
         },
         "components": {
@@ -637,13 +861,19 @@
         "dialogs": {
             "more_info_settings": {
                 "save": "Gem",
-                "name": "Navn"
+                "name": "Navn",
+                "entity_id": "Enheds ID"
             }
         },
         "auth_store": {
             "ask": "Vil du gemme dette login?",
             "decline": "Nej tak",
             "confirm": "Gem login"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Klik på knappen for at konfigurere {entity}",
+            "empty": "Ingen notifikationer",
+            "title": "Notifikationer"
         }
     },
     "domain": {

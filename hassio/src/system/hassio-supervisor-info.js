@@ -1,10 +1,10 @@
-import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-card/paper-card.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/paper-button/paper-button";
+import "@polymer/paper-card/paper-card";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../../../src/components/buttons/ha-call-api-button.js';
-import EventsMixin from '../../../src/mixins/events-mixin.js';
+import "../../../src/components/buttons/ha-call-api-button";
+import EventsMixin from "../../../src/mixins/events-mixin";
 
 class HassioSupervisorInfo extends EventsMixin(PolymerElement) {
   static get template() {
@@ -16,13 +16,14 @@ class HassioSupervisorInfo extends EventsMixin(PolymerElement) {
       }
       .card-content {
         height: 200px;
+        color: var(--primary-text-color);
       }
       @media screen and (max-width: 830px) {
         paper-card {
           width: 100%;
         }
         .card-content {
-          height: 100%;
+          height: auto;
         }
       }
       .info {
@@ -84,14 +85,14 @@ class HassioSupervisorInfo extends EventsMixin(PolymerElement) {
       errors: String,
       leaveBeta: {
         type: Object,
-        value: { channel: 'stable' },
+        value: { channel: "stable" },
       },
     };
   }
 
   ready() {
     super.ready();
-    this.addEventListener('hass-api-called', ev => this.apiCalled(ev));
+    this.addEventListener("hass-api-called", (ev) => this.apiCalled(ev));
   }
 
   apiCalled(ev) {
@@ -102,8 +103,8 @@ class HassioSupervisorInfo extends EventsMixin(PolymerElement) {
 
     var response = ev.detail.response;
 
-    if (typeof response.body === 'object') {
-      this.errors = response.body.message || 'Unknown error';
+    if (typeof response.body === "object") {
+      this.errors = response.body.message || "Unknown error";
     } else {
       this.errors = response.body;
     }
@@ -118,18 +119,20 @@ class HassioSupervisorInfo extends EventsMixin(PolymerElement) {
   }
 
   _joinBeta() {
-    if (!confirm(`WARNING:
+    if (
+      !confirm(`WARNING:
 Beta releases are for testers and early adopters and can contain unstable code changes. Make sure you have backups of your data before you activate this feature.
 
 This inludes beta releases for:
 - Home Assistant (Release Candidates)
 - Hass.io supervisor
-- Host system`)) {
+- Host system`)
+    ) {
       return;
     }
-    const method = 'post';
-    const path = 'hassio/supervisor/options';
-    const data = { channel: 'beta' };
+    const method = "post";
+    const path = "hassio/supervisor/options";
+    const data = { channel: "beta" };
 
     const eventData = {
       method: method,
@@ -137,17 +140,22 @@ This inludes beta releases for:
       data: data,
     };
 
-    this.hass.callApi(method, path, data)
-      .then((resp) => {
-        eventData.success = true;
-        eventData.response = resp;
-      }, (resp) => {
-        eventData.success = false;
-        eventData.response = resp;
-      }).then(() => {
-        this.fire('hass-api-called', eventData);
+    this.hass
+      .callApi(method, path, data)
+      .then(
+        (resp) => {
+          eventData.success = true;
+          eventData.response = resp;
+        },
+        (resp) => {
+          eventData.success = false;
+          eventData.response = resp;
+        }
+      )
+      .then(() => {
+        this.fire("hass-api-called", eventData);
       });
   }
 }
 
-customElements.define('hassio-supervisor-info', HassioSupervisorInfo);
+customElements.define("hassio-supervisor-info", HassioSupervisorInfo);

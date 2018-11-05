@@ -1,11 +1,59 @@
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../components/demo-cards.js';
+import getEntity from "../data/entity";
+import provideHass from "../data/provide_hass";
+import "../components/demo-cards";
+
+const ENTITIES = [
+  getEntity("device_tracker", "demo_paulus", "work", {
+    source_type: "gps",
+    latitude: 32.877105,
+    longitude: 117.232185,
+    gps_accuracy: 91,
+    battery: 71,
+    friendly_name: "Paulus",
+  }),
+  getEntity("device_tracker", "demo_anne_therese", "school", {
+    source_type: "gps",
+    latitude: 32.877105,
+    longitude: 117.232185,
+    gps_accuracy: 91,
+    battery: 71,
+    friendly_name: "Anne Therese",
+  }),
+  getEntity("device_tracker", "demo_home_boy", "home", {
+    source_type: "gps",
+    latitude: 32.877105,
+    longitude: 117.232185,
+    gps_accuracy: 91,
+    battery: 71,
+    friendly_name: "Home Boy",
+  }),
+  getEntity("light", "bed_light", "on", {
+    friendly_name: "Bed Light",
+  }),
+  getEntity("light", "kitchen_lights", "on", {
+    friendly_name: "Kitchen Lights",
+  }),
+  getEntity("light", "ceiling_lights", "off", {
+    friendly_name: "Ceiling Lights",
+  }),
+];
 
 const CONFIGS = [
   {
-    heading: 'Basic',
+    heading: "Controller",
+    config: `
+- type: entities
+  entities:
+  - light.bed_light
+  - light.ceiling_lights
+  - light.kitchen_lights
+    `,
+  },
+  {
+    heading: "Basic",
     config: `
 - type: entity-filter
   entities:
@@ -17,11 +65,11 @@ const CONFIGS = [
     - light.kitchen_lights
   state_filter:
     - "on"
-    - not_home
-    `
+    - home
+    `,
   },
   {
-    heading: 'With card config',
+    heading: "With card config",
     config: `
 - type: entity-filter
   entities:
@@ -37,27 +85,17 @@ const CONFIGS = [
   card:
     type: glance
     show_state: false
-    `
+    `,
   },
-  {
-    heading: 'Showing single entity conditionally',
-    config: `
-- type: entity-filter
-  entities:
-    - media_player.lounge_room
-  state_filter:
-    - 'playing'
-  card:
-    type: media-control
-    entity: media_player.lounge_room
-    `
-  }
 ];
 
 class DemoFilter extends PolymerElement {
   static get template() {
     return html`
-      <demo-cards configs="[[_configs]]"></demo-cards>
+      <demo-cards
+        id='demos'
+        configs="[[_configs]]"
+      ></demo-cards>
     `;
   }
 
@@ -65,10 +103,16 @@ class DemoFilter extends PolymerElement {
     return {
       _configs: {
         type: Object,
-        value: CONFIGS
-      }
+        value: CONFIGS,
+      },
     };
+  }
+
+  ready() {
+    super.ready();
+    const hass = provideHass(this.$.demos);
+    hass.addEntities(ENTITIES);
   }
 }
 
-customElements.define('demo-hui-entity-filter-card', DemoFilter);
+customElements.define("demo-hui-entity-filter-card", DemoFilter);

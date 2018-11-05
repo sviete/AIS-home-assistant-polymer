@@ -1,11 +1,35 @@
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../components/demo-cards.js';
+import getEntity from "../data/entity";
+import provideHass from "../data/provide_hass";
+import "../components/demo-cards";
+
+const ENTITIES = [
+  getEntity("light", "bed_light", "on", {
+    friendly_name: "Bed Light",
+  }),
+  getEntity("group", "all_lights", "on", {
+    entity_id: ["light.bed_light"],
+    order: 8,
+    friendly_name: "All Lights",
+  }),
+  getEntity("camera", "demo_camera", "idle", {
+    access_token:
+      "2f5bb163fb91cd8770a9494fa5e7eab172d8d34f4aba806eb6b59411b8c720b8",
+    friendly_name: "Demo camera",
+    entity_picture:
+      "/api/camera_proxy/camera.demo_camera?token=2f5bb163fb91cd8770a9494fa5e7eab172d8d34f4aba806eb6b59411b8c720b8",
+  }),
+  getEntity("binary_sensor", "movement_backyard", "on", {
+    friendly_name: "Movement Backyard",
+    device_class: "motion",
+  }),
+];
 
 const CONFIGS = [
   {
-    heading: 'Card with few elements',
+    heading: "Card with few elements",
     config: `
 - type: picture-elements
   image: /images/floorplan.png
@@ -49,14 +73,17 @@ const CONFIGS = [
       style:
         top: 8%
         left: 35%
-    `
+    `,
   },
 ];
 
 class DemoPicElements extends PolymerElement {
   static get template() {
     return html`
-      <demo-cards configs="[[_configs]]"></demo-cards>
+      <demo-cards
+        id='demos'
+        configs="[[_configs]]"
+      ></demo-cards>
     `;
   }
 
@@ -64,10 +91,16 @@ class DemoPicElements extends PolymerElement {
     return {
       _configs: {
         type: Object,
-        value: CONFIGS
-      }
+        value: CONFIGS,
+      },
     };
+  }
+
+  ready() {
+    super.ready();
+    const hass = provideHass(this.$.demos);
+    hass.addEntities(ENTITIES);
   }
 }
 
-customElements.define('demo-hui-picture-elements-card', DemoPicElements);
+customElements.define("demo-hui-picture-elements-card", DemoPicElements);

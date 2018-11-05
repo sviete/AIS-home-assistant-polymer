@@ -1,8 +1,8 @@
-import '@polymer/paper-icon-button/paper-icon-button.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/paper-icon-button/paper-icon-button";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import CoverEntity from '../util/cover-model.js';
+import CoverEntity from "../util/cover-model";
 
 class HaCoverControls extends PolymerElement {
   static get template() {
@@ -34,33 +34,39 @@ class HaCoverControls extends PolymerElement {
       },
       entityObj: {
         type: Object,
-        computed: 'computeEntityObj(hass, stateObj)',
+        computed: "computeEntityObj(hass, stateObj)",
       },
     };
   }
+
   computeEntityObj(hass, stateObj) {
     return new CoverEntity(hass, stateObj);
   }
+
   computeOpenDisabled(stateObj, entityObj) {
     var assumedState = stateObj.attributes.assumed_state === true;
     return (entityObj.isFullyOpen || entityObj.isOpening) && !assumedState;
   }
+
   computeClosedDisabled(stateObj, entityObj) {
-    var assumedState = (stateObj.attributes.assumed_state === true);
+    var assumedState = stateObj.attributes.assumed_state === true;
     return (entityObj.isFullyClosed || entityObj.isClosing) && !assumedState;
   }
+
   onOpenTap(ev) {
     ev.stopPropagation();
     this.entityObj.openCover();
   }
+
   onCloseTap(ev) {
     ev.stopPropagation();
     this.entityObj.closeCover();
   }
+
   onStopTap(ev) {
     ev.stopPropagation();
     this.entityObj.stopCover();
   }
 }
 
-customElements.define('ha-cover-controls', HaCoverControls);
+customElements.define("ha-cover-controls", HaCoverControls);

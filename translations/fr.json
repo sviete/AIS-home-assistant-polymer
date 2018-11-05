@@ -12,7 +12,9 @@
         "dev-events": "Événements",
         "dev-templates": "Templates",
         "dev-mqtt": "MQTT",
-        "dev-info": "Info"
+        "dev-info": "Info",
+        "calendar": "Calendrier",
+        "profile": "Profil"
     },
     "state": {
         "default": {
@@ -131,7 +133,7 @@
         "climate": {
             "off": "Off",
             "on": "On",
-            "heat": "Chaleur",
+            "heat": "Chauffe",
             "cool": "Frais",
             "idle": "Inactif",
             "auto": "Auto",
@@ -252,6 +254,16 @@
             "sunny": "Soleil",
             "windy": "Vent",
             "windy-variant": "Vent"
+        },
+        "vacuum": {
+            "cleaning": "Nettoyage",
+            "docked": "Sur la base",
+            "error": "Erreur",
+            "idle": "Inactif",
+            "off": "Off",
+            "on": "On",
+            "paused": "En pause",
+            "returning": "Retourne à la base"
         }
     },
     "state_badge": {
@@ -368,7 +380,8 @@
                                 "state": {
                                     "label": "État",
                                     "from": "De",
-                                    "to": "À"
+                                    "to": "À",
+                                    "for": "Pour"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -473,7 +486,7 @@
                                 },
                                 "delay": {
                                     "label": "Délai",
-                                    "delay": "Délais"
+                                    "delay": "Délai"
                                 },
                                 "wait_template": {
                                     "label": "Attendre",
@@ -499,6 +512,205 @@
                 "zwave": {
                     "caption": "Z-Wave",
                     "description": "Gérez votre réseau Z-Wave"
+                },
+                "users": {
+                    "caption": "Utilisateurs",
+                    "description": "Gérer les utilisateurs",
+                    "picker": {
+                        "title": "Utilisateurs"
+                    },
+                    "editor": {
+                        "rename_user": "Renommer l'utilisateur",
+                        "change_password": "Changer le mot de passe",
+                        "activate_user": "Activer l'utilisateur",
+                        "deactivate_user": "Désactiver l'utilisateur",
+                        "delete_user": "Supprimer l'utilisateur"
+                    }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Connecté en tant que {email}",
+                    "description_not_login": "Pas connecté"
+                },
+                "integrations": {
+                    "caption": "Intégrations",
+                    "description": "Gérer les appareils et services connectés",
+                    "discovered": "Découvert",
+                    "configured": "Configuré",
+                    "new": "Configurer une nouvelle intégration",
+                    "configure": "Configurer",
+                    "none": "Rien n'est encore configuré",
+                    "config_entry": {
+                        "no_devices": "Cette intégration n'a pas d'appareils.",
+                        "no_device": "Entités sans appareils",
+                        "delete_confirm": "Êtes-vous sûr de vouloir supprimer cette intégration?",
+                        "restart_confirm": "Redémarrez Home Assistant pour terminer la suppression de cette intégration",
+                        "manuf": "par {manufacturer}",
+                        "hub": "Connecté via",
+                        "firmware": "Firmware: {version}",
+                        "device_unavailable": "appareil indisponible",
+                        "entity_unavailable": "entité indisponible"
+                    }
+                }
+            },
+            "profile": {
+                "push_notifications": {
+                    "header": "Notifications push",
+                    "description": "Envoyer des notifications à cet appareil.",
+                    "error_load_platform": "Configurer notify.html5.",
+                    "error_use_https": "Nécessite l'activation de SSL pour le frontend.",
+                    "push_notifications": "Notifications push",
+                    "link_promo": "En savoir plus"
+                },
+                "language": {
+                    "header": "Langue",
+                    "link_promo": "Aider à traduire",
+                    "dropdown_label": "Langue"
+                },
+                "themes": {
+                    "header": "Thème",
+                    "error_no_theme": "Aucun thème disponible.",
+                    "link_promo": "En savoir plus sur les thèmes",
+                    "dropdown_label": "Thème"
+                },
+                "refresh_tokens": {
+                    "header": "Actualiser les jetons",
+                    "description": "Chaque jeton d'actualisation représente une session de connexion. Les jetons d'actualisation seront automatiquement supprimés lorsque vous cliquez sur Déconnexion. Les jetons d'actualisation suivants sont actuellement actifs pour votre compte.",
+                    "token_title": "Actualiser le jeton de {clientId}",
+                    "created_at": "Créé le {date}",
+                    "confirm_delete": "Êtes-vous sûr de vouloir supprimer le jeton d'actualisation de {name} ?",
+                    "delete_failed": "Impossible de supprimer le jeton d'actualisation",
+                    "last_used": "Dernière utilisation le {date} à partir de {location}",
+                    "not_used": "N'a jamais été utilisé",
+                    "current_token_tooltip": "Impossible de supprimer le jeton d'actualisation actuel"
+                },
+                "long_lived_access_tokens": {
+                    "header": "Jetons d'accès de longue durée",
+                    "description": "Créez des jetons d'accès de longue durée pour permettre à vos scripts d'interagir avec votre instance de Home Assistant. Chaque jeton sera valable 10 ans à compter de sa création. Les jetons d'accès longue durée suivants sont actuellement actifs.",
+                    "learn_auth_requests": "Apprenez comment faire des demandes authentifiées.",
+                    "created_at": "Créé le {date}",
+                    "confirm_delete": "Êtes-vous sûr de vouloir supprimer le jeton d'accès de {name} ?",
+                    "delete_failed": "Impossible de supprimer le jeton d'accès.",
+                    "create": "Créer un jeton",
+                    "create_failed": "Impossible de créer le jeton d'accès.",
+                    "prompt_name": "Nom ?",
+                    "prompt_copy_token": "Copiez votre jeton d'accès. Il ne sera plus affiché à nouveau.",
+                    "empty_state": "Vous n'avez pas encore de jetons d'accès longue durée.",
+                    "last_used": "Dernière utilisation le {date} à partir de {location}",
+                    "not_used": "N'a jamais été utilisé"
+                },
+                "current_user": "Vous êtes actuellement connecté tant que {fullName}.",
+                "is_owner": "Vous êtes propriétaire",
+                "logout": "Déconnexion",
+                "change_password": {
+                    "header": "Changer le mot de passe",
+                    "current_password": "Mot de passe actuel",
+                    "new_password": "nouveau mot de passe",
+                    "confirm_new_password": "Confirmer le nouveau mot de passe",
+                    "error_required": "Requis",
+                    "submit": "Envoyer"
+                },
+                "mfa": {
+                    "header": "Modules d'authentification multi-facteurs",
+                    "disable": "Désactiver",
+                    "enable": "Activer",
+                    "confirm_disable": "Êtes-vous sûr de vouloir désactiver {name} ?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Abandonné",
+                    "title_success": "Succès !",
+                    "step_done": "Configuration terminée pour {step}",
+                    "close": "Fermer",
+                    "submit": "Envoyer"
+                }
+            },
+            "page-authorize": {
+                "initializing": "Initialisation",
+                "authorizing_client": "Vous êtes sur le point de donner accès à {clientId} à votre instance de Home Assistant.",
+                "logging_in_with": "Se connecter avec **{authProviderName}**.",
+                "pick_auth_provider": "Ou connectez-vous avec",
+                "abort_intro": "Connexion interrompue",
+                "form": {
+                    "working": "Veuillez patienter",
+                    "unknown_error": "Quelque chose a mal tourné",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Nom d'utilisateur",
+                                        "password": "Mot de passe"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Code d'authentification à deux facteurs"
+                                    },
+                                    "description": "Ouvrez le **{mfa_module_name}** sur votre appareil pour afficher votre code d'authentification à deux facteurs et vérifier votre identité:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Nom d'utilisateur ou mot de passe invalide",
+                                "invalid_code": "Code d'authentification invalide"
+                            },
+                            "abort": {
+                                "login_expired": "Session expirée, veuillez vous connecter à nouveau."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "Mot de passe API"
+                                    },
+                                    "description": "Veuillez saisir le mot de passe API dans votre configuration http:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Code d'authentification à deux facteurs"
+                                    },
+                                    "description": "Ouvrez le **{mfa_module_name}** sur votre appareil pour afficher votre code d'authentification à deux facteurs et vérifier votre identité:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Mot de passe API invalide",
+                                "invalid_code": "Code d'authentification invalide"
+                            },
+                            "abort": {
+                                "no_api_password_set": "Vous n'avez pas de mot de passe API configuré.",
+                                "login_expired": "Session expirée, veuillez vous connecter à nouveau."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Utilisateur"
+                                    },
+                                    "description": "Sélectionnez l'utilisateur avec lequel vous souhaitez vous connecter :"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "Votre ordinateur n'est pas en liste blanche."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Êtes-vous prêt à réveiller votre maison, à récupérer votre vie privée et à rejoindre une communauté mondiale de bricoleurs?",
+                "user": {
+                    "intro": "Commençons par créer un compte utilisateur.",
+                    "required_field": "Requis",
+                    "data": {
+                        "name": "Nom",
+                        "username": "Nom d'utilisateur",
+                        "password": "Mot de passe"
+                    },
+                    "create_account": "Créer un compte",
+                    "error": {
+                        "required_fields": "Remplissez tous les champs requis"
+                    }
                 }
             }
         },
@@ -550,8 +762,8 @@
                     "n": "N",
                     "ne": "NE",
                     "nne": "N-NE",
-                    "nw": "NW",
-                    "nnw": "N-NW",
+                    "nw": "NO",
+                    "nnw": "N-NO",
                     "s": "S",
                     "se": "SE",
                     "sse": "S-SE",
@@ -590,7 +802,9 @@
                 "effect": "Effet"
             },
             "media_player": {
-                "text_to_speak": "Texte à lire"
+                "text_to_speak": "Texte à lire",
+                "source": "Source",
+                "sound_mode": "Mode sonore"
             },
             "climate": {
                 "currently": "Actuellement",
@@ -607,6 +821,22 @@
                 "code": "Code",
                 "lock": "Verrouiller",
                 "unlock": "Déverrouiller"
+            },
+            "vacuum": {
+                "actions": {
+                    "resume_cleaning": "Reprendre le nettoyage",
+                    "return_to_base": "Retourner à la base",
+                    "start_cleaning": "Commencer à nettoyer",
+                    "turn_on": "Allumer",
+                    "turn_off": "Éteindre"
+                }
+            },
+            "water_heater": {
+                "currently": "Actuellement",
+                "on_off": "Marche \/ Arrêt",
+                "target_temperature": "Température cible",
+                "operation": "Opération",
+                "away_mode": "Mode \"Absent\""
             }
         },
         "components": {
@@ -621,7 +851,14 @@
             "relative_time": {
                 "past": "{time} auparavant",
                 "future": "Dans {time}",
-                "never": "Jamais"
+                "never": "Jamais",
+                "duration": {
+                    "second": "{count} {count, plural,\none {seconde}\nother {secondes}\n}",
+                    "minute": "{count} {count, plural,\none {minute}\nother {minutes}\n}",
+                    "hour": "{count} {count, plural,\none {heure}\nother {heures}\n}",
+                    "day": "{count} {count, plural,\none {jour}\nother {jours}\n}",
+                    "week": "{count} {count, plural,\none {semaine}\nother {semaines}\n}"
+                }
             },
             "history_charts": {
                 "loading_history": "Chargement de l'historique des valeurs ...",
@@ -634,6 +871,23 @@
             "service_called": "Service \"{service}\" appelé.",
             "service_call_failed": "Échec d'appel du service \"{service}\".",
             "connection_lost": "Connexion perdue. Reconnexion en cours ..."
+        },
+        "dialogs": {
+            "more_info_settings": {
+                "save": "Sauvegarder",
+                "name": "Nom",
+                "entity_id": "ID de l'entité"
+            }
+        },
+        "auth_store": {
+            "ask": "Voulez-vous enregistrer cette connexion?",
+            "decline": "Non merci",
+            "confirm": "Connexion automatique"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Cliquez sur le bouton pour configurer {entity}",
+            "empty": "Aucune notification",
+            "title": "Notifications"
         }
     },
     "domain": {
@@ -671,7 +925,8 @@
         "switch": "Interrupteur",
         "updater": "Mise à jour",
         "weblink": "Lien",
-        "zwave": "Z-Wave"
+        "zwave": "Z-Wave",
+        "vacuum": "Aspirateur"
     },
     "attribute": {
         "weather": {

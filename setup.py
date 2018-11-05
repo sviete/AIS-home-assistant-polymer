@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='ais-dom-frontend',
-      version='20180820.0',
+      version='20181103.1',
       description='AIS dom frontend',
       url='https://github.com/sviete/home-assistant/home-assistant-polymer',
       author='Andrzej Raczkowski',
@@ -13,8 +13,6 @@ setup(name='ais-dom-frontend',
           'hass_frontend.*',
           'hass_frontend_es5.*'
       ]),
-      install_requires=[
-          'user-agents==1.1.0',
-      ],
+      install_requires=['user-agents==1.1.0'],
       include_package_data=True,
       zip_safe=False)

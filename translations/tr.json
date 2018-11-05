@@ -12,7 +12,8 @@
         "dev-events": "Olaylar",
         "dev-templates": "Taslaklar",
         "dev-mqtt": "MQTT",
-        "dev-info": "Bilgi"
+        "dev-info": "Bilgi",
+        "profile": "Profil"
     },
     "state": {
         "default": {
@@ -79,8 +80,8 @@
                 "on": "Güvensiz"
             },
             "presence": {
-                "off": "[%key:state::device_tracker::dışarda%]",
-                "on": "[%key:state::device_tracker::ev%]"
+                "off": "Dışarda",
+                "on": "Evde"
             },
             "battery": {
                 "off": "Normal",
@@ -203,7 +204,7 @@
             "on": "Açık"
         },
         "scene": {
-            "scening": "sahneler"
+            "scening": "senaryolar"
         },
         "script": {
             "off": "Kapalı",
@@ -249,7 +250,7 @@
             "arming": "Etkinleştir",
             "disarming": "Etkisiz",
             "triggered": "Tetiklendi",
-            "armed_custom_bypass": "[%key:state_badge::alarm_control_panel::alarm_kuruldu%]"
+            "armed_custom_bypass": "Etkin"
         },
         "device_tracker": {
             "home": "Evde",
@@ -316,7 +317,71 @@
                 },
                 "automation": {
                     "caption": "Otomasyon",
-                    "description": "Otomasyonları oluşturun ve düzenleyin"
+                    "description": "Otomasyonları oluşturun ve düzenleyin",
+                    "picker": {
+                        "header": "Otomasyon Düzenleyici"
+                    },
+                    "editor": {
+                        "triggers": {
+                            "delete": "Sil",
+                            "type": {
+                                "sun": {
+                                    "event": "Olay:"
+                                },
+                                "zone": {
+                                    "zone": "Bölge",
+                                    "event": "Olay:"
+                                },
+                                "state": {
+                                    "for": "İçin"
+                                }
+                            }
+                        },
+                        "conditions": {
+                            "duplicate": "Kopya",
+                            "delete": "Sil",
+                            "delete_confirm": "Silmek istediğinizden emin misiniz?",
+                            "unsupported_condition": "Desteklenmeyen durum: {durum}",
+                            "type": {
+                                "state": {
+                                    "label": "Durum",
+                                    "state": "Durum"
+                                },
+                                "numeric_state": {
+                                    "label": "Sayısal durum",
+                                    "above": "Üzerinde",
+                                    "below": "Altında",
+                                    "value_template": "Değer şablonu (isteğe bağlı)"
+                                },
+                                "sun": {
+                                    "label": "Güneş"
+                                },
+                                "template": {
+                                    "label": "Şablon",
+                                    "value_template": "Değer şablonu"
+                                },
+                                "time": {
+                                    "label": "Zaman"
+                                },
+                                "zone": {
+                                    "entity": "Konumlu girdi"
+                                }
+                            }
+                        },
+                        "actions": {
+                            "duplicate": "Kopya",
+                            "delete": "Sil",
+                            "type": {
+                                "delay": {
+                                    "delay": "Gecikme"
+                                },
+                                "event": {
+                                    "event": "Olay:",
+                                    "service_data": "Hizmet verisi"
+                                }
+                            }
+                        }
+                    }
                 },
                 "script": {
                     "caption": "Senaryo",
@@ -325,6 +390,64 @@
                 "zwave": {
                     "caption": "Z-Wave",
                     "description": "Z-Wave ağınızı yönetin"
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "{email} olarak oturum açtınız",
+                    "description_not_login": "Oturum açmadınız"
+                },
+                "integrations": {
+                    "caption": "Entegrasyonlar",
+                    "description": "Bağlı cihazları ve hizmetleri yönetin",
+                    "discovered": "Bulundu",
+                    "configured": "Yapılandırılmış",
+                    "new": "Yeni bir entegrasyon kur",
+                    "configure": "Yapılandır",
+                    "none": "Henüz hiçbir şey yapılandırılmamış",
+                    "config_entry": {
+                        "no_devices": "Bu entegrasyona ait hiçbir cihaz yok",
+                        "no_device": "Cihaza ait olmayan cisimler",
+                        "delete_confirm": "Bu entegrasyonu silmek istediğinizden emin misiniz?",
+                        "restart_confirm": "Bu entegrasyonu kaldırmaya devam etmek için Home Assistant'ı yeniden başlatın",
+                        "manuf": "üretici: {manufacturer}",
+                        "hub": "Şununla bağlı:",
+                        "firmware": "Aygıt yazılımı: {version}",
+                        "device_unavailable": "cihaz kullanılamıyor",
+                        "entity_unavailable": "cisim kullanılamıyor"
+                    }
+                }
+            },
+            "profile": {
+                "push_notifications": {
+                    "description": "Bu cihaza bildirimler gönder"
+                },
+                "refresh_tokens": {
+                    "description": "Her yenileme jetonu bir oturum açma oturumunu temsil eder. Yenileme jetonları, çıkış yapmak istediğinizde otomatik olarak kaldırılacaktır. Aşağıdaki yenileme jetonları hesabınız için şu anda aktif."
+                },
+                "long_lived_access_tokens": {
+                    "not_used": "Hiç kullanılmamış"
+                },
+                "logout": "Çıkış yap",
+                "change_password": {
+                    "header": "Parolayı Değiştir",
+                    "current_password": "Güncel Parola",
+                    "new_password": "Yeni Parolayı",
+                    "confirm_new_password": "Yeni Parolayı Onaylayın",
+                    "error_required": "Gerekli",
+                    "submit": "Gönder"
+                },
+                "mfa": {
+                    "header": "Çoklu-faktör Kimlik Doğrulama Modülleri",
+                    "disable": "Devre dışı bırak",
+                    "enable": "Etkinleştir",
+                    "confirm_disable": "{name} adlı öğeyi devre dışı bırakmak istediğinizden emin misiniz?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "İptal edildi",
+                    "title_success": "Başarılı!",
+                    "step_done": "Kurulumun {step} adımı tamamlandı",
+                    "close": "Kapat",
+                    "submit": "Gönder"
                 }
             }
         },
@@ -338,7 +461,7 @@
         },
         "duration": {
             "day": "{count}{count, plural,\n  one { gün }\n  other { gün }\n}",
-            "week": "{count}{count, plural,\n  one { hafta }\n  other { hafta }\n}",
+            "week": "{say}{say, çoğul,\n  bir { hafta }\n  diğer { hafta }\n}",
             "second": "{count}{count, plural,\n  one { saniye }\n  other { saniye }\n}"
         },
         "login-form": {
@@ -352,7 +475,17 @@
             },
             "persistent_notification": {
                 "dismiss": "Kapat"
+            },
+            "water_heater": {
+                "currently": "Güncel olarak",
+                "on_off": "Açık \/ kapalı",
+                "target_temperature": "hedef sıcaklık",
+                "operation": "İşlem",
+                "away_mode": "Dışarıda modu"
             }
+        },
+        "auth_store": {
+            "confirm": "Girişi kaydet"
         }
     },
     "domain": {
@@ -364,7 +497,7 @@
         "climate": "İklim",
         "configurator": "Yapılandırıcı",
         "conversation": "Konuşma",
-        "cover": "Kapak",
+        "cover": "Panjur",
         "device_tracker": "Cihaz izleyici",
         "fan": "Fan",
         "history_graph": "Geçmiş grafiği",
@@ -383,7 +516,7 @@
         "plant": "Bitki",
         "proximity": "Yakınlık",
         "remote": "Uzaktan Kumanda",
-        "scene": "Sahne",
+        "scene": "Senaryo",
         "script": "Senaryo",
         "sensor": "Sensör",
         "sun": "Güneş",

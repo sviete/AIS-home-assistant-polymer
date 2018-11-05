@@ -1,14 +1,32 @@
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../../../components/entity/state-badge.js';
-import '../../../components/ha-relative-time.js';
-import '../../../components/ha-icon.js';
+import "../../../components/entity/state-badge";
+import "../../../components/ha-relative-time";
+import "../../../components/ha-icon";
 
-import computeStateName from '../../../common/entity/compute_state_name.js';
+import computeStateName from "../../../common/entity/compute_state_name";
 
 class HuiGenericEntityRow extends PolymerElement {
   static get template() {
+    return html`
+      ${this.styleTemplate}
+      <template is="dom-if" if="[[_stateObj]]">
+        ${this.stateBadgeTemplate}
+        <div class="flex">
+          ${this.infoTemplate}
+          <slot></slot>
+        </div>
+      </template>
+      <template is="dom-if" if="[[!_stateObj]]">
+        <div class="not-found">
+          Entity not available: [[config.entity]]
+        </div>
+      </template>
+    `;
+  }
+
+  static get styleTemplate() {
     return html`
       <style>
         :host {
@@ -36,14 +54,13 @@ class HuiGenericEntityRow extends PolymerElement {
           margin-left: 8px;
           min-width: 0;
         }
+        .flex ::slotted([slot=secondary]) {
+          margin-left: 0;
+        }
         .secondary,
         ha-relative-time {
           display: block;
           color: var(--secondary-text-color);
-        }
-        ha-icon {
-          padding: 8px;
-          color: var(--paper-item-icon-color);
         }
         .not-found {
           flex: 1;
@@ -54,38 +71,39 @@ class HuiGenericEntityRow extends PolymerElement {
           flex: 0 0 40px;
         }
       </style>
-      <template is="dom-if" if="[[_stateObj]]">
-        <template is="dom-if" if="[[!config.icon]]">
-          <state-badge state-obj="[[_stateObj]]"></state-badge>
-        </template>
-        <template is="dom-if" if="[[config.icon]]">
-          <ha-icon icon="[[config.icon]]"></ha-icon>
-        </template>
-        <div class="flex">
-          <div class="info">
-            [[_computeName(config.name, _stateObj)]]
-            <template is="dom-if" if="[[config.secondary_info]]">
-              <template is="dom-if" if="[[_equals(config.secondary_info, 'entity-id')]]">
-                <div class="secondary">
-                  [[_stateObj.entity_id]]
-                </div>
-              </template>
-              <template is="dom-if" if="[[_equals(config.secondary_info, 'last-changed')]]">
-                <ha-relative-time
-                  hass="[[hass]]"
-                  datetime="[[_stateObj.last_changed]]"
-                ></ha-relative-time>
-              </template>
+    `;
+  }
+
+  static get stateBadgeTemplate() {
+    return html`
+      <state-badge
+        state-obj="[[_stateObj]]"
+        override-icon="[[config.icon]]"
+      ></state-badge>
+    `;
+  }
+
+  static get infoTemplate() {
+    return html`
+      <div class="info">
+        [[_computeName(config.name, _stateObj)]]
+        <div class="secondary">
+          <template is="dom-if" if="[[showSecondary]]">
+            <template is="dom-if" if="[[_equals(config.secondary_info, 'entity-id')]]">
+              [[_stateObj.entity_id]]
             </template>
-          </div>
-          <slot></slot>
+            <template is="dom-if" if="[[_equals(config.secondary_info, 'last-changed')]]">
+              <ha-relative-time
+                hass="[[hass]]"
+                datetime="[[_stateObj.last_changed]]"
+              ></ha-relative-time>
+            </template>
+          </template>
+          <template is="dom-if" if="[[!showSecondary]">
+            <slot name="secondary"></slot>
+          </template>
         </div>
-      </template>
-      <template is="dom-if" if="[[!_stateObj]]">
-        <div class="not-found">
-          Entity not available: [[config.entity]]
-        </div>
-      </template>
+      </div>
     `;
   }
 
@@ -95,8 +113,12 @@ class HuiGenericEntityRow extends PolymerElement {
       config: Object,
       _stateObj: {
         type: Object,
-        computed: '_computeStateObj(hass.states, config.entity)'
-      }
+        computed: "_computeStateObj(hass.states, config.entity)",
+      },
+      showSecondary: {
+        type: Boolean,
+        value: true,
+      },
     };
   }
 
@@ -112,4 +134,4 @@ class HuiGenericEntityRow extends PolymerElement {
     return name || computeStateName(stateObj);
   }
 }
-customElements.define('hui-generic-entity-row', HuiGenericEntityRow);
+customElements.define("hui-generic-entity-row", HuiGenericEntityRow);

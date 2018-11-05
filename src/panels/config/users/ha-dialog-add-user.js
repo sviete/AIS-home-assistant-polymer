@@ -1,12 +1,12 @@
-import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-dialog/paper-dialog.js';
-import '@polymer/paper-spinner/paper-spinner.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/paper-button/paper-button";
+import "@polymer/paper-dialog/paper-dialog";
+import "@polymer/paper-spinner/paper-spinner";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../../../resources/ha-style.js';
+import "../../../resources/ha-style";
 
-import LocalizeMixin from '../../../mixins/localize-mixin.js';
+import LocalizeMixin from "../../../mixins/localize-mixin";
 
 /*
  * @appliesMixin LocalizeMixin
@@ -37,6 +37,7 @@ class HaDialogAddUser extends LocalizeMixin(PolymerElement) {
           value='{{_name}}'
           required
           auto-validate
+          autocapitalize='on'
           error-message='Required'
           on-blur='_maybePopulateUsername'
         ></paper-input>
@@ -46,6 +47,7 @@ class HaDialogAddUser extends LocalizeMixin(PolymerElement) {
           value='{{_username}}'
           required
           auto-validate
+          autocapitalize='none'
           error-message='Required'
         ></paper-input>
         <paper-input
@@ -95,7 +97,7 @@ class HaDialogAddUser extends LocalizeMixin(PolymerElement) {
 
   ready() {
     super.ready();
-    this.addEventListener('keypress', (ev) => {
+    this.addEventListener("keypress", (ev) => {
       if (ev.keyCode === 13) {
         this._createUser();
       }
@@ -107,13 +109,13 @@ class HaDialogAddUser extends LocalizeMixin(PolymerElement) {
     this._dialogClosedCallback = dialogClosedCallback;
     this._loading = false;
     this._opened = true;
-    setTimeout(() => this.shadowRoot.querySelector('paper-input').focus(), 0);
+    setTimeout(() => this.shadowRoot.querySelector("paper-input").focus(), 0);
   }
 
   _maybePopulateUsername() {
     if (this._username) return;
 
-    const parts = this._name.split(' ');
+    const parts = this._name.split(" ");
 
     if (parts.length) {
       this._username = parts[0].toLowerCase();
@@ -130,7 +132,7 @@ class HaDialogAddUser extends LocalizeMixin(PolymerElement) {
 
     try {
       const userResponse = await this.hass.callWS({
-        type: 'config/auth/create',
+        type: "config/auth/create",
         name: this._name,
       });
       userId = userResponse.user.id;
@@ -142,7 +144,7 @@ class HaDialogAddUser extends LocalizeMixin(PolymerElement) {
 
     try {
       await this.hass.callWS({
-        type: 'config/auth_provider/homeassistant/create',
+        type: "config/auth_provider/homeassistant/create",
         user_id: userId,
         username: this._username,
         password: this._password,
@@ -151,7 +153,7 @@ class HaDialogAddUser extends LocalizeMixin(PolymerElement) {
       this._loading = false;
       this._errorMsg = err.code;
       await this.hass.callWS({
-        type: 'config/auth/delete',
+        type: "config/auth/delete",
         user_id: userId,
       });
       return;
@@ -165,8 +167,8 @@ class HaDialogAddUser extends LocalizeMixin(PolymerElement) {
 
     this.setProperties({
       _errorMsg: null,
-      _username: '',
-      _password: '',
+      _username: "",
+      _password: "",
       _dialogClosedCallback: null,
       _opened: false,
     });
@@ -186,4 +188,4 @@ class HaDialogAddUser extends LocalizeMixin(PolymerElement) {
   }
 }
 
-customElements.define('ha-dialog-add-user', HaDialogAddUser);
+customElements.define("ha-dialog-add-user", HaDialogAddUser);

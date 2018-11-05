@@ -1,14 +1,14 @@
-import '@polymer/paper-checkbox/paper-checkbox.js';
-import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
-import '@polymer/paper-icon-button/paper-icon-button.js';
-import '@polymer/paper-input/paper-input.js';
-import '@polymer/paper-item/paper-item.js';
-import '@polymer/paper-listbox/paper-listbox.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/paper-checkbox/paper-checkbox";
+import "@polymer/paper-dropdown-menu/paper-dropdown-menu";
+import "@polymer/paper-icon-button/paper-icon-button";
+import "@polymer/paper-input/paper-input";
+import "@polymer/paper-item/paper-item";
+import "@polymer/paper-listbox/paper-listbox";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import './ha-paper-slider.js';
-import EventsMixin from '../mixins/events-mixin.js';
+import "./ha-paper-slider";
+import EventsMixin from "../mixins/events-mixin";
 
 /*
  * @appliesMixin EventsMixin
@@ -20,10 +20,14 @@ class HaForm extends EventsMixin(PolymerElement) {
       .error {
         color: red;
       }
+      paper-checkbox {
+        display: inline-block;
+        padding: 22px 0;
+      }
     </style>
     <template is="dom-if" if="[[_isArray(schema)]]" restamp="">
       <template is="dom-if" if="[[error.base]]">
-          [[computeError(error.base, schema)]]
+          <div class='error'>[[computeError(error.base, schema)]]</div>
       </template>
 
       <template is="dom-repeat" items="[[schema]]">
@@ -96,7 +100,9 @@ class HaForm extends EventsMixin(PolymerElement) {
       </template>
 
       <template is="dom-if" if="[[_equals(schema.type, &quot;boolean&quot;)]]" restamp="">
-        <paper-checkbox checked="{{data}}">[[computeLabel(schema)]]</paper-checkbox>
+        <div>
+          <paper-checkbox checked="{{data}}">[[computeLabel(schema)]]</paper-checkbox>
+        </div>
       </template>
 
       <template is="dom-if" if="[[_equals(schema.type, &quot;select&quot;)]]" restamp="">
@@ -126,7 +132,7 @@ class HaForm extends EventsMixin(PolymerElement) {
       // schema object.
       computeLabel: {
         type: Function,
-        value: () => schema => schema && schema.name,
+        value: () => (schema) => schema && schema.name,
       },
 
       // A function that will computes an error message to be displayed for a
@@ -143,7 +149,7 @@ class HaForm extends EventsMixin(PolymerElement) {
   }
 
   _isRange(schema) {
-    return ('valueMin' in schema) && ('valueMax' in schema);
+    return "valueMin" in schema && "valueMax" in schema;
   }
 
   _equals(a, b) {
@@ -155,19 +161,22 @@ class HaForm extends EventsMixin(PolymerElement) {
   }
 
   _getValue(obj, item) {
-    return obj[item.name];
+    if (obj) {
+      return obj[item.name];
+    }
+    return null;
   }
 
   _valueChanged(ev) {
-    this.set(['data', ev.model.item.name], ev.detail.value);
+    this.set(["data", ev.model.item.name], ev.detail.value);
   }
 
   _passwordFieldType(unmaskedPassword) {
-    return unmaskedPassword ? 'text' : 'password';
+    return unmaskedPassword ? "text" : "password";
   }
 
   _passwordFieldIcon(unmaskedPassword) {
-    return unmaskedPassword ? 'hass:eye-off' : 'hass:eye';
+    return unmaskedPassword ? "hass:eye-off" : "hass:eye";
   }
 
   _optionValue(item) {
@@ -179,4 +188,4 @@ class HaForm extends EventsMixin(PolymerElement) {
   }
 }
 
-customElements.define('ha-form', HaForm);
+customElements.define("ha-form", HaForm);

@@ -1,8 +1,8 @@
-import '@polymer/iron-icon/iron-icon.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/iron-icon/iron-icon";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../../../src/components/ha-relative-time.js';
+import "../../../src/components/ha-relative-time";
 
 class HassioCardContent extends PolymerElement {
   static get template() {
@@ -65,11 +65,11 @@ class HassioCardContent extends PolymerElement {
       datetime: String,
       icon: {
         type: String,
-        value: 'hass:help-circle'
+        value: "hass:help-circle",
       },
       iconTitle: String,
       iconClass: String,
     };
   }
 }
-customElements.define('hassio-card-content', HassioCardContent);
+customElements.define("hassio-card-content", HassioCardContent);

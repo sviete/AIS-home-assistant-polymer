@@ -1,11 +1,12 @@
-import { storeState } from '../../util/ha-pref-storage.js';
+import { storeState } from "../../util/ha-pref-storage";
 
-export default superClass =>
+export default (superClass) =>
   class extends superClass {
     ready() {
       super.ready();
-      this.addEventListener('hass-dock-sidebar', e =>
-        this._handleDockSidebar(e));
+      this.addEventListener("hass-dock-sidebar", (e) =>
+        this._handleDockSidebar(e)
+      );
     }
 
     _handleDockSidebar(ev) {

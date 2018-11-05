@@ -12,8 +12,9 @@
         "dev-events": "Hendelser",
         "dev-templates": "Maler",
         "dev-mqtt": "MQTT",
-        "dev-info": "Info",
-        "calendar": "Kalender"
+        "dev-info": "Informasjon",
+        "calendar": "Kalender",
+        "profile": "Profil"
     },
     "state": {
         "default": {
@@ -65,11 +66,11 @@
             },
             "sound": {
                 "off": "Klar",
-                "on": "Oppdaget"
+                "on": "Aktivert"
             },
             "vibration": {
                 "off": "Klar",
-                "on": "Oppdaget"
+                "on": "Aktivert"
             },
             "opening": {
                 "off": "Lukket",
@@ -244,10 +245,10 @@
             "fog": "Tåke",
             "hail": "Hagl",
             "lightning": "Lyn",
-            "lightning-rainy": "Lyn, regnfull",
+            "lightning-rainy": "Lyn, regn",
             "partlycloudy": "Delvis skyet",
-            "pouring": "Kraftig regn",
-            "rainy": "Regnfull",
+            "pouring": "Kraftig nedbør",
+            "rainy": "Regn",
             "snowy": "Snø",
             "snowy-rainy": "Sludd",
             "sunny": "Solfylt",
@@ -273,14 +274,14 @@
         "alarm_control_panel": {
             "armed": "Påslått",
             "disarmed": "Deaktiver",
-            "armed_home": "Påslått",
-            "armed_away": "Påslått",
-            "armed_night": "Påslått",
+            "armed_home": "Aktivert",
+            "armed_away": "Aktivert",
+            "armed_night": "Aktivert",
             "pending": "Venter",
             "arming": "Slår på",
             "disarming": "Slå av",
             "triggered": "Utløs",
-            "armed_custom_bypass": "Påslått"
+            "armed_custom_bypass": "Aktivert"
         },
         "device_tracker": {
             "home": "Hjemme",
@@ -312,11 +313,11 @@
                 "introduction": "Her er det mulig å konfigurere dine komponenter og Home Assistant. Ikke alt er mulig å konfigurere fra brukergrensesnittet enda, men vi jobber med det.",
                 "core": {
                     "caption": "Generelt",
-                    "description": "Validere konfigurasjonsfilen din og kontroller serveren",
+                    "description": "Valider konfigurasjonsfilen din og kontroller serveren",
                     "section": {
                         "core": {
                             "header": "Konfigurasjon og serverkontroll",
-                            "introduction": "Endringer i konfigurasjonen kan være en slitsom prosess, vi vet det. Denne delen vil forsøke å gjøre livet ditt litt lettere.",
+                            "introduction": "Endring av konfigurasjonen kan være en slitsom prosess, det vet vi. Denne delen vil forsøke å gjøre livet ditt litt lettere.",
                             "validation": {
                                 "heading": "Konfigurasjonsvalidering",
                                 "introduction": "Sjekk konfigurasjon din hvis du nylig har gjort noen endringer og ønsker å være sikker på at den er gyldig ved å kjøre en valideringstest",
@@ -334,7 +335,7 @@
                             },
                             "server_management": {
                                 "heading": "Serveradministrasjon",
-                                "introduction": "Kontroller Home Assistant fra Home Assistant.",
+                                "introduction": "Kontroller din Home Assistant server...fra Home Assistant.",
                                 "restart": "Start på nytt",
                                 "stop": "Stopp"
                             }
@@ -359,7 +360,7 @@
                         "introduction": "Bruk automatiseringer for å få liv i hjemmet ditt",
                         "default_name": "Ny automatisering",
                         "save": "Lagre",
-                        "unsaved_confirm": "Du har ulagrede endringer. Er du sikker på at du vil forlate?",
+                        "unsaved_confirm": "Du har endringer som ikke er lagret. Er du sikker på at du vil forlate?",
                         "alias": "Navn",
                         "triggers": {
                             "header": "Utløsere",
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Tilstand",
                                     "from": "Fra",
-                                    "to": "Til"
+                                    "to": "Til",
+                                    "for": "Fra"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -417,7 +419,7 @@
                                     "label": "Sone",
                                     "entity": "Enhet med posisjon",
                                     "zone": "Sone",
-                                    "event": "Hendelse",
+                                    "event": "Hendelse:",
                                     "enter": "Ankommer",
                                     "leave": "Forlater"
                                 }
@@ -441,7 +443,7 @@
                                     "label": "Numerisk tilstand",
                                     "above": "Over",
                                     "below": "Under",
-                                    "value_template": "Verdi mal (valgfritt)"
+                                    "value_template": "Verdi mal (valgfri)"
                                 },
                                 "sun": {
                                     "label": "Sol",
@@ -524,12 +526,37 @@
                         "deactivate_user": "Deaktiver bruker",
                         "delete_user": "Slett bruker"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Logget inn som {email}",
+                    "description_not_login": "Ikke logget på"
+                },
+                "integrations": {
+                    "caption": "Integrasjoner",
+                    "description": "Administrer tilkoblede enheter og tjenester",
+                    "discovered": "Oppdaget",
+                    "configured": "Konfigurert",
+                    "new": "Sett opp en ny integrasjon",
+                    "configure": "Konfigurer",
+                    "none": "Ikke konfigurert enda",
+                    "config_entry": {
+                        "no_devices": "Denne integrasjonen har ingen enheter.",
+                        "no_device": "Enheten mangler input",
+                        "delete_confirm": "Er du sikker på at du vil slette denne integrasjonen?",
+                        "restart_confirm": "Start Home Assistant på nytt for å fullføre fjerningen av denne integrasjonen",
+                        "manuf": "av {manufacturer}",
+                        "hub": "Tilkoblet via",
+                        "firmware": "Fastvare: {version}",
+                        "device_unavailable": "enheten er utilgjengelig",
+                        "entity_unavailable": "enhet utilgjengelig"
+                    }
                 }
             },
             "profile": {
                 "push_notifications": {
                     "header": "Push varslinger",
-                    "description": "Send varslinger til denne enheten",
+                    "description": "Send notifikasjoner til denne enheten",
                     "error_load_platform": "Konfigurer notify.html5.",
                     "error_use_https": "Krever SSL aktivert for grensesnitt.",
                     "push_notifications": "Push varslinger",
@@ -545,6 +572,145 @@
                     "error_no_theme": "Ingen temaer er tilgjengelig.",
                     "link_promo": "Lær om temaer",
                     "dropdown_label": "Tema"
+                },
+                "refresh_tokens": {
+                    "header": "Oppdater Tokens",
+                    "description": "Hver oppdateringstoken representerer en innloggingsøkt. Oppdateringstoken blir automatisk fjernet når du klikker på logg ut. Følgende oppdateringstoken er for tiden aktiv for kontoen din.",
+                    "token_title": "Oppdateringstoken for {clientId}",
+                    "created_at": "Opprettet den {date}",
+                    "confirm_delete": "Er du sikker på at du vil slette oppdateringstoken for {name}?",
+                    "delete_failed": "Kunne ikke slette oppdateringstoken.",
+                    "last_used": "Sist brukt den {date} fra {location}",
+                    "not_used": "Har aldri blitt brukt",
+                    "current_token_tooltip": "Kan ikke slette gjeldende oppdateringstoken"
+                },
+                "long_lived_access_tokens": {
+                    "header": "Varige tilgangstokener",
+                    "description": "Opprett langvarige tilgangstokener slik at skriptene dine kan samhandle med din Home Assistant instans. Hver token vil være gyldig i 10 år fra opprettelsen. Følgende langvarige tilgangstokener er for tiden aktive.",
+                    "learn_auth_requests": "Lær hvordan du lager godkjente forespørsler.",
+                    "created_at": "Opprettet den {date}",
+                    "confirm_delete": "Er du sikker på at du vil slette tilgangstoken for {name}?",
+                    "delete_failed": "Kan ikke slette tilgangstokenet.",
+                    "create": "Opprett Token",
+                    "create_failed": "Kunne ikke opprette tilgangstoken.",
+                    "prompt_name": "Navn?",
+                    "prompt_copy_token": "Kopier tilgangstoken. Det blir ikke vist igjen.",
+                    "empty_state": "Du har ingen langvarige tilgangstokener ennå.",
+                    "last_used": "Sist brukt den {date} fra {location}",
+                    "not_used": "Har aldri blitt brukt"
+                },
+                "current_user": "Du er logget inn som {fullName}.",
+                "is_owner": "Du er en eier.",
+                "logout": "Logg ut",
+                "change_password": {
+                    "header": "Endre passord",
+                    "current_password": "Nåværende passord",
+                    "new_password": "Nytt passord",
+                    "confirm_new_password": "Bekreft nytt passord",
+                    "error_required": "Nødvendig",
+                    "submit": "Send inn"
+                },
+                "mfa": {
+                    "header": "Multifaktorautentisering moduler",
+                    "disable": "Deaktiver",
+                    "enable": "Aktiver",
+                    "confirm_disable": "Er du sikker på at du vil deaktivere {name}?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Avbrutt",
+                    "title_success": "Suksess!",
+                    "step_done": "Oppsett fullført for {step}",
+                    "close": "Lukk",
+                    "submit": "Send inn"
+                }
+            },
+            "page-authorize": {
+                "initializing": "Initialiserer",
+                "authorizing_client": "Du er i ferd med å gi {clientId} tilgang til din Home Assistant",
+                "logging_in_with": "Logg inn med **{authProviderName}**.",
+                "pick_auth_provider": "Eller logg inn med",
+                "abort_intro": "Innlogging avbrutt",
+                "form": {
+                    "working": "Vennligst vent",
+                    "unknown_error": "Noe gikk galt",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Brukernavn",
+                                        "password": "Passord"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "To-faktor autentiseringskode"
+                                    },
+                                    "description": "Åpne **{mfa_module_name}** på enheten din for å se din tofaktors autentiseringskode og bekrefte identiteten din:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Ugyldig brukernavn eller passord",
+                                "invalid_code": "Ugyldig autentiseringskode"
+                            },
+                            "abort": {
+                                "login_expired": "Økten er utløpt, vennligst logg inn på nytt"
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "API-passord"
+                                    },
+                                    "description": "Vennligst skriv inn API-passordet i http-konfigurasjonen din:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "To-faktor autentiseringskode"
+                                    },
+                                    "description": "Åpne **{mfa_module_name}** på enheten din for å se din tofaktors autentiseringskode og bekrefte identiteten din:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Ugyldig API-passord",
+                                "invalid_code": "Ugyldig autentiseringskode"
+                            },
+                            "abort": {
+                                "no_api_password_set": "Du har ikke konfigurert et API-passord.",
+                                "login_expired": "Økten er utløpt, vennligst logg inn på nytt"
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Bruker"
+                                    },
+                                    "description": "Vennligst velg en bruker du vil logge inn som:"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "Datamaskinen din er ikke hvitlistet."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Er du klar til å vekke hjemmet ditt, gjenvinne ditt privatliv og bli med i et verdensomspennende samfunn av tinkerers?",
+                "user": {
+                    "intro": "La oss begynne med å opprette en brukerkonto.",
+                    "required_field": "Kreves",
+                    "data": {
+                        "name": "Navn",
+                        "username": "Brukernavn",
+                        "password": "Passord"
+                    },
+                    "create_account": "Opprett konto",
+                    "error": {
+                        "required_fields": "Fyll ut alle nødvendige felt"
+                    }
                 }
             }
         },
@@ -626,7 +792,7 @@
             },
             "fan": {
                 "speed": "Hastighet",
-                "oscillate": "Svinge",
+                "oscillate": "Vandring",
                 "direction": "Retning"
             },
             "light": {
@@ -654,7 +820,7 @@
             "lock": {
                 "code": "Kode",
                 "lock": "Lås",
-                "unlock": "Låse opp"
+                "unlock": "Lås opp"
             },
             "vacuum": {
                 "actions": {
@@ -664,6 +830,13 @@
                     "turn_on": "Slå på",
                     "turn_off": "Slå av"
                 }
+            },
+            "water_heater": {
+                "currently": "Temperatur nå",
+                "on_off": "På \/ Av",
+                "target_temperature": "Ønsket temperatur",
+                "operation": "Drift",
+                "away_mode": "Bortemodus"
             }
         },
         "components": {
@@ -689,7 +862,7 @@
             },
             "history_charts": {
                 "loading_history": "Laster statushistorikk...",
-                "no_history_found": "Ingen status history funnet."
+                "no_history_found": "Ingen statushistorikk funnet."
             }
         },
         "notification_toast": {
@@ -710,6 +883,11 @@
             "ask": "Ønsker du å lagre denne påloggingen?",
             "decline": "Nei takk",
             "confirm": "Lagre pålogging"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Klikk på knappen for å konfigurere {entity}",
+            "empty": "Ingen varsler",
+            "title": "Varsler"
         }
     },
     "domain": {
@@ -746,7 +924,7 @@
         "sun": "Sol",
         "switch": "Bryter",
         "updater": "Oppdateringer",
-        "weblink": "Nettlink",
+        "weblink": "Lenke",
         "zwave": "Z-Wave",
         "vacuum": "Støvsuger"
     },

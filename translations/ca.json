@@ -13,7 +13,8 @@
         "dev-templates": "Plantilles",
         "dev-mqtt": "MQTT",
         "dev-info": "Informació",
-        "calendar": "Calendari"
+        "calendar": "Calendari",
+        "profile": "Perfil"
     },
     "state": {
         "default": {
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Estat",
                                     "from": "Des de",
-                                    "to": "A"
+                                    "to": "A",
+                                    "for": "Durant"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -524,6 +526,31 @@
                         "deactivate_user": "Desactivar usuari",
                         "delete_user": "Eliminar usuari"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Sessió iniciada com a {email}",
+                    "description_not_login": "No has iniciat sessió"
+                },
+                "integrations": {
+                    "caption": "Integracions",
+                    "description": "Gestioneu dispositius i serveis connectats",
+                    "discovered": "Descobert",
+                    "configured": "Configurat",
+                    "new": "Configureu una nova integració",
+                    "configure": "Configurar",
+                    "none": "Encara no hi ha res configurat",
+                    "config_entry": {
+                        "no_devices": "Aquesta integració no té dispositius.",
+                        "no_device": "Entitats sense dispositius",
+                        "delete_confirm": "Esteu segur que voleu suprimir aquesta integració?",
+                        "restart_confirm": "Reinicieu el Home Assistant per acabar d'eliminar aquesta integració",
+                        "manuf": "per {manufacturer}",
+                        "hub": "Connectat a través de",
+                        "firmware": "Firmware: {version}",
+                        "device_unavailable": "dispositiu no disponible",
+                        "entity_unavailable": "entitat no disponible"
+                    }
                 }
             },
             "profile": {
@@ -545,6 +572,145 @@
                     "error_no_theme": "No hi ha temes disponibles.",
                     "link_promo": "Més informació sobre temes",
                     "dropdown_label": "Tema"
+                },
+                "refresh_tokens": {
+                    "header": "Refresca els testimonis d'autenticació",
+                    "description": "Cada testimoni d'autenticació d'actualització representa un inici de sessió diferent. Els testimonis d'autenticació d'actualització s'eliminaran automàticament quan tanqueu la sessió. A sota hi ha una llista de testimonis d'autenticació d'actualització que estan actius actualment al vostre compte.",
+                    "token_title": "Refresca el testimoni d'autenticació del {clientId}",
+                    "created_at": "Creat el {date}",
+                    "confirm_delete": "Esteu segur que voleu suprimir el testimoni d'autenticació d'actualització per {name}?",
+                    "delete_failed": "No s'ha pogut suprimir el testimoni d'autenticació d'actualització.",
+                    "last_used": "Darrer ús el {date} des de {location}",
+                    "not_used": "Mai no s'ha utilitzat",
+                    "current_token_tooltip": "No s'ha pogut suprimir el testimoni d'autenticació d'actualització."
+                },
+                "long_lived_access_tokens": {
+                    "header": "Testimonis d'autenticació d'accés de llarga durada",
+                    "description": "Creeu testimonis d'autenticació d'accés de llarga durada per permetre als vostres programes (scripts) interactuar amb la vostra instància de Home Assistant. Cada testimoni d'autenticació serà vàlid durant deu anys després de la seva creació. Els següents testimoni d'autenticació d'accés de llarga durada estan actius actualment.",
+                    "learn_auth_requests": "Apren a fer sol·licituds autenticades.",
+                    "created_at": "Creat el {date}",
+                    "confirm_delete": "Esteu segur que voleu suprimir el testimoni d'autenticació d'accés per {name}?",
+                    "delete_failed": "No s'ha pogut suprimir el testimoni d'autenticació d'accés.",
+                    "create": "Crea un testimoni d'autenticació",
+                    "create_failed": "No s'ha pogut crear el testimoni d'autenticació d'accés.",
+                    "prompt_name": "Nom?",
+                    "prompt_copy_token": "Copieu el testimoni d'autenticació (token) d'accés. No es tornarà a mostrar més endavant.",
+                    "empty_state": "Encara no tens testimonis d'autenticaciós d'accés de llarga durada.",
+                    "last_used": "Darrer ús el {date} des de {location}",
+                    "not_used": "Mai no s'ha utilitzat"
+                },
+                "current_user": "Heu iniciat la sessió com a {fullName}.",
+                "is_owner": "Sou propietari.",
+                "logout": "Tancar sessió",
+                "change_password": {
+                    "header": "Canvi de contrasenya",
+                    "current_password": "Contrasenya actual",
+                    "new_password": "Contrasenya nova",
+                    "confirm_new_password": "Confirmar contrasenya nova",
+                    "error_required": "Obligatori",
+                    "submit": "Enviar"
+                },
+                "mfa": {
+                    "header": "Mòduls d'autenticació amb múltiples passos",
+                    "disable": "Desactiva",
+                    "enable": "Activa",
+                    "confirm_disable": "Esteu segur que voleu desactivar {name}?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "S'ha avortat",
+                    "title_success": "Correcte!",
+                    "step_done": "Configuració feta per a {step}",
+                    "close": "Tanca",
+                    "submit": "Enviar"
+                }
+            },
+            "page-authorize": {
+                "initializing": "S'està inicialitzant",
+                "authorizing_client": "Esteu a punt de permetre l'accés a la vostra instància de Home Assistant al client {clientId}.",
+                "logging_in_with": "Iniciant sessió amb **{authProviderName}**.",
+                "pick_auth_provider": "O bé inicieu sessió amb",
+                "abort_intro": "S'ha avortat l'inici de sessió",
+                "form": {
+                    "working": "Si us plau, espereu",
+                    "unknown_error": "Alguna cosa no ha anat bé",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Nom d'usuari",
+                                        "password": "Contrasenya"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Codi de verificació en dos passos"
+                                    },
+                                    "description": "Obriu el **{mfa_module_name}** al vostre dispositiu per veure el codi de verificació en dos passos i verificar la vostra identitat:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Nom d'usuari o contrasenya incorrectes",
+                                "invalid_code": "El codi d'autenticació no és vàlid"
+                            },
+                            "abort": {
+                                "login_expired": "La sessió ha caducat, torneu a iniciar la sessió."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "Contrasenya API"
+                                    },
+                                    "description": "Introduïu la contrasenya API en la vostra configuració http:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Codi de verificació en dos passos"
+                                    },
+                                    "description": "Obriu el **{mfa_module_name}** al vostre dispositiu per veure el codi de verificació en dos passos i verificar la vostra identitat:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Contrasenya API no vàlida",
+                                "invalid_code": "El codi d'autenticació no és vàlid"
+                            },
+                            "abort": {
+                                "no_api_password_set": "No teniu una contrasenya API configurada.",
+                                "login_expired": "La sessió ha caducat, torneu a iniciar la sessió."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Usuari"
+                                    },
+                                    "description": "Seleccioneu l'usuari amb el qual iniciar la sessió:"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "El teu ordinador no es troba accessible a la llista."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Estàs preparat donar vida pròpia a la teva llar, recuperar la teva privacitat i unir-te a una comunitat mundial de \"tinkerers\"?",
+                "user": {
+                    "intro": "Comencem creant un nou compte d'usuari.",
+                    "required_field": "Obligatori",
+                    "data": {
+                        "name": "Nom",
+                        "username": "Nom d'usuari",
+                        "password": "Contrasenya"
+                    },
+                    "create_account": "Crear un compte",
+                    "error": {
+                        "required_fields": "Ompliu tots els camps obligatoris"
+                    }
                 }
             }
         },
@@ -664,6 +830,13 @@
                     "turn_on": "Encendre",
                     "turn_off": "Apagar"
                 }
+            },
+            "water_heater": {
+                "currently": "Actual",
+                "on_off": "On \/ Off",
+                "target_temperature": "Temperatura desitjada",
+                "operation": "Funcionament",
+                "away_mode": "Mode absent"
             }
         },
         "components": {
@@ -710,6 +883,11 @@
             "ask": "Voleu desar aquest inici de sessió?",
             "decline": "No, gràcies",
             "confirm": "Desar inici de sessió"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Prem el botó per configurar {entity}",
+            "empty": "No hi ha notificacions",
+            "title": "Notificacions"
         }
     },
     "domain": {

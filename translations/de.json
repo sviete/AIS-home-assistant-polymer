@@ -13,7 +13,8 @@
         "dev-templates": "Templates",
         "dev-mqtt": "MQTT",
         "dev-info": "Info",
-        "calendar": "Kalender"
+        "calendar": "Kalender",
+        "profile": "Profil"
     },
     "state": {
         "default": {
@@ -244,12 +245,12 @@
             "fog": "Nebel",
             "hail": "Hagel",
             "lightning": "Gewitter",
-            "lightning-rainy": "Gewitter, Regnerisch",
+            "lightning-rainy": "Gewitter, regnerisch",
             "partlycloudy": "Teilweise bewölkt",
             "pouring": "Strömend",
             "rainy": "Regnerisch",
             "snowy": "Verschneit",
-            "snowy-rainy": "Verschneit, Regnerisch",
+            "snowy-rainy": "Verschneit, regnerisch",
             "sunny": "Sonnig",
             "windy": "Windig",
             "windy-variant": "Windig"
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Zustand",
                                     "from": "Von",
-                                    "to": "Zu"
+                                    "to": "Zu",
+                                    "for": "Für"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -524,12 +526,37 @@
                         "deactivate_user": "Benutzer deaktivieren",
                         "delete_user": "Benutzer löschen"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Angemeldet als {email}",
+                    "description_not_login": "Nicht angemeldet"
+                },
+                "integrations": {
+                    "caption": "Integrationen",
+                    "description": "Verwalte verbundene Geräte und Dienste",
+                    "discovered": "Entdeckt",
+                    "configured": "Konfiguriert",
+                    "new": "Richte eine neue Integration ein",
+                    "configure": "Konfigurieren",
+                    "none": "Noch nichts konfiguriert",
+                    "config_entry": {
+                        "no_devices": "Diese Integration hat keine Geräte.",
+                        "no_device": "Entitäten ohne Geräte",
+                        "delete_confirm": "Möchtest du diese Integration wirklich löschen?",
+                        "restart_confirm": "Starte Home Assistant neu, um das Entfernen dieser Integration abzuschließen",
+                        "manuf": "von {manufacturer}",
+                        "hub": "Verbunden über",
+                        "firmware": "Firmware: {version}",
+                        "device_unavailable": "Gerät nicht verfügbar",
+                        "entity_unavailable": "Entität nicht verfügbar"
+                    }
                 }
             },
             "profile": {
                 "push_notifications": {
                     "header": "Push-Benachrichtigungen",
-                    "description": "Sende Benachrichtigungen an dieses Gerät",
+                    "description": "Sende Benachrichtigungen an dieses Gerät.",
                     "error_load_platform": "Konfiguriere notify.html5.",
                     "error_use_https": "Erfordert aktiviertes SSL für das Frontend.",
                     "push_notifications": "Push-Benachrichtigungen",
@@ -537,7 +564,7 @@
                 },
                 "language": {
                     "header": "Sprache",
-                    "link_promo": "Helfe beim Übersetzen",
+                    "link_promo": "Hilf beim Übersetzen",
                     "dropdown_label": "Sprache"
                 },
                 "themes": {
@@ -545,6 +572,145 @@
                     "error_no_theme": "Keine Themen verfügbar.",
                     "link_promo": "Erfahre mehr über Themen",
                     "dropdown_label": "Thema"
+                },
+                "refresh_tokens": {
+                    "header": "Aktualisierungs-Tokens",
+                    "description": "Jedes Aktualisierungstoken stellt eine Anmeldesitzung dar. Aktualisierungstoken werden automatisch entfernt, wenn du auf Abmelden klickst. Die folgenden Aktualisierungstoken sind derzeit für dein Konto aktiv.",
+                    "token_title": "Aktualisierungs-Token für {clientId}",
+                    "created_at": "Erstellt am {date}",
+                    "confirm_delete": "Möchtest du das Aktualisierungstoken für {name} wirklich löschen?",
+                    "delete_failed": "Fehler beim Löschen des Aktualisierungs-Token.",
+                    "last_used": "Zuletzt verwendet am {date} in {location}",
+                    "not_used": "Wurde noch nie benutzt",
+                    "current_token_tooltip": "Aktueller Refresh-Token konnte nicht gelöscht werden"
+                },
+                "long_lived_access_tokens": {
+                    "header": "Langlebige Zugangs-Token",
+                    "description": "Erstelle langlebige Zugriffstoken, damit deine Skripte mit deiner Home Assistant-Instanz interagieren können. Jedes Token ist ab der Erstellung für 10 Jahre gültig. Die folgenden langlebigen Zugriffstoken sind derzeit aktiv.",
+                    "learn_auth_requests": "Erfahre, wie du authentifizierte Anfragen stellen kannst.",
+                    "created_at": "Erstellt am {date}",
+                    "confirm_delete": "Möchtest du den Zugriffs-Token für {name} wirklich löschen?",
+                    "delete_failed": "Fehler beim Löschen des Zugriffs-Tokens.",
+                    "create": "Token erstellen",
+                    "create_failed": "Das Zugriffs-Token konnte nicht erstellt werden.",
+                    "prompt_name": "Name?",
+                    "prompt_copy_token": "Kopiere deinen Zugangs-Token. Er wird nicht wieder angezeigt werden.",
+                    "empty_state": "Du hast noch keine langlebigen Zugangs-Token.",
+                    "last_used": "Zuletzt verwendet am {date} in {location}",
+                    "not_used": "Wurde noch nie benutzt"
+                },
+                "current_user": "Du bist derzeit als {fullName} angemeldet.",
+                "is_owner": "Du bist der Besitzer",
+                "logout": "Abmelden",
+                "change_password": {
+                    "header": "Passwort ändern",
+                    "current_password": "Aktuelles Passwort",
+                    "new_password": "Neues Passwort",
+                    "confirm_new_password": "Neues Passwort Bestätigen",
+                    "error_required": "Erforderlich",
+                    "submit": "Absenden"
+                },
+                "mfa": {
+                    "header": "2-Faktor-Authentifizierung Module",
+                    "disable": "Deaktivieren",
+                    "enable": "Aktivieren",
+                    "confirm_disable": "Möchtest du {name} wirklich deaktivieren?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Abgebrochen",
+                    "title_success": "Erfolgreich!",
+                    "step_done": "Setup für {step} abgeschlossen",
+                    "close": "Schließen",
+                    "submit": "Absenden"
+                }
+            },
+            "page-authorize": {
+                "initializing": "Initialisieren",
+                "authorizing_client": "Du bist dabei, {clientId} Zugriff auf deine Home Assistant Instanz zu gewähren.",
+                "logging_in_with": "Anmeldung mit **{authProviderName}**.",
+                "pick_auth_provider": "Oder melde dich an mit",
+                "abort_intro": "Anmeldung abgebrochen",
+                "form": {
+                    "working": "Bitte warten",
+                    "unknown_error": "Etwas lief schief",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Benutzername",
+                                        "password": "Passwort"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Zwei-Faktor Authentifizierungscode"
+                                    },
+                                    "description": "Öffne das **{mfa_module_name}** auf deinem Gerät um den 2-Faktor Authentifizierungscode zu sehen und deine Identität zu bestätigen:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Ungültiger Benutzername oder Passwort",
+                                "invalid_code": "Ungültiger Authentifizierungscode"
+                            },
+                            "abort": {
+                                "login_expired": "Sitzung abgelaufen, bitte erneut anmelden."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "API-Passwort"
+                                    },
+                                    "description": "Bitte gib das API-Passwort deiner http-Konfiguration ein:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Zwei-Faktor Authentifizierungscode"
+                                    },
+                                    "description": "Öffne das **{mfa_module_name}** auf deinem Gerät um den 2-Faktor Authentifizierungscode zu sehen und deine Identität zu bestätigen:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Ungültiges API-Passwort",
+                                "invalid_code": "Ungültiger Authentifizierungscode"
+                            },
+                            "abort": {
+                                "no_api_password_set": "Du hast kein API-Passwort konfiguriert.",
+                                "login_expired": "Sitzung abgelaufen, bitte erneut anmelden."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Benutzer"
+                                    },
+                                    "description": "Bitte wähle einen Benutzer aus, mit dem du dich anmelden möchtest:"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "Dein Computer ist nicht auf der Whitelist."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Bist du bereit, dein Zuhause zu erwecken, deine Privatsphäre zurückzugewinnen und einer weltweiten Gemeinschaft von Tüftlern beizutreten?",
+                "user": {
+                    "intro": "Beginnen wir mit dem Erstellen eines Benutzerkontos.",
+                    "required_field": "Erforderlich",
+                    "data": {
+                        "name": "Name",
+                        "username": "Benutzername",
+                        "password": "Passwort"
+                    },
+                    "create_account": "Benutzerkonto anlegen",
+                    "error": {
+                        "required_fields": "Fülle alle Pflichtfelder aus."
+                    }
                 }
             }
         },
@@ -658,12 +824,19 @@
             },
             "vacuum": {
                 "actions": {
-                    "resume_cleaning": "Fortsetzen der Reinigung",
+                    "resume_cleaning": "Reinigung fortsetzen",
                     "return_to_base": "Zurück zur Dockingstation",
-                    "start_cleaning": "Beginn der Reinigung",
+                    "start_cleaning": "Reinigung starten",
                     "turn_on": "Einschalten",
                     "turn_off": "Ausschalten"
                 }
+            },
+            "water_heater": {
+                "currently": "Aktuell",
+                "on_off": "An \/ Aus",
+                "target_temperature": "Solltemperatur",
+                "operation": "Betrieb",
+                "away_mode": "Abwesend-Modus"
             }
         },
         "components": {
@@ -710,6 +883,11 @@
             "ask": "Möchtest du diesen Login speichern?",
             "decline": "Nein Danke",
             "confirm": "Login speichern"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Klicke auf die Schaltfläche, um {entity} zu konfigurieren.",
+            "empty": "Keine Benachrichtigungen",
+            "title": "Benachrichtigungen"
         }
     },
     "domain": {

@@ -1,14 +1,14 @@
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
-import '@polymer/paper-item/paper-item.js';
-import '@polymer/paper-listbox/paper-listbox.js';
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
+import "@polymer/paper-dropdown-menu/paper-dropdown-menu";
+import "@polymer/paper-item/paper-item";
+import "@polymer/paper-listbox/paper-listbox";
 
-import '../../../components/entity/state-badge.js';
+import "../../../components/entity/state-badge";
 
-import computeStateName from '../../../common/entity/compute_state_name.js';
+import computeStateName from "../../../common/entity/compute_state_name";
 
-import EventsMixin from '../../../mixins/events-mixin.js';
+import EventsMixin from "../../../mixins/events-mixin";
 
 /*
  * @appliesMixin EventsMixin
@@ -16,21 +16,7 @@ import EventsMixin from '../../../mixins/events-mixin.js';
 class HuiInputSelectEntityRow extends EventsMixin(PolymerElement) {
   static get template() {
     return html`
-      <style>
-        :host {
-          display: flex;
-          align-items: center;
-        }
-        paper-dropdown-menu {
-          margin-left: 16px;
-          flex: 1;
-        }
-        .not-found {
-          flex: 1;
-          background-color: yellow;
-          padding: 8px;
-        }
-      </style>
+      ${this.styleTemplate}
       <template is="dom-if" if="[[_stateObj]]">
         <state-badge state-obj="[[_stateObj]]"></state-badge>
         <paper-dropdown-menu on-click="_stopPropagation" selected-item-label="{{_selected}}" label="[[_computeName(_config.name, _stateObj)]]">
@@ -49,24 +35,44 @@ class HuiInputSelectEntityRow extends EventsMixin(PolymerElement) {
     `;
   }
 
+  static get styleTemplate() {
+    return html`
+      <style>
+        :host {
+          display: flex;
+          align-items: center;
+        }
+        paper-dropdown-menu {
+          margin-left: 16px;
+          flex: 1;
+        }
+        .not-found {
+          flex: 1;
+          background-color: yellow;
+          padding: 8px;
+        }
+      </style>
+    `;
+  }
+
   static get properties() {
     return {
       hass: Object,
       _config: Object,
       _stateObj: {
         type: Object,
-        computed: '_computeStateObj(hass.states, _config.entity)'
+        computed: "_computeStateObj(hass.states, _config.entity)",
       },
       _selected: {
         type: String,
-        observer: '_selectedChanged',
+        observer: "_selectedChanged",
       },
     };
   }
 
   setConfig(config) {
     if (!config || !config.entity) {
-      throw new Error('Entity not configured.');
+      throw new Error("Entity not configured.");
     }
     this._config = config;
   }
@@ -85,10 +91,10 @@ class HuiInputSelectEntityRow extends EventsMixin(PolymerElement) {
 
   _selectedChanged(option) {
     // Selected Option will transition to '' before transitioning to new value
-    if (option === '' || option === this._stateObj.state) {
+    if (option === "" || option === this._stateObj.state) {
       return;
     }
-    this.hass.callService('input_select', 'select_option', {
+    this.hass.callService("input_select", "select_option", {
       option: option,
       entity_id: this._stateObj.entity_id,
     });
@@ -98,4 +104,4 @@ class HuiInputSelectEntityRow extends EventsMixin(PolymerElement) {
     ev.stopPropagation();
   }
 }
-customElements.define('hui-input-select-entity-row', HuiInputSelectEntityRow);
+customElements.define("hui-input-select-entity-row", HuiInputSelectEntityRow);

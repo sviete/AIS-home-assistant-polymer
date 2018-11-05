@@ -1,17 +1,16 @@
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../components/ha-card.js';
-import '../components/ha-icon.js';
+import "../components/ha-card";
+import "../components/ha-icon";
 
-import EventsMixin from '../mixins/events-mixin.js';
-import LocalizeMixin from '../mixins/localize-mixin.js';
+import EventsMixin from "../mixins/events-mixin";
+import LocalizeMixin from "../mixins/localize-mixin";
 
 /*
  * @appliesMixin LocalizeMixin
  */
-class HaWeatherCard extends
-  LocalizeMixin(EventsMixin(PolymerElement)) {
+class HaWeatherCard extends LocalizeMixin(EventsMixin(PolymerElement)) {
   static get template() {
     return html`
       <style>
@@ -25,6 +24,25 @@ class HaWeatherCard extends
 
         ha-icon {
           color: var(--paper-item-icon-color);
+        }
+
+        .header {
+          font-family: var(--paper-font-headline_-_font-family);
+          -webkit-font-smoothing: var(--paper-font-headline_-_-webkit-font-smoothing);
+          font-size: var(--paper-font-headline_-_font-size);
+          font-weight: var(--paper-font-headline_-_font-weight);
+          letter-spacing: var(--paper-font-headline_-_letter-spacing);
+          line-height: var(--paper-font-headline_-_line-height);
+          text-rendering: var(--paper-font-common-expensive-kerning_-_text-rendering);
+          opacity: var(--dark-primary-opacity);
+          padding: 24px 16px 16px;
+          display: flex;
+        }
+
+        .name {
+          margin-left: 16px;
+          font-size: 16px;
+          color: var(--secondary-text-color);
         }
 
         .now {
@@ -59,12 +77,8 @@ class HaWeatherCard extends
           top: 4px;
         }
 
-        .now-text {
-          font-size: 24px;
-        }
-
         .forecast {
-          margin-top: 24px;
+          margin-top: 16px;
           display: flex;
           justify-content: space-between;
         }
@@ -75,7 +89,7 @@ class HaWeatherCard extends
         }
 
         .forecast .icon {
-          margin: 8px 0;
+          margin: 4px 0;
           text-align: center;
         }
 
@@ -89,7 +103,13 @@ class HaWeatherCard extends
           color: var(--secondary-text-color);
         }
       </style>
-      <ha-card header="[[stateObj.attributes.friendly_name]]">
+      <ha-card>
+        <div class="header">
+          [[computeState(stateObj.state, localize)]]
+          <div class="name">
+            [[stateObj.attributes.friendly_name]]
+          </div>
+        </div>
         <div class="content">
           <div class="now">
             <div class="main">
@@ -121,19 +141,16 @@ class HaWeatherCard extends
               </template>
             </div>
           </div>
-          <div class="now-text">
-            [[computeState(stateObj.state, localize)]]
-          </div>
           <template is="dom-if" if="[[forecast]]">
             <div class="forecast">
               <template is="dom-repeat" items="[[forecast]]">
                 <div>
                   <div class="weekday">[[computeDate(item.datetime)]]<br>
-                    <template is="dom-if" if="[[!item.templow]]">
+                    <template is="dom-if" if="[[!_showValue(item.templow)]]">
                       [[computeTime(item.datetime)]]
                     </template>
                   </div>
-                  <template is="dom-if" if="[[item.condition]]">
+                  <template is="dom-if" if="[[_showValue(item.condition)]]">
                     <div class="icon">
                       <ha-icon icon="[[getWeatherIcon(item.condition)]]"></ha-icon>
                     </div>
@@ -160,42 +177,57 @@ class HaWeatherCard extends
       stateObj: Object,
       forecast: {
         type: Array,
-        computed: 'computeForecast(stateObj.attributes.forecast)'
-      }
+        computed: "computeForecast(stateObj.attributes.forecast)",
+      },
     };
   }
 
   constructor() {
     super();
     this.cardinalDirections = [
-      'N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE',
-      'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW', 'N'
+      "N",
+      "NNE",
+      "NE",
+      "ENE",
+      "E",
+      "ESE",
+      "SE",
+      "SSE",
+      "S",
+      "SSW",
+      "SW",
+      "WSW",
+      "W",
+      "WNW",
+      "NW",
+      "NNW",
+      "N",
     ];
     this.weatherIcons = {
-      'clear-night': 'hass:weather-night',
-      cloudy: 'hass:weather-cloudy',
-      fog: 'hass:weather-fog',
-      hail: 'hass:weather-hail',
-      lightning: 'mid:weather-lightning',
-      'lightning-rainy': 'hass:weather-lightning-rainy',
-      partlycloudy: 'hass:weather-partlycloudy',
-      pouring: 'hass:weather-pouring',
-      rainy: 'hass:weather-rainy',
-      snowy: 'hass:weather-snowy',
-      'snowy-rainy': 'hass:weather-snowy-rainy',
-      sunny: 'hass:weather-sunny',
-      windy: 'hass:weather-windy',
-      'windy-variant': 'hass:weather-windy-variant'
+      "clear-night": "hass:weather-night",
+      cloudy: "hass:weather-cloudy",
+      fog: "hass:weather-fog",
+      hail: "hass:weather-hail",
+      lightning: "hass:weather-lightning",
+      "lightning-rainy": "hass:weather-lightning-rainy",
+      partlycloudy: "hass:weather-partlycloudy",
+      pouring: "hass:weather-pouring",
+      rainy: "hass:weather-rainy",
+      snowy: "hass:weather-snowy",
+      "snowy-rainy": "hass:weather-snowy-rainy",
+      sunny: "hass:weather-sunny",
+      windy: "hass:weather-windy",
+      "windy-variant": "hass:weather-windy-variant",
     };
   }
 
   ready() {
-    this.addEventListener('click', this._onClick);
+    this.addEventListener("click", this._onClick);
     super.ready();
   }
 
   _onClick() {
-    this.fire('hass-more-info', { entityId: this.stateObj.entity_id });
+    this.fire("hass-more-info", { entityId: this.stateObj.entity_id });
   }
 
   computeForecast(forecast) {
@@ -203,16 +235,16 @@ class HaWeatherCard extends
   }
 
   getUnit(measure) {
-    const lengthUnit = this.hass.config.core.unit_system.length || '';
+    const lengthUnit = this.hass.config.unit_system.length || "";
     switch (measure) {
-      case 'air_pressure':
-        return lengthUnit === 'km' ? 'hPa' : 'inHg';
-      case 'length':
+      case "air_pressure":
+        return lengthUnit === "km" ? "hPa" : "inHg";
+      case "length":
         return lengthUnit;
-      case 'precipitation':
-        return lengthUnit === 'km' ? 'mm' : 'in';
+      case "precipitation":
+        return lengthUnit === "km" ? "mm" : "in";
       default:
-        return this.hass.config.core.unit_system[measure] || '';
+        return this.hass.config.unit_system[measure] || "";
     }
   }
 
@@ -239,20 +271,22 @@ class HaWeatherCard extends
   getWind(speed, bearing, localize) {
     if (bearing != null) {
       const cardinalDirection = this.windBearingToText(bearing);
-      return `${speed} ${this.getUnit('length')}/h (${localize(`ui.card.weather.cardinal_direction.${cardinalDirection.toLowerCase()}`) || cardinalDirection})`;
+      return `${speed} ${this.getUnit("length")}/h (${localize(
+        `ui.card.weather.cardinal_direction.${cardinalDirection.toLowerCase()}`
+      ) || cardinalDirection})`;
     }
-    return `${speed} ${this.getUnit('length')}/h`;
+    return `${speed} ${this.getUnit("length")}/h`;
   }
 
   _showValue(item) {
-    return typeof item !== 'undefined' && item !== null;
+    return typeof item !== "undefined" && item !== null;
   }
 
   computeDate(data) {
     const date = new Date(data);
     return date.toLocaleDateString(
       this.hass.selectedLanguage || this.hass.language,
-      { weekday: 'short' }
+      { weekday: "short" }
     );
   }
 
@@ -260,8 +294,8 @@ class HaWeatherCard extends
     const date = new Date(data);
     return date.toLocaleTimeString(
       this.hass.selectedLanguage || this.hass.language,
-      { hour: 'numeric' }
+      { hour: "numeric" }
     );
   }
 }
-customElements.define('ha-weather-card', HaWeatherCard);
+customElements.define("ha-weather-card", HaWeatherCard);

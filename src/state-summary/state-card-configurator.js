@@ -1,11 +1,11 @@
-import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
-import '@polymer/paper-button/paper-button.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/iron-flex-layout/iron-flex-layout-classes";
+import "@polymer/paper-button/paper-button";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../components/entity/state-info.js';
+import "../components/entity/state-info";
 
-import LocalizeMixin from '../mixins/localize-mixin.js';
+import LocalizeMixin from "../mixins/localize-mixin";
 
 /*
  * @appliesMixin LocalizeMixin
@@ -53,7 +53,7 @@ class StateCardConfigurator extends LocalizeMixin(PolymerElement) {
       inDialog: {
         type: Boolean,
         value: false,
-      }
+      },
     };
   }
 
@@ -61,4 +61,4 @@ class StateCardConfigurator extends LocalizeMixin(PolymerElement) {
     return this.localize(`state.configurator.${state}`);
   }
 }
-customElements.define('state-card-configurator', StateCardConfigurator);
+customElements.define("state-card-configurator", StateCardConfigurator);

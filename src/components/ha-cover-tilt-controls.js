@@ -1,9 +1,9 @@
-import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
-import '@polymer/paper-icon-button/paper-icon-button.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/iron-flex-layout/iron-flex-layout-classes";
+import "@polymer/paper-icon-button/paper-icon-button";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import CoverEntity from '../util/cover-model.js';
+import CoverEntity from "../util/cover-model";
 
 class HaCoverTiltControls extends PolymerElement {
   static get template() {
@@ -33,33 +33,39 @@ class HaCoverTiltControls extends PolymerElement {
       },
       entityObj: {
         type: Object,
-        computed: 'computeEntityObj(hass, stateObj)',
+        computed: "computeEntityObj(hass, stateObj)",
       },
     };
   }
+
   computeEntityObj(hass, stateObj) {
     return new CoverEntity(hass, stateObj);
   }
+
   computeOpenDisabled(stateObj, entityObj) {
     var assumedState = stateObj.attributes.assumed_state === true;
     return entityObj.isFullyOpenTilt && !assumedState;
   }
+
   computeClosedDisabled(stateObj, entityObj) {
-    var assumedState = (stateObj.attributes.assumed_state === true);
+    var assumedState = stateObj.attributes.assumed_state === true;
     return entityObj.isFullyClosedTilt && !assumedState;
   }
+
   onOpenTiltTap(ev) {
     ev.stopPropagation();
     this.entityObj.openCoverTilt();
   }
+
   onCloseTiltTap(ev) {
     ev.stopPropagation();
     this.entityObj.closeCoverTilt();
   }
+
   onStopTiltTap(ev) {
     ev.stopPropagation();
     this.entityObj.stopCoverTilt();
   }
 }
 
-customElements.define('ha-cover-tilt-controls', HaCoverTiltControls);
+customElements.define("ha-cover-tilt-controls", HaCoverTiltControls);

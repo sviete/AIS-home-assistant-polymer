@@ -13,7 +13,8 @@
         "dev-templates": "Šablony",
         "dev-mqtt": "MQTT",
         "dev-info": "Informace",
-        "calendar": "Kalendář"
+        "calendar": "Kalendář",
+        "profile": "Profil"
     },
     "state": {
         "default": {
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Stav",
                                     "from": "Od",
-                                    "to": "Do"
+                                    "to": "Do",
+                                    "for": "Po dobu"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -524,6 +526,31 @@
                         "deactivate_user": "Deaktivovat uživatele",
                         "delete_user": "Odstranit uživatele"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Přihlášen jako {email}",
+                    "description_not_login": "Nepřihlášen"
+                },
+                "integrations": {
+                    "caption": "Integrace",
+                    "description": "Spravovat připojená zařízení a služby",
+                    "discovered": "Objeveno",
+                    "configured": "Zkonfigurováno",
+                    "new": "Nastavte novou integraci",
+                    "configure": "Konfigurovat",
+                    "none": "Zatím nic nezkonfigurováno",
+                    "config_entry": {
+                        "no_devices": "Tato integrace nemá žádná zařízení.",
+                        "no_device": "Entity bez zařízení",
+                        "delete_confirm": "Opravdu že chcete odstranit tuto integraci?",
+                        "restart_confirm": "Restartujte Home Assistant pro odstranění této integrace",
+                        "manuf": "od {manufacturer}",
+                        "hub": "Připojeno přes",
+                        "firmware": "Firmware: {version}",
+                        "device_unavailable": "zařízení není k dispozici",
+                        "entity_unavailable": "entita není k dispozici"
+                    }
                 }
             },
             "profile": {
@@ -545,6 +572,145 @@
                     "error_no_theme": "Žádné motivy nejsou k dispozici.",
                     "link_promo": "Další info o motivech",
                     "dropdown_label": "Motiv"
+                },
+                "refresh_tokens": {
+                    "header": "Obnovit tokeny",
+                    "description": "Každý obnovovací token představuje relaci přihlášení. Aktualizační tokeny budou automaticky odstraněny po klepnutí na tlačítko Odhlásit. Následující tokeny obnovení jsou v současné době aktivní pro váš účet.",
+                    "token_title": "Obnovit token pro {clientId}",
+                    "created_at": "Vytvořeno {date}",
+                    "confirm_delete": "Opravdu že chcete odstranit token pro {název}?",
+                    "delete_failed": "Nepodařilo se smazat token.",
+                    "last_used": "Naposledy použito {date} z {location}",
+                    "not_used": "Nikdy nebylo použito",
+                    "current_token_tooltip": "Nelze odstranit aktuální obnovení tokenu"
+                },
+                "long_lived_access_tokens": {
+                    "header": "Tokeny s dlouhou životností",
+                    "description": "Vytvořit přístupové tokeny s dlouhou životností, aby vaše skripty mohli komunikovat s Home Assistant instancí. Každý token bude platný po dobu 10 let od vytvoření. Tyto tokeny s dlouhou životností jsou v současné době aktivní.",
+                    "learn_auth_requests": "Naučte se, jak posílat ověřené requesty.",
+                    "created_at": "Vytvořeno {date}",
+                    "confirm_delete": "Opravdu chcete smazat přístupový token pro {name} ?",
+                    "delete_failed": "Nepodařilo se odstranit přístupový token.",
+                    "create": "Vytvořte token",
+                    "create_failed": "Nepodařilo se vytvořit přístupový token.",
+                    "prompt_name": "Název?",
+                    "prompt_copy_token": "Zkopírujte přístupový token. Už nikdy nebude znovu zobrazen.",
+                    "empty_state": "Zatím nemáte žádné dlouhodobé přístupové tokeny.",
+                    "last_used": "Naposledy použito {date} z {location}",
+                    "not_used": "Nikdy nebylo použito"
+                },
+                "current_user": "Nyní jste přihlášeni jako {fullName}.",
+                "is_owner": "Jste vlastník.",
+                "logout": "Odhlásit se",
+                "change_password": {
+                    "header": "Změnit heslo",
+                    "current_password": "Současné heslo",
+                    "new_password": "Nové heslo",
+                    "confirm_new_password": "Potvrďte nové heslo",
+                    "error_required": "Povinný",
+                    "submit": "Odeslat"
+                },
+                "mfa": {
+                    "header": "Multifaktorové autentizační moduly",
+                    "disable": "Zakázat",
+                    "enable": "Povolit",
+                    "confirm_disable": "Opravdu chcete zakázat {name} ?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Zrušeno",
+                    "title_success": "Úspěch!",
+                    "step_done": "Dokončen krok {step}",
+                    "close": "Zavřít",
+                    "submit": "Odeslat"
+                }
+            },
+            "page-authorize": {
+                "initializing": "Inicializuji",
+                "authorizing_client": "Chystáte se dát {clientId} práva pro Home Assistant instanci.",
+                "logging_in_with": "Přihlásit se pomocí **{authProviderName}**.",
+                "pick_auth_provider": "Nebo se přihlaste s",
+                "abort_intro": "Přihlášení bylo zrušeno",
+                "form": {
+                    "working": "Počkejte prosím",
+                    "unknown_error": "Něco se pokazilo",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Uživatelské jméno",
+                                        "password": "Heslo"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Dvoufaktorový ověřovací kód"
+                                    },
+                                    "description": "Otevřte **{mfa_module_name}** na vašem zařízení pro zobrazení dvoufaktorového ověřovacího kódu a ověřte vaší identitu"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Neplatné uživatelské jméno či heslo",
+                                "invalid_code": "Neplatný ověřovací kód"
+                            },
+                            "abort": {
+                                "login_expired": "Relace vypršela, přihlaste se prosím znovu."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "Heslo API"
+                                    },
+                                    "description": "Zadejte API heslo v http config"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Dvoufaktorový ověřovací kód"
+                                    },
+                                    "description": "Otevřte **{mfa_module_name}** na vašem zařízení pro zobrazení dvoufaktorového ověřovacího kódu a ověřte vaší identitu"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Neplatné heslo API",
+                                "invalid_code": "Neplatný ověřovací kód"
+                            },
+                            "abort": {
+                                "no_api_password_set": "Nemáte nakonfigurované heslo API.",
+                                "login_expired": "Relace vypršela, přihlaste se prosím znovu."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Uživatel"
+                                    },
+                                    "description": "Vyberte uživatele, za kterého se chcete přihlásit"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "Váš počítač není na seznamu povolených."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Jste připraveni oživit svůj domov, zachovat si své soukromí a připojit se k celosvětové komunitě tvůrců?",
+                "user": {
+                    "intro": "Začněme tím, že vytvoříme uživatelský účet.",
+                    "required_field": "Povinný",
+                    "data": {
+                        "name": "Jméno",
+                        "username": "Uživatelské jméno",
+                        "password": "Heslo"
+                    },
+                    "create_account": "Vytvořit účet",
+                    "error": {
+                        "required_fields": "Vyplňte všechna povinná pole"
+                    }
                 }
             }
         },
@@ -664,6 +830,13 @@
                     "turn_on": "Zapnout",
                     "turn_off": "Vypnout"
                 }
+            },
+            "water_heater": {
+                "currently": "Momentálně",
+                "on_off": "Zapnout \/ vypnout",
+                "target_temperature": "Cílová teplota",
+                "operation": "Provoz",
+                "away_mode": "Prázdninový režim"
             }
         },
         "components": {
@@ -710,6 +883,11 @@
             "ask": "Chcete toto přihlášení uložit?",
             "decline": "Ne děkuji",
             "confirm": "Uložit login"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Klepnutím na tlačítko nastavíte {entity}",
+            "empty": "Žádné oznámení",
+            "title": "Oznámení"
         }
     },
     "domain": {

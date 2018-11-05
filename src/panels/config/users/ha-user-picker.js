@@ -1,15 +1,15 @@
-import '@polymer/paper-fab/paper-fab.js';
-import '@polymer/paper-item/paper-item.js';
-import '@polymer/paper-card/paper-card.js';
-import '@polymer/paper-item/paper-item-body.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/paper-fab/paper-fab";
+import "@polymer/paper-item/paper-item";
+import "@polymer/paper-card/paper-card";
+import "@polymer/paper-item/paper-item-body";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../../../layouts/hass-subpage.js';
+import "../../../layouts/hass-subpage";
 
-import LocalizeMixin from '../../../mixins/localize-mixin.js';
-import NavigateMixin from '../../../mixins/navigate-mixin.js';
-import EventsMixin from '../../../mixins/events-mixin.js';
+import LocalizeMixin from "../../../mixins/localize-mixin";
+import NavigateMixin from "../../../mixins/navigate-mixin";
+import EventsMixin from "../../../mixins/events-mixin";
 
 let registeredDialog = false;
 
@@ -18,7 +18,9 @@ let registeredDialog = false;
  * @appliesMixin NavigateMixin
  * @appliesMixin EventsMixin
  */
-class HaUserPicker extends EventsMixin(NavigateMixin(LocalizeMixin(PolymerElement))) {
+class HaUserPicker extends EventsMixin(
+  NavigateMixin(LocalizeMixin(PolymerElement))
+) {
   static get template() {
     return html`
   <style>
@@ -50,7 +52,12 @@ class HaUserPicker extends EventsMixin(NavigateMixin(LocalizeMixin(PolymerElemen
           <paper-item>
             <paper-item-body two-line>
               <div>[[_withDefault(user.name, 'Unnamed User')]]</div>
-              <div secondary="">[[user.id]]</div>
+              <div secondary="">
+                [[user.id]]
+                <template is='dom-if' if='[[user.system_generated]]'>
+                - System Generated
+                </template>
+              </div>
             </paper-item-body>
             <iron-icon icon="hass:chevron-right"></iron-icon>
           </paper-item>
@@ -72,7 +79,6 @@ class HaUserPicker extends EventsMixin(NavigateMixin(LocalizeMixin(PolymerElemen
     return {
       hass: Object,
       users: Array,
-
     };
   }
 
@@ -81,10 +87,10 @@ class HaUserPicker extends EventsMixin(NavigateMixin(LocalizeMixin(PolymerElemen
 
     if (!registeredDialog) {
       registeredDialog = true;
-      this.fire('register-dialog', {
-        dialogShowEvent: 'show-add-user',
-        dialogTag: 'ha-dialog-add-user',
-        dialogImport: () => import('./ha-dialog-add-user.js'),
+      this.fire("register-dialog", {
+        dialogShowEvent: "show-add-user",
+        dialogTag: "ha-dialog-add-user",
+        dialogImport: () => import("./ha-dialog-add-user"),
       });
     }
   }
@@ -98,14 +104,14 @@ class HaUserPicker extends EventsMixin(NavigateMixin(LocalizeMixin(PolymerElemen
   }
 
   _addUser() {
-    this.fire('show-add-user', {
+    this.fire("show-add-user", {
       hass: this.hass,
       dialogClosedCallback: async ({ userId }) => {
-        this.fire('reload-users');
+        this.fire("reload-users");
         if (userId) this.navigate(`/config/users/${userId}`);
       },
     });
   }
 }
 
-customElements.define('ha-user-picker', HaUserPicker);
+customElements.define("ha-user-picker", HaUserPicker);

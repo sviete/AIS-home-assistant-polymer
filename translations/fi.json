@@ -13,7 +13,8 @@
         "dev-templates": "Mallit",
         "dev-mqtt": "MQTT",
         "dev-info": "Tiedot",
-        "calendar": "Kalenteri"
+        "calendar": "Kalenteri",
+        "profile": "Profiili"
     },
     "state": {
         "default": {
@@ -130,7 +131,7 @@
             "idle": "Lepotilassa"
         },
         "climate": {
-            "off": "Pois päältä",
+            "off": "Pois",
             "on": "Päällä",
             "heat": "Lämmitys",
             "cool": "Jäähdytys",
@@ -161,11 +162,11 @@
             "not_home": "Poissa"
         },
         "fan": {
-            "off": "Sammutettu",
-            "on": "Käynnissä"
+            "off": "Pois",
+            "on": "Päällä"
         },
         "group": {
-            "off": "Suljettu",
+            "off": "Pois",
             "on": "Päällä",
             "home": "Kotona",
             "not_home": "Poissa",
@@ -176,11 +177,11 @@
             "stopped": "Pysäytetty",
             "locked": "Lukittu",
             "unlocked": "Avattu",
-            "ok": "OK",
+            "ok": "Ok",
             "problem": "Ongelma"
         },
         "input_boolean": {
-            "off": "Kiinni",
+            "off": "Pois",
             "on": "Päällä"
         },
         "light": {
@@ -192,7 +193,7 @@
             "unlocked": "Auki"
         },
         "media_player": {
-            "off": "Sammutettu",
+            "off": "Pois",
             "on": "Päällä",
             "playing": "Toistaa",
             "paused": "Pysäytetty",
@@ -204,18 +205,18 @@
             "problem": "Ongelma"
         },
         "remote": {
-            "off": "Pois päältä",
+            "off": "Pois",
             "on": "Päällä"
         },
         "scene": {
             "scening": "Skenehallinta"
         },
         "script": {
-            "off": "Pois päältä",
+            "off": "Pois",
             "on": "Päällä"
         },
         "sensor": {
-            "off": "Pois päältä",
+            "off": "Pois",
             "on": "Päällä"
         },
         "sun": {
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "Tila",
                                     "from": "Lähtötila",
-                                    "to": "Kohdetila"
+                                    "to": "Kohdetila",
+                                    "for": "Ajaksi"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -524,13 +526,38 @@
                         "deactivate_user": "Passivoi käyttäjätunnus",
                         "delete_user": "Poista käyttäjä"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "Kirjautunut sisään {email}",
+                    "description_not_login": "Et ole kirjautunut"
+                },
+                "integrations": {
+                    "caption": "Integraatiot",
+                    "description": "Hallitse liitettyjä laitteita ja palveluita",
+                    "discovered": "Löydetty",
+                    "configured": "Määritetty",
+                    "new": "Määritä uusi integraatio",
+                    "configure": "Määrittele",
+                    "none": "Mitään ei ole vielä määritetty",
+                    "config_entry": {
+                        "no_devices": "Tällä integraatiolla ei ole laitteita.",
+                        "no_device": "Kokonaisuudet ilman laitteita",
+                        "delete_confirm": "Haluatko varmasti poistaa tämän integraation?",
+                        "restart_confirm": "Käynnistä Home Assistant uudellen viimeistelläksesi tämän integraation poistamisen",
+                        "manuf": "{manufacturer}",
+                        "hub": "Yhdistetty kautta",
+                        "firmware": "Laiteohjelmisto: {version}",
+                        "device_unavailable": "laite ei saatavissa",
+                        "entity_unavailable": "kohde ei saatavilla"
+                    }
                 }
             },
             "profile": {
                 "push_notifications": {
                     "header": "Notifikaatiot",
-                    "description": "Tilaa notifikaatiot tälle laitteelle",
-                    "error_load_platform": "Konfiguroi notify.html5 komponentti",
+                    "description": "Lähetä ilmoitukset tälle laitteelle.",
+                    "error_load_platform": "Määritä notify.html5-komponentti",
                     "error_use_https": "Vaatii SSL suojauksen",
                     "push_notifications": "Notifikaatiot",
                     "link_promo": "Lisätietoja"
@@ -545,6 +572,134 @@
                     "error_no_theme": "Ei teemoja käytettävissä.",
                     "link_promo": "Lisätietoja teemoista",
                     "dropdown_label": "Teema"
+                },
+                "refresh_tokens": {
+                    "header": "Päivitä tokenit",
+                    "created_at": "Luotu {date}",
+                    "last_used": "Viimeksi käytetty {date} sijainnista {location}",
+                    "not_used": "Ei ole koskaan käytetty"
+                },
+                "long_lived_access_tokens": {
+                    "header": "Pitkäaikaiset käyttötunnussanomat",
+                    "learn_auth_requests": "Opi tekemään tunnistautuneita kutsuja.",
+                    "created_at": "Luotu {date}",
+                    "delete_failed": "Käyttötunnussanoman poistaminen epäonnistui.",
+                    "create": "Luo token",
+                    "create_failed": "Käyttötunnussanoman luominen epäonnistui.",
+                    "prompt_name": "Nimi?",
+                    "prompt_copy_token": "Kopioi käyttöoikeuskoodi. Sitä ei näytetä uudelleen.",
+                    "empty_state": "Sinulla ei ole vielä pitkäaikaisia käyttötunnussanomia",
+                    "last_used": "Viimeksi käytetty {date} sijainnista {location}",
+                    "not_used": "Ei ole koskaan käytetty"
+                },
+                "current_user": "Olet tällä hetkellä kirjautuneena tunnuksella {fullName}.",
+                "is_owner": "Olet omistaja.",
+                "logout": "Kirjaudu ulos",
+                "change_password": {
+                    "header": "Vaihda salasana",
+                    "current_password": "Nykyinen salasana",
+                    "new_password": "Uusi salasana",
+                    "confirm_new_password": "Vahvista uusi salasana",
+                    "error_required": "Edellytetään",
+                    "submit": "Lähetä"
+                },
+                "mfa": {
+                    "header": "Monivaiheisen tunnistautumisen moduulit",
+                    "disable": "Poista käytöstä",
+                    "enable": "Ota käyttöön",
+                    "confirm_disable": "Haluatko varmasti poistaa {nimi}?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "Keskeytetty",
+                    "title_success": "Onnistui!",
+                    "step_done": "Asetus tehty {step}",
+                    "close": "Sulje",
+                    "submit": "Lähetä"
+                }
+            },
+            "page-authorize": {
+                "initializing": "Alustetaan",
+                "logging_in_with": "Kirjaudutaan sisään",
+                "pick_auth_provider": "Tai kirjaudu sisään joillakin seuraavista",
+                "abort_intro": "Kirjautuminen on keskeytetty",
+                "form": {
+                    "working": "Ole hyvä ja odota",
+                    "unknown_error": "Jotain meni pieleen",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Käyttäjätunnus",
+                                        "password": "Salasana"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Kaksivaiheinen tunnistuskoodi"
+                                    },
+                                    "description": "Avaa **{mfa_module_name}** laitteessasi nähdäksesi kaksivaiheisen tunnistautumisen koodisi ja vahvistaaksesi identiteettisi:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Virheellinen käyttäjätunnus tai salasana",
+                                "invalid_code": "Väärä tunnistuskoodi"
+                            },
+                            "abort": {
+                                "login_expired": "Istunto päättyi, ole hyvä ja kirjaudu uudelleen."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "API-salasana"
+                                    },
+                                    "description": "Ole hyvä ja syötä API-salasanasi http-asetuksissa:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Kaksivaiheisen tunnistautumisen koodi"
+                                    },
+                                    "description": "Avaa **{mfa_module_name}** laitteessasi nähdäksesi kaksivaiheisen tunnistautumisen koodisi ja vahvistaaksesi identiteettisi:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "Virheellinen API-salasana",
+                                "invalid_code": "Virheellinen tunnistautumiskoodi"
+                            },
+                            "abort": {
+                                "no_api_password_set": "API-salasanaa ei ole asetettu.",
+                                "login_expired": "Istunto vanhentunut, ole hyvä ja kirjaudu uudelleen."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "Käyttäjä"
+                                    },
+                                    "description": "Valitse käyttäjä, jolla haluat kirjautua:"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "Oletko valmis herättämään kotisi eloon, palauttamaan yksityisyytesi ja liittymään maailmanlaajuiseen nikkarien joukkoon?",
+                "user": {
+                    "intro": "Aloitetaan luomalla käyttäjätili.",
+                    "required_field": "Edellytetään",
+                    "data": {
+                        "name": "Nimi",
+                        "username": "Käyttäjätunnus",
+                        "password": "Salasana"
+                    },
+                    "create_account": "Luo tili",
+                    "error": {
+                        "required_fields": "Täytä kaikki pakolliset kentät"
+                    }
                 }
             }
         },
@@ -558,7 +713,7 @@
         },
         "duration": {
             "day": "{count} {count, plural,\n  one {päivä}\n  other {päivää}\n}",
-            "week": "{count} {count, plural,\n  one {viikkoa}\n  other {viikkoa}\n}",
+            "week": "{count} {count, plural,\n  one {viikko}\n  other {viikkoa}\n}",
             "second": "{count} {count, plural,\none {sekunti}\nother {sekuntia}\n}",
             "minute": "{count} {count, plural,\none {minuutti}\nother {minuuttia}\n}",
             "hour": "{count} {count, plural,\none {tunti}\nother {tuntia}\n}"
@@ -618,7 +773,7 @@
             },
             "automation": {
                 "last_triggered": "Viimeksi käynnistetty",
-                "trigger": "Käynnistysehto"
+                "trigger": "Käynnistä"
             },
             "cover": {
                 "position": "Sijainti",
@@ -664,6 +819,13 @@
                     "turn_on": "Päälle",
                     "turn_off": "Sammuta"
                 }
+            },
+            "water_heater": {
+                "currently": "Tällä hetkellä",
+                "on_off": "Päällä \/ pois",
+                "target_temperature": "Tavoitelämpötila",
+                "operation": "Toiminto",
+                "away_mode": "Poissa kotoa"
             }
         },
         "components": {
@@ -678,7 +840,14 @@
             "relative_time": {
                 "past": "{time} sitten",
                 "future": "{time} kuluttua",
-                "never": "Ei koskaan"
+                "never": "Ei koskaan",
+                "duration": {
+                    "second": "{count} {count, plural,\none {sekunti}\nother {sekuntia}\n}",
+                    "minute": "{count} {count, plural,\none {minuutti}\nother {minuuttia}\n}",
+                    "hour": "{count} {count, plural,\none {tunti}\nother {tuntia}\n}",
+                    "day": "{count} {count, plural,\n  one {päivä}\n  other {päivää}\n}",
+                    "week": "{count} {count, plural,\n  one {viikko}\n  other {viikkoa}\n}"
+                }
             },
             "history_charts": {
                 "loading_history": "Ladataan tilahistoriaa...",
@@ -698,6 +867,16 @@
                 "name": "Nimi",
                 "entity_id": "Kohde ID"
             }
+        },
+        "auth_store": {
+            "ask": "Haluatko tallentaa tämän käyttäjätunnuksen?",
+            "decline": "Ei kiitos",
+            "confirm": "Tallenna käyttäjätunnus"
+        },
+        "notification_drawer": {
+            "click_to_configure": "Napsauta painiketta määrittääksesi {entity}",
+            "empty": "Ei ilmoituksia",
+            "title": "Ilmoitukset"
         }
     },
     "domain": {

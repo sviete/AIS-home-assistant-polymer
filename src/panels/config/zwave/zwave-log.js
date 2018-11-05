@@ -1,13 +1,19 @@
-import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-card/paper-card.js';
-import '@polymer/paper-checkbox/paper-checkbox.js';
-import '@polymer/paper-input/paper-input.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/paper-button/paper-button";
+import "@polymer/paper-card/paper-card";
+import "@polymer/paper-checkbox/paper-checkbox";
+import "@polymer/paper-input/paper-input";
+import "@polymer/paper-dialog/paper-dialog";
+import "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
+import EventsMixin from "../../../mixins/events-mixin";
+import isPwa from "../../../common/config/is_pwa";
 
-import '../ha-config-section.js';
+import "../ha-config-section";
 
-class OzwLog extends PolymerElement {
+let registeredDialog = false;
+
+class OzwLog extends EventsMixin(PolymerElement) {
   static get template() {
     return html`
     <style include="iron-flex ha-style">
@@ -26,20 +32,18 @@ class OzwLog extends PolymerElement {
         padding-right: 24px;
         padding-bottom: 24px;
       }
+
     </style>
     <ha-config-section is-wide="[[isWide]]">
       <span slot="header">OZW Log</span>
       <paper-card>
-      <div class="device-picker">
-        <paper-input label="Number of last log lines." type="number" min="0" max="1000" step="10" value="{{numLogLines}}">
-        </paper-input>
-      </div>
-      <div class="card-actions">
-        <paper-button raised="" on-click="refreshLog">Refresh</paper-button>
-      </div>
-      <div class="help-text">
-             <pre>[[ozwLogs]]</pre>
-      </div>
+        <div class="device-picker">
+          <paper-input label="Number of last log lines." type="number" min="0" max="1000" step="10" value="{{numLogLines}}">
+          </paper-input>
+        </div>
+        <div class="card-actions">
+          <paper-button raised="true" on-click="_openLogWindow">Load</paper-button>
+          <paper-button raised="true" on-click="_tailLog" disabled="{{_completeLog}}">Tail</paper-button>
       </paper-card>
     </ha-config-section>
 `;
@@ -54,25 +58,100 @@ class OzwLog extends PolymerElement {
         value: false,
       },
 
-      ozwLogs: {
-        type: String,
-        value: 'Refresh to pull log'
+      _ozwLogs: String,
+
+      _completeLog: {
+        type: Boolean,
+        value: true,
       },
 
       numLogLines: {
         type: Number,
-        value: 0
+        value: 0,
+        observer: "_isCompleteLog",
       },
+
+      _intervalId: String,
+
+      tail: Boolean,
     };
   }
 
-  refreshLog() {
-    this.ozwLogs = 'Loading ozw log...';
-    this.hass.callApi('GET', 'zwave/ozwlog?lines=' + this.numLogLines)
-      .then((info) => {
-        this.ozwLogs = info;
+  async _tailLog() {
+    this.setProperties({ tail: true });
+    const ozwWindow = await this._openLogWindow();
+    if (!isPwa()) {
+      this.setProperties({
+        _intervalId: setInterval(() => {
+          this._refreshLog(ozwWindow);
+        }, 1500),
       });
+    }
+  }
+
+  async _openLogWindow() {
+    const info = await this.hass.callApi(
+      "GET",
+      "zwave/ozwlog?lines=" + this.numLogLines
+    );
+    this.setProperties({ _ozwLogs: info });
+    if (isPwa()) {
+      this._showOzwlogDialog();
+      return -1;
+    }
+    const ozwWindow = open("", "ozwLog", "toolbar");
+    ozwWindow.document.body.innerHTML = `<pre>${this._ozwLogs}</pre>`;
+    return ozwWindow;
+  }
+
+  async _refreshLog(ozwWindow) {
+    if (ozwWindow.closed === true) {
+      clearInterval(this._intervalId);
+      this.setProperties({ _intervalId: null });
+    } else {
+      const info = await this.hass.callApi(
+        "GET",
+        "zwave/ozwlog?lines=" + this.numLogLines
+      );
+      this.setProperties({ _ozwLogs: info });
+      ozwWindow.document.body.innerHTML = `<pre>${this._ozwLogs}</pre>`;
+    }
+  }
+
+  _isCompleteLog() {
+    if (this.numLogLines !== "0") {
+      this.setProperties({ _completeLog: false });
+    } else {
+      this.setProperties({ _completeLog: true });
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    if (!registeredDialog) {
+      registeredDialog = true;
+      this.fire("register-dialog", {
+        dialogShowEvent: "show-ozwlog-dialog",
+        dialogTag: "zwave-log-dialog",
+        dialogImport: () => import("./zwave-log-dialog"),
+      });
+    }
+  }
+
+  _showOzwlogDialog() {
+    this.fire("show-ozwlog-dialog", {
+      hass: this.hass,
+      _numLogLines: this.numLogLines,
+      _ozwLog: this._ozwLogs,
+      _tail: this.tail,
+      dialogClosedCallback: () => this._dialogClosed(),
+    });
+  }
+
+  _dialogClosed() {
+    this.setProperties({
+      tail: false,
+    });
   }
 }
-
-customElements.define('ozw-log', OzwLog);
+customElements.define("ozw-log", OzwLog);

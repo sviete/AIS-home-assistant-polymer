@@ -1,46 +1,34 @@
-import applyThemesOnElement from '../../common/dom/apply_themes_on_element.js';
-import { storeState } from '../../util/ha-pref-storage.js';
+import applyThemesOnElement from "../../common/dom/apply_themes_on_element";
+import { storeState } from "../../util/ha-pref-storage";
+import { subscribeThemes } from "../../data/ws-themes";
 
-export default superClass => class extends superClass {
-  ready() {
-    super.ready();
-    this.addEventListener('settheme', e => this._setTheme(e));
-  }
+export default (superClass) =>
+  class extends superClass {
+    ready() {
+      super.ready();
 
-  hassConnected() {
-    super.hassConnected();
+      this.addEventListener("settheme", (ev) => {
+        this._updateHass({ selectedTheme: ev.detail });
+        this._applyTheme();
+        storeState(this.hass);
+      });
+    }
 
-    this.hass.callWS({
-      type: 'frontend/get_themes',
-    }).then((themes) => {
-      this._updateHass({ themes });
+    hassConnected() {
+      super.hassConnected();
+
+      subscribeThemes(this.hass.connection, (themes) => {
+        this._updateHass({ themes });
+        this._applyTheme();
+      });
+    }
+
+    _applyTheme() {
       applyThemesOnElement(
         document.documentElement,
-        themes,
+        this.hass.themes,
         this.hass.selectedTheme,
         true
       );
-    });
-
-    this.hass.connection.subscribeEvents((event) => {
-      this._updateHass({ themes: event.data });
-      applyThemesOnElement(
-        document.documentElement,
-        event.data,
-        this.hass.selectedTheme,
-        true
-      );
-    }, 'themes_updated').then(unsub => this.unsubFuncs.push(unsub));
-  }
-
-  _setTheme(event) {
-    this._updateHass({ selectedTheme: event.detail });
-    applyThemesOnElement(
-      document.documentElement,
-      this.hass.themes,
-      this.hass.selectedTheme,
-      true
-    );
-    storeState(this.hass);
-  }
-};
+    }
+  };

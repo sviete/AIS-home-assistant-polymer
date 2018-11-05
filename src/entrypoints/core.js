@@ -1,84 +1,75 @@
 import {
-  ERR_INVALID_AUTH,
+  getAuth,
   createConnection,
   subscribeConfig,
   subscribeEntities,
-} from 'home-assistant-js-websocket';
+  subscribeServices,
+  ERR_INVALID_AUTH,
+} from "home-assistant-js-websocket";
 
-import { redirectLogin, resolveCode, refreshToken } from '../common/auth/token.js';
-// import refreshToken_ from '../common/auth/refresh_token.js';
-import parseQuery from '../common/util/parse_query.js';
-import { loadTokens } from '../common/auth/token_storage.js';
+import { loadTokens, saveTokens } from "../common/auth/token_storage";
+import { subscribePanels } from "../data/ws-panels";
+import { subscribeThemes } from "../data/ws-themes";
+import { subscribeUser } from "../data/ws-user";
 
-const init = window.createHassConnection = function (password, accessToken) {
-  const proto = window.location.protocol === 'https:' ? 'wss' : 'ws';
-  const url = `${proto}://${window.location.host}/api/websocket?${__BUILD__}`;
-  const options = {
-    setupRetry: 10,
-  };
-  if (password) {
-    options.authToken = password;
-  } else if (accessToken) {
-    options.accessToken = accessToken.access_token;
-    options.expires = accessToken.expires;
+const hassUrl = `${location.protocol}//${location.host}`;
+const isExternal = location.search.includes("external_auth=1");
+
+const authProm = isExternal
+  ? () =>
+      import("../common/auth/external_auth").then(
+        (mod) => new mod.default(hassUrl)
+      )
+  : () =>
+      getAuth({
+        hassUrl,
+        saveTokens,
+        loadTokens: () => Promise.resolve(loadTokens()),
+      });
+
+const connProm = async (auth) => {
+  try {
+    const conn = await createConnection({ auth });
+
+    // Clear url if we have been able to establish a connection
+    if (location.search.includes("auth_callback=1")) {
+      history.replaceState(null, null, location.pathname);
+    }
+
+    return { auth, conn };
+  } catch (err) {
+    if (err !== ERR_INVALID_AUTH) {
+      throw err;
+    }
+    // We can get invalid auth if auth tokens were stored that are no longer valid
+    // Clear stored tokens.
+    if (!isExternal) saveTokens(null);
+    auth = await authProm();
+    const conn = await createConnection({ auth });
+    return { auth, conn };
   }
-  return createConnection(url, options)
-    .then(function (conn) {
-      subscribeEntities(conn);
-      subscribeConfig(conn);
-      return conn;
-    });
 };
 
-function main() {
-  if (location.search) {
-    const query = parseQuery(location.search.substr(1));
-    if (query.code) {
-      window.hassConnection = resolveCode(query.code).then(newTokens => init(null, newTokens));
-      return;
-    }
-  }
-  const tokens = loadTokens();
+window.hassConnection = authProm().then(connProm);
 
-  if (tokens == null) {
-    redirectLogin();
-    return;
-  }
+// Start fetching some of the data that we will need.
+window.hassConnection.then(({ conn }) => {
+  const noop = () => {};
+  subscribeEntities(conn, noop);
+  subscribeConfig(conn, noop);
+  subscribeServices(conn, noop);
+  subscribePanels(conn, noop);
+  subscribeThemes(conn, noop);
+  subscribeUser(conn, noop);
+});
 
-  if (Date.now() + 30000 > tokens.expires) {
-    // refresh access token if it will expire in 30 seconds to avoid invalid auth event
-    window.hassConnection = refreshToken().then(newTokens => init(null, newTokens));
-    return;
-  }
-
-  window.hassConnection = init(null, tokens).catch((err) => {
-    if (err !== ERR_INVALID_AUTH) throw err;
-
-    return refreshToken().then(newTokens => init(null, newTokens));
-  });
-}
-
-function mainLegacy() {
-  if (window.noAuth === '1') {
-    window.hassConnection = init();
-  } else if (window.localStorage.authToken) {
-    window.hassConnection = init(window.localStorage.authToken);
-  } else {
-    window.hassConnection = null;
-  }
-}
-
-if (window.useOAuth === '1') {
-  main();
-} else {
-  mainLegacy();
-}
-
-window.addEventListener('error', (e) => {
-  const homeAssistant = document.querySelector('home-assistant');
+window.addEventListener("error", (e) => {
+  const homeAssistant = document.querySelector("home-assistant");
   if (homeAssistant && homeAssistant.hass && homeAssistant.hass.callService) {
-    homeAssistant.hass.callService('system_log', 'write', {
-      logger: `frontend.${__DEV__ ? 'js_dev' : 'js'}.${__BUILD__}.${__VERSION__.replace('.', '')}`,
+    homeAssistant.hass.callService("system_log", "write", {
+      logger: `frontend.${
+        __DEV__ ? "js_dev" : "js"
+      }.${__BUILD__}.${__VERSION__.replace(".", "")}`,
       message: `${e.filename}:${e.lineno}:${e.colno} ${e.message}`,
     });
   }

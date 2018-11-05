@@ -1,18 +1,15 @@
-import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
-import EventsMixin from './events-mixin';
+import { dedupingMixin } from "@polymer/polymer/lib/utils/mixin";
+import { navigate } from "../common/navigate";
 
 /*
  * @polymerMixin
  * @appliesMixin EventsMixin
  */
-export default dedupingMixin(superClass =>
-  class extends EventsMixin(superClass) {
-    navigate(path, replace = false) {
-      if (replace) {
-        history.replaceState(null, null, path);
-      } else {
-        history.pushState(null, null, path);
+export default dedupingMixin(
+  (superClass) =>
+    class extends superClass {
+      navigate(...args) {
+        navigate(this, ...args);
       }
-      this.fire('location-changed');
     }
-  });
+);

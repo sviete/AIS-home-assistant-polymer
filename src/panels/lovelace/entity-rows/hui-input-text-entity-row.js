@@ -1,8 +1,8 @@
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '@polymer/paper-input/paper-input.js';
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
+import "@polymer/paper-input/paper-input";
 
-import '../components/hui-generic-entity-row.js';
+import "../components/hui-generic-entity-row";
 
 class HuiInputTextEntityRow extends PolymerElement {
   static get template() {
@@ -11,18 +11,24 @@ class HuiInputTextEntityRow extends PolymerElement {
         hass="[[hass]]"
         config="[[_config]]"
       >
-        <paper-input
-          no-label-float
-          minlength="[[_stateObj.attributes.min]]"
-          maxlength="[[_stateObj.attributes.max]]"
-          value="{{_value}}"
-          auto-validate="[[_stateObj.attributes.pattern]]"
-          pattern="[[_stateObj.attributes.pattern]]"
-          type="[[_stateObj.attributes.mode]]"
-          on-change="_selectedValueChanged"
-          placeholder="(empty value)"
-        ></paper-input>
+        ${this.inputTextControlTemplate}
       </hui-generic-entity-row>
+    `;
+  }
+
+  static get inputTextControlTemplate() {
+    return html`
+      <paper-input
+        no-label-float
+        minlength="[[_stateObj.attributes.min]]"
+        maxlength="[[_stateObj.attributes.max]]"
+        value="{{_value}}"
+        auto-validate="[[_stateObj.attributes.pattern]]"
+        pattern="[[_stateObj.attributes.pattern]]"
+        type="[[_stateObj.attributes.mode]]"
+        on-change="_selectedValueChanged"
+        placeholder="(empty value)"
+      ></paper-input>
     `;
   }
 
@@ -32,10 +38,10 @@ class HuiInputTextEntityRow extends PolymerElement {
       _config: Object,
       _stateObj: {
         type: Object,
-        computed: '_computeStateObj(hass.states, _config.entity)',
-        observer: '_stateObjChanged',
+        computed: "_computeStateObj(hass.states, _config.entity)",
+        observer: "_stateObjChanged",
       },
-      _value: String
+      _value: String,
     };
   }
 
@@ -45,23 +51,23 @@ class HuiInputTextEntityRow extends PolymerElement {
 
   setConfig(config) {
     if (!config || !config.entity) {
-      throw new Error('Entity not configured.');
+      throw new Error("Entity not configured.");
     }
     this._config = config;
   }
 
   _stateObjChanged(stateObj) {
-    this._value = stateObj.state;
+    this._value = stateObj && stateObj.state;
   }
 
   _selectedValueChanged() {
     if (this._value === this._stateObj.state) {
       return;
     }
-    this.hass.callService('input_text', 'set_value', {
+    this.hass.callService("input_text", "set_value", {
       value: this._value,
       entity_id: this._stateObj.entity_id,
     });
   }
 }
-customElements.define('hui-input-text-entity-row', HuiInputTextEntityRow);
+customElements.define("hui-input-text-entity-row", HuiInputTextEntityRow);

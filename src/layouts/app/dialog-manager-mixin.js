@@ -1,8 +1,10 @@
-export default superClass =>
+export default (superClass) =>
   class extends superClass {
     ready() {
       super.ready();
-      this.addEventListener('register-dialog', e => this.registerDialog(e.detail));
+      this.addEventListener("register-dialog", (e) =>
+        this.registerDialog(e.detail)
+      );
     }
 
     registerDialog({ dialogShowEvent, dialogTag, dialogImport }) {
@@ -17,7 +19,7 @@ export default superClass =>
             return dialogEl;
           });
         }
-        loaded.then(dialogEl => dialogEl.showDialog(showEv.detail));
+        loaded.then((dialogEl) => dialogEl.showDialog(showEv.detail));
       });
     }
   };

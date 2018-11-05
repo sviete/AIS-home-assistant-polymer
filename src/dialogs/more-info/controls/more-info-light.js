@@ -1,25 +1,24 @@
-import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
-import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
-import '@polymer/paper-item/paper-item.js';
-import '@polymer/paper-listbox/paper-listbox.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/iron-flex-layout/iron-flex-layout-classes";
+import "@polymer/paper-dropdown-menu/paper-dropdown-menu";
+import "@polymer/paper-item/paper-item";
+import "@polymer/paper-listbox/paper-listbox";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../../../components/ha-attributes.js';
-import '../../../components/ha-color-picker.js';
-import '../../../components/ha-labeled-slider.js';
+import "../../../components/ha-attributes";
+import "../../../components/ha-color-picker";
+import "../../../components/ha-labeled-slider";
 
-
-import featureClassNames from '../../../common/entity/feature_class_names';
-import EventsMixin from '../../../mixins/events-mixin.js';
-import LocalizeMixin from '../../../mixins/localize-mixin.js';
+import featureClassNames from "../../../common/entity/feature_class_names";
+import EventsMixin from "../../../mixins/events-mixin";
+import LocalizeMixin from "../../../mixins/localize-mixin";
 
 const FEATURE_CLASS_NAMES = {
-  1: 'has-brightness',
-  2: 'has-color_temp',
-  4: 'has-effect_list',
-  16: 'has-color',
-  128: 'has-white_value',
+  1: "has-brightness",
+  2: "has-color_temp",
+  4: "has-effect_list",
+  16: "has-color",
+  128: "has-white_value",
 };
 /*
  * @appliesMixin EventsMixin
@@ -29,9 +28,6 @@ class MoreInfoLight extends LocalizeMixin(EventsMixin(PolymerElement)) {
     return html`
   <style include="iron-flex"></style>
   <style>
-    .effect_list {
-      padding-bottom: 16px;
-    }
 
     .effect_list, .brightness, .color_temp, .white_value {
       max-height: 0px;
@@ -61,6 +57,18 @@ class MoreInfoLight extends LocalizeMixin(EventsMixin(PolymerElement)) {
       max-height: 84px;
     }
 
+    .has-brightness
+    .has-color_temp.is-on,
+    .has-white_value.is-on {
+      margin-top: -16px;
+    }
+
+    .has-brightness .brightness,
+    .has-color_temp.is-on .color_temp,
+    .has-white_value.is-on .white_value {
+      padding-top: 16px;
+    }
+
     .has-color.is-on ha-color-picker {
       max-height: 500px;
       overflow: visible;
@@ -78,12 +86,13 @@ class MoreInfoLight extends LocalizeMixin(EventsMixin(PolymerElement)) {
     paper-item {
       cursor: pointer;
     }
+
   </style>
 
   <div class$="[[computeClassNames(stateObj)]]">
 
     <div class="control brightness">
-      <ha-labeled-slider caption="[[localize('ui.card.light.brightness')]]" icon="hass:brightness-5" max="255" value="{{brightnessSliderValue}}" on-change="brightnessSliderChanged"></ha-labeled-slider>
+      <ha-labeled-slider caption="[[localize('ui.card.light.brightness')]]" icon="hass:brightness-5" min="1" max="255" value="{{brightnessSliderValue}}" on-change="brightnessSliderChanged"></ha-labeled-slider>
     </div>
 
     <div class="control color_temp">
@@ -120,13 +129,13 @@ class MoreInfoLight extends LocalizeMixin(EventsMixin(PolymerElement)) {
 
       stateObj: {
         type: Object,
-        observer: 'stateObjChanged',
+        observer: "stateObjChanged",
       },
 
       effectIndex: {
         type: Number,
         value: -1,
-        observer: 'effectChanged',
+        observer: "effectChanged",
       },
 
       brightnessSliderValue: {
@@ -146,16 +155,16 @@ class MoreInfoLight extends LocalizeMixin(EventsMixin(PolymerElement)) {
 
       colorPickerColor: {
         type: Object,
-      }
+      },
     };
   }
 
   stateObjChanged(newVal, oldVal) {
     const props = {
-      brightnessSliderValue: 0
+      brightnessSliderValue: 0,
     };
 
-    if (newVal && newVal.state === 'on') {
+    if (newVal && newVal.state === "on") {
       props.brightnessSliderValue = newVal.attributes.brightness;
       props.ctSliderValue = newVal.attributes.color_temp;
       props.wvSliderValue = newVal.attributes.white_value;
@@ -166,7 +175,9 @@ class MoreInfoLight extends LocalizeMixin(EventsMixin(PolymerElement)) {
         };
       }
       if (newVal.attributes.effect_list) {
-        props.effectIndex = newVal.attributes.effect_list.indexOf(newVal.attributes.effect);
+        props.effectIndex = newVal.attributes.effect_list.indexOf(
+          newVal.attributes.effect
+        );
       } else {
         props.effectIndex = -1;
       }
@@ -176,31 +187,31 @@ class MoreInfoLight extends LocalizeMixin(EventsMixin(PolymerElement)) {
 
     if (oldVal) {
       setTimeout(() => {
-        this.fire('iron-resize');
+        this.fire("iron-resize");
       }, 500);
     }
   }
 
   computeClassNames(stateObj) {
     const classes = [featureClassNames(stateObj, FEATURE_CLASS_NAMES)];
-    if (stateObj && stateObj.state === 'on') {
-      classes.push('is-on');
+    if (stateObj && stateObj.state === "on") {
+      classes.push("is-on");
     }
-    if (stateObj && stateObj.state === 'unavailable') {
-      classes.push('is-unavailable');
+    if (stateObj && stateObj.state === "unavailable") {
+      classes.push("is-unavailable");
     }
-    return classes.join(' ');
+    return classes.join(" ");
   }
 
   effectChanged(effectIndex) {
     var effectInput;
     // Selected Option will transition to '' before transitioning to new value
-    if (effectIndex === '' || effectIndex === -1) return;
+    if (effectIndex === "" || effectIndex === -1) return;
 
     effectInput = this.stateObj.attributes.effect_list[effectIndex];
     if (effectInput === this.stateObj.attributes.effect) return;
 
-    this.hass.callService('light', 'turn_on', {
+    this.hass.callService("light", "turn_on", {
       entity_id: this.stateObj.entity_id,
       effect: effectInput,
     });
@@ -211,16 +222,10 @@ class MoreInfoLight extends LocalizeMixin(EventsMixin(PolymerElement)) {
 
     if (isNaN(bri)) return;
 
-    if (bri === 0) {
-      this.hass.callService('light', 'turn_off', {
-        entity_id: this.stateObj.entity_id,
-      });
-    } else {
-      this.hass.callService('light', 'turn_on', {
-        entity_id: this.stateObj.entity_id,
-        brightness: bri,
-      });
-    }
+    this.hass.callService("light", "turn_on", {
+      entity_id: this.stateObj.entity_id,
+      brightness: bri,
+    });
   }
 
   ctSliderChanged(ev) {
@@ -228,7 +233,7 @@ class MoreInfoLight extends LocalizeMixin(EventsMixin(PolymerElement)) {
 
     if (isNaN(ct)) return;
 
-    this.hass.callService('light', 'turn_on', {
+    this.hass.callService("light", "turn_on", {
       entity_id: this.stateObj.entity_id,
       color_temp: ct,
     });
@@ -239,14 +244,14 @@ class MoreInfoLight extends LocalizeMixin(EventsMixin(PolymerElement)) {
 
     if (isNaN(wv)) return;
 
-    this.hass.callService('light', 'turn_on', {
+    this.hass.callService("light", "turn_on", {
       entity_id: this.stateObj.entity_id,
       white_value: wv,
     });
   }
 
   serviceChangeColor(hass, entityId, color) {
-    hass.callService('light', 'turn_on', {
+    hass.callService("light", "turn_on", {
       entity_id: entityId,
       hs_color: [color.h, color.s * 100],
     });
@@ -261,4 +266,4 @@ class MoreInfoLight extends LocalizeMixin(EventsMixin(PolymerElement)) {
   }
 }
 
-customElements.define('more-info-light', MoreInfoLight);
+customElements.define("more-info-light", MoreInfoLight);

@@ -1,18 +1,17 @@
-import '@polymer/paper-slider/paper-slider.js';
+import "@polymer/paper-slider/paper-slider";
 
 /**
-* @polymer
-* @customElement
-* @appliesMixin paper-slider
-*/
-const PaperSliderClass = customElements.get('paper-slider');
+ * @polymer
+ * @customElement
+ * @appliesMixin paper-slider
+ */
+const PaperSliderClass = customElements.get("paper-slider");
 
 class HaPaperSlider extends PaperSliderClass {
   static get template() {
-    const tpl = document.createElement('template');
+    const tpl = document.createElement("template");
     tpl.innerHTML = PaperSliderClass.template.innerHTML;
-    const styleEl = tpl.content.querySelector('style');
-    styleEl.setAttribute('include', 'paper-slider');
+    const styleEl = document.createElement("style");
     styleEl.innerHTML = `
       .pin > .slider-knob > .slider-knob-inner {
         font-size:  var(--ha-paper-slider-pin-font-size, 10px);
@@ -60,7 +59,8 @@ class HaPaperSlider extends PaperSliderClass {
         transform: scale(1) translate(0, -10px);
       }
     `;
+    tpl.content.appendChild(styleEl);
     return tpl;
   }
 }
-customElements.define('ha-paper-slider', HaPaperSlider);
+customElements.define("ha-paper-slider", HaPaperSlider);

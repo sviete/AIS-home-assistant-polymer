@@ -1,15 +1,16 @@
-import '@polymer/app-layout/app-toolbar/app-toolbar.js';
-import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-icon-button/paper-icon-button.js';
-import '@polymer/paper-input/paper-input.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/app-layout/app-toolbar/app-toolbar";
+import "@polymer/paper-button/paper-button";
+import "@polymer/paper-icon-button/paper-icon-button";
+import "@polymer/paper-input/paper-input";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import EventsMixin from '../../mixins/events-mixin.js';
-import LocalizeMixin from '../../mixins/localize-mixin.js';
+import EventsMixin from "../../mixins/events-mixin";
+import LocalizeMixin from "../../mixins/localize-mixin";
 
-import computeStateName from '../../common/entity/compute_state_name.js';
-import isComponentLoaded from '../../common/config/is_component_loaded.js';
+import computeStateName from "../../common/entity/compute_state_name";
+import computeDomain from "../../common/entity/compute_domain";
+import isComponentLoaded from "../../common/config/is_component_loaded";
 
 /*
  * @appliesMixin EventsMixin
@@ -44,7 +45,10 @@ class MoreInfoSettings extends LocalizeMixin(EventsMixin(PolymerElement)) {
     <app-toolbar>
       <paper-icon-button icon="hass:arrow-left" on-click="_backTapped"></paper-icon-button>
       <div main-title="">[[_computeStateName(stateObj)]]</div>
-      <paper-button on-click="_save">[[localize('ui.dialogs.more_info_settings.save')]]</paper-button>
+      <paper-button
+        on-click="_save"
+        disabled='[[_computeInvalid(_entityId)]]'
+      >[[localize('ui.dialogs.more_info_settings.save')]]</paper-button>
     </app-toolbar>
 
     <div class="form">
@@ -55,6 +59,8 @@ class MoreInfoSettings extends LocalizeMixin(EventsMixin(PolymerElement)) {
       <paper-input
         value="{{_entityId}}"
         label="[[localize('ui.dialogs.more_info_settings.entity_id')]]"
+        error-message="Domain needs to stay the same"
+        invalid='[[_computeInvalid(_entityId)]]'
       ></paper-input>
     </div>
 `;
@@ -67,12 +73,12 @@ class MoreInfoSettings extends LocalizeMixin(EventsMixin(PolymerElement)) {
 
       _componentLoaded: {
         type: Boolean,
-        computed: '_computeComponentLoaded(hass)'
+        computed: "_computeComponentLoaded(hass)",
       },
 
       registryInfo: {
         type: Object,
-        observer: '_registryInfoChanged',
+        observer: "_registryInfoChanged",
         notify: true,
       },
 
@@ -82,12 +88,16 @@ class MoreInfoSettings extends LocalizeMixin(EventsMixin(PolymerElement)) {
   }
 
   _computeStateName(stateObj) {
-    if (!stateObj) return '';
+    if (!stateObj) return "";
     return computeStateName(stateObj);
   }
 
   _computeComponentLoaded(hass) {
-    return isComponentLoaded(hass, 'config.entity_registry');
+    return isComponentLoaded(hass, "config.entity_registry");
+  }
+
+  _computeInvalid(entityId) {
+    return computeDomain(this.stateObj.entity_id) !== computeDomain(entityId);
   }
 
   _registryInfoChanged(newVal) {
@@ -98,20 +108,20 @@ class MoreInfoSettings extends LocalizeMixin(EventsMixin(PolymerElement)) {
       });
     } else {
       this.setProperties({
-        _name: '',
-        _entityId: '',
+        _name: "",
+        _entityId: "",
       });
     }
   }
 
   _backTapped() {
-    this.fire('more-info-page', { page: null });
+    this.fire("more-info-page", { page: null });
   }
 
   async _save() {
     try {
       const info = await this.hass.callWS({
-        type: 'config/entity_registry/update',
+        type: "config/entity_registry/update",
         entity_id: this.stateObj.entity_id,
         name: this._name,
         new_entity_id: this._entityId,
@@ -121,11 +131,11 @@ class MoreInfoSettings extends LocalizeMixin(EventsMixin(PolymerElement)) {
 
       // Keep the more info dialog open at the new entity.
       if (this.stateObj.entity_id !== this._entityId) {
-        this.fire('hass-more-info', { entityId: this._entityId });
+        this.fire("hass-more-info", { entityId: this._entityId });
       }
     } catch (err) {
       alert(`save failed: ${err.message}`);
     }
   }
 }
-customElements.define('more-info-settings', MoreInfoSettings);
+customElements.define("more-info-settings", MoreInfoSettings);

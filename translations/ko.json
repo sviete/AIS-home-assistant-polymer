@@ -13,7 +13,8 @@
         "dev-templates": "템플릿",
         "dev-mqtt": "MQTT",
         "dev-info": "정보",
-        "calendar": "캘린더"
+        "calendar": "캘린더",
+        "profile": "프로필"
     },
     "state": {
         "default": {
@@ -257,7 +258,7 @@
         "vacuum": {
             "cleaning": "청소중",
             "docked": "충전중",
-            "error": "에러",
+            "error": "작동 에러",
             "idle": "대기중",
             "off": "꺼짐",
             "on": "켜짐",
@@ -379,7 +380,8 @@
                                 "state": {
                                     "label": "상태",
                                     "from": "이전",
-                                    "to": "이후"
+                                    "to": "이후",
+                                    "for": "경과 시간"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -513,7 +515,7 @@
                 },
                 "users": {
                     "caption": "사용자",
-                    "description": "사용자 관리",
+                    "description": "사용자를 관리합니다",
                     "picker": {
                         "title": "사용자"
                     },
@@ -524,6 +526,31 @@
                         "deactivate_user": "사용자 비활성화",
                         "delete_user": "사용자 삭제"
                     }
+                },
+                "cloud": {
+                    "caption": "Home Assistant Cloud",
+                    "description_login": "{email} 로 로그인 되어있습니다",
+                    "description_not_login": "로그인이 되어있지 않습니다"
+                },
+                "integrations": {
+                    "caption": "통합 구성요소",
+                    "description": "연결된 기기 및 서비스를 관리합니다",
+                    "discovered": "발견된 구성요소",
+                    "configured": "설정된 구성요소",
+                    "new": "새로운 통합 구성요소 설정",
+                    "configure": "설정하기",
+                    "none": "설정된 구성요소가 없습니다",
+                    "config_entry": {
+                        "no_devices": "이 통합 구성요소에는 장치가 없습니다.",
+                        "no_device": "장치가 없는 구성요소",
+                        "delete_confirm": "이 통합 구성요소를 제거 하시겠습니까?",
+                        "restart_confirm": "통합 구성요소 제거 완료를 위해 Home Assistant 를 재시작합니다",
+                        "manuf": "{manufacturer} 제조",
+                        "hub": "연결 경유 대상",
+                        "firmware": "펌웨어: {version}",
+                        "device_unavailable": "기기 사용불가",
+                        "entity_unavailable": "구성요소 사용불가"
+                    }
                 }
             },
             "profile": {
@@ -531,7 +558,7 @@
                     "header": "푸시 알림",
                     "description": "이 기기에 알림 보내기",
                     "error_load_platform": "notify.html5 를 구성해주세요.",
-                    "error_use_https": "프론트 엔드에는 SSL 사용이 필요합니다.",
+                    "error_use_https": "SSL 을 통한 보안 연결된 환경이 필요합니다.",
                     "push_notifications": "푸시 알림",
                     "link_promo": "더 알아보기"
                 },
@@ -545,6 +572,145 @@
                     "error_no_theme": "사용할 수 있는 테마가 없습니다.",
                     "link_promo": "테마에 대해 알아보기",
                     "dropdown_label": "테마"
+                },
+                "refresh_tokens": {
+                    "header": "리프레시 토큰",
+                    "description": "각 리프레시 토큰은 로그인 세션을 나타냅니다. 로그아웃을 클릭하면 리프레시 토큰은 자동으로 제거됩니다. 다음의 리프레시 토큰이 현재 접속한 계정에 대해 활성화 되어 있습니다.",
+                    "token_title": "{clientId} 의 리프레시 토큰",
+                    "created_at": "{date} 에 생성 됨",
+                    "confirm_delete": "{name} 의 리프레시 토큰을 삭제 하시겠습니까?",
+                    "delete_failed": "리프레시 토큰을 삭제할 수 없습니다.",
+                    "last_used": "{date} 에  {location} 에서 마지막으로 사용됨",
+                    "not_used": "사용된 적이 없음",
+                    "current_token_tooltip": "현재 리프레시 토큰을 삭제할 수 없음"
+                },
+                "long_lived_access_tokens": {
+                    "header": "장기 액세스 토큰",
+                    "description": "스크립트가 Home Assistant 인스턴스와 상호 작용할 수 있도록 장기 액세스 토큰을 생성하세요. 각 토큰은 생성 후 10년 동안 유효합니다. 현재 활성 상태인 장기 액세스 토큰은 다음과 같습니다.",
+                    "learn_auth_requests": "인증 요청을 생성하는 방법에 대해 알아 보세요.",
+                    "created_at": "{date} 에 생성 됨",
+                    "confirm_delete": "{name} 액세스 토큰을 삭제 하시겠습니까?",
+                    "delete_failed": "액세스 토큰을 삭제할 수 없습니다.",
+                    "create": "토큰 만들기",
+                    "create_failed": "액세스 토큰을 생성을 할 수 없습니다.",
+                    "prompt_name": "토큰 이름을 지어 주세요.",
+                    "prompt_copy_token": "Ctrl + C 를 눌러 액세스 토큰을 복사하세요. 이 안내는 다시 표시되지 않습니다.",
+                    "empty_state": "장기 액세스 토큰이 없습니다.",
+                    "last_used": "{date} 에  {location} 에서 마지막으로 사용됨",
+                    "not_used": "사용된 적이 없음"
+                },
+                "current_user": "현재 {fullName} 로(으로) 로그인 한 상태 입니다.",
+                "is_owner": "관리자 계정 입니다.",
+                "logout": "로그아웃",
+                "change_password": {
+                    "header": "비밀번호 변경",
+                    "current_password": "현재 비밀번호",
+                    "new_password": "새 비밀번호",
+                    "confirm_new_password": "새 비밀번호 확인",
+                    "error_required": "필수 요소",
+                    "submit": "변경하기"
+                },
+                "mfa": {
+                    "header": "다단계 인증 모듈",
+                    "disable": "비활성화",
+                    "enable": "활성화",
+                    "confirm_disable": "{name} 을(를) 비활성화 하시겠습니까?"
+                },
+                "mfa_setup": {
+                    "title_aborted": "취소됨",
+                    "title_success": "성공!",
+                    "step_done": "{step} 설정 완료",
+                    "close": "닫기",
+                    "submit": "구성하기"
+                }
+            },
+            "page-authorize": {
+                "initializing": "초기화 중",
+                "authorizing_client": "{clientId} 에 Home Assistant 인스턴스에 대한 액세스 권한을 부여하려고 합니다.",
+                "logging_in_with": "**{authProviderName}** 로(으로) 로그인 합니다.",
+                "pick_auth_provider": "또는 다음으로 로그인하세요",
+                "abort_intro": "로그인이 중단되었습니다",
+                "form": {
+                    "working": "잠시 기다려주세요",
+                    "unknown_error": "문제가 발생했습니다",
+                    "providers": {
+                        "homeassistant": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "사용자 이름",
+                                        "password": "비밀번호"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "2단계 인증 코드"
+                                    },
+                                    "description": "2단계 인증 코드 및 신원을 확인하기 위해 기기에서 **{mfa_module_name}** 을(를) 열어주세요:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "사용자 이름 또는 비밀번호가 잘못되었습니다",
+                                "invalid_code": "잘못된 인증 코드"
+                            },
+                            "abort": {
+                                "login_expired": "세션이 만료되었습니다. 다시 로그인 해주세요."
+                            }
+                        },
+                        "legacy_api_password": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "API 비밀번호"
+                                    },
+                                    "description": "configuration.yaml 에 설정한 api_password 를 입력해주세요:"
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "2단계 인증 코드"
+                                    },
+                                    "description": "2단계 인증 코드 및 신원을 확인하기 위해 기기에서 **{mfa_module_name}** 을(를) 열어주세요:"
+                                }
+                            },
+                            "error": {
+                                "invalid_auth": "API 비밀번호가 잘못되었습니다",
+                                "invalid_code": "잘못된 인증 코드"
+                            },
+                            "abort": {
+                                "no_api_password_set": "API 비밀번호를 설정하지 않았습니다.",
+                                "login_expired": "세션이 만료되었습니다. 다시 로그인 해주세요."
+                            }
+                        },
+                        "trusted_networks": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "user": "사용자"
+                                    },
+                                    "description": "로그인하려는 사용자를 선택해주세요:"
+                                }
+                            },
+                            "abort": {
+                                "not_whitelisted": "이 컴퓨터는 허용 목록에 등록되어 있지 않습니다."
+                            }
+                        }
+                    }
+                }
+            },
+            "page-onboarding": {
+                "intro": "잠들어 있는 집을 깨우고 개인정보를 보호하며 전세계의 공돌이 커뮤니티에 가입 할 준비가 되셨나요?",
+                "user": {
+                    "intro": "사용자 계정을 만들어 시작합니다.",
+                    "required_field": "필수 요소",
+                    "data": {
+                        "name": "이름",
+                        "username": "사용자 이름",
+                        "password": "비밀번호"
+                    },
+                    "create_account": "계정 만들기",
+                    "error": {
+                        "required_fields": "필수 입력란을 모두 채워주세요"
+                    }
                 }
             }
         },
@@ -664,6 +830,13 @@
                     "turn_on": "끄기",
                     "turn_off": "켜기"
                 }
+            },
+            "water_heater": {
+                "currently": "현재 온도",
+                "on_off": "켜기 \/ 끄기",
+                "target_temperature": "희망 온도",
+                "operation": "운전",
+                "away_mode": "외출 모드"
             }
         },
         "components": {
@@ -709,7 +882,12 @@
         "auth_store": {
             "ask": "현재 로그인을 저장 하시겠습니까?",
             "decline": "아니요, 괜찮습니다",
-            "confirm": "저장해주세요"
+            "confirm": "로그인 저장하기"
+        },
+        "notification_drawer": {
+            "click_to_configure": "버튼을 클릭하여 구성하세요 {entity}",
+            "empty": "알림 없음",
+            "title": "알림"
         }
     },
     "domain": {

@@ -1,8 +1,8 @@
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import './ha-paper-slider.js';
-import './ha-icon.js';
+import "./ha-paper-slider";
+import "./ha-icon";
 
 class HaLabeledSlider extends PolymerElement {
   static get template() {
@@ -10,7 +10,6 @@ class HaLabeledSlider extends PolymerElement {
     <style>
       :host {
         display: block;
-        padding-bottom: 16px;
       }
 
       .title {
@@ -63,7 +62,7 @@ class HaLabeledSlider extends PolymerElement {
       },
       icon: {
         type: String,
-        value: '',
+        value: "",
       },
       value: {
         type: Number,
@@ -73,4 +72,4 @@ class HaLabeledSlider extends PolymerElement {
   }
 }
 
-customElements.define('ha-labeled-slider', HaLabeledSlider);
+customElements.define("ha-labeled-slider", HaLabeledSlider);

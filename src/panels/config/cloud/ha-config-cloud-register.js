@@ -1,13 +1,13 @@
-import '@polymer/paper-card/paper-card.js';
-import '@polymer/paper-input/paper-input.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/paper-card/paper-card";
+import "@polymer/paper-input/paper-input";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../../../components/buttons/ha-progress-button.js';
-import '../../../layouts/hass-subpage.js';
-import '../../../resources/ha-style.js';
-import '../ha-config-section.js';
-import EventsMixin from '../../../mixins/events-mixin.js';
+import "../../../components/buttons/ha-progress-button";
+import "../../../layouts/hass-subpage";
+import "../../../resources/ha-style";
+import "../ha-config-section";
+import EventsMixin from "../../../mixins/events-mixin";
 
 /*
  * @appliesMixin EventsMixin
@@ -16,6 +16,12 @@ class HaConfigCloudRegister extends EventsMixin(PolymerElement) {
   static get template() {
     return html`
     <style include="iron-flex ha-style">
+      [slot=introduction] {
+        margin: -1em 0;
+      }
+      [slot=introduction] a {
+        color: var(--primary-color);
+      }
       a {
         color: var(--primary-color);
       }
@@ -47,9 +53,21 @@ class HaConfigCloudRegister extends EventsMixin(PolymerElement) {
     <hass-subpage header="Register Account">
       <div class="content">
         <ha-config-section is-wide="[[isWide]]">
-          <span slot="header">Register with the Home Assistant Cloud</span>
-          <span slot="introduction">
-            Register today to easily connect with the Home Assistant Cloud. This will allow you to unlock great new services and functionality, like Amazon Alexa integration.
+          <span slot="header">Start your free trial</span>
+          <div slot="introduction">
+            <p>
+              Create an account to start your free one month trial with Home Assistant Cloud. No payment information necessary.
+            </p>
+            <p>
+              The trial will give you access to all the benefits of Home Assistant Cloud, including:
+            </p>
+            <ul>
+              <li>Integration with Google Assistant</li>
+              <li>Integration with Amazon Alexa</li>
+            </ul>
+            <p>
+              This service is run by our partner <a href='https://www.nabucasa.com' target='_blank'>Nabu&nbsp;Casa,&nbsp;Inc</a>, a company founded by the founders of Home Assistant and Hass.io.
+            </p>
 
             <p>
               By registering an account you agree to the following terms and conditions.
@@ -57,20 +75,20 @@ class HaConfigCloudRegister extends EventsMixin(PolymerElement) {
                 <li><a href="https://home-assistant.io/tos/" target="_blank">Terms and Conditions</a></li>
                 <li><a href="https://home-assistant.io/privacy/" target="_blank">Privacy Policy</a></li>
               </ul>
-            <p></p>
-          </span>
+            </p>
+          </div>
 
           <paper-card>
             <div class="card-content">
               <div class="header">
-                <h1>Register</h1>
+                <h1>Create Account</h1>
                 <div class="error" hidden$="[[!_error]]">[[_error]]</div>
               </div>
               <paper-input autofocus="" id="email" label="Email address" type="email" value="{{email}}" on-keydown="_keyDown" error-message="Invalid email"></paper-input>
               <paper-input id="password" label="Password" value="{{_password}}" type="password" on-keydown="_keyDown" error-message="Your password needs to be at least 8 characters"></paper-input>
             </div>
             <div class="card-actions">
-              <ha-progress-button on-click="_handleRegister" progress="[[_requestInProgress]]">Create Account</ha-progress-button>
+              <ha-progress-button on-click="_handleRegister" progress="[[_requestInProgress]]">Start trial</ha-progress-button>
               <button class="link" hidden="[[_requestInProgress]]" on-click="_handleResendVerifyEmail">Resend confirmation email</button>
             </div>
           </paper-card>
@@ -95,23 +113,21 @@ class HaConfigCloudRegister extends EventsMixin(PolymerElement) {
       },
       _password: {
         type: String,
-        value: '',
+        value: "",
       },
       _error: {
         type: String,
-        value: '',
+        value: "",
       },
     };
   }
 
   static get observers() {
-    return [
-      '_inputChanged(email, _password)'
-    ];
+    return ["_inputChanged(email, _password)"];
   }
 
   _inputChanged() {
-    this._error = '';
+    this._error = "";
     this.$.email.invalid = false;
     this.$.password.invalid = false;
   }
@@ -127,7 +143,7 @@ class HaConfigCloudRegister extends EventsMixin(PolymerElement) {
   _handleRegister() {
     let invalid = false;
 
-    if (!this.email || !this.email.includes('@')) {
+    if (!this.email || !this.email.includes("@")) {
       this.$.email.invalid = true;
       this.$.email.focus();
       invalid = true;
@@ -146,18 +162,26 @@ class HaConfigCloudRegister extends EventsMixin(PolymerElement) {
 
     this._requestInProgress = true;
 
-    this.hass.callApi('post', 'cloud/register', {
-      email: this.email,
-      password: this._password,
-    }).then(() => this._verificationEmailSent(), (err) => {
-      // Do this before setProperties because changing it clears errors.
-      this._password = '';
+    this.hass
+      .callApi("post", "cloud/register", {
+        email: this.email,
+        password: this._password,
+      })
+      .then(
+        () => this._verificationEmailSent(),
+        (err) => {
+          // Do this before setProperties because changing it clears errors.
+          this._password = "";
 
-      this.setProperties({
-        _requestInProgress: false,
-        _error: err && err.body && err.body.message ? err.body.message : 'Unknown error'
-      });
-    });
+          this.setProperties({
+            _requestInProgress: false,
+            _error:
+              err && err.body && err.body.message
+                ? err.body.message
+                : "Unknown error",
+          });
+        }
+      );
   }
 
   _handleResendVerifyEmail() {
@@ -166,22 +190,32 @@ class HaConfigCloudRegister extends EventsMixin(PolymerElement) {
       return;
     }
 
-    this.hass.callApi('post', 'cloud/resend_confirm', {
-      email: this.email,
-    }).then(() => this._verificationEmailSent(), err => this.setProperties({
-      _error: err && err.body && err.body.message ? err.body.message : 'Unknown error'
-    }));
+    this.hass
+      .callApi("post", "cloud/resend_confirm", {
+        email: this.email,
+      })
+      .then(
+        () => this._verificationEmailSent(),
+        (err) =>
+          this.setProperties({
+            _error:
+              err && err.body && err.body.message
+                ? err.body.message
+                : "Unknown error",
+          })
+      );
   }
 
   _verificationEmailSent() {
     this.setProperties({
       _requestInProgress: false,
-      _password: '',
+      _password: "",
     });
-    this.fire('cloud-done', {
-      flashMessage: 'Account created! Check your email for instructions on how to activate your account.'
+    this.fire("cloud-done", {
+      flashMessage:
+        "Account created! Check your email for instructions on how to activate your account.",
     });
   }
 }
 
-customElements.define('ha-config-cloud-register', HaConfigCloudRegister);
+customElements.define("ha-config-cloud-register", HaConfigCloudRegister);

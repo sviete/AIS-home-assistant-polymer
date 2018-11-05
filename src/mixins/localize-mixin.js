@@ -1,32 +1,28 @@
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
-import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
-import { AppLocalizeBehavior } from '../util/app-localize-behavior.js';
-
+import { dedupingMixin } from "@polymer/polymer/lib/utils/mixin";
+import { localizeBaseMixin } from "./localize-base-mixin";
 /**
+ * Polymer Mixin to enable a localize function powered by language/resources from hass object.
+ *
  * @polymerMixin
- * @appliesMixin AppLocalizeBehavior
  */
-export default dedupingMixin(superClass =>
-  class extends mixinBehaviors([AppLocalizeBehavior], superClass) {
-    static get properties() {
-      return {
-        hass: Object,
-        language: {
-          type: String,
-          computed: 'computeLanguage(hass)',
-        },
-        resources: {
-          type: Object,
-          computed: 'computeResources(hass)',
-        },
-      };
-    }
+export default dedupingMixin(
+  (superClass) =>
+    class extends localizeBaseMixin(superClass) {
+      static get properties() {
+        return {
+          hass: Object,
 
-    computeLanguage(hass) {
-      return hass && hass.language;
+          /**
+           * Translates a string to the current `language`. Any parameters to the
+           * string should be passed in order, as follows:
+           * `localize(stringKey, param1Name, param1Value, param2Name, param2Value)`
+           */
+          localize: {
+            type: Function,
+            computed:
+              "__computeLocalize(hass.language, hass.resources, formats)",
+          },
+        };
+      }
     }
-
-    computeResources(hass) {
-      return hass && hass.resources;
-    }
-  });
+);

@@ -1,10 +1,10 @@
-import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-card/paper-card.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/paper-button/paper-button";
+import "@polymer/paper-card/paper-card";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../../../src/components/buttons/ha-call-api-button.js';
-import EventsMixin from '../../../src/mixins/events-mixin.js';
+import "../../../src/components/buttons/ha-call-api-button";
+import EventsMixin from "../../../src/mixins/events-mixin";
 
 class HassioHostInfo extends EventsMixin(PolymerElement) {
   static get template() {
@@ -17,6 +17,7 @@ class HassioHostInfo extends EventsMixin(PolymerElement) {
       }
       .card-content {
         height: 200px;
+        color: var(--primary-text-color);
       }
       @media screen and (max-width: 830px) {
         paper-card {
@@ -25,7 +26,7 @@ class HassioHostInfo extends EventsMixin(PolymerElement) {
           width: 100%;
         }
         .card-content {
-          height: 100%;
+          height: auto;
         }
       }
       .info {
@@ -40,6 +41,9 @@ class HassioHostInfo extends EventsMixin(PolymerElement) {
       }
       paper-button.info {
         max-width: calc(50% - 12px);
+      }
+      table.info {
+        margin-bottom: 10px;
       }
     </style>
     <paper-card>
@@ -96,16 +100,16 @@ class HassioHostInfo extends EventsMixin(PolymerElement) {
       hass: Object,
       data: {
         type: Object,
-        observer: '_dataChanged'
+        observer: "_dataChanged",
       },
       errors: String,
-      _hassOs: Object
+      _hassOs: Object,
     };
   }
 
   ready() {
     super.ready();
-    this.addEventListener('hass-api-called', ev => this.apiCalled(ev));
+    this.addEventListener("hass-api-called", (ev) => this.apiCalled(ev));
   }
 
   apiCalled(ev) {
@@ -116,19 +120,18 @@ class HassioHostInfo extends EventsMixin(PolymerElement) {
 
     var response = ev.detail.response;
 
-    if (typeof response.body === 'object') {
-      this.errors = response.body.message || 'Unknown error';
+    if (typeof response.body === "object") {
+      this.errors = response.body.message || "Unknown error";
     } else {
       this.errors = response.body;
     }
   }
 
   _dataChanged(data) {
-    if (data.features && data.features.includes('hassos')) {
-      this.hass.callApi('get', 'hassio/hassos/info')
-        .then((resp) => {
-          this._hassOs = resp.data;
-        });
+    if (data.features && data.features.includes("hassos")) {
+      this.hass.callApi("get", "hassio/hassos/info").then((resp) => {
+        this._hassOs = resp.data;
+      });
     } else {
       this._hassOs = {};
     }
@@ -143,28 +146,31 @@ class HassioHostInfo extends EventsMixin(PolymerElement) {
   }
 
   _showHardware() {
-    this.hass.callApi('get', 'hassio/hardware/info')
+    this.hass
+      .callApi("get", "hassio/hardware/info")
       .then(
-        resp => this._objectToMarkdown(resp.data)
-        , () => 'Error getting hardware info'
-      ).then((content) => {
-        this.fire('hassio-markdown-dialog', {
-          title: 'Hardware',
+        (resp) => this._objectToMarkdown(resp.data),
+        () => "Error getting hardware info"
+      )
+      .then((content) => {
+        this.fire("hassio-markdown-dialog", {
+          title: "Hardware",
           content: content,
         });
       });
   }
 
-  _objectToMarkdown(obj, indent = '') {
-    let data = '';
+  _objectToMarkdown(obj, indent = "") {
+    let data = "";
     Object.keys(obj).forEach((key) => {
-      if (typeof obj[key] !== 'object') {
+      if (typeof obj[key] !== "object") {
         data += `${indent}- ${key}: ${obj[key]}\n`;
       } else {
         data += `${indent}- ${key}:\n`;
         if (Array.isArray(obj[key])) {
           if (obj[key].length) {
-            data += `${indent}    - ` + obj[key].join(`\n${indent}    - `) + '\n';
+            data +=
+              `${indent}    - ` + obj[key].join(`\n${indent}    - `) + "\n";
           }
         } else {
           data += this._objectToMarkdown(obj[key], `    ${indent}`);
@@ -176,11 +182,11 @@ class HassioHostInfo extends EventsMixin(PolymerElement) {
 
   _changeHostnameClicked() {
     const curHostname = this.data.hostname;
-    const hostname = prompt('Please enter a new hostname:', curHostname);
+    const hostname = prompt("Please enter a new hostname:", curHostname);
     if (hostname && hostname !== curHostname) {
-      this.hass.callApi('post', 'hassio/host/options', { hostname });
+      this.hass.callApi("post", "hassio/host/options", { hostname });
     }
   }
 }
 
-customElements.define('hassio-host-info', HassioHostInfo);
+customElements.define("hassio-host-info", HassioHostInfo);

@@ -1,32 +1,34 @@
-import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-card/paper-card.js';
-import '@polymer/paper-icon-button/paper-icon-button.js';
-import '@polymer/paper-input/paper-input.js';
-import '@polymer/paper-item/paper-item-body.js';
-import '@polymer/paper-item/paper-item.js';
-import '@polymer/paper-ripple/paper-ripple.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/paper-button/paper-button";
+import "@polymer/paper-card/paper-card";
+import "@polymer/paper-icon-button/paper-icon-button";
+import "@polymer/paper-input/paper-input";
+import "@polymer/paper-item/paper-item-body";
+import "@polymer/paper-item/paper-item";
+import "@polymer/paper-ripple/paper-ripple";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../../../components/buttons/ha-progress-button.js';
-import '../../../layouts/hass-subpage.js';
-import '../../../resources/ha-style.js';
+import "../../../components/buttons/ha-progress-button";
+import "../../../layouts/hass-subpage";
+import "../../../resources/ha-style";
 
-import '../ha-config-section.js';
-import EventsMixin from '../../../mixins/events-mixin.js';
-import NavigateMixin from '../../../mixins/navigate-mixin.js';
+import "../ha-config-section";
+import EventsMixin from "../../../mixins/events-mixin";
+import NavigateMixin from "../../../mixins/navigate-mixin";
 
 /*
  * @appliesMixin NavigateMixin
  * @appliesMixin EventsMixin
  */
-class HaConfigCloudLogin extends
-  NavigateMixin(EventsMixin(PolymerElement)) {
+class HaConfigCloudLogin extends NavigateMixin(EventsMixin(PolymerElement)) {
   static get template() {
     return html`
     <style include="iron-flex ha-style">
       .content {
         padding-bottom: 24px;
+      }
+      [slot=introduction] {
+        margin: -1em 0;
       }
       [slot=introduction] a {
         color: var(--primary-color);
@@ -69,10 +71,18 @@ class HaConfigCloudLogin extends
       <div class="content">
         <ha-config-section is-wide="[[isWide]]">
           <span slot="header">Home Assistant Cloud</span>
-          <span slot="introduction">
-            The Home Assistant Cloud allows your local Home Assistant instance to connect with cloud-only services like Amazon Alexa.
-            <p><a href="https://www.home-assistant.io/components/cloud/" target="_blank">Learn more</a></p>
-          </span>
+          <div slot="introduction">
+            <p>
+              Home Assistant Cloud connects your local instance securely to cloud-only services Amazon Alexa and Google Assistant.
+            </p>
+            <p>
+              This service is run by our partner <a href='https://www.nabucasa.com' target='_blank'>Nabu&nbsp;Casa,&nbsp;Inc</a>, a company founded by the founders of Home Assistant and Hass.io.
+            </p>
+            <p>
+              Home Assistant Cloud is a subscription service with a free one month trial. No payment information necessary.
+            </p>
+            <p><a href="https://www.nabucasa.com" target="_blank">Learn more about Home Assistant Cloud</a></p>
+          </div>
 
           <paper-card hidden$="[[!flashMessage]]">
             <div class="card-content flash-msg">
@@ -98,8 +108,8 @@ class HaConfigCloudLogin extends
           <paper-card>
             <paper-item on-click="_handleRegister">
               <paper-item-body two-line="">
-                Create Account
-                <div secondary="">Get up and running quickly.</div>
+                Start your free 1 month trial
+                <div secondary="">No payment information necessary</div>
               </paper-item-body>
               <iron-icon icon="hass:chevron-right"></iron-icon>
             </paper-item>
@@ -120,7 +130,7 @@ class HaConfigCloudLogin extends
       },
       _password: {
         type: String,
-        value: '',
+        value: "",
       },
       _requestInProgress: {
         type: Boolean,
@@ -135,9 +145,7 @@ class HaConfigCloudLogin extends
   }
 
   static get observers() {
-    return [
-      '_inputChanged(email, _password)'
-    ];
+    return ["_inputChanged(email, _password)"];
   }
 
   connectedCallback() {
@@ -145,8 +153,8 @@ class HaConfigCloudLogin extends
     if (this.flashMessage) {
       // Wait for DOM to be drawn
       requestAnimationFrame(() =>
-        requestAnimationFrame(() =>
-          this.$.flashRipple.simulatedRipple()));
+        requestAnimationFrame(() => this.$.flashRipple.simulatedRipple())
+      );
     }
   }
 
@@ -167,7 +175,7 @@ class HaConfigCloudLogin extends
   _handleLogin() {
     let invalid = false;
 
-    if (!this.email || !this.email.includes('@')) {
+    if (!this.email || !this.email.includes("@")) {
       this.$.email.invalid = true;
       this.$.email.focus();
       invalid = true;
@@ -186,54 +194,64 @@ class HaConfigCloudLogin extends
 
     this._requestInProgress = true;
 
-    this.hass.callApi('post', 'cloud/login', {
-      email: this.email,
-      password: this._password,
-    }).then((account) => {
-      this.fire('ha-account-refreshed', { account: account });
-      this.setProperties({
-        email: '',
-        _password: '',
-      });
-    }, (err) => {
-      // Do this before setProperties because changing it clears errors.
-      this._password = '';
+    this.hass
+      .callApi("post", "cloud/login", {
+        email: this.email,
+        password: this._password,
+      })
+      .then(
+        () => {
+          this.fire("ha-refresh-cloud-status");
+          this.setProperties({
+            email: "",
+            _password: "",
+          });
+        },
+        (err) => {
+          // Do this before setProperties because changing it clears errors.
+          this._password = "";
 
-      const errCode = err && err.body && err.body.code;
-      if (errCode === 'PasswordChangeRequired') {
-        alert('You need to change your password before logging in.');
-        this.navigate('/config/cloud/forgot-password');
-        return;
-      }
+          const errCode = err && err.body && err.body.code;
+          if (errCode === "PasswordChangeRequired") {
+            alert("You need to change your password before logging in.");
+            this.navigate("/config/cloud/forgot-password");
+            return;
+          }
 
-      const props = {
-        _requestInProgress: false,
-        _error: (err && err.body && err.body.message) ? err.body.message : 'Unknown error',
-      };
+          const props = {
+            _requestInProgress: false,
+            _error:
+              err && err.body && err.body.message
+                ? err.body.message
+                : "Unknown error",
+          };
 
-      if (errCode === 'UserNotConfirmed') {
-        props._error = 'You need to confirm your email before logging in.';
-      }
+          if (errCode === "UserNotConfirmed") {
+            props._error = "You need to confirm your email before logging in.";
+          }
 
-      this.setProperties(props);
-      this.$.email.focus();
-    });
+          this.setProperties(props);
+          this.$.email.focus();
+        }
+      );
   }
 
   _handleRegister() {
-    this.flashMessage = '';
-    this.navigate('/config/cloud/register');
+    this.flashMessage = "";
+    this.navigate("/config/cloud/register");
   }
 
   _handleForgotPassword() {
-    this.flashMessage = '';
-    this.navigate('/config/cloud/forgot-password');
+    this.flashMessage = "";
+    this.navigate("/config/cloud/forgot-password");
   }
 
   _dismissFlash() {
     // give some time to let the ripple finish.
-    setTimeout(() => { this.flashMessage = ''; }, 200);
+    setTimeout(() => {
+      this.flashMessage = "";
+    }, 200);
   }
 }
 
-customElements.define('ha-config-cloud-login', HaConfigCloudLogin);
+customElements.define("ha-config-cloud-login", HaConfigCloudLogin);

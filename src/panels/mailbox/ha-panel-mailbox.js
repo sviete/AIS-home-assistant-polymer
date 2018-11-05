@@ -1,26 +1,29 @@
-import '@polymer/app-layout/app-header-layout/app-header-layout.js';
-import '@polymer/app-layout/app-header/app-header.js';
-import '@polymer/app-layout/app-toolbar/app-toolbar.js';
-import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-card/paper-card.js';
-import '@polymer/paper-dialog/paper-dialog.js';
-import '@polymer/paper-input/paper-textarea.js';
-import '@polymer/paper-item/paper-item-body.js';
-import '@polymer/paper-item/paper-item.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/app-layout/app-header-layout/app-header-layout";
+import "@polymer/app-layout/app-header/app-header";
+import "@polymer/app-layout/app-toolbar/app-toolbar";
+import "@polymer/paper-button/paper-button";
+import "@polymer/paper-card/paper-card";
+import "@polymer/paper-input/paper-textarea";
+import "@polymer/paper-item/paper-item-body";
+import "@polymer/paper-item/paper-item";
+import "@polymer/paper-tabs/paper-tab";
+import "@polymer/paper-tabs/paper-tabs";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../../components/ha-menu-button.js';
-import '../../resources/ha-style.js';
+import "../../components/ha-menu-button";
+import "../../resources/ha-style";
 
+import formatDateTime from "../../common/datetime/format_date_time";
+import LocalizeMixin from "../../mixins/localize-mixin";
+import EventsMixin from "../../mixins/events-mixin";
 
-import formatDateTime from '../../common/datetime/format_date_time.js';
-import LocalizeMixin from '../../mixins/localize-mixin.js';
+let registeredDialog = false;
 
 /*
  * @appliesMixin LocalizeMixin
  */
-class HaPanelMailbox extends LocalizeMixin(PolymerElement) {
+class HaPanelMailbox extends EventsMixin(LocalizeMixin(PolymerElement)) {
   static get template() {
     return html`
     <style include='ha-style'>
@@ -57,32 +60,8 @@ class HaPanelMailbox extends LocalizeMixin(PolymerElement) {
         display: flex;
        justify-content: space-between;
       }
-      paper-dialog {
-        border-radius: 2px;
-      }
-      paper-dialog p {
-        color: var(--secondary-text-color);
-      }
-
-      #mp3dialog paper-icon-button {
-        float: right;
-      }
 
       @media all and (max-width: 450px) {
-        paper-dialog {
-          margin: 0;
-          width: 100%;
-          max-height: calc(100% - 64px);
-
-          position: fixed !important;
-          bottom: 0px;
-          left: 0px;
-          right: 0px;
-          overflow: scroll;
-          border-bottom-left-radius: 0px;
-          border-bottom-right-radius: 0px;
-        }
-
         .content {
           width: auto;
           padding: 0;
@@ -104,6 +83,19 @@ class HaPanelMailbox extends LocalizeMixin(PolymerElement) {
           <ha-menu-button narrow='[[narrow]]' show-menu='[[showMenu]]'></ha-menu-button>
           <div main-title>[[localize('panel.mailbox')]]</div>
         </app-toolbar>
+        <div sticky hidden$='[[areTabsHidden(platforms)]]'>
+          <paper-tabs
+            scrollable
+            selected='[[_currentPlatform]]'
+            on-iron-activate='handlePlatformSelected'
+          >
+            <template is='dom-repeat' items='[[platforms]]'>
+              <paper-tab data-entity='[[item]]' >
+                [[getPlatformName(item)]]
+              </paper-tab>
+            </template>
+          </paper-tabs>
+        </div>
       </app-header>
       <div class='content'>
         <paper-card>
@@ -128,28 +120,6 @@ class HaPanelMailbox extends LocalizeMixin(PolymerElement) {
         </paper-card>
       </div>
     </app-header-layout>
-
-    <paper-dialog with-backdrop id="mp3dialog" on-iron-overlay-closed="_mp3Closed">
-      <h2>
-        [[localize('ui.panel.mailbox.playback_title')]]
-        <paper-icon-button
-          on-click='openDeleteDialog'
-          icon='hass:delete'
-        ></paper-icon-button>
-      </h2>
-      <div id="transcribe"></div>
-      <div>
-        <audio id="mp3" preload="none" controls> <source id="mp3src" src="" type="audio/mpeg" /></audio>
-      </div>
-    </paper-dialog>
-
-    <paper-dialog with-backdrop id="confirmdel">
-      <p>[[localize('ui.panel.mailbox.delete_prompt')]]</p>
-      <div class="buttons">
-        <paper-button dialog-dismiss>[[localize('ui.common.cancel')]]</paper-button>
-        <paper-button dialog-confirm autofocus on-click="deleteSelected">[[localize('ui.panel.mailbox.delete_button')]]</paper-button>
-      </div>
-    </paper-dialog>
     `;
   }
 
@@ -177,21 +147,37 @@ class HaPanelMailbox extends LocalizeMixin(PolymerElement) {
         type: Array,
       },
 
-      currentMessage: {
-        type: Object,
+      _currentPlatform: {
+        type: Number,
+        value: 0,
       },
     };
   }
 
   connectedCallback() {
     super.connectedCallback();
+    if (!registeredDialog) {
+      registeredDialog = true;
+      this.fire("register-dialog", {
+        dialogShowEvent: "show-audio-message-dialog",
+        dialogTag: "ha-dialog-show-audio-message",
+        dialogImport: () => import("./ha-dialog-show-audio-message"),
+      });
+    }
     this.hassChanged = this.hassChanged.bind(this);
-    this.hass.connection.subscribeEvents(this.hassChanged, 'mailbox_updated')
-      .then(function (unsub) { this._unsubEvents = unsub; }.bind(this));
-    this.computePlatforms().then(function (platforms) {
-      this.platforms = platforms;
-      this.hassChanged();
-    }.bind(this));
+    this.hass.connection
+      .subscribeEvents(this.hassChanged, "mailbox_updated")
+      .then(
+        function(unsub) {
+          this._unsubEvents = unsub;
+        }.bind(this)
+      );
+    this.computePlatforms().then(
+      function(platforms) {
+        this.platforms = platforms;
+        this.hassChanged();
+      }.bind(this)
+    );
   }
 
   disconnectedCallback() {
@@ -203,69 +189,68 @@ class HaPanelMailbox extends LocalizeMixin(PolymerElement) {
     if (!this._messages) {
       this._messages = [];
     }
-    this.getMessages().then(function (items) {
-      this._messages = items;
-    }.bind(this));
+    this.getMessages().then(
+      function(items) {
+        this._messages = items;
+      }.bind(this)
+    );
   }
 
   openMP3Dialog(event) {
-    var platform = event.model.item.platform;
-    this.currentMessage = event.model.item;
-    this.$.mp3dialog.open();
-    this.$.mp3src.src = '/api/mailbox/media/' + platform + '/' + event.model.item.sha;
-    this.$.transcribe.innerText = event.model.item.message;
-    this.$.mp3.load();
-    this.$.mp3.play();
+    this.fire("show-audio-message-dialog", {
+      hass: this.hass,
+      message: event.model.item,
+    });
   }
 
-  _mp3Closed() {
-    this.$.mp3.pause();
-  }
-
-  openDeleteDialog() {
-    this.$.confirmdel.open();
-  }
-
-  deleteSelected() {
-    var msg = this.currentMessage;
-    this.hass.callApi('DELETE', 'mailbox/delete/' + msg.platform + '/' + msg.sha);
-    this.$.mp3dialog.close();
-  }
   getMessages() {
-    const items = this.platforms.map(function (platform) {
-      return this.hass.callApi('GET', 'mailbox/messages/' + platform).then(function (values) {
-        var platformItems = [];
-        var arrayLength = values.length;
-        for (var i = 0; i < arrayLength; i++) {
-          var datetime = formatDateTime(new Date(values[i].info.origtime * 1000));
+    const platform = this.platforms[this._currentPlatform];
+    return this.hass
+      .callApi("GET", `mailbox/messages/${platform.name}`)
+      .then((values) => {
+        const platformItems = [];
+        const arrayLength = values.length;
+        for (let i = 0; i < arrayLength; i++) {
+          const datetime = formatDateTime(
+            new Date(values[i].info.origtime * 1000),
+            this.hass.language
+          );
           platformItems.push({
             timestamp: datetime,
             caller: values[i].info.callerid,
             message: values[i].text,
             sha: values[i].sha,
             duration: values[i].info.duration,
-            platform: platform
+            platform: platform,
           });
         }
-        return platformItems;
+        return platformItems.sort(function(a, b) {
+          return new Date(b.timestamp) - new Date(a.timestamp);
+        });
       });
-    }.bind(this));
-    return Promise.all(items).then(function (platformItems) {
-      var arrayLength = items.length;
-      var final = [];
-      for (var i = 0; i < arrayLength; i++) {
-        final = final.concat(platformItems[i]);
-      }
-      final.sort(function (a, b) {
-        return new Date(b.timestamp) - new Date(a.timestamp);
-      });
-      return final;
-    });
   }
 
   computePlatforms() {
-    return this.hass.callApi('GET', 'mailbox/platforms');
+    return this.hass.callApi("GET", "mailbox/platforms");
+  }
+
+  handlePlatformSelected(ev) {
+    const newPlatform = ev.detail.selected;
+    if (newPlatform !== this._currentPlatform) {
+      this._currentPlatform = newPlatform;
+      this.hassChanged();
+    }
+  }
+
+  areTabsHidden(platforms) {
+    return !platforms || platforms.length < 2;
+  }
+
+  getPlatformName(item) {
+    const entity = `mailbox.${item.name}`;
+    const stateObj = this.hass.states[entity.toLowerCase()];
+    return stateObj.attributes.friendly_name;
   }
 }
 
-customElements.define('ha-panel-mailbox', HaPanelMailbox);
+customElements.define("ha-panel-mailbox", HaPanelMailbox);

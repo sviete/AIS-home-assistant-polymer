@@ -1,18 +1,19 @@
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import '../../../components/ha-card.js';
-import '../components/hui-image.js';
+import "../../../components/ha-card";
+import "../components/hui-image";
 
-import computeDomain from '../../../common/entity/compute_domain.js';
-import computeStateDisplay from '../../../common/entity/compute_state_display.js';
-import computeStateName from '../../../common/entity/compute_state_name.js';
-import toggleEntity from '../common/entity/toggle-entity.js';
+import computeDomain from "../../../common/entity/compute_domain";
+import computeStateDisplay from "../../../common/entity/compute_state_display";
+import computeStateName from "../../../common/entity/compute_state_name";
+import toggleEntity from "../common/entity/toggle-entity";
 
-import EventsMixin from '../../../mixins/events-mixin.js';
-import LocalizeMixin from '../../../mixins/localize-mixin.js';
+import EventsMixin from "../../../mixins/events-mixin";
+import LocalizeMixin from "../../../mixins/localize-mixin";
+import { longPressBind } from "../common/directives/long-press-directive";
 
-const UNAVAILABLE = 'Unavailable';
+const UNAVAILABLE = "Unavailable";
 
 /*
  * @appliesMixin LocalizeMixin
@@ -51,13 +52,14 @@ class HuiPictureEntityCard extends EventsMixin(LocalizeMixin(PolymerElement)) {
         }
       </style>
 
-      <ha-card id='card' on-click="_cardClicked">
+      <ha-card id='card'>
         <hui-image
           hass="[[hass]]"
           image="[[_config.image]]"
           state-image="[[_config.state_image]]"
           camera-image="[[_getCameraImage(_config)]]"
           entity="[[_config.entity]]"
+          aspect-ratio="[[_config.aspect_ratio]]"
         ></hui-image>
         <template is="dom-if" if="[[_showNameAndState(_config)]]">
           <div class="footer both">
@@ -83,11 +85,11 @@ class HuiPictureEntityCard extends EventsMixin(LocalizeMixin(PolymerElement)) {
     return {
       hass: {
         type: Object,
-        observer: '_hassChanged'
+        observer: "_hassChanged",
       },
       _config: Object,
       _name: String,
-      _state: String
+      _state: String,
     };
   }
 
@@ -97,16 +99,26 @@ class HuiPictureEntityCard extends EventsMixin(LocalizeMixin(PolymerElement)) {
 
   setConfig(config) {
     if (!config || !config.entity) {
-      throw new Error('Error in card configuration.');
+      throw new Error("Error in card configuration.");
     }
 
     this._entityDomain = computeDomain(config.entity);
-    if (this._entityDomain !== 'camera' &&
-        (!config.image && !config.state_image && !config.camera_image)) {
-      throw new Error('No image source configured.');
+    if (
+      this._entityDomain !== "camera" &&
+      (!config.image && !config.state_image && !config.camera_image)
+    ) {
+      throw new Error("No image source configured.");
     }
 
     this._config = config;
+  }
+
+  ready() {
+    super.ready();
+    const card = this.shadowRoot.querySelector("#card");
+    longPressBind(card);
+    card.addEventListener("ha-click", () => this._cardClicked(false));
+    card.addEventListener("ha-hold", () => this._cardClicked(true));
   }
 
   _hassChanged(hass) {
@@ -115,8 +127,10 @@ class HuiPictureEntityCard extends EventsMixin(LocalizeMixin(PolymerElement)) {
     const stateObj = hass.states[entityId];
 
     // Nothing changed
-    if ((!stateObj && this._oldState === UNAVAILABLE) ||
-        (stateObj && stateObj.state === this._oldState)) {
+    if (
+      (!stateObj && this._oldState === UNAVAILABLE) ||
+      (stateObj && stateObj.state === this._oldState)
+    ) {
       return;
     }
 
@@ -133,17 +147,17 @@ class HuiPictureEntityCard extends EventsMixin(LocalizeMixin(PolymerElement)) {
     } else {
       name = config.name || entityId;
       state = UNAVAILABLE;
-      stateLabel = this.localize('state.default.unavailable');
+      stateLabel = this.localize("state.default.unavailable");
       available = false;
     }
 
     this.setProperties({
       _name: name,
       _state: stateLabel,
-      _oldState: state
+      _oldState: state,
     });
 
-    this.$.card.classList.toggle('canInteract', available);
+    this.$.card.classList.toggle("canInteract", available);
   }
 
   _showNameAndState(config) {
@@ -158,22 +172,30 @@ class HuiPictureEntityCard extends EventsMixin(LocalizeMixin(PolymerElement)) {
     return config.show_name === false && config.show_state !== false;
   }
 
-  _cardClicked() {
+  _cardClicked(hold) {
     const config = this._config;
     const entityId = config.entity;
 
     if (!(entityId in this.hass.states)) return;
 
-    if (config.tap_action === 'toggle') {
-      toggleEntity(this.hass, entityId);
-    } else {
-      this.fire('hass-more-info', { entityId });
+    const action = hold ? config.hold_action : config.tap_action || "more-info";
+
+    switch (action) {
+      case "toggle":
+        toggleEntity(this.hass, entityId);
+        break;
+      case "more-info":
+        this.fire("hass-more-info", { entityId });
+        break;
+      default:
     }
   }
 
   _getCameraImage(config) {
-    return this._entityDomain === 'camera' ? config.entity : config.camera_image;
+    return this._entityDomain === "camera"
+      ? config.entity
+      : config.camera_image;
   }
 }
 
-customElements.define('hui-picture-entity-card', HuiPictureEntityCard);
+customElements.define("hui-picture-entity-card", HuiPictureEntityCard);

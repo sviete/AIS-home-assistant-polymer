@@ -1,9 +1,9 @@
-import '@polymer/app-layout/app-header-layout/app-header-layout.js';
-import '@polymer/app-layout/app-header/app-header.js';
-import '@polymer/app-layout/app-toolbar/app-toolbar.js';
-import '@polymer/paper-icon-button/paper-icon-button.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import "@polymer/app-layout/app-header-layout/app-header-layout";
+import "@polymer/app-layout/app-header/app-header";
+import "@polymer/app-layout/app-toolbar/app-toolbar";
+import "@polymer/paper-icon-button/paper-icon-button";
+import { html } from "@polymer/polymer/lib/utils/html-tag";
+import { PolymerElement } from "@polymer/polymer/polymer-element";
 
 class HassSubpage extends PolymerElement {
   static get template() {
@@ -14,6 +14,7 @@ class HassSubpage extends PolymerElement {
         <app-toolbar>
           <paper-icon-button icon="hass:arrow-left" on-click="_backTapped"></paper-icon-button>
           <div main-title="">[[header]]</div>
+          <slot name="toolbar-icon"></slot>
         </app-toolbar>
       </app-header>
 
@@ -24,7 +25,7 @@ class HassSubpage extends PolymerElement {
 
   static get properties() {
     return {
-      header: String
+      header: String,
     };
   }
 
@@ -33,4 +34,4 @@ class HassSubpage extends PolymerElement {
   }
 }
 
-customElements.define('hass-subpage', HassSubpage);
+customElements.define("hass-subpage", HassSubpage);
