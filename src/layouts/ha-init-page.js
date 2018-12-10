@@ -24,11 +24,11 @@ class HaInitPage extends EventsMixin(LocalizeMixin(PolymerElement)) {
         <img src="/static/icons/favicon-192x192.png" height="192" />
         <paper-spinner active="[[!error]]"></paper-spinner>
         <template is="dom-if" if="[[error]]">
-          Unable to connect to Home Assistant.
-          <paper-button on-click="_retry">Retry</paper-button>
+          Nie udało się połączyć z Asystentem domowym
+          <paper-button on-click="_retry">Ponów</paper-button>
         </template>
         <template is="dom-if" if="[[!error]]">
-          Loading data
+          Wczytywanie danych
         </template>
       </div>
     `;
