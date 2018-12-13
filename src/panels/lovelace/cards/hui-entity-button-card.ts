@@ -10,7 +10,6 @@ import { styleMap } from "lit-html/directives/styleMap";
 
 import "../../../components/ha-card";
 
-import toggleEntity from "../common/entity/toggle-entity";
 import isValidEntityId from "../../../common/entity/valid_entity_id";
 import stateIcon from "../../../common/entity/state_icon";
 import computeStateDomain from "../../../common/entity/compute_state_domain";
@@ -18,19 +17,18 @@ import computeStateName from "../../../common/entity/compute_state_name";
 import applyThemesOnElement from "../../../common/dom/apply_themes_on_element";
 import { HomeAssistant, LightEntity } from "../../../types";
 import { hassLocalizeLitMixin } from "../../../mixins/lit-localize-mixin";
-import { LovelaceCard, LovelaceConfig } from "../types";
+import { LovelaceCard } from "../types";
+import { LovelaceCardConfig, ActionConfig } from "../../../data/lovelace";
 import { longPress } from "../common/directives/long-press-directive";
-import { fireEvent } from "../../../common/dom/fire_event";
+import { handleClick } from "../common/handle-click";
 
-interface Config extends LovelaceConfig {
+interface Config extends LovelaceCardConfig {
   entity: string;
   name?: string;
   icon?: string;
   theme?: string;
-  tap_action?: "toggle" | "call-service" | "more-info";
-  hold_action?: "toggle" | "call-service" | "more-info";
-  service?: string;
-  service_data?: object;
+  tap_action?: ActionConfig;
+  hold_action?: ActionConfig;
 }
 
 class HuiEntityButtonCard extends hassLocalizeLitMixin(LitElement)
@@ -81,33 +79,35 @@ class HuiEntityButtonCard extends hassLocalizeLitMixin(LitElement)
     return html`
       ${this.renderStyle()}
       <ha-card
-        @ha-click="${() => this.handleClick(false)}"
-        @ha-hold="${() => this.handleClick(true)}"
+        @ha-click="${this._handleTap}"
+        @ha-hold="${this._handleHold}"
         .longPress="${longPress()}"
       >
         ${
           !stateObj
-            ? html`<div class="not-found">Entity not available: ${
-                this._config.entity
-              }</div>`
-            : html`
-              <paper-button>
-                <div>
-                  <ha-icon
-                    data-domain="${computeStateDomain(stateObj)}"
-                    data-state="${stateObj.state}"
-                    .icon="${this._config.icon || stateIcon(stateObj)}"
-                    style="${styleMap({
-                      filter: this._computeBrightness(stateObj),
-                      color: this._computeColor(stateObj),
-                    })}"
-                  ></ha-icon>
-                  <span>
-                    ${this._config.name || computeStateName(stateObj)}
-                  </span>
+            ? html`
+                <div class="not-found">
+                  Entity not available: ${this._config.entity}
                 </div>
-              </paper-button>
-            `
+              `
+            : html`
+                <paper-button>
+                  <div>
+                    <ha-icon
+                      data-domain="${computeStateDomain(stateObj)}"
+                      data-state="${stateObj.state}"
+                      .icon="${this._config.icon || stateIcon(stateObj)}"
+                      style="${styleMap({
+                        filter: this._computeBrightness(stateObj),
+                        color: this._computeColor(stateObj),
+                      })}"
+                    ></ha-icon>
+                    <span>
+                      ${this._config.name || computeStateName(stateObj)}
+                    </span>
+                  </div>
+                </paper-button>
+              `
         }
       </ha-card>
     `;
@@ -125,41 +125,41 @@ class HuiEntityButtonCard extends hassLocalizeLitMixin(LitElement)
 
   private renderStyle(): TemplateResult {
     return html`
-    <style>
-      ha-icon {
-        display: flex;
-        margin: auto;
-        width: 40%;
-        height: 40%;
-        color: var(--paper-item-icon-color, #44739e);
-      }
-      ha-icon[data-domain=light][data-state=on],
-      ha-icon[data-domain=switch][data-state=on],
-      ha-icon[data-domain=binary_sensor][data-state=on],
-      ha-icon[data-domain=fan][data-state=on],
-      ha-icon[data-domain=sun][data-state=above_horizon] {
-        color: var(--paper-item-icon-active-color, #FDD835);
-      }
-      ha-icon[data-state=unavailable] {
-        color: var(--state-icon-unavailable-color);
-      }
-      state-badge {
-        display: flex;
-        margin: auto;
-        width:40%;
-        height:40%;
-      }
-      paper-button {
-        display: flex;
-        margin: auto;
-        text-align: center;
-      }
-      .not-found {
-        flex: 1;
-        background-color: yellow;
-        padding: 8px;
-      }
-    </style>
+      <style>
+        ha-icon {
+          display: flex;
+          margin: auto;
+          width: 40%;
+          height: 40%;
+          color: var(--paper-item-icon-color, #44739e);
+        }
+        ha-icon[data-domain="light"][data-state="on"],
+        ha-icon[data-domain="switch"][data-state="on"],
+        ha-icon[data-domain="binary_sensor"][data-state="on"],
+        ha-icon[data-domain="fan"][data-state="on"],
+        ha-icon[data-domain="sun"][data-state="above_horizon"] {
+          color: var(--paper-item-icon-active-color, #fdd835);
+        }
+        ha-icon[data-state="unavailable"] {
+          color: var(--state-icon-unavailable-color);
+        }
+        state-badge {
+          display: flex;
+          margin: auto;
+          width: 40%;
+          height: 40%;
+        }
+        paper-button {
+          display: flex;
+          margin: auto;
+          text-align: center;
+        }
+        .not-found {
+          flex: 1;
+          background-color: yellow;
+          padding: 8px;
+        }
+      </style>
     `;
   }
 
@@ -182,34 +182,12 @@ class HuiEntityButtonCard extends hassLocalizeLitMixin(LitElement)
     return `hsl(${hue}, 100%, ${100 - sat / 2}%)`;
   }
 
-  private handleClick(hold: boolean): void {
-    const config = this._config;
-    if (!config) {
-      return;
-    }
-    const stateObj = this.hass!.states[config.entity];
-    if (!stateObj) {
-      return;
-    }
-    const entityId = stateObj.entity_id;
-    const action = hold ? config.hold_action : config.tap_action || "more-info";
-    switch (action) {
-      case "toggle":
-        toggleEntity(this.hass, entityId);
-        break;
-      case "call-service":
-        if (!config.service) {
-          return;
-        }
-        const [domain, service] = config.service.split(".", 2);
-        const serviceData = { entity_id: entityId, ...config.service_data };
-        this.hass!.callService(domain, service, serviceData);
-        break;
-      case "more-info":
-        fireEvent(this, "hass-more-info", { entityId });
-        break;
-      default:
-    }
+  private _handleTap() {
+    handleClick(this, this.hass!, this._config!, false);
+  }
+
+  private _handleHold() {
+    handleClick(this, this.hass!, this._config!, true);
   }
 }
 

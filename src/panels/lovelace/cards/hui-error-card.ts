@@ -1,11 +1,12 @@
 import { html, LitElement } from "@polymer/lit-element";
 
-import { LovelaceCard, LovelaceConfig } from "../types";
+import { LovelaceCard } from "../types";
+import { LovelaceCardConfig } from "../../../data/lovelace";
 import { TemplateResult } from "lit-html";
 
-interface Config extends LovelaceConfig {
+interface Config extends LovelaceCardConfig {
   error: string;
-  origConfig: LovelaceConfig;
+  origConfig: LovelaceCardConfig;
 }
 
 class HuiErrorCard extends LitElement implements LovelaceCard {
@@ -31,8 +32,7 @@ class HuiErrorCard extends LitElement implements LovelaceCard {
     }
 
     return html`
-      ${this.renderStyle()}
-      ${this._config.error}
+      ${this.renderStyle()} ${this._config.error}
       <pre>${this._toStr(this._config.origConfig)}</pre>
     `;
   }
@@ -51,7 +51,7 @@ class HuiErrorCard extends LitElement implements LovelaceCard {
     `;
   }
 
-  private _toStr(config: LovelaceConfig): string {
+  private _toStr(config: LovelaceCardConfig): string {
     return JSON.stringify(config, null, 2);
   }
 }

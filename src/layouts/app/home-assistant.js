@@ -4,11 +4,13 @@ import "@polymer/iron-flex-layout/iron-flex-layout-classes";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 import { afterNextRender } from "@polymer/polymer/lib/utils/render-status";
+import { html as litHtml, LitElement } from "@polymer/lit-element";
 
 import "../home-assistant-main";
 import "../ha-init-page";
 import "../../resources/ha-style";
 import registerServiceWorker from "../../util/register-service-worker";
+import { DEFAULT_PANEL } from "../../common/const";
 
 import HassBaseMixin from "./hass-base-mixin";
 import AuthMixin from "./auth-mixin";
@@ -16,10 +18,12 @@ import TranslationsMixin from "./translations-mixin";
 import ThemesMixin from "./themes-mixin";
 import MoreInfoMixin from "./more-info-mixin";
 import SidebarMixin from "./sidebar-mixin";
-import DialogManagerMixin from "./dialog-manager-mixin";
+import { dialogManagerMixin } from "./dialog-manager-mixin";
 import ConnectionMixin from "./connection-mixin";
 import NotificationMixin from "./notification-mixin";
 import DisconnectToastMixin from "./disconnect-toast-mixin";
+
+LitElement.prototype.html = litHtml;
 
 const ext = (baseClass, mixins) =>
   mixins.reduceRight((base, mixin) => mixin(base), baseClass);
@@ -33,28 +37,28 @@ class HomeAssistant extends ext(PolymerElement, [
   DisconnectToastMixin,
   ConnectionMixin,
   NotificationMixin,
-  DialogManagerMixin,
+  dialogManagerMixin,
   HassBaseMixin,
 ]) {
   static get template() {
     return html`
-    <app-location route="{{route}}"></app-location>
-    <app-route
-      route="{{route}}"
-      pattern="/:panel"
-      data="{{routeData}}"
-    ></app-route>
-    <template is="dom-if" if="[[showMain]]" restamp>
-      <home-assistant-main
-        hass="[[hass]]"
+      <app-location route="{{route}}"></app-location>
+      <app-route
         route="{{route}}"
-      ></home-assistant-main>
-    </template>
+        pattern="/:panel"
+        data="{{routeData}}"
+      ></app-route>
+      <template is="dom-if" if="[[showMain]]" restamp>
+        <home-assistant-main
+          hass="[[hass]]"
+          route="{{route}}"
+        ></home-assistant-main>
+      </template>
 
-    <template is="dom-if" if="[[!showMain]]" restamp>
-      <ha-init-page error='[[_error]]'></ha-init-page>
-    </template>
-`;
+      <template is="dom-if" if="[[!showMain]]" restamp>
+        <ha-init-page error="[[_error]]"></ha-init-page>
+      </template>
+    `;
   }
 
   static get properties() {
@@ -91,7 +95,7 @@ class HomeAssistant extends ext(PolymerElement, [
   }
 
   computePanelUrl(routeData) {
-    return (routeData && routeData.panel) || "states";
+    return (routeData && routeData.panel) || DEFAULT_PANEL;
   }
 
   panelUrlChanged(newPanelUrl) {

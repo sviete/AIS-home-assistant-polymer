@@ -45,8 +45,8 @@
                 "on": "włączony"
             },
             "moisture": {
-                "off": "sucho",
-                "on": "wilgotno"
+                "off": "brak wilgoci",
+                "on": "wilgoć"
             },
             "gas": {
                 "off": "brak",
@@ -144,7 +144,8 @@
             "performance": "wydajność",
             "high_demand": "duży rozbiór",
             "heat_pump": "pompa ciepła",
-            "gas": "gaz"
+            "gas": "gaz",
+            "manual": "manualnie"
         },
         "configurator": {
             "configure": "Skonfiguruj",
@@ -347,18 +348,18 @@
                     "description": "Dostosuj swoje encje"
                 },
                 "automation": {
-                    "caption": "Automatyzacja",
-                    "description": "Twórz i edytuj automatyzacje",
+                    "caption": "Reguły automatyzacji",
+                    "description": "Twórz i edytuj reguły automatyzacji",
                     "picker": {
                         "header": "Edytor automatyzacji",
-                        "introduction": "Edytor automatyzacji pozwala tworzyć i edytować automatyzację. Przeczytaj [instrukcje](https:\/\/home-assistant.io\/docs\/automation\/editor\/), aby upewnić się, że poprawnie skonfigurowałeś Home Assistant'a.",
-                        "pick_automation": "Wybierz automatyzację do edycji",
-                        "no_automations": "Nie znaleziono żadnych edytowalnych automatyzacji",
-                        "add_automation": "Dodaj automatyzację"
+                        "introduction": "Edytor automatyzacji pozwala tworzyć i edytować reguły automatyzacji. Przeczytaj [instrukcje](https:\/\/home-assistant.io\/docs\/automation\/editor\/), aby upewnić się, że poprawnie skonfigurowałeś Home Assistant'a.",
+                        "pick_automation": "Wybierz regułę automatyzacji do edycji",
+                        "no_automations": "Nie znaleziono żadnych edytowalnych reguł automatyzacji",
+                        "add_automation": "Dodaj regułę automatyzacji"
                     },
                     "editor": {
-                        "introduction": "Użyj automatyzacji, aby utrzymać swój dom przy życiu",
-                        "default_name": "Nowa automatyzacja",
+                        "introduction": "Użyj reguł automatyzacji, aby utrzymać swój dom przy życiu",
+                        "default_name": "Nowa reguła automatyzacji",
                         "save": "Zapisz",
                         "unsaved_confirm": "Masz niezapisane zmiany. Jesteś pewny, że chcesz wyjść?",
                         "alias": "Nazwa",
@@ -386,8 +387,8 @@
                                 "homeassistant": {
                                     "label": "Home Assistant",
                                     "event": "Zdarzenie:",
-                                    "start": "Początek",
-                                    "shutdown": "Zamknięcie systemu"
+                                    "start": "uruchomienie",
+                                    "shutdown": "zakończenie"
                                 },
                                 "mqtt": {
                                     "label": "MQTT",
@@ -403,8 +404,8 @@
                                 "sun": {
                                     "label": "Słońce",
                                     "event": "Zdarzenie:",
-                                    "sunrise": "Wschód słońca",
-                                    "sunset": "Zachód słońca",
+                                    "sunrise": "wschód słońca",
+                                    "sunset": "zachód słońca",
                                     "offset": "Przesunięcie (opcjonalnie)"
                                 },
                                 "template": {
@@ -451,8 +452,8 @@
                                     "after": "Po:",
                                     "before_offset": "Przed przesunięciem (opcjonalnie)",
                                     "after_offset": "Po przesunięciu (opcjonalnie)",
-                                    "sunrise": "Wschód słońca",
-                                    "sunset": "Zachód słońca"
+                                    "sunrise": "wschód słońca",
+                                    "sunset": "zachód słońca"
                                 },
                                 "template": {
                                     "label": "Szablon",
@@ -515,7 +516,7 @@
                 },
                 "users": {
                     "caption": "Użytkownicy",
-                    "description": "Zarządzanie użytkownikami",
+                    "description": "Zarządzaj użytkownikami",
                     "picker": {
                         "title": "Użytkownicy"
                     },
@@ -712,6 +713,47 @@
                         "required_fields": "Wypełnij wszystkie wymagane pola"
                     }
                 }
+            },
+            "lovelace": {
+                "cards": {
+                    "shopping-list": {
+                        "checked_items": "Pozycje zaznaczone",
+                        "clear_items": "Wyczyść zaznaczone pozycje",
+                        "add_item": "Dodaj pozycję"
+                    }
+                },
+                "editor": {
+                    "edit_card": {
+                        "header": "Konfiguracja karty",
+                        "save": "Zapisz",
+                        "toggle_editor": "Przełącz edytor",
+                        "pick_card": "Wybierz kartę, którą chcesz dodać.",
+                        "add": "Dodaj kartę",
+                        "edit": "Edytuj",
+                        "delete": "Usuń"
+                    },
+                    "migrate": {
+                        "header": "Konfiguracja niekompatybilna",
+                        "para_no_id": "Ten element nie ma ID. Dodaj ID do tego elementu w \"ui-lovelace.yaml\".",
+                        "para_migrate": "Home Assistant może automatycznie dodać ID do wszystkich twoich kart i widoków, po kliknięciu przycisku \"Migracja konfiguracji\".",
+                        "migrate": "Migracja konfiguracji"
+                    },
+                    "header": "Edycja interfejsu użytkownika",
+                    "configure_ui": "Konfiguracja interfejsu użytkownika",
+                    "edit_view": {
+                        "header": "Konfiguracja widoku",
+                        "add": "Dodaj widok",
+                        "edit": "Edytuj widok",
+                        "delete": "Usuń widok"
+                    },
+                    "save_config": {
+                        "header": "Przejmij kontrolę nad interfejsem użytkownika Lovelace",
+                        "para": "Domyślnie Home Assistant będzie zarządzać interfejsem użytkownika, aktualizując go, gdy pojawią się nowe encje lub komponenty Lovelace. Jeśli przejmiesz kontrolę, Home Assistant nie będzie już automatycznie wprowadzać dla ciebie zmian.",
+                        "para_sure": "Czy na pewno chcesz przejąć kontrolę nad interfejsem użytkownika?",
+                        "cancel": "Nieważne",
+                        "save": "Przejmuję kontrolę"
+                    }
+                }
             }
         },
         "sidebar": {
@@ -720,7 +762,8 @@
         },
         "common": {
             "loading": "Ładowanie",
-            "cancel": "Anuluj"
+            "cancel": "Anuluj",
+            "save": "Zapisz"
         },
         "duration": {
             "day": "{count} {count, plural,\n  one {dzień}\n  other {dni}\n}",
@@ -745,7 +788,7 @@
                 "activate": "Aktywuj"
             },
             "script": {
-                "execute": "Wykonaj"
+                "execute": "Uruchom"
             },
             "weather": {
                 "attributes": {
@@ -779,8 +822,10 @@
                 "code": "Kod",
                 "clear_code": "Wyczyść",
                 "disarm": "Rozbrojony",
-                "arm_home": "Uzbrojony (w domu)",
-                "arm_away": "Uzbrojony (nieobecny)"
+                "arm_home": "uzbrojony (w domu)",
+                "arm_away": "uzbrojony (nieobecny)",
+                "arm_night": "uzbrojony (noc)",
+                "armed_custom_bypass": "uzbrojony (częściowo)"
             },
             "automation": {
                 "last_triggered": "Ostatnie uruchomienie",

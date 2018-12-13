@@ -2,10 +2,12 @@ import { html, LitElement, PropertyDeclarations } from "@polymer/lit-element";
 
 import "../../../components/ha-card";
 
-import { LovelaceCard, LovelaceConfig } from "../types";
+import { LovelaceCard } from "../types";
+import { LovelaceCardConfig } from "../../../data/lovelace";
 import { TemplateResult } from "lit-html";
+import { styleMap } from "lit-html/directives/styleMap";
 
-interface Config extends LovelaceConfig {
+interface Config extends LovelaceCardConfig {
   aspect_ratio?: string;
   title?: string;
   url: string;
@@ -37,10 +39,17 @@ export class HuiIframeCard extends LitElement implements LovelaceCard {
       return html``;
     }
 
+    const aspectRatio = this._config.aspect_ratio || "50%";
+
     return html`
       ${this.renderStyle()}
       <ha-card .header="${this._config.title}">
-        <div id="root">
+        <div
+          id="root"
+          style="${styleMap({
+            "padding-top": aspectRatio,
+          })}"
+        >
           <iframe src="${this._config.url}"></iframe>
         </div>
       </ha-card>

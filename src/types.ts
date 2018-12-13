@@ -6,7 +6,19 @@ import {
   MessageBase,
   HassEntityBase,
   HassEntityAttributeBase,
+  HassServices,
 } from "home-assistant-js-websocket";
+
+declare global {
+  var __DEV__: boolean;
+  var __BUILD__: "latest" | "es5";
+  var __VERSION__: string;
+}
+
+export interface WebhookError {
+  code: number;
+  message: string;
+}
 
 export interface Credential {
   auth_provider_type: string;
@@ -34,6 +46,11 @@ export interface Theme {
   "accent-color": string;
 }
 
+export interface Themes {
+  default_theme: string;
+  themes: { [key: string]: Theme };
+}
+
 export interface Panel {
   component_name: string;
   config?: { [key: string]: any };
@@ -42,9 +59,22 @@ export interface Panel {
   url_path: string;
 }
 
+export interface Panels {
+  [name: string]: Panel;
+}
+
 export interface Translation {
   nativeName: string;
+  isRTL: boolean;
   fingerprints: { [fragment: string]: string };
+}
+
+export interface Notification {
+  notification_id: string;
+  message: string;
+  title: string;
+  status: "read" | "unread";
+  created_at: string;
 }
 
 export interface HomeAssistant {
@@ -52,12 +82,10 @@ export interface HomeAssistant {
   connection: Connection;
   connected: boolean;
   states: HassEntities;
+  services: HassServices;
   config: HassConfig;
-  themes: {
-    default_theme: string;
-    themes: { [key: string]: Theme };
-  };
-  panels: { [key: string]: Panel };
+  themes: Themes;
+  panels: Panels;
   panelUrl: string;
   language: string;
   resources: { [key: string]: any };
@@ -121,3 +149,21 @@ export type LightEntity = HassEntityBase & {
     hs_color: number[];
   };
 };
+
+export type GroupEntity = HassEntityBase & {
+  attributes: HassEntityAttributeBase & {
+    entity_id: string[];
+    order: number;
+    auto?: boolean;
+    view?: boolean;
+    control?: "hidden";
+  };
+};
+
+export interface PanelInfo<T = unknown> {
+  component_name: string;
+  icon?: string;
+  title?: string;
+  url_path: string;
+  config: T;
+}

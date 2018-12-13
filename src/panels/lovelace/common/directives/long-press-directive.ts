@@ -19,6 +19,8 @@ class LongPress extends HTMLElement implements LongPress {
   protected ripple: any;
   protected timer: number | undefined;
   protected held: boolean;
+  protected cooldownStart: boolean;
+  protected cooldownEnd: boolean;
 
   constructor() {
     super();
@@ -26,6 +28,8 @@ class LongPress extends HTMLElement implements LongPress {
     this.ripple = document.createElement("mwc-ripple");
     this.timer = undefined;
     this.held = false;
+    this.cooldownStart = false;
+    this.cooldownEnd = false;
   }
 
   public connectedCallback() {
@@ -41,7 +45,8 @@ class LongPress extends HTMLElement implements LongPress {
     this.ripple.primary = true;
 
     [
-      isTouch ? "touchcancel" : "mouseout",
+      "touchcancel",
+      "mouseout",
       "mouseup",
       "touchmove",
       "mousewheel",
@@ -53,6 +58,7 @@ class LongPress extends HTMLElement implements LongPress {
         () => {
           clearTimeout(this.timer);
           this.stopAnimation();
+          this.timer = undefined;
         },
         { passive: true }
       );
@@ -64,34 +70,68 @@ class LongPress extends HTMLElement implements LongPress {
       return;
     }
     element.longPress = true;
-    element.addEventListener(
-      isTouch ? "touchstart" : "mousedown",
-      (ev: Event) => {
-        this.held = false;
-        let x;
-        let y;
-        if ((ev as TouchEvent).touches) {
-          x = (ev as TouchEvent).touches[0].pageX;
-          y = (ev as TouchEvent).touches[0].pageY;
-        } else {
-          x = (ev as MouseEvent).pageX;
-          y = (ev as MouseEvent).pageY;
-        }
-        this.timer = window.setTimeout(() => {
-          this.startAnimation(x, y);
-          this.held = true;
-        }, this.holdTime);
-      },
-      { passive: true }
-    );
-    element.addEventListener("click", () => {
+
+    element.addEventListener("contextmenu", (ev: Event) => {
+      const e = ev || window.event;
+      if (e.preventDefault) {
+        e.preventDefault();
+      }
+      if (e.stopPropagation) {
+        e.stopPropagation();
+      }
+      e.cancelBubble = true;
+      e.returnValue = false;
+      return false;
+    });
+
+    const clickStart = (ev: Event) => {
+      if (this.cooldownStart) {
+        return;
+      }
+      this.held = false;
+      let x;
+      let y;
+      if ((ev as TouchEvent).touches) {
+        x = (ev as TouchEvent).touches[0].pageX;
+        y = (ev as TouchEvent).touches[0].pageY;
+      } else {
+        x = (ev as MouseEvent).pageX;
+        y = (ev as MouseEvent).pageY;
+      }
+      this.timer = window.setTimeout(() => {
+        this.startAnimation(x, y);
+        this.held = true;
+      }, this.holdTime);
+
+      this.cooldownStart = true;
+      window.setTimeout(() => (this.cooldownStart = false), 100);
+    };
+
+    const clickEnd = (ev: Event) => {
+      if (
+        this.cooldownEnd ||
+        (["touchend", "touchcancel"].includes(ev.type) &&
+          this.timer === undefined)
+      ) {
+        return;
+      }
+      clearTimeout(this.timer);
       this.stopAnimation();
+      this.timer = undefined;
       if (this.held) {
         element.dispatchEvent(new Event("ha-hold"));
       } else {
         element.dispatchEvent(new Event("ha-click"));
       }
-    });
+      this.cooldownEnd = true;
+      window.setTimeout(() => (this.cooldownEnd = false), 100);
+    };
+
+    element.addEventListener("touchstart", clickStart, { passive: true });
+    element.addEventListener("touchend", clickEnd);
+    element.addEventListener("touchcancel", clickEnd);
+    element.addEventListener("mousedown", clickStart, { passive: true });
+    element.addEventListener("click", clickEnd);
   }
 
   private startAnimation(x: number, y: number) {

@@ -4,6 +4,7 @@ import "@polymer/app-layout/app-scroll-effects/effects/waterfall";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
 import "@polymer/app-route/app-route";
 import "@polymer/paper-icon-button/paper-icon-button";
+import "@polymer/paper-button/paper-button";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-listbox/paper-listbox";
 import "@polymer/paper-menu-button/paper-menu-button";
@@ -16,6 +17,7 @@ import { PolymerElement } from "@polymer/polymer/polymer-element";
 import scrollToTarget from "../../common/dom/scroll-to-target";
 
 import EventsMixin from "../../mixins/events-mixin";
+import localizeMixin from "../../mixins/localize-mixin";
 import NavigateMixin from "../../mixins/navigate-mixin";
 
 import "../../layouts/ha-app-layout";
@@ -23,20 +25,22 @@ import "../../components/ha-start-voice-button";
 import "../../components/ha-icon";
 import { loadModule, loadCSS, loadJS } from "../../common/dom/load_resource";
 import { subscribeNotifications } from "../../data/ws-notifications";
+import { computeNotifications } from "./common/compute-notifications";
 import "./components/notifications/hui-notification-drawer";
 import "./components/notifications/hui-notifications-button";
 import "./hui-unused-entities";
 import "./hui-view";
 import debounce from "../../common/util/debounce";
-
 import createCardElement from "./common/create-card-element";
-import computeNotifications from "./common/compute-notifications";
+import { showEditViewDialog } from "./editor/view-editor/show-edit-view-dialog";
 
 // CSS and JS should only be imported once. Modules and HTML are safe.
 const CSS_CACHE = {};
 const JS_CACHE = {};
 
-class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
+class HUIRoot extends NavigateMixin(
+  EventsMixin(localizeMixin(PolymerElement))
+) {
   static get template() {
     return html`
     <style include='ha-style'>
@@ -54,8 +58,27 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
         --paper-tabs-selection-bar-color: var(--text-primary-color, #FFF);
         text-transform: uppercase;
       }
+      paper-tab.iron-selected .edit-view-icon{
+        display: inline-flex;
+      }
+      .edit-view-icon {
+        padding-left: 8px;
+        display: none;
+      }
+      #add-view {
+        position: absolute;
+        height: 44px;
+      }
+      #add-view ha-icon {
+        background-color: var(--accent-color);
+        border-radius: 5px;
+        margin-top: 4px;
+      }
       app-toolbar a {
         color: var(--text-primary-color, white);
+      }
+      paper-button.warning:not([disabled]) {
+        color: var(--google-red-500);
       }
       #view {
         min-height: calc(100vh - 112px);
@@ -101,9 +124,14 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
             >
               <paper-icon-button icon="hass:dots-vertical" slot="dropdown-trigger"></paper-icon-button>
               <paper-listbox on-iron-select="_deselect" slot="dropdown-content">
-                <paper-item on-click="_handleRefresh">Refresh</paper-item>
+                <template is='dom-if' if="[[_yamlMode]]">
+                  <paper-item on-click="_handleRefresh">Refresh</paper-item>
+                </template>
                 <paper-item on-click="_handleUnusedEntities">Unused entities</paper-item>
-                <paper-item on-click="_editModeEnable">Configure UI (alpha)</paper-item>
+                <paper-item on-click="_editModeEnable">[[localize("ui.panel.lovelace.editor.configure_ui")]]</paper-item>
+                <template is='dom-if' if="[[_storageMode]]">
+                  <paper-item on-click="_handleFullEditor">Raw config editor</paper-item>
+                </template>
                 <paper-item on-click="_handleHelp">Help</paper-item>
               </paper-listbox>
             </paper-menu-button>
@@ -115,11 +143,11 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
               icon='hass:close'
               on-click='_editModeDisable'
             ></paper-icon-button>
-            <div main-title>Edit UI</div>
+            <div main-title>[[localize("ui.panel.lovelace.editor.header")]]</div>
           </app-toolbar>
         </template>
 
-        <div sticky hidden$="[[_computeTabsHidden(config.views)]]">
+        <div sticky hidden$="[[_computeTabsHidden(config.views, _editMode)]]">
           <paper-tabs scrollable selected="[[_curView]]" on-iron-activate="_handleViewSelected">
             <template is="dom-repeat" items="[[config.views]]">
               <paper-tab>
@@ -129,12 +157,19 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
                 <template is="dom-if" if="[[!item.icon]]">
                   [[_computeTabTitle(item.title)]]
                 </template>
+                <template is='dom-if' if="[[_editMode]]">
+                 <ha-icon class="edit-view-icon" on-click="_editView" icon="hass:pencil"></ha-icon>
+                </template>
               </paper-tab>
+            </template>
+            <template is='dom-if' if="[[_editMode]]">
+              <paper-button id="add-view" on-click="_addView">
+                <ha-icon title=[[localize("ui.panel.lovelace.editor.edit_view.add")]] icon="hass:plus"></ha-icon>
+              </paper-button>
             </template>
           </paper-tabs>
         </div>
       </app-header>
-
       <div id='view' on-rebuild-view='_debouncedConfigChanged'></div>
     </app-header-layout>
     `;
@@ -144,50 +179,36 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
     return {
       narrow: Boolean,
       showMenu: Boolean,
-      hass: {
-        type: Object,
-        observer: "_hassChanged",
-      },
+      hass: { type: Object, observer: "_hassChanged" },
       config: {
         type: Object,
+        computed: "_computeConfig(lovelace)",
         observer: "_configChanged",
       },
-      columns: {
-        type: Number,
-        observer: "_columnsChanged",
-      },
-
-      _curView: {
-        type: Number,
-        value: 0,
-      },
-
-      route: {
-        type: Object,
-        observer: "_routeChanged",
-      },
-
-      notificationsOpen: {
-        type: Boolean,
-        value: false,
-      },
-
-      _persistentNotifications: {
-        type: Array,
-        value: [],
-      },
-
+      lovelace: { type: Object },
+      columns: { type: Number, observer: "_columnsChanged" },
+      _curView: { type: Number, value: 0 },
+      route: { type: Object, observer: "_routeChanged" },
+      notificationsOpen: { type: Boolean, value: false },
+      _persistentNotifications: { type: Array, value: [] },
       _notifications: {
         type: Array,
         computed: "_updateNotifications(hass.states, _persistentNotifications)",
       },
-
+      _yamlMode: {
+        type: Boolean,
+        computed: "_computeYamlMode(lovelace)",
+      },
+      _storageMode: {
+        type: Boolean,
+        computed: "_computeStorageMode(lovelace)",
+      },
       _editMode: {
         type: Boolean,
         value: false,
+        computed: "_computeEditMode(lovelace)",
         observer: "_editModeChanged",
       },
-
       routeData: Object,
     };
   }
@@ -227,12 +248,12 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
   _routeChanged(route) {
     const views = this.config && this.config.views;
     if (route.path === "" && route.prefix === "/lovelace" && views) {
-      this.navigate(`/lovelace/${views[0].id || 0}`, true);
+      this.navigate(`/lovelace/${views[0].path || 0}`, true);
     } else if (this.routeData.view) {
       const view = this.routeData.view;
       let index = 0;
       for (let i = 0; i < views.length; i++) {
-        if (views[i].id === view || i === parseInt(view)) {
+        if (views[i].path === view || i === parseInt(view)) {
           index = i;
           break;
         }
@@ -241,16 +262,16 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
     }
   }
 
-  _computeViewId(id, index) {
-    return id || index;
+  _computeViewPath(path, index) {
+    return path || index;
   }
 
   _computeTitle(config) {
     return config.title || "Home Assistant";
   }
 
-  _computeTabsHidden(views) {
-    return views.length < 2;
+  _computeTabsHidden(views, editMode) {
+    return views.length < 2 && !editMode;
   }
 
   _computeTabTitle(title) {
@@ -273,23 +294,56 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
     window.open("https://www.home-assistant.io/lovelace/", "_blank");
   }
 
+  _handleFullEditor() {
+    this.lovelace.enableFullEditMode();
+  }
+
   _editModeEnable() {
-    this._editMode = true;
+    if (this._yamlMode) {
+      window.alert("The edit UI is not available when in YAML mode.");
+      return;
+    }
+    this.lovelace.setEditMode(true);
+    if (this.config.views.length < 2) {
+      this.$.view.classList.remove("tabs-hidden");
+      this.fire("iron-resize");
+    }
   }
 
   _editModeDisable() {
-    this._editMode = false;
+    this.lovelace.setEditMode(false);
+    if (this.config.views.length < 2) {
+      this.$.view.classList.add("tabs-hidden");
+      this.fire("iron-resize");
+    }
   }
 
   _editModeChanged() {
     this._selectView(this._curView);
   }
 
+  _editView() {
+    showEditViewDialog(this, {
+      lovelace: this.lovelace,
+      viewIndex: this._curView,
+    });
+  }
+
+  _addView() {
+    showEditViewDialog(this, {
+      lovelace: this.lovelace,
+    });
+  }
+
   _handleViewSelected(ev) {
     const index = ev.detail.selected;
-    if (index !== this._curView) {
-      const id = this.config.views[index].id || index;
-      this.navigate(`/lovelace/${id}`);
+    this._navigateView(index);
+  }
+
+  _navigateView(viewIndex) {
+    if (viewIndex !== this._curView) {
+      const path = this.config.views[viewIndex].path || viewIndex;
+      this.navigate(`/lovelace/${path}`);
     }
     scrollToTarget(this, this.$.layout.header.scrollTarget);
   }
@@ -308,18 +362,22 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
 
     if (viewIndex === "unused") {
       view = document.createElement("hui-unused-entities");
-      view.config = this.config;
+      view.setConfig(this.config);
     } else {
       const viewConfig = this.config.views[this._curView];
+      if (!viewConfig) {
+        this._editModeEnable();
+        return;
+      }
       if (viewConfig.panel) {
         view = createCardElement(viewConfig.cards[0]);
         view.isPanel = true;
-        view.editMode = this._editMode;
       } else {
         view = document.createElement("hui-view");
+        view.lovelace = this.lovelace;
         view.config = viewConfig;
         view.columns = this.columns;
-        view.editMode = this._editMode;
+        view.index = viewIndex;
       }
       if (viewConfig.background) background = viewConfig.background;
     }
@@ -375,6 +433,22 @@ class HUIRoot extends NavigateMixin(EventsMixin(PolymerElement)) {
           console.warn("Unknown resource type specified: ${resource.type}");
       }
     });
+  }
+
+  _computeConfig(lovelace) {
+    return lovelace ? lovelace.config : null;
+  }
+
+  _computeYamlMode(lovelace) {
+    return lovelace ? lovelace.mode === "yaml" : false;
+  }
+
+  _computeStorageMode(lovelace) {
+    return lovelace ? lovelace.mode === "storage" : false;
+  }
+
+  _computeEditMode(lovelace) {
+    return lovelace ? lovelace.editMode : false;
   }
 }
 customElements.define("hui-root", HUIRoot);

@@ -144,7 +144,8 @@
             "performance": "Rendimiento",
             "high_demand": "Alta demanda",
             "heat_pump": "Bomba de calor",
-            "gas": "Gas"
+            "gas": "Gas",
+            "manual": "Manual"
         },
         "configurator": {
             "configure": "Configurar",
@@ -158,7 +159,7 @@
             "stopped": "Detenido"
         },
         "device_tracker": {
-            "home": "Casa",
+            "home": "En casa",
             "not_home": "Fuera de casa"
         },
         "fan": {
@@ -284,7 +285,7 @@
             "armed_custom_bypass": "Armada"
         },
         "device_tracker": {
-            "home": "En casa",
+            "home": "Casa",
             "not_home": "Fuera"
         }
     },
@@ -381,7 +382,7 @@
                                     "label": "Estado",
                                     "from": "De",
                                     "to": "A",
-                                    "for": "Por"
+                                    "for": "Durante"
                                 },
                                 "homeassistant": {
                                     "label": "Home Assistant",
@@ -548,7 +549,7 @@
                         "manuf": "por {manufacturer}",
                         "hub": "Conectado a través de",
                         "firmware": "Firmware: {version}",
-                        "device_unavailable": "entidad no disponible",
+                        "device_unavailable": "dispositivo no disponible",
                         "entity_unavailable": "entidad no disponible"
                     }
                 }
@@ -577,10 +578,10 @@
                     "header": "Actualizar tokens",
                     "description": "Cada token de actualización representa un acceso de sesión. Los tokens de actualización se eliminarán automáticamente cuando haga clic en Cerrar sesión. Los siguientes tokens de actualización están actualmente activos para su cuenta.",
                     "token_title": "Actualizar token para {clientId}",
-                    "created_at": "Creado en {date}",
+                    "created_at": "Creado el {date}",
                     "confirm_delete": "¿Está seguro de que desea eliminar el token de acceso para {name}?",
                     "delete_failed": "Error al eliminar el token de acceso.",
-                    "last_used": "Ultimo uso {fecha} desde {lugar}",
+                    "last_used": "Último uso el {date} desde {location}",
                     "not_used": "Nunca ha sido usado",
                     "current_token_tooltip": "No se puede eliminar el token actual"
                 },
@@ -588,23 +589,23 @@
                     "header": "Tokens de acceso de larga duración",
                     "description": "Crea tokens de acceso de larga duración para permitir que tus scripts interactúen con tu Home Assistant. Cada token será válido por 10 años desde la creación. Los siguientes tokens de acceso de larga duración están actualmente activos.",
                     "learn_auth_requests": "Aprenda a realizar solicitudes autenticadas.",
-                    "created_at": "Creado en {fecha}",
-                    "confirm_delete": "¿Está seguro de que desea eliminar el token de acceso para {nombre}?",
+                    "created_at": "Creado el {date}",
+                    "confirm_delete": "¿Está seguro de que desea eliminar el token de acceso para {name}?",
                     "delete_failed": "Error al eliminar el token de acceso.",
                     "create": "Crear Token",
                     "create_failed": "No se ha podido crear el token de acceso.",
                     "prompt_name": "¿Nombre?",
                     "prompt_copy_token": "Copie su token de acceso. No se volverá a mostrar.",
                     "empty_state": "Aún no tienes tokens de acceso de larga duración.",
-                    "last_used": "Ultimo uso {fecha} desde {lugar}",
+                    "last_used": "Último uso el {date} desde {location}",
                     "not_used": "Nunca ha sido usado"
                 },
-                "current_user": "Actualmente estás conectado como {fullName} .",
+                "current_user": "Has inciado sesión como {fullName} .",
                 "is_owner": "Eres propietario.",
                 "logout": "Cerrar sesión",
                 "change_password": {
                     "header": "Cambiar Contraseña",
-                    "current_password": "contraseña actual",
+                    "current_password": "Contraseña actual",
                     "new_password": "Nueva contraseña",
                     "confirm_new_password": "Confirmar nueva contraseña",
                     "error_required": "Obligatorio",
@@ -654,7 +655,7 @@
                                 "invalid_code": "Código de autenticación inválido"
                             },
                             "abort": {
-                                "login_expired": "La sesión expiró, por favor inicie sesión de nuevo."
+                                "login_expired": "La sesión ha caducado, por favor inicie sesión de nuevo."
                             }
                         },
                         "legacy_api_password": {
@@ -678,7 +679,7 @@
                             },
                             "abort": {
                                 "no_api_password_set": "No tienes una contraseña de API configurada.",
-                                "login_expired": "La sesión expiró, por favor inicie sesión de nuevo."
+                                "login_expired": "La sesión ha caducado, por favor inicie sesión de nuevo."
                             }
                         },
                         "trusted_networks": {
@@ -710,6 +711,28 @@
                     "create_account": "Crear una cuenta",
                     "error": {
                         "required_fields": "Complete todos los campos requeridos"
+                    }
+                }
+            },
+            "lovelace": {
+                "cards": {
+                    "shopping-list": {
+                        "checked_items": "Elementos marcados",
+                        "clear_items": "Borrar elementos marcados",
+                        "add_item": "Añadir artículo"
+                    }
+                },
+                "editor": {
+                    "edit_card": {
+                        "header": "Configuración de la tarjeta",
+                        "save": "Guardar",
+                        "toggle_editor": "Alternar editor"
+                    },
+                    "migrate": {
+                        "header": "Configuración incompatible",
+                        "para_no_id": "Este elemento no tiene un ID. Por favor agregue uno  este elemento en 'ui-lovelace.yaml'.",
+                        "para_migrate": "Home Assistant puede agregar ID a todas sus tarjetas y vistas automáticamente por usted presionando el botón 'Migrar configuración'.",
+                        "migrate": "Migrar configuración"
                     }
                 }
             }
@@ -780,7 +803,9 @@
                 "clear_code": "Limpiar",
                 "disarm": "Desarmar",
                 "arm_home": "Armar en casa",
-                "arm_away": "Armar fuera de casa"
+                "arm_away": "Armar fuera de casa",
+                "arm_night": "Armado nocturno",
+                "armed_custom_bypass": "Armada zona específica"
             },
             "automation": {
                 "last_triggered": "Última activación",
