@@ -8,17 +8,18 @@ import { TemplateResult } from "lit-html";
 
 import { fireEvent } from "../../../common/dom/fire_event";
 import { styleMap } from "lit-html/directives/styleMap";
-import { jQuery } from "../../../resources/jquery";
-import { roundSliderStyle } from "../../../resources/jquery.roundslider";
 import { HomeAssistant, LightEntity } from "../../../types";
 import { hassLocalizeLitMixin } from "../../../mixins/lit-localize-mixin";
-import { LovelaceCard, LovelaceConfig } from "../types";
+import { LovelaceCard } from "../types";
+import { LovelaceCardConfig } from "../../../data/lovelace";
 import { longPress } from "../common/directives/long-press-directive";
+import { hasConfigOrEntityChanged } from "../common/has-changed";
+import { loadRoundslider } from "../../../resources/jquery.roundslider.ondemand";
+import { toggleEntity } from "../common/entity/toggle-entity";
 
 import stateIcon from "../../../common/entity/state_icon";
 import computeStateName from "../../../common/entity/compute_state_name";
 import applyThemesOnElement from "../../../common/dom/apply_themes_on_element";
-import { hasConfigOrEntityChanged } from "../common/has-changed";
 
 import "../../../components/ha-card";
 import "../../../components/ha-icon";
@@ -37,7 +38,7 @@ const lightConfig = {
   showTooltip: false,
 };
 
-interface Config extends LovelaceConfig {
+interface Config extends LovelaceCardConfig {
   entity: string;
   name?: string;
   theme?: string;
@@ -48,11 +49,15 @@ export class HuiLightCard extends hassLocalizeLitMixin(LitElement)
   public hass?: HomeAssistant;
   private _config?: Config;
   private _brightnessTimout?: number;
+  private _roundSliderStyle?: TemplateResult;
+  private _jQuery?: any;
 
   static get properties(): PropertyDeclarations {
     return {
       hass: {},
       _config: {},
+      roundSliderStyle: {},
+      _jQuery: {},
     };
   }
 
@@ -98,14 +103,14 @@ export class HuiLightCard extends hassLocalizeLitMixin(LitElement)
                           color: this._computeColor(stateObj),
                         })
                       }"
-                      @ha-click="${() => this._handleClick(false)}"
-                      @ha-hold="${() => this._handleClick(true)}"
+                      @ha-click="${this._handleTap}"
+                      @ha-hold="${this._handleHold}"
                       .longPress="${longPress()}"
                     ></ha-icon>
                     <div
                       class="brightness"
-                      @ha-click="${() => this._handleClick(false)}"
-                      @ha-hold="${() => this._handleClick(true)}"
+                      @ha-click="${this._handleTap}"
+                      @ha-hold="${this._handleHold}"
                       .longPress="${longPress()}"
                     ></div>
                     <div class="name">
@@ -123,10 +128,21 @@ export class HuiLightCard extends hassLocalizeLitMixin(LitElement)
     return hasConfigOrEntityChanged(this, changedProps);
   }
 
-  protected firstUpdated(): void {
-    const brightness = this.hass!.states[this._config!.entity].attributes
-      .brightness;
-    jQuery("#light", this.shadowRoot).roundSlider({
+  protected async firstUpdated(): Promise<void> {
+    const loaded = await loadRoundslider();
+
+    this._roundSliderStyle = loaded.roundSliderStyle;
+    this._jQuery = loaded.jQuery;
+
+    const stateObj = this.hass!.states[this._config!.entity] as LightEntity;
+
+    if (!stateObj) {
+      return;
+    }
+
+    const brightness = stateObj.attributes.brightness || 0;
+
+    this._jQuery("#light", this.shadowRoot).roundSlider({
       ...lightConfig,
       change: (value) => this._setBrightness(value),
       drag: (value) => this._dragEvent(value),
@@ -138,13 +154,19 @@ export class HuiLightCard extends hassLocalizeLitMixin(LitElement)
   }
 
   protected updated(changedProps: PropertyValues): void {
-    if (!this._config || !this.hass) {
+    if (!this._config || !this.hass || !this._jQuery) {
       return;
     }
 
-    const attrs = this.hass!.states[this._config!.entity].attributes;
+    const stateObj = this.hass!.states[this._config!.entity];
 
-    jQuery("#light", this.shadowRoot).roundSlider({
+    if (!stateObj) {
+      return;
+    }
+
+    const attrs = stateObj.attributes;
+
+    this._jQuery("#light", this.shadowRoot).roundSlider({
       value: Math.round((attrs.brightness / 254) * 100) || 0,
     });
 
@@ -156,7 +178,7 @@ export class HuiLightCard extends hassLocalizeLitMixin(LitElement)
 
   private renderStyle(): TemplateResult {
     return html`
-      ${roundSliderStyle}
+      ${this._roundSliderStyle}
       <style>
         :host {
           display: block;
@@ -310,18 +332,13 @@ export class HuiLightCard extends hassLocalizeLitMixin(LitElement)
     return `hsl(${hue}, 100%, ${100 - sat / 2}%)`;
   }
 
-  private _handleClick(hold: boolean): void {
-    const entityId = this._config!.entity;
+  private _handleTap() {
+    toggleEntity(this.hass!, this._config!.entity!);
+  }
 
-    if (hold) {
-      fireEvent(this, "hass-more-info", {
-        entityId,
-      });
-      return;
-    }
-
-    this.hass!.callService("light", "toggle", {
-      entity_id: entityId,
+  private _handleHold() {
+    fireEvent(this, "hass-more-info", {
+      entityId: this._config!.entity,
     });
   }
 }
