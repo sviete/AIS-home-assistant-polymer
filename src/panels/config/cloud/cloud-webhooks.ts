@@ -79,6 +79,7 @@ export class CloudWebhooks extends LitElement {
   }
 
   protected updated(changedProps: PropertyValues) {
+    super.updated(changedProps);
     if (changedProps.has("cloudStatus") && this.cloudStatus) {
       this._cloudHooks = this.cloudStatus.prefs.cloudhooks || {};
     }
@@ -123,12 +124,12 @@ export class CloudWebhooks extends LitElement {
                   </div>
                 `
               : this._cloudHooks![entry.webhook_id]
-                ? html`
+              ? html`
                   <paper-button @click="${this._handleManageButton}"
                     >Manage</paper-button
                   >
                 `
-                : html`
+              : html`
                   <paper-toggle-button
                     @click="${this._enableWebhook}"
                   ></paper-toggle-button>

@@ -97,10 +97,12 @@ class HuiEntityButtonCard extends hassLocalizeLitMixin(LitElement)
                       data-domain="${computeStateDomain(stateObj)}"
                       data-state="${stateObj.state}"
                       .icon="${this._config.icon || stateIcon(stateObj)}"
-                      style="${styleMap({
-                        filter: this._computeBrightness(stateObj),
-                        color: this._computeColor(stateObj),
-                      })}"
+                      style="${
+                        styleMap({
+                          filter: this._computeBrightness(stateObj),
+                          color: this._computeColor(stateObj),
+                        })
+                      }"
                     ></ha-icon>
                     <span>
                       ${this._config.name || computeStateName(stateObj)}
@@ -114,6 +116,7 @@ class HuiEntityButtonCard extends hassLocalizeLitMixin(LitElement)
   }
 
   protected updated(changedProps: PropertyValues): void {
+    super.updated(changedProps);
     if (!this._config || !this.hass) {
       return;
     }

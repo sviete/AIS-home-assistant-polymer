@@ -51,10 +51,11 @@ export class CloudExposedEntities extends LitElement {
 
     return html`
       ${this.renderStyle()}
-      ${repeat(
-        states!,
-        (stateInfo) => stateInfo[1].entity_id,
-        (stateInfo) => html`
+      ${
+        repeat(
+          states!,
+          (stateInfo) => stateInfo[1].entity_id,
+          (stateInfo) => html`
             <span>
               <ha-state-icon
                 .stateObj="${stateInfo[1]}"
@@ -63,11 +64,13 @@ export class CloudExposedEntities extends LitElement {
               <paper-tooltip position="bottom">${stateInfo[0]}</paper-tooltip>
             </span>
           `
-      )}
+        )
+      }
     `;
   }
 
   protected updated(changedProperties: PropertyValues) {
+    super.updated(changedProperties);
     if (
       changedProperties.has("filter") &&
       changedProperties.get("filter") !== this.filter

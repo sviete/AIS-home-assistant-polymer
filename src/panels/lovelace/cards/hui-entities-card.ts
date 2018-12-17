@@ -88,7 +88,8 @@ class HuiEntitiesCard extends hassLocalizeLitMixin(LitElement)
     this._configEntities = entities;
   }
 
-  protected updated(_changedProperties: PropertyValues): void {
+  protected updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
     if (this._hass && this._config) {
       applyThemesOnElement(this, this._hass.themes, this._config.theme);
     }
@@ -115,9 +116,9 @@ class HuiEntitiesCard extends hassLocalizeLitMixin(LitElement)
                       : html`
                           <hui-entities-toggle
                             .hass="${this._hass}"
-                            .entities="${this._configEntities!.map(
-                              (conf) => conf.entity
-                            )}"
+                            .entities="${
+                              this._configEntities!.map((conf) => conf.entity)
+                            }"
                           ></hui-entities-toggle>
                         `
                   }
@@ -125,9 +126,11 @@ class HuiEntitiesCard extends hassLocalizeLitMixin(LitElement)
               `
         }
         <div id="states">
-          ${this._configEntities!.map((entityConf) =>
-            this.renderEntity(entityConf)
-          )}
+          ${
+            this._configEntities!.map((entityConf) =>
+              this.renderEntity(entityConf)
+            )
+          }
         </div>
       </ha-card>
     `;

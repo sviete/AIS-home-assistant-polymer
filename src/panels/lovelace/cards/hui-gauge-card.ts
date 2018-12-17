@@ -88,9 +88,11 @@ class HuiGaugeCard extends LitElement implements LovelaceCard {
                   <div class="gauge-data">
                     <div id="percent">
                       ${stateObj.state}
-                      ${this._config.unit ||
-                        stateObj.attributes.unit_of_measurement ||
-                        ""}
+                      ${
+                        this._config.unit ||
+                          stateObj.attributes.unit_of_measurement ||
+                          ""
+                      }
                     </div>
                     <div id="name">
                       ${this._config.name || computeStateName(stateObj)}
@@ -108,11 +110,8 @@ class HuiGaugeCard extends LitElement implements LovelaceCard {
   }
 
   protected updated(changedProps: PropertyValues): void {
-    if (
-      !this._config ||
-      !this.hass ||
-      !this.shadowRoot!.getElementById("gauge")
-    ) {
+    super.updated(changedProps);
+    if (!this._config || !this.hass) {
       return;
     }
     const stateObj = this.hass.states[this._config.entity];

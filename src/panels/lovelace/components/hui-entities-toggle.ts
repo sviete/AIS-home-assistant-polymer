@@ -25,6 +25,7 @@ class HuiEntitiesToggle extends LitElement {
   }
 
   public updated(changedProperties: PropertyValues) {
+    super.updated(changedProperties);
     if (changedProperties.has("entities")) {
       this._toggleEntities = this.entities!.filter(
         (entityId) =>
@@ -42,9 +43,11 @@ class HuiEntitiesToggle extends LitElement {
     return html`
       ${this.renderStyle()}
       <paper-toggle-button
-        ?checked="${this._toggleEntities!.some(
-          (entityId) => this.hass!.states[entityId].state === "on"
-        )}"
+        ?checked="${
+          this._toggleEntities!.some(
+            (entityId) => this.hass!.states[entityId].state === "on"
+          )
+        }"
         @change="${this._callService}"
       ></paper-toggle-button>
     `;

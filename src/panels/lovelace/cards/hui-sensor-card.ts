@@ -247,8 +247,10 @@ class HuiSensorCard extends LitElement implements LovelaceCard {
                 <div class="flex info">
                   <span id="value">${stateObj.state}</span>
                   <span id="measurement"
-                    >${this._config.unit ||
-                      stateObj.attributes.unit_of_measurement}</span
+                    >${
+                      this._config.unit ||
+                        stateObj.attributes.unit_of_measurement
+                    }</span
                   >
                 </div>
                 <div class="graph"><div>${graph}</div></div>
@@ -263,6 +265,7 @@ class HuiSensorCard extends LitElement implements LovelaceCard {
   }
 
   protected updated(changedProps: PropertyValues) {
+    super.updated(changedProps);
     if (!this._config || this._config.graph !== "line" || !this.hass) {
       return;
     }

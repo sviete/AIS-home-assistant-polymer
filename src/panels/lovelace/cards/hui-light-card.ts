@@ -36,6 +36,7 @@ const lightConfig = {
   lineCap: "round",
   handleSize: "+12",
   showTooltip: false,
+  animation: false,
 };
 
 interface Config extends LovelaceCardConfig {
@@ -97,10 +98,12 @@ export class HuiLightCard extends hassLocalizeLitMixin(LitElement)
                     <ha-icon
                       data-state="${stateObj.state}"
                       .icon="${stateIcon(stateObj)}"
-                      style="${styleMap({
-                        filter: this._computeBrightness(stateObj),
-                        color: this._computeColor(stateObj),
-                      })}"
+                      style="${
+                        styleMap({
+                          filter: this._computeBrightness(stateObj),
+                          color: this._computeColor(stateObj),
+                        })
+                      }"
                       @ha-click="${this._handleTap}"
                       @ha-hold="${this._handleHold}"
                       .longPress="${longPress()}"
@@ -152,6 +155,7 @@ export class HuiLightCard extends hassLocalizeLitMixin(LitElement)
   }
 
   protected updated(changedProps: PropertyValues): void {
+    super.updated(changedProps);
     if (!this._config || !this.hass || !this._jQuery) {
       return;
     }
