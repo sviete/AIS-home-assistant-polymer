@@ -16,6 +16,10 @@ import { LovelaceCardConfig, ActionConfig } from "../../../data/lovelace";
 import { LovelaceCard } from "../types";
 import { handleClick } from "../common/handle-click";
 import { UNAVAILABLE } from "../../../data/entity";
+import {
+  createErrorCardElement,
+  createErrorCardConfig,
+} from "./hui-error-card";
 
 interface Config extends LovelaceCardConfig {
   entity: string;
@@ -62,11 +66,25 @@ class HuiPictureEntityCard extends hassLocalizeLitMixin(LitElement)
   }
 
   protected render(): TemplateResult {
-    if (!this._config || !this.hass || !this.hass.states[this._config.entity]) {
+    if (!this._config || !this.hass) {
       return html``;
     }
 
     const stateObj = this.hass.states[this._config.entity];
+
+    if (!stateObj) {
+      return html`
+        ${
+          createErrorCardElement(
+            createErrorCardConfig(
+              `Entity not found: ${this._config.entity}`,
+              this._config
+            )
+          )
+        }
+      `;
+    }
+
     const name = this._config.name || computeStateName(stateObj);
     const state = computeStateDisplay(
       this.localize,
@@ -109,9 +127,11 @@ class HuiPictureEntityCard extends hassLocalizeLitMixin(LitElement)
           @ha-click="${this._handleTap}"
           @ha-hold="${this._handleHold}"
           .longPress="${longPress()}"
-          class="${classMap({
-            clickable: stateObj.state !== UNAVAILABLE,
-          })}"
+          class="${
+            classMap({
+              clickable: stateObj.state !== UNAVAILABLE,
+            })
+          }"
         ></hui-image>
         ${footer}
       </ha-card>

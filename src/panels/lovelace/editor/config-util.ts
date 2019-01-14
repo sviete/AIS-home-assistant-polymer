@@ -50,8 +50,8 @@ export const replaceCard = (
 
     views.push({
       ...viewConf,
-      cards: (viewConf.cards || []).map(
-        (origConf, ind) => (ind === cardIndex ? cardConfig : origConf)
+      cards: (viewConf.cards || []).map((origConf, ind) =>
+        ind === cardIndex ? cardConfig : origConf
       ),
     });
   });
@@ -100,24 +100,61 @@ export const swapCard = (
   const origView1 = config.views[path1[0]];
   const newView1 = {
     ...origView1,
-    cards: origView1.cards!.map(
-      (origCard, index) => (index === path1[1] ? card2 : origCard)
+    cards: origView1.cards!.map((origCard, index) =>
+      index === path1[1] ? card2 : origCard
     ),
   };
 
   const origView2 = path1[0] === path2[0] ? newView1 : config.views[path2[0]];
   const newView2 = {
     ...origView2,
-    cards: origView2.cards!.map(
-      (origCard, index) => (index === path2[1] ? card1 : origCard)
+    cards: origView2.cards!.map((origCard, index) =>
+      index === path2[1] ? card1 : origCard
     ),
   };
 
   return {
     ...config,
-    views: config.views.map(
-      (origView, index) =>
-        index === path2[0] ? newView2 : index === path1[0] ? newView1 : origView
+    views: config.views.map((origView, index) =>
+      index === path2[0] ? newView2 : index === path1[0] ? newView1 : origView
+    ),
+  };
+};
+
+export const moveCard = (
+  config: LovelaceConfig,
+  fromPath: [number, number],
+  toPath: [number]
+): LovelaceConfig => {
+  if (fromPath[0] === toPath[0]) {
+    throw new Error("You can not move a card to the view it is in.");
+  }
+  const fromView = config.views[fromPath[0]];
+  const card = fromView.cards![fromPath[1]];
+
+  const newView1 = {
+    ...fromView,
+    cards: (fromView.cards || []).filter(
+      (_origConf, ind) => ind !== fromPath[1]
+    ),
+  };
+
+  const toView = config.views[toPath[0]];
+  const cards = toView.cards ? [...toView.cards, card] : [card];
+
+  const newView2 = {
+    ...toView,
+    cards,
+  };
+
+  return {
+    ...config,
+    views: config.views.map((origView, index) =>
+      index === toPath[0]
+        ? newView2
+        : index === fromPath[0]
+        ? newView1
+        : origView
     ),
   };
 };
@@ -136,8 +173,8 @@ export const replaceView = (
   viewConfig: LovelaceViewConfig
 ): LovelaceConfig => ({
   ...config,
-  views: config.views.map(
-    (origView, index) => (index === viewIndex ? viewConfig : origView)
+  views: config.views.map((origView, index) =>
+    index === viewIndex ? viewConfig : origView
   ),
 });
 

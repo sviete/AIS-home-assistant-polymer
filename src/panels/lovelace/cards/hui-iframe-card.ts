@@ -2,18 +2,26 @@ import { html, LitElement, PropertyDeclarations } from "@polymer/lit-element";
 
 import "../../../components/ha-card";
 
-import { LovelaceCard } from "../types";
+import { LovelaceCard, LovelaceCardEditor } from "../types";
 import { LovelaceCardConfig } from "../../../data/lovelace";
 import { TemplateResult } from "lit-html";
 import { styleMap } from "lit-html/directives/styleMap";
 
-interface Config extends LovelaceCardConfig {
+export interface Config extends LovelaceCardConfig {
   aspect_ratio?: string;
   title?: string;
   url: string;
 }
 
 export class HuiIframeCard extends LitElement implements LovelaceCard {
+  public static async getConfigElement(): Promise<LovelaceCardEditor> {
+    await import(/* webpackChunkName: "hui-iframe-card-editor" */ "../editor/config-elements/hui-iframe-card-editor");
+    return document.createElement("hui-iframe-card-editor");
+  }
+  public static getStubConfig(): object {
+    return { url: "https://www.home-assistant.io", aspect_ratio: "50%" };
+  }
+
   protected _config?: Config;
 
   static get properties(): PropertyDeclarations {
@@ -46,9 +54,11 @@ export class HuiIframeCard extends LitElement implements LovelaceCard {
       <ha-card .header="${this._config.title}">
         <div
           id="root"
-          style="${styleMap({
-            "padding-top": aspectRatio,
-          })}"
+          style="${
+            styleMap({
+              "padding-top": aspectRatio,
+            })
+          }"
         >
           <iframe src="${this._config.url}"></iframe>
         </div>
