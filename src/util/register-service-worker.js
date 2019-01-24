@@ -1,5 +1,5 @@
 const serviceWorkerUrl =
-  __BUILD__ === "latest" ? "/service_worker.js" : "/service_worker_es5";
+  __BUILD__ === "latest" ? "/service_worker.js" : "/service_worker_es5.js";
 
 export default () => {
   if (!("serviceWorker" in navigator)) return;
@@ -11,7 +11,8 @@ export default () => {
         if (
           installingWorker.state === "installed" &&
           navigator.serviceWorker.controller &&
-          !__DEV__
+          !__DEV__ &&
+          !__DEMO__
         ) {
           // Notify users here of a new frontend being available.
           import(/* webpackChunkName: "show-new-frontend-toast" */ "./show-new-frontend-toast").then(

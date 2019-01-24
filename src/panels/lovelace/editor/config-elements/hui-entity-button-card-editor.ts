@@ -1,5 +1,9 @@
-import { html, LitElement, PropertyDeclarations } from "@polymer/lit-element";
-import { TemplateResult } from "lit-html";
+import {
+  html,
+  LitElement,
+  PropertyDeclarations,
+  TemplateResult,
+} from "lit-element";
 import "@polymer/paper-input/paper-input";
 
 import { struct } from "../../common/structs/struct";
@@ -25,8 +29,8 @@ const cardConfigStruct = struct({
   entity: "string?",
   name: "string?",
   icon: "string?",
-  tap_action: actionConfigStruct,
-  hold_action: actionConfigStruct,
+  tap_action: struct.optional(actionConfigStruct),
+  hold_action: struct.optional(actionConfigStruct),
   theme: "string?",
 });
 
@@ -68,7 +72,7 @@ export class HuiEntityButtonCardEditor extends hassLocalizeLitMixin(LitElement)
     return this._config!.theme || "default";
   }
 
-  protected render(): TemplateResult {
+  protected render(): TemplateResult | void {
     if (!this.hass) {
       return html``;
     }

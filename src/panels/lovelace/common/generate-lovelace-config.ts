@@ -14,6 +14,7 @@ import computeStateDomain from "../../../common/entity/compute_state_domain";
 import { LocalizeFunc } from "../../../mixins/localize-base-mixin";
 import computeDomain from "../../../common/entity/compute_domain";
 import { EntityRowConfig, WeblinkConfig } from "../entity-rows/types";
+import { EntitiesCardConfig } from "../cards/hui-entities-card";
 
 const DEFAULT_VIEW_ENTITY_ID = "group.default_view";
 const DOMAINS_BADGES = [
@@ -24,11 +25,15 @@ const DOMAINS_BADGES = [
   "sun",
   "timer",
 ];
-const HIDE_DOMAIN = new Set(["persistent_notification", "configurator"]);
+const HIDE_DOMAIN = new Set([
+  "persistent_notification",
+  "configurator",
+  "geo_location",
+]);
 
 const computeCards = (
-  title: string,
-  states: Array<[string, HassEntity]>
+  states: Array<[string, HassEntity]>,
+  entityCardOptions: Partial<EntitiesCardConfig>
 ): LovelaceCardConfig[] => {
   const cards: LovelaceCardConfig[] = [];
 
@@ -68,7 +73,7 @@ const computeCards = (
         type: "weather-forecast",
         entity: entityId,
       });
-    } else if (domain === "weblink") {
+    } else if (domain === "weblink" && stateObj) {
       const conf: WeblinkConfig = {
         type: "weblink",
         url: stateObj.state,
@@ -85,9 +90,9 @@ const computeCards = (
 
   if (entities.length > 0) {
     cards.unshift({
-      title,
       type: "entities",
       entities,
+      ...entityCardOptions,
     });
   }
 
@@ -152,10 +157,13 @@ const generateViewConfig = (
   splitted.groups.forEach((groupEntity) => {
     cards = cards.concat(
       computeCards(
-        computeStateName(groupEntity),
         groupEntity.attributes.entity_id.map(
           (entityId): [string, HassEntity] => [entityId, entities[entityId]]
-        )
+        ),
+        {
+          title: computeStateName(groupEntity),
+          show_header_toggle: groupEntity.attributes.control !== "hidden",
+        }
       )
     );
   });
@@ -165,21 +173,28 @@ const generateViewConfig = (
     .forEach((domain) => {
       cards = cards.concat(
         computeCards(
-          localize(`domain.${domain}`),
           ungroupedEntitites[domain].map(
             (entityId): [string, HassEntity] => [entityId, entities[entityId]]
-          )
+          ),
+          {
+            title: localize(`domain.${domain}`),
+          }
         )
       );
     });
 
-  return {
+  const view: LovelaceViewConfig = {
     path,
     title,
-    icon,
     badges,
     cards,
   };
+
+  if (icon) {
+    view.icon = icon;
+  }
+
+  return view;
 };
 
 export const generateLovelaceConfig = (
@@ -237,10 +252,26 @@ export const generateLovelaceConfig = (
       )
     );
 
+    // Add map of geo locations to default view if loaded
+    if (hass.config.components.includes("geo_location")) {
+      if (views[0] && views[0].cards) {
+        views[0].cards.push({
+          type: "map",
+          geo_location_sources: ["all"],
+        });
+      }
+    }
+
     // Make sure we don't have Home as title and first tab.
     if (views.length > 1 && title === "Home") {
       title = "Home Assistant";
     }
+  }
+
+  if (__DEMO__) {
+    views[0].cards!.unshift({
+      type: "custom:ha-demo-card",
+    });
   }
 
   return {

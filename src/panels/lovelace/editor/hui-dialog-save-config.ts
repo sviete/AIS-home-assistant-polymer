@@ -1,5 +1,11 @@
-import { html, LitElement, PropertyDeclarations } from "@polymer/lit-element";
-import { TemplateResult } from "lit-html";
+import {
+  html,
+  css,
+  LitElement,
+  PropertyDeclarations,
+  TemplateResult,
+  CSSResult,
+} from "lit-element";
 
 import "@polymer/paper-spinner/paper-spinner";
 import "@polymer/paper-dialog/paper-dialog";
@@ -7,6 +13,8 @@ import "@polymer/paper-dialog/paper-dialog";
 // tslint:disable-next-line
 import { PaperDialogElement } from "@polymer/paper-dialog/paper-dialog";
 import "@polymer/paper-button/paper-button";
+
+import { haStyleDialog } from "../../../resources/ha-style";
 
 import { HomeAssistant } from "../../../types";
 
@@ -41,9 +49,8 @@ export class HuiSaveConfig extends hassLocalizeLitMixin(LitElement) {
     return this.shadowRoot!.querySelector("paper-dialog")!;
   }
 
-  protected render(): TemplateResult {
+  protected render(): TemplateResult | void {
     return html`
-      ${this.renderStyle()}
       <paper-dialog with-backdrop>
         <h2>${this.localize("ui.panel.lovelace.editor.save_config.header")}</h2>
         <paper-dialog-scrollable>
@@ -75,27 +82,6 @@ export class HuiSaveConfig extends hassLocalizeLitMixin(LitElement) {
     `;
   }
 
-  private renderStyle(): TemplateResult {
-    return html`
-      <style>
-        paper-dialog {
-          width: 650px;
-        }
-        paper-spinner {
-          display: none;
-        }
-        paper-spinner[active] {
-          display: block;
-        }
-        paper-button paper-spinner {
-          width: 14px;
-          height: 14px;
-          margin-right: 20px;
-        }
-      </style>
-    `;
-  }
-
   private _closeDialog(): void {
     this._dialog.close();
   }
@@ -108,12 +94,47 @@ export class HuiSaveConfig extends hassLocalizeLitMixin(LitElement) {
     try {
       const lovelace = this._params!.lovelace;
       await lovelace.saveConfig(lovelace.config);
+      lovelace.setEditMode(true);
       this._saving = false;
       this._closeDialog();
     } catch (err) {
       alert(`Saving failed: ${err.message}`);
       this._saving = false;
     }
+  }
+
+  static get styles(): CSSResult[] {
+    return [
+      haStyleDialog,
+      css`
+        @media all and (max-width: 450px), all and (max-height: 500px) {
+          /* overrule the ha-style-dialog max-height on small screens */
+          paper-dialog {
+            max-height: 100%;
+            height: 100%;
+          }
+        }
+        @media all and (min-width: 660px) {
+          paper-dialog {
+            width: 650px;
+          }
+        }
+        paper-dialog {
+          max-width: 650px;
+        }
+        paper-spinner {
+          display: none;
+        }
+        paper-spinner[active] {
+          display: block;
+        }
+        paper-button paper-spinner {
+          width: 14px;
+          height: 14px;
+          margin-right: 20px;
+        }
+      `,
+    ];
   }
 }
 

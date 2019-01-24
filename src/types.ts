@@ -11,6 +11,7 @@ import {
 
 declare global {
   var __DEV__: boolean;
+  var __DEMO__: boolean;
   var __BUILD__: "latest" | "es5";
   var __VERSION__: string;
 }
@@ -53,9 +54,9 @@ export interface Themes {
 
 export interface Panel {
   component_name: string;
-  config?: { [key: string]: any };
-  icon: string;
-  title: string;
+  config: { [key: string]: any } | null;
+  icon: string | null;
+  title: string | null;
   url_path: string;
 }
 
@@ -85,6 +86,7 @@ export interface HomeAssistant {
   services: HassServices;
   config: HassConfig;
   themes: Themes;
+  selectedTheme?: string | null;
   panels: Panels;
   panelUrl: string;
   language: string;
@@ -166,4 +168,17 @@ export interface PanelInfo<T = unknown> {
   title?: string;
   url_path: string;
   config: T;
+}
+
+export interface Route {
+  prefix: string;
+  path: string;
+}
+
+export interface PanelElement extends HTMLElement {
+  hass?: HomeAssistant;
+  narrow?: boolean;
+  showMenu?: boolean;
+  route?: Route | null;
+  panel?: Panel;
 }

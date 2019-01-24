@@ -1,5 +1,11 @@
-import { html, LitElement, PropertyDeclarations } from "@polymer/lit-element";
-import { TemplateResult } from "lit-html";
+import {
+  html,
+  css,
+  LitElement,
+  PropertyDeclarations,
+  TemplateResult,
+  CSSResult,
+} from "lit-element";
 
 import "@polymer/paper-spinner/paper-spinner";
 import "@polymer/paper-tabs/paper-tab";
@@ -11,6 +17,9 @@ import "@polymer/paper-icon-button/paper-icon-button.js";
 import { PaperDialogElement } from "@polymer/paper-dialog/paper-dialog";
 import "@polymer/paper-button/paper-button";
 import "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
+
+import { haStyleDialog } from "../../../../resources/ha-style";
+
 import "../../components/hui-entity-editor";
 import "./hui-view-editor";
 import { HomeAssistant } from "../../../../types";
@@ -83,7 +92,7 @@ export class HuiEditView extends hassLocalizeLitMixin(LitElement) {
     return this.shadowRoot!.querySelector("paper-dialog")!;
   }
 
-  protected render(): TemplateResult {
+  protected render(): TemplateResult | void {
     let content;
     switch (this._curTab) {
       case "tab-settings":
@@ -111,7 +120,6 @@ export class HuiEditView extends hassLocalizeLitMixin(LitElement) {
         break;
     }
     return html`
-      ${this.renderStyle()}
       <paper-dialog with-backdrop>
         <h2>${this.localize("ui.panel.lovelace.editor.edit_view.header")}</h2>
         <paper-tabs
@@ -152,43 +160,6 @@ export class HuiEditView extends hassLocalizeLitMixin(LitElement) {
           >
         </div>
       </paper-dialog>
-    `;
-  }
-
-  private renderStyle(): TemplateResult {
-    return html`
-      <style>
-        paper-dialog {
-          width: 650px;
-        }
-        paper-tabs {
-          --paper-tabs-selection-bar-color: var(--primary-color);
-          text-transform: uppercase;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        paper-button paper-spinner {
-          width: 14px;
-          height: 14px;
-          margin-right: 20px;
-        }
-        paper-icon-button.delete {
-          margin-right: auto;
-          color: var(--secondary-text-color);
-        }
-        paper-spinner {
-          display: none;
-        }
-        paper-spinner[active] {
-          display: block;
-        }
-        .hidden {
-          display: none;
-        }
-        .error {
-          color: #ef5350;
-          border-bottom: 1px solid #ef5350;
-        }
-      </style>
     `;
   }
 
@@ -292,6 +263,57 @@ export class HuiEditView extends hassLocalizeLitMixin(LitElement) {
 
   private get _creatingView(): boolean {
     return this.viewIndex === undefined;
+  }
+
+  static get styles(): CSSResult[] {
+    return [
+      haStyleDialog,
+      css`
+        @media all and (max-width: 450px), all and (max-height: 500px) {
+          /* overrule the ha-style-dialog max-height on small screens */
+          paper-dialog {
+            max-height: 100%;
+            height: 100%;
+          }
+        }
+        @media all and (min-width: 660px) {
+          paper-dialog {
+            width: 650px;
+          }
+        }
+        paper-dialog {
+          max-width: 650px;
+        }
+        paper-tabs {
+          --paper-tabs-selection-bar-color: var(--primary-color);
+          text-transform: uppercase;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        paper-button paper-spinner {
+          width: 14px;
+          height: 14px;
+          margin-right: 20px;
+        }
+        paper-icon-button.delete {
+          margin-right: auto;
+          color: var(--secondary-text-color);
+        }
+        paper-spinner {
+          display: none;
+        }
+        paper-spinner[active] {
+          display: block;
+        }
+        .hidden {
+          display: none;
+        }
+        .error {
+          color: #ef5350;
+          border-bottom: 1px solid #ef5350;
+        }
+      </style>
+    `,
+    ];
   }
 }
 
