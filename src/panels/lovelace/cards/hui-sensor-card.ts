@@ -4,8 +4,8 @@ import {
   LitElement,
   PropertyDeclarations,
   PropertyValues,
-} from "@polymer/lit-element";
-import { TemplateResult } from "lit-html";
+  TemplateResult,
+} from "lit-element";
 import "@polymer/paper-spinner/paper-spinner";
 
 import { LovelaceCard, LovelaceCardEditor } from "../types";
@@ -192,7 +192,7 @@ class HuiSensorCard extends LitElement implements LovelaceCard {
     return 3;
   }
 
-  protected render(): TemplateResult {
+  protected render(): TemplateResult | void {
     if (!this._config || !this.hass) {
       return html``;
     }
@@ -201,7 +201,7 @@ class HuiSensorCard extends LitElement implements LovelaceCard {
 
     let graph;
 
-    if (this._config.graph === "line") {
+    if (stateObj && this._config.graph === "line") {
       if (!stateObj.attributes.unit_of_measurement) {
         graph = html`
           <div class="not-found">
@@ -308,7 +308,7 @@ class HuiSensorCard extends LitElement implements LovelaceCard {
       endTime
     );
 
-    if (stateHistory[0].length < 1) {
+    if (stateHistory.length < 1 || stateHistory[0].length < 1) {
       return;
     }
 

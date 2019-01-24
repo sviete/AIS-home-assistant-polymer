@@ -427,6 +427,11 @@
                                 "webhook": {
                                     "label": "Webhook",
                                     "webhook_id": "ID Webhook"
+                                },
+                                "time_pattern": {
+                                    "hours": "Ore",
+                                    "minutes": "Minuti",
+                                    "seconds": "Secondi"
                                 }
                             }
                         },
@@ -556,6 +561,10 @@
                         "device_unavailable": "dispositivo non disponibile",
                         "entity_unavailable": "entità non disponibile"
                     }
+                },
+                "zha": {
+                    "caption": "ZHA",
+                    "description": "Gestione rete Zigbee Home Automation"
                 }
             },
             "profile": {
@@ -926,6 +935,19 @@
                 "save": "Salva",
                 "name": "Nome",
                 "entity_id": "ID Entità"
+            },
+            "more_info_control": {
+                "script": {
+                    "last_action": "Ultima azione"
+                },
+                "sun": {
+                    "elevation": "Alba",
+                    "rising": "Tramonto",
+                    "setting": "Impostazione"
+                },
+                "updater": {
+                    "title": "Aggiorna istruzioni"
+                }
             }
         },
         "auth_store": {
@@ -975,7 +997,8 @@
         "updater": "Updater",
         "weblink": "Link Web",
         "zwave": "Z-Wave",
-        "vacuum": "Aspirapolvere"
+        "vacuum": "Aspirapolvere",
+        "zha": "ZHA"
     },
     "attribute": {
         "weather": {

@@ -3,8 +3,8 @@ import {
   LitElement,
   PropertyDeclarations,
   PropertyValues,
-} from "@polymer/lit-element";
-import { TemplateResult } from "lit-html";
+  TemplateResult,
+} from "lit-element";
 import { PaperToggleButtonElement } from "@polymer/paper-toggle-button/paper-toggle-button";
 
 import { DOMAINS_TOGGLE } from "../../../common/const";
@@ -35,7 +35,7 @@ class HuiEntitiesToggle extends LitElement {
     }
   }
 
-  protected render(): TemplateResult {
+  protected render(): TemplateResult | void {
     if (!this._toggleEntities) {
       return html``;
     }
@@ -44,9 +44,10 @@ class HuiEntitiesToggle extends LitElement {
       ${this.renderStyle()}
       <paper-toggle-button
         ?checked="${
-          this._toggleEntities!.some(
-            (entityId) => this.hass!.states[entityId].state === "on"
-          )
+          this._toggleEntities!.some((entityId) => {
+            const stateObj = this.hass!.states[entityId];
+            return stateObj && stateObj.state === "on";
+          })
         }"
         @change="${this._callService}"
       ></paper-toggle-button>

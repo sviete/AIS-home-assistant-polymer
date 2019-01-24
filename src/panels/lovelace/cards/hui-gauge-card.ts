@@ -3,9 +3,9 @@ import {
   LitElement,
   PropertyDeclarations,
   PropertyValues,
-} from "@polymer/lit-element";
-import { TemplateResult } from "lit-html";
-import { styleMap } from "lit-html/directives/styleMap";
+  TemplateResult,
+} from "lit-element";
+import { styleMap } from "lit-html/directives/style-map";
 
 import "../../../components/ha-card";
 import { LovelaceCardConfig } from "../../../data/lovelace";
@@ -56,6 +56,7 @@ class HuiGaugeCard extends LitElement implements LovelaceCard {
 
   public hass?: HomeAssistant;
   private _config?: Config;
+  private _updated?: boolean;
 
   static get properties(): PropertyDeclarations {
     return {
@@ -78,7 +79,12 @@ class HuiGaugeCard extends LitElement implements LovelaceCard {
     this._config = { min: 0, max: 100, theme: "default", ...config };
   }
 
-  protected render(): TemplateResult {
+  public connectedCallback(): void {
+    super.connectedCallback();
+    this._setBaseUnit();
+  }
+
+  protected render(): TemplateResult | void {
     if (!this._config || !this.hass) {
       return html``;
     }
@@ -148,12 +154,9 @@ class HuiGaugeCard extends LitElement implements LovelaceCard {
   }
 
   protected firstUpdated(): void {
-    (this.shadowRoot!.querySelector(
-      "ha-card"
-    )! as HTMLElement).style.setProperty(
-      "--base-unit",
-      this._computeBaseUnit()
-    );
+    this._updated = true;
+    this._setBaseUnit();
+    this.classList.add("init");
   }
 
   protected updated(changedProps: PropertyValues): void {
@@ -167,6 +170,19 @@ class HuiGaugeCard extends LitElement implements LovelaceCard {
     if (!oldHass || oldHass.themes !== this.hass.themes) {
       applyThemesOnElement(this, this.hass.themes, this._config.theme);
     }
+  }
+
+  private _setBaseUnit(): void {
+    if (!this.isConnected || !this._updated) {
+      return;
+    }
+    const baseUnit = this._computeBaseUnit();
+    if (baseUnit === "0px") {
+      return;
+    }
+    (this.shadowRoot!.querySelector(
+      "ha-card"
+    )! as HTMLElement).style.setProperty("--base-unit", baseUnit);
   }
 
   private _computeSeverity(numberValue: number): string {
@@ -268,6 +284,8 @@ class HuiGaugeCard extends LitElement implements LovelaceCard {
           border-radius: 0px 0px calc(var(--base-unit) * 2)
             calc(var(--base-unit) * 2);
           transform-origin: center top;
+        }
+        .init .gauge-c {
           transition: all 1.3s ease-in-out;
         }
         .gauge-data {
@@ -280,6 +298,8 @@ class HuiGaugeCard extends LitElement implements LovelaceCard {
           top: calc(var(--base-unit) * 1.2);
           margin-left: auto;
           margin-right: auto;
+        }
+        .init .gauge-data {
           transition: all 1s ease-out;
         }
         .gauge-data #percent {

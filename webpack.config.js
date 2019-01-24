@@ -35,7 +35,7 @@ const generateJSPage = (entrypoint, latestBuild) => {
 };
 
 function createConfig(isProdBuild, latestBuild) {
-  let buildPath = latestBuild ? "hass_frontend/" : "hass_frontend_es5/";
+  const buildPath = latestBuild ? "hass_frontend/" : "hass_frontend_es5/";
   const publicPath = latestBuild ? "/frontend_latest/" : "/frontend_es5/";
 
   const entry = {
@@ -104,6 +104,7 @@ function createConfig(isProdBuild, latestBuild) {
     plugins: [
       new webpack.DefinePlugin({
         __DEV__: JSON.stringify(!isProdBuild),
+        __DEMO__: false,
         __BUILD__: JSON.stringify(latestBuild ? "latest" : "es5"),
         __VERSION__: JSON.stringify(VERSION),
         __STATIC_PATH__: "/static/",
@@ -166,6 +167,23 @@ function createConfig(isProdBuild, latestBuild) {
             return zopfli.gzip(input, compressionOptions, callback);
           },
         }),
+      new HtmlWebpackPlugin({
+        inject: false,
+        template: "./src/html/index.html.template",
+        // Default templateParameterGenerator code
+        // https://github.com/jantimon/html-webpack-plugin/blob/master/index.js#L719
+        templateParameters: (compilation, assets, option) => ({
+          latestBuild,
+          compatibility: assets.chunks.compatibility.entry,
+          appJS: assets.chunks.app.entry,
+          coreJS: assets.chunks.core.entry,
+          customPanelJS: assets.chunks["custom-panel"].entry,
+          hassIconsJS: assets.chunks["hass-icons"].entry,
+        }),
+        filename: `index.html`,
+      }),
+      generateJSPage("onboarding", latestBuild),
+      generateJSPage("authorize", latestBuild),
       new WorkboxPlugin.InjectManifest({
         swSrc: "./src/entrypoints/service-worker-bootstrap.js",
         swDest: "service_worker.js",
@@ -193,23 +211,6 @@ function createConfig(isProdBuild, latestBuild) {
             "node_modules/@polymer/font-roboto-local/fonts/roboto/Roboto-Bold.ttf",
         },
       }),
-      new HtmlWebpackPlugin({
-        inject: false,
-        template: "./src/html/index.html.template",
-        // Default templateParameterGenerator code
-        // https://github.com/jantimon/html-webpack-plugin/blob/master/index.js#L719
-        templateParameters: (compilation, assets, option) => ({
-          latestBuild,
-          compatibility: assets.chunks.compatibility.entry,
-          appJS: assets.chunks.app.entry,
-          coreJS: assets.chunks.core.entry,
-          customPanelJS: assets.chunks["custom-panel"].entry,
-          hassIconsJS: assets.chunks["hass-icons"].entry,
-        }),
-        filename: `index.html`,
-      }),
-      generateJSPage("onboarding", latestBuild),
-      generateJSPage("authorize", latestBuild),
     ].filter(Boolean),
     output: {
       filename: ({ chunk }) => {

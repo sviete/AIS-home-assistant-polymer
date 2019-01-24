@@ -4,7 +4,7 @@ import "@polymer/iron-flex-layout/iron-flex-layout-classes";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 import { afterNextRender } from "@polymer/polymer/lib/utils/render-status";
-import { html as litHtml, LitElement } from "@polymer/lit-element";
+import { html as litHtml, LitElement } from "lit-element";
 
 import "../home-assistant-main";
 import "../ha-init-page";
@@ -28,7 +28,7 @@ LitElement.prototype.html = litHtml;
 const ext = (baseClass, mixins) =>
   mixins.reduceRight((base, mixin) => mixin(base), baseClass);
 
-class HomeAssistant extends ext(PolymerElement, [
+export class HomeAssistant extends ext(PolymerElement, [
   AuthMixin,
   ThemesMixin,
   TranslationsMixin,
@@ -42,16 +42,21 @@ class HomeAssistant extends ext(PolymerElement, [
 ]) {
   static get template() {
     return html`
-      <app-location route="{{route}}"></app-location>
-      <app-route
+      <app-location
         route="{{route}}"
+        use-hash-as-path="[[_useHashAsPath]]"
+      ></app-location>
+      <app-route
+        route="[[route]]"
         pattern="/:panel"
         data="{{routeData}}"
+        tail="{{subroute}}"
       ></app-route>
       <template is="dom-if" if="[[showMain]]" restamp>
         <home-assistant-main
           hass="[[hass]]"
-          route="{{route}}"
+          route="[[route]]"
+          tail="[[subroute]]"
         ></home-assistant-main>
       </template>
 
@@ -95,7 +100,15 @@ class HomeAssistant extends ext(PolymerElement, [
   }
 
   computePanelUrl(routeData) {
-    return (routeData && routeData.panel) || DEFAULT_PANEL;
+    return (
+      (routeData && routeData.panel) ||
+      localStorage.defaultPage ||
+      DEFAULT_PANEL
+    );
+  }
+
+  get _useHashAsPath() {
+    return __DEMO__;
   }
 
   panelUrlChanged(newPanelUrl) {

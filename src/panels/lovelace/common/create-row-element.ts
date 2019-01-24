@@ -1,3 +1,5 @@
+import deepClone from "deep-clone-simple";
+
 import { fireEvent } from "../../../common/dom/fire_event";
 
 import {
@@ -52,6 +54,9 @@ const DOMAIN_TO_ELEMENT_TYPE = {
   timer: "timer",
   switch: "toggle",
   vacuum: "toggle",
+  // Temporary. Once climate is rewritten,
+  // water heater should get it's own row.
+  water_heater: "climate",
 };
 const TIMEOUT = 2000;
 
@@ -61,7 +66,7 @@ const _createElement = (
 ): EntityRow | HuiErrorCard => {
   const element = document.createElement(tag) as EntityRow;
   try {
-    element.setConfig(config);
+    element.setConfig(deepClone(config));
   } catch (err) {
     // tslint:disable-next-line
     console.error(tag, err);
@@ -115,7 +120,7 @@ export const createRowElement = (
 
     customElements.whenDefined(tag).then(() => {
       clearTimeout(timer);
-      fireEvent(element, "rebuild-view");
+      fireEvent(element, "ll-rebuild");
     });
 
     return element;
