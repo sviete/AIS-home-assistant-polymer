@@ -48,9 +48,11 @@ function generateIconset(name, iconNames) {
     .map((name) => {
       const iconDef = loadIcon(name);
       if (!iconDef) {
-        throw new Error(`Unknown icon referenced: ${name}`);
+        console.log(name);
+        // throw new Error(`Unknown icon referenced: ${name}`);
+      } else {
+        return transformXMLtoPolymer(name, iconDef);
       }
-      return transformXMLtoPolymer(name, iconDef);
     })
     .join("");
   return `<ha-iconset-svg name="${name}" size="24"><svg><defs>${iconDefs}</defs></svg></ha-iconset-svg>`;
