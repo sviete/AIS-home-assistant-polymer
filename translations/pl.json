@@ -427,6 +427,20 @@
                                 "webhook": {
                                     "label": "Webhook",
                                     "webhook_id": "Identyfikator Webhook"
+                                },
+                                "time_pattern": {
+                                    "label": "Szablon czasu ",
+                                    "hours": "Godziny",
+                                    "minutes": "Minuty",
+                                    "seconds": "Sekundy"
+                                },
+                                "geo_location": {
+                                    "label": "Geolokalizacja",
+                                    "source": "Źródło",
+                                    "zone": "Strefa",
+                                    "event": "Zdarzenie:",
+                                    "enter": "wejście",
+                                    "leave": "wyjście"
                                 }
                             }
                         },
@@ -559,7 +573,18 @@
                 },
                 "zha": {
                     "caption": "ZHA",
-                    "description": "Zarządzanie siecią ZigBee Home Automation"
+                    "description": "Zarządzanie siecią ZigBee Home Automation",
+                    "services": {
+                        "reconfigure": "Ponowna konfiguracja urządzenia ZHA (uzdrawianie urządzenia). Użyj tej usługi, jeśli masz problemy z urządzeniem. Jeśli urządzenie jest zasilane bateryjnie, upewnij się, że nie jest uśpione i przyjmie polecenie rekonfiguracji."
+                    }
+                },
+                "area_registry": {
+                    "caption": "Rejestr lokalizacji",
+                    "description": "Przegląd wszystkich lokalizacji w twoim domu."
+                },
+                "entity_registry": {
+                    "caption": "Rejestr encji",
+                    "description": "Przegląd wszystkich znanych encji"
                 }
             },
             "profile": {
@@ -728,6 +753,11 @@
                         "checked_items": "Pozycje zaznaczone",
                         "clear_items": "Wyczyść zaznaczone pozycje",
                         "add_item": "Dodaj pozycję"
+                    },
+                    "empty_state": {
+                        "title": "Witaj w domu",
+                        "no_devices": "Ta strona pozwala kontrolować urządzenia, ale wygląda na to, że nie masz jeszcze żadnych skonfigurowanych. Przejdź na stronę integracji, aby rozpocząć.",
+                        "go_to_integrations_page": "Przejdź do strony integracji."
                     }
                 },
                 "editor": {
@@ -747,7 +777,6 @@
                         "migrate": "Migracja konfiguracji"
                     },
                     "header": "Edycja interfejsu użytkownika",
-                    "configure_ui": "Konfiguracja interfejsu użytkownika",
                     "edit_view": {
                         "header": "Konfiguracja widoku",
                         "add": "Dodaj widok",
@@ -761,6 +790,9 @@
                         "cancel": "Nieważne",
                         "save": "Przejmuję kontrolę"
                     }
+                },
+                "menu": {
+                    "configure_ui": "Konfiguracja interfejsu użytkownika"
                 }
             }
         },
@@ -993,7 +1025,10 @@
         "weblink": "Link",
         "zwave": "Z-Wave",
         "vacuum": "Odkurzacz",
-        "zha": "ZHA"
+        "zha": "ZHA",
+        "hassio": "Hass.io",
+        "homeassistant": "Home Assistant",
+        "lovelace": "Lovelace"
     },
     "attribute": {
         "weather": {

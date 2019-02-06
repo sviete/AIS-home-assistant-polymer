@@ -50,7 +50,7 @@ export class CloudGooglePref extends LitElement {
           <ul>
             <li>
               <a
-                href="https://assistant.google.com/services/a/uid/00000091fd5fb875"
+                href="https://assistant.google.com/services/a/uid/00000091fd5fb875?hl=en-US"
                 target="_blank"
               >
                 Activate the Home Assistant skill for Google Assistant
@@ -69,26 +69,24 @@ export class CloudGooglePref extends LitElement {
             >This integration requires a Google Assistant-enabled device like
             the Google Home or Android phone.</em
           >
-          ${
-            google_enabled
-              ? html`
-                  <div class="unlock">
-                    <div>Allow unlocking locks</div>
-                    <paper-toggle-button
-                      id="google_allow_unlock"
-                      .checked="${google_allow_unlock}"
-                      @change="${this._toggleChanged}"
-                    ></paper-toggle-button>
-                  </div>
-                  <p>Exposed entities:</p>
-                  <cloud-exposed-entities
-                    .hass="${this.hass}"
-                    .filter="${this.cloudStatus!.google_entities}"
-                    .supportedDomains="${this.cloudStatus!.google_domains}"
-                  ></cloud-exposed-entities>
-                `
-              : ""
-          }
+          ${google_enabled
+            ? html`
+                <div class="unlock">
+                  <div>Allow unlocking locks</div>
+                  <paper-toggle-button
+                    id="google_allow_unlock"
+                    .checked="${google_allow_unlock}"
+                    @change="${this._toggleChanged}"
+                  ></paper-toggle-button>
+                </div>
+                <p>Exposed entities:</p>
+                <cloud-exposed-entities
+                  .hass="${this.hass}"
+                  .filter="${this.cloudStatus!.google_entities}"
+                  .supportedDomains="${this.cloudStatus!.google_domains}"
+                ></cloud-exposed-entities>
+              `
+            : ""}
         </div>
         <div class="card-actions">
           <ha-call-api-button

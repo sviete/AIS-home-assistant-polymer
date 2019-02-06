@@ -301,7 +301,8 @@
                 "period": "Period"
             },
             "logbook": {
-                "showing_entries": "Showing entries for"
+                "showing_entries": "Showing entries for",
+                "period": "Period"
             },
             "mailbox": {
                 "empty": "You do not have any messages",
@@ -433,6 +434,14 @@
                                     "hours": "Hours",
                                     "minutes": "Minutes",
                                     "seconds": "Seconds"
+                                },
+                                "geo_location": {
+                                    "label": "Geolocation",
+                                    "source": "Source",
+                                    "zone": "Zone",
+                                    "event": "Event:",
+                                    "enter": "Enter",
+                                    "leave": "Leave"
                                 }
                             }
                         },
@@ -565,7 +574,18 @@
                 },
                 "zha": {
                     "caption": "ZHA",
-                    "description": "Zigbee Home Automation network management"
+                    "description": "Zigbee Home Automation network management",
+                    "services": {
+                        "reconfigure": "Reconfigure ZHA device (heal device). Use this if you are having issues with the device. If the device in question is a battery powered device please ensure it is awake and accepting commands when you use this service."
+                    }
+                },
+                "area_registry": {
+                    "caption": "Area Registry",
+                    "description": "Overview of all areas in your home."
+                },
+                "entity_registry": {
+                    "caption": "Entity Registry",
+                    "description": "Overview of all known entities."
                 }
             },
             "profile": {
@@ -734,6 +754,11 @@
                         "checked_items": "Checked items",
                         "clear_items": "Clear checked items",
                         "add_item": "Add item"
+                    },
+                    "empty_state": {
+                        "title": "Welcome Home",
+                        "no_devices": "This page allows you to control your devices, however it looks like you have no devices set up yet. Head to the integrations page to get started.",
+                        "go_to_integrations_page": "Go to the integrations page."
                     }
                 },
                 "editor": {
@@ -753,7 +778,6 @@
                         "migrate": "Migrate config"
                     },
                     "header": "Edit UI",
-                    "configure_ui": "Configure UI",
                     "edit_view": {
                         "header": "View Configuration",
                         "add": "Add view",
@@ -766,7 +790,16 @@
                         "para_sure": "Are you sure you want to take control of your user interface?",
                         "cancel": "Never mind",
                         "save": "Take control"
+                    },
+                    "menu": {
+                        "raw_editor": "Raw config editor"
                     }
+                },
+                "menu": {
+                    "configure_ui": "Configure UI",
+                    "unused_entities": "Unused entities",
+                    "help": "Help",
+                    "refresh": "Refresh"
                 }
             }
         },
@@ -934,7 +967,7 @@
         "dialogs": {
             "more_info_settings": {
                 "save": "Save",
-                "name": "Name",
+                "name": "Name Override",
                 "entity_id": "Entity ID"
             },
             "more_info_control": {
@@ -999,7 +1032,11 @@
         "weblink": "Weblink",
         "zwave": "Z-Wave",
         "vacuum": "Vacuum",
-        "zha": "ZHA"
+        "zha": "ZHA",
+        "hassio": "Hass.io",
+        "homeassistant": "Home Assistant",
+        "lovelace": "Lovelace",
+        "system_health": "System Health"
     },
     "attribute": {
         "weather": {

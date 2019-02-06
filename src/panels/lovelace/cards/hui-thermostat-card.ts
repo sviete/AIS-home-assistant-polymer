@@ -6,6 +6,7 @@ import {
   TemplateResult,
 } from "lit-element";
 import { classMap } from "lit-html/directives/class-map";
+import "@polymer/paper-icon-button/paper-icon-button";
 
 import "../../../components/ha-card";
 import "../../../components/ha-icon";
@@ -15,12 +16,11 @@ import computeStateName from "../../../common/entity/compute_state_name";
 
 import { hasConfigOrEntityChanged } from "../common/has-changed";
 import { HomeAssistant, ClimateEntity } from "../../../types";
-import { hassLocalizeLitMixin } from "../../../mixins/lit-localize-mixin";
 import { LovelaceCard, LovelaceCardEditor } from "../types";
 import { LovelaceCardConfig } from "../../../data/lovelace";
 import { loadRoundslider } from "../../../resources/jquery.roundslider.ondemand";
-import { afterNextRender } from "../../../common/util/render-status";
 import { UNIT_F } from "../../../common/const";
+import { fireEvent } from "../../../common/dom/fire_event";
 
 const thermostatConfig = {
   radius: 150,
@@ -51,8 +51,7 @@ export interface Config extends LovelaceCardConfig {
   name?: string;
 }
 
-export class HuiThermostatCard extends hassLocalizeLitMixin(LitElement)
-  implements LovelaceCard {
+export class HuiThermostatCard extends LitElement implements LovelaceCard {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
     await import(/* webpackChunkName: "hui-thermostat-card-editor" */ "../editor/config-elements/hui-thermostat-card-editor");
     return document.createElement("hui-thermostat-card-editor");
@@ -125,6 +124,11 @@ export class HuiThermostatCard extends hassLocalizeLitMixin(LitElement)
           small: !this._broadCard,
         })}">
         <div id="root">
+          <paper-icon-button
+            icon="hass:dots-vertical"
+            class="more-info"
+            @click="${this._handleMoreInfo}"
+          ></paper-icon-button>
           <div id="thermostat"></div>
           <div id="tooltip">
             <div class="title">${this._config.name ||
@@ -145,7 +149,7 @@ export class HuiThermostatCard extends hassLocalizeLitMixin(LitElement)
             </div>
             <div class="climate-info">
             <div id="set-temperature"></div>
-            <div class="current-mode">${this.localize(
+            <div class="current-mode">${this.hass!.localize(
               `state.climate.${stateObj.state}`
             )}</div>
             <div class="modes">
@@ -214,15 +218,20 @@ export class HuiThermostatCard extends hassLocalizeLitMixin(LitElement)
   private async _initialLoad(): Promise<void> {
     this._loaded = true;
 
-    const radius = this.clientWidth / 3.2;
+    await this.updateComplete;
+
+    let radius = this.clientWidth / 3.2;
     this._broadCard = this.clientWidth > 390;
+
+    if (radius === 0) {
+      radius = 100;
+    }
 
     (this.shadowRoot!.querySelector(
       "#thermostat"
     )! as HTMLElement).style.height = radius * 2 + "px";
 
     const loaded = await loadRoundslider();
-    await new Promise((resolve) => afterNextRender(resolve));
 
     this._roundSliderStyle = loaded.roundSliderStyle;
     this._jQuery = loaded.jQuery;
@@ -324,6 +333,12 @@ export class HuiThermostatCard extends hassLocalizeLitMixin(LitElement)
         @click="${this._handleModeClick}"
       ></ha-icon>
     `;
+  }
+
+  private _handleMoreInfo() {
+    fireEvent(this, "hass-more-info", {
+      entityId: this._config!.entity,
+    });
   }
 
   private _handleModeClick(e: MouseEvent): void {
@@ -532,6 +547,14 @@ export class HuiThermostatCard extends hassLocalizeLitMixin(LitElement)
           font-size: var(--uom-font-size);
           vertical-align: top;
           margin-left: var(--uom-margin-left);
+        }
+        .more-info {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          right: 0;
+          z-index: 25;
+          color: var(--secondary-text-color);
         }
       </style>
     `;

@@ -301,7 +301,8 @@
                 "period": "Időtartam"
             },
             "logbook": {
-                "showing_entries": "Bejegyzések megjelenítése"
+                "showing_entries": "Bejegyzések megjelenítése",
+                "period": "Időszak"
             },
             "mailbox": {
                 "empty": "Nincsenek üzeneteid",
@@ -427,6 +428,19 @@
                                 "webhook": {
                                     "label": "Webhook",
                                     "webhook_id": "Webhook ID"
+                                },
+                                "time_pattern": {
+                                    "label": "Idő sablon",
+                                    "hours": "Óra",
+                                    "minutes": "Perc",
+                                    "seconds": "Másodperc"
+                                },
+                                "geo_location": {
+                                    "source": "Forrás",
+                                    "zone": "Zóna",
+                                    "event": "Esemény:",
+                                    "enter": "Érkezés",
+                                    "leave": "Távozás"
                                 }
                             }
                         },
@@ -560,6 +574,12 @@
                 "zha": {
                     "caption": "ZHA",
                     "description": "Zigbee Home Automation hálózat menedzsment"
+                },
+                "area_registry": {
+                    "description": "Az összes otthoni terület áttekintése."
+                },
+                "entity_registry": {
+                    "description": "Az összes ismert entitás áttekintése."
                 }
             },
             "profile": {
@@ -728,6 +748,9 @@
                         "checked_items": "Bejelölt tételek",
                         "clear_items": "Bejelölt tételek törlése",
                         "add_item": "Tétel hozzáadása"
+                    },
+                    "empty_state": {
+                        "title": "Üdv Itthon"
                     }
                 },
                 "editor": {
@@ -747,7 +770,6 @@
                         "migrate": "Konfiguráció áttelepítése"
                     },
                     "header": "Felhasználói felület szerkesztése",
-                    "configure_ui": "Felhasználói felület konfigurálása",
                     "edit_view": {
                         "header": "Nézet konfigurálása",
                         "add": "Nézet hozzáadása",
@@ -761,6 +783,12 @@
                         "cancel": "Mégsem",
                         "save": "Irányítás átvétele"
                     }
+                },
+                "menu": {
+                    "configure_ui": "Felhasználói felület konfigurálása",
+                    "unused_entities": "Nem használt entitások",
+                    "help": "Súgó",
+                    "refresh": "Frissítés"
                 }
             }
         },
@@ -993,7 +1021,10 @@
         "weblink": "Hivatkozás",
         "zwave": "Z-Wave",
         "vacuum": "Porszívó",
-        "zha": "ZHA"
+        "zha": "ZHA",
+        "hassio": "Hass.io",
+        "homeassistant": "Home Assistant",
+        "lovelace": "Lovelace"
     },
     "attribute": {
         "weather": {
