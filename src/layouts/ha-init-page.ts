@@ -29,8 +29,8 @@ class HaInitPage extends LitElement {
         <paper-spinner-lite .active=${!this.error}></paper-spinner-lite>
         ${this.error
           ? html`
-              Unable to connect to Home Assistant.
-              <paper-button @click=${this._retry}>Retry</paper-button>
+              Czekam na połączenie z Asystentem domowym...
+              <paper-button @click=${this._retry}>Ponów</paper-button>
             `
           : "Loading data"}
       </div>

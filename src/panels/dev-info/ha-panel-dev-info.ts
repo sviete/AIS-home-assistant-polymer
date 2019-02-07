@@ -74,37 +74,34 @@ class HaPanelDevInfo extends LitElement {
               <a href="https://www.home-assistant.io"
                 ><img src="/static/icons/favicon-192x192.png" height="192"/></a
               ><br />
-              Home Assistant<br />
+              Asystent domowy<br />
               ${hass.config.version}
             </p>
             <p>
-              Path to configuration.yaml: ${hass.config.config_dir}
+              Ścieżka do configuration.yaml: ${hass.config.config_dir}
             </p>
             <p class="develop">
-              <a
-                href="https://www.home-assistant.io/developers/credits/"
-                target="_blank"
-              >
-                Developed by a bunch of awesome people.
+              <a href="https://www.ai-speaker.com" target="_blank">
+                Rozwijane w ramach projektu AI-Speaker.com na bazie Home
+                Assistant
               </a>
             </p>
             <p>
-              Published under the Apache 2.0 license<br />
-              Source:
-              <a
-                href="https://github.com/home-assistant/home-assistant"
-                target="_blank"
+              licencja Apache 2.0<br />
+              Zródła:
+              <a href="https://github.com/sviete/home-assistant" target="_blank"
                 >server</a
               >
               &mdash;
               <a
-                href="https://github.com/home-assistant/home-assistant-polymer"
+                href="https://github.com/sviete/home-assistant-polymer"
                 target="_blank"
                 >frontend-ui</a
               >
             </p>
             <p>
-              Built using
+              Zbudowane na bazie
+              <a href="https://www.home-assistant.io">Home Assistant</a>,
               <a href="https://www.python.org">Python 3</a>,
               <a href="https://www.polymer-project.org" target="_blank"
                 >Polymer</a
