@@ -301,7 +301,8 @@
                 "period": "期間長"
             },
             "logbook": {
-                "showing_entries": "選擇要查看的時間"
+                "showing_entries": "選擇要查看的時間",
+                "period": "選擇週期"
             },
             "mailbox": {
                 "empty": "目前沒有任何訊息",
@@ -433,6 +434,14 @@
                                     "hours": "小時",
                                     "minutes": "分鐘",
                                     "seconds": "秒鐘"
+                                },
+                                "geo_location": {
+                                    "label": "地理位置",
+                                    "source": "來源",
+                                    "zone": "區域",
+                                    "event": "事件：",
+                                    "enter": "進入區域",
+                                    "leave": "離開區域"
                                 }
                             }
                         },
@@ -565,7 +574,18 @@
                 },
                 "zha": {
                     "caption": "ZHA",
-                    "description": "Zigbee 家庭自動化網路管理"
+                    "description": "Zigbee 家庭自動化網路管理",
+                    "services": {
+                        "reconfigure": "重新設定 ZHA Zibgee 裝置（健康裝置）。假如遇到裝置問題，請使用此選項。假如有問題的裝置為使用電池的裝置，請先確定裝置已喚醒並處於接受命令狀態。"
+                    }
+                },
+                "area_registry": {
+                    "caption": "區域 ID",
+                    "description": "家中所有區域概觀。"
+                },
+                "entity_registry": {
+                    "caption": "物件 ID",
+                    "description": "所有已知物件概觀。"
                 }
             },
             "profile": {
@@ -734,6 +754,11 @@
                         "checked_items": "已選取項目",
                         "clear_items": "清除已選取項目",
                         "add_item": "新增項目"
+                    },
+                    "empty_state": {
+                        "title": "歡迎回家",
+                        "no_devices": "此頁面允許進行控制所擁有的裝置。看起來您尚未設定任何裝置，從設定中的整合頁面開始吧。",
+                        "go_to_integrations_page": "轉至整合頁面。"
                     }
                 },
                 "editor": {
@@ -753,7 +778,6 @@
                         "migrate": "遷移設定"
                     },
                     "header": "編輯 UI",
-                    "configure_ui": "設定 UI",
                     "edit_view": {
                         "header": "檢視設定",
                         "add": "新增視圖",
@@ -766,7 +790,16 @@
                         "para_sure": "確定要自行編輯使用者介面？",
                         "cancel": "我再想想",
                         "save": "自行編輯"
+                    },
+                    "menu": {
+                        "raw_editor": "文字設定編輯器"
                     }
+                },
+                "menu": {
+                    "configure_ui": "設定 UI",
+                    "unused_entities": "未使用物件",
+                    "help": "說明",
+                    "refresh": "更新"
                 }
             }
         },
@@ -934,7 +967,7 @@
         "dialogs": {
             "more_info_settings": {
                 "save": "儲存",
-                "name": "名稱",
+                "name": "名稱撤銷",
                 "entity_id": "物件 ID"
             },
             "more_info_control": {
@@ -999,7 +1032,11 @@
         "weblink": "網站鏈接",
         "zwave": "Z-Wave",
         "vacuum": "吸塵器",
-        "zha": "ZHA"
+        "zha": "ZHA",
+        "hassio": "Hass.io",
+        "homeassistant": "Home Assistant",
+        "lovelace": "Lovelace",
+        "system_health": "系統健康"
     },
     "attribute": {
         "weather": {

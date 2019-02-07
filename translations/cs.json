@@ -743,7 +743,6 @@
                         "migrate": "Migrovat konfiguraci"
                     },
                     "header": "Upravit UI",
-                    "configure_ui": "Konfigurovat UI",
                     "edit_view": {
                         "header": "Zobrazit konfiguraci",
                         "add": "Přidat pohled",
@@ -757,6 +756,9 @@
                         "cancel": "Zahodit změnu",
                         "save": "Převzít kontrolu"
                     }
+                },
+                "menu": {
+                    "configure_ui": "Konfigurovat UI"
                 }
             }
         },
@@ -826,7 +828,7 @@
                 "code": "Kód",
                 "clear_code": "Zrušit",
                 "disarm": "Deaktivovat",
-                "arm_home": "Aktivní doma",
+                "arm_home": "Aktivovat domov",
                 "arm_away": "Aktivní v nepřítomnosti",
                 "arm_night": "Aktivní v noci",
                 "armed_custom_bypass": "Specifické obejítí alarmu"
