@@ -270,6 +270,10 @@
             "active": "Aktiv",
             "idle": "Waart",
             "paused": "Pauseiert"
+        },
+        "person": {
+            "home": "Doheem",
+            "not_home": "Ënnerwee"
         }
     },
     "state_badge": {
@@ -290,6 +294,10 @@
             "armed_custom_bypass": "Aktiv"
         },
         "device_tracker": {
+            "home": "Doheem",
+            "not_home": "Ënnerwee"
+        },
+        "person": {
             "home": "Doheem",
             "not_home": "Ënnerwee"
         }
@@ -365,7 +373,8 @@
                         "introduction": "Den Automatisme Editor erméiglecht et fir Automatismen z'erstellen an ze änneren. Liest w.e.g. [d'Instruktioune](https:\/\/home-assistant.io\/docs\/automation\/editor\/) fir sécher ze stellen dass den Home Assistant richteg agestallt ass.",
                         "pick_automation": "Automatisme fir ze änneren auswielen",
                         "no_automations": "Keen Automatisme fir ze änneren fonnt",
-                        "add_automation": "Automatisme dobäisetzen"
+                        "add_automation": "Automatisme dobäisetzen",
+                        "learn_more": "Méi iwwert Automatioune liesen"
                     },
                     "editor": {
                         "introduction": "Benotzt Automatismen fir äert Haus zum Liewen ze bréngen",
@@ -452,7 +461,8 @@
                                     "enter": "Betrieden",
                                     "leave": "Verloossen"
                                 }
-                            }
+                            },
+                            "learn_more": "Méi iwwert Ausléiser liesen"
                         },
                         "conditions": {
                             "header": "Konditiounen",
@@ -497,7 +507,8 @@
                                     "entity": "Entitéit mam Standuert",
                                     "zone": "Strefa"
                                 }
-                            }
+                            },
+                            "learn_more": "Méi iwwert Konditioune liesen"
                         },
                         "actions": {
                             "header": "Aktiounen",
@@ -530,7 +541,8 @@
                                     "event": "Evenement:",
                                     "service_data": "Service-Donnéeën"
                                 }
-                            }
+                            },
+                            "learn_more": "Méi iwwert Aktioune liesen"
                         }
                     }
                 },
@@ -603,7 +615,8 @@
                     "picker": {
                         "header": "Lëscht vun de Beräicher",
                         "introduction": "Beräicher gi benotzt fir d'Organisatioun vum Standuert vun den Apparater. Dës Informatioun gëtt vum Home Assistant benotzt fir iech ze hëllefe fir den Interface, Berechtegungen an Integratioune mat aner Systemer ze geréieren.",
-                        "introduction2": "Fir Apparater an e Beräich ze setzen, benotzt de Link ënne fir op d'Integratiouns Säit ze kommen a klickt do op eng konfiguréiert Integratioun fir d'Kaart vum Apparat unzeweisen."
+                        "introduction2": "Fir Apparater an e Beräich ze setzen, benotzt de Link ënne fir op d'Integratiouns Säit ze kommen a klickt do op eng konfiguréiert Integratioun fir d'Kaart vum Apparat unzeweisen.",
+                        "integrations_page": "Integratiouns Säit"
                     },
                     "no_areas": "Et sinn nach keng Beräicher do!",
                     "create_area": "Beräich erstellen",
@@ -621,7 +634,8 @@
                         "header": "Lëscht vun den Entitéiten",
                         "unavailable": "(net verfügbar)",
                         "introduction": "Home Assistant hält eng Lëscht vun all Entitéit's ID déi eenzel erkennbar ass a bis elo vum System erkannt gouf. All eenzel vun dësen Entitéite kritt eng ID zougewise welch nëmme fir dës Entitéit reservéiert ass.",
-                        "introduction2": "Benotzt d'Lëscht vun den Entitéite fir d'Nimm z'änneren, d'Entitéits ID z'änneren oder d'Entrée aus dem Home Assistant ze läschen. Remarque: Läsche vun der Entitéit aus der Lëscht läscht d'Entitéit selwer net. Fir dës ze läsche follegt dem Link ënnen a läscht et op der Integratiouns Säit."
+                        "introduction2": "Benotzt d'Lëscht vun den Entitéite fir d'Nimm z'änneren, d'Entitéits ID z'änneren oder d'Entrée aus dem Home Assistant ze läschen. Remarque: Läsche vun der Entitéit aus der Lëscht läscht d'Entitéit selwer net. Fir dës ze läsche follegt dem Link ënnen a läscht et op der Integratiouns Säit.",
+                        "integrations_page": "Integratiouns Säit"
                     },
                     "editor": {
                         "unavailable": "Dës Entitéit ass net erreechbar fir de Moment.",
@@ -870,6 +884,12 @@
                     },
                     "menu": {
                         "raw_editor": "Editeur fir déi reng Konfiguratioun"
+                    },
+                    "raw_editor": {
+                        "header": "Konfiguratioun änneren",
+                        "save": "Späicheren",
+                        "unsaved_changes": "Net gespäicherten Ännerungen",
+                        "saved": "Gespäichert"
                     }
                 },
                 "menu": {
@@ -879,8 +899,8 @@
                     "refresh": "Erneieren"
                 },
                 "warning": {
-                    "entity_not_found": "Entitéit net erreechbar: {entitiy}",
-                    "entity_non_numeric": "Entitéit ass net numerescher Natur: {entitiy}"
+                    "entity_not_found": "Entitéit net erreechbar: {entity}",
+                    "entity_non_numeric": "Entitéit ass net numerescher Natur: {entity}"
                 }
             }
         },
@@ -1118,7 +1138,8 @@
         "hassio": "Hass.io",
         "homeassistant": "Home Assistant",
         "lovelace": "Lovelace",
-        "system_health": "System Zoustand"
+        "system_health": "System Zoustand",
+        "person": "Persoun"
     },
     "attribute": {
         "weather": {

@@ -20,7 +20,6 @@ import {
   deleteCloudhook,
   CloudWebhook,
 } from "../../../data/cloud";
-import { ERR_UNKNOWN_COMMAND } from "../../../data/websocket_api";
 
 declare global {
   // for fire event
@@ -122,9 +121,9 @@ export class CloudWebhooks extends LitElement {
               `
             : this._cloudHooks![entry.webhook_id]
             ? html`
-                <mwc-button @click="${this._handleManageButton}"
-                  >Manage</mwc-button
-                >
+                <mwc-button @click="${this._handleManageButton}">
+                  Manage
+                </mwc-button>
               `
             : html`
                 <paper-toggle-button
@@ -196,15 +195,9 @@ export class CloudWebhooks extends LitElement {
   }
 
   private async _fetchData() {
-    try {
-      this._localHooks = await fetchWebhooks(this.hass!);
-    } catch (err) {
-      if (err.code === ERR_UNKNOWN_COMMAND) {
-        this._localHooks = [];
-      } else {
-        throw err;
-      }
-    }
+    this._localHooks = this.hass!.config.components.includes("webhook")
+      ? await fetchWebhooks(this.hass!)
+      : [];
   }
 
   private renderStyle() {
