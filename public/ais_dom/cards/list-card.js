@@ -46,6 +46,9 @@ class ListCard extends HTMLElement {
               font-size: 1.2em;
               color: #ff5722;
             }
+            tr.fileSelected td{
+              background-color:#ffc94773;
+            }
           `;
 
     content.id = "container";
@@ -72,25 +75,49 @@ class ListCard extends HTMLElement {
       let rows = 0;
 
       if (feed !== undefined && Object.keys(feed).length > 0) {
+        let l_icon_home;
+        if (path.length > 0) {
+          l_icon_home = '<ha-icon icon="mdi:home"></ha-icon>';
+        } else {
+          l_icon_home = "";
+        }
         let card_content =
-          '<table><tr><th width="10%"></th><th width="90%">' +
+          '<table><tr><th width="10%">' +
+          l_icon_home +
+          '</th><th width="80%">' +
           path +
-          "</th></tr><tbody>";
-
+          '</th><th width="10%"></th></tr><tbody>';
+        let l_status_icon = "";
+        let l_status_class = "";
         for (let entry in feed) {
           if (rows >= rowLimit) break;
-
           if (feed.hasOwnProperty(entry)) {
-            card_content += `<tr class="fileRow" data-path="${
-              feed[entry]["path"]
-            }">`;
-            card_content += `<td><ha-icon style="width: 20; height: 20;" icon="mdi:${
+            if (path.length > 0 && feed[entry]["path"].endsWith(path)) {
+              l_status_icon = '<ha-icon icon="mdi:play"></ha-icon>';
+              l_status_class = "fileSelected";
+            } else {
+              l_status_icon = "";
+              l_status_class = "";
+            }
+            card_content +=
+              `<tr class="fileRow ` +
+              l_status_class +
+              `" data-path="${feed[entry]["path"]}">`;
+            card_content += `<td><ha-icon icon="mdi:${
               feed[entry]["icon"]
             }"></ha-icon></td>`;
             card_content += `<td>${feed[entry]["name"]}</td>`;
+            card_content += `<td>` + l_status_icon + `</td>`;
             card_content += `</tr>`;
             ++rows;
           }
+        }
+
+        // add new remote
+        if (path == "dyski-zdalne:") {
+          card_content += `<tr>`;
+          card_content += `<td colspan="3" style="text-align:right; text-decoration: underline; background-color: var(--paper-card-background-color);">Dodaj nowy dysk</td></td>`;
+          card_content += `</tr>`;
         }
 
         root.lastChild.hass = hass;
