@@ -12,12 +12,13 @@ import {
   css,
   PropertyValues,
   query,
+  customElement,
 } from "lit-element";
 import { HomeAssistant } from "../../../types";
 import { styleMap } from "lit-html/directives/style-map";
 import { classMap } from "lit-html/directives/class-map";
 import { b64toBlob } from "../../../common/file/b64-to-blob";
-import { fetchThumbnail } from "../../../data/camera";
+import { fetchThumbnailWithCache } from "../../../data/camera";
 
 const UPDATE_INTERVAL = 10000;
 const DEFAULT_FILTER = "grayscale(100%)";
@@ -26,33 +27,43 @@ export interface StateSpecificConfig {
   [state: string]: string;
 }
 
-/*
- * @appliesMixin LocalizeMixin
- */
+@customElement("hui-image")
 class HuiImage extends LitElement {
   @property() public hass?: HomeAssistant;
+
   @property() public entity?: string;
+
   @property() public image?: string;
+
   @property() public stateImage?: StateSpecificConfig;
+
   @property() public cameraImage?: string;
+
   @property() public aspectRatio?: string;
+
   @property() public filter?: string;
+
   @property() public stateFilter?: StateSpecificConfig;
 
   @property() private _loadError?: boolean;
+
   @property() private _cameraImageSrc?: string;
+
   @query("img") private _image!: HTMLImageElement;
+
   private _lastImageHeight?: number;
+
   private _cameraUpdater?: number;
+
   private _attached?: boolean;
 
-  public connectedCallback() {
+  public connectedCallback(): void {
     super.connectedCallback();
     this._attached = true;
     this._startUpdateCameraInterval();
   }
 
-  public disconnectedCallback() {
+  public disconnectedCallback(): void {
     super.disconnectedCallback();
     this._attached = false;
     this._stopUpdateCameraInterval();
@@ -137,7 +148,7 @@ class HuiImage extends LitElement {
     }
   }
 
-  private _startUpdateCameraInterval() {
+  private _startUpdateCameraInterval(): void {
     this._stopUpdateCameraInterval();
     if (this.cameraImage && this._attached) {
       this._cameraUpdater = window.setInterval(
@@ -147,31 +158,31 @@ class HuiImage extends LitElement {
     }
   }
 
-  private _stopUpdateCameraInterval() {
+  private _stopUpdateCameraInterval(): void {
     if (this._cameraUpdater) {
       clearInterval(this._cameraUpdater);
     }
   }
 
-  private _onImageError() {
+  private _onImageError(): void {
     this._loadError = true;
   }
 
-  private async _onImageLoad() {
+  private async _onImageLoad(): Promise<void> {
     this._loadError = false;
     await this.updateComplete;
     this._lastImageHeight = this._image.offsetHeight;
   }
 
-  private async _updateCameraImageSrc() {
+  private async _updateCameraImageSrc(): Promise<void> {
     if (!this.hass || !this.cameraImage) {
       return;
     }
     try {
-      const { content_type: contentType, content } = await fetchThumbnail(
-        this.hass,
-        this.cameraImage
-      );
+      const {
+        content_type: contentType,
+        content,
+      } = await fetchThumbnailWithCache(this.hass, this.cameraImage);
       if (this._cameraImageSrc) {
         URL.revokeObjectURL(this._cameraImageSrc);
       }
@@ -221,5 +232,3 @@ declare global {
     "hui-image": HuiImage;
   }
 }
-
-customElements.define("hui-image", HuiImage);

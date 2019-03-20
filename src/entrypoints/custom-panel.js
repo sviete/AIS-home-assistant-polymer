@@ -55,10 +55,12 @@ function initialize(panel, properties) {
 
         const forwardEvent = (ev) =>
           window.parent.customPanel.fire(ev.type, ev.detail);
-        root.addEventListener("hass-open-menu", forwardEvent);
-        root.addEventListener("hass-close-menu", forwardEvent);
-        root.addEventListener("location-changed", () =>
-          window.parent.customPanel.navigate(window.location.pathname)
+        root.addEventListener("hass-toggle-menu", forwardEvent);
+        window.addEventListener("location-changed", (ev) =>
+          window.parent.customPanel.navigate(
+            window.location.pathname,
+            ev.detail ? ev.detail.replace : false
+          )
         );
         setProperties(Object.assign({ panel }, properties));
         document.body.appendChild(root);

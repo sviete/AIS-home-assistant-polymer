@@ -11,7 +11,7 @@ import {
   html,
   PropertyValues,
   TemplateResult,
-  PropertyDeclarations,
+  property,
 } from "lit-element";
 import { showSaveDialog } from "./editor/show-save-config-dialog";
 import { generateLovelaceConfig } from "./common/generate-lovelace-config";
@@ -23,34 +23,27 @@ interface LovelacePanelConfig {
 let editorLoaded = false;
 
 class LovelacePanel extends LitElement {
-  public panel?: PanelInfo<LovelacePanelConfig>;
-  public hass?: HomeAssistant;
-  public narrow?: boolean;
-  public showMenu?: boolean;
-  public route?: Route;
-  private _columns?: number;
-  private _state?: "loading" | "loaded" | "error" | "yaml-editor";
-  private _errorMsg?: string;
-  private lovelace?: Lovelace;
-  private mqls?: MediaQueryList[];
+  @property() public panel?: PanelInfo<LovelacePanelConfig>;
 
-  static get properties(): PropertyDeclarations {
-    return {
-      hass: {},
-      lovelace: {},
-      narrow: {},
-      showMenu: {},
-      route: {},
-      _columns: {},
-      _state: {},
-      _errorMsg: {},
-      _config: {},
-    };
-  }
+  @property() public hass?: HomeAssistant;
+
+  @property() public narrow?: boolean;
+
+  @property() public route?: Route;
+
+  @property() private _columns?: number;
+
+  @property()
+  private _state?: "loading" | "loaded" | "error" | "yaml-editor" = "loading";
+
+  @property() private _errorMsg?: string;
+
+  @property() private lovelace?: Lovelace;
+
+  private mqls?: MediaQueryList[];
 
   constructor() {
     super();
-    this._state = "loading";
     this._closeEditor = this._closeEditor.bind(this);
   }
 
@@ -60,12 +53,11 @@ class LovelacePanel extends LitElement {
     if (state === "loaded") {
       return html`
         <hui-root
-          .narrow="${this.narrow}"
-          .showMenu="${this.showMenu}"
           .hass="${this.hass}"
           .lovelace="${this.lovelace}"
           .route="${this.route}"
           .columns="${this._columns}"
+          .narrow=${this.narrow}
           @config-refresh="${this._forceFetchConfig}"
         ></hui-root>
       `;
@@ -73,12 +65,7 @@ class LovelacePanel extends LitElement {
 
     if (state === "error") {
       return html`
-        <hass-error-screen
-          title="Lovelace"
-          .error="${this._errorMsg}"
-          .narrow="${this.narrow}"
-          .showMenu="${this.showMenu}"
-        >
+        <hass-error-screen title="Lovelace" .error="${this._errorMsg}">
           <mwc-button on-click="_forceFetchConfig">Reload Lovelace</mwc-button>
         </hass-error-screen>
       `;
@@ -95,16 +82,25 @@ class LovelacePanel extends LitElement {
     }
 
     return html`
-      <hass-loading-screen
-        .narrow="${this.narrow}"
-        .showMenu="${this.showMenu}"
-      ></hass-loading-screen>
+      <hass-loading-screen rootnav></hass-loading-screen>
     `;
   }
 
   public updated(changedProps: PropertyValues): void {
     super.updated(changedProps);
-    if (changedProps.has("narrow") || changedProps.has("showMenu")) {
+
+    if (changedProps.has("narrow")) {
+      this._updateColumns();
+      return;
+    }
+
+    if (!changedProps.has("hass")) {
+      return;
+    }
+
+    const oldHass = changedProps.get("hass") as this["hass"];
+
+    if (oldHass && this.hass!.dockedSidebar !== oldHass.dockedSidebar) {
       this._updateColumns();
     }
   }
@@ -144,7 +140,7 @@ class LovelacePanel extends LitElement {
     // Do -1 column if the menu is docked and open
     this._columns = Math.max(
       1,
-      matchColumns - Number(!this.narrow && this.showMenu)
+      matchColumns - Number(!this.narrow && this.hass!.dockedSidebar)
     );
   }
 
