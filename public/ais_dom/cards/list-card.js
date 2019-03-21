@@ -1,3 +1,4 @@
+/* eslint-disable guard-for-in */
 class ListCard extends HTMLElement {
   constructor() {
     super();
@@ -62,7 +63,7 @@ class ListCard extends HTMLElement {
   set hass(hass) {
     const config = this._config;
     const root = this.shadowRoot;
-    const card = root.lastChild;
+    // const card = root.lastChild;
     this.myHass = hass;
 
     if (hass.states[config.entity]) {
@@ -75,54 +76,54 @@ class ListCard extends HTMLElement {
       let rows = 0;
 
       if (feed !== undefined && Object.keys(feed).length > 0) {
-        let l_icon_home;
+        let iconHome;
         if (path.length > 0) {
-          l_icon_home = '<ha-icon icon="mdi:home"></ha-icon>';
+          iconHome = '<ha-icon icon="mdi:home"></ha-icon>';
         } else {
-          l_icon_home = "";
+          iconHome = "";
         }
-        let card_content =
+        let cardContent =
           '<table><tr><th width="10%">' +
-          l_icon_home +
+          iconHome +
           '</th><th width="80%">' +
           path +
           '</th><th width="10%"></th></tr><tbody>';
-        let l_status_icon = "";
-        let l_status_class = "";
+        let iconStatus = "";
+        let classStatus = "";
         for (let entry in feed) {
           if (rows >= rowLimit) break;
           if (feed.hasOwnProperty(entry)) {
             if (path.length > 0 && feed[entry]["path"].endsWith(path)) {
-              l_status_icon = '<ha-icon icon="mdi:play"></ha-icon>';
-              l_status_class = "fileSelected";
+              iconStatus = '<ha-icon icon="mdi:play"></ha-icon>';
+              classStatus = "fileSelected";
             } else {
-              l_status_icon = "";
-              l_status_class = "";
+              iconStatus = "";
+              classStatus = "";
             }
-            card_content +=
+            cardContent +=
               `<tr class="fileRow ` +
-              l_status_class +
+              classStatus +
               `" data-path="${feed[entry]["path"]}">`;
-            card_content += `<td><ha-icon icon="mdi:${
+            cardContent += `<td><ha-icon icon="mdi:${
               feed[entry]["icon"]
             }"></ha-icon></td>`;
-            card_content += `<td>${feed[entry]["name"]}</td>`;
-            card_content += `<td>` + l_status_icon + `</td>`;
-            card_content += `</tr>`;
+            cardContent += `<td>${feed[entry]["name"]}</td>`;
+            cardContent += `<td>` + iconStatus + `</td>`;
+            cardContent += `</tr>`;
             ++rows;
           }
         }
 
         // add new remote
-        if (path == "dyski-zdalne:") {
-          card_content += `<tr>`;
-          card_content += `<td colspan="3" style="text-align:right; text-decoration: underline; background-color: var(--paper-card-background-color);">Dodaj nowy dysk</td></td>`;
-          card_content += `</tr>`;
+        if (path === "dyski-zdalne:") {
+          cardContent += `<tr>`;
+          cardContent += `<td colspan="3" style="text-align:right;"><a style="color:#FF9800;" href="/config/integrations/dashboard">Dodaj nowy dysk zdalny</a></td></td>`;
+          cardContent += `</tr>`;
         }
 
         root.lastChild.hass = hass;
-        card_content += `</tbody></table>`;
-        root.getElementById("container").innerHTML = card_content;
+        cardContent += `</tbody></table>`;
+        root.getElementById("container").innerHTML = cardContent;
       } else {
         this.style.display = "none";
       }
