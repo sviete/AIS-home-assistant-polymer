@@ -67,7 +67,7 @@ class ListCard extends HTMLElement {
     this.myHass = hass;
 
     if (hass.states[config.entity]) {
-      const feed = hass.states[config.entity].attributes;
+      const feed = hass.states[config.entity].attributes.files;
       const path = hass.states[config.entity].state;
       this.style.display = "block";
       const rowLimit = config.row_limit
