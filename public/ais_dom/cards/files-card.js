@@ -1,5 +1,5 @@
 /* eslint-disable guard-for-in */
-class ListCard extends HTMLElement {
+class FilesCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -148,4 +148,4 @@ class ListCard extends HTMLElement {
   }
 }
 
-customElements.define("list-card", ListCard);
+customElements.define("files-card", FilesCard);
