@@ -25,6 +25,9 @@ class ListCard extends HTMLElement {
               width: 100%;
               padding: 0 16px 16px 16px;
             }
+            tr:hover td{
+              background-color:#ffc94761;
+            }
             thead th {
               text-align: left;
             }
@@ -138,7 +141,7 @@ class ListCard extends HTMLElement {
               }
 
               if (!has_field) continue;
-              card_content += `<tr>`;
+              card_content += `<tr class="trackRow" data-id="${rows}">`;
 
               for (const column in columns) {
                 if (columns.hasOwnProperty(column)) {
@@ -159,11 +162,11 @@ class ListCard extends HTMLElement {
                       ) {
                         card_content += `<img src="${
                           feed[entry][columns[column].field][0].url
-                        }" width="90" height="90">`;
+                        }" width="80" height="80">`;
                       } else {
                         card_content += `<img src="${
                           feed[entry][columns[column].field]
-                        }" width="90" height="90">`;
+                        }" width="80" height="80">`;
                       }
                     } else if (columns[column].type === "icon") {
                       card_content += `<ha-icon icon="${
@@ -209,6 +212,16 @@ class ListCard extends HTMLElement {
     } else {
       this.style.display = "none";
     }
+    //
+    const tracks = root.querySelectorAll("tr.trackRow");
+    tracks.forEach((track) => {
+      track.addEventListener("click", (event) => {
+        hass.callService("ais_spotify_service", "select_track_uri", {
+          id: track.getAttribute("data-id"),
+        });
+        track.classList.add("clicked");
+      });
+    });
   }
 
   getCardSize() {
