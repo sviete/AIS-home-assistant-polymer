@@ -86,7 +86,7 @@
             },
             "battery": {
                 "off": "naładowana",
-                "on": "rozładowana"
+                "on": "Rozładowana"
             },
             "problem": {
                 "off": "ok",
@@ -441,7 +441,7 @@
                                     "label": "Strefa",
                                     "entity": "Encja z lokalizacją",
                                     "zone": "Strefa",
-                                    "event": "Zdarzenie",
+                                    "event": "Zdarzenie:",
                                     "enter": "Wprowadź",
                                     "leave": "Opuść"
                                 },
@@ -468,7 +468,7 @@
                         },
                         "conditions": {
                             "header": "Warunki",
-                            "introduction": "Warunki są opcjonalną częścią reguły automatyzacji i można ich użyć, aby zapobiec działaniom po uruchomieniu. Warunki wyglądają bardzo podobnie do wyzwalaczy, ale są bardzo różne. Wyzwalacz będzie analizował zdarzenia zachodzące w systemie, a warunek będzie dotyczył tylko tego, jak wygląda teraz system. Wyzwalacz może zaobserwować, że przełącznik jest przełączany. Warunek może tylko sprawdzić, czy przełącznik jest aktualnie włączony lub wyłączony. ",
+                            "introduction": "Warunki są opcjonalną częścią reguły automatyzacji i można ich użyć, aby zapobiec działaniom po uruchomieniu. Warunki wyglądają bardzo podobnie do wyzwalaczy, ale są bardzo różne. Wyzwalacz będzie analizował zdarzenia zachodzące w systemie, a warunek będzie dotyczył tylko tego, jak wygląda teraz system. Wyzwalacz może zaobserwować, że przełącznik jest przełączany. Warunek może tylko sprawdzić, czy przełącznik jest aktualnie włączony lub wyłączony.",
                             "add": "Dodaj warunek",
                             "duplicate": "Duplikuj",
                             "delete": "Usuń",
@@ -581,7 +581,8 @@
                 "cloud": {
                     "caption": "Chmura Home Assistant",
                     "description_login": "Zalogowany jako {email}",
-                    "description_not_login": "Nie zalogowany"
+                    "description_not_login": "Nie zalogowany",
+                    "description_features": "Sterowanie z spoza domu, integracja z Alexą i Google Assistant."
                 },
                 "integrations": {
                     "caption": "Integracje",
@@ -635,12 +636,12 @@
                         "create_area": "UTWÓRZ OBSZAR"
                     },
                     "no_areas": "Wygląda na to, że jeszcze nie masz zdefiniowanych obszarów!",
-                    "create_area": "STWÓRZ OBSZAR",
+                    "create_area": "UTWÓRZ OBSZAR",
                     "editor": {
                         "default_name": "Nowy obszar",
                         "delete": "USUŃ",
                         "update": "UAKTUALNIJ",
-                        "create": "STWÓRZ"
+                        "create": "UTWÓRZ"
                     }
                 },
                 "entity_registry": {
@@ -713,7 +714,7 @@
                     "create_failed": "Nie udało się utworzyć tokena.",
                     "prompt_name": "Nazwa?",
                     "prompt_copy_token": "Skopiuj token. Nie będzie on już ponownie wyświetlany.",
-                    "empty_state": "Nie masz jeszcze żadnych żadnych tokenów.",
+                    "empty_state": "Nie masz jeszcze żadnych tokenów.",
                     "last_used": "Ostatnio używany {date} z {location}",
                     "not_used": "Nigdy nie był używany"
                 },
@@ -1087,7 +1088,7 @@
         "dialogs": {
             "more_info_settings": {
                 "save": "Zapisz",
-                "name": "Nazwa",
+                "name": "Nadpisanie nazwy",
                 "entity_id": "Identyfikator encji"
             },
             "more_info_control": {
@@ -1169,9 +1170,9 @@
     "state_attributes": {
         "climate": {
             "fan_mode": {
-                "off": "Wył.",
-                "on": "Wł.",
-                "auto": "Auto"
+                "off": "wyłączony",
+                "on": "włączony",
+                "auto": "automatyczny"
             }
         }
     },
