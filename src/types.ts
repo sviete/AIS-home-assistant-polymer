@@ -9,6 +9,8 @@ import {
   HassServices,
 } from "home-assistant-js-websocket";
 import { LocalizeFunc } from "./common/translations/localize";
+import { ExternalMessaging } from "./external_app/external_messaging";
+import { HASSDomEvent } from "./common/dom/fire_event";
 
 declare global {
   var __DEV__: boolean;
@@ -16,9 +18,7 @@ declare global {
   var __BUILD__: "latest" | "es5";
   var __VERSION__: string;
   var __STATIC_PATH__: string;
-}
 
-declare global {
   interface Window {
     // Custom panel entry point url
     customPanelJS: string;
@@ -38,8 +38,15 @@ declare global {
       value: unknown;
     };
     change: undefined;
+    "connection-status": ConnectionStatus;
+  }
+
+  interface GlobalEventHandlersEventMap {
+    "connection-status": HASSDomEvent<ConnectionStatus>;
   }
 }
+
+type ConnectionStatus = "connected" | "auth-invalid" | "disconnected";
 
 export interface WebhookError {
   code: number;
@@ -78,16 +85,16 @@ export interface Themes {
   themes: { [key: string]: Theme };
 }
 
-export interface Panel {
+export interface PanelInfo<T = {} | null> {
   component_name: string;
-  config: { [key: string]: any } | null;
+  config: T;
   icon: string | null;
   title: string | null;
   url_path: string;
 }
 
 export interface Panels {
-  [name: string]: Panel;
+  [name: string]: PanelInfo;
 }
 
 export interface Translation {
@@ -109,7 +116,7 @@ export interface Resources {
 }
 
 export interface HomeAssistant {
-  auth: Auth;
+  auth: Auth & { external?: ExternalMessaging };
   connection: Connection;
   connected: boolean;
   states: HassEntities;
@@ -212,14 +219,6 @@ export type CameraEntity = HassEntityBase & {
   };
 };
 
-export interface PanelInfo<T = unknown> {
-  component_name: string;
-  icon?: string;
-  title?: string;
-  url_path: string;
-  config: T;
-}
-
 export interface Route {
   prefix: string;
   path: string;
@@ -229,7 +228,7 @@ export interface PanelElement extends HTMLElement {
   hass?: HomeAssistant;
   narrow?: boolean;
   route?: Route | null;
-  panel?: Panel;
+  panel?: PanelInfo;
 }
 
 export interface LocalizeMixin {
