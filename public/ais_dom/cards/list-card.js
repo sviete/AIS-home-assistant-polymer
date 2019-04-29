@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable guard-for-in */
 class ListCard extends HTMLElement {
   constructor() {
     super();
@@ -18,12 +20,11 @@ class ListCard extends HTMLElement {
     const content = document.createElement("div");
     const style = document.createElement("style");
     style.textContent = `
-            ha-card {
-              /* sample css */
-            }
             table {
               width: 100%;
               padding: 0 16px 16px 16px;
+              border-collapse: collapse;
+              padding: 0px;
             }
             tr:hover td{
               background-color:#ffc94761;
@@ -45,6 +46,10 @@ class ListCard extends HTMLElement {
               color: var(--primary-text-color);
               text-decoration-line: none;
               font-weight: normal;
+            }
+            tr.itemSelected td{
+              background-color:#ffc94773;
+              padding: 0px;
             }
           `;
 
@@ -86,7 +91,7 @@ class ListCard extends HTMLElement {
     const config = this._config;
     const root = this.shadowRoot;
     const card = root.lastChild;
-
+    const selectedId = hass.states[config.entity].state;
     if (hass.states[config.entity]) {
       const feed = hass.states[config.entity].attributes;
       const columns = config.columns;
@@ -95,6 +100,7 @@ class ListCard extends HTMLElement {
         ? config.row_limit
         : Object.keys(feed).length;
       let rows = 0;
+      const audioType = config.audio_type;
 
       if (feed !== undefined && Object.keys(feed).length > 0) {
         let card_content = "<table><thread><tr>";
@@ -120,10 +126,17 @@ class ListCard extends HTMLElement {
         card_content += `</tr></thead><tbody>`;
 
         // eslint-disable-next-line guard-for-in
+        let classStatus = "";
         for (const entry in feed) {
           if (rows >= rowLimit) break;
 
           if (feed.hasOwnProperty(entry)) {
+            if (selectedId == rows) {
+              classStatus = "itemSelected";
+            } else {
+              classStatus = "";
+            }
+
             if (!columns) {
               for (const field in feed[entry]) {
                 if (feed[entry].hasOwnProperty(field)) {
@@ -141,7 +154,10 @@ class ListCard extends HTMLElement {
               }
 
               if (!has_field) continue;
-              card_content += `<tr class="trackRow" data-id="${rows}">`;
+              card_content +=
+                `<tr class="trackRow ` +
+                classStatus +
+                `" data-id="${rows}" data-audio-type="${audioType}">`;
 
               for (const column in columns) {
                 if (columns.hasOwnProperty(column)) {
@@ -216,8 +232,12 @@ class ListCard extends HTMLElement {
     const tracks = root.querySelectorAll("tr.trackRow");
     tracks.forEach((track) => {
       track.addEventListener("click", (event) => {
-        hass.callService("ais_spotify_service", "select_track_uri", {
+        console.log(this);
+        console.log(track.getAttribute("data-id"));
+        console.log(this.getAttribute("data-id"));
+        hass.callService("ais_cloud", "play_audio", {
           id: track.getAttribute("data-id"),
+          audio_type: track.getAttribute("data-audio-type"),
         });
         track.classList.add("clicked");
       });
