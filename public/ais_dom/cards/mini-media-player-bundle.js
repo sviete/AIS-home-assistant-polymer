@@ -124,12 +124,13 @@
   function k() {
     const a = M([
       "\n      <div class='vol-control flex'>\n        <div>\n          ",
-      "\n        </div>\n        <paper-slider ?disabled=",
+      "\n        </div>\n        <ha-slider ?disabled=",
       "\n          @change=",
       "\n          @click=",
       "\n          min='0' max=",
       " value=",
-      "\n          ignore-bar-touch pin>\n        </paper-slider>\n      </div>",
+      "\n          dir=",
+      "\n          ignore-bar-touch pin>\n        </ha-slider>\n      </div>",
     ]);
     return (
       (k = function() {
@@ -151,7 +152,7 @@
     const a = M([
       "\n      ",
       "\n      <div class='flex shuffle'>\n        ",
-      "\n      </div>\n      <div class='flex'>\n        ",
+      "\n      </div>\n      <div class='flex media-controls'>\n        ",
       "\n      </div>",
     ]);
     return (
@@ -468,6 +469,7 @@
       "\n        ?flow=",
       " ?collapse=",
       "\n        content=",
+      "\n        ?rtl=",
       "\n        @click=",
       ">\n        <div class='bg'>\n          ",
       "\n        </div>\n        <header>",
@@ -493,7 +495,7 @@
   }
   function L() {
     const a = M([
-      "\n  ha-card {\n    --mmp-accent-color: var(--mini-media-player-accent-color, var(--accent-color, #f39c12));\n    cursor: default;\n    display: flex;\n    background: transparent;\n    overflow: hidden;\n    padding: 0;\n    position: relative;\n  }\n  ha-card[group] {\n    box-shadow: none;\n  }\n  ha-card[more-info] {\n    cursor: pointer;\n  }\n  ha-card[collapse] {\n    overflow: visible;\n  }\n  ha-card:before {\n    content: '';\n    padding-top: 0px;\n    transition: padding-top .5s cubic-bezier(.21,.61,.35,1);\n    will-change: padding-top;\n  }\n  ha-card[initial] .entity__artwork,\n  ha-card[initial] .entity__icon {\n    animation-duration: .001s;\n  }\n  ha-card[initial]:before,\n  ha-card[initial] .player {\n    transition: none;\n  }\n  header {\n    display: none;\n  }\n  mwc-button {\n    --mdc-theme-primary: var(--primary-text-color);\n  }\n  mwc-button[raised] {\n    --mdc-theme-on-primary: var(--primary-text-color);\n    --mdc-theme-primary: transparent;\n    background: rgba(255,255,255,.25);\n  }\n  mwc-button[dense] {\n    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0,0,0,.12);\n  }\n  ha-card[has-title] header {\n    display: block;\n    font-size: var(--paper-font-headline_-_font-size);\n    font-weight: var(--paper-font-headline_-_font-weight);\n    letter-spacing: var(--paper-font-headline_-_letter-spacing);\n    line-height: var(--paper-font-headline_-_line-height);\n    padding: 24px 16px 16px;\n    position: relative;\n  }\n  ha-card[artwork='full-cover'][has-artwork]:before {\n    padding-top: 56%;\n  }\n  ha-card[artwork='full-cover'][has-artwork][content='music']:before,\n  ha-card[artwork='full-cover-fit'][has-artwork]:before {\n    padding-top: 100%;\n  }\n  .bg {\n    background: var(--paper-card-background-color, white);\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n  }\n  ha-card[group] .bg {\n    background: transparent;\n  }\n  .cover,\n  .cover:before {\n    display: block;\n    opacity: 0;\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n    transition: opacity .75s cubic-bezier(.21,.61,.35,1);\n    will-change: opacity;\n  }\n  .cover {\n    animation: fade-in .5s cubic-bezier(.21,.61,.35,1);\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center center;\n  }\n  .cover:before {\n    background: rgba(0,0,0,.5);\n    content: '';\n  }\n  ha-card[artwork*='full-cover'][has-artwork] .player {\n    background: rgba(0,0,0,.75);\n    background: linear-gradient(to top, rgba(0,0,0,.75) 0%, rgba(0,0,0,.5) 50%, transparent 100%);\n  }\n  ha-card[has-artwork] .cover,\n  ha-card[has-artwork][artwork='cover'] .cover:before,\n  ha-card[bg] .cover {\n    opacity: .999;\n  }\n  ha-card[artwork='default'] .cover {\n    display: none;\n  }\n  ha-card[bg] .cover {\n    display: block;\n  }\n  ha-card[artwork='full-cover-fit'][has-artwork] .cover {\n    background-color: black;\n    background-size: contain;\n  }\n  .player {\n    align-self: flex-end;\n    box-sizing: border-box;\n    position: relative;\n    padding: 16px;\n    transition: padding .25s ease-out;\n    width: 100%;\n    will-change: padding;\n  }\n  ha-card[group] .player {\n    padding: 2px 0;\n  }\n  ha-card[has-title] .player {\n    padding-top: 0;\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-icon-button,\n  ha-card[artwork*='cover'][has-artwork] ha-icon,\n  ha-card[artwork*='cover'][has-artwork] .entity__info,\n  ha-card[artwork*='cover'][has-artwork] .entity__info__name,\n  ha-card[artwork*='cover'][has-artwork] mwc-button,\n  ha-card[artwork*='cover'][has-artwork] header,\n  ha-card[artwork*='cover'][has-artwork] .speaker-select > span,\n  ha-card[artwork*='cover'][has-artwork] paper-menu-button mwc-button:focus iron-icon {\n    color: #FFFFFF;\n    border-color: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-slider {\n    --paper-slider-container-color: rgba(255,255,255,.75);\n  }\n  ha-card[artwork*='cover'][has-artwork] mwc-button {\n    --mdc-theme-primary: #FFFFFF;\n    --mdc-theme-on-primary: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-input {\n    --paper-input-container-focus-color: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-checkbox[disabled] {\n    --paper-checkbox-checkmark-color: rgba(0,0,0,.5);\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-checkbox {\n    --paper-checkbox-unchecked-color: #FFFFFF;\n    --paper-checkbox-label-color: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] .media-buttons__button,\n  ha-card[artwork*='cover'][has-artwork] .speaker-select__button {\n    background-color: rgba(255,255,255,.25);\n  }\n  ha-card[artwork*='cover'][has-artwork] mwc-button[raised] {\n    --mdc-theme-primary: transparent;\n    --mdc-theme-on-primary: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-input {\n    --paper-input-container-color: #FFFFFF;\n    --paper-input-container-input-color: #FFFFFF;\n  }\n  .flex {\n    display: flex;\n    display: -ms-flexbox;\n    display: -webkit-flex;\n    flex-direction: row;\n  }\n  .justify {\n    -webkit-justify-content: space-between;\n    justify-content: space-between;\n  }\n  .hidden {\n    display: none;\n  }\n  .entity {\n    position: relative;\n  }\n  .entity__info {\n    justify-content: center;\n    display: flex;\n    flex-direction: column;\n    margin-left: 8px;\n    position: relative;\n    overflow: hidden;\n    user-select: none;\n  }\n  .rows {\n    margin-left: 56px;\n    position: relative;\n  }\n  .rows > *:nth-child(2) {\n    margin-top: 0px;\n  }\n  .entity__info__media[short] {\n    max-height: 20px;\n    overflow: hidden;\n  }\n  ha-card[content='movie'] .attr__media_season,\n  ha-card[content='movie'] .attr__media_episode {\n    display: none;\n  }\n  .entity__icon {\n    color: var(--paper-item-icon-color, #44739e);\n  }\n  .entity__artwork, .entity__icon {\n    animation: fade-in .25s ease-out;\n    background-position: center center;\n    background-repeat: no-repeat;\n    background-size: cover;\n    border-radius: 100%;\n    height: 40px;\n    line-height: 40px;\n    margin-right: 8px;\n    min-width: 40px;\n    position: relative;\n    text-align: center;\n    width: 40px;\n    will-change: border-color;\n    transition: border-color .25s ease-out;\n  }\n  .entity__artwork[border] {\n    border: 2px solid var(--primary-text-color);\n    box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    -webkit-box-sizing: border-box;\n  }\n  .entity__artwork[state='playing'] {\n    border-color: var(--mmp-accent-color);\n  }\n  .entity__info__name,\n  .entity__info__media[short],\n  .source-menu__source,\n  .media-dropdown__label,\n  .media-label,\n  .label {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }\n  .entity__info__name {\n    line-height: 20px;\n  }\n  .control-row--top {\n    line-height: 40px;\n  }\n  .entity[inactive] .entity__info__media,\n  .entity__info__name,\n  paper-icon-button,\n  mwc-button {\n    color: var(--primary-text-color);\n    position: relative;\n  }\n  .entity__info__media {\n    color: var(--secondary-text-color);\n    max-height: 6em;\n    word-break: break-word;\n  }\n  .attr__app_name {\n    display: none;\n  }\n  .attr__app_name:first-child,\n  .attr__app_name:first-of-type {\n    display: inline;\n  }\n  .entity[inactive] .entity__info__media {\n    opacity: .5;\n  }\n  .entity[inactive] .entity__info__media {\n    max-width: 200px;\n  }\n  .entity__info__media[short-scroll] {\n    max-height: 20px;\n    white-space: nowrap;\n  }\n  .entity__info__media[scroll] > span {\n    visibility: hidden;\n  }\n  .entity__info__media[scroll] > div {\n    animation: move linear infinite;\n  }\n  .entity__info__media[scroll] .marquee {\n    animation: slide linear infinite;\n  }\n  .entity__info__media[scroll] .marquee,\n  .entity__info__media[scroll] > div {\n    animation-duration: inherit;\n    visibility: visible;\n  }\n  .entity__info__media[scroll] {\n    animation-duration: 10s;\n    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n  }\n  .marquee {\n    visibility: hidden;\n    position: absolute;\n    white-space: nowrap;\n  }\n  paper-icon-button[color],\n  ha-icon[color] {\n    color: var(--mmp-accent-color) !important;\n  }\n  ha-card[artwork*='cover'][has-artwork] .entity__info__media {\n    color: var(--mini-media-player-media-cover-info-color, #FFFFFF);\n    opacity: .85;\n  }\n  paper-icon-button {\n    transition: color .15s ease-in-out;\n    will-change: color;\n  }\n  .entity__info__media span:before {\n    content: ' - ';\n  }\n  .entity__info__media span:first-of-type:before {\n    content: '';\n  }\n  .entity__info__media span:empty,\n  .source-menu span:empty {\n    display: none;\n  }\n  .tts {\n    align-items: center;\n    margin-top: 8px;\n  }\n  .tts__input {\n    cursor: text;\n    flex: 1;\n    margin-right: 8px;\n    --paper-input-container-input: {\n      font-size: 1em;\n    };\n  }\n  .tts__button {\n    margin: 0;\n    padding: .4em;\n  }\n  .media-dropdown {\n    box-sizing: border-box;\n    width: 100%;\n    padding: 8px 8px 0 0;\n  }\n  .media-dropdown__button {\n    display: flex;\n    font-size: 1em;\n    justify-content: space-between;\n    margin: 0;\n    border-bottom: 1px solid var(--primary-text-color);\n    opacity: .8;\n  }\n  .media-dropdown__button > div {\n    display: flex;\n    flex: 1;\n    justify-content: space-between;\n    align-items: center;\n  }\n  .media-dropdown__label {\n    padding: .2em .2em .2em 0;\n    text-align: left;\n    text-transform: none;\n  }\n  .media-dropdown__icon {\n    height: 24px;\n    width: 24px;\n  }\n  .media-buttons {\n    box-sizing: border-box;\n    display: flex;\n    flex-wrap: wrap;\n    margin-top: 8px;\n  }\n  .media-buttons__button {\n    background-color: rgba(255,255,255,.1);\n    box-sizing: border-box;\n    margin: 8px 8px 0 0;\n    min-width: 0;\n    min-width: calc(50% - 8px);\n    flex: 1;\n    overflow: hidden;\n  }\n  .media-buttons__button[columns='0'] {\n    min-width: calc(100% - 8px);\n  }\n  .media-buttons__button[columns='3'] {\n    min-width: calc(33.33% - 8px);\n  }\n  .media-buttons__button[columns='4'] {\n    min-width: calc(25% - 8px);\n  }\n  .media-buttons__button > span {\n    line-height: 24px;\n    text-transform: initial;\n  }\n  .media-buttons__button > *:nth-child(2),\n  .media-dropdown paper-item > *:nth-child(2) {\n    margin-left: 4px;\n  }\n  .control-row--top .vol-control {\n    max-width: 200px;\n  }\n  .control-row--top {\n    flex: 1;\n    justify-content: flex-end;\n    margin-right: 0;\n    margin-left: auto;\n    width: auto;\n    max-width: 100%;\n  }\n  .control-row--top paper-slider {\n    flex: 1;\n    height: 40px;\n    line-height: initial;\n  }\n  .control-row {\n    flex-wrap: wrap;\n    justify-content: center;\n  }\n  .control-row > .flex {\n    flex: 1;\n    justify-content: space-between;\n  }\n  .control-row > .shuffle {\n    flex: 3;\n    flex-shrink: 200;\n    justify-content: center;\n  }\n  .control-row > .vol-control {\n    flex: 100;\n  }\n  .vol-control {\n    flex: 1;\n    max-height: 40px;\n  }\n  .group-button {\n    height: 85%;\n    margin: auto;\n  }\n  .speaker-select {\n    display: flex;\n    flex-direction: column;\n  }\n  .speaker-select > span {\n    font-weight: 500;\n    margin-top: 12px;\n    text-transform: uppercase;\n  }\n  .speaker-select paper-checkbox {\n    padding: 8px 0;\n  }\n  .speaker-select .buttons {\n    display: flex;\n  }\n  .speaker-select__button {\n    background-color: rgba(255,255,255,.1);\n    margin: 8px 8px 0 0;\n    min-width: 0;\n    text-transform: uppercase;\n    text-align: center;\n    width: 50%;\n  }\n  .speaker-select > paper-checkbox > span {\n    font-weight: 600;\n  }\n  paper-slider {\n    max-width: 400px;\n    min-width: 100px;\n    width: 100%;\n  }\n  paper-input {\n    opacity: .75;\n    --paper-input-container-color: var(--primary-text-color);\n    --paper-input-container-focus-color: var(--primary-text-color);\n    --paper-input-container: {\n      padding: 0;\n    };\n  }\n  .source-menu {\n    display: flex;\n    align-items: center;\n    height: 40px;\n    line-height: 20px;\n    padding: 0;\n  }\n  paper-menu-button[focused] mwc-button > iron-icon,\n  paper-menu-button[focused] mwc-button > div > iron-icon,\n  paper-menu-button[focused] paper-icon-button,\n  ha-card[artwork*='cover'][has-artwork] paper-menu-button[focused] paper-icon-button {\n    color: var(--mmp-accent-color);\n    transform: rotate(180deg);\n  }\n  paper-menu-button mwc-button:focus iron-icon,\n  paper-menu-button mwc-button:focus > div iron-icon,\n  paper-menu-button mwc-button[focused] iron-icon,\n  paper-menu-button[focused] paper-icon-button[focused],\n  ha-card[artwork*='cover'][has-artwork] paper-menu-button[focused] paper-icon-button[focused] {\n    color: var(--primary-text-color);\n    transform: rotate(0deg);\n  }\n  ha-card[has-artwork][artwork*='cover'] paper-menu-button[focused] paper-icon-button[focused] {\n    color: #FFFFFF;\n  }\n  .source-menu__button {\n    height: 36px;\n    line-height: 20px;\n    margin: 0;\n    min-width: 0;\n  }\n  .source-menu__source {\n    display: block;\n    max-width: 60px;\n    position: relative;\n    width: auto;\n    text-transform: initial;\n  }\n  .source-menu__source[display=\"icon\"] {\n    display: none;\n  }\n  .source-menu__source[display=\"full\"] {\n    max-width: none;\n  }\n  .progress {\n    height: 12px;\n    cursor: pointer;\n    left: 0; right: 0; bottom: 0;\n    position: absolute;\n  }\n  ha-card[group][collapse] .progress {\n    bottom: -2px;\n    height: 5px;\n  }\n  ha-card[group] paper-progress {\n    height: var(--paper-progress-height, 2px);\n  }\n  paper-progress {\n    height: var(--paper-progress-height, 4px);\n    bottom: 0;\n    position: absolute;\n    width: 100%;\n    --paper-progress-active-color: var(--mmp-accent-color);\n    --paper-progress-container-color: rgba(100,100,100,.15);\n    --paper-progress-transition-duration: 1s;\n    --paper-progress-transition-timing-function: linear;\n    --paper-progress-transition-delay: 0s;\n  }\n  ha-card[state='paused'] paper-progress {\n    --paper-progress-active-color: var(--disabled-text-color, rgba(150,150,150,.5));\n  }\n  .label {\n    margin: 0 8px;\n  }\n  .media-dropdown[focused] mwc-button,\n  paper-icon-button[color][opaque],\n  paper-input[focused] {\n    opacity: 1;\n  }\n  .media-dropdown[focused] mwc-button:focus {\n    opacity: .75;\n  }\n  paper-icon-button[opaque],\n  .speaker-select mwc-button[disabled] {\n    opacity: .5;\n  }\n  ha-card[flow] .control-row--top {\n    justify-content: space-between;\n  }\n  ha-card[flow] .power-row {\n    margin-left: auto;\n  }\n  ha-card[flow] .entity__info {\n    display: none;\n  }\n  ha-card[flow] paper-slider,\n  ha-card[flow] .vol-control {\n    width: 100%;\n    max-width: none;\n  }\n  ha-card[break*=\"break\"] .rows {\n    margin-left: 0;\n  }\n  ha-card[break*=\"break\"] .rows > * {\n    padding-left: 8px;\n  }\n  ha-card[break*=\"break\"] .rows > .control-row {\n    padding: 0;\n  }\n  ha-card[break*=\"break\"] .media-dropdown__button {\n    padding-right: 0;\n  }\n  .player div:empty,\n  ha-card[break=\"break-width\"] .source-menu__source,\n  .entity[inactive] .source-menu__source {\n    display: none;\n  }\n  @keyframes slide {\n    100% { transform: translateX(-100%); }\n  }\n  @keyframes move {\n    from { transform: translateX(100%); }\n    to { transform: translateX(0); }\n  }\n  @keyframes fade-in {\n    from { opacity: 0; }\n    to { opacity: 1; }\n  }",
+      "\n  :host {\n    display: block;\n  }\n  ha-card {\n    --mmp-accent-color: var(--mini-media-player-accent-color, var(--accent-color, #f39c12));\n    cursor: default;\n    display: flex;\n    background: transparent;\n    overflow: hidden;\n    padding: 0;\n    position: relative;\n  }\n  ha-card[group] {\n    box-shadow: none;\n  }\n  ha-card[more-info] {\n    cursor: pointer;\n  }\n  ha-card[collapse] {\n    overflow: visible;\n  }\n  ha-card:before {\n    content: '';\n    padding-top: 0px;\n    transition: padding-top .5s cubic-bezier(.21,.61,.35,1);\n    will-change: padding-top;\n  }\n  ha-card[initial] .entity__artwork,\n  ha-card[initial] .entity__icon {\n    animation-duration: .001s;\n  }\n  ha-card[initial]:before,\n  ha-card[initial] .player {\n    transition: none;\n  }\n  header {\n    display: none;\n  }\n  mwc-button {\n    --mdc-theme-primary: var(--primary-text-color);\n  }\n  mwc-button[raised] {\n    --mdc-theme-on-primary: var(--primary-text-color);\n    --mdc-theme-primary: transparent;\n    background: rgba(255,255,255,.25);\n  }\n  mwc-button[dense] {\n    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0,0,0,.12);\n  }\n  ha-card[has-title] header {\n    display: block;\n    font-size: var(--paper-font-headline_-_font-size);\n    font-weight: var(--paper-font-headline_-_font-weight);\n    letter-spacing: var(--paper-font-headline_-_letter-spacing);\n    line-height: var(--paper-font-headline_-_line-height);\n    padding: 24px 16px 16px;\n    position: relative;\n  }\n  ha-card[artwork='full-cover'][has-artwork]:before {\n    padding-top: 56%;\n  }\n  ha-card[artwork='full-cover'][has-artwork][content='music']:before,\n  ha-card[artwork='full-cover-fit'][has-artwork]:before {\n    padding-top: 100%;\n  }\n  .bg {\n    background: var(--paper-card-background-color, white);\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n  }\n  ha-card[group] .bg {\n    background: transparent;\n  }\n  .cover,\n  .cover:before {\n    display: block;\n    opacity: 0;\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n    transition: opacity .75s cubic-bezier(.21,.61,.35,1);\n    will-change: opacity;\n  }\n  .cover {\n    animation: fade-in .5s cubic-bezier(.21,.61,.35,1);\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center center;\n  }\n  .cover:before {\n    background: rgba(0,0,0,.5);\n    content: '';\n  }\n  ha-card[artwork*='full-cover'][has-artwork] .player {\n    background: rgba(0,0,0,.75);\n    background: linear-gradient(to top, rgba(0,0,0,.75) 0%, rgba(0,0,0,.5) 50%, transparent 100%);\n  }\n  ha-card[has-artwork] .cover,\n  ha-card[has-artwork][artwork='cover'] .cover:before,\n  ha-card[bg] .cover {\n    opacity: .999;\n  }\n  ha-card[artwork='default'] .cover {\n    display: none;\n  }\n  ha-card[bg] .cover {\n    display: block;\n  }\n  ha-card[artwork='full-cover-fit'][has-artwork] .cover {\n    background-color: black;\n    background-size: contain;\n  }\n  .player {\n    align-self: flex-end;\n    box-sizing: border-box;\n    position: relative;\n    padding: 16px;\n    transition: padding .25s ease-out;\n    width: 100%;\n    will-change: padding;\n  }\n  ha-card[group] .player {\n    padding: 2px 0;\n  }\n  ha-card[has-title] .player {\n    padding-top: 0;\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-icon-button,\n  ha-card[artwork*='cover'][has-artwork] ha-icon,\n  ha-card[artwork*='cover'][has-artwork] .entity__info,\n  ha-card[artwork*='cover'][has-artwork] .entity__info__name,\n  ha-card[artwork*='cover'][has-artwork] mwc-button,\n  ha-card[artwork*='cover'][has-artwork] header,\n  ha-card[artwork*='cover'][has-artwork] .speaker-select > span,\n  ha-card[artwork*='cover'][has-artwork] paper-menu-button mwc-button:focus iron-icon {\n    color: #FFFFFF;\n    border-color: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] ha-slider {\n    --paper-slider-container-color: rgba(255,255,255,.75);\n  }\n  ha-card[artwork*='cover'][has-artwork] mwc-button {\n    --mdc-theme-primary: #FFFFFF;\n    --mdc-theme-on-primary: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-input {\n    --paper-input-container-focus-color: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-checkbox[disabled] {\n    --paper-checkbox-checkmark-color: rgba(0,0,0,.5);\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-checkbox {\n    --paper-checkbox-unchecked-color: #FFFFFF;\n    --paper-checkbox-label-color: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] .media-buttons__button,\n  ha-card[artwork*='cover'][has-artwork] .speaker-select__button {\n    background-color: rgba(255,255,255,.25);\n  }\n  ha-card[artwork*='cover'][has-artwork] mwc-button[raised] {\n    --mdc-theme-primary: transparent;\n    --mdc-theme-on-primary: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-input {\n    --paper-input-container-color: #FFFFFF;\n    --paper-input-container-input-color: #FFFFFF;\n  }\n  .flex {\n    display: flex;\n    display: -ms-flexbox;\n    display: -webkit-flex;\n    flex-direction: row;\n  }\n  .justify {\n    -webkit-justify-content: space-between;\n    justify-content: space-between;\n  }\n  .hidden {\n    display: none;\n  }\n  .entity {\n    position: relative;\n  }\n  .entity__info {\n    justify-content: center;\n    display: flex;\n    flex-direction: column;\n    margin-left: 8px;\n    position: relative;\n    overflow: hidden;\n    user-select: none;\n  }\n  ha-card[rtl] .entity__info {\n    margin-left: auto;\n    margin-right: 8px;\n  }\n  .rows {\n    margin-left: 56px;\n    position: relative;\n  }\n  ha-card[rtl] .rows {\n    margin-left: auto;\n    margin-right: 56px;\n  }\n  .rows > *:nth-child(2) {\n    margin-top: 0px;\n  }\n  .entity__info__media[short] {\n    max-height: 20px;\n    overflow: hidden;\n  }\n  ha-card[content='movie'] .attr__media_season,\n  ha-card[content='movie'] .attr__media_episode {\n    display: none;\n  }\n  .entity__icon {\n    color: var(--paper-item-icon-color, #44739e);\n  }\n  .entity__artwork, .entity__icon {\n    animation: fade-in .25s ease-out;\n    background-position: center center;\n    background-repeat: no-repeat;\n    background-size: cover;\n    border-radius: 100%;\n    height: 40px;\n    line-height: 40px;\n    margin-right: 8px;\n    min-width: 40px;\n    position: relative;\n    text-align: center;\n    width: 40px;\n    will-change: border-color;\n    transition: border-color .25s ease-out;\n  }\n  ha-card[rtl] .entity__artwork, ha-card[rtl] .entity__icon {\n    margin-right: auto;\n    margin-left: 8px;\n  }\n  .entity__artwork[border] {\n    border: 2px solid var(--primary-text-color);\n    box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    -webkit-box-sizing: border-box;\n  }\n  .entity__artwork[state='playing'] {\n    border-color: var(--mmp-accent-color);\n  }\n  .entity__info__name,\n  .entity__info__media[short],\n  .source-menu__source,\n  .media-dropdown__label,\n  .media-label,\n  .label {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }\n  .entity__info__name {\n    line-height: 20px;\n  }\n  .control-row--top {\n    line-height: 40px;\n    max-height: 40px;\n  }\n  .entity[inactive] .entity__info__media,\n  .entity__info__name,\n  paper-icon-button,\n  mwc-button {\n    color: var(--primary-text-color);\n    position: relative;\n  }\n  .entity__info__media {\n    color: var(--secondary-text-color);\n    max-height: 6em;\n    word-break: break-word;\n  }\n  .attr__app_name {\n    display: none;\n  }\n  .attr__app_name:first-child,\n  .attr__app_name:first-of-type {\n    display: inline;\n  }\n  .entity[inactive] .entity__info__media {\n    opacity: .5;\n  }\n  .entity[inactive] .entity__info__media {\n    max-width: 200px;\n  }\n  .entity__info__media[short-scroll] {\n    max-height: 20px;\n    white-space: nowrap;\n  }\n  .entity__info__media[scroll] > span {\n    visibility: hidden;\n  }\n  .entity__info__media[scroll] > div {\n    animation: move linear infinite;\n  }\n  .entity__info__media[scroll] .marquee {\n    animation: slide linear infinite;\n  }\n  .entity__info__media[scroll] .marquee,\n  .entity__info__media[scroll] > div {\n    animation-duration: inherit;\n    visibility: visible;\n  }\n  .entity__info__media[scroll] {\n    animation-duration: 10s;\n    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n  }\n  .marquee {\n    visibility: hidden;\n    position: absolute;\n    white-space: nowrap;\n  }\n  paper-icon-button[color],\n  ha-icon[color] {\n    color: var(--mmp-accent-color) !important;\n  }\n  ha-card[artwork*='cover'][has-artwork] .entity__info__media {\n    color: var(--mini-media-player-media-cover-info-color, #FFFFFF);\n  }\n  paper-icon-button {\n    transition: color .15s ease-in-out;\n    will-change: color;\n  }\n  .entity__info__media span:before {\n    content: ' - ';\n  }\n  .entity__info__media span:first-of-type:before {\n    content: '';\n  }\n  .entity__info__media span:empty,\n  .source-menu span:empty {\n    display: none;\n  }\n  .tts {\n    align-items: center;\n    margin-top: 8px;\n  }\n  .tts__input {\n    cursor: text;\n    flex: 1;\n    margin-right: 8px;\n    --paper-input-container-input: {\n      font-size: 1em;\n    };\n  }\n  ha-card[rtl] .tts__input {\n    margin-right: auto;\n    margin-left: 8px;\n  }\n  .tts__button {\n    margin: 0;\n    padding: .4em;\n  }\n  .media-dropdown {\n    box-sizing: border-box;\n    width: 100%;\n    padding: 8px 8px 0 0;\n  }\n  .media-dropdown__button {\n    display: flex;\n    font-size: 1em;\n    justify-content: space-between;\n    margin: 0;\n    border-bottom: 1px solid var(--primary-text-color);\n    opacity: .8;\n  }\n  .media-dropdown__button > div {\n    display: flex;\n    flex: 1;\n    justify-content: space-between;\n    align-items: center;\n  }\n  .media-dropdown__label {\n    padding: .2em .2em .2em 0;\n    text-align: left;\n    text-transform: none;\n  }\n  .media-dropdown__icon {\n    height: 24px;\n    width: 24px;\n  }\n  .media-buttons {\n    box-sizing: border-box;\n    display: flex;\n    flex-wrap: wrap;\n    margin-top: 8px;\n  }\n  .media-buttons__button {\n    background-color: rgba(255,255,255,.1);\n    box-sizing: border-box;\n    margin: 8px 8px 0 0;\n    min-width: 0;\n    min-width: calc(50% - 8px);\n    flex: 1;\n    overflow: hidden;\n  }\n  .media-buttons__button[columns='0'] {\n    min-width: calc(100% - 8px);\n  }\n  .media-buttons__button[columns='3'] {\n    min-width: calc(33.33% - 8px);\n  }\n  .media-buttons__button[columns='4'] {\n    min-width: calc(25% - 8px);\n  }\n  .media-buttons__button > span {\n    line-height: 24px;\n    text-transform: initial;\n  }\n  .media-buttons__button > *:nth-child(2),\n  .media-dropdown paper-item > *:nth-child(2) {\n    margin-left: 4px;\n  }\n  ha-card[rtl] .media-buttons__button > *:nth-child(2),\n  ha-card[rtl] .media-dropdown paper-item > *:nth-child(2) {\n    margin-left: auto;\n    margin-right: 4px;\n  }\n  .control-row--top .vol-control {\n    max-width: 200px;\n  }\n  .control-row--top {\n    flex: 1;\n    justify-content: flex-end;\n    margin-right: 0;\n    margin-left: auto;\n    width: auto;\n    max-width: 100%;\n  }\n  ha-card[rtl] .control-row--top {\n    margin-right: auto;\n    margin-left: 0;\n  }\n  .control-row--top ha-slider {\n    flex: 1;\n    height: 40px;\n    line-height: initial;\n  }\n  .control-row {\n    flex-wrap: wrap;\n    justify-content: center;\n  }\n  .control-row > .flex {\n    flex: 1;\n    justify-content: space-between;\n  }\n  .control-row > .shuffle {\n    flex: 3;\n    flex-shrink: 200;\n    justify-content: center;\n  }\n  .control-row > .vol-control {\n    flex: 100;\n  }\n  .vol-control {\n    flex: 1;\n    max-height: 40px;\n  }\n  .group-button {\n    height: 85%;\n    margin: auto;\n  }\n  .speaker-select {\n    display: flex;\n    flex-direction: column;\n  }\n  .speaker-select > span {\n    font-weight: 500;\n    margin-top: 12px;\n    text-transform: uppercase;\n  }\n  .speaker-select paper-checkbox {\n    padding: 8px 0;\n  }\n  .speaker-select .buttons {\n    display: flex;\n  }\n  .speaker-select__button {\n    background-color: rgba(255,255,255,.1);\n    margin: 8px 8px 0 0;\n    min-width: 0;\n    text-transform: uppercase;\n    text-align: center;\n    width: 50%;\n  }\n  .speaker-select > paper-checkbox > span {\n    font-weight: 600;\n  }\n  ha-slider {\n    max-width: none;\n    min-width: 100px;\n    width: 100%;\n  }\n  paper-input {\n    opacity: .75;\n    --paper-input-container-color: var(--primary-text-color);\n    --paper-input-container-focus-color: var(--primary-text-color);\n    --paper-input-container: {\n      padding: 0;\n    };\n  }\n  .source-menu {\n    display: flex;\n    align-items: center;\n    height: 40px;\n    line-height: 20px;\n    padding: 0;\n  }\n  paper-menu-button[focused] mwc-button > iron-icon,\n  paper-menu-button[focused] mwc-button > div > iron-icon,\n  paper-menu-button[focused] paper-icon-button,\n  ha-card[artwork*='cover'][has-artwork] paper-menu-button[focused] paper-icon-button {\n    color: var(--mmp-accent-color);\n    transform: rotate(180deg);\n  }\n  paper-menu-button mwc-button:focus iron-icon,\n  paper-menu-button mwc-button:focus > div iron-icon,\n  paper-menu-button mwc-button[focused] iron-icon,\n  paper-menu-button[focused] paper-icon-button[focused],\n  ha-card[artwork*='cover'][has-artwork] paper-menu-button[focused] paper-icon-button[focused] {\n    color: var(--primary-text-color);\n    transform: rotate(0deg);\n  }\n  ha-card[has-artwork][artwork*='cover'] paper-menu-button[focused] paper-icon-button[focused] {\n    color: #FFFFFF;\n  }\n  .source-menu__button {\n    height: 36px;\n    line-height: 20px;\n    margin: 0;\n    min-width: 0;\n  }\n  .source-menu__source {\n    display: block;\n    max-width: 60px;\n    position: relative;\n    width: auto;\n    text-transform: initial;\n  }\n  .source-menu__source[display=\"icon\"] {\n    display: none;\n  }\n  .source-menu__source[display=\"full\"] {\n    max-width: none;\n  }\n  .progress {\n    height: 12px;\n    cursor: pointer;\n    left: 0; right: 0; bottom: 0;\n    position: absolute;\n  }\n  ha-card[group][collapse] .progress {\n    bottom: -2px;\n    height: 5px;\n  }\n  ha-card[group] paper-progress {\n    height: var(--paper-progress-height, 2px);\n  }\n  paper-progress {\n    height: var(--paper-progress-height, 4px);\n    bottom: 0;\n    position: absolute;\n    width: 100%;\n    --paper-progress-active-color: var(--mmp-accent-color);\n    --paper-progress-container-color: rgba(100,100,100,.15);\n    --paper-progress-transition-duration: 1s;\n    --paper-progress-transition-timing-function: linear;\n    --paper-progress-transition-delay: 0s;\n  }\n  ha-card[state='paused'] paper-progress {\n    --paper-progress-active-color: var(--disabled-text-color, rgba(150,150,150,.5));\n  }\n  .label {\n    margin: 0 8px;\n  }\n  .media-dropdown[focused] mwc-button,\n  paper-icon-button[color][opaque],\n  paper-input[focused] {\n    opacity: 1;\n  }\n  .media-dropdown[focused] mwc-button:focus {\n    opacity: .75;\n  }\n  paper-icon-button[opaque],\n  .speaker-select mwc-button[disabled] {\n    opacity: .5;\n  }\n  ha-card[flow] .control-row--top {\n    justify-content: space-between;\n  }\n  ha-card[flow] .power-row {\n    margin-left: auto;\n  }\n  ha-card[flow][rtl] .power-row {\n    margin-right: auto;\n  }\n  ha-card[flow] .entity__info {\n    display: none;\n  }\n  ha-card[flow] ha-slider,\n  ha-card[flow] .vol-control {\n    width: 100%;\n    max-width: none;\n  }\n  ha-card[break*=\"break\"] .rows {\n    margin-left: 0;\n  }\n  ha-card[break*=\"break\"][rtl] .rows {\n    margin-right: 0;\n  }\n  ha-card[break*=\"break\"] .rows > * {\n    padding-left: 8px;\n  }\n  ha-card[break*=\"break\"][rtl] .rows > * {\n    padding-right: 8px;\n  }\n  ha-card[break*=\"break\"] .rows > .control-row {\n    padding: 0;\n  }\n  ha-card[break*=\"break\"] .media-dropdown__button {\n    padding-right: 0;\n  }\n  ha-card[break*=\"break\"][rtl] .media-dropdown__button {\n    padding-left: 0;\n  }\n  .player div:empty,\n  ha-card[break=\"break-width\"] .source-menu__source,\n  .entity[inactive] .source-menu__source {\n    display: none;\n  }\n  @keyframes slide {\n    100% { transform: translateX(-100%); }\n  }\n  @keyframes move {\n    from { transform: translateX(100%); }\n    to { transform: translateX(0); }\n  }\n  @keyframes fade-in {\n    from { opacity: 0; }\n    to { opacity: 1; }\n  }\n  .media-controls {\n    direction: ltr;\n  }",
     ]);
     return (
       (L = function() {
@@ -1376,7 +1378,7 @@
           },
           set(b) {
             const d = this[a];
-            (this[c] = b), this.requestUpdate(a, d);
+            (this[c] = b), this._requestUpdate(a, d);
           },
           configurable: !0,
           enumerable: !0,
@@ -1437,7 +1439,7 @@
         return e(a, c);
       }
       initialize() {
-        this._saveInstanceProperties();
+        this._saveInstanceProperties(), this._requestUpdate();
       }
       _saveInstanceProperties() {
         this.constructor._classProperties.forEach((a, b) => {
@@ -1456,10 +1458,9 @@
       }
       connectedCallback() {
         (this._updateState |= Xa),
-          this._hasConnectedResolver
-            ? (this._hasConnectedResolver(),
-              (this._hasConnectedResolver = void 0))
-            : this.requestUpdate();
+          this._hasConnectedResolver &&
+            (this._hasConnectedResolver(),
+            (this._hasConnectedResolver = void 0));
       }
       disconnectedCallback() {}
       attributeChangedCallback(a, b, c) {
@@ -1489,36 +1490,45 @@
             (this._updateState &= ~Wa);
         }
       }
-      requestUpdate(a, b) {
+      _requestUpdate(a, b) {
         let c = !0;
-        if (void 0 !== a && !this._changedProperties.has(a)) {
+        if (a !== void 0) {
           const d = this.constructor,
             e = d._classProperties.get(a) || Ra;
           d._valueHasChanged(this[a], b, e.hasChanged)
-            ? (this._changedProperties.set(a, b),
+            ? (!this._changedProperties.has(a) &&
+                this._changedProperties.set(a, b),
               !0 === e.reflect &&
                 !(this._updateState & Wa) &&
-                (void 0 === this._reflectingProperties &&
+                (this._reflectingProperties === void 0 &&
                   (this._reflectingProperties = new Map()),
                 this._reflectingProperties.set(a, e)))
             : (c = !1);
         }
-        return (
-          !this._hasRequestedUpdate && c && this._enqueueUpdate(),
-          this.updateComplete
-        );
+        !this._hasRequestedUpdate && c && this._enqueueUpdate();
+      }
+      requestUpdate(a, b) {
+        return this._requestUpdate(a, b), this.updateComplete;
       }
       async _enqueueUpdate() {
         this._updateState |= Ua;
-        let a;
-        const b = this._updatePromise;
-        (this._updatePromise = new Promise((b) => (a = b))),
-          await b,
-          this._hasConnected ||
-            (await new Promise((a) => (this._hasConnectedResolver = a)));
-        const c = this.performUpdate();
-        null != c && "function" == typeof c.then && (await c),
-          a(!this._hasRequestedUpdate);
+        let a, b;
+        const c = this._updatePromise;
+        this._updatePromise = new Promise((c, d) => {
+          (a = c), (b = d);
+        });
+        try {
+          await c;
+        } catch (a) {}
+        this._hasConnected ||
+          (await new Promise((a) => (this._hasConnectedResolver = a)));
+        try {
+          const a = this.performUpdate();
+          null != a && (await a);
+        } catch (a) {
+          b(a);
+        }
+        a(!this._hasRequestedUpdate);
       }
       get _hasConnected() {
         return this._updateState & Xa;
@@ -1530,17 +1540,20 @@
         return this._updateState & Ta;
       }
       performUpdate() {
-        if (
-          (this._instanceProperties && this._applyInstanceProperties(),
-          this.shouldUpdate(this._changedProperties))
-        ) {
-          const a = this._changedProperties;
-          this.update(a),
-            this._markUpdated(),
-            this._updateState & Ta ||
-              ((this._updateState |= Ta), this.firstUpdated(a)),
-            this.updated(a);
-        } else this._markUpdated();
+        this._instanceProperties && this._applyInstanceProperties();
+        let a = !1;
+        const b = this._changedProperties;
+        try {
+          (a = this.shouldUpdate(b)), a && this.update(b);
+        } catch (b) {
+          throw ((a = !1), b);
+        } finally {
+          this._markUpdated();
+        }
+        a &&
+          (!(this._updateState & Ta) &&
+            ((this._updateState |= Ta), this.firstUpdated(b)),
+          this.updated(b));
       }
       _markUpdated() {
         (this._changedProperties = new Map()), (this._updateState &= ~Ua);
@@ -1548,10 +1561,10 @@
       get updateComplete() {
         return this._updatePromise;
       }
-      shouldUpdate() {
+      shouldUpdate(a) {
         return !0;
       }
-      update() {
+      update(a) {
         this._reflectingProperties !== void 0 &&
           0 < this._reflectingProperties.size &&
           (this._reflectingProperties.forEach((a, b) =>
@@ -1559,8 +1572,8 @@
           ),
           (this._reflectingProperties = void 0));
       }
-      updated() {}
-      firstUpdated() {}
+      updated(a) {}
+      firstUpdated(a) {}
     }
     Ya.finalized = !0;
     const Za =
@@ -2064,7 +2077,8 @@
         return this.group.length;
       }
       get group() {
-        return this.attr.sonos_group || [];
+        const a = "".concat(this.config.speaker_group.platform, "_group");
+        return this.attr[a] || [];
       }
       get master() {
         return this.group[0] || this.config.entity;
@@ -2172,19 +2186,21 @@
         this.callService(a, "media_next_track");
       }
       setVolume(a) {
-        let b = parseFloat(a.target.value) / 100;
-        this.config.sonos.sync_volume
+        const b = parseFloat(a.target.value) / 100;
+        this.config.speaker_group.sync_volume
           ? this.group.forEach((c) => {
-              const d = this.config.sonos.entities.find(
-                (a) => a.entity_id === c
-              );
+              const d =
+                this.config.speaker_group.entities.find(
+                  (a) => a.entity_id === c
+                ) || {};
+              let e = b;
               d.volume_offset &&
-                ((b += d.volume_offset / 100),
-                1 < b && (b = 1),
-                0 > b && (b = 0)),
+                ((e += d.volume_offset / 100),
+                1 < e && (e = 1),
+                0 > e && (e = 0)),
                 this.callService(a, "volume_set", {
                   entity_id: c,
-                  volume_level: b,
+                  volume_level: e,
                 });
             })
           : this.callService(a, "volume_set", {
@@ -2201,27 +2217,17 @@
           );
       }
     }
-    const xb = (function f(a) {
-      for (
-        var b = arguments.length, c = Array(1 < b ? b - 1 : 0), d = 1;
-        d < b;
-        d++
-      )
-        c[d - 1] = arguments[d];
-      const e = c.reduce((b, c, d) => b + ab(c) + a[d + 1], a[0]);
-      return new _a(e, $a);
-    })(L());
-    customElements.get("mwc-button") ||
-      customElements.define(
-        "mwc-button",
-        class extends customElements.get("paper-button") {}
-      );
-    const yb = {
-        shuffle: !0,
-        power_state: !0,
-        artwork_border: !0,
-        icon_state: !0,
-      },
+    const xb = (function css(a) {
+        for (
+          var b = arguments.length, c = Array(1 < b ? b - 1 : 0), d = 1;
+          d < b;
+          d++
+        )
+          c[d - 1] = arguments[d];
+        const e = c.reduce((b, c, d) => b + ab(c) + a[d + 1], a[0]);
+        return new _a(e, $a);
+      })(L()),
+      yb = { shuffle: !0, power_state: !0, artwork_border: !0, icon_state: !0 },
       zb = {
         DEFAULT: "mdi:cast",
         DROPDOWN: "mdi:chevron-down",
@@ -2249,16 +2255,26 @@
         "edit",
         "idleView",
       ];
+    customElements.get("mwc-button") ||
+      customElements.define(
+        "mwc-button",
+        class extends customElements.get("paper-button") {}
+      ),
+      customElements.get("ha-slider") ||
+        customElements.define(
+          "ha-slider",
+          class extends customElements.get("ha-slider") {}
+        );
     class Bb extends cb {
       constructor() {
         super(),
           (this._overflow = !1),
-          (this.break = !0),
           (this.initial = !0),
           (this.picture = !1),
           (this.thumbnail = !1),
           (this.edit = !1),
-          (this.idleView = !1);
+          (this.idleView = !1),
+          (this.rtl = !1);
       }
       static get properties() {
         return {
@@ -2276,6 +2292,7 @@
           _progress: Boolean,
           _pos: Number,
           idleView: Boolean,
+          rtl: Boolean,
         };
       }
       static get styles() {
@@ -2290,6 +2307,7 @@
             (this.player = new wb(a, this.config, b)),
             (this.progress = this.player.hasProgress),
             (this.idleView = this.player.idle),
+            (this.rtl = this._computeRTL(a)),
             this.player.trackIdle && this._updateIdle());
       }
       get hass() {
@@ -2334,7 +2352,11 @@
           a,
           {
             hide: N({}, yb, a.hide),
-            sonos: N({ show_group_count: !0 }, a.sonos),
+            speaker_group: N(
+              { show_group_count: !0, platform: "sonos" },
+              a.sonos,
+              a.speaker_group
+            ),
           }
         );
         (b.max_volume = +b.max_volume || 100),
@@ -2344,8 +2366,10 @@
           (this.config = b);
       }
       shouldUpdate(a) {
-        const b = Ab.some((b) => a.has(b));
-        return b && this.player;
+        return (
+          void 0 === this.break && this._computeRect(this),
+          Ab.some((b) => a.has(b)) && this.player
+        );
       }
       firstUpdated() {
         const a = new tb((a) => {
@@ -2362,9 +2386,9 @@
             });
           });
         });
-        a.observe(this.shadowRoot.querySelector(".player")),
+        a.observe(this),
           setTimeout(() => (this.initial = !1), 250),
-          (this.edit = this.config.sonos.expanded || !1);
+          (this.edit = this.config.speaker_group.expanded || !1);
       }
       updated() {
         "scroll" === this.config.info &&
@@ -2397,6 +2421,7 @@
           b.flow,
           b.collapse,
           this.player.content,
+          this.rtl,
           () => this._handleMore(),
           this._renderArtwork(c),
           b.title,
@@ -2417,7 +2442,7 @@
         return this.config.name || this.player.name;
       }
       _speakerCount() {
-        if (this.config.sonos.show_group_count) {
+        if (this.config.speaker_group.show_group_count) {
           const a = this.player.groupCount;
           return 1 < a ? " +".concat(a - 1) : "";
         }
@@ -2450,10 +2475,20 @@
         }
       }
       _computeRect(a) {
-        const b = a.contentRect,
+        const b = a.contentRect || a.getBoundingClientRect(),
           c = b.left,
           d = b.width;
         this.break = d + 2 * c < 390;
+      }
+      _computeRTL(a) {
+        const b = a.language || "en";
+        return (
+          !!a.translationMetadata.translations[b] &&
+          (a.translationMetadata.translations[b].isRTL || !1)
+        );
+      }
+      _computeRTLDirection() {
+        return this.rtl ? "rtl" : "ltr";
       }
       _renderArtwork(a) {
         if (this.thumbnail || this.config.background) {
@@ -2570,7 +2605,7 @@
               this.player.active && b.collapse ? this._renderControlRow() : "",
               this.player.idle ? this._renderIdleStatus() : "",
               this._renderSource(),
-              b.sonos.entities ? this._renderGroupButton() : "",
+              b.speaker_group.entities ? this._renderGroupButton() : "",
               b.hide.power ? "" : this._renderPowerButton()
             );
       }
@@ -2580,7 +2615,7 @@
         );
       }
       _renderGroupList() {
-        const a = this.config.sonos.entities,
+        const a = this.config.speaker_group.entities,
           b = this.player,
           c = b.group,
           d = b.master,
@@ -2685,7 +2720,8 @@
           (a) => this.player.setVolume(a),
           (a) => a.stopPropagation(),
           this.config.max_volume,
-          100 * this.player.vol
+          100 * this.player.vol,
+          this._computeRTLDirection()
         );
       }
       _renderVolButtons() {
@@ -2760,25 +2796,25 @@
       _handleTts(a) {
         const b = this.shadowRoot.querySelector(".tts paper-input"),
           c = b.value,
-          d = { message: c };
-        this.config.tts.entity_id && (d.entity_id = this.config.tts.entity_id),
-          this.config.tts.language && (d.language = this.config.tts.language),
-          "alexa" === this.config.tts.platform
-            ? this._callService(a, "alexa_tts", { message: c })
-            : "sonos" === this.config.tts.platform
+          d = { message: c },
+          e = this.config.tts;
+        e.entity_id && (d.entity_id = e.entity_id),
+          e.language && (d.language = e.language),
+          "alexa" === e.platform
+            ? this.hass.callService("notify", "alexa_media", {
+                message: c,
+                data: { type: e.type || "tts" },
+                target: d.entity_id || this.config.entity,
+              })
+            : "sonos" === e.platform
             ? this.hass.callService("script", "sonos_say", {
                 sonos_entity: this.config.entity,
-                volume: this.config.tts.volume || 0.5,
+                volume: e.volume || 0.5,
                 message: c,
               })
-            : "ga" === this.config.tts.platform
+            : "ga" === e.platform
             ? this.hass.callService("notify", "ga_broadcast", { message: c })
-            : this._callService(
-                a,
-                "".concat(this.config.tts.platform, "_say"),
-                d,
-                "tts"
-              ),
+            : this._callService(a, "".concat(e.platform, "_say"), d, "tts"),
           a.stopPropagation(),
           (b.value = "");
       }
@@ -2807,11 +2843,12 @@
         a.stopPropagation(), (this.edit = !this.edit);
       }
       _handleGroupItemChange(a, b, c) {
-        const d = { entity_id: b };
+        const d = this.config.speaker_group.platform,
+          e = { entity_id: b };
         c
-          ? ((d.master = this.config.entity),
-            this._callService(a, "SONOS_JOIN", d))
-          : this._callService(a, "SONOS_UNJOIN", d);
+          ? ((e.master = this.config.entity),
+            this._callService(a, "".concat(d, "_JOIN"), e))
+          : this._callService(a, "".concat(d, "_UNJOIN"), e);
       }
       _updateProgress() {
         (this.pos = this.player.progress),
