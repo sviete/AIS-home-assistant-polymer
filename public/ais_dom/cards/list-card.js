@@ -25,15 +25,13 @@ class ListCard extends HTMLElement {
               padding: 0 16px 16px 16px;
               border-collapse: collapse;
               padding: 0px;
+              border-spacing: 0px;
             }
             tr:hover td{
               background-color:#ffc94761;
             }
             thead th {
               text-align: left;
-            }
-            tbody tr {
-              background-color: var(--paper-card-background-color);
             }
             .button {
               overflow: auto;
@@ -47,9 +45,13 @@ class ListCard extends HTMLElement {
               text-decoration-line: none;
               font-weight: normal;
             }
-            tr.itemSelected td{
-              background-color:#ffc94773;
-              padding: 0px;
+            td img{
+              display: block;
+            } td.icon{
+              padding-right: 10px;
+            }
+            tbody tr.itemSelected td{
+              background-color:#ca7d0d;
             }
           `;
 
@@ -62,9 +64,7 @@ class ListCard extends HTMLElement {
         ) {
           const styles = columns[column].style;
 
-          style.textContent += `
-              .${columns[column].field} {`;
-
+          style.textContent += `.${columns[column].field} {`;
           for (const index in styles) {
             if (styles.hasOwnProperty(index)) {
               for (const s in styles[index]) {
@@ -127,14 +127,17 @@ class ListCard extends HTMLElement {
 
         // eslint-disable-next-line guard-for-in
         let classStatus = "";
+        let rowBgColor = "";
         for (const entry in feed) {
           if (rows >= rowLimit) break;
 
           if (feed.hasOwnProperty(entry)) {
             if (selectedId == rows) {
               classStatus = "itemSelected";
+              rowBgColor = 'bgcolor="#ca7d0d"';
             } else {
               classStatus = "";
+              rowBgColor = "";
             }
 
             if (!columns) {
@@ -155,7 +158,9 @@ class ListCard extends HTMLElement {
 
               if (!has_field) continue;
               card_content +=
-                `<tr class="trackRow ` +
+                `<tr ` +
+                rowBgColor +
+                ` class="trackRow ` +
                 classStatus +
                 `" data-id="${rows}" data-audio-type="${audioType}">`;
 
@@ -178,11 +183,11 @@ class ListCard extends HTMLElement {
                       ) {
                         card_content += `<img src="${
                           feed[entry][columns[column].field][0].url
-                        }" width="80" height="80">`;
+                        }" width="70" height="70">`;
                       } else {
                         card_content += `<img src="${
                           feed[entry][columns[column].field]
-                        }" width="80" height="80">`;
+                        }" width="70" height="70">`;
                       }
                     } else if (columns[column].type === "icon") {
                       card_content += `<ha-icon icon="${
@@ -232,9 +237,6 @@ class ListCard extends HTMLElement {
     const tracks = root.querySelectorAll("tr.trackRow");
     tracks.forEach((track) => {
       track.addEventListener("click", (event) => {
-        console.log(this);
-        console.log(track.getAttribute("data-id"));
-        console.log(this.getAttribute("data-id"));
         hass.callService("ais_cloud", "play_audio", {
           id: track.getAttribute("data-id"),
           audio_type: track.getAttribute("data-audio-type"),
