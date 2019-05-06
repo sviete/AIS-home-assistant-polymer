@@ -166,7 +166,13 @@ class ListCard extends HTMLElement {
 
               for (const column in columns) {
                 if (columns.hasOwnProperty(column)) {
-                  card_content += `<td class=${columns[column].field}>`;
+                  if (columns[column].type === "icon") {
+                    card_content += `<td align="right" class=${
+                      columns[column].field
+                    }>`;
+                  } else {
+                    card_content += `<td class=${columns[column].field}>`;
+                  }
 
                   if (columns[column].hasOwnProperty("add_link")) {
                     card_content += `<a href="${

@@ -21,7 +21,7 @@ class UpcomingMediaCard extends HTMLElement {
 
     const view = this.config.image_style || "poster";
     const dateform = this.config.date || "mmdd";
-    let icon = this.config.icon || feed[0]["icon"];
+    let icon = this.config.icon || "mdi:play";
     const icon_hide = this.config.icon == "none" ? "display:none;" : "";
     const icon_color = this.config.icon_color || "white";
     const flag_color = this.config.flag_color || "var(--primary-color)";
@@ -84,10 +84,9 @@ class UpcomingMediaCard extends HTMLElement {
         ? "5px 5px 10px"
         : "3px 2px 25px"
       : "";
-    const svgshdw = shadows(this.config.box_shadows) ? "url(#grad1)" : accent;
     const txtshdw = shadows(this.config.text_shadows) ? "1px 1px 3px" : "";
     //const rowLimit = Math.min(Object.keys(feed).length, this.config.max || 5);
-    const rowLimit = 5;
+    const rowLimit = 50;
     window.cardSize = rowLimit;
     let rows = 0;
     const audioType = this.config.audio_type;
@@ -98,8 +97,11 @@ class UpcomingMediaCard extends HTMLElement {
           background-color:#ffc94761;
           cursor: pointer;
         }
-        div.itemSelected{
-          background-color:#ca7d0d91;
+        div._fan_fanart:hover .${service}_flag_${view} {
+          fill:${flag_color};
+        }
+        div.itemSelected .${service}_flag_${view}{
+          fill:${flag_color};
         }
         .${service}_${view} {
           width:100%;
@@ -136,7 +138,7 @@ class UpcomingMediaCard extends HTMLElement {
         .${service}_container_${view} {
           position:relative;
           outline: 5px solid #fff;
-          width:30%;
+          width:25%;
           outline:5px solid ${border};
           box-shadow:${boxshdw} rgba(0,0,0,.8);
           float:left;
@@ -152,7 +154,6 @@ class UpcomingMediaCard extends HTMLElement {
           position: absolute;
           bottom: 0;
           right: 0;
-          fill:${flag_color};
         }
         .${service}_flag_${view} svg{
           float:right;
@@ -190,12 +191,15 @@ class UpcomingMediaCard extends HTMLElement {
       `;
     } else {
       style.textContent = `
-        div._fan_fanart:hover{
+        div._poster:hover{
           background-color:#ffc94761;
           cursor: pointer;
         }
-        div.itemSelected{
-          background-color:#ca7d0d91;
+        div._poster:hover .${service}_flag_${view} {
+          fill:${flag_color};
+        }
+        div.itemSelected .${service}_flag_${view}{
+          fill:${flag_color};
         }
         .${service}_${view} {
           width:100%;
@@ -209,12 +213,12 @@ class UpcomingMediaCard extends HTMLElement {
           position:relative;
         }
         .${service}_${view} ha-icon {
-          top: 5px;
-          margin-right: -19px;
+          top: 3px;
+          margin-right: -39px;
           right:0;
           z-index: 2;
-          width: 15%;
-          height: 15%;
+          width: 25%;
+          height: 25%;
           position:absolute;
           color:${icon_color};
           filter: drop-shadow( 0px 0px 1px rgba(0,0,0,1));
@@ -242,7 +246,6 @@ class UpcomingMediaCard extends HTMLElement {
           margin-top:3px;
           margin-right:3px;
           right: 0;
-          fill:${flag_color};
         }
         .${service}_flag_${view} svg{
           float:right;
@@ -346,6 +349,7 @@ class UpcomingMediaCard extends HTMLElement {
           : airdate.toLocaleDateString([], { weekday: "short" });
       //
       let classStatus = selectedId == rows ? "itemSelected" : "";
+      let svgshdw = selectedId == rows ? "url(#grad1)" : "";
 
       // Format runtime as either '23 min' or '01:23' if over an hour
       let hrs = String(Math.floor(item_runtime / 60)).padStart(2, 0);
@@ -362,8 +366,12 @@ class UpcomingMediaCard extends HTMLElement {
       if (item == "0") var top = "0px";
       else view == "poster" ? "20px" : "10px";
 
-      let line = [feed[item]["title"], feed[item]["name"], "xxx", "xxx", "-"];
-      let char = [title_size, line1_size, line2_size, line3_size, line4_size];
+      let line = [
+        feed[item]["title"],
+        feed[item]["mediasource"],
+        feed[item]["name"],
+      ];
+      let char = [title_size, line1_size, line2_size];
 
       for (let i = 0; i < line.length; i++) {
         let text = line[i];
@@ -394,16 +402,16 @@ class UpcomingMediaCard extends HTMLElement {
       if (view == "poster") {
         this.content.innerHTML += `
           <div id='ais_track' class='${service}_${view}' style='margin-top:${top};' data-id='${item}' data-audio-type='${audioType}'>
-             <div class="${service}_container_${view}" style="background-image:url('${image}');">
+             <div class="${service}_container_${view} ${classStatus}" style="background-image:url('${image}');">
                 <img src="${image}"/>
                 <ha-icon icon="${icon}" style="${dflag}"></ha-icon>
                 <div class="${service}_flag_${view} ${classStatus}" style="${dflag}">
                    <svg style="${dflag}" preserveAspectRatio="none" viewBox="0 0 100 100">
-                      <polygon points="100 25,65 0,100 0"></polygon>
+                      <polygon points="100 35,60 0,100 0"></polygon>
                    </svg>
                 </div>
              </div>
-             <svg class='${service}_svg_${view}' viewBox="0 0 200 100">
+             <svg class='${service}_svg_${view}' viewBox="0 0 200 80">
                 <defs>
                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%" style="stop-color:rgb(20,20,20,1);stop-opacity:1" />
@@ -411,10 +419,9 @@ class UpcomingMediaCard extends HTMLElement {
                    </linearGradient>
                 </defs>
                 <rect width="500px" height="23px" fill="${svgshdw}"/>
-                <text>
-                   ${line[0]}
+                <text>${line[0]}
                    <tspan dy="1.3em" style="font-size:3px;fill:transparent;text-shadow:0 0 transparent;">.</tspan>
-                   ${line[1]}${line[2]}${line[3]}${line[4]}
+                   ${line[1]}${line[2]}
                 </text>
              </svg>
           </div>
@@ -423,17 +430,15 @@ class UpcomingMediaCard extends HTMLElement {
         this.content.innerHTML += `
           <div id='ais_track' class="${service}_${view} style='${top}'"
              style="${shiftimg}background-image:url('${image}')" data-id='${item}' data-audio-type='${audioType}'>
-             <div class="${service}_fan_${view}">
+             <div class="${service}_fan_${view} ${classStatus}">
                 <ha-icon icon="${icon}" style="${dflag}"></ha-icon>
                 <div class="${service}_flag_${view} ${classStatus}" style="${dflag}">
                    <svg style="${dflag}" preserveAspectRatio="none" viewBox="0 0 100 100">
-                      <polygon points="100 30,90 0,100 0"></polygon>
+                      <polygon points="100 40,88 0,100 0"></polygon>
                    </svg>
                 </div>
-                <svg class="${service}_svg_${view}"viewBox="0 0 200 100">
-                   <text>${line[0]}${line[1]}${line[2]}${line[3]}${
-          line[4]
-        }</text>
+                <svg class="${service}_svg_${view}"viewBox="0 0 200 80">
+                   <text>${line[0]}${line[1]}${line[2]}</text>
                 </svg>
              </div>
           </div>
@@ -447,9 +452,7 @@ class UpcomingMediaCard extends HTMLElement {
     }
 
     //
-    console.log(this);
     const tracks = this.querySelectorAll("div#ais_track");
-    console.log(tracks);
     tracks.forEach((track) => {
       track.addEventListener("click", (event) => {
         hass.callService("ais_cloud", "play_audio", {
