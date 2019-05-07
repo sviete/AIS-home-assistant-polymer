@@ -30,6 +30,14 @@ class ListCard extends HTMLElement {
             tr:hover td{
               background-color:#ffc94761;
             }
+            tr td.playItem:hover{
+              color:#FF9800;
+              cursor: pointer;
+            }
+            tr td.deleteItem:hover ha-icon{
+              color:red;
+              cursor: pointer;
+            }
             thead th {
               text-align: left;
             }
@@ -52,6 +60,13 @@ class ListCard extends HTMLElement {
             }
             tbody tr.itemSelected td{
               background-color:#ca7d0d;
+            }
+            tbody tr.itemSelected td.playItem ha-icon{
+              color:#ffc94761;
+            }
+            td.deleteItem {
+              padding-right: 15px;
+              padding-left: 15px;
             }
           `;
 
@@ -167,11 +182,17 @@ class ListCard extends HTMLElement {
               for (const column in columns) {
                 if (columns.hasOwnProperty(column)) {
                   if (columns[column].type === "icon") {
-                    card_content += `<td align="right" class=${
+                    card_content += `<td align="right" class="${
                       columns[column].field
-                    }>`;
+                    } playItem" data-id="${rows}" data-audio-type="${audioType}">`;
+                  } else if (columns[column].type === "icon_remove") {
+                    card_content += `<td align="center" class="${
+                      columns[column].field
+                    } deleteItem" data-id="${rows}" data-audio-type="${audioType}">`;
                   } else {
-                    card_content += `<td class=${columns[column].field}>`;
+                    card_content += `<td class="${
+                      columns[column].field
+                    } playItem" data-id="${rows}" data-audio-type="${audioType}">`;
                   }
 
                   if (columns[column].hasOwnProperty("add_link")) {
@@ -196,6 +217,10 @@ class ListCard extends HTMLElement {
                         }" width="70" height="70">`;
                       }
                     } else if (columns[column].type === "icon") {
+                      card_content += `<ha-icon icon="${
+                        feed[entry][columns[column].field]
+                      }"></ha-icon>`;
+                    } else if (columns[column].type === "icon_remove") {
                       card_content += `<ha-icon icon="${
                         feed[entry][columns[column].field]
                       }"></ha-icon>`;
@@ -240,14 +265,23 @@ class ListCard extends HTMLElement {
       this.style.display = "none";
     }
     //
-    const tracks = root.querySelectorAll("tr.trackRow");
-    tracks.forEach((track) => {
+    const playTracks = root.querySelectorAll("td.playItem");
+    const delTracks = root.querySelectorAll("td.deleteItem");
+    playTracks.forEach((track) => {
       track.addEventListener("click", (event) => {
         hass.callService("ais_cloud", "play_audio", {
           id: track.getAttribute("data-id"),
           audio_type: track.getAttribute("data-audio-type"),
         });
         track.classList.add("clicked");
+      });
+    });
+    delTracks.forEach((track) => {
+      track.addEventListener("click", (event) => {
+        hass.callService("ais_cloud", "delete_audio", {
+          id: track.getAttribute("data-id"),
+          audio_type: track.getAttribute("data-audio-type"),
+        });
       });
     });
   }
