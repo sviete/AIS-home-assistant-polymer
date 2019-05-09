@@ -115,7 +115,7 @@ class ListCard extends HTMLElement {
         ? config.row_limit
         : Object.keys(feed).length;
       let rows = 0;
-      const audioType = config.audio_type;
+      const mediaSource = config.media_source;
 
       if (feed !== undefined && Object.keys(feed).length > 0) {
         let card_content = "<table><thread><tr>";
@@ -177,22 +177,22 @@ class ListCard extends HTMLElement {
                 rowBgColor +
                 ` class="trackRow ` +
                 classStatus +
-                `" data-id="${rows}" data-audio-type="${audioType}">`;
+                `" data-id="${rows}" data-media-source="${mediaSource}">`;
 
               for (const column in columns) {
                 if (columns.hasOwnProperty(column)) {
                   if (columns[column].type === "icon") {
                     card_content += `<td align="right" class="${
                       columns[column].field
-                    } playItem" data-id="${rows}" data-audio-type="${audioType}">`;
+                    } playItem" data-id="${rows}" data-media-source="${mediaSource}">`;
                   } else if (columns[column].type === "icon_remove") {
                     card_content += `<td align="center" class="${
                       columns[column].field
-                    } deleteItem" data-id="${rows}" data-audio-type="${audioType}">`;
+                    } deleteItem" data-id="${rows}" data-media-source="${mediaSource}">`;
                   } else {
                     card_content += `<td class="${
                       columns[column].field
-                    } playItem" data-id="${rows}" data-audio-type="${audioType}">`;
+                    } playItem" data-id="${rows}" data-media-source="${mediaSource}">`;
                   }
 
                   if (columns[column].hasOwnProperty("add_link")) {
@@ -271,7 +271,7 @@ class ListCard extends HTMLElement {
       track.addEventListener("click", (event) => {
         hass.callService("ais_cloud", "play_audio", {
           id: track.getAttribute("data-id"),
-          audio_type: track.getAttribute("data-audio-type"),
+          media_source: track.getAttribute("data-media-source"),
         });
         track.classList.add("clicked");
       });
@@ -280,7 +280,7 @@ class ListCard extends HTMLElement {
       track.addEventListener("click", (event) => {
         hass.callService("ais_cloud", "delete_audio", {
           id: track.getAttribute("data-id"),
-          audio_type: track.getAttribute("data-audio-type"),
+          media_source: track.getAttribute("data-media-source"),
         });
       });
     });
