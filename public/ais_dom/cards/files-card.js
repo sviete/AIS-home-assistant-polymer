@@ -18,8 +18,8 @@ class FilesCard extends HTMLElement {
     const content = document.createElement("div");
     const style = document.createElement("style");
     style.textContent = `
-            ha-card {
-              /* sample css */
+            tr{
+              height: 3em;
             }
             table {
               width: 100%;
@@ -42,10 +42,6 @@ class FilesCard extends HTMLElement {
             ha-icon {
               display: flex;
               width: auto;
-            }
-            tr.clicked {
-              font-size: 1.2em;
-              color: #ff5722;
             }
             tr.fileSelected td{
               background-color:#ffc94773;
@@ -83,7 +79,7 @@ class FilesCard extends HTMLElement {
           iconHome = "";
         }
         let cardContent =
-          '<table><tr><th width="10%">' +
+          '<table><tr style="height:0px"><th width="10%">' +
           iconHome +
           '</th><th width="80%">' +
           path +
@@ -138,7 +134,7 @@ class FilesCard extends HTMLElement {
         hass.callService("ais_drives_service", "browse_path", {
           path: file.getAttribute("data-path"),
         });
-        file.classList.add("clicked");
+        file.classList.add("fileSelected");
       });
     });
   }
