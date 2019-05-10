@@ -1,7 +1,7 @@
 (function() {
   "use strict";
   function a() {
-    const b = M(["<span class='media-label'>", "</span>"]);
+    const b = ma(["<span class=", ">", "</span>"]);
     return (
       (a = function() {
         return b;
@@ -10,7 +10,7 @@
     );
   }
   function b() {
-    const a = M(["<iron-icon .icon=", "></iron-icon>"]);
+    const a = ma(["<span class=", ">", "</span>"]);
     return (
       (b = function() {
         return a;
@@ -19,12 +19,9 @@
     );
   }
   function c() {
-    const a = M([
-      "\n          <mwc-button dense raised columns=",
-      "\n            class='media-buttons__button'\n            @click='",
-      "'>\n            ",
-      "\n            ",
-      "\n          </mwc-button>",
+    const a = ma([
+      "\n          <div>\n            <div class='marquee'>\n              ",
+      "\n            </div>\n          </div>",
     ]);
     return (
       (c = function() {
@@ -34,8 +31,13 @@
     );
   }
   function d() {
-    const a = M([
-      "\n      <div class='media-buttons'>\n        ",
+    const a = ma([
+      "\n      <div class='entity__info__media'\n        ?short=",
+      "\n        ?short-scroll=",
+      "\n        ?scroll=",
+      "\n        style='animation-duration: ",
+      "s;'>\n        ",
+      "\n        ",
       "\n      </div>",
     ]);
     return (
@@ -46,7 +48,11 @@
     );
   }
   function e() {
-    const a = M(["<span class='media-label'>", "</span>"]);
+    const a = ma([
+      "\n      <div class='entity__info__name'>\n        ",
+      " ",
+      "\n      </div>",
+    ]);
     return (
       (e = function() {
         return a;
@@ -55,7 +61,10 @@
     );
   }
   function f() {
-    const a = M(["<iron-icon .icon=", "></iron-icon>"]);
+    const a = ma([
+      "\n      <div class='entity__icon'>\n        <ha-icon .icon=",
+      "></ha-icon>\n      </div>",
+    ]);
     return (
       (f = function() {
         return a;
@@ -64,11 +73,11 @@
     );
   }
   function g() {
-    const a = M([
-      "\n            <paper-item @click=",
-      ">\n              ",
-      "\n              ",
-      "\n            </paper-item>",
+    const a = ma([
+      "\n        <div class='entity__artwork'\n          style='background-image: ",
+      ";'\n          ?border=",
+      "\n          state=",
+      ">\n        </div>",
     ]);
     return (
       (g = function() {
@@ -78,14 +87,7 @@
     );
   }
   function h() {
-    const a = M([
-      "\n      <paper-menu-button class='media-dropdown'\n        noink no-animations horizontal-align vertical-align .noLabelFloat=",
-      "\n        @click='",
-      "'>\n        <mwc-button class='media-dropdown__button' slot='dropdown-trigger'>\n          <div>\n          <span class='media-dropdown__label'>\n            ",
-      "\n          </span>\n            <iron-icon class='media-dropdown__icon' .icon=",
-      '></iron-icon>\n          </div>\n        </mwc-button>\n        <paper-listbox slot="dropdown-content" class="media-dropdown-trigger">\n          ',
-      "\n        </paper-listbox>\n      </paper-menu-button>",
-    ]);
+    const a = ma(["<div class='cover' style='background-image: ", ";'></div>"]);
     return (
       (h = function() {
         return a;
@@ -94,11 +96,11 @@
     );
   }
   function i() {
-    const a = M([
-      "\n      <div class='tts flex justify'>\n        <paper-input class='tts__input' no-label-float\n          placeholder=",
-      "...\n          @click='",
-      "'>\n        </paper-input>\n        <div>\n          <mwc-button class='tts_button' @click='",
-      "'>\n            SEND\n          </mwc-button>\n        </div>\n      </div>",
+    const a = ma([
+      "\n              <mmp-tts\n                .config=",
+      "\n                .hass=",
+      "\n                .entity=",
+      ">\n              </mmp-tts>\n            ",
     ]);
     return (
       (i = function() {
@@ -108,11 +110,10 @@
     );
   }
   function j() {
-    const a = M([
-      "\n      <div class='vol-control--stateless flex'>\n        ",
-      "\n        ",
-      "\n        ",
-      "\n      </div>",
+    const a = ma([
+      "\n              <mmp-media-controls\n                .player=",
+      "\n                .config=",
+      ">\n              </mmp-media-controls>\n            ",
     ]);
     return (
       (j = function() {
@@ -122,15 +123,33 @@
     );
   }
   function k() {
-    const a = M([
-      "\n      <div class='vol-control flex'>\n        <div>\n          ",
-      "\n        </div>\n        <ha-slider ?disabled=",
-      "\n          @change=",
-      "\n          @click=",
-      "\n          min='0' max=",
-      " value=",
-      "\n          dir=",
-      "\n          ignore-bar-touch pin>\n        </ha-slider>\n      </div>",
+    const a = ma([
+      "\n      <ha-card\n        @click=",
+      "\n        class=",
+      "\n        artwork=",
+      "\n        content=",
+      ">\n        <div class='mmp__bg'>\n          ",
+      "\n          <mmp-progress\n            .player=",
+      "\n            .showTime=",
+      ">\n          </mmp-progress>\n        </div>\n        <div class='mmp-player'>\n          <div class='mmp-player__core flex' ?inactive=",
+      ">\n            ",
+      "\n            <div class='entity__info'>\n              ",
+      "\n              ",
+      "\n            </div>\n            <mmp-powerstrip\n              @toggleGroupList=",
+      "\n              .hass=",
+      "\n              .player=",
+      "\n              .config=",
+      "\n              .groupVisible=",
+      "\n              .idle=",
+      "\n              ?flow=",
+      ">\n            </mmp-powerstrip>\n          </div>\n          <div class='mmp-player__adds'>\n            ",
+      "\n            <mmp-shortcuts\n              .player=",
+      "\n              .shortcuts=",
+      ">\n            </mmp-shortcuts>\n            ",
+      "\n            <mmp-group-list\n              .visible=",
+      "\n              .entities=",
+      "\n              .player=",
+      ">\n            </mmp-group-list>\n          </div>\n        </div>\n      </ha-card>\n    ",
     ]);
     return (
       (k = function() {
@@ -140,7 +159,9 @@
     );
   }
   function l() {
-    const a = M(["\n      ", "\n      ", "\n      ", ""]);
+    const a = ma([
+      "\n        :host {\n          display: flex;\n          line-height: 40px;\n          max-height: 40px;\n        }\n        :host([flow]) mmp-media-controls {\n          max-width: unset;\n        }\n        mmp-media-controls {\n          max-width: 200px;\n        }\n        .group-button {\n          height: 34px;\n          width: 34px;\n          min-width: 34px;\n          margin: 3px;\n        }\n        paper-icon-button {\n          min-width: 40px;\n        }\n      ",
+    ]);
     return (
       (l = function() {
         return a;
@@ -149,11 +170,9 @@
     );
   }
   function m() {
-    const a = M([
-      "\n      ",
-      "\n      <div class='flex shuffle'>\n        ",
-      "\n      </div>\n      <div class='flex media-controls'>\n        ",
-      "\n      </div>",
+    const a = ma([
+      "\n        <span class='label ellipsis'>\n          ",
+      "\n        </span>\n      ",
     ]);
     return (
       (m = function() {
@@ -163,7 +182,11 @@
     );
   }
   function n() {
-    const a = M(["<paper-item value=", ">", "</paper-item>"]);
+    const a = ma([
+      "\n        <paper-icon-button\n          .icon=",
+      "\n          @click=",
+      ">\n        </paper-icon-button>",
+    ]);
     return (
       (n = function() {
         return a;
@@ -172,17 +195,11 @@
     );
   }
   function o() {
-    const a = M([
-      "\n      <paper-menu-button class='source-menu' slot='dropdown-trigger'\n        .horizontalAlign=",
-      " .verticalAlign=",
-      "\n        .verticalOffset=",
-      " .noAnimations=",
-      "\n        @click='",
-      "'>\n        ",
-      "\n        <paper-listbox slot='dropdown-content' selected=",
-      "\n          @click='",
-      "'>\n          ",
-      "\n        </paper-listbox>\n      </paper-menu-button>",
+    const a = ma([
+      "\n        <paper-icon-button class='power-button'\n          .icon=",
+      "\n          @click=",
+      "\n          ?color=",
+      ">\n        </paper-icon-button>",
     ]);
     return (
       (o = function() {
@@ -192,11 +209,12 @@
     );
   }
   function p() {
-    const a = M([
-      "\n        <mwc-button class='source-menu__button' slot='dropdown-trigger'>\n          <span class='source-menu__source' display=",
-      ">\n            ",
-      "\n          </span>\n          <iron-icon .icon=",
-      "></iron-icon>\n        </mwc-button>",
+    const a = ma([
+      "\n        <paper-icon-button class='group-button'\n          .icon=",
+      "\n          ?inactive=",
+      "\n          ?color=",
+      "\n          @click=",
+      ">\n        </paper-icon-button>",
     ]);
     return (
       (p = function() {
@@ -206,9 +224,11 @@
     );
   }
   function q() {
-    const a = M([
-      "<paper-icon-button class='source-menu__button' slot='dropdown-trigger' .icon=",
-      "></paper-icon-button>",
+    const a = ma([
+      "\n        <mmp-sound-menu\n          .player=",
+      "\n          .icon=",
+      "\n          ?full=",
+      ">\n        </mmp-sound-menu>",
     ]);
     return (
       (q = function() {
@@ -218,7 +238,12 @@
     );
   }
   function r() {
-    const a = M(["<span>(master)</span>"]);
+    const a = ma([
+      "\n        <mmp-source-menu\n          .player=",
+      "\n          .icon=",
+      "\n          ?full=",
+      ">\n        </mmp-source-menu>",
+    ]);
     return (
       (r = function() {
         return a;
@@ -227,13 +252,10 @@
     );
   }
   function s() {
-    const a = M([
-      "\n      <paper-checkbox\n        ?checked=",
-      "\n        ?disabled=",
-      "\n        @click='",
-      "'>\n        ",
-      "\n        ",
-      "\n      </paper-checkbox>",
+    const a = ma([
+      "\n        <mmp-media-controls\n          .player=",
+      "\n          .config=",
+      ">\n        </mmp-media-controls>\n      ",
     ]);
     return (
       (s = function() {
@@ -243,7 +265,15 @@
     );
   }
   function t() {
-    const a = M(["Leave"]);
+    const a = ma([
+      "\n      ",
+      "\n      ",
+      "\n      ",
+      "\n      ",
+      "\n      ",
+      "\n      ",
+      "\n    ",
+    ]);
     return (
       (t = function() {
         return a;
@@ -252,7 +282,10 @@
     );
   }
   function u() {
-    const a = M(["Ungroup"]);
+    const a = ma([
+      "\n        <span class='label ellipsis'>\n          ",
+      "\n        </span>\n      ",
+    ]);
     return (
       (u = function() {
         return a;
@@ -261,14 +294,8 @@
     );
   }
   function v() {
-    const a = M([
-      "\n      <div class='speaker-select'>\n        <span>Group speakers</span>\n        ",
-      "\n        <div class='buttons'>\n          <mwc-button\n            class='speaker-select__button'\n            raised\n            ?disabled=",
-      "\n            @click='",
-      "'>\n            ",
-      "\n          </mwc-button>\n          <mwc-button\n            class='speaker-select__button'\n            raised\n            ?disabled=",
-      "\n            @click='",
-      "'>\n            Group all\n          </mwc-button>\n        </div>\n      </div>",
+    const a = ma([
+      "\n        :host {\n          display: flex;\n          width: 100%;\n        }\n        .flex {\n          display: flex;\n          flex: 1;\n          justify-content: space-between;\n        }\n        ha-paper-slider {\n          max-width: none;\n          min-width: 100px;\n          width: 100%;\n        }\n        paper-icon-button {\n          min-width: 40px;\n        }\n        .mmp-media-controls__volume {\n          flex: 100;\n          max-height: 40px;\n        }\n        .mmp-media-controls__volume.--buttons {\n          justify-content: left;\n        }\n        .mmp-media-controls__media {\n          direction: ltr;\n          max-width: calc(40px * 3);\n          margin-right: 0;\n          margin-left: auto;\n        }\n        .mmp-media-controls__media[flow] {\n          max-width: none;\n        }\n        .mmp-media-controls__shuffle {\n          flex: 3;\n          flex-shrink: 200;\n          justify-content: center;\n        }\n        .mmp-media-controls__shuffle paper-icon-button {\n          height: 36px;\n          width: 36px;\n          min-width: 36px;\n          margin: 2px;\n        }\n      ",
     ]);
     return (
       (v = function() {
@@ -278,12 +305,10 @@
     );
   }
   function w() {
-    const a = M([
-      "\n      <paper-icon-button class='group-button' .icon=",
-      "\n        ?opaque=",
-      "\n        ?color=",
-      "\n        @click=",
-      ">\n      </paper-icon-button>",
+    const a = ma([
+      "\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n        ",
     ]);
     return (
       (w = function() {
@@ -293,13 +318,10 @@
     );
   }
   function x() {
-    const a = M([
-      "\n      ",
-      "\n      <div class='power-row flex'>\n        ",
-      "\n        ",
-      "\n        ",
-      "\n        ",
-      "\n      </div>",
+    const a = ma([
+      "\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n        ",
     ]);
     return (
       (x = function() {
@@ -309,7 +331,11 @@
     );
   }
   function y() {
-    const a = M(["\n      <span class='label'>\n        ", "\n      </span>"]);
+    const a = ma([
+      "\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n        ",
+    ]);
     return (
       (y = function() {
         return a;
@@ -318,11 +344,10 @@
     );
   }
   function z() {
-    const a = M([
-      "\n      <div class='progress' @click=",
-      ">\n        <paper-progress class='transiting' value=",
-      "\n          max=",
-      ">\n        </paper-progress>\n      </div>",
+    const a = ma([
+      "\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n        ",
     ]);
     return (
       (z = function() {
@@ -332,7 +357,14 @@
     );
   }
   function A() {
-    const a = M(["<span class=", ">", "</span>"]);
+    const a = ma([
+      "\n      <div class='mmp-media-controls__volume --buttons flex'>\n        ",
+      "\n        <paper-icon-button\n          @click=",
+      "\n          .icon=",
+      ">\n        </paper-icon-button>\n        <paper-icon-button\n          @click=",
+      "\n          .icon=",
+      ">\n        </paper-icon-button>\n      </div>",
+    ]);
     return (
       (A = function() {
         return a;
@@ -341,7 +373,17 @@
     );
   }
   function B() {
-    const a = M(["<span class=", ">", "</span>"]);
+    const a = ma([
+      "\n      <div class='mmp-media-controls__volume --slider flex'>\n        ",
+      "\n        <ha-paper-slider\n          @change=",
+      "\n          @click=",
+      "\n          ?disabled=",
+      "\n          min=",
+      " max=",
+      "\n          value=",
+      "\n          dir=",
+      "\n          ignore-bar-touch pin>\n        </ha-paper-slider>\n      </div>",
+    ]);
     return (
       (B = function() {
         return a;
@@ -350,9 +392,15 @@
     );
   }
   function C() {
-    const a = M([
-      "\n          <div>\n            <div class='marquee'>\n              ",
-      "\n            </div>\n          </div>",
+    const a = ma([
+      "\n        <div class='flex mmp-media-controls__media' ?flow=",
+      ">\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n        </div>\n      ",
     ]);
     return (
       (C = function() {
@@ -362,14 +410,11 @@
     );
   }
   function D() {
-    const a = M([
-      "\n      <div class='entity__info__media'\n        ?short=",
-      "\n        ?short-scroll=",
-      " ?scroll=",
-      "\n        style='animation-duration: ",
-      "s;'>\n        ",
-      "\n        ",
-      "\n      </div>",
+    const a = ma([
+      "\n        <div class='flex mmp-media-controls__shuffle'>\n          <paper-icon-button\n            class='shuffle-button'\n            @click=",
+      "\n            .icon=",
+      "\n            ?color=",
+      ">\n          </paper-icon-button>\n        </div>\n      ",
     ]);
     return (
       (D = function() {
@@ -379,11 +424,7 @@
     );
   }
   function E() {
-    const a = M([
-      "\n      <div class='entity__info__name'>\n        ",
-      " ",
-      "\n      </div>",
-    ]);
+    const a = ma(["\n      ", "\n      ", "\n      ", "\n    "]);
     return (
       (E = function() {
         return a;
@@ -392,11 +433,8 @@
     );
   }
   function F() {
-    const a = M([
-      "\n      <paper-icon-button .icon=",
-      " ?color=",
-      "\n        @click='",
-      "'>\n      </paper-icon-button>",
+    const a = ma([
+      "\n      :host {\n        max-width: 120px;\n        min-width: 40px;\n      }\n      :host([full]) {\n        max-width: none;\n      }\n    ",
     ]);
     return (
       (F = function() {
@@ -406,11 +444,13 @@
     );
   }
   function G() {
-    const a = M([
-      "\n      <paper-icon-button class='power-button'\n        .icon=",
-      "\n        @click='",
-      "'\n        ?color=",
-      ">\n      </paper-icon-button>",
+    const a = ma([
+      "\n      <mmp-dropdown\n        @change=",
+      "\n        .items=",
+      "\n        .label=",
+      "\n        .selected=",
+      "\n        .icon=",
+      "\n      />\n    ",
     ]);
     return (
       (G = function() {
@@ -420,10 +460,8 @@
     );
   }
   function H() {
-    const a = M([
-      "\n      <div class='entity__icon'>\n        <ha-icon\n          icon=",
-      "\n          ?color=",
-      ">\n        </ha-icon>\n      </div>",
+    const a = ma([
+      "\n      :host {\n        max-width: 120px;\n        min-width: 40px;\n      }\n      :host([full]) {\n        max-width: none;\n      }\n    ",
     ]);
     return (
       (H = function() {
@@ -433,11 +471,13 @@
     );
   }
   function I() {
-    const a = M([
-      "\n        <div class='entity__artwork' ?border=",
-      "\n          style='background-image: ",
-      ";'\n          state=",
-      ">\n        </div>",
+    const a = ma([
+      "\n      <mmp-dropdown\n        @change=",
+      "\n        .items=",
+      "\n        .label=",
+      "\n        .selected=",
+      "\n        .icon=",
+      "\n      />\n    ",
     ]);
     return (
       (I = function() {
@@ -447,7 +487,9 @@
     );
   }
   function J() {
-    const a = M(["<div class='cover' style='background-image: ", ";'></div>"]);
+    const a = ma([
+      "\n      .mmp-progress {\n        cursor: pointer;\n        left: 0; right: 0; bottom: 0;\n        position: absolute;\n      }\n      .mmp-progress__duration {\n        display: flex;\n        justify-content: space-between;\n        font-size: .8em;\n        margin: 8px calc(var(--ha-card-border-radius, 4) / 2);\n        padding: 0 6px;\n      }\n      paper-progress {\n        height: var(--paper-progress-height, 4px);\n        bottom: 0;\n        position: absolute;\n        width: 100%;\n        --paper-progress-active-color: var(--mmp-accent-color);\n        --paper-progress-container-color: rgba(100,100,100,.15);\n        --paper-progress-transition-duration: 1s;\n        --paper-progress-transition-timing-function: linear;\n        --paper-progress-transition-delay: 0s;\n      }\n      .mmp-progress[paused] paper-progress {\n        --paper-progress-active-color: var(--disabled-text-color, rgba(150,150,150,.5));\n      }\n    ",
+    ]);
     return (
       (J = function() {
         return a;
@@ -456,36 +498,7 @@
     );
   }
   function K() {
-    const a = M([
-      "\n      <ha-card break=",
-      " ?initial=",
-      "\n        ?bg=",
-      " ?group=",
-      "\n        ?more-info=",
-      " ?has-title=",
-      "\n        artwork=",
-      " ?has-artwork=",
-      " state=",
-      "\n        ?flow=",
-      " ?collapse=",
-      "\n        content=",
-      "\n        ?rtl=",
-      "\n        @click=",
-      ">\n        <div class='bg'>\n          ",
-      "\n        </div>\n        <header>",
-      "</header>\n        <div class='player'>\n          <div class='entity flex' ?inactive=",
-      ">\n            ",
-      "\n            <div class='entity__info'>\n              ",
-      "\n              ",
-      "\n            </div>\n            <div class='control-row--top flex'>\n              ",
-      "\n            </div>\n          </div>\n          <div class='rows'>\n            <div class='control-row flex'>\n              ",
-      "\n            </div>\n            ",
-      "\n            ",
-      "\n            ",
-      "\n            ",
-      "\n          </div>\n        </div>\n        ",
-      "\n      </ha-card>",
-    ]);
+    const a = ma([""]);
     return (
       (K = function() {
         return a;
@@ -494,8 +507,10 @@
     );
   }
   function L() {
-    const a = M([
-      "\n  :host {\n    display: block;\n  }\n  ha-card {\n    --mmp-accent-color: var(--mini-media-player-accent-color, var(--accent-color, #f39c12));\n    cursor: default;\n    display: flex;\n    background: transparent;\n    overflow: hidden;\n    padding: 0;\n    position: relative;\n  }\n  ha-card[group] {\n    box-shadow: none;\n  }\n  ha-card[more-info] {\n    cursor: pointer;\n  }\n  ha-card[collapse] {\n    overflow: visible;\n  }\n  ha-card:before {\n    content: '';\n    padding-top: 0px;\n    transition: padding-top .5s cubic-bezier(.21,.61,.35,1);\n    will-change: padding-top;\n  }\n  ha-card[initial] .entity__artwork,\n  ha-card[initial] .entity__icon {\n    animation-duration: .001s;\n  }\n  ha-card[initial]:before,\n  ha-card[initial] .player {\n    transition: none;\n  }\n  header {\n    display: none;\n  }\n  mwc-button {\n    --mdc-theme-primary: var(--primary-text-color);\n  }\n  mwc-button[raised] {\n    --mdc-theme-on-primary: var(--primary-text-color);\n    --mdc-theme-primary: transparent;\n    background: rgba(255,255,255,.25);\n  }\n  mwc-button[dense] {\n    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0,0,0,.12);\n  }\n  ha-card[has-title] header {\n    display: block;\n    font-size: var(--paper-font-headline_-_font-size);\n    font-weight: var(--paper-font-headline_-_font-weight);\n    letter-spacing: var(--paper-font-headline_-_letter-spacing);\n    line-height: var(--paper-font-headline_-_line-height);\n    padding: 24px 16px 16px;\n    position: relative;\n  }\n  ha-card[artwork='full-cover'][has-artwork]:before {\n    padding-top: 56%;\n  }\n  ha-card[artwork='full-cover'][has-artwork][content='music']:before,\n  ha-card[artwork='full-cover-fit'][has-artwork]:before {\n    padding-top: 100%;\n  }\n  .bg {\n    background: var(--paper-card-background-color, white);\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n  }\n  ha-card[group] .bg {\n    background: transparent;\n  }\n  .cover,\n  .cover:before {\n    display: block;\n    opacity: 0;\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n    transition: opacity .75s cubic-bezier(.21,.61,.35,1);\n    will-change: opacity;\n  }\n  .cover {\n    animation: fade-in .5s cubic-bezier(.21,.61,.35,1);\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center center;\n  }\n  .cover:before {\n    background: rgba(0,0,0,.5);\n    content: '';\n  }\n  ha-card[artwork*='full-cover'][has-artwork] .player {\n    background: rgba(0,0,0,.75);\n    background: linear-gradient(to top, rgba(0,0,0,.75) 0%, rgba(0,0,0,.5) 50%, transparent 100%);\n  }\n  ha-card[has-artwork] .cover,\n  ha-card[has-artwork][artwork='cover'] .cover:before,\n  ha-card[bg] .cover {\n    opacity: .999;\n  }\n  ha-card[artwork='default'] .cover {\n    display: none;\n  }\n  ha-card[bg] .cover {\n    display: block;\n  }\n  ha-card[artwork='full-cover-fit'][has-artwork] .cover {\n    background-color: black;\n    background-size: contain;\n  }\n  .player {\n    align-self: flex-end;\n    box-sizing: border-box;\n    position: relative;\n    padding: 16px;\n    transition: padding .25s ease-out;\n    width: 100%;\n    will-change: padding;\n  }\n  ha-card[group] .player {\n    padding: 2px 0;\n  }\n  ha-card[has-title] .player {\n    padding-top: 0;\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-icon-button,\n  ha-card[artwork*='cover'][has-artwork] ha-icon,\n  ha-card[artwork*='cover'][has-artwork] .entity__info,\n  ha-card[artwork*='cover'][has-artwork] .entity__info__name,\n  ha-card[artwork*='cover'][has-artwork] mwc-button,\n  ha-card[artwork*='cover'][has-artwork] header,\n  ha-card[artwork*='cover'][has-artwork] .speaker-select > span,\n  ha-card[artwork*='cover'][has-artwork] paper-menu-button mwc-button:focus iron-icon {\n    color: #FFFFFF;\n    border-color: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] ha-slider {\n    --paper-slider-container-color: rgba(255,255,255,.75);\n  }\n  ha-card[artwork*='cover'][has-artwork] mwc-button {\n    --mdc-theme-primary: #FFFFFF;\n    --mdc-theme-on-primary: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-input {\n    --paper-input-container-focus-color: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-checkbox[disabled] {\n    --paper-checkbox-checkmark-color: rgba(0,0,0,.5);\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-checkbox {\n    --paper-checkbox-unchecked-color: #FFFFFF;\n    --paper-checkbox-label-color: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] .media-buttons__button,\n  ha-card[artwork*='cover'][has-artwork] .speaker-select__button {\n    background-color: rgba(255,255,255,.25);\n  }\n  ha-card[artwork*='cover'][has-artwork] mwc-button[raised] {\n    --mdc-theme-primary: transparent;\n    --mdc-theme-on-primary: #FFFFFF;\n  }\n  ha-card[artwork*='cover'][has-artwork] paper-input {\n    --paper-input-container-color: #FFFFFF;\n    --paper-input-container-input-color: #FFFFFF;\n  }\n  .flex {\n    display: flex;\n    display: -ms-flexbox;\n    display: -webkit-flex;\n    flex-direction: row;\n  }\n  .justify {\n    -webkit-justify-content: space-between;\n    justify-content: space-between;\n  }\n  .hidden {\n    display: none;\n  }\n  .entity {\n    position: relative;\n  }\n  .entity__info {\n    justify-content: center;\n    display: flex;\n    flex-direction: column;\n    margin-left: 8px;\n    position: relative;\n    overflow: hidden;\n    user-select: none;\n  }\n  ha-card[rtl] .entity__info {\n    margin-left: auto;\n    margin-right: 8px;\n  }\n  .rows {\n    margin-left: 56px;\n    position: relative;\n  }\n  ha-card[rtl] .rows {\n    margin-left: auto;\n    margin-right: 56px;\n  }\n  .rows > *:nth-child(2) {\n    margin-top: 0px;\n  }\n  .entity__info__media[short] {\n    max-height: 20px;\n    overflow: hidden;\n  }\n  ha-card[content='movie'] .attr__media_season,\n  ha-card[content='movie'] .attr__media_episode {\n    display: none;\n  }\n  .entity__icon {\n    color: var(--paper-item-icon-color, #44739e);\n  }\n  .entity__artwork, .entity__icon {\n    animation: fade-in .25s ease-out;\n    background-position: center center;\n    background-repeat: no-repeat;\n    background-size: cover;\n    border-radius: 100%;\n    height: 40px;\n    line-height: 40px;\n    margin-right: 8px;\n    min-width: 40px;\n    position: relative;\n    text-align: center;\n    width: 40px;\n    will-change: border-color;\n    transition: border-color .25s ease-out;\n  }\n  ha-card[rtl] .entity__artwork, ha-card[rtl] .entity__icon {\n    margin-right: auto;\n    margin-left: 8px;\n  }\n  .entity__artwork[border] {\n    border: 2px solid var(--primary-text-color);\n    box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    -webkit-box-sizing: border-box;\n  }\n  .entity__artwork[state='playing'] {\n    border-color: var(--mmp-accent-color);\n  }\n  .entity__info__name,\n  .entity__info__media[short],\n  .source-menu__source,\n  .media-dropdown__label,\n  .media-label,\n  .label {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }\n  .entity__info__name {\n    line-height: 20px;\n  }\n  .control-row--top {\n    line-height: 40px;\n    max-height: 40px;\n  }\n  .entity[inactive] .entity__info__media,\n  .entity__info__name,\n  paper-icon-button,\n  mwc-button {\n    color: var(--primary-text-color);\n    position: relative;\n  }\n  .entity__info__media {\n    color: var(--secondary-text-color);\n    max-height: 6em;\n    word-break: break-word;\n  }\n  .attr__app_name {\n    display: none;\n  }\n  .attr__app_name:first-child,\n  .attr__app_name:first-of-type {\n    display: inline;\n  }\n  .entity[inactive] .entity__info__media {\n    opacity: .5;\n  }\n  .entity[inactive] .entity__info__media {\n    max-width: 200px;\n  }\n  .entity__info__media[short-scroll] {\n    max-height: 20px;\n    white-space: nowrap;\n  }\n  .entity__info__media[scroll] > span {\n    visibility: hidden;\n  }\n  .entity__info__media[scroll] > div {\n    animation: move linear infinite;\n  }\n  .entity__info__media[scroll] .marquee {\n    animation: slide linear infinite;\n  }\n  .entity__info__media[scroll] .marquee,\n  .entity__info__media[scroll] > div {\n    animation-duration: inherit;\n    visibility: visible;\n  }\n  .entity__info__media[scroll] {\n    animation-duration: 10s;\n    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n  }\n  .marquee {\n    visibility: hidden;\n    position: absolute;\n    white-space: nowrap;\n  }\n  paper-icon-button[color],\n  ha-icon[color] {\n    color: var(--mmp-accent-color) !important;\n  }\n  ha-card[artwork*='cover'][has-artwork] .entity__info__media {\n    color: var(--mini-media-player-media-cover-info-color, #FFFFFF);\n  }\n  paper-icon-button {\n    transition: color .15s ease-in-out;\n    will-change: color;\n  }\n  .entity__info__media span:before {\n    content: ' - ';\n  }\n  .entity__info__media span:first-of-type:before {\n    content: '';\n  }\n  .entity__info__media span:empty,\n  .source-menu span:empty {\n    display: none;\n  }\n  .tts {\n    align-items: center;\n    margin-top: 8px;\n  }\n  .tts__input {\n    cursor: text;\n    flex: 1;\n    margin-right: 8px;\n    --paper-input-container-input: {\n      font-size: 1em;\n    };\n  }\n  ha-card[rtl] .tts__input {\n    margin-right: auto;\n    margin-left: 8px;\n  }\n  .tts__button {\n    margin: 0;\n    padding: .4em;\n  }\n  .media-dropdown {\n    box-sizing: border-box;\n    width: 100%;\n    padding: 8px 8px 0 0;\n  }\n  .media-dropdown__button {\n    display: flex;\n    font-size: 1em;\n    justify-content: space-between;\n    margin: 0;\n    border-bottom: 1px solid var(--primary-text-color);\n    opacity: .8;\n  }\n  .media-dropdown__button > div {\n    display: flex;\n    flex: 1;\n    justify-content: space-between;\n    align-items: center;\n  }\n  .media-dropdown__label {\n    padding: .2em .2em .2em 0;\n    text-align: left;\n    text-transform: none;\n  }\n  .media-dropdown__icon {\n    height: 24px;\n    width: 24px;\n  }\n  .media-buttons {\n    box-sizing: border-box;\n    display: flex;\n    flex-wrap: wrap;\n    margin-top: 8px;\n  }\n  .media-buttons__button {\n    background-color: rgba(255,255,255,.1);\n    box-sizing: border-box;\n    margin: 8px 8px 0 0;\n    min-width: 0;\n    min-width: calc(50% - 8px);\n    flex: 1;\n    overflow: hidden;\n  }\n  .media-buttons__button[columns='0'] {\n    min-width: calc(100% - 8px);\n  }\n  .media-buttons__button[columns='3'] {\n    min-width: calc(33.33% - 8px);\n  }\n  .media-buttons__button[columns='4'] {\n    min-width: calc(25% - 8px);\n  }\n  .media-buttons__button > span {\n    line-height: 24px;\n    text-transform: initial;\n  }\n  .media-buttons__button > *:nth-child(2),\n  .media-dropdown paper-item > *:nth-child(2) {\n    margin-left: 4px;\n  }\n  ha-card[rtl] .media-buttons__button > *:nth-child(2),\n  ha-card[rtl] .media-dropdown paper-item > *:nth-child(2) {\n    margin-left: auto;\n    margin-right: 4px;\n  }\n  .control-row--top .vol-control {\n    max-width: 200px;\n  }\n  .control-row--top {\n    flex: 1;\n    justify-content: flex-end;\n    margin-right: 0;\n    margin-left: auto;\n    width: auto;\n    max-width: 100%;\n  }\n  ha-card[rtl] .control-row--top {\n    margin-right: auto;\n    margin-left: 0;\n  }\n  .control-row--top ha-slider {\n    flex: 1;\n    height: 40px;\n    line-height: initial;\n  }\n  .control-row {\n    flex-wrap: wrap;\n    justify-content: center;\n  }\n  .control-row > .flex {\n    flex: 1;\n    justify-content: space-between;\n  }\n  .control-row > .shuffle {\n    flex: 3;\n    flex-shrink: 200;\n    justify-content: center;\n  }\n  .control-row > .vol-control {\n    flex: 100;\n  }\n  .vol-control {\n    flex: 1;\n    max-height: 40px;\n  }\n  .group-button {\n    height: 85%;\n    margin: auto;\n  }\n  .speaker-select {\n    display: flex;\n    flex-direction: column;\n  }\n  .speaker-select > span {\n    font-weight: 500;\n    margin-top: 12px;\n    text-transform: uppercase;\n  }\n  .speaker-select paper-checkbox {\n    padding: 8px 0;\n  }\n  .speaker-select .buttons {\n    display: flex;\n  }\n  .speaker-select__button {\n    background-color: rgba(255,255,255,.1);\n    margin: 8px 8px 0 0;\n    min-width: 0;\n    text-transform: uppercase;\n    text-align: center;\n    width: 50%;\n  }\n  .speaker-select > paper-checkbox > span {\n    font-weight: 600;\n  }\n  ha-slider {\n    max-width: none;\n    min-width: 100px;\n    width: 100%;\n  }\n  paper-input {\n    opacity: .75;\n    --paper-input-container-color: var(--primary-text-color);\n    --paper-input-container-focus-color: var(--primary-text-color);\n    --paper-input-container: {\n      padding: 0;\n    };\n  }\n  .source-menu {\n    display: flex;\n    align-items: center;\n    height: 40px;\n    line-height: 20px;\n    padding: 0;\n  }\n  paper-menu-button[focused] mwc-button > iron-icon,\n  paper-menu-button[focused] mwc-button > div > iron-icon,\n  paper-menu-button[focused] paper-icon-button,\n  ha-card[artwork*='cover'][has-artwork] paper-menu-button[focused] paper-icon-button {\n    color: var(--mmp-accent-color);\n    transform: rotate(180deg);\n  }\n  paper-menu-button mwc-button:focus iron-icon,\n  paper-menu-button mwc-button:focus > div iron-icon,\n  paper-menu-button mwc-button[focused] iron-icon,\n  paper-menu-button[focused] paper-icon-button[focused],\n  ha-card[artwork*='cover'][has-artwork] paper-menu-button[focused] paper-icon-button[focused] {\n    color: var(--primary-text-color);\n    transform: rotate(0deg);\n  }\n  ha-card[has-artwork][artwork*='cover'] paper-menu-button[focused] paper-icon-button[focused] {\n    color: #FFFFFF;\n  }\n  .source-menu__button {\n    height: 36px;\n    line-height: 20px;\n    margin: 0;\n    min-width: 0;\n  }\n  .source-menu__source {\n    display: block;\n    max-width: 60px;\n    position: relative;\n    width: auto;\n    text-transform: initial;\n  }\n  .source-menu__source[display=\"icon\"] {\n    display: none;\n  }\n  .source-menu__source[display=\"full\"] {\n    max-width: none;\n  }\n  .progress {\n    height: 12px;\n    cursor: pointer;\n    left: 0; right: 0; bottom: 0;\n    position: absolute;\n  }\n  ha-card[group][collapse] .progress {\n    bottom: -2px;\n    height: 5px;\n  }\n  ha-card[group] paper-progress {\n    height: var(--paper-progress-height, 2px);\n  }\n  paper-progress {\n    height: var(--paper-progress-height, 4px);\n    bottom: 0;\n    position: absolute;\n    width: 100%;\n    --paper-progress-active-color: var(--mmp-accent-color);\n    --paper-progress-container-color: rgba(100,100,100,.15);\n    --paper-progress-transition-duration: 1s;\n    --paper-progress-transition-timing-function: linear;\n    --paper-progress-transition-delay: 0s;\n  }\n  ha-card[state='paused'] paper-progress {\n    --paper-progress-active-color: var(--disabled-text-color, rgba(150,150,150,.5));\n  }\n  .label {\n    margin: 0 8px;\n  }\n  .media-dropdown[focused] mwc-button,\n  paper-icon-button[color][opaque],\n  paper-input[focused] {\n    opacity: 1;\n  }\n  .media-dropdown[focused] mwc-button:focus {\n    opacity: .75;\n  }\n  paper-icon-button[opaque],\n  .speaker-select mwc-button[disabled] {\n    opacity: .5;\n  }\n  ha-card[flow] .control-row--top {\n    justify-content: space-between;\n  }\n  ha-card[flow] .power-row {\n    margin-left: auto;\n  }\n  ha-card[flow][rtl] .power-row {\n    margin-right: auto;\n  }\n  ha-card[flow] .entity__info {\n    display: none;\n  }\n  ha-card[flow] ha-slider,\n  ha-card[flow] .vol-control {\n    width: 100%;\n    max-width: none;\n  }\n  ha-card[break*=\"break\"] .rows {\n    margin-left: 0;\n  }\n  ha-card[break*=\"break\"][rtl] .rows {\n    margin-right: 0;\n  }\n  ha-card[break*=\"break\"] .rows > * {\n    padding-left: 8px;\n  }\n  ha-card[break*=\"break\"][rtl] .rows > * {\n    padding-right: 8px;\n  }\n  ha-card[break*=\"break\"] .rows > .control-row {\n    padding: 0;\n  }\n  ha-card[break*=\"break\"] .media-dropdown__button {\n    padding-right: 0;\n  }\n  ha-card[break*=\"break\"][rtl] .media-dropdown__button {\n    padding-left: 0;\n  }\n  .player div:empty,\n  ha-card[break=\"break-width\"] .source-menu__source,\n  .entity[inactive] .source-menu__source {\n    display: none;\n  }\n  @keyframes slide {\n    100% { transform: translateX(-100%); }\n  }\n  @keyframes move {\n    from { transform: translateX(100%); }\n    to { transform: translateX(0); }\n  }\n  @keyframes fade-in {\n    from { opacity: 0; }\n    to { opacity: 1; }\n  }\n  .media-controls {\n    direction: ltr;\n  }",
+    const a = ma([
+      "\n            <div class='mmp-progress__duration'>\n              <span>",
+      "</span>\n              <span>",
+      "</span>\n            </div>\n          ",
     ]);
     return (
       (L = function() {
@@ -504,7 +519,347 @@
       a
     );
   }
-  function M(a, b) {
+  function M() {
+    const a = ma([
+      "\n        <div class='mmp-progress'\n          @click=",
+      "\n          ?paused=",
+      ">\n          ",
+      "\n          <paper-progress class='transiting'\n            value=",
+      "\n            max=",
+      ">\n          </paper-progress>\n        </div>\n      ",
+    ]);
+    return (
+      (M = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function N() {
+    const a = ma([
+      "\n      :host {\n        align-items: center;\n        margin-left: 8px;\n        display: flex;\n      }\n      .mmp-tts__input {\n        cursor: text;\n        flex: 1;\n        margin-right: 8px;\n        --paper-input-container-input: {\n          font-size: 1em;\n        };\n      }\n      ha-card[rtl] .mmp-tts__input {\n        margin-right: auto;\n        margin-left: 8px;\n      }\n      .mmp-tts__button {\n        margin: 0;\n        padding: .4em;\n      }\n      paper-input {\n        opacity: .75;\n        --paper-input-container-color: var(--primary-text-color);\n        --paper-input-container-focus-color: var(--primary-text-color);\n        --paper-input-container: {\n          padding: 0;\n        };\n      }\n      paper-input[focused] {\n        opacity: 1;\n      }\n\n      ha-card[artwork*='cover'][has-artwork] paper-input {\n        --paper-input-container-focus-color: #FFFFFF;\n      }\n      ha-card[artwork*='cover'][has-artwork] paper-input {\n        --paper-input-container-color: #FFFFFF;\n        --paper-input-container-input-color: #FFFFFF;\n      }\n    ",
+    ]);
+    return (
+      (N = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function O() {
+    const a = ma([
+      "\n      <paper-input id=\"tts-input\" class='mmp-tts__input'\n        no-label-float\n        placeholder=",
+      "...\n        @click=",
+      ">\n      </paper-input>\n      <div>\n        <mwc-button class='mmp-tts__button' @click=",
+      ">\n          SEND\n        </mwc-button>\n      </div>\n    ",
+    ]);
+    return (
+      (O = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function P() {
+    const a = ma([
+      "\n        .mmp-shortcuts__buttons {\n          box-sizing: border-box;\n          display: flex;\n          flex-wrap: wrap;\n          margin-top: 8px;\n        }\n        .mmp-shortcuts__button {\n          --mdc-theme-primary: transparent;\n          box-sizing: border-box;\n          margin: 4px;\n          min-width: 0;\n          min-width: calc(50% - 8px);\n          flex: 1;\n          overflow: hidden;\n          transition: background .5s;\n          background: rgba(255,255,255,0.25);\n          box-shadow:\n            0px 3px 1px -2px rgba(0, 0, 0, 0.2),\n            0px 2px 2px 0px rgba(0, 0, 0, 0.14),\n            0px 1px 5px 0px rgba(0,0,0,.12);\n        }\n        .mmp-shortcuts__button[color] {\n          background: var(--mmp-active-color);\n        }\n        .mmp-shortcuts__button[columns='0'] {\n          min-width: calc(100% - 8px);\n        }\n        .mmp-shortcuts__button[columns='3'] {\n          min-width: calc(33.33% - 8px);\n        }\n        .mmp-shortcuts__button[columns='4'] {\n          min-width: calc(25% - 8px);\n        }\n        .mmp-shortcuts__button > span {\n          line-height: 24px;\n          text-transform: initial;\n        }\n        .mmp-shortcuts__button > *:nth-child(2) {\n          margin-left: 4px;\n        }\n      ",
+    ]);
+    return (
+      (P = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function Q() {
+    const a = ma(["\n      ", "\n      ", "\n    "]);
+    return (
+      (Q = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function R() {
+    const a = ma(['<span class="ellipsis">', "</span>"]);
+    return (
+      (R = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function S() {
+    const a = ma(["<iron-icon .icon=", "></iron-icon>"]);
+    return (
+      (S = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function T() {
+    const a = ma([
+      "\n          <mwc-button\n            dense raised\n            columns=",
+      "\n            ?color=",
+      "\n            class='mmp-shortcuts__button'\n            @click='",
+      "'>\n            ",
+      "\n            ",
+      "\n          </mwc-button>",
+    ]);
+    return (
+      (T = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function U() {
+    const a = ma([
+      "\n      <div class='mmp-shortcuts__buttons'>\n        ",
+      "\n      </div>\n    ",
+    ]);
+    return (
+      (U = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function V() {
+    const a = ma([
+      "\n      <mmp-dropdown class='mmp-shortcuts__dropdown'\n        @change=",
+      "\n        .items=",
+      "\n        .label=",
+      "\n        .selected=",
+      ">\n      </mmp-dropdown>\n    ",
+    ]);
+    return (
+      (V = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function W() {
+    const a = ma([
+      "\n        :host {\n          display: block;\n        }\n        :host([faded]) mwc-button {\n          opacity: .75;\n        }\n        .mmp-dropdown {\n          padding: 0;\n          display: block;\n        }\n        .mmp-dropdown__button {\n          display: flex;\n          font-size: 1em;\n          justify-content: space-between;\n          align-items: center;\n          height: 36px;\n          margin: 2px 0;\n        }\n        .mmp-dropdown__button.icon {\n          height: 40px;\n          margin: 0;\n        }\n        .mmp-dropdown__button > div {\n          display: flex;\n          flex: 1;\n          justify-content: space-between;\n          align-items: center;\n          height: 36px;\n          max-width: 100%;\n        }\n        .mmp-dropdown__label {\n          text-align: left;\n          text-transform: none;\n        }\n        .mmp-dropdown__icon {\n          height: 24px;\n          width: 24px;\n          min-width: 24px;\n        }\n        paper-item > *:nth-child(2) {\n          margin-left: 4px;\n        }\n\n        paper-menu-button[focused] mwc-button > div > iron-icon,\n        paper-menu-button[focused] paper-icon-button {\n          color: var(--mmp-accent-color);\n          transform: rotate(180deg);\n        }\n        paper-menu-button mwc-button:focus > div > iron-icon,\n        paper-menu-button mwc-button[focused] > div > iron-icon,\n        paper-menu-button[focused] paper-icon-button[focused] {\n          color: var(--mmp-text-color);\n          transform: rotate(0deg);\n        }\n        :host[small] .mmp-dropdown__label {\n          max-width: 60px;\n          display: block;\n          position: relative;\n          width: auto;\n          text-transform: initial;\n        }\n        :host[full] .mmp-dropdown__label {\n          max-width: none;\n        }\n      ",
+    ]);
+    return (
+      (W = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function X() {
+    const a = ma(["<span class='mmp-dropdown__item__label'>", "</span>"]);
+    return (
+      (X = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function Y() {
+    const a = ma(["<iron-icon .icon=", "></iron-icon>"]);
+    return (
+      (Y = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function Z() {
+    const a = ma([
+      "\n            <paper-item\n              value=",
+      "\n              @click=",
+      ">\n              ",
+      "\n              ",
+      "\n            </paper-item>",
+    ]);
+    return (
+      (Z = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function $() {
+    const a = ma([
+      "\n          <mwc-button class='mmp-dropdown__button' slot='dropdown-trigger'>\n            <div>\n              <span class='mmp-dropdown__label ellipsis'>\n                ",
+      "\n              </span>\n              <iron-icon class='mmp-dropdown__icon' .icon=",
+      "></iron-icon>\n            </div>\n          </mwc-button>\n        ",
+    ]);
+    return (
+      ($ = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function _() {
+    const a = ma([
+      "\n          <paper-icon-button\n            class='mmp-dropdown__button icon'\n            slot='dropdown-trigger'\n            .icon=",
+      ">\n          </paper-icon-button>\n        ",
+    ]);
+    return (
+      (_ = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function aa() {
+    const a = ma([
+      "\n      <paper-menu-button\n        class='mmp-dropdown'\n        noink no-animations\n        .horizontalAlign=",
+      "\n        .verticalAlign=",
+      "\n        .verticalOffset=",
+      "\n        @click=",
+      ">\n        ",
+      '\n        <paper-listbox slot="dropdown-content" selected=',
+      ">\n          ",
+      "\n        </paper-listbox>\n      </paper-menu-button>\n    ",
+    ]);
+    return (
+      (aa = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ba() {
+    const a = ma([
+      "\n  .ellipsis {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }\n  .label {\n    margin: 0 8px;\n  }\n  paper-icon-button {\n    transition: color .25s;\n  }\n  paper-icon-button[color] {\n    color: var(--mmp-accent-color) !important;\n    opacity: 1 !important;\n  }\n  paper-icon-button[inactive] {\n    opacity: .5;\n  }\n  mwc-button[color] {\n    background: var(--mmp-accent-color) !important;\n    transition: background .25s;\n  }\n",
+    ]);
+    return (
+      (ba = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ca() {
+    const a = ma([
+      "\n      .mmp-group-list {\n        display: flex;\n        flex-direction: column;\n        margin-left: 8px;\n      }\n      .mmp-group-list__title {\n        font-weight: 500;\n        letter-spacing: .1em;\n        margin: 8px 0 4px;\n        text-transform: uppercase;\n      }\n      .mmp-group-list__buttons {\n        display: flex;\n      }\n      .mmp-group-list__button {\n        margin: 8px 8px 0 0;\n        min-width: 0;\n        text-transform: uppercase;\n        text-align: center;\n        width: 50%;\n        --mdc-theme-primary: transparent;\n        background: rgba(255,255,255,0.25);\n      }\n    ",
+    ]);
+    return (
+      (ca = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function da() {
+    const a = ma([""]);
+    return (
+      (da = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ea() {
+    const a = ma(["Leave"]);
+    return (
+      (ea = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function fa() {
+    const a = ma(["Ungroup"]);
+    return (
+      (fa = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ga() {
+    const a = ma([
+      "\n          <mmp-group-item\n            @change=",
+      "\n            .item=",
+      "\n            .checked=",
+      "\n            .disabled=",
+      "\n            .master=",
+      "\n          />",
+    ]);
+    return (
+      (ga = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ha() {
+    const a = ma([
+      "\n      <div class='mmp-group-list' ?visible=",
+      ">\n        <span class='mmp-group-list__title'>Group speakers</span>\n        ",
+      "\n        <div class='mmp-group-list__buttons'>\n          <mwc-button\n            class='mmp-group-list__button'\n            raised\n            ?disabled=",
+      "\n            @click='",
+      "'>\n            ",
+      "\n          </mwc-button>\n          <mwc-button\n            class='mmp-group-list__button'\n            raised\n            ?disabled=",
+      "\n            @click='",
+      "'>\n            Group all\n          </mwc-button>\n        </div>\n      </div>\n    ",
+    ]);
+    return (
+      (ha = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ia() {
+    const a = ma([
+      "\n      paper-checkbox {\n        padding: 8px 0;\n      }\n      paper-checkbox > span {\n        font-weight: 600;\n      }\n\n      ha-card[artwork*='cover'][has-artwork] paper-checkbox[disabled] {\n        --paper-checkbox-checkmark-color: rgba(0,0,0,.5);\n      }\n      ha-card[artwork*='cover'][has-artwork] paper-checkbox {\n        --paper-checkbox-unchecked-color: #FFFFFF;\n        --paper-checkbox-label-color: #FFFFFF;\n      }\n    ",
+    ]);
+    return (
+      (ia = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ja() {
+    const a = ma(["<span>(master)</span>"]);
+    return (
+      (ja = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ka() {
+    const a = ma([
+      "\n      <paper-checkbox\n        ?checked=",
+      "\n        ?disabled=",
+      "\n        @change='",
+      "'\n        @click='",
+      "'>\n        ",
+      "\n        ",
+      "\n      </paper-checkbox>\n    ",
+    ]);
+    return (
+      (ka = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function la() {
+    const a = ma([
+      "\n  :host {\n    display: block;\n    --mmp-accent-color: var(--mini-media-player-accent-color, var(--accent-color, #f39c12));\n    --mmp-text-color: var(--primary-text-color);\n    --mmp-text-color-inverted: var(--disabled-text-color);\n    --mmp-active-color: var(--mmp-accent-color);\n    --mmp-icon-color: var(--paper-item-icon-color, #44739e);\n    --mmp-info-opacity: 1;\n    --mdc-theme-primary: var(--mmp-text-color);\n    --mdc-theme-on-primary: var(--mmp-text-color);\n    --paper-checkbox-unchecked-color: var(--mmp-text-color);\n    --paper-checkbox-label-color: var(--mmp-text-color);\n    color: var(--mmp-text-color);\n  }\n  ha-card.--has-artwork[artwork*='cover'] {\n    --mmp-text-color: #fff;\n    --mmp-text-color-inverted: #000;\n    --mmp-active-color: rgba(255,255,255,.5);\n    --mmp-icon-color: var(--mmp-text-color);\n    --mmp-info-opacity: .75;\n    --paper-slider-container-color: rgba(255,255,255,.75);\n    --mdc-theme-primary: var(--mmp-text-color);\n    --mdc-theme-on-primary: var(--mmp-text-color);\n    --paper-checkbox-unchecked-color: var(--mmp-text-color);\n    --paper-checkbox-label-color: var(--mmp-text-color);\n    color: var(--mmp-text-color);\n  }\n  ha-card {\n    cursor: default;\n    display: flex;\n    background: transparent;\n    overflow: hidden;\n    padding: 0;\n    position: relative;\n  }\n  ha-card.--group {\n    box-shadow: none;\n  }\n  ha-card.--more-info {\n    cursor: pointer;\n  }\n  ha-card.--collapse {\n    overflow: visible;\n  }\n  .mmp__bg, .mmp__player {\n    border-radius: var(--ha-card-border-radius, 0);\n  }\n  ha-card:before {\n    content: '';\n    padding-top: 0px;\n    transition: padding-top .5s cubic-bezier(.21,.61,.35,1);\n    will-change: padding-top;\n  }\n  ha-card.--initial .entity__artwork,\n  ha-card.--initial .entity__icon {\n    animation-duration: .001s;\n  }\n  ha-card.--initial:before,\n  ha-card.--initial .mmp-player {\n    transition: none;\n  }\n  header {\n    display: none;\n  }\n  ha-card[artwork='full-cover'].--has-artwork:before {\n    padding-top: 56%;\n  }\n  ha-card[artwork='full-cover'].--has-artwork[content='music']:before,\n  ha-card[artwork='full-cover-fit'].--has-artwork:before {\n    padding-top: 100%;\n  }\n  .mmp__bg {\n    background: var(--paper-card-background-color, white);\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n    overflow: hidden;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n  }\n  ha-card.--group .mmp__bg {\n    background: transparent;\n  }\n  .cover,\n  .cover:before {\n    display: block;\n    opacity: 0;\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n    transition: opacity .75s cubic-bezier(.21,.61,.35,1);\n    will-change: opacity;\n  }\n  .cover {\n    animation: fade-in .5s cubic-bezier(.21,.61,.35,1);\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center center;\n  }\n  .cover:before {\n    background: rgba(0,0,0,.5);\n    content: '';\n  }\n  ha-card[artwork*='full-cover'].--has-artwork .mmp-player {\n    background: rgba(0,0,0,.75);\n    background: linear-gradient(to top, rgba(0,0,0,.75) 0%, rgba(0,0,0,.5) 50%, transparent 100%);\n  }\n  ha-card.--has-artwork .cover,\n  ha-card.--has-artwork[artwork='cover'] .cover:before,\n  ha-card.--bg .cover {\n    opacity: .999;\n  }\n  ha-card[artwork='default'] .cover {\n    display: none;\n  }\n  ha-card.--bg .cover {\n    display: block;\n  }\n  ha-card[artwork='full-cover-fit'].--has-artwork .cover {\n    background-color: black;\n    background-size: contain;\n  }\n  .mmp-player {\n    align-self: flex-end;\n    box-sizing: border-box;\n    position: relative;\n    padding: 16px;\n    transition: padding .25s ease-out;\n    width: 100%;\n    will-change: padding;\n  }\n  ha-card.--group .mmp-player {\n    padding: 2px 0;\n  }\n  .flex {\n    display: flex;\n    display: -ms-flexbox;\n    display: -webkit-flex;\n    flex-direction: row;\n  }\n  .mmp-player__core {\n    position: relative;\n  }\n  .entity__info {\n    justify-content: center;\n    display: flex;\n    flex-direction: column;\n    margin-left: 8px;\n    position: relative;\n    overflow: hidden;\n    user-select: none;\n  }\n  ha-card.--rtl .entity__info {\n    margin-left: auto;\n    margin-right: 8px;\n  }\n  ha-card[content='movie'] .attr__media_season,\n  ha-card[content='movie'] .attr__media_episode {\n    display: none;\n  }\n  .entity__icon {\n    color: var(--mmp-icon-color);\n  }\n  .entity__artwork, .entity__icon {\n    animation: fade-in .25s ease-out;\n    background-position: center center;\n    background-repeat: no-repeat;\n    background-size: cover;\n    border-radius: 100%;\n    height: 40px;\n    width: 40px;\n    min-width: 40px;\n    line-height: 40px;\n    margin-right: 8px;\n    position: relative;\n    text-align: center;\n    will-change: border-color;\n    transition: border-color .25s ease-out;\n  }\n  ha-card.--rtl .entity__artwork,\n  ha-card.--rtl .entity__icon {\n    margin-right: auto;\n  }\n  .entity__artwork[border] {\n    border: 2px solid var(--primary-text-color);\n    box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    -webkit-box-sizing: border-box;\n  }\n  .entity__artwork[border][state='playing'] {\n    border-color: var(--mmp-accent-color);\n  }\n  .entity__info__name,\n  .entity__info__media[short] {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }\n  .entity__info__name {\n    line-height: 20px;\n    color: var(--mmp-text-color);\n  }\n  .entity__info__media {\n    color: var(--secondary-text-color);\n    max-height: 6em;\n    word-break: break-word;\n    opacity: var(--mmp-info-opacity);\n    transition: color .5s;\n  }\n  .entity__info__media[short] {\n    max-height: 20px;\n    overflow: hidden;\n  }\n  .attr__app_name {\n    display: none;\n  }\n  .attr__app_name:first-child,\n  .attr__app_name:first-of-type {\n    display: inline;\n  }\n  .mmp-player__core[inactive] .entity__info__media {\n    color: var(--mmp-text-color);\n    max-width: 200px;\n    opacity: .5;\n  }\n  .mmp-player__core[inactive] .entity__info__media {\n  }\n  .entity__info__media[short-scroll] {\n    max-height: 20px;\n    white-space: nowrap;\n  }\n  .entity__info__media[scroll] > span {\n    visibility: hidden;\n  }\n  .entity__info__media[scroll] > div {\n    animation: move linear infinite;\n  }\n  .entity__info__media[scroll] .marquee {\n    animation: slide linear infinite;\n  }\n  .entity__info__media[scroll] .marquee,\n  .entity__info__media[scroll] > div {\n    animation-duration: inherit;\n    visibility: visible;\n  }\n  .entity__info__media[scroll] {\n    animation-duration: 10s;\n    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n  }\n  .marquee {\n    visibility: hidden;\n    position: absolute;\n    white-space: nowrap;\n  }\n  ha-card[artwork*='cover'].--has-artwork .entity__info__media {\n    color: var(--mini-media-player-media-cover-info-color, var(--mmp-text-color));\n  }\n  .entity__info__media span:before {\n    content: ' - ';\n  }\n  .entity__info__media span:first-of-type:before {\n    content: '';\n  }\n  .entity__info__media span:empty {\n    display: none;\n  }\n  .mmp-player__adds {\n    margin-left: 48px;\n    position: relative;\n  }\n  ha-card.--rtl .mmp-player__adds {\n    margin-left: auto;\n    margin-right: 48px;\n  }\n  .mmp-player__adds > *:nth-child(2) {\n    margin-top: 0px;\n  }\n  mmp-powerstrip {\n    flex: 1;\n    justify-content: flex-end;\n    margin-right: 0;\n    margin-left: auto;\n    width: auto;\n    max-width: 100%;\n  }\n  mmp-media-controls {\n    flex-wrap: wrap;\n    justify-content: center;\n  }\n  ha-card.--flow mmp-powerstrip {\n    justify-content: space-between;\n    margin-left: auto;\n  }\n  ha-card.--flow.--rtl mmp-powerstrip {\n    margin-right: auto;\n  }\n  ha-card.--flow .entity__info {\n    display: none;\n  }\n  ha-card.--responsive .mmp-player__adds {\n    margin-left: 0;\n  }\n  ha-card.--responsive.--rtl .mmp-player__adds {\n    margin-right: 0;\n  }\n  ha-card.--responsive .mmp-player__adds > mmp-media-controls {\n    padding: 0;\n  }\n  ha-card.--runtime .mmp-player {\n    margin-bottom: 8px;\n  }\n  ha-card.--runtime.--group .mmp-player {\n    padding-bottom: 16px;\n  }\n  .mmp-player div:empty {\n    display: none;\n  }\n  @keyframes slide {\n    100% { transform: translateX(-100%); }\n  }\n  @keyframes move {\n    from { transform: translateX(100%); }\n    to { transform: translateX(0); }\n  }\n  @keyframes fade-in {\n    from { opacity: 0; }\n    to { opacity: 1; }\n  }\n",
+    ]);
+    return (
+      (la = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ma(a, b) {
     return (
       b || (b = a.slice(0)),
       Object.freeze(
@@ -512,7 +867,7 @@
       )
     );
   }
-  function N(a) {
+  function na(a) {
     for (var b = 1; b < arguments.length; b++) {
       var c = null == arguments[b] ? {} : arguments[b],
         d = Object.keys(c);
@@ -523,12 +878,12 @@
           })
         )),
         d.forEach(function(b) {
-          O(a, b, c[b]);
+          oa(a, b, c[b]);
         });
     }
     return a;
   }
-  function O(a, b, c) {
+  function oa(a, b, c) {
     return (
       b in a
         ? Object.defineProperty(a, b, {
@@ -541,6 +896,31 @@
       a
     );
   }
+  function pa(a, b, c, d, e, f, g) {
+    try {
+      var h = a[f](g),
+        i = h.value;
+    } catch (a) {
+      return void c(a);
+    }
+    h.done ? b(i) : Promise.resolve(i).then(d, e);
+  }
+  function qa(a) {
+    return function() {
+      var b = this,
+        c = arguments;
+      return new Promise(function(d, e) {
+        function f(a) {
+          pa(h, d, e, f, g, "next", a);
+        }
+        function g(a) {
+          pa(h, d, e, f, g, "throw", a);
+        }
+        var h = a.apply(b, c);
+        f(void 0);
+      });
+    };
+  }
   (function(a, b) {
     "object" == typeof exports && "undefined" != typeof module
       ? b()
@@ -548,27 +928,27 @@
       ? define(b)
       : b();
   })(this, function() {
-    function M(a) {
-      let b = Aa.get(a.type);
+    function ma(a) {
+      let b = bb.get(a.type);
       void 0 === b &&
         ((b = { stringsArray: new WeakMap(), keyString: new Map() }),
-        Aa.set(a.type, b));
+        bb.set(a.type, b));
       let c = b.stringsArray.get(a.strings);
       if (void 0 !== c) return c;
-      const d = a.strings.join(fa);
+      const d = a.strings.join(Ia);
       return (
         (c = b.keyString.get(d)),
         void 0 === c &&
-          ((c = new ja(a, a.getTemplateElement())), b.keyString.set(d, c)),
+          ((c = new Ma(a, a.getTemplateElement())), b.keyString.set(d, c)),
         b.stringsArray.set(a.strings, c),
         c
       );
     }
-    function O(a, b) {
+    function oa(a, b) {
       const c = a.element.content,
         d = a.parts,
-        e = document.createTreeWalker(c, Ea, null, !1);
-      let f = Ga(d),
+        e = document.createTreeWalker(c, fb, null, !1);
+      let f = hb(d),
         g = d[f],
         h = -1,
         i = 0;
@@ -583,51 +963,51 @@
           g !== void 0 && g.index === h;
 
         )
-          (g.index = null === c ? g.index - i : -1), (f = Ga(d, f)), (g = d[f]);
+          (g.index = null === c ? g.index - i : -1), (f = hb(d, f)), (g = d[f]);
       }
       j.forEach((a) => a.parentNode.removeChild(a));
     }
-    function P(a, b) {
+    function pa(a, b) {
       let c =
         2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : null;
       const d = a.element.content,
         e = a.parts;
       if (null === c || void 0 === c) return void d.appendChild(b);
-      const f = document.createTreeWalker(d, Ea, null, !1);
-      let g = Ga(e),
+      const f = document.createTreeWalker(d, fb, null, !1);
+      let g = hb(e),
         h = 0,
         i = -1;
       for (; f.nextNode(); ) {
         i++;
         const a = f.currentNode;
         for (
-          a === c && ((h = Fa(b)), c.parentNode.insertBefore(b, c));
+          a === c && ((h = gb(b)), c.parentNode.insertBefore(b, c));
           -1 !== g && e[g].index === i;
 
         ) {
           if (0 < h) {
-            for (; -1 !== g; ) (e[g].index += h), (g = Ga(e, g));
+            for (; -1 !== g; ) (e[g].index += h), (g = hb(e, g));
             return;
           }
-          g = Ga(e, g);
+          g = hb(e, g);
         }
       }
     }
-    function Q(a) {
+    function ra(a) {
       let b =
         1 < arguments.length && arguments[1] !== void 0 ? arguments[1] : [];
       for (let c = 0, d = a.length; c < d; c++) {
         const d = a[c];
-        Array.isArray(d) ? Q(d, b) : b.push(d);
+        Array.isArray(d) ? ra(d, b) : b.push(d);
       }
       return b;
     }
-    function R(a, b) {
+    function sa(a, b) {
       function c() {
         f && ((f = !1), a()), g && e();
       }
       function d() {
-        gb(c);
+        Nb(c);
       }
       function e() {
         var a = Date.now();
@@ -642,18 +1022,18 @@
         h = 0;
       return e;
     }
-    function S(a) {
+    function ta(a) {
       return parseFloat(a) || 0;
     }
-    function T(a) {
+    function ua(a) {
       for (var b = [], c = 1; c < arguments.length; c++)
         b[c - 1] = arguments[c];
       return b.reduce(function(b, c) {
         var d = a["border-" + c + "-width"];
-        return b + S(d);
+        return b + ta(d);
       }, 0);
     }
-    function U(a) {
+    function va(a) {
       for (
         var b = ["top", "right", "bottom", "left"], c = {}, d = 0, e = b;
         d < e.length;
@@ -661,45 +1041,45 @@
       ) {
         var f = e[d],
           g = a["padding-" + f];
-        c[f] = S(g);
+        c[f] = ta(g);
       }
       return c;
     }
-    function V(a) {
+    function wa(a) {
       var b = a.getBBox();
-      return $(0, 0, b.width, b.height);
+      return Ba(0, 0, b.width, b.height);
     }
-    function W(a) {
+    function xa(a) {
       var b = Math.abs,
         c = Math.round,
         d = a.clientWidth,
         e = a.clientHeight;
-      if (!d && !e) return mb;
-      var f = lb(a).getComputedStyle(a),
-        g = U(f),
+      if (!d && !e) return Tb;
+      var f = Sb(a).getComputedStyle(a),
+        g = va(f),
         h = g.left + g.right,
         i = g.top + g.bottom,
-        j = S(f.width),
-        k = S(f.height);
+        j = ta(f.width),
+        k = ta(f.height);
       if (
         ("border-box" === f.boxSizing &&
-          (c(j + h) !== d && (j -= T(f, "left", "right") + h),
-          c(k + i) !== e && (k -= T(f, "top", "bottom") + i)),
-        !X(a))
+          (c(j + h) !== d && (j -= ua(f, "left", "right") + h),
+          c(k + i) !== e && (k -= ua(f, "top", "bottom") + i)),
+        !ya(a))
       ) {
         var l = c(j + h) - d,
           m = c(k + i) - e;
         1 !== b(l) && (j -= l), 1 !== b(m) && (k -= m);
       }
-      return $(g.left, g.top, j, k);
+      return Ba(g.left, g.top, j, k);
     }
-    function X(a) {
-      return a === lb(a).document.documentElement;
+    function ya(a) {
+      return a === Sb(a).document.documentElement;
     }
-    function Y(a) {
-      return eb ? (nb(a) ? V(a) : W(a)) : mb;
+    function za(a) {
+      return Lb ? (Ub(a) ? wa(a) : xa(a)) : Tb;
     }
-    function Z(a) {
+    function Aa(a) {
       var b = a.x,
         c = a.y,
         d = a.width,
@@ -707,7 +1087,7 @@
         f = "undefined" == typeof DOMRectReadOnly ? Object : DOMRectReadOnly,
         g = Object.create(f.prototype);
       return (
-        kb(g, {
+        Rb(g, {
           x: b,
           y: c,
           width: d,
@@ -720,15 +1100,15 @@
         g
       );
     }
-    function $(a, b, c, d) {
+    function Ba(a, b, c, d) {
       return { x: a, y: b, width: c, height: d };
     }
-    const _ = new WeakMap(),
-      aa = (a) => "function" == typeof a && _.has(a),
-      ba =
+    const Ca = new WeakMap(),
+      Da = (a) => "function" == typeof a && Ca.has(a),
+      Ea =
         window.customElements !== void 0 &&
         window.customElements.polyfillWrapFlushCallback !== void 0,
-      ca = function(a, b) {
+      Fa = function(a, b) {
         let c =
             2 < arguments.length && arguments[2] !== void 0
               ? arguments[2]
@@ -739,13 +1119,13 @@
           a.removeChild(d), (d = b);
         }
       },
-      da = {},
-      ea = {},
-      fa = "{{lit-".concat((Math.random() + "").slice(2), "}}"),
-      ga = "<!--".concat(fa, "-->"),
-      ha = new RegExp("".concat(fa, "|").concat(ga)),
-      ia = "$lit$";
-    class ja {
+      Ga = {},
+      Ha = {},
+      Ia = "{{lit-".concat((Math.random() + "").slice(2), "}}"),
+      Ja = "<!--".concat(Ia, "-->"),
+      Ka = new RegExp("".concat(Ia, "|").concat(Ja)),
+      La = "$lit$";
+    class Ma {
       constructor(a, b) {
         (this.parts = []), (this.element = b);
         let c = -1,
@@ -762,13 +1142,13 @@
                   const e = b.attributes;
                   let f = 0;
                   for (let a = 0; a < e.length; a++)
-                    0 <= e[a].value.indexOf(fa) && f++;
+                    0 <= e[a].value.indexOf(Ia) && f++;
                   for (; 0 < f--; ) {
                     const e = a.strings[d],
-                      f = ma.exec(e)[2],
-                      g = f.toLowerCase() + ia,
+                      f = Pa.exec(e)[2],
+                      g = f.toLowerCase() + La,
                       h = b.getAttribute(g),
-                      i = h.split(ha);
+                      i = h.split(Ka);
                     this.parts.push({
                       type: "attribute",
                       index: c,
@@ -782,32 +1162,32 @@
                 "TEMPLATE" === b.tagName && f(b);
               } else if (3 === b.nodeType) {
                 const a = b.data;
-                if (0 <= a.indexOf(fa)) {
+                if (0 <= a.indexOf(Ia)) {
                   const f = b.parentNode,
-                    g = a.split(ha),
+                    g = a.split(Ka),
                     h = g.length - 1;
                   for (let a = 0; a < h; a++)
                     f.insertBefore(
-                      "" === g[a] ? la() : document.createTextNode(g[a]),
+                      "" === g[a] ? Oa() : document.createTextNode(g[a]),
                       b
                     ),
                       this.parts.push({ type: "node", index: ++c });
                   "" === g[h]
-                    ? (f.insertBefore(la(), b), e.push(b))
+                    ? (f.insertBefore(Oa(), b), e.push(b))
                     : (b.data = g[h]),
                     (d += h);
                 }
               } else if (8 === b.nodeType)
-                if (b.data === fa) {
+                if (b.data === Ia) {
                   const a = b.parentNode;
                   (null === b.previousSibling || c === g) &&
-                    (c++, a.insertBefore(la(), b)),
+                    (c++, a.insertBefore(Oa(), b)),
                     (g = c),
                     this.parts.push({ type: "node", index: c }),
                     null === b.nextSibling ? (b.data = "") : (e.push(b), c--),
                     d++;
                 } else
-                  for (let a = -1; -1 !== (a = b.data.indexOf(fa, a + 1)); )
+                  for (let a = -1; -1 !== (a = b.data.indexOf(Ia, a + 1)); )
                     this.parts.push({ type: "node", index: -1 });
             }
           };
@@ -815,10 +1195,10 @@
         for (const c of e) c.parentNode.removeChild(c);
       }
     }
-    const ka = (a) => -1 !== a.index,
-      la = () => document.createComment(""),
-      ma = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F \x09\x0a\x0c\x0d"'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
-    class na {
+    const Na = (a) => -1 !== a.index,
+      Oa = () => document.createComment(""),
+      Pa = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F \x09\x0a\x0c\x0d"'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
+    class Qa {
       constructor(a, b, c) {
         (this._parts = []),
           (this.template = a),
@@ -831,7 +1211,7 @@
         for (const b of this._parts) void 0 !== b && b.commit();
       }
       _clone() {
-        const a = ba
+        const a = Ea
             ? this.template.element.content.cloneNode(!0)
             : document.importNode(this.template.element.content, !0),
           b = this.template.parts;
@@ -841,7 +1221,7 @@
           const f = document.createTreeWalker(a, 133, null, !1);
           for (let g = f.nextNode(); c < b.length && null !== g; ) {
             const a = b[c];
-            if (!ka(a)) this._parts.push(void 0), c++;
+            if (!Na(a)) this._parts.push(void 0), c++;
             else if (d === a.index) {
               if ("node" === a.type) {
                 const a = this.processor.handleTextExpression(this.options);
@@ -863,11 +1243,11 @@
           }
         };
         return (
-          e(a), ba && (document.adoptNode(a), customElements.upgrade(a)), a
+          e(a), Ea && (document.adoptNode(a), customElements.upgrade(a)), a
         );
       }
     }
-    class oa {
+    class Ra {
       constructor(a, b, c, d) {
         (this.strings = a),
           (this.values = b),
@@ -879,8 +1259,8 @@
         let b = "";
         for (let c = 0; c < a; c++) {
           const a = this.strings[c],
-            d = ma.exec(a);
-          b += d ? a.substr(0, d.index) + d[1] + d[2] + ia + d[3] + fa : a + ga;
+            d = Pa.exec(a);
+          b += d ? a.substr(0, d.index) + d[1] + d[2] + La + d[3] + Ia : a + Ja;
         }
         return b + this.strings[a];
       }
@@ -889,9 +1269,9 @@
         return (a.innerHTML = this.getHTML()), a;
       }
     }
-    const pa = (a) =>
+    const Sa = (a) =>
       null === a || ("object" != typeof a && "function" != typeof a);
-    class qa {
+    class Ta {
       constructor(a, b, c) {
         (this.dirty = !0),
           (this.element = a),
@@ -902,7 +1282,7 @@
           this.parts[d] = this._createPart();
       }
       _createPart() {
-        return new ra(this);
+        return new Ua(this);
       }
       _getValue() {
         const a = this.strings,
@@ -929,41 +1309,41 @@
           this.element.setAttribute(this.name, this._getValue()));
       }
     }
-    class ra {
+    class Ua {
       constructor(a) {
         (this.value = void 0), (this.committer = a);
       }
       setValue(a) {
-        a === da ||
-          (pa(a) && a === this.value) ||
-          ((this.value = a), !aa(a) && (this.committer.dirty = !0));
+        a === Ga ||
+          (Sa(a) && a === this.value) ||
+          ((this.value = a), !Da(a) && (this.committer.dirty = !0));
       }
       commit() {
-        for (; aa(this.value); ) {
+        for (; Da(this.value); ) {
           const a = this.value;
-          (this.value = da), a(this);
+          (this.value = Ga), a(this);
         }
-        this.value === da || this.committer.commit();
+        this.value === Ga || this.committer.commit();
       }
     }
-    class sa {
+    class Va {
       constructor(a) {
         (this.value = void 0),
           (this._pendingValue = void 0),
           (this.options = a);
       }
       appendInto(a) {
-        (this.startNode = a.appendChild(la())),
-          (this.endNode = a.appendChild(la()));
+        (this.startNode = a.appendChild(Oa())),
+          (this.endNode = a.appendChild(Oa()));
       }
       insertAfterNode(a) {
         (this.startNode = a), (this.endNode = a.nextSibling);
       }
       appendIntoPart(a) {
-        a._insert((this.startNode = la())), a._insert((this.endNode = la()));
+        a._insert((this.startNode = Oa())), a._insert((this.endNode = Oa()));
       }
       insertAfterPart(a) {
-        a._insert((this.startNode = la())),
+        a._insert((this.startNode = Oa())),
           (this.endNode = a.endNode),
           (a.endNode = this.startNode);
       }
@@ -971,22 +1351,22 @@
         this._pendingValue = a;
       }
       commit() {
-        for (; aa(this._pendingValue); ) {
+        for (; Da(this._pendingValue); ) {
           const a = this._pendingValue;
-          (this._pendingValue = da), a(this);
+          (this._pendingValue = Ga), a(this);
         }
         const a = this._pendingValue;
-        a === da ||
-          (pa(a)
+        a === Ga ||
+          (Sa(a)
             ? a !== this.value && this._commitText(a)
-            : a instanceof oa
+            : a instanceof Ra
             ? this._commitTemplateResult(a)
             : a instanceof Node
             ? this._commitNode(a)
             : Array.isArray(a) || a[Symbol.iterator]
             ? this._commitIterable(a)
-            : a === ea
-            ? ((this.value = ea), this.clear())
+            : a === Ha
+            ? ((this.value = Ha), this.clear())
             : this._commitText(a));
       }
       _insert(a) {
@@ -1007,10 +1387,10 @@
       }
       _commitTemplateResult(a) {
         const b = this.options.templateFactory(a);
-        if (this.value instanceof na && this.value.template === b)
+        if (this.value instanceof Qa && this.value.template === b)
           this.value.update(a.values);
         else {
-          const c = new na(b, a.processor, this.options),
+          const c = new Qa(b, a.processor, this.options),
             d = c._clone();
           c.update(a.values), this._commitNode(d), (this.value = c);
         }
@@ -1023,7 +1403,7 @@
         for (const e of a)
           (c = b[d]),
             void 0 === c &&
-              ((c = new sa(this.options)),
+              ((c = new Va(this.options)),
               b.push(c),
               0 == d ? c.appendIntoPart(this) : c.insertAfterPart(b[d - 1])),
             c.setValue(e),
@@ -1036,10 +1416,10 @@
           0 < arguments.length && arguments[0] !== void 0
             ? arguments[0]
             : this.startNode;
-        ca(this.startNode.parentNode, a.nextSibling, this.endNode);
+        Fa(this.startNode.parentNode, a.nextSibling, this.endNode);
       }
     }
-    class ta {
+    class Wa {
       constructor(a, b, c) {
         if (
           ((this.value = void 0),
@@ -1055,28 +1435,28 @@
         this._pendingValue = a;
       }
       commit() {
-        for (; aa(this._pendingValue); ) {
+        for (; Da(this._pendingValue); ) {
           const a = this._pendingValue;
-          (this._pendingValue = da), a(this);
+          (this._pendingValue = Ga), a(this);
         }
-        if (this._pendingValue !== da) {
+        if (this._pendingValue !== Ga) {
           const a = !!this._pendingValue;
           this.value !== a &&
             (a
               ? this.element.setAttribute(this.name, "")
               : this.element.removeAttribute(this.name)),
             (this.value = a),
-            (this._pendingValue = da);
+            (this._pendingValue = Ga);
         }
       }
     }
-    class ua extends qa {
+    class Xa extends Ta {
       constructor(a, b, c) {
         super(a, b, c),
           (this.single = 2 === c.length && "" === c[0] && "" === c[1]);
       }
       _createPart() {
-        return new va(this);
+        return new Ya(this);
       }
       _getValue() {
         return this.single ? this.parts[0].value : super._getValue();
@@ -1086,18 +1466,18 @@
           ((this.dirty = !1), (this.element[this.name] = this._getValue()));
       }
     }
-    class va extends ra {}
-    let wa = !1;
+    class Ya extends Ua {}
+    let Za = !1;
     try {
       const a = {
         get capture() {
-          return (wa = !0), !1;
+          return (Za = !0), !1;
         },
       };
       window.addEventListener("test", a, a),
         window.removeEventListener("test", a, a);
     } catch (a) {}
-    class xa {
+    class $a {
       constructor(a, b, c) {
         (this.value = void 0),
           (this._pendingValue = void 0),
@@ -1110,11 +1490,11 @@
         this._pendingValue = a;
       }
       commit() {
-        for (; aa(this._pendingValue); ) {
+        for (; Da(this._pendingValue); ) {
           const a = this._pendingValue;
-          (this._pendingValue = da), a(this);
+          (this._pendingValue = Ga), a(this);
         }
-        if (this._pendingValue === da) return;
+        if (this._pendingValue === Ga) return;
         const a = this._pendingValue,
           b = this.value,
           c =
@@ -1131,14 +1511,14 @@
           ),
           null != a &&
             (null == b || c) &&
-            ((this._options = ya(a)),
+            ((this._options = _a(a)),
             this.element.addEventListener(
               this.eventName,
               this._boundHandleEvent,
               this._options
             )),
           (this.value = a),
-          (this._pendingValue = da);
+          (this._pendingValue = Ga);
       }
       handleEvent(a) {
         "function" == typeof this.value
@@ -1146,98 +1526,98 @@
           : this.value.handleEvent(a);
       }
     }
-    const ya = (a) =>
+    const _a = (a) =>
       a &&
-      (wa
+      (Za
         ? { capture: a.capture, passive: a.passive, once: a.once }
         : a.capture);
-    const za = new class {
+    const ab = new class {
         handleAttributeExpressions(a, b, c, d) {
           const e = b[0];
           if ("." === e) {
-            const d = new ua(a, b.slice(1), c);
+            const d = new Xa(a, b.slice(1), c);
             return d.parts;
           }
-          if ("@" === e) return [new xa(a, b.slice(1), d.eventContext)];
-          if ("?" === e) return [new ta(a, b.slice(1), c)];
-          const f = new qa(a, b, c);
+          if ("@" === e) return [new $a(a, b.slice(1), d.eventContext)];
+          if ("?" === e) return [new Wa(a, b.slice(1), c)];
+          const f = new Ta(a, b, c);
           return f.parts;
         }
         handleTextExpression(a) {
-          return new sa(a);
+          return new Va(a);
         }
       }(),
-      Aa = new Map(),
-      Ba = new WeakMap(),
-      Ca = (a, b, c) => {
-        let d = Ba.get(b);
+      bb = new Map(),
+      cb = new WeakMap(),
+      db = (a, b, c) => {
+        let d = cb.get(b);
         d === void 0 &&
-          (ca(b, b.firstChild),
-          Ba.set(b, (d = new sa(Object.assign({ templateFactory: M }, c)))),
+          (Fa(b, b.firstChild),
+          cb.set(b, (d = new Va(Object.assign({ templateFactory: ma }, c)))),
           d.appendInto(b)),
           d.setValue(a),
           d.commit();
       };
     (window.litHtmlVersions || (window.litHtmlVersions = [])).push("1.0.0");
-    const Da = function(a) {
+    const eb = function(a) {
         for (
           var b = arguments.length, c = Array(1 < b ? b - 1 : 0), d = 1;
           d < b;
           d++
         )
           c[d - 1] = arguments[d];
-        return new oa(a, c, "html", za);
+        return new Ra(a, c, "html", ab);
       },
-      Ea = 133,
-      Fa = (a) => {
+      fb = 133,
+      gb = (a) => {
         let b = 11 === a.nodeType ? 0 : 1;
         for (
-          const c = document.createTreeWalker(a, Ea, null, !1);
+          const c = document.createTreeWalker(a, fb, null, !1);
           c.nextNode();
 
         )
           b++;
         return b;
       },
-      Ga = function(a) {
+      hb = function(a) {
         let b =
           1 < arguments.length && arguments[1] !== void 0 ? arguments[1] : -1;
         for (let c = b + 1; c < a.length; c++) {
           const b = a[c];
-          if (ka(b)) return c;
+          if (Na(b)) return c;
         }
         return -1;
       },
-      Ha = (a, b) => "".concat(a, "--").concat(b);
-    let Ia = !0;
+      ib = (a, b) => "".concat(a, "--").concat(b);
+    let jb = !0;
     "undefined" == typeof window.ShadyCSS
-      ? (Ia = !1)
+      ? (jb = !1)
       : "undefined" == typeof window.ShadyCSS.prepareTemplateDom &&
         (console.warn(
           "Incompatible ShadyCSS version detected.Please update to at least @webcomponents/webcomponentsjs@2.0.2 and@webcomponents/shadycss@1.3.1."
         ),
-        (Ia = !1));
-    const Ja = (a) => (b) => {
-        const c = Ha(b.type, a);
-        let d = Aa.get(c);
+        (jb = !1));
+    const kb = (a) => (b) => {
+        const c = ib(b.type, a);
+        let d = bb.get(c);
         void 0 === d &&
           ((d = { stringsArray: new WeakMap(), keyString: new Map() }),
-          Aa.set(c, d));
+          bb.set(c, d));
         let e = d.stringsArray.get(b.strings);
         if (void 0 !== e) return e;
-        const f = b.strings.join(fa);
+        const f = b.strings.join(Ia);
         if (((e = d.keyString.get(f)), void 0 === e)) {
           const c = b.getTemplateElement();
-          Ia && window.ShadyCSS.prepareTemplateDom(c, a),
-            (e = new ja(b, c)),
+          jb && window.ShadyCSS.prepareTemplateDom(c, a),
+            (e = new Ma(b, c)),
             d.keyString.set(f, e);
         }
         return d.stringsArray.set(b.strings, e), e;
       },
-      Ka = ["html", "svg"],
-      La = (a) => {
-        Ka.forEach((b) => {
-          const c = Aa.get(Ha(b, a));
+      lb = ["html", "svg"],
+      mb = (a) => {
+        lb.forEach((b) => {
+          const c = bb.get(ib(b, a));
           c !== void 0 &&
             c.keyString.forEach((a) => {
               const b = a.element.content,
@@ -1245,13 +1625,13 @@
               Array.from(b.querySelectorAll("style")).forEach((a) => {
                 c.add(a);
               }),
-                O(a, c);
+                oa(a, c);
             });
         });
       },
-      Ma = new Set(),
-      Na = (a, b, c) => {
-        Ma.add(c);
+      nb = new Set(),
+      ob = (a, b, c) => {
+        nb.add(c);
         const d = a.querySelectorAll("style");
         if (0 === d.length)
           return void window.ShadyCSS.prepareTemplateStyles(b.element, c);
@@ -1261,8 +1641,8 @@
           a.parentNode.removeChild(a), (e.textContent += a.textContent);
         }
         if (
-          (La(c),
-          P(b, e, b.element.content.firstChild),
+          (mb(c),
+          pa(b, e, b.element.content.firstChild),
           window.ShadyCSS.prepareTemplateStyles(b.element, c),
           window.ShadyCSS.nativeShadow)
         ) {
@@ -1271,27 +1651,27 @@
         } else {
           b.element.content.insertBefore(e, b.element.content.firstChild);
           const a = new Set();
-          a.add(e), O(b, a);
+          a.add(e), oa(b, a);
         }
       },
-      Oa = (a, b, c) => {
+      pb = (a, b, c) => {
         const d = c.scopeName,
-          e = Ba.has(b),
-          f = b instanceof ShadowRoot && Ia && a instanceof oa,
-          g = f && !Ma.has(d),
+          e = cb.has(b),
+          f = b instanceof ShadowRoot && jb && a instanceof Ra,
+          g = f && !nb.has(d),
           h = g ? document.createDocumentFragment() : b;
-        if ((Ca(a, h, Object.assign({ templateFactory: Ja(d) }, c)), g)) {
-          const a = Ba.get(h);
-          Ba.delete(h),
-            a.value instanceof na && Na(h, a.value.template, d),
-            ca(b, b.firstChild),
+        if ((db(a, h, Object.assign({ templateFactory: kb(d) }, c)), g)) {
+          const a = cb.get(h);
+          cb.delete(h),
+            a.value instanceof Qa && ob(h, a.value.template, d),
+            Fa(b, b.firstChild),
             b.appendChild(h),
-            Ba.set(b, a);
+            cb.set(b, a);
         }
         !e && f && window.ShadyCSS.styleElement(b.host);
       };
     window.JSCompiler_renameProperty = (a) => a;
-    const Pa = {
+    const qb = {
         toAttribute(a, b) {
           return b === Boolean
             ? a
@@ -1315,26 +1695,26 @@
             : a;
         },
       },
-      Qa = (a, b) => b !== a && (b === b || a === a),
-      Ra = {
+      rb = (a, b) => b !== a && (b === b || a === a),
+      sb = {
         attribute: !0,
         type: String,
-        converter: Pa,
+        converter: qb,
         reflect: !1,
-        hasChanged: Qa,
+        hasChanged: rb,
       },
-      Sa = Promise.resolve(!0),
-      Ta = 1,
-      Ua = 4,
-      Va = 8,
-      Wa = 16,
-      Xa = 32;
-    class Ya extends HTMLElement {
+      tb = Promise.resolve(!0),
+      ub = 1,
+      vb = 4,
+      wb = 8,
+      xb = 16,
+      yb = 32;
+    class zb extends HTMLElement {
       constructor() {
         super(),
           (this._updateState = 0),
           (this._instanceProperties = void 0),
-          (this._updatePromise = Sa),
+          (this._updatePromise = tb),
           (this._hasConnectedResolver = void 0),
           (this._changedProperties = new Map()),
           (this._reflectingProperties = void 0),
@@ -1364,7 +1744,7 @@
       }
       static createProperty(a) {
         let b =
-          1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : Ra;
+          1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : sb;
         if (
           (this._ensureClassProperties(),
           this._classProperties.set(a, b),
@@ -1422,12 +1802,12 @@
       }
       static _valueHasChanged(a, b) {
         let c =
-          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : Qa;
+          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : rb;
         return c(a, b);
       }
       static _propertyValueFromAttribute(a, b) {
         const c = b.type,
-          d = b.converter || Pa,
+          d = b.converter || qb,
           e = "function" == typeof d ? d : d.fromAttribute;
         return e ? e(a, c) : a;
       }
@@ -1435,7 +1815,7 @@
         if (void 0 === b.reflect) return;
         const c = b.type,
           d = b.converter,
-          e = (d && d.toAttribute) || Pa.toAttribute;
+          e = (d && d.toAttribute) || qb.toAttribute;
         return e(a, c);
       }
       initialize() {
@@ -1457,7 +1837,7 @@
           (this._instanceProperties = void 0);
       }
       connectedCallback() {
-        (this._updateState |= Xa),
+        (this._updateState |= yb),
           this._hasConnectedResolver &&
             (this._hasConnectedResolver(),
             (this._hasConnectedResolver = void 0));
@@ -1468,38 +1848,38 @@
       }
       _propertyToAttribute(a, b) {
         let c =
-          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : Ra;
+          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : sb;
         const d = this.constructor,
           e = d._attributeNameForProperty(a, c);
         if (e !== void 0) {
           const a = d._propertyValueToAttribute(b, c);
           if (a === void 0) return;
-          (this._updateState |= Va),
+          (this._updateState |= wb),
             null == a ? this.removeAttribute(e) : this.setAttribute(e, a),
-            (this._updateState &= ~Va);
+            (this._updateState &= ~wb);
         }
       }
       _attributeToProperty(a, b) {
-        if (this._updateState & Va) return;
+        if (this._updateState & wb) return;
         const c = this.constructor,
           d = c._attributeToPropertyMap.get(a);
         if (d !== void 0) {
-          const a = c._classProperties.get(d) || Ra;
-          (this._updateState |= Wa),
+          const a = c._classProperties.get(d) || sb;
+          (this._updateState |= xb),
             (this[d] = c._propertyValueFromAttribute(b, a)),
-            (this._updateState &= ~Wa);
+            (this._updateState &= ~xb);
         }
       }
       _requestUpdate(a, b) {
         let c = !0;
         if (a !== void 0) {
           const d = this.constructor,
-            e = d._classProperties.get(a) || Ra;
+            e = d._classProperties.get(a) || sb;
           d._valueHasChanged(this[a], b, e.hasChanged)
             ? (!this._changedProperties.has(a) &&
                 this._changedProperties.set(a, b),
               !0 === e.reflect &&
-                !(this._updateState & Wa) &&
+                !(this._updateState & xb) &&
                 (this._reflectingProperties === void 0 &&
                   (this._reflectingProperties = new Map()),
                 this._reflectingProperties.set(a, e)))
@@ -1510,34 +1890,37 @@
       requestUpdate(a, b) {
         return this._requestUpdate(a, b), this.updateComplete;
       }
-      async _enqueueUpdate() {
-        this._updateState |= Ua;
-        let a, b;
-        const c = this._updatePromise;
-        this._updatePromise = new Promise((c, d) => {
-          (a = c), (b = d);
-        });
-        try {
-          await c;
-        } catch (a) {}
-        this._hasConnected ||
-          (await new Promise((a) => (this._hasConnectedResolver = a)));
-        try {
-          const a = this.performUpdate();
-          null != a && (await a);
-        } catch (a) {
-          b(a);
-        }
-        a(!this._hasRequestedUpdate);
+      _enqueueUpdate() {
+        var a = this;
+        return qa(function*() {
+          a._updateState |= vb;
+          let b, c;
+          const d = a._updatePromise;
+          a._updatePromise = new Promise((a, d) => {
+            (b = a), (c = d);
+          });
+          try {
+            yield d;
+          } catch (a) {}
+          a._hasConnected ||
+            (yield new Promise((b) => (a._hasConnectedResolver = b)));
+          try {
+            const b = a.performUpdate();
+            null != b && (yield b);
+          } catch (a) {
+            c(a);
+          }
+          b(!a._hasRequestedUpdate);
+        })();
       }
       get _hasConnected() {
-        return this._updateState & Xa;
+        return this._updateState & yb;
       }
       get _hasRequestedUpdate() {
-        return this._updateState & Ua;
+        return this._updateState & vb;
       }
       get hasUpdated() {
-        return this._updateState & Ta;
+        return this._updateState & ub;
       }
       performUpdate() {
         this._instanceProperties && this._applyInstanceProperties();
@@ -1551,12 +1934,12 @@
           this._markUpdated();
         }
         a &&
-          (!(this._updateState & Ta) &&
-            ((this._updateState |= Ta), this.firstUpdated(b)),
+          (!(this._updateState & ub) &&
+            ((this._updateState |= ub), this.firstUpdated(b)),
           this.updated(b));
       }
       _markUpdated() {
-        (this._changedProperties = new Map()), (this._updateState &= ~Ua);
+        (this._changedProperties = new Map()), (this._updateState &= ~vb);
       }
       get updateComplete() {
         return this._updatePromise;
@@ -1575,14 +1958,14 @@
       updated(a) {}
       firstUpdated(a) {}
     }
-    Ya.finalized = !0;
-    const Za =
+    zb.finalized = !0;
+    const Ab =
         "adoptedStyleSheets" in Document.prototype &&
         "replace" in CSSStyleSheet.prototype,
-      $a = Symbol();
-    class _a {
+      Bb = Symbol();
+    class Cb {
       constructor(a, b) {
-        if (b !== $a)
+        if (b !== Bb)
           throw new Error(
             "CSSResult is not constructable. Use `unsafeCSS` or `css` instead."
           );
@@ -1591,7 +1974,7 @@
       get styleSheet() {
         return (
           void 0 === this._styleSheet &&
-            (Za
+            (Ab
               ? ((this._styleSheet = new CSSStyleSheet()),
                 this._styleSheet.replaceSync(this.cssText))
               : (this._styleSheet = null)),
@@ -1602,20 +1985,30 @@
         return this.cssText;
       }
     }
-    const ab = (a) => {
-      if (a instanceof _a) return a.cssText;
-      throw new Error(
-        "Value passed to 'css' function must be a 'css' function result: ".concat(
-          a,
-          ". Use 'unsafeCSS' to pass non-literal values, but\n            take care to ensure page security."
+    const Db = (a) => {
+        if (a instanceof Cb) return a.cssText;
+        throw new Error(
+          "Value passed to 'css' function must be a 'css' function result: ".concat(
+            a,
+            ". Use 'unsafeCSS' to pass non-literal values, but\n            take care to ensure page security."
+          )
+        );
+      },
+      Eb = function(a) {
+        for (
+          var b = arguments.length, c = Array(1 < b ? b - 1 : 0), d = 1;
+          d < b;
+          d++
         )
-      );
-    };
+          c[d - 1] = arguments[d];
+        const e = c.reduce((b, c, d) => b + Db(c) + a[d + 1], a[0]);
+        return new Cb(e, Bb);
+      };
     (window.litElementVersions || (window.litElementVersions = [])).push(
       "2.0.1"
     );
-    const bb = (a) => (a.flat ? a.flat(1 / 0) : Q(a));
-    class cb extends Ya {
+    const Fb = (a) => (a.flat ? a.flat(1 / 0) : ra(a));
+    class Gb extends zb {
       static finalize() {
         super.finalize(),
           (this._styles = this.hasOwnProperty(
@@ -1628,7 +2021,7 @@
         const a = this.styles,
           b = [];
         if (Array.isArray(a)) {
-          const c = bb(a),
+          const c = Fb(a),
             d = c.reduceRight((a, b) => (a.add(b), a), new Set());
           d.forEach((a) => b.unshift(a));
         } else a && b.push(a);
@@ -1648,7 +2041,7 @@
         const a = this.constructor._styles;
         0 === a.length ||
           (window.ShadyCSS === void 0 || window.ShadyCSS.nativeShadow
-            ? Za
+            ? Ab
               ? (this.renderRoot.adoptedStyleSheets = a.map(
                   (a) => a.styleSheet
                 ))
@@ -1667,7 +2060,7 @@
       update(a) {
         super.update(a);
         const b = this.render();
-        b instanceof oa &&
+        b instanceof Ra &&
           this.constructor.render(b, this.renderRoot, {
             scopeName: this.localName,
             eventContext: this,
@@ -1681,8 +2074,41 @@
       }
       render() {}
     }
-    (cb.finalized = !0), (cb.render = Oa);
-    var db = (function() {
+    (Gb.finalized = !0),
+      (Gb.render = pb),
+      window.navigator.userAgent.match("Trident") &&
+        (DOMTokenList.prototype.toggle = function(a, b) {
+          return (
+            void 0 === b || b ? this.add(a) : this.remove(a), void 0 === b || b
+          );
+        });
+    const Hb = new WeakMap(),
+      Ib = new WeakMap(),
+      Jb = ((a) =>
+        function() {
+          const b = a(...arguments);
+          return Ca.set(b, !0), b;
+        })((a) => (b) => {
+        if (
+          !(b instanceof Ua) ||
+          b instanceof Ya ||
+          "class" !== b.committer.name ||
+          1 < b.committer.parts.length
+        )
+          throw new Error(
+            "The `classMap` directive must be used in the `class` attribute and must be the only part in the attribute."
+          );
+        Ib.has(b) ||
+          ((b.committer.element.className = b.committer.strings.join(" ")),
+          Ib.set(b, !0));
+        const c = Hb.get(b);
+        for (const d in c) d in a || b.committer.element.classList.remove(d);
+        for (const d in a)
+          (c && c[d] === a[d]) ||
+            b.committer.element.classList.toggle(d, !!a[d]);
+        Hb.set(b, a);
+      });
+    var Kb = (function() {
         function a(a, b) {
           var c = -1;
           return (
@@ -1737,11 +2163,11 @@
             })()
           : Map;
       })(),
-      eb =
+      Lb =
         "undefined" != typeof window &&
         "undefined" != typeof document &&
         window.document === document,
-      fb = (function() {
+      Mb = (function() {
         return "undefined" != typeof global && global.Math === Math
           ? global
           : "undefined" != typeof self && self.Math === Math
@@ -1750,16 +2176,16 @@
           ? window
           : Function("return this")();
       })(),
-      gb = (function() {
+      Nb = (function() {
         return "function" == typeof requestAnimationFrame
-          ? requestAnimationFrame.bind(fb)
+          ? requestAnimationFrame.bind(Mb)
           : function(a) {
               return setTimeout(function() {
                 return a(Date.now());
               }, 1e3 / 60);
             };
       })(),
-      hb = [
+      Ob = [
         "top",
         "right",
         "bottom",
@@ -1769,15 +2195,15 @@
         "size",
         "weight",
       ],
-      ib = "undefined" != typeof MutationObserver,
-      jb = (function() {
+      Pb = "undefined" != typeof MutationObserver,
+      Qb = (function() {
         function a() {
           (this.connected_ = !1),
             (this.mutationEventsAdded_ = !1),
             (this.mutationsObserver_ = null),
             (this.observers_ = []),
             (this.onTransitionEnd_ = this.onTransitionEnd_.bind(this)),
-            (this.refresh = R(this.refresh.bind(this), 20));
+            (this.refresh = sa(this.refresh.bind(this), 20));
         }
         return (
           (a.prototype.addObserver = function(a) {
@@ -1806,14 +2232,14 @@
             );
           }),
           (a.prototype.connect_ = function() {
-            !eb ||
+            !Lb ||
               this.connected_ ||
               (document.addEventListener(
                 "transitionend",
                 this.onTransitionEnd_
               ),
               window.addEventListener("resize", this.refresh),
-              ib
+              Pb
                 ? ((this.mutationsObserver_ = new MutationObserver(
                     this.refresh
                   )),
@@ -1831,7 +2257,7 @@
               (this.connected_ = !0));
           }),
           (a.prototype.disconnect_ = function() {
-            eb &&
+            Lb &&
               this.connected_ &&
               (document.removeEventListener(
                 "transitionend",
@@ -1851,7 +2277,7 @@
           (a.prototype.onTransitionEnd_ = function(a) {
             var b = a.propertyName,
               c = void 0 === b ? "" : b,
-              d = hb.some(function(a) {
+              d = Ob.some(function(a) {
                 return !!~c.indexOf(a);
               });
             d && this.refresh();
@@ -1863,7 +2289,7 @@
           a
         );
       })(),
-      kb = function(a, b) {
+      Rb = function(a, b) {
         for (var c, d = 0, e = Object.keys(b); d < e.length; d++)
           (c = e[d]),
             Object.defineProperty(a, c, {
@@ -1874,32 +2300,32 @@
             });
         return a;
       },
-      lb = function(a) {
+      Sb = function(a) {
         var b = a && a.ownerDocument && a.ownerDocument.defaultView;
-        return b || fb;
+        return b || Mb;
       },
-      mb = $(0, 0, 0, 0),
-      nb = (function() {
+      Tb = Ba(0, 0, 0, 0),
+      Ub = (function() {
         return "undefined" == typeof SVGGraphicsElement
           ? function(a) {
               return (
-                a instanceof lb(a).SVGElement && "function" == typeof a.getBBox
+                a instanceof Sb(a).SVGElement && "function" == typeof a.getBBox
               );
             }
           : function(a) {
-              return a instanceof lb(a).SVGGraphicsElement;
+              return a instanceof Sb(a).SVGGraphicsElement;
             };
       })(),
-      ob = (function() {
+      Vb = (function() {
         function a(a) {
           (this.broadcastWidth = 0),
             (this.broadcastHeight = 0),
-            (this.contentRect_ = $(0, 0, 0, 0)),
+            (this.contentRect_ = Ba(0, 0, 0, 0)),
             (this.target = a);
         }
         return (
           (a.prototype.isActive = function() {
-            var a = Y(this.target);
+            var a = za(this.target);
             return (
               (this.contentRect_ = a),
               a.width !== this.broadcastWidth ||
@@ -1917,17 +2343,17 @@
           a
         );
       })(),
-      pb = (function() {
+      Wb = (function() {
         return function(a, b) {
-          var c = Z(b);
-          kb(this, { target: a, contentRect: c });
+          var c = Aa(b);
+          Rb(this, { target: a, contentRect: c });
         };
       })(),
-      qb = (function() {
+      Xb = (function() {
         function a(a, b, c) {
           if (
             ((this.activeObservations_ = []),
-            (this.observations_ = new db()),
+            (this.observations_ = new Kb()),
             "function" != typeof a)
           )
             throw new TypeError(
@@ -1940,11 +2366,11 @@
             if (!arguments.length)
               throw new TypeError("1 argument required, but only 0 present.");
             if ("undefined" != typeof Element && Element instanceof Object) {
-              if (!(a instanceof lb(a).Element))
+              if (!(a instanceof Sb(a).Element))
                 throw new TypeError('parameter 1 is not of type "Element".');
               var b = this.observations_;
               b.has(a) ||
-                (b.set(a, new ob(a)),
+                (b.set(a, new Vb(a)),
                 this.controller_.addObserver(this),
                 this.controller_.refresh());
             }
@@ -1953,7 +2379,7 @@
             if (!arguments.length)
               throw new TypeError("1 argument required, but only 0 present.");
             if ("undefined" != typeof Element && Element instanceof Object) {
-              if (!(a instanceof lb(a).Element))
+              if (!(a instanceof Sb(a).Element))
                 throw new TypeError('parameter 1 is not of type "Element".');
               var b = this.observations_;
               b.has(a) &&
@@ -1976,7 +2402,7 @@
             if (this.hasActive()) {
               var a = this.callbackCtx_,
                 b = this.activeObservations_.map(function(a) {
-                  return new pb(a.target, a.broadcastRect());
+                  return new Wb(a.target, a.broadcastRect());
                 });
               this.callback_.call(a, b, a), this.clearActive();
             }
@@ -1990,46 +2416,74 @@
           a
         );
       })(),
-      rb = "undefined" == typeof WeakMap ? new db() : new WeakMap(),
-      sb = (function() {
+      Yb = "undefined" == typeof WeakMap ? new Kb() : new WeakMap(),
+      Zb = (function() {
         function a(b) {
           if (!(this instanceof a))
             throw new TypeError("Cannot call a class as a function.");
           if (!arguments.length)
             throw new TypeError("1 argument required, but only 0 present.");
-          var c = jb.getInstance(),
-            d = new qb(b, c, this);
-          rb.set(this, d);
+          var c = Qb.getInstance(),
+            d = new Xb(b, c, this);
+          Yb.set(this, d);
         }
         return a;
       })();
     ["observe", "unobserve", "disconnect"].forEach(function(a) {
-      sb.prototype[a] = function() {
+      Zb.prototype[a] = function() {
         var b;
-        return (b = rb.get(this))[a].apply(b, arguments);
+        return (b = Yb.get(this))[a].apply(b, arguments);
       };
     });
-    var tb = (function() {
-      return "undefined" == typeof fb.ResizeObserver ? sb : fb.ResizeObserver;
+    var $b = (function() {
+      return "undefined" == typeof Mb.ResizeObserver ? Zb : Mb.ResizeObserver;
     })();
-    const ub = [
+    const _b = {
+        shuffle: !0,
+        power_state: !0,
+        artwork_border: !0,
+        icon_state: !0,
+        sound_mode: !0,
+        runtime: !0,
+      },
+      ac = {
+        DEFAULT: "mdi:cast",
+        DROPDOWN: "mdi:chevron-down",
+        GROUP: "mdi:speaker-multiple",
+        MENU: "mdi:menu-down",
+        MUTE: { true: "mdi:volume-off", false: "mdi:volume-high" },
+        NEXT: "mdi:skip-next",
+        PLAY: { true: "mdi:pause", false: "mdi:play" },
+        POWER: "mdi:power",
+        PREV: "mdi:skip-previous",
+        SEND: "mdi:send",
+        SHUFFLE: "mdi:shuffle",
+        STOP: "mdi:stop",
+        VOL_DOWN: "mdi:volume-minus",
+        VOL_UP: "mdi:volume-plus",
+      },
+      bc = ["entity", "_overflow", "break", "thumbnail", "edit", "idle"],
+      cc = ["media_duration", "media_position", "media_position_updated_at"],
+      dc = [
         { attr: "media_title" },
         { attr: "media_artist" },
         { attr: "media_series_title" },
         { attr: "media_season", prefix: "S" },
         { attr: "media_episode", prefix: "E" },
         { attr: "app_name" },
-      ],
-      vb = ["media_duration", "media_position", "media_position_updated_at"];
-    class wb {
+      ];
+    class ec {
       constructor(a, b, c) {
         (this.hass = a || {}),
           (this.config = b || {}),
           (this.entity = c || {}),
-          (this.state = this.entity.state),
+          (this.state = c.state),
           (this.attr = c.attributes),
-          (this.idle = !!this.config.idle_view && this.idleView),
+          (this.idle = !!b.idle_view && this.idleView),
           (this.active = this.isActive);
+      }
+      get id() {
+        return this.entity.entity_id;
       }
       get icon() {
         return this.attr.icon;
@@ -2076,6 +2530,9 @@
       get groupCount() {
         return this.group.length;
       }
+      get isGrouped() {
+        return 1 < this.group.length;
+      }
       get group() {
         const a = "".concat(this.config.speaker_group.platform, "_group");
         return this.attr[a] || [];
@@ -2091,6 +2548,12 @@
       }
       get source() {
         return this.attr.source || "";
+      }
+      get soundModes() {
+        return this.attr.sound_mode_list || [];
+      }
+      get soundMode() {
+        return this.attr.sound_mode || "";
       }
       get muted() {
         return this.attr.is_volume_muted || !1;
@@ -2110,15 +2573,15 @@
         );
       }
       get mediaInfo() {
-        return ub
-          .map((a) => N({ text: this.attr[a.attr], prefix: "" }, a))
+        return dc
+          .map((a) => na({ text: this.attr[a.attr], prefix: "" }, a))
           .filter((a) => a.text);
       }
       get hasProgress() {
         return (
           !this.config.hide.progress &&
           !this.idle &&
-          vb.every((a) => a in this.attr)
+          cc.every((a) => a in this.attr)
         );
       }
       get progress() {
@@ -2154,23 +2617,32 @@
           (this.idle = b > 60 * a), (this.active = this.isActive), this.idle
         );
       }
-      get supportShuffle() {
+      get supportsShuffle() {
         return "undefined" != typeof this.attr.shuffle;
       }
-      async fetchThumbnail() {
-        try {
-          const a = await this.hass.callWS({
-              type: "media_player_thumbnail",
-              entity_id: this.config.entity,
-            }),
-            b = a.content_type,
-            c = a.content;
-          return "url(data:".concat(b, ";base64,").concat(c, ")");
-        } catch (a) {
-          return (
-            console.error("mini-media-player: Failed fetching thumbnail"), !1
-          );
-        }
+      get supportsMute() {
+        return "undefined" != typeof this.attr.is_volume_muted;
+      }
+      getAttribute(a) {
+        return this.attr[a] || "";
+      }
+      fetchThumbnail() {
+        var a = this;
+        return qa(function*() {
+          try {
+            const b = yield a.hass.callWS({
+                type: "media_player_thumbnail",
+                entity_id: a.config.entity,
+              }),
+              c = b.content_type,
+              d = b.content;
+            return "url(data:".concat(c, ";base64,").concat(d, ")");
+          } catch (a) {
+            return (
+              console.error("mini-media-player: Failed fetching thumbnail"), !1
+            );
+          }
+        })();
       }
       toggle(a) {
         return this.config.toggle_power
@@ -2179,14 +2651,43 @@
           ? this.callService(a, "turn_on")
           : void this.callService(a, "turn_off");
       }
+      toggleMute(a) {
+        this.callService(a, "volume_mute", { is_volume_muted: !this.muted });
+      }
+      toggleShuffle(a) {
+        this.callService(a, "shuffle_set", { shuffle: !this.shuffle });
+      }
       setSource(a, b) {
         this.callService(a, "select_source", { source: b });
+      }
+      setMedia(a, b) {
+        this.callService(a, "play_media", na({}, b));
+      }
+      playPause(a) {
+        this.callService(a, "media_play_pause");
+      }
+      setSoundMode(a, b) {
+        this.callService(a, "select_sound_mode", { sound_mode: b });
       }
       next(a) {
         this.callService(a, "media_next_track");
       }
-      setVolume(a) {
-        const b = parseFloat(a.target.value) / 100;
+      prev(a) {
+        this.callService(a, "media_previous_track");
+      }
+      stop(a) {
+        this.callService(a, "media_stop");
+      }
+      volumeUp(a) {
+        this.callService(a, "volume_up");
+      }
+      volumeDown(a) {
+        this.callService(a, "volume_down");
+      }
+      seek(a, b) {
+        this.callService(a, "media_seek", { seek_position: b });
+      }
+      setVolume(a, b) {
         this.config.speaker_group.sync_volume
           ? this.group.forEach((c) => {
               const d =
@@ -2208,64 +2709,615 @@
               volume_level: b,
             });
       }
+      handleGroupChange(a, b, c) {
+        const d = this.config.speaker_group.platform,
+          e = { entity_id: b };
+        c
+          ? ((e.master = this.config.entity),
+            this.callService(a, "".concat(d, "_JOIN"), e))
+          : this.callService(a, "".concat(d, "_UNJOIN"), e);
+      }
+      toggleScript(a, b) {
+        let c =
+          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : {};
+        this.callService(a, b.split(".").pop(), na({}, c), "script");
+      }
       callService(a, b, c) {
+        let d =
+          3 < arguments.length && arguments[3] !== void 0
+            ? arguments[3]
+            : "media_player";
         a.stopPropagation(),
-          this.hass.callService(
-            "media_player",
-            b,
-            N({ entity_id: this.config.entity }, c)
-          );
+          this.hass.callService(d, b, na({ entity_id: this.config.entity }, c));
       }
     }
-    const xb = (function css(a) {
-        for (
-          var b = arguments.length, c = Array(1 < b ? b - 1 : 0), d = 1;
-          d < b;
-          d++
-        )
-          c[d - 1] = arguments[d];
-        const e = c.reduce((b, c, d) => b + ab(c) + a[d + 1], a[0]);
-        return new _a(e, $a);
-      })(L()),
-      yb = { shuffle: !0, power_state: !0, artwork_border: !0, icon_state: !0 },
-      zb = {
-        DEFAULT: "mdi:cast",
-        DROPDOWN: "mdi:chevron-down",
-        GROUP: "mdi:speaker-multiple",
-        MENU: "mdi:menu-down",
-        MUTE: { true: "mdi:volume-off", false: "mdi:volume-high" },
-        NEXT: "mdi:skip-next",
-        PLAY: { true: "mdi:pause", false: "mdi:play" },
-        POWER: "mdi:power",
-        PREV: "mdi:skip-previous",
-        SEND: "mdi:send",
-        SHUFFLE: "mdi:shuffle",
-        STOP: "mdi:stop",
-        VOL_DOWN: "mdi:volume-minus",
-        VOL_UP: "mdi:volume-plus",
-      },
-      Ab = [
-        "entity",
-        "source",
-        "_progress",
-        "_pos",
-        "_overflow",
-        "break",
-        "thumbnail",
-        "edit",
-        "idleView",
-      ];
-    customElements.get("mwc-button") ||
-      customElements.define(
-        "mwc-button",
-        class extends customElements.get("paper-button") {}
-      ),
-      customElements.get("ha-slider") ||
-        customElements.define(
-          "ha-slider",
-          class extends customElements.get("ha-slider") {}
+    const fc = Eb(la());
+    class gc extends Gb {
+      static get properties() {
+        return {
+          item: {},
+          checked: Boolean,
+          disabled: Boolean,
+          master: Boolean,
+        };
+      }
+      render() {
+        return eb(
+          ka(),
+          this.checked,
+          this.disabled,
+          (a) => a.stopPropagation(),
+          this.handleClick,
+          this.item.name,
+          this.master ? eb(ja()) : ""
         );
-    class Bb extends cb {
+      }
+      handleClick(a) {
+        a.stopPropagation(),
+          this.dispatchEvent(
+            new CustomEvent("change", {
+              detail: { entity: this.item.entity_id, checked: !this.checked },
+            })
+          );
+      }
+      static get styles() {
+        return Eb(ia());
+      }
+    }
+    customElements.define("mmp-group-item", gc);
+    class hc extends Gb {
+      static get properties() {
+        return { entities: {}, player: {}, visible: Boolean };
+      }
+      get group() {
+        return this.player.group;
+      }
+      get master() {
+        return this.player.master;
+      }
+      get isMaster() {
+        return this.player.isMaster;
+      }
+      handleGroupChange(a) {
+        const b = a.detail,
+          c = b.entity,
+          d = b.checked;
+        this.player.handleGroupChange(a, c, d);
+      }
+      render() {
+        let a =
+            0 < arguments.length && arguments[0] !== void 0
+              ? arguments[0]
+              : this,
+          b = a.group,
+          c = a.master,
+          d = a.isMaster;
+        return this.visible
+          ? eb(
+              ha(),
+              this.visible,
+              this.entities.map((a) =>
+                eb(
+                  ga(),
+                  this.handleGroupChange,
+                  a,
+                  a.entity_id === this.player.id || b.includes(a.entity_id),
+                  a.entity_id === this.player.id || c !== this.player.id,
+                  a.entity_id === c
+                )
+              ),
+              2 > b.length,
+              (a) =>
+                this.player.handleGroupChange(
+                  a,
+                  d ? b : this.player.entity_id,
+                  !1
+                ),
+              d ? eb(fa()) : eb(ea()),
+              !d,
+              (a) =>
+                this.player.handleGroupChange(
+                  a,
+                  this.entities.map((a) => a.entity_id),
+                  !0
+                )
+            )
+          : eb(da());
+      }
+      static get styles() {
+        return Eb(ca());
+      }
+    }
+    customElements.define("mmp-group-list", hc);
+    const ic = Eb(ba());
+    class jc extends Gb {
+      static get properties() {
+        return { items: [], label: String, selected: String };
+      }
+      get selectedId() {
+        return this.items.map((a) => a.id).indexOf(this.selected);
+      }
+      onChange(a) {
+        this.dispatchEvent(new CustomEvent("change", { detail: a }));
+      }
+      render() {
+        return eb(
+          aa(),
+          "right",
+          "top",
+          44,
+          (a) => a.stopPropagation(),
+          this.icon
+            ? eb(_(), ac.DROPDOWN)
+            : eb($(), this.selected || this.label, ac.DROPDOWN),
+          this.selectedId,
+          this.items.map((a) =>
+            eb(
+              Z(),
+              a.id || a.name,
+              () => this.onChange(a),
+              a.icon ? eb(Y(), a.icon) : "",
+              a.name ? eb(X(), a.name) : ""
+            )
+          )
+        );
+      }
+      static get styles() {
+        return [ic, Eb(W())];
+      }
+    }
+    customElements.define("mmp-dropdown", jc);
+    class kc extends Gb {
+      static get properties() {
+        return { player: {}, shortcuts: {} };
+      }
+      get buttons() {
+        return this.shortcuts.buttons;
+      }
+      get list() {
+        return this.shortcuts.list;
+      }
+      get show() {
+        return !this.shortcuts.hide_when_off || this.player.active;
+      }
+      get active() {
+        return this.player.getAttribute(this.shortcuts.attribute);
+      }
+      render() {
+        if (!this.show) return;
+        const a = this.active,
+          b = this.list
+            ? eb(V(), this.handleShortcut, this.list, this.shortcuts.label, a)
+            : "",
+          c = this.buttons
+            ? eb(
+                U(),
+                this.buttons.map((b) =>
+                  eb(
+                    T(),
+                    this.shortcuts.columns,
+                    b.id === a,
+                    (a) => this.handleShortcut(a, b),
+                    b.icon ? eb(S(), b.icon) : "",
+                    b.name ? eb(R(), b.name) : ""
+                  )
+                )
+              )
+            : "";
+        return eb(Q(), c, b);
+      }
+      handleShortcut(a, b) {
+        const c = b || a.detail,
+          d = c.type,
+          e = c.id,
+          f = c.data;
+        if ("source" === d) return this.player.setSource(a, e);
+        if ("script" === d) return this.player.toggleScript(a, e, f);
+        if ("sound_mode" === d) return this.player.setSoundMode(a, e);
+        this.player.setMedia(a, { media_content_type: d, media_content_id: e });
+      }
+      static get styles() {
+        return [ic, Eb(P())];
+      }
+    }
+    customElements.define("mmp-shortcuts", kc);
+    const lc = function(a, b) {
+      let c =
+        2 < arguments.length && arguments[2] !== void 0
+          ? arguments[2]
+          : "unknown";
+      const d = a.selectedLanguage || a.language,
+        e = a.resources[d];
+      return e && e[b] ? e[b] : c;
+    };
+    class mc extends Gb {
+      static get properties() {
+        return { hass: {}, config: {} };
+      }
+      get label() {
+        return lc(this.hass, "ui.card.media_player.text_to_speak", "Say");
+      }
+      get input() {
+        return this.shadowRoot.getElementById("tts-input");
+      }
+      get message() {
+        return this.input.value;
+      }
+      render() {
+        return eb(O(), this.label, (a) => a.stopPropagation(), this.handleTts);
+      }
+      handleTts(a) {
+        const b = this.config,
+          c = this.message,
+          d = { message: c, entity_id: b.entity_id || this.entity };
+        b.language && (d.language = b.language),
+          "alexa" === b.platform
+            ? this.hass.callService("notify", "alexa_media", {
+                message: c,
+                data: { type: b.type || "tts" },
+                target: d.entity_id,
+              })
+            : "sonos" === b.platform
+            ? this.hass.callService("script", "sonos_say", {
+                sonos_entity: d.entity_id,
+                volume: b.volume || 0.5,
+                message: c,
+              })
+            : "ga" === b.platform
+            ? this.hass.callService("notify", "ga_broadcast", { message: c })
+            : this.hass.callService("tts", "".concat(b.platform, "_say"), d),
+          a.stopPropagation(),
+          this.reset();
+      }
+      reset() {
+        this.input.value = "";
+      }
+      static get styles() {
+        return Eb(N());
+      }
+    }
+    customElements.define("mmp-tts", mc);
+    var nc = (a) => {
+      let b = parseInt(a % 60, 10),
+        c = parseInt((a / 60) % 60, 10),
+        d = parseInt((a / 3600) % 24, 10);
+      return (
+        (d = 10 > d ? "0".concat(d) : d),
+        (c = 10 > c ? "0".concat(c) : c),
+        (b = 10 > b ? "0".concat(b) : b),
+        ""
+          .concat("00" === d ? "" : "".concat(d, ":"))
+          .concat(c, ":")
+          .concat(b)
+      );
+    };
+    class oc extends Gb {
+      static get properties() {
+        return {
+          _player: {},
+          showTime: Boolean,
+          progress: Number,
+          duration: Number,
+          tracker: {},
+          track: Boolean,
+        };
+      }
+      set player(a) {
+        (this._player = a), this.hasProgress && this.trackProgress();
+      }
+      get duration() {
+        return this.player.mediaDuration;
+      }
+      get player() {
+        return this._player;
+      }
+      get hasProgress() {
+        return this.player.hasProgress;
+      }
+      render() {
+        return this.player.active && this.hasProgress
+          ? eb(
+              M(),
+              this.handleSeek,
+              !this.player.isPlaying,
+              this.showTime
+                ? eb(L(), nc(this.progress), nc(this.duration))
+                : "",
+              this.progress,
+              this.duration
+            )
+          : eb(K());
+      }
+      trackProgress() {
+        (this.progress = this.player.progress),
+          this.tracker ||
+            (this.tracker = setInterval(() => this.trackProgress(), 1e3)),
+          this.player.isPlaying ||
+            (clearInterval(this.tracker), (this.tracker = null));
+      }
+      handleSeek(a) {
+        const b = this.duration,
+          c = (a.offsetX / a.target.offsetWidth) * b;
+        this.player.seek(a, c);
+      }
+      disconnectedCallback() {
+        clearInterval(this.tracker);
+      }
+      static get styles() {
+        return Eb(J());
+      }
+    }
+    customElements.define("mmp-progress", oc);
+    class pc extends Gb {
+      static get properties() {
+        return { player: {}, selected: String, icon: Boolean };
+      }
+      get source() {
+        return this.player.source;
+      }
+      get sources() {
+        return this.player.sources.map((a) => ({
+          name: a,
+          id: a,
+          type: "source",
+        }));
+      }
+      render() {
+        return eb(
+          I(),
+          this.handleSource,
+          this.sources,
+          this.source,
+          this.selected || this.source,
+          this.icon
+        );
+      }
+      handleSource(a) {
+        const b = a.detail.id;
+        this.player.setSource(a, b), (this.selected = b);
+      }
+      static get styles() {
+        return Eb(H());
+      }
+    }
+    customElements.define("mmp-source-menu", pc);
+    class qc extends Gb {
+      static get properties() {
+        return { player: {}, selected: String, icon: Boolean };
+      }
+      get mode() {
+        return this.player.soundMode;
+      }
+      get modes() {
+        return this.player.soundModes.map((a) => ({
+          name: a,
+          id: a,
+          type: "soundMode",
+        }));
+      }
+      render() {
+        return eb(
+          G(),
+          this.handleChange,
+          this.modes,
+          this.mode,
+          this.selected || this.mode,
+          this.icon
+        );
+      }
+      handleChange(a) {
+        const b = a.detail.id;
+        this.player.setSoundMode(a, b), (this.selected = b);
+      }
+      static get styles() {
+        return Eb(F());
+      }
+    }
+    customElements.define("mmp-sound-menu", qc);
+    class rc extends Gb {
+      static get properties() {
+        return { player: {}, config: {} };
+      }
+      get showShuffle() {
+        return !this.config.hide.shuffle && this.player.supportsShuffle;
+      }
+      get maxVol() {
+        return this.config.max_volume || 100;
+      }
+      get minVol() {
+        return this.config.min_volume || 0;
+      }
+      render() {
+        const a = this.config.hide;
+        return eb(
+          E(),
+          a.volume ? "" : this.renderVolControls(this.player.muted),
+          this.showShuffle
+            ? eb(
+                D(),
+                (a) => this.player.toggleShuffle(a),
+                ac.SHUFFLE,
+                this.player.shuffle
+              )
+            : "",
+          a.controls
+            ? ""
+            : eb(
+                C(),
+                this.config.flow,
+                (a) => this.player.prev(a),
+                ac.PREV,
+                (a) => this.player.playPause(a),
+                ac.PLAY[this.player.isPlaying],
+                (a) => this.player.next(a),
+                ac.NEXT
+              )
+        );
+      }
+      renderVolControls(a) {
+        return this.config.volume_stateless
+          ? this.renderVolButtons(a)
+          : this.renderVolSlider(a);
+      }
+      renderVolSlider(a) {
+        return eb(
+          B(),
+          this.renderMuteButton(a),
+          this.handleVolumeChange,
+          (a) => a.stopPropagation(),
+          a,
+          this.minVol,
+          this.maxVol,
+          100 * this.player.vol,
+          "ltr"
+        );
+      }
+      renderVolButtons(a) {
+        return eb(
+          A(),
+          this.renderMuteButton(a),
+          (a) => this.player.volumeDown(a),
+          ac.VOL_DOWN,
+          (a) => this.player.volumeUp(a),
+          ac.VOL_UP
+        );
+      }
+      renderMuteButton(a) {
+        if (!this.config.hide.mute)
+          switch (this.config.replace_mute) {
+            case "play":
+              return eb(
+                z(),
+                (a) => this.player.playPause(a),
+                ac.PLAY[this.player.isPlaying]
+              );
+            case "stop":
+              return eb(y(), (a) => this.player.stop(a), ac.STOP);
+            case "next":
+              return eb(x(), (a) => this.player.next(a), ac.NEXT);
+            default:
+              return this.player.supportsMute
+                ? eb(w(), (a) => this.player.toggleMute(a), ac.MUTE[a])
+                : void 0;
+          }
+      }
+      handleVolumeChange(a) {
+        const b = parseFloat(a.target.value) / 100;
+        this.player.setVolume(a, b);
+      }
+      static get styles() {
+        return [ic, Eb(v())];
+      }
+    }
+    customElements.define("mmp-media-controls", rc);
+    class sc extends Gb {
+      static get properties() {
+        return {
+          hass: {},
+          player: {},
+          config: {},
+          groupVisible: Boolean,
+          idle: Boolean,
+        };
+      }
+      get showGroupButton() {
+        return this.config.speaker_group.entities;
+      }
+      get showPowerButton() {
+        return !this.config.hide.power;
+      }
+      get powerColor() {
+        return this.player.active && !this.config.hide.power_state;
+      }
+      get sourceSize() {
+        return (
+          "icon" === this.config.source || this.config.collapse || this.idle
+        );
+      }
+      get soundSize() {
+        return (
+          "icon" === this.config.sound_mode || this.config.collapse || this.idle
+        );
+      }
+      get hasSource() {
+        return 0 < this.player.sources.length && !this.config.hide.source;
+      }
+      get hasSoundMode() {
+        return (
+          0 < this.player.soundModes.length && !this.config.hide.sound_mode
+        );
+      }
+      render() {
+        return this.player.isUnavailable
+          ? eb(u(), lc(this.hass, "state.default.unavailable", "Unavailable"))
+          : eb(
+              t(),
+              this.idle ? this.renderIdleView : "",
+              this.config.collapse && this.player.active
+                ? eb(s(), this.player, this.config)
+                : "",
+              this.hasSource
+                ? eb(
+                    r(),
+                    this.player,
+                    this.sourceSize,
+                    "full" === this.config.source
+                  )
+                : "",
+              this.hasSoundMode
+                ? eb(
+                    q(),
+                    this.player,
+                    this.soundSize,
+                    "full" === this.config.sound_mode
+                  )
+                : "",
+              this.showGroupButton
+                ? eb(
+                    p(),
+                    ac.GROUP,
+                    !this.player.isGrouped,
+                    this.groupVisible,
+                    this.handleGroupClick
+                  )
+                : "",
+              this.showPowerButton
+                ? eb(
+                    o(),
+                    ac.POWER,
+                    (a) => this.player.toggle(a),
+                    this.powerColor
+                  )
+                : ""
+            );
+      }
+      handleGroupClick(a) {
+        a.stopPropagation(),
+          this.dispatchEvent(new CustomEvent("toggleGroupList"));
+      }
+      get renderIdleView() {
+        return this.player.isPaused
+          ? eb(n(), ac.PLAY[this.player.isPlaying], (a) =>
+              this.player.playPause(a)
+            )
+          : eb(m(), lc(this.hass, "state.media_player.idle", "Idle"));
+      }
+      static get styles() {
+        return [ic, Eb(l())];
+      }
+    }
+    customElements.define("mmp-powerstrip", sc),
+      customElements.get("mwc-button") ||
+        customElements.define(
+          "mwc-button",
+          class extends customElements.get("paper-button") {}
+        ),
+      customElements.get("ha-paper-slider") ||
+        customElements.define(
+          "ha-paper-slider",
+          class extends customElements.get("paper-slider") {}
+        );
+    class tc extends Gb {
       constructor() {
         super(),
           (this._overflow = !1),
@@ -2273,7 +3325,6 @@
           (this.picture = !1),
           (this.thumbnail = !1),
           (this.edit = !1),
-          (this.idleView = !1),
           (this.rtl = !1);
       }
       static get properties() {
@@ -2282,21 +3333,18 @@
           config: {},
           entity: {},
           player: {},
-          source: String,
           _overflow: Boolean,
           break: Boolean,
           initial: Boolean,
           picture: String,
           thumbnail: String,
           edit: Boolean,
-          _progress: Boolean,
-          _pos: Number,
-          idleView: Boolean,
           rtl: Boolean,
+          idle: Boolean,
         };
       }
       static get styles() {
-        return xb;
+        return fc;
       }
       set hass(a) {
         const b = a.states[this.config.entity];
@@ -2304,11 +3352,10 @@
           b &&
             this.entity !== b &&
             ((this.entity = b),
-            (this.player = new wb(a, this.config, b)),
-            (this.progress = this.player.hasProgress),
-            (this.idleView = this.player.idle),
-            (this.rtl = this._computeRTL(a)),
-            this.player.trackIdle && this._updateIdle());
+            (this.player = new ec(a, this.config, b)),
+            (this.rtl = this.computeRTL(a)),
+            (this.idle = this.player.idle),
+            this.player.trackIdle && this.updateIdleStatus());
       }
       get hass() {
         return this._hass;
@@ -2319,47 +3366,36 @@
       get overflow() {
         return this._overflow;
       }
-      set progress(a) {
-        this._progress !== a &&
-          ((this._progress = a),
-          !0 === this.progress && this._updateProgress());
-      }
-      get progress() {
-        return this._progress;
-      }
-      set pos(a) {
-        this._pos !== a && (this._pos = a);
-      }
-      get pos() {
-        return this._pos;
+      get name() {
+        return this.config.name || this.player.name;
       }
       setConfig(a) {
         if (!a.entity || "media_player" !== a.entity.split(".")[0])
           throw new Error(
             "Specify an entity from within the media_player domain."
           );
-        const b = N(
+        const b = na(
           {
             artwork: "default",
             info: "default",
-            max_volume: 100,
             more_info: !0,
-            shortcuts: {},
             source: "default",
-            title: "",
+            sound_mode: "default",
             toggle_power: !0,
           },
           a,
           {
-            hide: N({}, yb, a.hide),
-            speaker_group: N(
+            hide: na({}, _b, a.hide),
+            speaker_group: na(
               { show_group_count: !0, platform: "sonos" },
               a.sonos,
               a.speaker_group
             ),
+            shortcuts: na({ label: "Shortcuts..." }, a.shortcuts),
           }
         );
         (b.max_volume = +b.max_volume || 100),
+          (b.min_volume = +b.min_volume || 0),
           (b.collapse = b.hide.controls || b.hide.volume),
           (b.info = b.collapse && "scroll" !== b.info ? "short" : b.info),
           (b.flow = b.hide.icon && b.hide.name && b.hide.info),
@@ -2367,20 +3403,20 @@
       }
       shouldUpdate(a) {
         return (
-          void 0 === this.break && this._computeRect(this),
-          Ab.some((b) => a.has(b)) && this.player
+          void 0 === this.break && this.computeRect(this),
+          bc.some((b) => a.has(b)) && this.player
         );
       }
       firstUpdated() {
-        const a = new tb((a) => {
+        const a = new $b((a) => {
           a.forEach((a) => {
             window.requestAnimationFrame(() => {
-              "scroll" === this.config.info && this._computeOverflow(),
+              "scroll" === this.config.info && this.computeOverflow(),
                 this._resizeTimer ||
-                  (this._computeRect(a),
+                  (this.computeRect(a),
                   (this._resizeTimer = setTimeout(() => {
                     (this._resizeTimer = null),
-                      this._computeRect(this._resizeEntry);
+                      this.computeRect(this._resizeEntry);
                   }, 250))),
                 (this._resizeEntry = a);
             });
@@ -2393,11 +3429,8 @@
       updated() {
         "scroll" === this.config.info &&
           setTimeout(() => {
-            this._computeOverflow();
+            this.computeOverflow();
           }, 10);
-      }
-      disconnectedCallback() {
-        clearInterval(this._progressTracker);
       }
       render() {
         let a =
@@ -2405,49 +3438,109 @@
               ? arguments[0]
               : this,
           b = a.config;
-        const c = this._computeArtwork(),
-          d = this.break ? "break-width" : b.hide.icon ? "break-icon" : "none";
-        return Da(
-          K(),
-          d,
-          this.initial,
-          b.background,
-          b.group,
-          b.more_info,
-          "" !== b.title,
+        const c = this.computeArtwork();
+        return eb(
+          k(),
+          this.handleMoreInfo,
+          this.computeClasses(),
           b.artwork,
-          c,
-          this.player.state,
-          b.flow,
-          b.collapse,
           this.player.content,
-          this.rtl,
-          () => this._handleMore(),
-          this._renderArtwork(c),
-          b.title,
+          this.renderArtwork(c),
+          this.player,
+          !this.config.hide.runtime,
           this.player.idle,
-          this._renderIcon(c),
-          this._renderEntityName(),
-          this._renderMediaInfo(),
-          this._renderPowerStrip(),
-          !b.collapse && this.player.active ? this._renderControlRow() : "",
-          b.shortcuts.buttons ? this._renderButtons() : "",
-          b.shortcuts.list ? this._renderList() : "",
-          b.tts ? this._renderTts() : "",
-          this.edit ? this._renderGroupList() : "",
-          this.progress ? this._renderProgress() : ""
+          this.renderIcon(c),
+          this.renderEntityName(),
+          this.renderMediaInfo(),
+          this.toggleGroupList,
+          this.hass,
+          this.player,
+          b,
+          this.edit,
+          this.idle,
+          b.flow,
+          !b.collapse && this.player.active ? eb(j(), this.player, b) : "",
+          this.player,
+          b.shortcuts,
+          b.tts ? eb(i(), b.tts, this.hass, this.player.id) : "",
+          this.edit,
+          b.speaker_group.entities,
+          this.player
         );
       }
-      get name() {
-        return this.config.name || this.player.name;
+      renderArtwork(a) {
+        if (this.thumbnail || this.config.background) {
+          const b =
+            this.config.background && (!a || "default" === this.config.artwork)
+              ? "url(".concat(this.config.background, ")")
+              : this.thumbnail;
+          return eb(h(), b);
+        }
       }
-      _speakerCount() {
+      renderIcon(a) {
+        return this.config.hide.icon
+          ? void 0
+          : this.player.active && a && "default" === this.config.artwork
+          ? eb(
+              g(),
+              this.thumbnail,
+              !this.config.hide.artwork_border,
+              this.player.state
+            )
+          : eb(f(), this.computeIcon());
+      }
+      renderEntityName() {
+        return this.config.hide.name
+          ? void 0
+          : eb(e(), this.name, this.speakerCount());
+      }
+      renderMediaInfo() {
+        if (!this.config.hide.info) {
+          const e = this.player.mediaInfo;
+          return eb(
+            d(),
+            "short" === this.config.info || !this.player.active,
+            "scroll" === this.config.info,
+            this.overflow,
+            this.overflow,
+            "scroll" === this.config.info
+              ? eb(
+                  c(),
+                  e.map((a) =>
+                    eb(b(), "attr__".concat(a.attr), a.prefix + a.text)
+                  )
+                )
+              : "",
+            e.map((b) => eb(a(), "attr__".concat(b.attr), b.prefix + b.text))
+          );
+        }
+      }
+      speakerCount() {
         if (this.config.speaker_group.show_group_count) {
           const a = this.player.groupCount;
           return 1 < a ? " +".concat(a - 1) : "";
         }
       }
-      _computeArtwork() {
+      computeClasses() {
+        let a =
+            0 < arguments.length && arguments[0] !== void 0
+              ? arguments[0]
+              : this,
+          b = a.config;
+        return Jb({
+          "--responsive": this.break || b.hide.icon,
+          "--initial": this.initial,
+          "--bg": b.background,
+          "--group": b.group,
+          "--more-info": b.more_info,
+          "--has-artwork": this.player.hasArtwork && this.thumbnail,
+          "--flow": b.flow,
+          "--collapse": b.collapse,
+          "--rtl": this.rtl,
+          "--runtime": !b.hide.runtime && this.player.hasProgress,
+        });
+      }
+      computeArtwork() {
         const a = this.player,
           b = a.picture,
           c = a.hasArtwork;
@@ -2461,12 +3554,12 @@
           !!(c && this.thumbnail)
         );
       }
-      _computeIcon() {
+      computeIcon() {
         return this.config.icon
           ? this.config.icon
-          : this.player.icon || zb.DEFAULT;
+          : this.player.icon || ac.DEFAULT;
       }
-      _computeOverflow() {
+      computeOverflow() {
         const a = this.shadowRoot.querySelector(".marquee");
         if (a) {
           const b = a.clientWidth > a.parentNode.clientWidth;
@@ -2474,418 +3567,42 @@
             !!(b && this.player.active) && 7.5 + a.clientWidth / 50;
         }
       }
-      _computeRect(a) {
+      computeRect(a) {
         const b = a.contentRect || a.getBoundingClientRect(),
           c = b.left,
           d = b.width;
         this.break = d + 2 * c < 390;
       }
-      _computeRTL(a) {
+      computeRTL(a) {
         const b = a.language || "en";
         return (
           !!a.translationMetadata.translations[b] &&
           (a.translationMetadata.translations[b].isRTL || !1)
         );
       }
-      _computeRTLDirection() {
-        return this.rtl ? "rtl" : "ltr";
+      toggleGroupList() {
+        this.edit = !this.edit;
       }
-      _renderArtwork(a) {
-        if (this.thumbnail || this.config.background) {
-          const b =
-            this.config.background && (!a || "default" === this.config.artwork)
-              ? "url(".concat(this.config.background, ")")
-              : this.thumbnail;
-          return Da(J(), b);
-        }
-      }
-      _renderIcon(a) {
-        return this.config.hide.icon
-          ? void 0
-          : this.player.active && a && "default" === this.config.artwork
-          ? Da(
-              I(),
-              !this.config.hide.artwork_border,
-              this.thumbnail,
-              this.player.state
-            )
-          : Da(
-              H(),
-              this._computeIcon(),
-              !this.config.hide.icon_state && (this.player.active || this.idle)
-            );
-      }
-      _renderPowerButton() {
-        return Da(
-          G(),
-          zb.POWER,
-          (a) => this.player.toggle(a),
-          !this.config.hide.power_state && (this.player.active || this.idle)
-        );
-      }
-      _renderButton(a, b) {
-        let c =
-            2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : {},
-          d =
-            !!(3 < arguments.length && arguments[3] !== void 0) && arguments[3];
-        return Da(F(), a, d, (a) => this._callService(a, b, c));
-      }
-      _renderEntityName() {
-        return this.config.hide.name
-          ? void 0
-          : Da(E(), this.name, this._speakerCount());
-      }
-      _renderMediaInfo() {
-        if (!this.config.hide.info) {
-          const a = this.player.mediaInfo;
-          return Da(
-            D(),
-            "short" === this.config.info || !this.player.active,
-            "scroll" === this.config.info,
-            this.overflow,
-            this.overflow,
-            "scroll" === this.config.info
-              ? Da(
-                  C(),
-                  a.map((a) =>
-                    Da(B(), "attr__".concat(a.attr), a.prefix + a.text)
-                  )
-                )
-              : "",
-            a.map((a) => Da(A(), "attr__".concat(a.attr), a.prefix + a.text))
-          );
-        }
-      }
-      _renderProgress() {
-        return this.player.idle
-          ? void 0
-          : Da(
-              z(),
-              (a) => this._handleSeek(a),
-              this.pos,
-              this.player.mediaDuration
-            );
-      }
-      _renderLabel(a) {
-        let b =
-          1 < arguments.length && arguments[1] !== void 0
-            ? arguments[1]
-            : "Unknown";
-        return Da(y(), this._getLabel(a, b));
-      }
-      _renderIdleStatus() {
-        return this.player.isPaused
-          ? this._renderButton(
-              zb.PLAY[this.player.isPlaying],
-              "media_play_pause"
-            )
-          : this._renderLabel("state.media_player.idle", "Idle");
-      }
-      _renderShuffleButton() {
-        if (this.player.supportShuffle) {
-          const a = !this.player.shuffle || !1;
-          return this._renderButton(
-            zb.SHUFFLE,
-            "shuffle_set",
-            { shuffle: a },
-            !a
-          );
-        }
-      }
-      _renderPowerStrip() {
-        let a =
-            0 < arguments.length && arguments[0] !== void 0
-              ? arguments[0]
-              : this,
-          b = a.config;
-        return this.player.isUnavailable
-          ? this._renderLabel("state.default.unavailable", "Unavailable")
-          : Da(
-              x(),
-              this.player.active && b.collapse ? this._renderControlRow() : "",
-              this.player.idle ? this._renderIdleStatus() : "",
-              this._renderSource(),
-              b.speaker_group.entities ? this._renderGroupButton() : "",
-              b.hide.power ? "" : this._renderPowerButton()
-            );
-      }
-      _renderGroupButton() {
-        return Da(w(), zb.GROUP, 2 > this.player.groupCount, this.edit, (a) =>
-          this._handleGroupButton(a)
-        );
-      }
-      _renderGroupList() {
-        const a = this.config.speaker_group.entities,
-          b = this.player,
-          c = b.group,
-          d = b.master,
-          f = b.isMaster;
-        return Da(
-          v(),
-          a.map((a) => this._renderGroupListItem(a, c, d)),
-          2 > c.length,
-          (a) => this._handleGroupItemChange(a, f ? c : this.config.entity, !1),
-          f ? Da(u()) : Da(t()),
-          !f,
-          (b) => this._handleGroupItemChange(b, a.map((a) => a.entity_id), !0)
-        );
-      }
-      _renderGroupListItem(a, b, c) {
-        const d = a.entity_id === this.config.entity || b.includes(a.entity_id),
-          e = a.entity_id === this.config.entity || c !== this.config.entity;
-        return Da(
-          s(),
-          d,
-          e,
-          (b) => this._handleGroupItemChange(b, a.entity_id, !d),
-          a.name,
-          a.entity_id === c ? Da(r()) : ""
-        );
-      }
-      _renderSource() {
-        const a = this.player,
-          b = a.source,
-          c = a.sources;
-        if (0 === c.length || this.config.hide.source) return;
-        const d = c.indexOf(b),
-          e =
-            "icon" === this.config.source ||
-            this.config.collapse ||
-            this.break ||
-            this.player.idle
-              ? Da(q(), zb.DROPDOWN)
-              : Da(p(), this.config.source, this.source || b, zb.DROPDOWN);
-        return Da(
-          o(),
-          "right",
-          "top",
-          40,
-          !0,
-          (a) => a.stopPropagation(),
-          e,
-          d,
-          (a) => this._handleSource(a, a.target.getAttribute("value")),
-          c.map((a) => Da(n(), a, a))
-        );
-      }
-      _renderControlRow() {
-        return Da(
-          m(),
-          this.config.hide.volume ? "" : this._renderVolControls(),
-          this.config.hide.shuffle ? "" : this._renderShuffleButton(),
-          this.config.hide.controls ? "" : this._renderMediaControls()
-        );
-      }
-      _renderMediaControls() {
-        return Da(
-          l(),
-          this._renderButton(zb.PREV, "media_previous_track"),
-          this._renderButton(
-            zb.PLAY[this.player.isPlaying],
-            "media_play_pause"
-          ),
-          this._renderButton(zb.NEXT, "media_next_track")
-        );
-      }
-      _renderVolControls() {
-        return this.config.volume_stateless
-          ? this._renderVolButtons(this.player.muted)
-          : this._renderVolSlider(this.player.muted);
-      }
-      _renderMuteButton(a) {
-        if (!this.config.hide.mute)
-          switch (this.config.replace_mute) {
-            case "play":
-              return this._renderButton(
-                zb.PLAY[this.player.isPlaying],
-                "media_play_pause"
-              );
-            case "stop":
-              return this._renderButton(zb.STOP, "media_stop");
-            case "next":
-              return this._renderButton(zb.NEXT, "media_next_track");
-            default:
-              return this._renderButton(zb.MUTE[a], "volume_mute", {
-                is_volume_muted: !a,
-              });
-          }
-      }
-      _renderVolSlider() {
-        let a =
-          !!(0 < arguments.length && arguments[0] !== void 0) && arguments[0];
-        return Da(
-          k(),
-          this._renderMuteButton(a),
-          a,
-          (a) => this.player.setVolume(a),
-          (a) => a.stopPropagation(),
-          this.config.max_volume,
-          100 * this.player.vol,
-          this._computeRTLDirection()
-        );
-      }
-      _renderVolButtons() {
-        let a =
-          !!(0 < arguments.length && arguments[0] !== void 0) && arguments[0];
-        return Da(
-          j(),
-          this._renderMuteButton(a),
-          this._renderButton(zb.VOL_DOWN, "volume_down"),
-          this._renderButton(zb.VOL_UP, "volume_up")
-        );
-      }
-      _renderTts() {
-        return Da(
-          i(),
-          this._getLabel("ui.card.media_player.text_to_speak", "Say"),
-          (a) => a.stopPropagation(),
-          (a) => this._handleTts(a)
-        );
-      }
-      _renderList() {
-        if (!this.config.shortcuts.hide_when_off || this.player.active) {
-          const a = this.config.shortcuts.list;
-          return Da(
-            h(),
-            !0,
-            (a) => a.stopPropagation(),
-            "Select media...",
-            zb.DROPDOWN,
-            a.map((a, b) =>
-              Da(
-                g(),
-                (a) => this._handleShortcut(a, "list", b),
-                a.icon ? Da(f(), a.icon) : "",
-                a.name ? Da(e(), a.name) : ""
-              )
-            )
-          );
-        }
-      }
-      _renderButtons() {
-        if (!this.config.shortcuts.hide_when_off || this.player.active) {
-          const e = this.config.shortcuts.buttons;
-          return Da(
-            d(),
-            e.map((d, f) =>
-              Da(
-                c(),
-                this.config.shortcuts.columns,
-                (a) => this._handleShortcut(a, "buttons", f),
-                d.icon ? Da(b(), d.icon) : "",
-                d.name ? Da(a(), d.name) : ""
-              )
-            )
-          );
-        }
-      }
-      _callService(a, b, c) {
-        let d =
-          3 < arguments.length && arguments[3] !== void 0
-            ? arguments[3]
-            : "media_player";
-        a.stopPropagation();
-        const e = N({ entity_id: this.config.entity }, c);
-        this.hass.callService(d, b, e);
-      }
-      _handleSeek(a) {
-        const b = this.player.mediaDuration,
-          c = (a.offsetX / a.target.offsetWidth) * b;
-        this._callService(a, "media_seek", { seek_position: c });
-      }
-      _handleTts(a) {
-        const b = this.shadowRoot.querySelector(".tts paper-input"),
-          c = b.value,
-          d = { message: c },
-          e = this.config.tts;
-        e.entity_id && (d.entity_id = e.entity_id),
-          e.language && (d.language = e.language),
-          "alexa" === e.platform
-            ? this.hass.callService("notify", "alexa_media", {
-                message: c,
-                data: { type: e.type || "tts" },
-                target: d.entity_id || this.config.entity,
-              })
-            : "sonos" === e.platform
-            ? this.hass.callService("script", "sonos_say", {
-                sonos_entity: this.config.entity,
-                volume: e.volume || 0.5,
-                message: c,
-              })
-            : "ga" === e.platform
-            ? this.hass.callService("notify", "ga_broadcast", { message: c })
-            : this._callService(a, "".concat(e.platform, "_say"), d, "tts"),
-          a.stopPropagation(),
-          (b.value = "");
-      }
-      _handleShortcut(a, b, c) {
-        const d = this.config.shortcuts[b][c],
-          e = d.type,
-          f = d.id;
-        if ("source" === e) return this._handleSource(a, f);
-        if ("script" === e)
-          return this._callService(a, "turn_on", { entity_id: f }, "script");
-        this._callService(a, "play_media", {
-          media_content_type: e,
-          media_content_id: f,
-        });
-      }
-      _handleMore() {
+      handleMoreInfo() {
         if (this.config.more_info) {
           const a = new Event("hass-more-info", { composed: !0 });
           (a.detail = { entityId: this.config.entity }), this.dispatchEvent(a);
         }
       }
-      _handleSource(a, b) {
-        this.player.setSource(a, b), (this.source = b);
-      }
-      _handleGroupButton(a) {
-        a.stopPropagation(), (this.edit = !this.edit);
-      }
-      _handleGroupItemChange(a, b, c) {
-        const d = this.config.speaker_group.platform,
-          e = { entity_id: b };
-        c
-          ? ((e.master = this.config.entity),
-            this._callService(a, "".concat(d, "_JOIN"), e))
-          : this._callService(a, "".concat(d, "_UNJOIN"), e);
-      }
-      _updateProgress() {
-        (this.pos = this.player.progress),
-          this._progressTracker ||
-            (this._progressTracker = setInterval(
-              () => this._updateProgress(),
-              1e3
-            )),
-          this.player.isPlaying ||
-            ((this.progress = "paused"),
-            clearInterval(this._progressTracker),
-            (this._progressTracker = null));
-      }
-      _updateIdle() {
+      updateIdleStatus() {
         this._idleTracker && clearTimeout(this._idleTracker);
         const a =
           (Date.now() - new Date(this.player.updatedAt).getTime()) / 1e3;
         this._idleTracker = setTimeout(() => {
-          (this.idleView = this.player.checkIdleAfter(
-            this.config.idle_view.after
-          )),
+          (this.idle = this.player.checkIdleAfter(this.config.idle_view.after)),
+            (this.player.idle = this.idle),
             (this._idleTracker = null);
         }, 1e3 * (60 * this.config.idle_view.after - a));
-      }
-      _getLabel(a) {
-        let b =
-          1 < arguments.length && arguments[1] !== void 0
-            ? arguments[1]
-            : "unknown";
-        const c = this.hass.selectedLanguage || this.hass.language,
-          d = this.hass.resources[c];
-        return d && d[a] ? d[a] : b;
       }
       getCardSize() {
         return this.config.collapse ? 1 : 2;
       }
     }
-    customElements.define("mini-media-player", Bb);
+    customElements.define("mini-media-player", tc);
   });
 })();
