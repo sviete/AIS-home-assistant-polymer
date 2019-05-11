@@ -2549,6 +2549,82 @@ const styleMap = directive((styleInfo) => (part) => {
   styleMapCache.set(part, styleInfo);
 });
 
+/**
+ * @license
+ * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at
+ * http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at
+ * http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at
+ * http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at
+ * http://polymer.github.io/PATENTS.txt
+ */
+// For each part, remember the value that was last rendered to the part by the
+// unsafeHTML directive, and the DocumentFragment that was last set as a value.
+// The DocumentFragment is used as a unique key to check if the last value
+// rendered to the part was with unsafeHTML. If not, we'll always re-render the
+// value passed to unsafeHTML.
+const previousValues = new WeakMap();
+/**
+ * Renders the result as HTML, rather than text.
+ *
+ * Note, this is unsafe to use with any user-provided input that hasn't been
+ * sanitized or escaped, as it may lead to cross-site-scripting
+ * vulnerabilities.
+ */
+const unsafeHTML = directive((value) => (part) => {
+  if (!(part instanceof NodePart)) {
+    throw new Error("unsafeHTML can only be used in text bindings");
+  }
+  const previousValue = previousValues.get(part);
+  if (
+    previousValue !== undefined &&
+    isPrimitive(value) &&
+    value === previousValue.value &&
+    part.value === previousValue.fragment
+  ) {
+    return;
+  }
+  const template = document.createElement("template");
+  template.innerHTML = value; // innerHTML casts to string internally
+  const fragment = document.importNode(template.content, true);
+  part.setValue(fragment);
+  previousValues.set(part, { value, fragment });
+});
+
+/**
+ * @license
+ * Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at
+ * http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at
+ * http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at
+ * http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at
+ * http://polymer.github.io/PATENTS.txt
+ */
+/**
+ * For AttributeParts, sets the attribute if the value is defined and removes
+ * the attribute if the value is undefined.
+ *
+ * For other part types, this directive is a no-op.
+ */
+const ifDefined = directive((value) => (part) => {
+  if (value === undefined && part instanceof AttributePart) {
+    if (value !== part.value) {
+      const name = part.committer.name;
+      part.committer.element.removeAttribute(name);
+    }
+  } else {
+    part.setValue(value);
+  }
+});
+
 /** Constants to be used in the frontend. */
 // Constants should be alphabetically sorted by name.
 // Arrays with values should be alphabetically sorted if order doesn't matter.
@@ -3574,6 +3650,15 @@ var TinyColor = (function() {
   };
   return TinyColor;
 })();
+function tinycolor(color, opts) {
+  if (color === void 0) {
+    color = "";
+  }
+  if (opts === void 0) {
+    opts = {};
+  }
+  return new TinyColor(color, opts);
+}
 
 function computeDomain(entityId) {
   return entityId.substr(0, entityId.indexOf("."));
@@ -3598,6 +3683,21 @@ function getFontColorBasedOnBackgroundColor(backgroundColor) {
     return "rgb(234, 234, 234)"; // dark colors - white font
   }
 }
+function getLightColorBasedOnTemperature(current, min, max) {
+  const high = new TinyColor("rgb(255, 160, 0)"); // orange-ish
+  const low = new TinyColor("rgb(166, 209, 255)"); // blue-ish
+  const middle = new TinyColor("white");
+  const mixAmount = ((current - min) / (max - min)) * 100;
+  if (mixAmount < 50) {
+    return tinycolor(low)
+      .mix(middle, mixAmount * 2)
+      .toRgbString();
+  } else {
+    return tinycolor(middle)
+      .mix(high, (mixAmount - 50) * 2)
+      .toRgbString();
+  }
+}
 function buildNameStateConcat(name, stateString) {
   if (!name && !stateString) {
     return undefined;
@@ -3617,7 +3717,7 @@ function buildNameStateConcat(name, stateString) {
 function applyBrightnessToColor(color, brightness) {
   const colorObj = new TinyColor(getColorFromVariable(color));
   if (colorObj.isValid) {
-    const validColor = colorObj.darken(100 - brightness).toString();
+    const validColor = colorObj.mix("black", 100 - brightness).toString();
     if (validColor) return validColor;
   }
   return color;
@@ -3739,9 +3839,11 @@ const forwardHaptic = (el, hapticType) => {
   fireEvent(el, "haptic", hapticType);
 };
 
-const handleClick = (node, hass, config, hold) => {
+const handleClick = (node, hass, config, hold, dblClick) => {
   let actionConfig;
-  if (hold && config.hold_action) {
+  if (dblClick && config.dbltap_action) {
+    actionConfig = config.dbltap_action;
+  } else if (hold && config.hold_action) {
     actionConfig = config.hold_action;
   } else if (!hold && config.tap_action) {
     actionConfig = config.tap_action;
@@ -3789,7 +3891,7 @@ const handleClick = (node, hass, config, hold) => {
 
 // See https://github.com/home-assistant/home-assistant-polymer/pull/2457
 // on how to undo mwc -> paper migration
-// import "@material/mwc-ripple";
+// import '@material/mwc-ripple';
 const isTouch =
   "ontouchstart" in window ||
   navigator.maxTouchPoints > 0 ||
@@ -3803,6 +3905,7 @@ class LongPress extends HTMLElement {
     this.held = false;
     this.cooldownStart = false;
     this.cooldownEnd = false;
+    this.nbClicks = 0;
   }
   connectedCallback() {
     Object.assign(this.style, {
@@ -3838,6 +3941,7 @@ class LongPress extends HTMLElement {
     });
   }
   bind(element) {
+    /* eslint no-param-reassign: 0 */
     if (element.longPress) {
       return;
     }
@@ -3871,6 +3975,12 @@ class LongPress extends HTMLElement {
       this.timer = window.setTimeout(() => {
         this.startAnimation(x, y);
         this.held = true;
+        if (element.repeat && !element.isRepeating) {
+          element.isRepeating = true;
+          this.repeatTimeout = setInterval(() => {
+            element.dispatchEvent(new Event("ha-hold"));
+          }, element.repeat);
+        }
       }, this.holdTime);
       this.cooldownStart = true;
       window.setTimeout(() => (this.cooldownStart = false), 100);
@@ -3881,13 +3991,37 @@ class LongPress extends HTMLElement {
         (["touchend", "touchcancel"].includes(ev.type) &&
           this.timer === undefined)
       ) {
+        if (element.isRepeating && this.repeatTimeout) {
+          clearInterval(this.repeatTimeout);
+          element.isRepeating = false;
+        }
         return;
       }
       clearTimeout(this.timer);
+      if (element.isRepeating && this.repeatTimeout) {
+        clearInterval(this.repeatTimeout);
+      }
+      element.isRepeating = false;
       this.stopAnimation();
       this.timer = undefined;
       if (this.held) {
-        element.dispatchEvent(new Event("ha-hold"));
+        if (!element.repeat) {
+          element.dispatchEvent(new Event("ha-hold"));
+        }
+      } else if (element.hasDblClick) {
+        if (this.nbClicks === 0) {
+          this.nbClicks += 1;
+          this.dblClickTimeout = window.setTimeout(() => {
+            if (this.nbClicks === 1) {
+              this.nbClicks = 0;
+              element.dispatchEvent(new Event("ha-click"));
+            }
+          }, 250);
+        } else {
+          this.nbClicks = 0;
+          clearTimeout(this.dblClickTimeout);
+          element.dispatchEvent(new Event("ha-dblclick"));
+        }
       } else {
         element.dispatchEvent(new Event("ha-click"));
       }
@@ -3922,10 +4056,10 @@ class LongPress extends HTMLElement {
 customElements.define("long-press-button-card", LongPress);
 const getLongPress = () => {
   const body = document.body;
-  if (body.querySelector("long-press")) {
-    return body.querySelector("long-press");
+  if (body.querySelector("long-press-button-card")) {
+    return body.querySelector("long-press-button-card");
   }
-  const longpress = document.createElement("long-press");
+  const longpress = document.createElement("long-press-button-card");
   body.appendChild(longpress);
   return longpress;
 };
@@ -3945,6 +4079,10 @@ const styles = css`
     cursor: pointer;
     overflow: hidden;
     box-sizing: border-box;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   ha-card.disabled {
     pointer-events: none;
@@ -3964,10 +4102,49 @@ const styles = css`
     letter-spacing: normal;
     width: 100%;
   }
-  div {
+  .ellipsis {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+  }
+  #overlay {
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 8px 7px;
+    opacity: 0.5;
+    /* DO NOT override items below */
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+  }
+  #lock {
+    -webkit-animation-duration: 5s;
+    animation-duration: 5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    margin: unset;
+  }
+  @keyframes fadeOut {
+    0% {
+      opacity: 0.5;
+    }
+    20% {
+      opacity: 0;
+    }
+    80% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.5;
+    }
+  }
+  .fadeOut {
+    -webkit-animation-name: fadeOut;
+    animation-name: fadeOut;
   }
   @keyframes blink {
     0% {
@@ -4016,34 +4193,37 @@ const styles = css`
     animation: rotating 2s linear infinite;
   }
 
-  .container {
+  #container {
     display: grid;
     max-height: 100%;
     text-align: center;
     height: 100%;
     align-items: center;
   }
-  .img-cell {
+  #img-cell {
+    /* display: flex; */
     grid-area: i;
-    height: 100%;
     width: 100%;
     max-width: 100%;
+    align-self: center;
   }
 
-  .icon {
+  ha-icon#icon,
+  img#icon {
     height: 100%;
     max-width: 100%;
-    object-fit: scale;
+    object-fit: contain;
     overflow: hidden;
+    vertical-align: middle;
   }
-  .name {
+  #name {
     grid-area: n;
     max-width: 100%;
     align-self: center;
     justify-self: center;
     /* margin: auto; */
   }
-  .state {
+  #state {
     grid-area: s;
     max-width: 100%;
     align-self: center;
@@ -4051,210 +4231,254 @@ const styles = css`
     /* margin: auto; */
   }
 
-  .label {
+  #label {
     grid-area: l;
     max-width: 100%;
     align-self: center;
     justify-self: center;
   }
 
-  .container.vertical {
+  #container {
+    width: 100%;
+  }
+  #container.vertical {
     grid-template-areas: "i" "n" "s" "l";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr min-content min-content min-content;
   }
   /* Vertical No Icon */
-  .container.vertical.no-icon {
+  #container.vertical.no-icon {
     grid-template-areas: "n" "s" "l";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr min-content 1fr;
   }
-  .container.vertical.no-icon .state {
+  #container.vertical.no-icon #state {
     align-self: center;
   }
-  .container.vertical.no-icon .name {
+  #container.vertical.no-icon #name {
     align-self: end;
   }
-  .container.vertical.no-icon .label {
+  #container.vertical.no-icon #label {
     align-self: start;
   }
 
   /* Vertical No Icon No Name */
-  .container.vertical.no-icon.no-name {
+  #container.vertical.no-icon.no-name {
     grid-template-areas: "s" "l";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
   }
-  .container.vertical.no-icon.no-name .state {
+  #container.vertical.no-icon.no-name #state {
     align-self: end;
   }
-  .container.vertical.no-icon.no-name .label {
+  #container.vertical.no-icon.no-name #label {
     align-self: start;
   }
 
   /* Vertical No Icon No State */
-  .container.vertical.no-icon.no-state {
+  #container.vertical.no-icon.no-state {
     grid-template-areas: "n" "l";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
   }
-  .container.vertical.no-icon.no-state .name {
+  #container.vertical.no-icon.no-state #name {
     align-self: end;
   }
-  .container.vertical.no-icon.no-state .label {
+  #container.vertical.no-icon.no-state #label {
     align-self: start;
   }
 
   /* Vertical No Icon No Label */
-  .container.vertical.no-icon.no-label {
+  #container.vertical.no-icon.no-label {
     grid-template-areas: "n" "s";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
   }
-  .container.vertical.no-icon.no-label .name {
+  #container.vertical.no-icon.no-label #name {
     align-self: end;
   }
-  .container.vertical.no-icon.no-label .state {
+  #container.vertical.no-icon.no-label #state {
     align-self: start;
   }
 
   /* Vertical No Icon No Label No Name */
-  .container.vertical.no-icon.no-label.no-name {
+  #container.vertical.no-icon.no-label.no-name {
     grid-template-areas: "s";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
   }
-  .container.vertical.no-icon.no-label.no-name .state {
+  #container.vertical.no-icon.no-label.no-name #state {
     align-self: center;
   }
   /* Vertical No Icon No Label No State */
-  .container.vertical.no-icon.no-label.no-state {
+  #container.vertical.no-icon.no-label.no-state {
     grid-template-areas: "n";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
   }
-  .container.vertical.no-icon.no-label.no-state .name {
+  #container.vertical.no-icon.no-label.no-state #name {
     align-self: center;
   }
 
   /* Vertical No Icon No Name No State */
-  .container.vertical.no-icon.no-name.no-state {
+  #container.vertical.no-icon.no-name.no-state {
     grid-template-areas: "l";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
   }
-  .container.vertical.no-icon.no-name.no-state .label {
+  #container.vertical.no-icon.no-name.no-state #label {
     align-self: center;
   }
 
-  .container.icon_name_state {
+  #container.icon_name_state {
     grid-template-areas: "i n" "l l";
     grid-template-columns: 40% 1fr;
     grid-template-rows: 1fr min-content;
   }
 
-  .container.icon_name {
+  #container.icon_name {
     grid-template-areas: "i n" "s s" "l l";
     grid-template-columns: 40% 1fr;
     grid-template-rows: 1fr min-content min-content;
   }
 
-  .container.icon_state {
+  #container.icon_state {
     grid-template-areas: "i s" "n n" "l l";
     grid-template-columns: 40% 1fr;
     grid-template-rows: 1fr min-content min-content;
   }
 
-  .container.name_state {
+  #container.name_state {
     grid-template-areas: "i" "n" "l";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr min-content min-content;
   }
-  .container.name_state.no-icon {
+  #container.name_state.no-icon {
     grid-template-areas: "n" "l";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
   }
-  .container.name_state.no-icon .name {
+  #container.name_state.no-icon #name {
     align-self: end;
   }
-  .container.name_state.no-icon .label {
+  #container.name_state.no-icon #label {
     align-self: start;
   }
 
-  .container.name_state.no-icon.no-label {
+  #container.name_state.no-icon.no-label {
     grid-template-areas: "n";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
   }
-  .container.name_state.no-icon.no-label .name {
+  #container.name_state.no-icon.no-label #name {
     align-self: center;
   }
 
   /* icon_name_state2nd default */
-  .container.icon_name_state2nd {
+  #container.icon_name_state2nd {
     grid-template-areas: "i n" "i s" "i l";
     grid-template-columns: 40% 1fr;
     grid-template-rows: 1fr min-content 1fr;
   }
-  .container.icon_name_state2nd .name {
+  #container.icon_name_state2nd #name {
     align-self: end;
   }
-  .container.icon_name_state2nd .state {
+  #container.icon_name_state2nd #state {
     align-self: center;
   }
-  .container.icon_name_state2nd .label {
+  #container.icon_name_state2nd #label {
     align-self: start;
   }
 
   /* icon_name_state2nd No Label */
-  .container.icon_name_state2nd.no-label {
+  #container.icon_name_state2nd.no-label {
     grid-template-areas: "i n" "i s";
     grid-template-columns: 40% 1fr;
     grid-template-rows: 1fr 1fr;
   }
-  .container.icon_name_state2nd .name {
+  #container.icon_name_state2nd #name {
     align-self: end;
   }
-  .container.icon_name_state2nd .state {
+  #container.icon_name_state2nd #state {
     align-self: start;
   }
 
   /* icon_state_name2nd Default */
-  .container.icon_state_name2nd {
+  #container.icon_state_name2nd {
     grid-template-areas: "i s" "i n" "i l";
     grid-template-columns: 40% 1fr;
     grid-template-rows: 1fr min-content 1fr;
   }
-  .container.icon_state_name2nd .state {
+  #container.icon_state_name2nd #state {
     align-self: end;
   }
-  .container.icon_state_name2nd .name {
+  #container.icon_state_name2nd #name {
     align-self: center;
   }
-  .container.icon_state_name2nd .state {
+  #container.icon_state_name2nd #label {
     align-self: start;
   }
 
   /* icon_state_name2nd No Label */
-  .container.icon_state_name2nd.no-label {
+  #container.icon_state_name2nd.no-label {
     grid-template-areas: "i s" "i n";
     grid-template-columns: 40% 1fr;
     grid-template-rows: 1fr 1fr;
   }
-  .container.icon_state_name2nd .state {
+  #container.icon_state_name2nd #state {
     align-self: end;
   }
-  .container.icon_state_name2nd .name {
+  #container.icon_state_name2nd #name {
     align-self: start;
   }
 
-  .container.icon_label {
+  #container.icon_label {
     grid-template-areas: "i l" "n n" "s s";
     grid-template-columns: 40% 1fr;
     grid-template-rows: 1fr min-content min-content;
   }
 `;
+
+var computeStateDisplay = (localize, stateObj) => {
+  let display;
+  const domain = computeDomain(stateObj.entity_id);
+  if (domain === "binary_sensor") {
+    // Try device class translation, then default binary sensor translation
+    if (stateObj.attributes.device_class) {
+      display = localize(
+        `state.${domain}.${stateObj.attributes.device_class}.${stateObj.state}`
+      );
+    }
+    if (!display) {
+      display = localize(`state.${domain}.default.${stateObj.state}`);
+    }
+  } else if (
+    stateObj.attributes.unit_of_measurement &&
+    !["unknown", "unavailable"].includes(stateObj.state)
+  ) {
+    display = stateObj.state;
+  } else if (domain === "zwave") {
+    if (["initializing", "dead"].includes(stateObj.state)) {
+      display = localize(
+        `state.zwave.query_stage.${stateObj.state}`,
+        "query_stage",
+        stateObj.attributes.query_stage
+      );
+    } else {
+      display = localize(`state.zwave.default.${stateObj.state}`);
+    }
+  } else {
+    display = localize(`state.${domain}.${stateObj.state}`);
+  }
+  // Fall back to default, component backend translation, or raw state if nothing else matches.
+  if (!display) {
+    display =
+      localize(`state.default.${stateObj.state}`) ||
+      localize(`component.${domain}.state.${stateObj.state}`) ||
+      stateObj.state;
+  }
+  return display;
+};
 
 let ButtonCard = class ButtonCard extends LitElement {
   static get styles() {
@@ -4276,15 +4500,19 @@ let ButtonCard = class ButtonCard extends LitElement {
         ((configState && configState.label_template) ||
           this.config.label_template)) ||
       (this.config.state &&
-        this.config.state.find((elt) => {
-          return elt.operator === "template";
-        }))
+        this.config.state.find((elt) => elt.operator === "template"))
         ? true
         : false;
     return hasConfigOrEntityChanged(this, changedProps, forceUpdate);
   }
   _getMatchingConfigState(state) {
-    if (!state || !this.config.state) {
+    if (!this.config.state) {
+      return undefined;
+    }
+    const hasTemplate = this.config.state.find(
+      (elt) => elt.operator === "template"
+    );
+    if (!state && !hasTemplate) {
       return undefined;
     }
     let def;
@@ -4293,20 +4521,21 @@ let ButtonCard = class ButtonCard extends LitElement {
         switch (elt.operator) {
           case "==":
             /* eslint eqeqeq: 0 */
-            return state.state == elt.value;
+            return state && state.state == elt.value;
           case "<=":
-            return state.state <= elt.value;
+            return state && state.state <= elt.value;
           case "<":
-            return state.state < elt.value;
+            return state && state.state < elt.value;
           case ">=":
-            return state.state >= elt.value;
+            return state && state.state >= elt.value;
           case ">":
-            return state.state > elt.value;
+            return state && state.state > elt.value;
           case "!=":
-            return state.state != elt.value;
+            return state && state.state != elt.value;
           case "regex": {
             /* eslint no-unneeded-ternary: 0 */
-            const matches = state.state.match(elt.value) ? true : false;
+            const matches =
+              state && state.state.match(elt.value) ? true : false;
             return matches;
           }
           case "template": {
@@ -4325,7 +4554,7 @@ let ButtonCard = class ButtonCard extends LitElement {
             return false;
         }
       } else {
-        return elt.value == state.state;
+        return state && elt.value == state.state;
       }
     });
     if (!retval && def) {
@@ -4343,6 +4572,44 @@ let ButtonCard = class ButtonCard extends LitElement {
         return this.config.default_color;
     }
   }
+  _getColorForLightEntity(state) {
+    let color = this.config.default_color;
+    if (state) {
+      if (state.attributes.rgb_color) {
+        color = `rgb(${state.attributes.rgb_color.join(",")})`;
+        if (state.attributes.brightness) {
+          color = applyBrightnessToColor(
+            color,
+            (state.attributes.brightness + 245) / 5
+          );
+        }
+      } else if (
+        state.attributes.color_temp &&
+        state.attributes.min_mireds &&
+        state.attributes.max_mireds
+      ) {
+        color = getLightColorBasedOnTemperature(
+          state.attributes.color_temp,
+          state.attributes.min_mireds,
+          state.attributes.max_mireds
+        );
+        if (state.attributes.brightness) {
+          color = applyBrightnessToColor(
+            color,
+            (state.attributes.brightness + 245) / 5
+          );
+        }
+      } else if (state.attributes.brightness) {
+        color = applyBrightnessToColor(
+          this._getDefaultColorForState(state),
+          (state.attributes.brightness + 245) / 5
+        );
+      } else {
+        color = this._getDefaultColorForState(state);
+      }
+    }
+    return color;
+  }
   _buildCssColorAttribute(state, configState) {
     let colorValue = "";
     let color;
@@ -4354,26 +4621,7 @@ let ButtonCard = class ButtonCard extends LitElement {
       colorValue = this.config.color;
     }
     if (colorValue == "auto") {
-      if (state) {
-        if (state.attributes.rgb_color) {
-          color = `rgb(${state.attributes.rgb_color.join(",")})`;
-          if (state.attributes.brightness) {
-            color = applyBrightnessToColor(
-              color,
-              (state.attributes.brightness + 245) / 5
-            );
-          }
-        } else if (state.attributes.brightness) {
-          color = applyBrightnessToColor(
-            this._getDefaultColorForState(state),
-            (state.attributes.brightness + 245) / 5
-          );
-        } else {
-          color = this._getDefaultColorForState(state);
-        }
-      } else {
-        color = this.config.default_color;
-      }
+      color = this._getColorForLightEntity(state);
     } else if (colorValue) {
       color = colorValue;
     } else if (state) {
@@ -4419,39 +4667,20 @@ let ButtonCard = class ButtonCard extends LitElement {
     }
     return entityPicture;
   }
-  _buildStyle(state, configState) {
-    let cardStyle = {};
-    let styleArray;
-    if (state) {
-      if (configState && configState.style) {
-        styleArray = configState.style;
-      } else if (this.config.style) {
-        styleArray = this.config.style;
-      }
-    } else if (this.config.style) {
-      styleArray = this.config.style;
+  _buildStyleGeneric(configState, styleType) {
+    let style = {};
+    if (this.config.styles[styleType]) {
+      style = Object.assign(style, ...this.config.styles[styleType]);
     }
-    if (styleArray) {
-      cardStyle = Object.assign(cardStyle, ...styleArray);
+    if (configState && configState.styles[styleType]) {
+      let configStateStyle = {};
+      configStateStyle = Object.assign(
+        configStateStyle,
+        ...configState.styles[styleType]
+      );
+      style = Object.assign({}, style, configStateStyle);
     }
-    return cardStyle;
-  }
-  _buildEntityPictureStyle(state, configState) {
-    let entityPictureStyle = {};
-    let styleArray;
-    if (state) {
-      if (configState && configState.entity_picture_style) {
-        styleArray = configState.entity_picture_style;
-      } else if (this.config.entity_picture_style) {
-        styleArray = this.config.entity_picture_style;
-      }
-    } else if (this.config.entity_picture_style) {
-      styleArray = this.config.entity_picture_style;
-    }
-    if (styleArray) {
-      entityPictureStyle = Object.assign(entityPictureStyle, ...styleArray);
-    }
-    return entityPictureStyle;
+    return style;
   }
   _buildName(state, configState) {
     if (this.config.show_name === false) {
@@ -4473,11 +4702,12 @@ let ButtonCard = class ButtonCard extends LitElement {
   _buildStateString(state) {
     let stateString;
     if (this.config.show_state && state && state.state) {
+      const localizedState = computeStateDisplay(this.hass.localize, state);
       const units = this._buildUnits(state);
       if (units) {
         stateString = `${state.state} ${units}`;
       } else {
-        stateString = state.state;
+        stateString = localizedState;
       }
     }
     return stateString;
@@ -4498,6 +4728,19 @@ let ButtonCard = class ButtonCard extends LitElement {
       }
     }
     return units;
+  }
+  _buildLastChanged(state, style) {
+    return this.config.show_last_changed && state
+      ? html`
+          <ha-relative-time
+            id="label"
+            class="ellipsis"
+            .hass="${this.hass}"
+            .datetime="${state.last_changed}"
+            style=${styleMap(style)}
+          ></ha-relative-time>
+        `
+      : undefined;
   }
   _buildLabel(state, configState) {
     if (!this.config.show_label) {
@@ -4562,12 +4805,14 @@ let ButtonCard = class ButtonCard extends LitElement {
   _rotate(configState) {
     return configState && configState.spin ? true : false;
   }
-  _blankCardColoredHtml(state, cardStyle) {
-    const color = this._buildCssColorAttribute(state, undefined);
-    const fontColor = getFontColorBasedOnBackgroundColor(color);
+  _blankCardColoredHtml(cardStyle) {
+    const blankCardStyle = Object.assign(
+      { background: "none", "box-shadow": "none" },
+      cardStyle
+    );
     return html`
-      <ha-card class="disabled" style=${styleMap(cardStyle)}>
-        <div style="color: ${fontColor}; background-color: ${color};"></div>
+      <ha-card class="disabled" style=${styleMap(blankCardStyle)}>
+        <div></div>
       </ha-card>
     `;
   }
@@ -4579,18 +4824,21 @@ let ButtonCard = class ButtonCard extends LitElement {
     const color = this._buildCssColorAttribute(state, configState);
     let buttonColor = color;
     let cardStyle = {};
-    const configCardStyle = this._buildStyle(state, configState);
+    let lockStyle = {};
+    const lockStyleFromConfig = this._buildStyleGeneric(configState, "lock");
+    const configCardStyle = this._buildStyleGeneric(configState, "card");
     if (configCardStyle.width) {
       this.style.setProperty("flex", "0 0 auto");
       this.style.setProperty("max-width", "fit-content");
     }
     switch (this.config.color_type) {
       case "blank-card":
-        return this._blankCardColoredHtml(state, configCardStyle);
+        return this._blankCardColoredHtml(configCardStyle);
       case "card":
       case "label-card": {
         const fontColor = getFontColorBasedOnBackgroundColor(color);
         cardStyle.color = fontColor;
+        lockStyle.color = fontColor;
         cardStyle["background-color"] = color;
         cardStyle = Object.assign({}, cardStyle, configCardStyle);
         buttonColor = "inherit";
@@ -4600,19 +4848,44 @@ let ButtonCard = class ButtonCard extends LitElement {
         cardStyle = configCardStyle;
         break;
     }
+    this.style.setProperty(
+      "--button-card-light-color",
+      this._getColorForLightEntity(state)
+    );
+    lockStyle = Object.assign({}, lockStyle, lockStyleFromConfig);
     return html`
       <ha-card
         class="button-card-main ${this._isClickable(state) ? "" : "disabled"}"
         style=${styleMap(cardStyle)}
         @ha-click="${this._handleTap}"
         @ha-hold="${this._handleHold}"
+        @ha-dblclick=${this._handleDblTap}
+        .hasDblClick=${this.config.dbltap_action.action !== "none"}
+        .repeat=${ifDefined(this.config.hold_action.repeat)}
         .longpress="${longPress()}"
         .config="${this.config}"
       >
+        ${this._getLock(lockStyle)}
         ${this._buttonContent(state, configState, buttonColor)}
-        <mwc-ripple></mwc-ripple>
+        ${this.config.lock
+          ? ""
+          : html`
+              <mwc-ripple id="ripple"></mwc-ripple>
+            `}
       </ha-card>
     `;
+  }
+  _getLock(lockStyle) {
+    if (this.config.lock) {
+      return html`
+        <div id="overlay" style=${styleMap(lockStyle)} @click=${
+        this._handleLock
+      } @touchstart=${this._handleLock}>
+          <ha-icon id="lock" icon="mdi:lock-outline"></iron-icon>
+        </div>
+      `;
+    }
+    return html``;
   }
   _buttonContent(state, configState, color) {
     const name = this._buildName(state, configState);
@@ -4642,45 +4915,80 @@ let ButtonCard = class ButtonCard extends LitElement {
   }
   _gridHtml(state, configState, containerClass, color, name, stateString) {
     const iconTemplate = this._getIconHtml(state, configState, color);
-    const itemClass = ["container", containerClass];
+    const itemClass = [containerClass];
     const label = this._buildLabel(state, configState);
+    const nameStyleFromConfig = this._buildStyleGeneric(configState, "name");
+    const stateStyleFromConfig = this._buildStyleGeneric(configState, "state");
+    const labelStyleFromConfig = this._buildStyleGeneric(configState, "label");
+    const lastChangedTemplate = this._buildLastChanged(
+      state,
+      labelStyleFromConfig
+    );
+    const gridStyleFromConfig = this._buildStyleGeneric(configState, "grid");
     if (!iconTemplate) itemClass.push("no-icon");
     if (!name) itemClass.push("no-name");
     if (!stateString) itemClass.push("no-state");
-    if (!label) itemClass.push("no-label");
+    if (!label && !lastChangedTemplate) itemClass.push("no-label");
     return html`
-      <div class=${itemClass.join(" ")}>
+      <div
+        id="container"
+        class=${itemClass.join(" ")}
+        style=${styleMap(gridStyleFromConfig)}
+      >
         ${iconTemplate ? iconTemplate : ""}
         ${name
           ? html`
-              <div class="name">${name}</div>
+              <div
+                id="name"
+                class="ellipsis"
+                style=${styleMap(nameStyleFromConfig)}
+              >
+                ${name}
+              </div>
             `
           : ""}
         ${stateString
           ? html`
-              <div class="state">${stateString}</div>
+              <div
+                id="state"
+                class="ellipsis"
+                style=${styleMap(stateStyleFromConfig)}
+              >
+                ${stateString}
+              </div>
             `
           : ""}
-        ${label
+        ${label && !lastChangedTemplate
           ? html`
-              <div class="label">${label}</div>
+              <div
+                id="label"
+                class="ellipsis"
+                style=${styleMap(labelStyleFromConfig)}
+              >
+                ${unsafeHTML(label)}
+              </div>
             `
           : ""}
+        ${lastChangedTemplate ? lastChangedTemplate : ""}
       </div>
     `;
   }
   _getIconHtml(state, configState, color) {
     const icon = this._buildIcon(state, configState);
     const entityPicture = this._buildEntityPicture(state, configState);
-    const entityPictureStyleFromConfig = this._buildEntityPictureStyle(
-      state,
-      configState
+    const entityPictureStyleFromConfig = this._buildStyleGeneric(
+      configState,
+      "entity_picture"
     );
-    const haIconStyle = {
-      color,
-      width: this.config.size,
-      "min-width": this.config.size,
-    };
+    const haIconStyleFromConfig = this._buildStyleGeneric(configState, "icon");
+    const imgCellStyleFromConfig = this._buildStyleGeneric(
+      configState,
+      "img_cell"
+    );
+    const haIconStyle = Object.assign(
+      { color, width: this.config.size },
+      haIconStyleFromConfig
+    );
     const entityPictureStyle = Object.assign(
       {},
       haIconStyle,
@@ -4688,13 +4996,13 @@ let ButtonCard = class ButtonCard extends LitElement {
     );
     if (icon || entityPicture) {
       return html`
-        <div class="img-cell">
+        <div id="img-cell" style=${styleMap(imgCellStyleFromConfig)}>
           ${icon && !entityPicture
             ? html`
                 <ha-icon
                   style=${styleMap(haIconStyle)}
                   .icon="${icon}"
-                  class="icon"
+                  id="icon"
                   ?rotating=${this._rotate(configState)}
                 ></ha-icon>
               `
@@ -4704,7 +5012,7 @@ let ButtonCard = class ButtonCard extends LitElement {
                 <img
                   src="${entityPicture}"
                   style=${styleMap(entityPictureStyle)}
-                  class="icon"
+                  id="icon"
                   ?rotating=${this._rotate(configState)}
                 />
               `
@@ -4723,6 +5031,7 @@ let ButtonCard = class ButtonCard extends LitElement {
       {
         tap_action: { action: "toggle" },
         hold_action: { action: "none" },
+        dbltap_action: { action: "none" },
         layout: "vertical",
         size: "40%",
         color_type: "icon",
@@ -4742,6 +5051,33 @@ let ButtonCard = class ButtonCard extends LitElement {
       this.config.color_off = "var(--paper-item-icon-color)";
     }
     this.config.color_on = "var(--paper-item-icon-active-color)";
+    /* Temporary until we deprecate style and entity_picture_style config option */
+    if (!this.config.styles) {
+      this.config.styles = {};
+    }
+    if (this.config.style && !this.config.styles.card) {
+      this.config.styles.card = this.config.style;
+    }
+    if (
+      this.config.entity_picture_style &&
+      !this.config.styles.entity_picture
+    ) {
+      this.config.styles.entity_picture = this.config.entity_picture_style;
+    }
+    if (this.config.state) {
+      /* eslint no-param-reassign: ["error", { "props": false }] */
+      this.config.state.forEach((s) => {
+        if (!s.styles) {
+          s.styles = {};
+        }
+        if (s.entity_picture_style && !s.styles.entity_picture) {
+          s.styles.entity_picture = s.entity_picture_style;
+        }
+        if (s.style && !s.styles.card) {
+          s.styles.card = s.style;
+        }
+      });
+    }
   }
   // The height of your card. Home Assistant uses this to automatically
   // distribute all cards over the available columns.
@@ -4754,7 +5090,7 @@ let ButtonCard = class ButtonCard extends LitElement {
       return;
     }
     const config = ev.target.config;
-    handleClick(this, this.hass, config, false);
+    handleClick(this, this.hass, config, false, false);
   }
   _handleHold(ev) {
     /* eslint no-alert: 0 */
@@ -4762,7 +5098,40 @@ let ButtonCard = class ButtonCard extends LitElement {
       return;
     }
     const config = ev.target.config;
-    handleClick(this, this.hass, config, true);
+    handleClick(this, this.hass, config, true, false);
+  }
+  _handleDblTap(ev) {
+    /* eslint no-alert: 0 */
+    if (this.config.confirmation && !window.confirm(this.config.confirmation)) {
+      return;
+    }
+    const config = ev.target.config;
+    handleClick(this, this.hass, config, false, true);
+  }
+  _handleLock(ev) {
+    ev.stopPropagation();
+    const overlay = this.shadowRoot.getElementById("overlay");
+    const haCard = this.shadowRoot.firstElementChild;
+    overlay.style.setProperty("pointer-events", "none");
+    const paperRipple = document.createElement("paper-ripple");
+    const lock = this.shadowRoot.getElementById("lock");
+    if (lock) {
+      haCard.appendChild(paperRipple);
+      const icon = document.createAttribute("icon");
+      icon.value = "mdi:lock-open-outline";
+      lock.attributes.setNamedItem(icon);
+      lock.classList.add("fadeOut");
+    }
+    window.setTimeout(() => {
+      overlay.style.setProperty("pointer-events", "");
+      if (lock) {
+        lock.classList.remove("fadeOut");
+        const icon = document.createAttribute("icon");
+        icon.value = "mdi:lock-outline";
+        lock.attributes.setNamedItem(icon);
+        haCard.removeChild(paperRipple);
+      }
+    }, 5000);
   }
 };
 __decorate([property()], ButtonCard.prototype, "hass", void 0);
