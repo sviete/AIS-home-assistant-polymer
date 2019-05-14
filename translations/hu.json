@@ -594,7 +594,7 @@
                     "none": "Még semmi sincs beállítva",
                     "config_entry": {
                         "no_devices": "Ez az integráció nem rendelkezik eszközökkel.",
-                        "no_device": "Entitások eszközök nélkül",
+                        "no_device": "Eszköz nélküli entitások",
                         "delete_confirm": "Biztosan törölni szeretnéd ezt az integrációt?",
                         "restart_confirm": "Indítsd újra a Home Assistant-ot az integráció törlésének befejezéséhez",
                         "manuf": "{manufacturer} által",
@@ -603,6 +603,12 @@
                         "device_unavailable": "eszköz nem érhető el",
                         "entity_unavailable": "entitás nem érhető el",
                         "no_area": "Nincs Terület"
+                    },
+                    "config_flow": {
+                        "external_step": {
+                            "description": "Ehhez a lépéshez egy külső weboldal meglátogatása szükséges.",
+                            "open_site": "Weboldal megnyitása"
+                        }
                     }
                 },
                 "zha": {
@@ -855,6 +861,11 @@
                         "required_fields": "Töltsd ki az összes szükséges mezőt",
                         "password_not_match": "A jelszavak nem egyeznek"
                     }
+                },
+                "integration": {
+                    "intro": "Az eszközöket és szolgáltatásokat a Home Assistant integrációként kezeli. Beállíthatod őket most, vagy később a konfigurációs képernyőn.",
+                    "more_integrations": "Több",
+                    "finish": "Befejezés"
                 }
             },
             "lovelace": {
@@ -868,6 +879,14 @@
                         "title": "Üdv Itthon",
                         "no_devices": "Ez az oldal lehetővé teszi az eszközeid vezérlését, de úgy tűnik, hogy még nincs beállítva egy sem. A kezdéshez lépj át az integrációs oldalra.",
                         "go_to_integrations_page": "Ugrás az 'integrációk' oldalra."
+                    },
+                    "picture-elements": {
+                        "hold": "Tartás:",
+                        "tap": "Koppintás:",
+                        "navigate_to": "Ugrás {location}",
+                        "toggle": "Váltás {name}",
+                        "call_service": "Szolgáltatás meghívása {name}",
+                        "more_info": "További információ megjelenítése: {name}"
                     }
                 },
                 "editor": {
@@ -925,7 +944,8 @@
         },
         "sidebar": {
             "log_out": "Kijelentkezés",
-            "developer_tools": "Fejlesztői eszközök"
+            "developer_tools": "Fejlesztői eszközök",
+            "external_app_configuration": "App Konfiguráció"
         },
         "common": {
             "loading": "Betöltés",

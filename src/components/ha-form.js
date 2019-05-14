@@ -8,7 +8,7 @@ import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 
 import "./ha-paper-slider";
-import EventsMixin from "../mixins/events-mixin";
+import { EventsMixin } from "../mixins/events-mixin";
 
 /*
  * @appliesMixin EventsMixin
@@ -187,6 +187,18 @@ class HaForm extends EventsMixin(PolymerElement) {
         value: () => (error, schema) => error, // eslint-disable-line no-unused-vars
       },
     };
+  }
+
+  focus() {
+    const input = this.shadowRoot.querySelector(
+      "ha-form, paper-input, ha-paper-slider, paper-checkbox, paper-dropdown-menu"
+    );
+
+    if (!input) {
+      return;
+    }
+
+    input.focus();
   }
 
   _isArray(val) {

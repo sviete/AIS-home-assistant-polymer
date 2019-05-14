@@ -603,6 +603,12 @@
                         "device_unavailable": "裝置不可用",
                         "entity_unavailable": "物件不可用",
                         "no_area": "無分區"
+                    },
+                    "config_flow": {
+                        "external_step": {
+                            "description": "此步驟將需要開啟外部網站方能完成。",
+                            "open_site": "開啟網站"
+                        }
                     }
                 },
                 "zha": {
@@ -855,6 +861,11 @@
                         "required_fields": "填寫所有所需欄位",
                         "password_not_match": "密碼不相符"
                     }
+                },
+                "integration": {
+                    "intro": "將會於 Home Assistant 整合中呈現的裝置與服務。可以現在進行設定，或者稍後於設定選單中進行。",
+                    "more_integrations": "更多",
+                    "finish": "完成"
                 }
             },
             "lovelace": {
@@ -868,6 +879,14 @@
                         "title": "歡迎回家",
                         "no_devices": "此頁面允許進行控制所擁有的裝置。看起來您尚未設定任何裝置，從設定中的整合頁面開始吧。",
                         "go_to_integrations_page": "轉至整合頁面。"
+                    },
+                    "picture-elements": {
+                        "hold": "按住：",
+                        "tap": "點擊：",
+                        "navigate_to": "導航至 {location}",
+                        "toggle": "切換 {name}",
+                        "call_service": "執行服務 {name}",
+                        "more_info": "顯示更多資訊：{name}"
                     }
                 },
                 "editor": {
@@ -925,7 +944,8 @@
         },
         "sidebar": {
             "log_out": "登出",
-            "developer_tools": "開發工具"
+            "developer_tools": "開發工具",
+            "external_app_configuration": "App 設定"
         },
         "common": {
             "loading": "讀取中",

@@ -27,20 +27,44 @@ class HaCard extends LitElement {
         color: var(--primary-text-color);
         display: block;
         transition: all 0.3s ease-out;
+        position: relative;
       }
-      .header:not(:empty) {
-        font-size: 24px;
+
+      .card-header,
+      :host ::slotted(.card-header) {
+        color: var(--ha-card-header-color, --primary-text-color);
+        font-family: var(--ha-card-header-font-family, inherit);
+        font-size: var(--ha-card-header-font-size, 24px);
         letter-spacing: -0.012em;
         line-height: 32px;
-        opacity: 0.87;
         padding: 24px 16px 16px;
+        display: block;
+      }
+
+      :host ::slotted(.card-content:not(:first-child)),
+      slot:not(:first-child)::slotted(.card-content) {
+        padding-top: 0px;
+        margin-top: -8px;
+      }
+
+      :host ::slotted(.card-content) {
+        padding: 16px;
+      }
+
+      :host ::slotted(.card-actions) {
+        border-top: 1px solid #e8e8e8;
+        padding: 5px 16px;
       }
     `;
   }
 
   protected render(): TemplateResult {
     return html`
-      <div class="header">${this.header}</div>
+      ${this.header
+        ? html`
+            <div class="card-header">${this.header}</div>
+          `
+        : html``}
       <slot></slot>
     `;
   }

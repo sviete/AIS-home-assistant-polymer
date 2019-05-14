@@ -21,7 +21,7 @@ import { HomeAssistant, InputSelectEntity } from "../../../types";
 import { EntityRow, EntityConfig } from "./types";
 import { setInputSelectOption } from "../../../data/input-select";
 import { hasConfigOrEntityChanged } from "../common/has-changed";
-import { forwardHaptic } from "../../../util/haptics";
+import { forwardHaptic } from "../../../data/haptics";
 import { stopPropagation } from "../../../common/dom/stop_propagation";
 
 @customElement("hui-input-select-entity-row")
@@ -123,18 +123,14 @@ class HuiInputSelectEntityRow extends LitElement implements EntityRow {
 
   private _selectedChanged(ev): void {
     const stateObj = this.hass!.states[this._config!.entity];
-    const option = ev.detail.item.innerText;
+    const option = ev.target.selectedItem.innerText.trim();
     if (option === stateObj.state) {
       return;
     }
 
-    forwardHaptic(this, "light");
+    forwardHaptic("light");
 
-    setInputSelectOption(
-      this.hass!,
-      stateObj.entity_id,
-      ev.target.selectedItem.innerText
-    );
+    setInputSelectOption(this.hass!, stateObj.entity_id, option);
   }
 }
 

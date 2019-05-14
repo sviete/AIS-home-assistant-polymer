@@ -12,6 +12,7 @@ import "@material/mwc-button";
 import "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
 import "@polymer/paper-tooltip/paper-tooltip";
 import "@polymer/paper-spinner/paper-spinner";
+import { UnsubscribeFunc } from "home-assistant-js-websocket";
 
 import "../../components/ha-form";
 import "../../components/ha-markdown";
@@ -33,14 +34,19 @@ import { HaConfigFlowParams } from "./show-dialog-config-flow";
 import "./step-flow-pick-handler";
 import "./step-flow-loading";
 import "./step-flow-form";
+import "./step-flow-external";
 import "./step-flow-abort";
 import "./step-flow-create-entry";
 import {
   DeviceRegistryEntry,
-  fetchDeviceRegistry,
+  subscribeDeviceRegistry,
 } from "../../data/device_registry";
-import { AreaRegistryEntry, fetchAreaRegistry } from "../../data/area_registry";
+import {
+  AreaRegistryEntry,
+  subscribeAreaRegistry,
+} from "../../data/area_registry";
 import { HomeAssistant } from "../../types";
+import { caseInsensitiveCompare } from "../../common/string/compare";
 
 let instance = 0;
 
@@ -57,30 +63,19 @@ declare global {
 @customElement("dialog-config-flow")
 class ConfigFlowDialog extends LitElement {
   public hass!: HomeAssistant;
-
-  @property()
-  private _params?: HaConfigFlowParams;
-
-  @property()
-  private _loading = true;
-
+  @property() private _params?: HaConfigFlowParams;
+  @property() private _loading = true;
   private _instance = instance;
-
-  @property()
-  private _step:
+  @property() private _step:
     | ConfigFlowStep
     | undefined
     // Null means we need to pick a config flow
     | null;
-
-  @property()
-  private _devices?: DeviceRegistryEntry[];
-
-  @property()
-  private _areas?: AreaRegistryEntry[];
-
-  @property()
-  private _handlers?: string[];
+  @property() private _devices?: DeviceRegistryEntry[];
+  @property() private _areas?: AreaRegistryEntry[];
+  @property() private _handlers?: string[];
+  private _unsubAreas?: UnsubscribeFunc;
+  private _unsubDevices?: UnsubscribeFunc;
 
   public async showDialog(params: HaConfigFlowParams): Promise<void> {
     this._params = params;
@@ -95,7 +90,13 @@ class ConfigFlowDialog extends LitElement {
         this._loading = true;
         this.updateComplete.then(() => this._scheduleCenterDialog());
         try {
-          this._handlers = await getConfigFlowHandlers(this.hass);
+          this._handlers = (await getConfigFlowHandlers(this.hass)).sort(
+            (handlerA, handlerB) =>
+              caseInsensitiveCompare(
+                this.hass.localize(`component.${handlerA}.config.title`),
+                this.hass.localize(`component.${handlerB}.config.title`)
+              )
+          );
         } finally {
           this._loading = false;
         }
@@ -155,6 +156,13 @@ class ConfigFlowDialog extends LitElement {
                 .hass=${this.hass}
               ></step-flow-form>
             `
+          : this._step.type === "external"
+          ? html`
+              <step-flow-external
+                .step=${this._step}
+                .hass=${this.hass}
+              ></step-flow-external>
+            `
           : this._step.type === "abort"
           ? html`
               <step-flow-abort
@@ -196,6 +204,10 @@ class ConfigFlowDialog extends LitElement {
       this._fetchDevices(this._step.result);
       this._fetchAreas();
     }
+
+    if (changedProps.has("_devices") && this._dialog) {
+      this._scheduleCenterDialog();
+    }
   }
 
   private _scheduleCenterDialog() {
@@ -207,16 +219,17 @@ class ConfigFlowDialog extends LitElement {
   }
 
   private async _fetchDevices(configEntryId) {
-    // Wait 5 seconds to give integrations time to find devices
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-    const devices = await fetchDeviceRegistry(this.hass);
-    this._devices = devices.filter((device) =>
-      device.config_entries.includes(configEntryId)
-    );
+    this._unsubDevices = subscribeDeviceRegistry(this.hass, (devices) => {
+      this._devices = devices.filter((device) =>
+        device.config_entries.includes(configEntryId)
+      );
+    });
   }
 
   private async _fetchAreas() {
-    this._areas = await fetchAreaRegistry(this.hass);
+    this._unsubAreas = subscribeAreaRegistry(this.hass, (areas) => {
+      this._areas = areas;
+    });
   }
 
   private async _processStep(
@@ -246,7 +259,7 @@ class ConfigFlowDialog extends LitElement {
       return;
     }
     const flowFinished = Boolean(
-      this._step && ["success", "abort"].includes(this._step.type)
+      this._step && ["create_entry", "abort"].includes(this._step.type)
     );
 
     // If we created this flow, delete it now.
@@ -261,6 +274,14 @@ class ConfigFlowDialog extends LitElement {
     this._step = undefined;
     this._params = undefined;
     this._devices = undefined;
+    if (this._unsubAreas) {
+      this._unsubAreas();
+      this._unsubAreas = undefined;
+    }
+    if (this._unsubDevices) {
+      this._unsubDevices();
+      this._unsubDevices = undefined;
+    }
   }
 
   private _openedChanged(ev: PolymerChangedEvent<boolean>): void {

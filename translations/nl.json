@@ -855,6 +855,11 @@
                         "required_fields": "Vul alle verplichte velden in",
                         "password_not_match": "Wachtwoorden komen niet overeen"
                     }
+                },
+                "integration": {
+                    "intro": "Apparaten en services worden in Home Assistant weergegeven als integraties. U kunt ze nu instellen of later via het configuratiescherm.",
+                    "more_integrations": "Meer",
+                    "finish": "Voltooien"
                 }
             },
             "lovelace": {
@@ -868,6 +873,14 @@
                         "title": "Welkom thuis",
                         "no_devices": "Op deze pagina kun je je apparaten bedienen, maar het lijkt er op dat je nog geen apparaten hebt ingesteld. Ga naar de integraties pagina om te beginnen.",
                         "go_to_integrations_page": "Ga naar de integraties pagina."
+                    },
+                    "picture-elements": {
+                        "hold": "Vasthouden:",
+                        "tap": "Tik:",
+                        "navigate_to": "Navigeer naar {location}",
+                        "toggle": "Omschakelen {name}",
+                        "call_service": "Roep service {name} aan",
+                        "more_info": "Meer informatie weergeven: {name}"
                     }
                 },
                 "editor": {
@@ -925,7 +938,8 @@
         },
         "sidebar": {
             "log_out": "Uitloggen",
-            "developer_tools": "Ontwikkelaarstools"
+            "developer_tools": "Ontwikkelaarstools",
+            "external_app_configuration": "App configuratie"
         },
         "common": {
             "loading": "Bezig met laden",
@@ -1132,7 +1146,7 @@
         "group": "Groep",
         "image_processing": "Beeldverwerking",
         "input_boolean": "Boolean invoer",
-        "input_datetime": "Invoer datum en tijd",
+        "input_datetime": "Voer datum en tijd in",
         "input_select": "Invoer selectie",
         "input_number": "Numerieke invoer",
         "input_text": "Tekstinvoer",

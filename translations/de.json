@@ -603,6 +603,12 @@
                         "device_unavailable": "Gerät nicht verfügbar",
                         "entity_unavailable": "Entität nicht verfügbar",
                         "no_area": "Kein Bereich"
+                    },
+                    "config_flow": {
+                        "external_step": {
+                            "description": "Für diesen Schritt musst du eine externe Website besuchen, um den Vorgang abzuschließen.",
+                            "open_site": "Website öffnen"
+                        }
                     }
                 },
                 "zha": {
@@ -855,6 +861,11 @@
                         "required_fields": "Fülle alle Pflichtfelder aus.",
                         "password_not_match": "Passwörter stimmen nicht überein"
                     }
+                },
+                "integration": {
+                    "intro": "Geräte und Dienste werden in Home Assistant als Integrationen dargestellt. Sie können jetzt oder später über die Konfigurationsseite eingerichtet werden.",
+                    "more_integrations": "Mehr",
+                    "finish": "Fertig"
                 }
             },
             "lovelace": {
@@ -868,6 +879,14 @@
                         "title": "Willkommen zu Hause",
                         "no_devices": "Auf dieser Seite kannst du deine Geräte steuern, es sieht jedoch so aus, als hättest du noch keine eingerichtet. Gehe zur Integrationsseite, um damit zu beginnen.",
                         "go_to_integrations_page": "Gehe zur Integrationsseite."
+                    },
+                    "picture-elements": {
+                        "hold": "Halten:",
+                        "tap": "Tippe auf:",
+                        "navigate_to": "Navigiere zu {location}",
+                        "toggle": "{name} umschalten",
+                        "call_service": "Dienst  {name} ausführen",
+                        "more_info": "Zeige weitere Informationen: {name}"
                     }
                 },
                 "editor": {
@@ -925,7 +944,8 @@
         },
         "sidebar": {
             "log_out": "Abmelden",
-            "developer_tools": "Entwicklerwerkzeuge"
+            "developer_tools": "Entwicklerwerkzeuge",
+            "external_app_configuration": "App-Konfiguration"
         },
         "common": {
             "loading": "Laden",
