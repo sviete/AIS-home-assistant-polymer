@@ -1,6 +1,6 @@
 {
     "panel": {
-        "config": "Ustawienia",
+        "config": "Konfiguracja",
         "states": "Przegląd",
         "map": "Mapa",
         "logbook": "Dziennik",
@@ -582,7 +582,7 @@
                     "caption": "Chmura Home Assistant",
                     "description_login": "Zalogowany jako {email}",
                     "description_not_login": "Nie zalogowany",
-                    "description_features": "Sterowanie z spoza domu, integracja z Alexą i Google Assistant."
+                    "description_features": "Sterowanie spoza domu, integracja z Alexą i Google Assistant."
                 },
                 "integrations": {
                     "caption": "Integracje",
@@ -602,7 +602,13 @@
                         "firmware": "Oprogramowanie: {version}",
                         "device_unavailable": "urządzenie niedostępne",
                         "entity_unavailable": "encja niedostępna",
-                        "no_area": "Brak obszaru"
+                        "no_area": "brak"
+                    },
+                    "config_flow": {
+                        "external_step": {
+                            "description": "Ten krok wymaga od Ciebie odwiedzenia zewnętrznej strony.",
+                            "open_site": "Otwórz stronę"
+                        }
                     }
                 },
                 "zha": {
@@ -855,6 +861,11 @@
                         "required_fields": "Wypełnij wszystkie wymagane pola",
                         "password_not_match": "Hasła nie są takie same"
                     }
+                },
+                "integration": {
+                    "intro": "Urządzenia i usługi są reprezentowane w Home Assistant jako integracje. Możesz je teraz skonfigurować lub zrobić to później w konfiguracji.",
+                    "more_integrations": "Więcej",
+                    "finish": "Koniec"
                 }
             },
             "lovelace": {
@@ -868,6 +879,14 @@
                         "title": "Witaj w domu",
                         "no_devices": "Ta strona pozwala kontrolować urządzenia, ale wygląda na to, że nie masz jeszcze żadnych skonfigurowanych. Przejdź na stronę integracji, aby rozpocząć.",
                         "go_to_integrations_page": "Przejdź do strony integracji."
+                    },
+                    "picture-elements": {
+                        "hold": "Przytrzymanie:",
+                        "tap": "Dotknięcie:",
+                        "navigate_to": "Przejdź do {location}",
+                        "toggle": "Przełącz {nazwa}",
+                        "call_service": "Wywołaj usługę {nazwa}",
+                        "more_info": "Pokaż więcej informacji: {nazwa}"
                     }
                 },
                 "editor": {
@@ -925,7 +944,8 @@
         },
         "sidebar": {
             "log_out": "Wyloguj",
-            "developer_tools": "Narzędzia deweloperskie"
+            "developer_tools": "Narzędzia deweloperskie",
+            "external_app_configuration": "Konfiguracja aplikacji"
         },
         "common": {
             "loading": "Ładowanie",

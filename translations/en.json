@@ -603,6 +603,12 @@
                         "device_unavailable": "device unavailable",
                         "entity_unavailable": "entity unavailable",
                         "no_area": "No Area"
+                    },
+                    "config_flow": {
+                        "external_step": {
+                            "description": "This step requires you to visit an external website to be completed.",
+                            "open_site": "Open website"
+                        }
                     }
                 },
                 "zha": {
@@ -855,6 +861,11 @@
                         "required_fields": "Fill in all required fields",
                         "password_not_match": "Passwords don't match"
                     }
+                },
+                "integration": {
+                    "intro": "Devices and services are represented in Home Assistant as integrations. You can set them up now, or do it later from the configuration screen.",
+                    "more_integrations": "More",
+                    "finish": "Finish"
                 }
             },
             "lovelace": {
@@ -868,6 +879,14 @@
                         "title": "Welcome Home",
                         "no_devices": "This page allows you to control your devices, however it looks like you have no devices set up yet. Head to the integrations page to get started.",
                         "go_to_integrations_page": "Go to the integrations page."
+                    },
+                    "picture-elements": {
+                        "hold": "Hold:",
+                        "tap": "Tap:",
+                        "navigate_to": "Navigate to {location}",
+                        "toggle": "Toggle {name}",
+                        "call_service": "Call service {name}",
+                        "more_info": "Show more-info: {name}"
                     }
                 },
                 "editor": {
@@ -925,7 +944,8 @@
         },
         "sidebar": {
             "log_out": "Log out",
-            "developer_tools": "Developer tools"
+            "developer_tools": "Developer tools",
+            "external_app_configuration": "App Configuration"
         },
         "common": {
             "loading": "Loading",

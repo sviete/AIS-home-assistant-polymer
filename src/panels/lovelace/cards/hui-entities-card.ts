@@ -89,7 +89,7 @@ class HuiEntitiesCard extends LitElement implements LovelaceCard {
         ${!title && !show_header_toggle
           ? html``
           : html`
-              <div class="header">
+              <div class="card-header">
                 <div class="name">${title}</div>
                 ${show_header_toggle === false
                   ? html``
@@ -103,7 +103,7 @@ class HuiEntitiesCard extends LitElement implements LovelaceCard {
                     `}
               </div>
             `}
-        <div id="states">
+        <div id="states" class="card-content">
           ${this._configEntities!.map((entityConf) =>
             this.renderEntity(entityConf)
           )}
@@ -114,11 +114,18 @@ class HuiEntitiesCard extends LitElement implements LovelaceCard {
 
   static get styles(): CSSResult {
     return css`
-      ha-card {
-        padding: 16px;
+      .card-header {
+        display: flex;
+        justify-content: space-between;
       }
 
-      #states {
+      .card-header .name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .card-header hui-entities-toggle {
         margin: -4px 0;
       }
 
@@ -128,31 +135,6 @@ class HuiEntitiesCard extends LitElement implements LovelaceCard {
 
       #states > div > * {
         overflow: hidden;
-      }
-
-      .header {
-        /* start paper-font-headline style */
-        font-family: "Roboto", "Noto", sans-serif;
-        -webkit-font-smoothing: antialiased; /* OS X subpixel AA bleed bug */
-        text-rendering: optimizeLegibility;
-        font-size: 24px;
-        font-weight: 400;
-        letter-spacing: -0.012em;
-        /* end paper-font-headline style */
-
-        line-height: 40px;
-        color: var(--primary-text-color);
-        padding: 4px 0 12px;
-        display: flex;
-        justify-content: space-between;
-      }
-
-      .header .name {
-        /* start paper-font-common-nowrap style */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        /* end paper-font-common-nowrap */
       }
 
       .state-card-dialog {

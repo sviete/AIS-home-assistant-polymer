@@ -581,7 +581,8 @@
                 "cloud": {
                     "caption": "Cloud Home Assistant",
                     "description_login": "Connecté en tant que {email}",
-                    "description_not_login": "Pas connecté"
+                    "description_not_login": "Pas connecté",
+                    "description_features": "Contrôle hors de la maison, intégration avec Alexa et Google Assistant."
                 },
                 "integrations": {
                     "caption": "Intégrations",
@@ -602,6 +603,12 @@
                         "device_unavailable": "appareil indisponible",
                         "entity_unavailable": "entité indisponible",
                         "no_area": "Pas de pièce"
+                    },
+                    "config_flow": {
+                        "external_step": {
+                            "description": "Cette étape nécessite la visite d'un site Web externe pour être complétée.",
+                            "open_site": "Ouvrir le site"
+                        }
                     }
                 },
                 "zha": {
@@ -854,6 +861,11 @@
                         "required_fields": "Remplissez tous les champs requis",
                         "password_not_match": "Les mots de passe ne correspondent pas"
                     }
+                },
+                "integration": {
+                    "intro": "Les appareils et les services sont représentés dans Home Assistant sous forme d’intégrations. Vous pouvez les configurer maintenant ou le faire plus tard à partir de l'écran de configuration.",
+                    "more_integrations": "Plus",
+                    "finish": "Terminer"
                 }
             },
             "lovelace": {
@@ -867,6 +879,14 @@
                         "title": "Bienvenue à la maison",
                         "no_devices": "Cette page vous permet de contrôler vos périphériques. Toutefois, il semble que vous n’ayez pas encore configuré de périphériques. Rendez-vous sur la page des intégrations pour commencer.",
                         "go_to_integrations_page": "Aller à la page des intégrations."
+                    },
+                    "picture-elements": {
+                        "hold": "Maintenir:",
+                        "tap": "Appuyez sur:",
+                        "navigate_to": "Accédez à {location}",
+                        "toggle": "Activer\/désactiver {name}",
+                        "call_service": "Appeler le service {name}",
+                        "more_info": "Afficher plus d'informations: {name}"
                     }
                 },
                 "editor": {
@@ -924,7 +944,8 @@
         },
         "sidebar": {
             "log_out": "Déconnexion",
-            "developer_tools": "Outils de développement"
+            "developer_tools": "Outils de développement",
+            "external_app_configuration": "Configuration de l'application"
         },
         "common": {
             "loading": "Chargement",

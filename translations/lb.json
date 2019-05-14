@@ -603,6 +603,12 @@
                         "device_unavailable": "Apparat net erreechbar",
                         "entity_unavailable": "Entitéit net erreechbar",
                         "no_area": "Kee Beräich"
+                    },
+                    "config_flow": {
+                        "external_step": {
+                            "description": "Fir dës Etapp ofzeschléisse muss dir eng externe Internetsäit besichen.",
+                            "open_site": "Internetsäit opmaachen"
+                        }
                     }
                 },
                 "zha": {
@@ -855,6 +861,11 @@
                         "required_fields": "Fëllt all néideg Felder aus",
                         "password_not_match": "Passwierder stëmmen net iwwereneen"
                     }
+                },
+                "integration": {
+                    "intro": "Apparaten a Servicë ginn am Home Assistant als Integratioune representéiert. Dir kënnt si elo astellen, oder méi spéit vun der Konfiguratioun's Säit aus.",
+                    "more_integrations": "Méi",
+                    "finish": "Ofschléissen"
                 }
             },
             "lovelace": {
@@ -868,6 +879,14 @@
                         "title": "Wëllkomm Doheem",
                         "no_devices": "Dës Säit erlaabt et iech är Apparater ze kontrolléiere, awer wéi et schéngt sinn nach keng Apparater ageriicht. Gitt op d'Integratioun's Säit fir unzefänken.",
                         "go_to_integrations_page": "Zur Integratiouns Säit goen"
+                    },
+                    "picture-elements": {
+                        "hold": "Gedréckt halen:",
+                        "tap": "Tippen:",
+                        "navigate_to": "Navigéieren zu {location}",
+                        "toggle": "{name} ëmschalten",
+                        "call_service": "Service {name} opruffen",
+                        "more_info": "méi Informatiounen: {name}"
                     }
                 },
                 "editor": {
@@ -925,7 +944,8 @@
         },
         "sidebar": {
             "log_out": "Ausloggen",
-            "developer_tools": "Entwécklungsgeschir"
+            "developer_tools": "Entwécklungsgeschir",
+            "external_app_configuration": "App Konfiguratioun"
         },
         "common": {
             "loading": "Lued",
