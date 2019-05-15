@@ -10,7 +10,7 @@ cd "$(dirname "$0")/.."
 yarn install
 
 # Verify everything is ok
-#tsc
+tsc
 
 script/build_frontend
 
