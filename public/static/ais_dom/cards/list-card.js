@@ -55,6 +55,7 @@ class ListCard extends HTMLElement {
             }
             td img{
               display: block;
+              object-fit: cover;
             } td.icon{
               padding-right: 10px;
             }
