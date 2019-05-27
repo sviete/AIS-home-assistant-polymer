@@ -751,7 +751,7 @@
             },
             "page-authorize": {
                 "initializing": "Inicjowanie",
-                "authorizing_client": "Czy na pewno chcesz dać dostęp {clientId} do Twojej instancji Home Assistant'a.",
+                "authorizing_client": "Czy na pewno chcesz dać dostęp {clientId} do Twojej instancji Asystenta domowego.",
                 "logging_in_with": "Logowanie za pomocą **{authProviderName}**.",
                 "pick_auth_provider": "Lub zaloguj się za pomocą",
                 "abort_intro": "Logowanie przerwane",

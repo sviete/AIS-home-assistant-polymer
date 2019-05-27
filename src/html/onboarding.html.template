@@ -21,6 +21,9 @@
       body {
         color: white;
         background: #323232;
+        --primary-text-color: #ffffff;
+        --card-background-color: #323232;
+        --paper-listbox-background-color: #323232;
       }
       .content {
         padding: 20px 16px;
