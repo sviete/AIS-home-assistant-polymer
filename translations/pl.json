@@ -863,7 +863,7 @@
                     }
                 },
                 "integration": {
-                    "intro": "Urządzenia i usługi są reprezentowane w Home Assistant jako integracje. Możesz je teraz skonfigurować lub zrobić to później w konfiguracji.",
+                    "intro": "Urządzenia i usługi są reprezentowane w Asystencie domowym jako integracje. Możesz je teraz skonfigurować lub zrobić to później w konfiguracji.",
                     "more_integrations": "Więcej",
                     "finish": "Koniec"
                 }

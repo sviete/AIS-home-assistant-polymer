@@ -17,6 +17,11 @@
     />
     <%= renderTemplate('_header') %>
     <style>
+      /* ais */
+      body {
+        color: white;
+        background: #323232;
+      }
       .content {
         padding: 20px 16px;
         max-width: 400px;
