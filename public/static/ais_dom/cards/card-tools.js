@@ -18,19 +18,10 @@ customElements.define(
 
     static deprecationWarning() {
       if (window.cardTools_deprecationWarning) return;
-      console.warn(
-        "One or more of your lovelace plugins are using the functions cardTools.litElement(), cardTools.litHtml() or cardTools.hass(). Those are replaced with better alternatives and will be removed a some point in the future."
-      );
-      console.warn(
-        "If you are a plugin developer, make sure you are using the new functions (see documentation)."
-      );
-      console.warn(
-        "If you are a plugin user, feel free to ignore this warning (or poke the developer of your plugins - not me though, I already know about this)."
-      );
-      console.warn(
-        "Best regards / thomasloven - " +
-          (document.currentScript && document.currentScript.src)
-      );
+      // console.warn("One or more of your lovelace plugins are using the functions cardTools.litElement(), cardTools.litHtml() or cardTools.hass(). Those are replaced with better alternatives and will be removed a some point in the future.")
+      // console.warn("If you are a plugin developer, make sure you are using the new functions (see documentation).");
+      // console.warn("If you are a plugin user, feel free to ignore this warning (or poke the developer of your plugins - not me though, I already know about this).")
+      // console.warn("Best regards / thomasloven - " + (document.currentScript && document.currentScript.src));
       window.cardTools_deprecationWarning = true;
     }
 
@@ -203,6 +194,7 @@ customElements.define(
         switch: "toggle",
         vacuum: "toggle",
         water_heater: "climate",
+        input_datetime: "input-datetime",
       };
 
       if (
