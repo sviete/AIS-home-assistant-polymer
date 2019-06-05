@@ -355,6 +355,21 @@
                                 "introduction": "Controllare il server Home Assistant... da Home Assistant.",
                                 "restart": "Riavviare",
                                 "stop": "Stop"
+                            },
+                            "core_config": {
+                                "edit_requires_storage": "Editor disabilitato perché la configurazione memorizzata in configuration.yaml.",
+                                "location_name": "Nome della tua installazione di Home Assistant",
+                                "latitude": "Latitudine",
+                                "longitude": "Logitudine",
+                                "elevation": "Altitudine",
+                                "elevation_meters": "Metri",
+                                "time_zone": "Fuso orario",
+                                "unit_system": "Unità di misura",
+                                "unit_system_imperial": "Imperiale",
+                                "unit_system_metric": "metrico",
+                                "imperial_example": "Fahrenheit, libbre",
+                                "metric_example": "Celsius, chilogrammi",
+                                "save_button": "Salva"
                             }
                         }
                     }
@@ -545,7 +560,9 @@
                                 }
                             },
                             "learn_more": "Per saperne di più sulle azioni"
-                        }
+                        },
+                        "load_error_not_editable": "Solo le automazioni in automations.yaml sono modificabili.",
+                        "load_error_unknown": "Errore durante il caricamento dell'automazione ( {err_no} )."
                     }
                 },
                 "script": {
@@ -603,6 +620,12 @@
                         "device_unavailable": "dispositivo non disponibile",
                         "entity_unavailable": "entità non disponibile",
                         "no_area": "Nessuna area"
+                    },
+                    "config_flow": {
+                        "external_step": {
+                            "description": "Questo passaggio richiede di visitare un sito Web esterno per essere completato.",
+                            "open_site": "Apri sito Web"
+                        }
                     }
                 },
                 "zha": {
@@ -610,7 +633,7 @@
                     "description": "Gestione rete Zigbee Home Automation",
                     "services": {
                         "reconfigure": "Riconfigurare il dispositivo ZHA (dispositivo di guarigione). Utilizzare questa opzione se si verificano problemi con il dispositivo. Se il dispositivo in questione è un dispositivo alimentato a batteria, assicurarsi che sia sveglio e che accetti i comandi quando si utilizza questo servizio.",
-                        "updateDeviceName": "Imposta un nome personalizzato per questo dispositivo nel registro del dispositivo.",
+                        "updateDeviceName": "Imposta un nome personalizzato per questo dispositivo nel registro dispositivi.",
                         "remove": "Rimuovi un dispositivo dalla rete ZigBee."
                     },
                     "device_card": {
@@ -630,7 +653,7 @@
                     "picker": {
                         "header": "Registro di area",
                         "introduction": "Le aree sono utilizzate per organizzare dove sono i dispositivi. Queste informazioni saranno utilizzate in Home Assistant per aiutarti ad organizzare la tua interfaccia, permessi e integrazioni con altri sistemi.",
-                        "introduction2": "Per posizionare i dispositivi in un'area, utilizzare il collegamento seguente per accedere alla pagina delle integrazioni e quindi fare clic su un'integrazione configurata per accedere alle schede del dispositivo.",
+                        "introduction2": "Per posizionare i dispositivi in un'area, utilizzare il seguente collegamento per accedere alla pagina delle integrazioni e quindi fare clic su un'integrazione configurata per accedere alle schede del dispositivo.",
                         "integrations_page": "Integrazioni",
                         "no_areas": "Sembra che tu non abbia ancora delle aree!",
                         "create_area": "CREA AREA"
@@ -650,7 +673,7 @@
                     "picker": {
                         "header": "Registro delle entità",
                         "unavailable": "(non disponibile)",
-                        "introduction": "Home Assistant mantiene un registro di tutte le entità che ha mai localizzato che possono essere identificate in modo univoco. A ciascuna di queste entità sarà assegnato un ID che sarà riservato solo a questa entità.",
+                        "introduction": "Home Assistant mantiene un registro di tutte le entità che ha mai localizzato e possono essere identificate in modo univoco. A ciascuna di queste entità sarà assegnato un ID che sarà riservato solo a questa entità.",
                         "introduction2": "Utilizzare il registro delle entità per sovrascrivere il nome, modificare l'entity ID o rimuovere la voce da Home Assistant. Nota, la rimozione della voce del registro entità non rimuoverà l'entità. Per farlo, segui il link sottostante e rimuovilo dalla pagina delle integrazioni.",
                         "integrations_page": "Integrazioni"
                     },
@@ -855,6 +878,19 @@
                         "required_fields": "Compila tutti i campi richiesti",
                         "password_not_match": "Le password non corrispondono"
                     }
+                },
+                "integration": {
+                    "intro": "Dispositivi e servizi sono rappresentati in Home Assistant come integrazioni. È possibile impostarli ora, o farlo in seguito dalla schermata di configurazione.",
+                    "more_integrations": "Di Più",
+                    "finish": "finire"
+                },
+                "core-config": {
+                    "intro": "Salve {name} , benvenuto su Home Assistant. Come vorresti nominare la tua casa?",
+                    "intro_location": "Vorremmo sapere dove vivete. Queste informazioni aiuteranno a visualizzare informazioni e automazioni basate sul sole. Questi dati non vengono mai condivisi al di fuori della vostra rete.",
+                    "intro_location_detect": "Possiamo aiutarti a compilare queste informazioni effettuando una richiesta una volta a un servizio esterno.",
+                    "location_name_default": "Casa",
+                    "button_detect": "Rileva",
+                    "finish": "Prossimo"
                 }
             },
             "lovelace": {
@@ -868,6 +904,14 @@
                         "title": "Benvenuto a casa",
                         "no_devices": "Questa pagina ti consente di controllare i tuoi dispositivi, tuttavia sembra che tu non abbia ancora configurato uno. Vai alla pagina delle integrazioni per iniziare.",
                         "go_to_integrations_page": "Vai alla pagina delle integrazioni."
+                    },
+                    "picture-elements": {
+                        "hold": "Tenere premuto:",
+                        "tap": "Tocca:",
+                        "navigate_to": "Vai a {location}",
+                        "toggle": "Commuta {name}",
+                        "call_service": "Chiama il servizio {name}",
+                        "more_info": "Mostra più informazioni: {name}"
                     }
                 },
                 "editor": {
@@ -926,7 +970,7 @@
         "sidebar": {
             "log_out": "Esci",
             "developer_tools": "Strumenti per gli sviluppatori",
-            "external_app_configuration": "Configurazione dell'App"
+            "external_app_configuration": "Configurazione App"
         },
         "common": {
             "loading": "Caricamento",

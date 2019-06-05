@@ -310,6 +310,9 @@ class HUIRoot extends LitElement {
         ha-app-layout {
           min-height: 100%;
         }
+        paper-menu-button {
+          padding: 0;
+        }
         paper-tabs {
           margin-left: 12px;
           --paper-tabs-selection-bar-color: var(--text-primary-color, #fff);
@@ -396,6 +399,7 @@ class HUIRoot extends LitElement {
         views
       ) {
         navigate(this, `/lovelace/${views[0].path || 0}`, true);
+        newSelectView = 0;
       } else if (this._routeData!.view === "hass-unused-entities") {
         newSelectView = "hass-unused-entities";
       } else if (this._routeData!.view) {

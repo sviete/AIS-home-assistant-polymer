@@ -6,9 +6,17 @@ import { CloudStatus, fetchCloudStatus } from "../../data/cloud";
 import { listenMediaQuery } from "../../common/dom/media_query";
 import { HassRouterPage, RouterOptions } from "../../layouts/hass-router-page";
 
+declare global {
+  // for fire event
+  interface HASSDomEvents {
+    "ha-refresh-cloud-status": undefined;
+  }
+}
+
 @customElement("ha-panel-config")
 class HaPanelConfig extends HassRouterPage {
   @property() public hass!: HomeAssistant;
+  @property() public narrow!: boolean;
   @property() public _wideSidebar: boolean = false;
   @property() public _wide: boolean = false;
 
@@ -124,6 +132,7 @@ class HaPanelConfig extends HassRouterPage {
     el.route = this.routeTail;
     el.hass = this.hass;
     el.isWide = this.hass.dockedSidebar ? this._wideSidebar : this._wide;
+    el.narrow = this.narrow;
     el.cloudStatus = this._cloudStatus;
   }
 
