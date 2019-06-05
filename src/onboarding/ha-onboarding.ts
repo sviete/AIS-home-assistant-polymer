@@ -10,6 +10,7 @@ import {
   createConnection,
   genClientId,
   Auth,
+  subscribeConfig,
 } from "home-assistant-js-websocket";
 import { litLocalizeLiteMixin } from "../mixins/lit-localize-lite-mixin";
 import {
@@ -24,6 +25,8 @@ import "./onboarding-create-user";
 import "./onboarding-loading";
 import { hassUrl } from "../data/auth";
 import { HassElement } from "../state/hass-element";
+import { subscribeOne } from "../common/util/subscribe-one";
+import { subscribeUser } from "../data/ws-user";
 
 interface OnboardingEvent<T extends ValidOnboardingStep> {
   type: T;
@@ -61,6 +64,13 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
           .language=${this.language}
         ></onboarding-create-user>
       `;
+    } else if (step.step === "core_config") {
+      return html`
+        <onboarding-core-config
+          .hass=${this.hass}
+          .onboardingLocalize=${this.localize}
+        ></onboarding-core-config>
+      `;
     } else if (step.step === "integration") {
       return html`
         <onboarding-integrations
@@ -74,7 +84,8 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
     this._fetchOnboardingSteps();
-    import("./onboarding-integrations");
+    import(/* webpackChunkName: "onboarding-integrations" */ "./onboarding-integrations");
+    import(/* webpackChunkName: "onboarding-core-config" */ "./onboarding-core-config");
     registerServiceWorker(false);
     this.addEventListener("onboarding-step", (ev) => this._handleStepDone(ev));
   }
@@ -106,6 +117,7 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
         const auth = await getAuth({
           hassUrl,
         });
+        history.replaceState(null, "", location.pathname);
         await this._connectHass(auth);
       }
 
@@ -138,9 +150,20 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
       } finally {
         this._loading = false;
       }
+    } else if (stepResult.type === "core_config") {
+      // We do nothing
     } else if (stepResult.type === "integration") {
       const result = stepResult.result as OnboardingResponses["integration"];
       this._loading = true;
+
+      // If we don't close the connection manually, the connection will be
+      // closed when we navigate away from the page. Firefox allows JS to
+      // continue to execute, and so HAWS will automatically reconnect once
+      // the connection is closed. However, since we revoke our token below,
+      // HAWS will reload the page, since that will trigger the auth flow.
+      // In Firefox, triggering a reload will overrule the navigation that
+      // was in progress.
+      this.hass!.connection.close();
 
       // Revoke current auth token.
       await this.hass!.auth.revoke();
@@ -161,9 +184,17 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
 
   private async _connectHass(auth: Auth) {
     const conn = await createConnection({ auth });
+    // Make sure config and user info is loaded before we initialize.
+    // It is needed for the core config step.
+    await Promise.all([
+      subscribeOne(conn, subscribeConfig),
+      subscribeOne(conn, subscribeUser),
+    ]);
     this.initializeHass(auth, conn);
     // Load config strings for integrations
     (this as any)._loadFragmentTranslations(this.hass!.language, "config");
+    // Make sure hass is initialized + the config/user callbacks have called.
+    await new Promise((resolve) => setTimeout(resolve, 0));
   }
 }
 
