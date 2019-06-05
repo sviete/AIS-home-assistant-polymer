@@ -1,9 +1,6 @@
 import { handleFetchPromise } from "../util/hass-call-api";
 import { HomeAssistant } from "../types";
 
-// tslint:disable-next-line: no-empty-interface
-export interface OnboardingCoreConfigStepResponse {}
-
 export interface OnboardingUserStepResponse {
   auth_code: string;
 }
@@ -14,7 +11,6 @@ export interface OnboardingIntegrationStepResponse {
 
 export interface OnboardingResponses {
   user: OnboardingUserStepResponse;
-  core_config: OnboardingCoreConfigStepResponse;
   integration: OnboardingIntegrationStepResponse;
 }
 
@@ -41,12 +37,6 @@ export const onboardUserStep = (params: {
       credentials: "same-origin",
       body: JSON.stringify(params),
     })
-  );
-
-export const onboardCoreConfigStep = (hass: HomeAssistant) =>
-  hass.callApi<OnboardingCoreConfigStepResponse>(
-    "POST",
-    "onboarding/core_config"
   );
 
 export const onboardIntegrationStep = (

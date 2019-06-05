@@ -1,6 +1,3 @@
-import { HassElement } from "../state/hass-element";
-import { showToast } from "./toast";
-
 export const registerServiceWorker = (notifyUpdate = true) => {
   if (
     !("serviceWorker" in navigator) ||
@@ -23,19 +20,9 @@ export const registerServiceWorker = (notifyUpdate = true) => {
           !__DEMO__
         ) {
           // Notify users here of a new frontend being available.
-          const haElement = window.document.querySelector(
-            "home-assistant, ha-onboarding"
-          )! as HassElement;
-          showToast(haElement, {
-            message: "A new version of the frontend is available.",
-            action: {
-              action: () =>
-                installingWorker.postMessage({ type: "skipWaiting" }),
-              text: "reload",
-            },
-            duration: 0,
-            dismissable: false,
-          });
+          import(/* webpackChunkName: "show-new-frontend-toast" */ "./show-new-frontend-toast").then(
+            (mod) => mod.default(installingWorker)
+          );
         }
       });
     });

@@ -1,37 +1,37 @@
 import "@polymer/paper-spinner/paper-spinner-lite";
 import "@material/mwc-button";
 
-import { LitElement, html, CSSResult, css, property } from "lit-element";
+import {
+  LitElement,
+  PropertyDeclarations,
+  html,
+  CSSResult,
+  css,
+} from "lit-element";
 import { removeInitSkeleton } from "../util/init-skeleton";
 
 class HaInitPage extends LitElement {
-  @property({ type: Boolean }) public error = false;
+  public error?: boolean;
+
+  static get properties(): PropertyDeclarations {
+    return {
+      error: {
+        type: Boolean,
+      },
+    };
+  }
 
   protected render() {
     return html`
       <div>
         <img src="/static/icons/favicon-192x192.png" height="192" />
+        <paper-spinner-lite .active=${!this.error}></paper-spinner-lite>
         ${this.error
           ? html`
-              <p>Czekam na połączenie z Asystentem domowym...</p>
+              Czekam na połączenie z Asystentem domowym...
               <mwc-button @click=${this._retry}>Ponów</mwc-button>
-              ${location.host.includes("ui.nabu.casa")
-                ? html`
-                    <p>
-                      It is possible that you are seeing this screen because
-                      your Home Assistant is not currently connected. You can
-                      ask it to come online via
-                      <a href="https://remote.nabucasa.com/"
-                        >the Remote UI portal</a
-                      >.
-                    </p>
-                  `
-                : ""}
             `
-          : html`
-              <paper-spinner-lite active></paper-spinner-lite>
-              <p>Wczytuje dane</p>
-            `}
+          : "Wczytuje dane"}
       </div>
     `;
   }
@@ -54,13 +54,7 @@ class HaInitPage extends LitElement {
         align-items: center;
       }
       paper-spinner-lite {
-        margin-top: 9px;
-      }
-      a {
-        color: var(--primary-color);
-      }
-      p {
-        max-width: 350px;
+        margin-bottom: 10px;
       }
     `;
   }

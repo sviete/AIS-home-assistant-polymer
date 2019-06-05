@@ -219,18 +219,15 @@ class ConfigFlowDialog extends LitElement {
   }
 
   private async _fetchDevices(configEntryId) {
-    this._unsubDevices = subscribeDeviceRegistry(
-      this.hass.connection,
-      (devices) => {
-        this._devices = devices.filter((device) =>
-          device.config_entries.includes(configEntryId)
-        );
-      }
-    );
+    this._unsubDevices = subscribeDeviceRegistry(this.hass, (devices) => {
+      this._devices = devices.filter((device) =>
+        device.config_entries.includes(configEntryId)
+      );
+    });
   }
 
   private async _fetchAreas() {
-    this._unsubAreas = subscribeAreaRegistry(this.hass.connection, (areas) => {
+    this._unsubAreas = subscribeAreaRegistry(this.hass, (areas) => {
       this._areas = areas;
     });
   }

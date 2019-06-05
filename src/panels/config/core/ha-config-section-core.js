@@ -12,9 +12,6 @@ import "../ha-config-section";
 import isComponentLoaded from "../../../common/config/is_component_loaded";
 import LocalizeMixin from "../../../mixins/localize-mixin";
 
-import "./ha-config-name-form";
-import "./ha-config-core-form";
-
 /*
  * @appliesMixin LocalizeMixin
  */
@@ -59,9 +56,6 @@ class HaConfigSectionCore extends LocalizeMixin(PolymerElement) {
         <span slot="introduction"
           >[[localize('ui.panel.config.core.section.core.introduction')]]</span
         >
-
-        <ha-config-name-form hass="[[hass]]"></ha-config-name-form>
-        <ha-config-core-form hass="[[hass]]"></ha-config-core-form>
 
         <ha-card
           header="[[localize('ui.panel.config.core.section.core.validation.heading')]]"

@@ -355,21 +355,6 @@
                                 "introduction": "Home Assistant szerver vezérlése... a Home Assistant-ból.",
                                 "restart": "Újraindítás",
                                 "stop": "Leállítás"
-                            },
-                            "core_config": {
-                                "edit_requires_storage": "A szerkesztő le van tiltva, mert a konfiguráció a configuration.yaml fájlban van tárolva.",
-                                "location_name": "A Home Assistant rendszered neve",
-                                "latitude": "Szélesség",
-                                "longitude": "Hosszúság",
-                                "elevation": "Magasság",
-                                "elevation_meters": "méter",
-                                "time_zone": "Időzóna",
-                                "unit_system": "Egységrendszer",
-                                "unit_system_imperial": "Angolszász",
-                                "unit_system_metric": "Metrikus",
-                                "imperial_example": "Fahrenheit, font",
-                                "metric_example": "Celsius, kilogramm",
-                                "save_button": "Mentés"
                             }
                         }
                     }
@@ -560,9 +545,7 @@
                                 }
                             },
                             "learn_more": "Tudj meg többet a műveletekről"
-                        },
-                        "load_error_not_editable": "Csak az automations.yaml fájlban lévő automatizálások szerkeszthetőek.",
-                        "load_error_unknown": "Hiba történt az automatizálás betöltésekor ({err_no})."
+                        }
                     }
                 },
                 "script": {
@@ -883,14 +866,6 @@
                     "intro": "Az eszközöket és szolgáltatásokat a Home Assistant integrációként kezeli. Beállíthatod őket most, vagy később a konfigurációs képernyőn.",
                     "more_integrations": "Több",
                     "finish": "Befejezés"
-                },
-                "core-config": {
-                    "intro": "Hello {name}, üdvözöl a Home Assistant. Hogyan szeretnéd elnevezni az otthonodat?",
-                    "intro_location": "Szeretnénk tudni, hogy hol élsz. Ez segít az információk megjelenítésében és a nap alapú automatizálások beállításában. Ez az adat soha nem lesz megosztva a hálózatodon kívül.",
-                    "intro_location_detect": "Segíthetünk neked kitölteni ezt az információt egy külső szolgáltatás egyszeri lekérdezésével.",
-                    "location_name_default": "Otthon",
-                    "button_detect": "Érzékelés",
-                    "finish": "Tovább"
                 }
             },
             "lovelace": {
@@ -964,12 +939,7 @@
                 "warning": {
                     "entity_not_found": "Entitás nem elérhető: {entity}",
                     "entity_non_numeric": "Entitás nem numerikus: {entity}"
-                },
-                "changed_toast": {
-                    "message": "A Lovelace config módosult, szeretnéd frissíteni?",
-                    "refresh": "Frissítés"
-                },
-                "reload_lovelace": "Lovelace Újratöltése"
+                }
             }
         },
         "sidebar": {

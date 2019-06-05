@@ -1,5 +1,5 @@
 import { HomeAssistant } from "../types";
-import { createCollection, Connection } from "home-assistant-js-websocket";
+import { createCollection } from "home-assistant-js-websocket";
 import { debounce } from "../common/util/debounce";
 
 export interface DeviceRegistryEntry {
@@ -16,8 +16,8 @@ export interface DeviceRegistryEntry {
 }
 
 export interface DeviceRegistryEntryMutableParams {
-  area_id?: string | null;
-  name_by_user?: string | null;
+  area_id?: string;
+  name_by_user?: string;
 }
 
 export const updateDeviceRegistryEntry = (
@@ -50,13 +50,13 @@ const subscribeDeviceRegistryUpdates = (conn, store) =>
   );
 
 export const subscribeDeviceRegistry = (
-  conn: Connection,
+  hass: HomeAssistant,
   onChange: (devices: DeviceRegistryEntry[]) => void
 ) =>
   createCollection<DeviceRegistryEntry[]>(
     "_dr",
     fetchDeviceRegistry,
     subscribeDeviceRegistryUpdates,
-    conn,
+    hass.connection,
     onChange
   );

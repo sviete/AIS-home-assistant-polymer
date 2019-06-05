@@ -1,31 +1,37 @@
 import { Constructor, LitElement } from "lit-element";
 import { HassBaseEl } from "./hass-base-mixin";
-import { showToast } from "../util/toast";
+import { HaToast } from "../components/ha-toast";
+import { computeRTL } from "../common/util/compute_rtl";
 
 export default (superClass: Constructor<LitElement & HassBaseEl>) =>
   class extends superClass {
+    private _discToast?: HaToast;
+
     protected firstUpdated(changedProps) {
       super.firstUpdated(changedProps);
       // Need to load in advance because when disconnected, can't dynamically load code.
-      import(/* webpackChunkName: "notification-manager" */ "../managers/notification-manager");
+      import(/* webpackChunkName: "ha-toast" */ "../components/ha-toast");
     }
 
     protected hassReconnected() {
       super.hassReconnected();
-
-      showToast(this, {
-        message: "",
-        duration: 1,
-      });
+      if (this._discToast) {
+        this._discToast.opened = false;
+      }
     }
 
     protected hassDisconnected() {
       super.hassDisconnected();
-
-      showToast(this, {
-        message: this.hass!.localize("ui.notification_toast.connection_lost"),
-        duration: 0,
-        dismissable: false,
-      });
+      if (!this._discToast) {
+        const el = document.createElement("ha-toast");
+        el.duration = 0;
+        this._discToast = el;
+        this.shadowRoot!.appendChild(el as any);
+      }
+      this._discToast.dir = computeRTL(this.hass!);
+      this._discToast.text = this.hass!.localize(
+        "ui.notification_toast.connection_lost"
+      );
+      this._discToast.opened = true;
     }
   };

@@ -12,6 +12,3 @@ export const triggerScript = (
   entityId: string,
   variables?: {}
 ) => hass.callService("script", computeObjectId(entityId), variables);
-
-export const deleteScript = (hass: HomeAssistant, objectId: string) =>
-  hass.callApi("DELETE", `config/script/config/${objectId}`);

@@ -16,6 +16,7 @@ import "../../../components/ha-card";
 
 import { fireEvent } from "../../../common/dom/fire_event";
 import { HomeAssistant } from "../../../types";
+import "./cloud-exposed-entities";
 import { CloudStatusLoggedIn, updateCloudPref } from "../../../data/cloud";
 import { PaperInputElement } from "@polymer/paper-input/paper-input";
 
@@ -88,6 +89,12 @@ export class CloudGooglePref extends LitElement {
                     @change="${this._pinChanged}"
                   ></paper-input>
                 </div>
+                <p>Exposed entities:</p>
+                <cloud-exposed-entities
+                  .hass="${this.hass}"
+                  .filter="${this.cloudStatus!.google_entities}"
+                  .supportedDomains="${this.cloudStatus!.google_domains}"
+                ></cloud-exposed-entities>
               `
             : ""}
         </div>
@@ -96,13 +103,8 @@ export class CloudGooglePref extends LitElement {
             .hass="${this.hass}"
             .disabled="${!google_enabled}"
             path="cloud/google_actions/sync"
+            >Sync devices</ha-call-api-button
           >
-            Sync entities to Google
-          </ha-call-api-button>
-          <div class="spacer"></div>
-          <a href="/config/cloud/google-assistant">
-            <mwc-button>Manage Entities</mwc-button>
-          </a>
         </div>
       </ha-card>
     `;
@@ -151,15 +153,6 @@ export class CloudGooglePref extends LitElement {
       }
       paper-input {
         width: 200px;
-      }
-      .card-actions {
-        display: flex;
-      }
-      .card-actions a {
-        text-decoration: none;
-      }
-      .spacer {
-        flex-grow: 1;
       }
     `;
   }

@@ -41,11 +41,10 @@ class HassioHassUpdate extends PolymerElement {
                   >Update</ha-call-api-button
                 >
                 <a
-                  href="[[computeReleaseNotesUrl(hassInfo.version)]]"
+                  href="https://www.home-assistant.io/latest-release-notes/"
                   target="_blank"
+                  ><mwc-button>Release notes</mwc-button></a
                 >
-                  <mwc-button>Release notes</mwc-button>
-                </a>
               </div>
             </paper-card>
           </div>
@@ -84,12 +83,6 @@ class HassioHassUpdate extends PolymerElement {
 
   computeUpdateAvailable(hassInfo) {
     return hassInfo.version !== hassInfo.last_version;
-  }
-
-  computeReleaseNotesUrl(version) {
-    return `https://${
-      version.includes("b") ? "rc" : "www"
-    }.home-assistant.io/latest-release-notes/`;
   }
 }
 

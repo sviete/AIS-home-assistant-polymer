@@ -34,9 +34,6 @@ export interface RouterOptions {
   showLoading?: boolean;
   // Promise that resolves when the initial data is loaded which is needed to show any route.
   initialLoad?: () => Promise<unknown>;
-  // Hook that is called before rendering a new route. Allowing redirects.
-  // If string returned, that page will be rendered instead.
-  beforeRender?: (page: string) => string | undefined;
   routes: {
     // If it's a string, it is another route whose options should be adopted.
     [route: string]: RouteOptions | string;
@@ -51,7 +48,7 @@ export class HassRouterPage extends UpdatingElement {
 
   protected routerOptions!: RouterOptions;
 
-  protected _currentPage = "";
+  private _currentPage = "";
   private _currentLoadProm?: Promise<void>;
   private _cache = {};
   private _initialLoadDone = false;
@@ -102,25 +99,6 @@ export class HassRouterPage extends UpdatingElement {
     while (typeof routeOptions === "string") {
       newPage = routeOptions;
       routeOptions = routerOptions.routes[newPage];
-    }
-
-    if (routerOptions.beforeRender) {
-      const result = routerOptions.beforeRender(newPage);
-      if (result !== undefined) {
-        newPage = result;
-        routeOptions = routerOptions.routes[newPage];
-
-        // Handle redirects
-        while (typeof routeOptions === "string") {
-          newPage = routeOptions;
-          routeOptions = routerOptions.routes[newPage];
-        }
-
-        // Update the url if we know where we're mounted.
-        if (route) {
-          navigate(this, `${route.prefix}/${result}`, true);
-        }
-      }
     }
 
     if (this._currentPage === newPage) {
@@ -267,10 +245,6 @@ export class HassRouterPage extends UpdatingElement {
     return this.updateComplete.then(() => this._currentLoadProm);
   }
 
-  protected createElement(tag: string) {
-    return document.createElement(tag);
-  }
-
   protected updatePageEl(_pageEl, _changedProps?: PropertyValues) {
     // default we do nothing
   }
@@ -288,7 +262,8 @@ export class HassRouterPage extends UpdatingElement {
       this.removeChild(this.lastChild);
     }
 
-    const panelEl = this._cache[page] || this.createElement(routeOptions.tag);
+    const panelEl =
+      this._cache[page] || document.createElement(routeOptions.tag);
     this.updatePageEl(panelEl);
     this.appendChild(panelEl);
 

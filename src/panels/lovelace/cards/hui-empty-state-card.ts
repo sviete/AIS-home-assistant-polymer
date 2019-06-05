@@ -62,10 +62,6 @@ export class HuiEmptyStateCard extends LitElement implements LovelaceCard {
         padding: 16px;
       }
 
-      .card-actions a {
-        text-decoration: none;
-      }
-
       mwc-button {
         margin-left: -8px;
       }
