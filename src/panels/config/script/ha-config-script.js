@@ -91,10 +91,12 @@ class HaConfigScript extends PolymerElement {
     var scripts = [];
 
     Object.keys(hass.states).forEach(function(key) {
-      var entity = hass.states[key];
-
-      if (computeStateDomain(entity) === "script") {
-        scripts.push(entity);
+      // hide internal ais dom automations
+      if (!key.startsWith("script.ais_")) {
+        var entity = hass.states[key];
+        if (computeStateDomain(entity) === "script") {
+          scripts.push(entity);
+        }
       }
     });
 
