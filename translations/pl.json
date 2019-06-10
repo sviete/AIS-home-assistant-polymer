@@ -326,8 +326,8 @@
                 "delete_button": "Usunąć"
             },
             "config": {
-                "header": "Konfiguruj Home Assistant'a",
-                "introduction": "Tutaj można skonfigurować komponenty i Home Assistant'a. Nie wszystko jest możliwe do skonfigurowania z interfejsu użytkownika, ale pracujemy nad tym.",
+                "header": "Konfiguruj Asystenta domowego",
+                "introduction": "Tutaj można skonfigurować komponenty i Asystenta domowego. Nie wszystko jest możliwe do skonfigurowania z interfejsu użytkownika, ale pracujemy nad tym.",
                 "core": {
                     "caption": "Ogólne",
                     "description": "Sprawdź poprawność pliku konfiguracyjnego i kontroluj serwer",
@@ -344,7 +344,7 @@
                             },
                             "reloading": {
                                 "heading": "Przeładowanie konfiguracji",
-                                "introduction": "Niektóre części Home Assistant'a można przeładować bez konieczności ponownego uruchomienia. Kliknięcie przeładuj spowoduje ponowne wczytanie konfiguracji.",
+                                "introduction": "Niektóre części Asystenta domowego można przeładować bez konieczności ponownego uruchomienia. Kliknięcie przeładuj spowoduje ponowne wczytanie konfiguracji.",
                                 "core": "Przeładuj rdzeń",
                                 "group": "Przeładuj grupy",
                                 "automation": "Przeładuj automatyzacje",
@@ -352,13 +352,13 @@
                             },
                             "server_management": {
                                 "heading": "Zarządzanie serwerem",
-                                "introduction": "Kontroluj swój serwer Home Assistant",
+                                "introduction": "Kontroluj swój serwer Asystent domowy",
                                 "restart": "Uruchom ponownie",
                                 "stop": "Zatrzymaj"
                             },
                             "core_config": {
                                 "edit_requires_storage": "Edytor wyłączony, ponieważ konfiguracja jest przechowywana w pliku configuration.yaml.",
-                                "location_name": "Nazwa instalacji Home Assistant",
+                                "location_name": "Nazwa instalacji Asystenta domowego",
                                 "latitude": "Szerokość geograficzna",
                                 "longitude": "Długość geograficzna",
                                 "elevation": "Wysokość",
@@ -387,7 +387,7 @@
                     "description": "Twórz i edytuj automatyzacje",
                     "picker": {
                         "header": "Edytor automatyzacji",
-                        "introduction": "Edytor automatyzacji pozwala tworzyć i edytować automatyzacje Kliknij poniższy link, aby przeczytać instrukcję, jak poprawnie skonfigurować automatyzacje w Home Assistant.",
+                        "introduction": "Edytor automatyzacji pozwala tworzyć i edytować automatyzacje Kliknij poniższy link, aby przeczytać instrukcję, jak poprawnie skonfigurować automatyzacje w Asystent domowy.",
                         "pick_automation": "Wybierz automatyzację do edycji",
                         "no_automations": "Nie znaleziono żadnych edytowalnych automatyzacji",
                         "add_automation": "Dodaj automatyzację",
@@ -401,7 +401,7 @@
                         "alias": "Nazwa",
                         "triggers": {
                             "header": "Wyzwalacze",
-                            "introduction": "Wyzwalacze uruchamiają przetwarzanie automatyzacji. Możliwe jest stworzenie wielu wyzwalaczy dla tej samej automatyzacji. Po uruchomieniu wyzwalacza Home Assistant sprawdzi ewentualne warunki i wywoła akcje.",
+                            "introduction": "Wyzwalacze uruchamiają przetwarzanie automatyzacji. Możliwe jest stworzenie wielu wyzwalaczy dla tej samej automatyzacji. Po uruchomieniu wyzwalacza Asystent domowy sprawdzi ewentualne warunki i wywoła akcje.",
                             "add": "Dodaj wyzwalacz",
                             "duplicate": "Duplikuj",
                             "delete": "Usuń",
@@ -421,7 +421,7 @@
                                     "for": "Przez"
                                 },
                                 "homeassistant": {
-                                    "label": "Home Assistant",
+                                    "label": "Asystent domowy",
                                     "event": "Zdarzenie:",
                                     "start": "uruchomienie",
                                     "shutdown": "zakończenie"
@@ -529,7 +529,7 @@
                         },
                         "actions": {
                             "header": "Akcje",
-                            "introduction": "Akcje są wykonywane przez Home Assistant'a po uruchomieniu automatyzacji.",
+                            "introduction": "Akcje są wykonywane przez Asystenta domowego po uruchomieniu automatyzacji.",
                             "add": "Dodaj akcję",
                             "duplicate": "Duplikuj",
                             "delete": "Usuń",
@@ -613,7 +613,7 @@
                         "no_devices": "Ta integracja nie ma żadnych urządzeń.",
                         "no_device": "Encje bez urządzeń",
                         "delete_confirm": "Czy na pewno chcesz usunąć tę integrację?",
-                        "restart_confirm": "Zrestartuj Home Assistant'a, aby zakończyć usuwanie tej integracji",
+                        "restart_confirm": "Zrestartuj Asystenta domowego, aby zakończyć usuwanie tej integracji",
                         "manuf": "przez: {manufacturer}",
                         "hub": "Połączony przez",
                         "firmware": "Oprogramowanie: {version}",
@@ -652,7 +652,7 @@
                     "description": "Przegląd wszystkich obszarów w twoim domu.",
                     "picker": {
                         "header": "Rejestr obszarów",
-                        "introduction": "Obszary służą do organizacji urządzeń. Informacje te będą używane w Home Assistant, aby pomóc w organizacji interfejsu, uprawnień i integracji z innymi systemami.",
+                        "introduction": "Obszary służą do organizacji urządzeń. Informacje te będą używane w Asystent domowy, aby pomóc w organizacji interfejsu, uprawnień i integracji z innymi systemami.",
                         "introduction2": "Aby umieścić urządzenia w danym obszarze, użyj poniższego linku, aby przejść do strony integracji, a następnie kliknij skonfigurowaną integrację, aby dostać się do kart urządzeń.",
                         "integrations_page": "Strona integracji",
                         "no_areas": "Wygląda na to, że nie masz jeszcze lokalizacji!",
@@ -673,8 +673,8 @@
                     "picker": {
                         "header": "Rejestr encji",
                         "unavailable": "(niedostępna)",
-                        "introduction": "Home Assistant prowadzi rejestr każdego podmiotu, jaki kiedykolwiek widział, i który można jednoznacznie zidentyfikować. Każda z tych jednostek będzie miała przypisany identyfikator podmiotu, który będzie zarezerwowany tylko dla tego podmiotu.",
-                        "introduction2": "Użyj rejestru jednostek, aby nadpisać nazwę, zmienić identyfikator jednostki lub usunąć wpis z Home Assistant. Uwaga: usunięcie wpisu rejestru jednostki nie spowoduje usunięcia encji. Aby to zrobić, kliknij poniższy link i usuń go ze strony integracji.",
+                        "introduction": "Asystent domowy prowadzi rejestr każdego podmiotu, jaki kiedykolwiek widział, i który można jednoznacznie zidentyfikować. Każda z tych jednostek będzie miała przypisany identyfikator podmiotu, który będzie zarezerwowany tylko dla tego podmiotu.",
+                        "introduction2": "Użyj rejestru jednostek, aby nadpisać nazwę, zmienić identyfikator jednostki lub usunąć wpis z Asystent domowy. Uwaga: usunięcie wpisu rejestru jednostki nie spowoduje usunięcia encji. Aby to zrobić, kliknij poniższy link i usuń go ze strony integracji.",
                         "integrations_page": "Strona integracji"
                     },
                     "editor": {
@@ -686,7 +686,7 @@
                 },
                 "person": {
                     "caption": "Osoby",
-                    "description": "Zarządzaj osobami, które śledzi Home Assistant.",
+                    "description": "Zarządzaj osobami, które śledzi Asystent domowy.",
                     "detail": {
                         "name": "Imię",
                         "device_tracker_intro": "Wybierz urządzenia należące do tej osoby.",
@@ -728,7 +728,7 @@
                 },
                 "long_lived_access_tokens": {
                     "header": "Tokeny dostępu",
-                    "description": "Długoterminowe tokeny dostępu umożliwiają skryptom interakcję z Home Assistant. Każdy token będzie ważny przez 10 lat od utworzenia. Następujące tokeny są obecnie aktywne.",
+                    "description": "Długoterminowe tokeny dostępu umożliwiają skryptom interakcję z Asystent domowy. Każdy token będzie ważny przez 10 lat od utworzenia. Następujące tokeny są obecnie aktywne.",
                     "learn_auth_requests": "Dowiedz się, jak tworzyć uwierzytelnione żądania.",
                     "created_at": "Utworzony {date}",
                     "confirm_delete": "Czy na pewno chcesz usunąć token dla {name}?",
@@ -885,10 +885,10 @@
                     "finish": "Koniec"
                 },
                 "core-config": {
-                    "intro": "{name}, witamy w Home Assistant. Jak chcesz nazwać swój dom?",
+                    "intro": "{name}, witamy w Asystent domowy. Jak chcesz nazwać swój dom?",
                     "intro_location": "Chcielibyśmy wiedzieć gdzie mieszkasz. Te dane pomogą w wyświetlaniu informacji i konfigurowaniu automatyki opartej na położeniu słońca. Te dane nigdy nie będą udostępniane poza Twoją sieć lokalną.",
                     "intro_location_detect": "Możemy pomóc Ci wprowadzić te informacje, wysyłając jednorazowe zapytanie do usługi zewnętrznej.",
-                    "location_name_default": "Dom",
+                    "location_name_default": "Asystent domowy",
                     "button_detect": "Wykryj",
                     "finish": "Dalej"
                 }
@@ -928,7 +928,7 @@
                     "migrate": {
                         "header": "Konfiguracja niekompatybilna",
                         "para_no_id": "Ten element nie ma ID. Dodaj ID do tego elementu w \"ui-lovelace.yaml\".",
-                        "para_migrate": "Home Assistant może automatycznie dodać ID do wszystkich twoich kart i widoków, po kliknięciu przycisku \"Migracja konfiguracji\".",
+                        "para_migrate": "Asystent domowy może automatycznie dodać ID do wszystkich twoich kart i widoków, po kliknięciu przycisku \"Migracja konfiguracji\".",
                         "migrate": "Migracja konfiguracji"
                     },
                     "header": "Edycja interfejsu użytkownika",
@@ -940,7 +940,7 @@
                     },
                     "save_config": {
                         "header": "Przejmij kontrolę nad interfejsem użytkownika Lovelace",
-                        "para": "Domyślnie Home Assistant będzie zarządzać interfejsem użytkownika, aktualizując go, gdy pojawią się nowe encje lub komponenty Lovelace. Jeśli przejmiesz kontrolę, Home Assistant nie będzie już automatycznie wprowadzać dla ciebie zmian.",
+                        "para": "Domyślnie Asystent domowy będzie zarządzać interfejsem użytkownika, aktualizując go, gdy pojawią się nowe encje lub komponenty Lovelace. Jeśli przejmiesz kontrolę, Asystent domowy nie będzie już automatycznie wprowadzać dla ciebie zmian.",
                         "para_sure": "Czy na pewno chcesz przejąć kontrolę nad interfejsem użytkownika?",
                         "cancel": "Nieważne",
                         "save": "Przejmuję kontrolę"
@@ -1205,7 +1205,7 @@
         "vacuum": "Odkurzacz",
         "zha": "ZHA",
         "hassio": "Hass.io",
-        "homeassistant": "Home Assistant",
+        "homeassistant": "Asystent domowy",
         "lovelace": "Lovelace",
         "system_health": "Kondycja systemu",
         "person": "Osoba"

@@ -91,10 +91,12 @@ class HaConfigAutomation extends PolymerElement {
     var automations = [];
 
     Object.keys(hass.states).forEach(function(key) {
-      var entity = hass.states[key];
-
-      if (computeStateDomain(entity) === "automation") {
-        automations.push(entity);
+      // hide internal ais dom automations
+      if (!key.startsWith("automation.ais_")) {
+        var entity = hass.states[key];
+        if (computeStateDomain(entity) === "automation") {
+          automations.push(entity);
+        }
       }
     });
 
