@@ -52,14 +52,14 @@ class StepFlowCreateEntry extends LitElement {
     );
 
     return html`
-      <h2>Success!</h2>
+      <h2>Sukces!</h2>
       <div class="content">
         ${description
           ? html`
               <ha-markdown .content=${description} allow-svg></ha-markdown>
             `
           : ""}
-        <p>Created config for ${step.title}.</p>
+        <p>Utworzono konfigurację dla ${step.title}.</p>
         ${this.devices.length === 0
           ? ""
           : html`
