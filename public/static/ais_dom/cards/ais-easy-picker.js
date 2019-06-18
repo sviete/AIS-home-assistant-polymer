@@ -13,11 +13,10 @@ class AisEasyPicker extends HTMLElement {
     const content = document.createElement("div");
     const style = document.createElement("style");
     style.textContent = `
-      div {
-        width: 100%;
-        padding-left: 10px;
-      }
       div.tag {
+        width: 100%;
+        padding-bottom: 10px;
+        padding-left: 10px;
         padding-top: 0em;
         text-align: left;
         display: table-cell;
@@ -41,7 +40,7 @@ class AisEasyPicker extends HTMLElement {
       }
       .tag .tag0 {
         color: #0748cb;
-        font-size: 0.9em;
+        font-size: 1.25em;
       }
       .tag .tag1 {
           color: #e86e0b;
@@ -53,7 +52,7 @@ class AisEasyPicker extends HTMLElement {
       }
       .tag .tag3 {
           color: #574ece;
-          font-size: 1.2em;
+          font-size: 1.25em;
       }
       .tag .tag4 {
           color: #47ac33;
@@ -73,11 +72,11 @@ class AisEasyPicker extends HTMLElement {
       }
       .tag .tag8 {
           color: #a2a097;
-          font-size: 1.4375em;
+          font-size: 1.4em;
       }
       .tag .tag9 {
           color: #93a558;
-          font-size: 1.5em;
+          font-size: 1.2em;
       }
       .tag .clicked{
         background: #FF9800;
