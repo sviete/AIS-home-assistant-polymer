@@ -7,12 +7,8 @@
         "history": "História",
         "mailbox": "Poštová schránka",
         "shopping_list": "Nákupný zoznam",
-        "dev-services": "Služby",
-        "dev-states": "Stavy",
-        "dev-events": "Udalosti",
-        "dev-templates": "Šablóny",
-        "dev-mqtt": "MQTT",
         "dev-info": "Info",
+        "developer_tools": "Vývojárske nástroje",
         "calendar": "Kalendár",
         "profile": "Profil"
     },
@@ -311,6 +307,25 @@
                 "add_item": "Pridať položku",
                 "microphone_tip": "Kliknite na ikonu mikrofónu vpravo hore a povedzte “Add candy to my shopping list”"
             },
+            "developer-tools": {
+                "tabs": {
+                    "services": {
+                        "title": "Služby"
+                    },
+                    "states": {
+                        "title": "Stavy"
+                    },
+                    "events": {
+                        "title": "Udalosti"
+                    },
+                    "templates": {
+                        "title": "Šablóny"
+                    },
+                    "mqtt": {
+                        "title": "MQTT"
+                    }
+                }
+            },
             "history": {
                 "showing_entries": "Zobrazujú sa záznamy pre",
                 "period": "Obdobie"
@@ -359,8 +374,8 @@
                             "core_config": {
                                 "edit_requires_storage": "Editor je zablokovaný, pretože konfigurácia je uložená v configuration.yaml",
                                 "location_name": "Názov vašej Home Assistant inštalácie",
-                                "latitude": "zemepisná šírka",
-                                "longitude": "zemepisná dĺžka",
+                                "latitude": "Zemepisná šírka",
+                                "longitude": "Zemepisná dĺžka",
                                 "elevation": "Nadmorská výška",
                                 "elevation_meters": "metrov",
                                 "time_zone": "Časové pásmo",
@@ -744,7 +759,6 @@
                 },
                 "current_user": "Momentálne ste prihlásení ako {fullName}.",
                 "is_owner": "Ste vlastníkom.",
-                "logout": "Odhlásiť sa",
                 "change_password": {
                     "header": "Zmena hesla",
                     "current_password": "Aktuálne heslo",
@@ -909,9 +923,9 @@
                     "picture-elements": {
                         "hold": "Držať:",
                         "tap": "Ťuknite:",
-                        "navigate_to": "Navigovať do {Location}",
+                        "navigate_to": "Navigovať do {location}",
                         "toggle": "Prepnúť {name}",
-                        "call_service": "Zavolať službu",
+                        "call_service": "Zavolať službu {name}",
                         "more_info": "Zobraziť viac informácií: {name}"
                     }
                 },
@@ -971,11 +985,53 @@
                     "refresh": "Obnoviť"
                 },
                 "reload_lovelace": "Znovu načítať Lovelace"
+            },
+            "page-demo": {
+                "cards": {
+                    "demo": {
+                        "demo_by": "podľa {name}",
+                        "next_demo": "Ďalšie demo",
+                        "introduction": "Vitaj ! Dostali ste sa na demo Home Assistanta, kde prezentujeme najlepšie používateľské rozhrania vytvorené našou komunitou.",
+                        "learn_more": "Získajte viac informácií o Home asistentovi"
+                    }
+                },
+                "config": {
+                    "arsaboo": {
+                        "names": {
+                            "upstairs": "Poschodie",
+                            "family_room": "Obývacia izba",
+                            "kitchen": "Kuchyňa",
+                            "patio": "Terasa",
+                            "hallway": "Chodba",
+                            "master_bedroom": "Spálňa",
+                            "left": "Vľavo",
+                            "right": "Vpravo",
+                            "mirror": "Zrkadlenie"
+                        },
+                        "labels": {
+                            "lights": "Svetlá",
+                            "information": "Informácie",
+                            "morning_commute": "Ranné dochádzanie",
+                            "commute_home": "Dochádzanie domov",
+                            "entertainment": "Zábava",
+                            "activity": "Aktivita",
+                            "hdmi_input": "Vstup HDMI",
+                            "hdmi_switcher": "HDMI prepínač",
+                            "volume": "Hlasitosť",
+                            "total_tv_time": "Celkový čas sledovanie TV",
+                            "turn_tv_off": "Vypnúť TV",
+                            "air": "Vzduch"
+                        },
+                        "unit": {
+                            "watching": "Sledovanie",
+                            "minutes_abbr": "Min"
+                        }
+                    }
+                }
             }
         },
         "sidebar": {
             "log_out": "Odhlásiť sa",
-            "developer_tools": "Vývojárske nástroje",
             "external_app_configuration": "Konfigurácia aplikácie"
         },
         "common": {
@@ -1079,7 +1135,8 @@
                 "fan_mode": "Režim ventilátora",
                 "swing_mode": "Vejárový režim",
                 "away_mode": "Režim neprítomnosti",
-                "aux_heat": "Prídavné kúrenie"
+                "aux_heat": "Prídavné kúrenie",
+                "preset_mode": "Predvoľba"
             },
             "lock": {
                 "code": "Kód",
@@ -1224,6 +1281,16 @@
                 "off": "Vypnutý",
                 "on": "Zapnutý",
                 "auto": "Auto"
+            },
+            "preset_mode": {
+                "none": "None",
+                "eco": "Eko",
+                "away": "Preč",
+                "boost": "Turbo",
+                "comfort": "Komfort",
+                "home": "Doma",
+                "sleep": "Pohotovostný režim",
+                "activity": "Aktívny"
             }
         }
     },

@@ -7,12 +7,8 @@
         "history": "Historia",
         "mailbox": "Poczta",
         "shopping_list": "Lista zakupów",
-        "dev-services": "Usługi",
-        "dev-states": "Stany",
-        "dev-events": "Zdarzenia",
-        "dev-templates": "Szablony",
-        "dev-mqtt": "MQTT",
         "dev-info": "Informacje",
+        "developer_tools": "Narzędzia deweloperskie",
         "calendar": "Kalendarz",
         "profile": "Profil"
     },
@@ -311,6 +307,28 @@
                 "add_item": "Dodaj element",
                 "microphone_tip": "Kliknij ikonę mikrofonu w prawym górnym rogu i powiedz “Add candy to my shopping list”"
             },
+            "developer-tools": {
+                "tabs": {
+                    "services": {
+                        "title": "Usługi"
+                    },
+                    "states": {
+                        "title": "Stany"
+                    },
+                    "events": {
+                        "title": "Zdarzenia"
+                    },
+                    "templates": {
+                        "title": "Szablony"
+                    },
+                    "mqtt": {
+                        "title": "MQTT"
+                    },
+                    "info": {
+                        "title": "Informacje"
+                    }
+                }
+            },
             "history": {
                 "showing_entries": "Wyświetlanie rekordów dla",
                 "period": "Okres"
@@ -571,7 +589,31 @@
                 },
                 "zwave": {
                     "caption": "Z-Wave",
-                    "description": "Zarządzaj swoją siecią Z-Wave"
+                    "description": "Zarządzaj swoją siecią Z-Wave",
+                    "network_management": {
+                        "header": "Zarządzanie siecią Z-Wave",
+                        "introduction": "Uruchom polecenia sterujące siecią Z-Wave. Nie otrzymasz informacji o tym, czy wykonanie poleceń się powiodło, ale możesz szukać informacji na ten temat w logu OZW."
+                    },
+                    "network_status": {
+                        "network_stopped": "Zatrzymano sieć Z-Wave",
+                        "network_starting": "Uruchamianie sieci Z-Wave ...",
+                        "network_starting_note": "Może to chwilę potrwać, w zależności od rozmiaru sieci.",
+                        "network_started": "Uruchomiono sieć Z-Wave",
+                        "network_started_note_some_queried": "Wybudzone węzły zostały odpytane. Niewybudzone węzły będą odpytane, kiedy się wybudzą.",
+                        "network_started_note_all_queried": "Wszystkie węzły zostały odpytane."
+                    },
+                    "services": {
+                        "start_network": "Uruchom sieć",
+                        "stop_network": "Zatrzymaj sieć",
+                        "heal_network": "Uzdrawiaj sieć",
+                        "test_network": "Testuj sieć",
+                        "soft_reset": "Miękki reset",
+                        "save_config": "Zapisz konfigurację",
+                        "add_node_secure": "Dodaj bezpieczny węzeł",
+                        "add_node": "Dodaj węzeł",
+                        "remove_node": "Usuń węzeł",
+                        "cancel_command": "Anuluj polecenie"
+                    }
                 },
                 "users": {
                     "caption": "Użytkownicy",
@@ -744,7 +786,6 @@
                 },
                 "current_user": "Jesteś obecnie zalogowany jako {fullName}.",
                 "is_owner": "Jesteś właścicielem.",
-                "logout": "Wyloguj",
                 "change_password": {
                     "header": "Zmień hasło",
                     "current_password": "Bieżące hasło",
@@ -765,7 +806,8 @@
                     "step_done": "Konfiguracja wykonana dla {step}",
                     "close": "Zamknij",
                     "submit": "Zatwierdź"
-                }
+                },
+                "logout": "Wyloguj"
             },
             "page-authorize": {
                 "initializing": "Inicjowanie",
@@ -849,7 +891,7 @@
                                     "data": {
                                         "code": "Kod uwierzytelniania dwuskładnikowego"
                                     },
-                                    "description": "Otwórz **{mfa_module_name}** na swoim urządzeniu by zobaczyć kod dwuskładnikowego uwierzytelniania i zweryfikować swoją toższamość:"
+                                    "description": "Otwórz **{mfa_module_name}** na swoim urządzeniu by zobaczyć kod dwuskładnikowego uwierzytelniania i zweryfikować swoją tożsamość:"
                                 }
                             },
                             "error": {
@@ -1018,7 +1060,6 @@
         },
         "sidebar": {
             "log_out": "Wyloguj",
-            "developer_tools": "Narzędzia deweloperskie",
             "external_app_configuration": "Konfiguracja aplikacji"
         },
         "common": {
@@ -1122,7 +1163,8 @@
                 "fan_mode": "Tryb pracy wentylatora",
                 "swing_mode": "Tryb ruchu łopatek",
                 "away_mode": "Tryb poza domem",
-                "aux_heat": "Dodatkowe źródło ciepła"
+                "aux_heat": "Dodatkowe źródło ciepła",
+                "preset_mode": "Ustawienia"
             },
             "lock": {
                 "code": "Kod",
@@ -1267,6 +1309,16 @@
                 "off": "wyłączony",
                 "on": "włączony",
                 "auto": "automatyczny"
+            },
+            "preset_mode": {
+                "none": "brak",
+                "eco": "ekonomicznie",
+                "away": "poza domem",
+                "boost": "wzmocnienie",
+                "comfort": "komfort",
+                "home": "w domu",
+                "sleep": "sen",
+                "activity": "aktywność"
             }
         }
     },

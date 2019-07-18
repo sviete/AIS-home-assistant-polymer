@@ -7,12 +7,8 @@
         "history": "历史",
         "mailbox": "邮箱",
         "shopping_list": "购物清单",
-        "dev-services": "服务",
-        "dev-states": "状态",
-        "dev-events": "事件",
-        "dev-templates": "模板",
-        "dev-mqtt": "MQTT",
         "dev-info": "信息",
+        "developer_tools": "开发者工具",
         "calendar": "日历",
         "profile": "用户资料"
     },
@@ -132,7 +128,7 @@
         },
         "climate": {
             "off": "关",
-            "on": "开启",
+            "on": "开",
             "heat": "制热",
             "cool": "制冷",
             "idle": "待机",
@@ -163,8 +159,8 @@
             "not_home": "离开"
         },
         "fan": {
-            "off": "关闭",
-            "on": "开启"
+            "off": "关",
+            "on": "开"
         },
         "group": {
             "off": "关闭",
@@ -182,8 +178,8 @@
             "problem": "异常"
         },
         "input_boolean": {
-            "off": "关闭",
-            "on": "开启"
+            "off": "关",
+            "on": "开"
         },
         "light": {
             "off": "关",
@@ -194,8 +190,8 @@
             "unlocked": "解锁"
         },
         "media_player": {
-            "off": "关闭",
-            "on": "开启",
+            "off": "关",
+            "on": "开",
             "playing": "正在播放",
             "paused": "已暂停",
             "idle": "空闲",
@@ -206,19 +202,19 @@
             "problem": "异常"
         },
         "remote": {
-            "off": "关闭",
-            "on": "开启"
+            "off": "关",
+            "on": "开"
         },
         "scene": {
             "scening": "场景启用中"
         },
         "script": {
-            "off": "关闭",
-            "on": "开启"
+            "off": "关",
+            "on": "开"
         },
         "sensor": {
-            "off": "关闭",
-            "on": "开启"
+            "off": "关",
+            "on": "开"
         },
         "sun": {
             "above_horizon": "日出",
@@ -310,6 +306,25 @@
                 "clear_completed": "清除已完成项目",
                 "add_item": "添加项目",
                 "microphone_tip": "点击右上角麦克风图标并说 “Add candy to my shopping list”"
+            },
+            "developer-tools": {
+                "tabs": {
+                    "services": {
+                        "title": "服务"
+                    },
+                    "states": {
+                        "title": "状态"
+                    },
+                    "events": {
+                        "title": "事件"
+                    },
+                    "templates": {
+                        "title": "模板"
+                    },
+                    "mqtt": {
+                        "title": "MQTT"
+                    }
+                }
             },
             "history": {
                 "showing_entries": "显示自以下日期的图表",
@@ -744,7 +759,6 @@
                 },
                 "current_user": "您目前以 {fullName} 的身份登录。",
                 "is_owner": "您拥有所有者权限。",
-                "logout": "退出",
                 "change_password": {
                     "header": "更改密码",
                     "current_password": "当前密码",
@@ -984,6 +998,7 @@
                 "config": {
                     "arsaboo": {
                         "names": {
+                            "upstairs": "二楼",
                             "family_room": "客厅",
                             "kitchen": "厨房",
                             "patio": "露台",
@@ -998,7 +1013,18 @@
                             "information": "信息",
                             "morning_commute": "上班",
                             "commute_home": "下班",
-                            "entertainment": "娱乐"
+                            "entertainment": "娱乐",
+                            "activity": "活动",
+                            "hdmi_input": "HDMI输入",
+                            "hdmi_switcher": "HDMI切换",
+                            "volume": "音量",
+                            "total_tv_time": "观看总时长",
+                            "turn_tv_off": "关闭电视",
+                            "air": "换气"
+                        },
+                        "unit": {
+                            "watching": "观看",
+                            "minutes_abbr": "分"
                         }
                     }
                 }
@@ -1006,7 +1032,6 @@
         },
         "sidebar": {
             "log_out": "退出",
-            "developer_tools": "开发者工具",
             "external_app_configuration": "应用配置"
         },
         "common": {
@@ -1110,7 +1135,8 @@
                 "fan_mode": "风速",
                 "swing_mode": "扫风模式",
                 "away_mode": "离开模式",
-                "aux_heat": "辅热"
+                "aux_heat": "辅热",
+                "preset_mode": "预设"
             },
             "lock": {
                 "code": "密码",
@@ -1255,6 +1281,16 @@
                 "off": "关",
                 "on": "开",
                 "auto": "自动"
+            },
+            "preset_mode": {
+                "none": "无",
+                "eco": "节能",
+                "away": "离家",
+                "boost": "强力",
+                "comfort": "舒适",
+                "home": "在家",
+                "sleep": "睡眠",
+                "activity": "活动"
             }
         }
     },

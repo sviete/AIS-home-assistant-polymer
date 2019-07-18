@@ -7,12 +7,8 @@
         "history": "Histórico",
         "mailbox": "Caixa de correio",
         "shopping_list": "Lista de compras",
-        "dev-services": "Serviços",
-        "dev-states": "Estado",
-        "dev-events": "Eventos",
-        "dev-templates": "Modelos",
-        "dev-mqtt": "",
         "dev-info": "Informações",
+        "developer_tools": "Ferramentas do desenvolvedor",
         "calendar": "Calendário",
         "profile": "Perfil"
     },
@@ -113,8 +109,8 @@
                 "on": "Quente"
             },
             "window": {
-                "off": "Fechada",
-                "on": "Aberta"
+                "off": "Fechado",
+                "on": "Aberto"
             },
             "lock": {
                 "off": "Bloqueado",
@@ -311,6 +307,28 @@
                 "add_item": "Adicionar item",
                 "microphone_tip": "Clique no microfone no canto superior direito e diga \"Adicionar doces à minha lista de compras\""
             },
+            "developer-tools": {
+                "tabs": {
+                    "services": {
+                        "title": "Serviços"
+                    },
+                    "states": {
+                        "title": "Estado"
+                    },
+                    "events": {
+                        "title": "Eventos"
+                    },
+                    "templates": {
+                        "title": "Modelos"
+                    },
+                    "mqtt": {
+                        "title": ""
+                    },
+                    "info": {
+                        "title": "Info"
+                    }
+                }
+            },
             "history": {
                 "showing_entries": "Exibindo entradas para",
                 "period": "Período"
@@ -499,7 +517,7 @@
                                     "label": "Estado numérico",
                                     "above": "Acima",
                                     "below": "Abaixo",
-                                    "value_template": "Valor de exemplo (opcional)"
+                                    "value_template": "Valor do modelo (opcional)"
                                 },
                                 "sun": {
                                     "label": "Sol",
@@ -512,7 +530,7 @@
                                 },
                                 "template": {
                                     "label": "Modelo",
-                                    "value_template": "Valor de exemplo"
+                                    "value_template": "Valor do modelo"
                                 },
                                 "time": {
                                     "label": "Tempo",
@@ -571,7 +589,31 @@
                 },
                 "zwave": {
                     "caption": "",
-                    "description": "Gerencie sua rede Z-Wave"
+                    "description": "Gerencie sua rede Z-Wave",
+                    "network_management": {
+                        "header": "Gerenciamento de rede Z-Wave",
+                        "introduction": "Execute comandos que afetam a rede do Z-Wave. Você não receberá feedback sobre se a maioria dos comandos foi bem-sucedida, mas você pode verificar o log do OZW para tentar descobrir."
+                    },
+                    "network_status": {
+                        "network_stopped": "Rede Z-Wave Parada",
+                        "network_starting": "Iniciando a rede Z-Wave ...",
+                        "network_starting_note": "Isso pode demorar um pouco, dependendo do tamanho da sua rede.",
+                        "network_started": "Rede Z-Wave Iniciada",
+                        "network_started_note_some_queried": "Nós acordados foram consultados. Nós adormecidos serão consultados quando eles acordarem.",
+                        "network_started_note_all_queried": "Todos os nós foram consultados."
+                    },
+                    "services": {
+                        "start_network": "Iniciar Rede",
+                        "stop_network": "Parar Rede",
+                        "heal_network": "Curar rede",
+                        "test_network": "Teste de rede",
+                        "soft_reset": "Soft Reset",
+                        "save_config": "Salvar Configuração",
+                        "add_node_secure": "Adicionar Nó Seguro",
+                        "add_node": "Adicionar Nó",
+                        "remove_node": "Remover Nó",
+                        "cancel_command": "Cancelar Comando"
+                    }
                 },
                 "users": {
                     "caption": "Usuários",
@@ -619,7 +661,8 @@
                         "firmware": "Firmware: {version}",
                         "device_unavailable": "dispositivo indisponível",
                         "entity_unavailable": "entidade indisponível",
-                        "no_area": "Sem área"
+                        "no_area": "Sem área",
+                        "hub": "Conectado via"
                     },
                     "config_flow": {
                         "external_step": {
@@ -743,7 +786,6 @@
                 },
                 "current_user": "Você está logado como {fullName} .",
                 "is_owner": "Você é um proprietário.",
-                "logout": "Sair",
                 "change_password": {
                     "header": "Alterar senha",
                     "current_password": "Senha atual",
@@ -764,7 +806,8 @@
                     "step_done": "Configuração feita para {step}",
                     "close": "Fechar",
                     "submit": "Enviar"
-                }
+                },
+                "logout": "Sair"
             },
             "page-authorize": {
                 "initializing": "Iniciando",
@@ -970,11 +1013,53 @@
                     "refresh": "Atualizar"
                 },
                 "reload_lovelace": "Recarregar Lovelace"
+            },
+            "page-demo": {
+                "cards": {
+                    "demo": {
+                        "demo_by": "por {name}",
+                        "next_demo": "Próxima demonstração",
+                        "introduction": "Bem-vindo! Você chegou no demo do Home Assistant onde mostramos as melhores UIs criados por nossa comunidade.",
+                        "learn_more": "Saiba mais sobre o Home Assistant"
+                    }
+                },
+                "config": {
+                    "arsaboo": {
+                        "names": {
+                            "upstairs": "Andar de cima",
+                            "family_room": "Quarto Familiar",
+                            "kitchen": "Cozinha",
+                            "patio": "Pátio",
+                            "hallway": "Corredor",
+                            "master_bedroom": "Quarto principal",
+                            "left": "Esquerda",
+                            "right": "Direita",
+                            "mirror": "Espelho"
+                        },
+                        "labels": {
+                            "lights": "Luzes",
+                            "information": "Informação",
+                            "morning_commute": "Comutação da manhã",
+                            "commute_home": "Comutar para casa",
+                            "entertainment": "Entretenimento",
+                            "activity": "Atividade",
+                            "hdmi_input": "Entrada HDMI",
+                            "hdmi_switcher": "Comutador HDMI",
+                            "volume": "Volume",
+                            "total_tv_time": "Tempo total de TV",
+                            "turn_tv_off": "Desligue a televisão",
+                            "air": "Ar"
+                        },
+                        "unit": {
+                            "watching": "assistindo",
+                            "minutes_abbr": "min"
+                        }
+                    }
+                }
             }
         },
         "sidebar": {
             "log_out": "Sair",
-            "developer_tools": "Ferramentas do desenvolvedor",
             "external_app_configuration": "Configuração do aplicativo"
         },
         "common": {
@@ -1078,7 +1163,8 @@
                 "fan_mode": "Modo ventilação",
                 "swing_mode": "Modo oscilante",
                 "away_mode": "Modo ausente",
-                "aux_heat": "Aquecedor aux"
+                "aux_heat": "Aquecedor aux",
+                "preset_mode": "Predefinir"
             },
             "lock": {
                 "code": "Código",
@@ -1223,6 +1309,16 @@
                 "off": "Desligado",
                 "on": "Ligado",
                 "auto": "Auto"
+            },
+            "preset_mode": {
+                "none": "Nenhum",
+                "eco": "Eco",
+                "away": "Ausente",
+                "boost": "Impulsionar",
+                "comfort": "Conforto",
+                "home": "Home",
+                "sleep": "Suspender",
+                "activity": "Atividade"
             }
         }
     },

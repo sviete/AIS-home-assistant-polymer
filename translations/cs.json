@@ -7,12 +7,8 @@
         "history": "Historie",
         "mailbox": "Schránka",
         "shopping_list": "Nákupní seznam",
-        "dev-services": "Služby",
-        "dev-states": "Stavy",
-        "dev-events": "Události",
-        "dev-templates": "Šablony",
-        "dev-mqtt": "MQTT",
         "dev-info": "Informace",
+        "developer_tools": "Vývojářské nástroje",
         "calendar": "Kalendář",
         "profile": "Profil"
     },
@@ -311,6 +307,25 @@
                 "add_item": "Přidat položku",
                 "microphone_tip": "Klepněte na mikrofon vpravo nahoře a řekněte \"Add candy to my shopping list\""
             },
+            "developer-tools": {
+                "tabs": {
+                    "services": {
+                        "title": "Služby"
+                    },
+                    "states": {
+                        "title": "Stavy"
+                    },
+                    "events": {
+                        "title": "Události"
+                    },
+                    "templates": {
+                        "title": "Šablony"
+                    },
+                    "mqtt": {
+                        "title": "MQTT"
+                    }
+                }
+            },
             "history": {
                 "showing_entries": "Zobrazeny údaje pro",
                 "period": "Období"
@@ -357,6 +372,7 @@
                                 "stop": "Zastavit"
                             },
                             "core_config": {
+                                "edit_requires_storage": "Editori pois käytöstä, koska asetukset on määritelty configuration.yaml:ssä",
                                 "location_name": "Název instalace Home Assistant",
                                 "latitude": "Zeměpisná šířka",
                                 "longitude": "Zeměpisná délka",
@@ -743,7 +759,6 @@
                 },
                 "current_user": "Nyní jste přihlášeni jako {fullName}.",
                 "is_owner": "Jste vlastník.",
-                "logout": "Odhlásit se",
                 "change_password": {
                     "header": "Změnit heslo",
                     "current_password": "Současné heslo",
@@ -996,6 +1011,8 @@
                         "labels": {
                             "lights": "Světla",
                             "information": "Informace",
+                            "morning_commute": "Työmatka aamulla",
+                            "commute_home": "Matka kotiin",
                             "entertainment": "Zábava",
                             "activity": "Aktivita",
                             "hdmi_input": "Vstup HDMI",
@@ -1006,6 +1023,7 @@
                             "air": "Vzduch"
                         },
                         "unit": {
+                            "watching": "tarkkaillaan",
                             "minutes_abbr": "min"
                         }
                     }
@@ -1014,7 +1032,6 @@
         },
         "sidebar": {
             "log_out": "Odhlásit se",
-            "developer_tools": "Vývojářské nástroje",
             "external_app_configuration": "Konfigurace aplikace"
         },
         "common": {
