@@ -52,12 +52,7 @@
     "history": "History",
     "mailbox": "Mailbox",
     "shopping_list": "Shopping list",
-    "dev-services": "Services",
-    "dev-states": "States",
-    "dev-events": "Events",
-    "dev-templates": "Templates",
-    "dev-mqtt": "MQTT",
-    "dev-info": "Info",
+    "developer_tools": "Developer Tools",
     "profile": "Profile"
   },
   "state": {
@@ -176,20 +171,12 @@
     },
     "climate": {
       "off": "[%key:state::default::off%]",
-      "on": "[%key:state::default::on%]",
       "heat": "Heat",
       "cool": "Cool",
-      "idle": "Idle",
+      "heat_cool": "Heat/Cool",
       "auto": "Auto",
       "dry": "Dry",
-      "fan_only": "Fan only",
-      "eco": "Eco",
-      "electric": "Electric",
-      "performance": "Performance",
-      "high_demand": "High demand",
-      "heat_pump": "Heat pump",
-      "gas": "Gas",
-      "manual": "Manual"
+      "fan_only": "Fan only"
     },
     "configurator": {
       "configure": "Configure",
@@ -326,6 +313,16 @@
         "off": "[%key:state::default::off%]",
         "on": "[%key:state::default::on%]",
         "auto": "[%key:state::climate::auto%]"
+      },
+      "preset_mode": {
+        "none": "None",
+        "eco": "Eco",
+        "away": "Away",
+        "boost": "Boost",
+        "comfort": "Comfort",
+        "home": "Home",
+        "sleep": "Sleep",
+        "activity": "Activity"
       }
     }
   },
@@ -393,6 +390,7 @@
         "operation": "Operation",
         "fan_mode": "Fan mode",
         "swing_mode": "Swing mode",
+        "preset_mode": "Preset",
         "away_mode": "Away mode",
         "aux_heat": "Aux heat"
       },
@@ -548,9 +546,7 @@
       "connection_lost": "Connection lost. Reconnecting…"
     },
     "sidebar": {
-      "developer_tools": "Developer tools",
-      "external_app_configuration": "App Configuration",
-      "log_out": "Log out"
+      "external_app_configuration": "App Configuration"
     },
     "panel": {
       "config": {
@@ -918,7 +914,31 @@
         },
         "zwave": {
           "caption": "Z-Wave",
-          "description": "Manage your Z-Wave network"
+          "description": "Manage your Z-Wave network",
+          "network_management": {
+            "header": "Z-Wave Network Management",
+            "introduction": "Run commands that affect the Z-Wave network. You won't get feedback on whether most commands succeeded, but you can check the OZW Log to try to find out."
+          },
+          "network_status": {
+            "network_stopped": "Z-Wave Network Stopped",
+            "network_starting": "Starting Z-Wave Network...",
+            "network_starting_note": "This may take a while depending on the size of your network.",
+            "network_started": "Z-Wave Network Started",
+            "network_started_note_some_queried": "Awake nodes have been queried. Sleeping nodes will be queried when they wake.",
+            "network_started_note_all_queried": "All nodes have been queried."
+          },
+          "services": {
+            "start_network": "Start Network",
+            "stop_network": "Stop Network",
+            "heal_network": "Heal Network",
+            "test_network": "Test Network",
+            "soft_reset": "Soft Reset",
+            "save_config": "Save Config",
+            "add_node_secure": "Add Node Secure",
+            "add_node": "Add Node",
+            "remove_node": "Remove Node",
+            "cancel_command": "Cancel Command"
+          }
         }
       },
       "history": {
@@ -1224,6 +1244,28 @@
               "watching": "watching",
               "minutes_abbr": "min"
             }
+          }
+        }
+      },
+      "developer-tools": {
+        "tabs": {
+          "info": {
+            "title": "Info"
+          },
+          "events": {
+            "title": "Events"
+          },
+          "mqtt": {
+            "title": "MQTT"
+          },
+          "services": {
+            "title": "Services"
+          },
+          "states": {
+            "title": "States"
+          },
+          "templates": {
+            "title": "Template"
           }
         }
       },

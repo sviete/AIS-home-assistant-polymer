@@ -3,15 +3,12 @@
         "config": "Stillingar",
         "states": "Yfirlit",
         "map": "Kort",
-        "logbook": "Logbók",
+        "logbook": "Breytingarsaga",
         "history": "Saga",
         "mailbox": "Pósthólf",
         "shopping_list": "Innkaupalisti",
-        "dev-services": "Þjónustur",
-        "dev-states": "Stöður",
-        "dev-events": "Viðburðir",
-        "dev-mqtt": "MQTT",
         "dev-info": "Upplýsingar",
+        "developer_tools": "Þróunarverkfæri",
         "calendar": "Dagatal",
         "profile": "Prófíll"
     },
@@ -75,6 +72,10 @@
                 "off": "Aftengdur",
                 "on": "Tengdur"
             },
+            "cold": {
+                "off": "Venjulegt",
+                "on": "Kalt"
+            },
             "door": {
                 "off": "Lokuð",
                 "on": "Opin"
@@ -82,6 +83,10 @@
             "garage_door": {
                 "off": "Lokuð",
                 "on": "Opin"
+            },
+            "heat": {
+                "off": "Venjulegt",
+                "on": "Heitt"
             },
             "window": {
                 "off": "Loka",
@@ -255,6 +260,28 @@
                 "add_item": "Bæta við hlut",
                 "microphone_tip": "Ýttu á hljóðnemann efst til hægri og segðu \"Add candy to my shopping list\""
             },
+            "developer-tools": {
+                "tabs": {
+                    "services": {
+                        "title": "Þjónustur"
+                    },
+                    "states": {
+                        "title": "Stöður"
+                    },
+                    "events": {
+                        "title": "Viðburðir"
+                    },
+                    "templates": {
+                        "title": "Skapalón"
+                    },
+                    "mqtt": {
+                        "title": "MQTT"
+                    },
+                    "info": {
+                        "title": "Upplýsingar"
+                    }
+                }
+            },
             "history": {
                 "showing_entries": "Sýni færslur fyrir",
                 "period": "Tímabil"
@@ -301,6 +328,7 @@
                                 "stop": "Stöðva"
                             },
                             "core_config": {
+                                "edit_requires_storage": "Ritill er óvirkur af því að stillingar eru vistaðar í configuration.yaml.",
                                 "location_name": "Nafnið á Home Assistant uppsetningunni",
                                 "latitude": "Breiddargráða",
                                 "longitude": "Lengdargráða",
@@ -383,6 +411,7 @@
                                 "zone": {
                                     "label": "Öryggissvæði",
                                     "entity": "Eining með staðsetningu",
+                                    "zone": "Svæði",
                                     "event": "Viðburður:",
                                     "enter": "Koma",
                                     "leave": "Brottför"
@@ -475,7 +504,9 @@
                                 }
                             },
                             "learn_more": "Læra meira um aðgerðir"
-                        }
+                        },
+                        "load_error_not_editable": "Eingöngu er hægt að breyta sjálfvirkni í automations.yaml",
+                        "load_error_unknown": "Villa kom upp við að hlaða inn sjálfvirkni  ({err_no})."
                     }
                 },
                 "script": {
@@ -484,7 +515,21 @@
                 },
                 "zwave": {
                     "caption": "Z-Wave",
-                    "description": "Stjórnaðu Z-Wave netinu þínu"
+                    "description": "Stjórnaðu Z-Wave netinu þínu",
+                    "network_management": {
+                        "header": "Z-Wave netumsýsla"
+                    },
+                    "network_status": {
+                        "network_stopped": "Z-Wave net stöðvað",
+                        "network_starting": "Ræsi Z-Wave net...",
+                        "network_started": "Z-Wave net ræst"
+                    },
+                    "services": {
+                        "start_network": "Ræsa net",
+                        "stop_network": "Söðva net",
+                        "save_config": "Vista stillingar",
+                        "cancel_command": "Hætta við skipun"
+                    }
                 },
                 "users": {
                     "caption": "Notendur",
@@ -537,6 +582,7 @@
                     },
                     "config_flow": {
                         "external_step": {
+                            "description": "Þetta skref krefst þess að þú heimsækir ytri vefsíðu svo hægt sé að ljúka þessu skrefi.",
                             "open_site": "Opna vefsíðu"
                         }
                     }
@@ -649,7 +695,6 @@
                 },
                 "current_user": "Þú ert skráð(ur) inn sem {fullName}.",
                 "is_owner": "Þú ert eigandi.",
-                "logout": "Skrá út",
                 "change_password": {
                     "header": "Breyta lykilorði",
                     "current_password": "Núverandi lykilorð",
@@ -670,7 +715,8 @@
                     "step_done": "Uppsetningu lokið fyrir {step}",
                     "close": "Loka",
                     "submit": "Senda"
-                }
+                },
+                "logout": "Skrá út"
             },
             "page-authorize": {
                 "initializing": "Frumstilli",
@@ -785,6 +831,7 @@
                     "finish": "Ljúka"
                 },
                 "core-config": {
+                    "intro": "Hæ {name}, velkomin(n) í Home Assistant. Hvað á heimilið þitt að heita?",
                     "location_name_default": "Heima",
                     "button_detect": "Uppgötva",
                     "finish": "Næsta"
@@ -869,12 +916,14 @@
                 "cards": {
                     "demo": {
                         "demo_by": "eftir {name}",
+                        "next_demo": "Næsta sýnidæmi",
                         "learn_more": "Læra meira um Home Assistant"
                     }
                 },
                 "config": {
                     "arsaboo": {
                         "names": {
+                            "family_room": "Fjölskyldurými",
                             "kitchen": "Eldhús",
                             "left": "Vinstri",
                             "right": "Hægri",
@@ -885,7 +934,10 @@
                             "information": "Upplýsingar",
                             "entertainment": "Skemmtun",
                             "activity": "Virkni",
+                            "hdmi_input": "HDMI inntak",
+                            "hdmi_switcher": "HDMI rofi",
                             "volume": "Hljóðstyrkur",
+                            "total_tv_time": "Heildar sjónvarpstími",
                             "turn_tv_off": "Slökkva á sjónvarpi"
                         },
                         "unit": {
@@ -898,7 +950,6 @@
         },
         "sidebar": {
             "log_out": "Skrá út",
-            "developer_tools": "Þróunarverkfæri",
             "external_app_configuration": "Stillingar forrits"
         },
         "common": {
@@ -985,6 +1036,7 @@
                 "currently": "Er núna",
                 "on_off": "Kveikt \/ slökkt",
                 "operation": "Aðgerð",
+                "fan_mode": "Viftuhamur",
                 "swing_mode": "Sveifluhamur"
             },
             "lock": {
@@ -1074,6 +1126,7 @@
     },
     "domain": {
         "automation": "Sjálfvirkni",
+        "binary_sensor": "Tvíundar skynjari",
         "calendar": "Dagatal",
         "camera": "Myndavél",
         "climate": "Loftslag",
@@ -1104,6 +1157,7 @@
         "updater": "Uppfærsluálfur",
         "weblink": "Vefslóð",
         "zwave": "Z-Wave",
+        "vacuum": "Ryksuga",
         "zha": "ZHA",
         "hassio": "Hass.io",
         "homeassistant": "Home Assistant",

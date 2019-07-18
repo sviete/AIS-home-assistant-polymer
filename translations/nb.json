@@ -7,12 +7,8 @@
         "history": "Historie",
         "mailbox": "Postkasse",
         "shopping_list": "Handleliste",
-        "dev-services": "Tjenester",
-        "dev-states": "Statuser",
-        "dev-events": "Hendelser",
-        "dev-templates": "Maler",
-        "dev-mqtt": "MQTT",
         "dev-info": "Informasjon",
+        "developer_tools": "Utviklerverktøy",
         "calendar": "Kalender",
         "profile": "Profil"
     },
@@ -311,6 +307,25 @@
                 "add_item": "Legg til",
                 "microphone_tip": "Aktiver mikrofonen øverst til høyre og si “Add candy to my shopping list”"
             },
+            "developer-tools": {
+                "tabs": {
+                    "services": {
+                        "title": "Tjenester"
+                    },
+                    "states": {
+                        "title": "Statuser"
+                    },
+                    "events": {
+                        "title": "Hendelser"
+                    },
+                    "templates": {
+                        "title": "Maler"
+                    },
+                    "mqtt": {
+                        "title": "MQTT"
+                    }
+                }
+            },
             "history": {
                 "showing_entries": "Viser oppføringer for",
                 "period": "Periode"
@@ -483,7 +498,7 @@
                         },
                         "conditions": {
                             "header": "Betingelser",
-                            "introduction": "Betingelser er en valgfri del av en automatiseringsregel og kan brukes til å forhindre at en handling skjer når den blir aktivert. \nBetingelsene ser veldig ut som utløsere, men er veldig forskjellige. \nEn utløser vil se på hendelser som skjer i systemet, mens en betingelse bare ser på hvordan systemet ser ut akkurat nå. En utløser kan observere at en bryter er slått på. En betingelse kan bare se om en bryter for øyeblikket er på eller av. \n\n[Lær mer om betingelser.](https:\/\/home-assistant.io\/docs\/scripts\/conditions\/)",
+                            "introduction": "Betingelser er en valgfri del av en automatiseringsregel og kan brukes til å forhindre at en handling skjer når den blir aktivert. \nBetingelsene ser veldig ut som utløsere, men er veldig forskjellige. \nEn utløser vil se på hendelser som skjer i systemet, mens en betingelse bare ser på hvordan systemet ser ut akkurat nå. En utløser kan observere at en bryter er slått på. En betingelse kan bare se om en bryter for øyeblikket er på eller av.",
                             "add": "Legg til betingelse",
                             "duplicate": "Dupliser",
                             "delete": "Slett",
@@ -571,7 +586,31 @@
                 },
                 "zwave": {
                     "caption": "Z-Wave",
-                    "description": "Administrer ditt Z-Wave-nettverk"
+                    "description": "Administrer ditt Z-Wave-nettverk",
+                    "network_management": {
+                        "header": "Z-Wave nettverksadministrasjon",
+                        "introduction": "Kjør kommandoer som påvirker Z-Wave nettverket. Du får ikke tilbakemelding på om de fleste kommandoer lykkes, men du kan sjekke OZW-loggen for å prøve å finne det ut."
+                    },
+                    "network_status": {
+                        "network_stopped": "Z-Wave nettverket stoppet",
+                        "network_starting": "Starter Z-Wave nettverk...",
+                        "network_starting_note": "Dette kan ta en stund, avhengig av størrelsen på nettverket ditt.",
+                        "network_started": "Z-Wave nettverk startet",
+                        "network_started_note_some_queried": "Våkne noder har blitt forespurt. Sovende noder vil bli spurt når de våkner.",
+                        "network_started_note_all_queried": "Alle noder er forespurt."
+                    },
+                    "services": {
+                        "start_network": "Start nettverk",
+                        "stop_network": "Stopp nettverk",
+                        "heal_network": "Helbrede nettverk",
+                        "test_network": "Test nettverk",
+                        "soft_reset": "Myk tilbakestilling",
+                        "save_config": "Lagre konfigurasjon",
+                        "add_node_secure": "Legg til sikker node",
+                        "add_node": "Legg til node",
+                        "remove_node": "Fjern node",
+                        "cancel_command": "Avbryt kommando"
+                    }
                 },
                 "users": {
                     "caption": "Brukere",
@@ -744,7 +783,6 @@
                 },
                 "current_user": "Du er logget inn som {fullName}.",
                 "is_owner": "Du er en eier.",
-                "logout": "Logg ut",
                 "change_password": {
                     "header": "Endre passord",
                     "current_password": "Nåværende passord",
@@ -1018,7 +1056,6 @@
         },
         "sidebar": {
             "log_out": "Logg ut",
-            "developer_tools": "Utviklerverktøy",
             "external_app_configuration": "Appkonfigurasjon"
         },
         "common": {
@@ -1122,7 +1159,8 @@
                 "fan_mode": "Viftemodus",
                 "swing_mode": "Svingmodus",
                 "away_mode": "Bortemodus",
-                "aux_heat": "Aux varme"
+                "aux_heat": "Aux varme",
+                "preset_mode": "Preset"
             },
             "lock": {
                 "code": "Kode",
@@ -1267,6 +1305,16 @@
                 "off": "Av",
                 "on": "På",
                 "auto": "Auto"
+            },
+            "preset_mode": {
+                "none": "Ingen",
+                "eco": "Øko",
+                "away": "Borte",
+                "boost": "Turbo",
+                "comfort": "Komfort",
+                "home": "Hjem",
+                "sleep": "Sove",
+                "activity": "Aktivitet"
             }
         }
     },

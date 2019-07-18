@@ -7,12 +7,8 @@
         "history": "歷史",
         "mailbox": "郵箱",
         "shopping_list": "購物清單",
-        "dev-services": "服務",
-        "dev-states": "狀態",
-        "dev-events": "事件",
-        "dev-templates": "模板",
-        "dev-mqtt": "MQTT",
         "dev-info": "資訊",
+        "developer_tools": "開發工具",
         "calendar": "行事曆",
         "profile": "個人設定"
     },
@@ -136,7 +132,7 @@
             "heat": "暖氣",
             "cool": "冷氣",
             "idle": "待命",
-            "auto": "自動模式",
+            "auto": "自動",
             "dry": "除濕模式",
             "fan_only": "僅送風",
             "eco": "節能模式",
@@ -310,6 +306,25 @@
                 "clear_completed": "清理完成",
                 "add_item": "新加入清單",
                 "microphone_tip": "點擊右上角的麥克風圖示，並說\"加入糖果到我的購物清單內\""
+            },
+            "developer-tools": {
+                "tabs": {
+                    "services": {
+                        "title": "服務"
+                    },
+                    "states": {
+                        "title": "狀態"
+                    },
+                    "events": {
+                        "title": "事件"
+                    },
+                    "templates": {
+                        "title": "模板"
+                    },
+                    "mqtt": {
+                        "title": "MQTT"
+                    }
+                }
             },
             "history": {
                 "showing_entries": "選擇要查看的時間",
@@ -571,7 +586,31 @@
                 },
                 "zwave": {
                     "caption": "Z-Wave",
-                    "description": "管理 Z-Wave 網絡"
+                    "description": "管理 Z-Wave 網絡",
+                    "network_management": {
+                        "header": "Z-Wave 網路管理",
+                        "introduction": "執行令命將會影響 Z-Wave 網路。將無法獲得回饋或指令是否成功執行，但可透過 OZW 日誌進行查詢。"
+                    },
+                    "network_status": {
+                        "network_stopped": "Z-Wave 網路已停止",
+                        "network_starting": "正在啟用 Z-Wave 網路...",
+                        "network_starting_note": "根據您的網路規模，啟用可能需要一點時間。",
+                        "network_started": "Z-Wave 網路已啟用",
+                        "network_started_note_some_queried": "已查詢喚醒之節點。睡眠中節點將於喚醒後進行查詢。",
+                        "network_started_note_all_queried": "已查詢所有節點。"
+                    },
+                    "services": {
+                        "start_network": "啟用網路",
+                        "stop_network": "停止網路",
+                        "heal_network": "修復網路",
+                        "test_network": "測試網路",
+                        "soft_reset": "重開機",
+                        "save_config": "儲存設定",
+                        "add_node_secure": "新增節點來源",
+                        "add_node": "新增節點",
+                        "remove_node": "移除節點",
+                        "cancel_command": "取消命令"
+                    }
                 },
                 "users": {
                     "caption": "用戶",
@@ -744,7 +783,6 @@
                 },
                 "current_user": "目前登入身份：{fullName}。",
                 "is_owner": "你為擁有者。",
-                "logout": "登出",
                 "change_password": {
                     "header": "變更密碼",
                     "current_password": "目前密碼",
@@ -1000,7 +1038,7 @@
                             "morning_commute": "晨間通勤",
                             "commute_home": "返家通勤",
                             "entertainment": "視聽室",
-                            "activity": "活動",
+                            "activity": "模式",
                             "hdmi_input": "HDMI 輸入",
                             "hdmi_switcher": "HDMI 切換器",
                             "volume": "音量",
@@ -1018,7 +1056,6 @@
         },
         "sidebar": {
             "log_out": "登出",
-            "developer_tools": "開發工具",
             "external_app_configuration": "App 設定"
         },
         "common": {
@@ -1122,7 +1159,8 @@
                 "fan_mode": "風速模式",
                 "swing_mode": "擺動模式",
                 "away_mode": "外出模式",
-                "aux_heat": "輔助暖氣"
+                "aux_heat": "輔助暖氣",
+                "preset_mode": "預置"
             },
             "lock": {
                 "code": "密碼",
@@ -1266,7 +1304,17 @@
             "fan_mode": {
                 "off": "關閉",
                 "on": "開啟",
-                "auto": "自動模式"
+                "auto": "自動"
+            },
+            "preset_mode": {
+                "none": "無",
+                "eco": "節能",
+                "away": "離家",
+                "boost": "全速",
+                "comfort": "舒適",
+                "home": "在家",
+                "sleep": "睡眠",
+                "activity": "活動"
             }
         }
     },

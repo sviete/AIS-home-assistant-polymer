@@ -9,9 +9,6 @@ cd "$(dirname "$0")/.."
 # Install node modules
 yarn install
 
-# Verify everything is ok
-# tsc
-
 script/build_frontend
 
 rm -rf dist

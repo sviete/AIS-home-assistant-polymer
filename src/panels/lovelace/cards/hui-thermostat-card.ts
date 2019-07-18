@@ -17,12 +17,13 @@ import applyThemesOnElement from "../../../common/dom/apply_themes_on_element";
 import computeStateName from "../../../common/entity/compute_state_name";
 
 import { hasConfigOrEntityChanged } from "../common/has-changed";
-import { HomeAssistant, ClimateEntity } from "../../../types";
+import { HomeAssistant } from "../../../types";
 import { LovelaceCard, LovelaceCardEditor } from "../types";
 import { loadRoundslider } from "../../../resources/jquery.roundslider.ondemand";
 import { UNIT_F } from "../../../common/const";
 import { fireEvent } from "../../../common/dom/fire_event";
 import { ThermostatCardConfig } from "./types";
+import { ClimateEntity, HvacMode } from "../../../data/climate";
 
 const thermostatConfig = {
   radius: 150,
@@ -35,16 +36,14 @@ const thermostatConfig = {
   animation: false,
 };
 
-const modeIcons = {
-  auto: "hass:autorenew",
-  manual: "hass:cursor-pointer",
+const modeIcons: { [mode in HvacMode]: string } = {
+  auto: "hass:calendar-repeat",
+  heat_cool: "hass:autorenew",
   heat: "hass:fire",
   cool: "hass:snowflake",
   off: "hass:power",
   fan_only: "hass:fan",
-  eco: "hass:leaf",
   dry: "hass:water-percent",
-  idle: "hass:power-sleep",
 };
 
 @customElement("hui-thermostat-card")
@@ -109,9 +108,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
       `;
     }
 
-    const mode = modeIcons[stateObj.attributes.operation_mode || ""]
-      ? stateObj.attributes.operation_mode!
-      : "unknown-mode";
+    const mode = stateObj.state in modeIcons ? stateObj.state : "unknown-mode";
     return html`
       ${this.renderStyle()}
       <ha-card
@@ -146,11 +143,23 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
             </div>
             <div class="climate-info">
             <div id="set-temperature"></div>
-            <div class="current-mode">${this.hass!.localize(
-              `state.climate.${stateObj.state}`
-            )}</div>
+            <div class="current-mode">
+              ${this.hass!.localize(`state.climate.${stateObj.state}`)}
+              ${
+                stateObj.attributes.preset_mode
+                  ? html`
+                      -
+                      ${this.hass!.localize(
+                        `state_attributes.climate.preset_mode.${
+                          stateObj.attributes.preset_mode
+                        }`
+                      ) || stateObj.attributes.preset_mode}
+                    `
+                  : ""
+              }
+            </div>
             <div class="modes">
-              ${(stateObj.attributes.operation_list || []).map((modeItem) =>
+              ${stateObj.attributes.hvac_modes.map((modeItem) =>
                 this._renderIcon(modeItem, mode)
               )}
             </div>
@@ -195,9 +204,10 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
       !changedProps.has("_jQuery") &&
       (!oldHass || oldHass.states[this._config.entity] !== stateObj)
     ) {
-      const [sliderValue, uiValue] = this._genSliderValue(stateObj);
+      const [sliderValue, uiValue, sliderType] = this._genSliderValue(stateObj);
 
       this._jQuery("#thermostat", this.shadowRoot).roundSlider({
+        sliderType,
         value: sliderValue,
       });
       this._updateSetTemp(uiValue);
@@ -205,7 +215,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
   }
 
   private get _stepSize(): number {
-    const stateObj = this.hass!.states[this._config!.entity];
+    const stateObj = this.hass!.states[this._config!.entity] as ClimateEntity;
 
     if (stateObj.attributes.target_temp_step) {
       return stateObj.attributes.target_temp_step;
@@ -241,20 +251,14 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
     this._roundSliderStyle = loaded.roundSliderStyle;
     this._jQuery = loaded.jQuery;
 
-    const _sliderType =
-      stateObj.attributes.target_temp_low &&
-      stateObj.attributes.target_temp_high
-        ? "range"
-        : "min-range";
-
-    const [sliderValue, uiValue] = this._genSliderValue(stateObj);
+    const [sliderValue, uiValue, sliderType] = this._genSliderValue(stateObj);
 
     this._jQuery("#thermostat", this.shadowRoot).roundSlider({
       ...thermostatConfig,
       radius,
       min: stateObj.attributes.min_temp,
       max: stateObj.attributes.max_temp,
-      sliderType: _sliderType,
+      sliderType,
       change: (value) => this._setTemperature(value),
       drag: (value) => this._dragEvent(value),
       value: sliderValue,
@@ -263,7 +267,10 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
     this._updateSetTemp(uiValue);
   }
 
-  private _genSliderValue(stateObj: ClimateEntity): [string | number, string] {
+  private _genSliderValue(
+    stateObj: ClimateEntity
+  ): [string | number, string, string] {
+    let sliderType: string;
     let sliderValue: string | number;
     let uiValue: string;
 
@@ -271,6 +278,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
       stateObj.attributes.target_temp_low &&
       stateObj.attributes.target_temp_high
     ) {
+      sliderType = "range";
       sliderValue = `${stateObj.attributes.target_temp_low}, ${
         stateObj.attributes.target_temp_high
       }`;
@@ -282,6 +290,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
         false
       );
     } else {
+      sliderType = "min-range";
       sliderValue = stateObj.attributes.temperature;
       uiValue =
         stateObj.attributes.temperature !== null
@@ -289,7 +298,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
           : "";
     }
 
-    return [sliderValue, uiValue];
+    return [sliderValue, uiValue, sliderType];
   }
 
   private _updateSetTemp(value: string): void {
@@ -348,9 +357,9 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
   }
 
   private _handleModeClick(e: MouseEvent): void {
-    this.hass!.callService("climate", "set_operation_mode", {
+    this.hass!.callService("climate", "set_hvac_mode", {
       entity_id: this._config!.entity,
-      operation_mode: (e.currentTarget as any).mode,
+      hvac_mode: (e.currentTarget as any).mode,
     });
   }
 
@@ -394,7 +403,8 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
           position: relative;
           overflow: hidden;
         }
-        .auto {
+        .auto,
+        .heat_cool {
           --mode-color: var(--auto-color);
         }
         .cool {
