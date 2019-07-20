@@ -58,8 +58,8 @@ class HaPanelDevInfo extends LitElement {
         </p>
         <p class="develop">
           <a href="https://www.ai-speaker.com" target="_blank">
-            Rozwijane w ramach projektu AI-Speaker.com na bazie Home Assistant.
-          </a>
+            Oprogramowanie rozwijane w ramach projektu AI-Speaker.com </a
+          >.
         </p>
         <p>
           Kod źródłowy opublikowany na licencji Apache 2.0<br />
@@ -68,19 +68,18 @@ class HaPanelDevInfo extends LitElement {
             >server</a
           >
           &mdash;
-          <a href="https://github.com/sviete/AIS-home-assistant" target="_blank"
+          <a
+            href="https://github.com/sviete/AIS-home-assistant-polymer"
+            target="_blank"
             >frontend-ui</a
           >
         </p>
         <p>
-          Built using
-          <a href="https://www.python.org">Python 3</a>,
+          Zbudowane na bazie
+          <a href="https://www.home-assistant.io/" target="_blank"
+            >Home Assistant</a
+          >, <a href="https://www.python.org" target="_blank">Python 3</a>,
           <a href="https://www.polymer-project.org" target="_blank">Polymer</a>,
-          Icons by
-          <a href="https://www.google.com/design/icons/" target="_blank"
-            >Google</a
-          >
-          and
           <a href="https://MaterialDesignIcons.com" target="_blank"
             >MaterialDesignIcons.com</a
           >.

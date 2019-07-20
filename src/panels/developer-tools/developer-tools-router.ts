@@ -44,6 +44,10 @@ class DeveloperToolsRouter extends HassRouterPage {
         tag: "developer-tools-template",
         load: () => import("./template/developer-tools-template"),
       },
+      console: {
+        tag: "developer-tools-console",
+        load: () => import("./console/developer-tools-console"),
+      },
     },
   };
 
