@@ -7,12 +7,8 @@
         "history": "Historial",
         "mailbox": "Bústia",
         "shopping_list": "Llista de la compra",
-        "dev-services": "Serveis",
-        "dev-states": "Estats",
-        "dev-events": "Esdeveniments",
-        "dev-templates": "Plantilles",
-        "dev-mqtt": "MQTT",
         "dev-info": "Informació",
+        "developer_tools": "Eines per a desenvolupadors",
         "calendar": "Calendari",
         "profile": "Perfil"
     },
@@ -145,7 +141,8 @@
             "high_demand": "Alta potència",
             "heat_pump": "Bomba de calor",
             "gas": "Gas",
-            "manual": "Manual"
+            "manual": "Manual",
+            "heat_cool": "Escalfar\/Refredar"
         },
         "configurator": {
             "configure": "Configurar",
@@ -311,6 +308,28 @@
                 "add_item": "Afegir article",
                 "microphone_tip": "Clica el micròfon a la part superior dreta i digues \"Add candy to my shopping list\""
             },
+            "developer-tools": {
+                "tabs": {
+                    "services": {
+                        "title": "Serveis"
+                    },
+                    "states": {
+                        "title": "Estats"
+                    },
+                    "events": {
+                        "title": "Esdeveniments"
+                    },
+                    "templates": {
+                        "title": "Plantilles"
+                    },
+                    "mqtt": {
+                        "title": "MQTT"
+                    },
+                    "info": {
+                        "title": "Informació"
+                    }
+                }
+            },
             "history": {
                 "showing_entries": "Mostrant entrades de",
                 "period": "Període"
@@ -338,7 +357,7 @@
                             "validation": {
                                 "heading": "Validació de la configuració",
                                 "introduction": "Valida la configuració si recentment has fet algun canvi a la configuració i vols assegurar-te de que no té problemes.",
-                                "check_config": "Comprovar la configuració",
+                                "check_config": "Comprova la configuració",
                                 "valid": "La configuració és vàlida!",
                                 "invalid": "La configuració és invàlida"
                             },
@@ -353,8 +372,8 @@
                             "server_management": {
                                 "heading": "Gestió del servidor",
                                 "introduction": "Controla el servidor de Home Assistant... des de Home Assistant.",
-                                "restart": "Reiniciar",
-                                "stop": "Aturar"
+                                "restart": "Reinicia",
+                                "stop": "Atura"
                             },
                             "core_config": {
                                 "edit_requires_storage": "L'editor està desactivat ja que la configuració es troba a configuration.yaml.",
@@ -379,7 +398,7 @@
                     "description": "Personalitza les entitats",
                     "picker": {
                         "header": "Personalització",
-                        "introduction": "Modificació dels atributs d'entitat. Les personalitzacions afegides\/modificades apareixeran immediatament. Les personalitzacions eliminades tindran efecte quan l'entitat s'actualitzi."
+                        "introduction": "Personalitza els atributs de les entitats al teu gust. Les personalitzacions afegides\/modificades apareixeran immediatament, les que s'hagin eliminat tindran efecte quan l'entitat s'actualitzi."
                     }
                 },
                 "automation": {
@@ -571,7 +590,31 @@
                 },
                 "zwave": {
                     "caption": "Z-Wave",
-                    "description": "Gestiona la teva xarxa Z-Wave"
+                    "description": "Gestiona la teva xarxa Z-Wave",
+                    "network_management": {
+                        "header": "Gestió de la xarxa Z-Wave",
+                        "introduction": "Executa ordres a la xarxa Z-Wave. No es rebrà cap resposta si la majoria de les ordres han tingut èxit, però pots consultar el registre OZW."
+                    },
+                    "network_status": {
+                        "network_stopped": "Xarxa Z-Wave aturada",
+                        "network_starting": "Iniciant xarxa Z-Wave...",
+                        "network_starting_note": "Això pot trigar una estona en funció de la mida de la teva xarxa.",
+                        "network_started": "Xarxa Z-Wave iniciada",
+                        "network_started_note_some_queried": "S'han consultat els nodes desperts. Els nodes adormits es consultaran quan es despertin.",
+                        "network_started_note_all_queried": "S'han consultat tots els nodes."
+                    },
+                    "services": {
+                        "start_network": "Inicia la xarxa",
+                        "stop_network": "Atura la xarxa",
+                        "heal_network": "Guareix la xarxa",
+                        "test_network": "Prova la xarxa",
+                        "soft_reset": "Reinici suau",
+                        "save_config": "Desa la configuració",
+                        "add_node_secure": "Afegeix node amb seguretat",
+                        "add_node": "Afegeix node",
+                        "remove_node": "Elimina node",
+                        "cancel_command": "Cancel·lar ordre"
+                    }
                 },
                 "users": {
                     "caption": "Usuaris",
@@ -744,7 +787,6 @@
                 },
                 "current_user": "Has iniciat la sessió com a {fullName}.",
                 "is_owner": "Ets propietari.",
-                "logout": "Tancar sessió",
                 "change_password": {
                     "header": "Canvi de contrasenya",
                     "current_password": "Contrasenya actual",
@@ -765,7 +807,8 @@
                     "step_done": "Configuració feta per a {step}",
                     "close": "Tanca",
                     "submit": "Envia"
-                }
+                },
+                "logout": "Tanca la sessió"
             },
             "page-authorize": {
                 "initializing": "S'està inicialitzant",
@@ -1018,7 +1061,6 @@
         },
         "sidebar": {
             "log_out": "Desconnectar",
-            "developer_tools": "Eines per a desenvolupadors",
             "external_app_configuration": "Configuració de l’aplicació"
         },
         "common": {
@@ -1122,7 +1164,8 @@
                 "fan_mode": "Mode ventilació",
                 "swing_mode": "Mode oscil·lació",
                 "away_mode": "Mode absent",
-                "aux_heat": "Calefactor auxiliar"
+                "aux_heat": "Calefactor auxiliar",
+                "preset_mode": "Programat"
             },
             "lock": {
                 "code": "Codi",
@@ -1267,6 +1310,16 @@
                 "off": "Desactivat",
                 "on": "Activat",
                 "auto": "Automàtic"
+            },
+            "preset_mode": {
+                "none": "Cap",
+                "eco": "Econòmic",
+                "away": "Absent",
+                "boost": "Incrementat",
+                "comfort": "Confort",
+                "home": "A casa",
+                "sleep": "Dormint",
+                "activity": "Activitat"
             }
         }
     },

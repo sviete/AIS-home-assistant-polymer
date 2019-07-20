@@ -7,12 +7,8 @@
         "history": "",
         "mailbox": "",
         "shopping_list": "Lista de compras",
-        "dev-services": "Servicios",
-        "dev-states": "Estados",
-        "dev-events": "Eventos",
-        "dev-templates": "Plantillas",
-        "dev-mqtt": "",
         "dev-info": "Información",
+        "developer_tools": "Herramientas para desarrolladores",
         "calendar": "Calendario",
         "profile": "Perfil"
     },
@@ -310,6 +306,25 @@
                 "clear_completed": "Borrar completados",
                 "add_item": "Agregar elemento",
                 "microphone_tip": "Toque el micrófono en la esquina superior derecha y diga \"Agregar dulces a mi lista de compras\""
+            },
+            "developer-tools": {
+                "tabs": {
+                    "services": {
+                        "title": "Servicios"
+                    },
+                    "states": {
+                        "title": "Estados"
+                    },
+                    "events": {
+                        "title": "Eventos"
+                    },
+                    "templates": {
+                        "title": "Plantillas"
+                    },
+                    "mqtt": {
+                        "title": ""
+                    }
+                }
             },
             "history": {
                 "showing_entries": "Mostrando registros del",
@@ -619,7 +634,8 @@
                         "firmware": "Firmware: {version}",
                         "device_unavailable": "dispositivo no disponible",
                         "entity_unavailable": "entidad no disponible",
-                        "no_area": "Ninguna área"
+                        "no_area": "Ninguna área",
+                        "hub": "Conectado a través de"
                     },
                     "config_flow": {
                         "external_step": {
@@ -743,7 +759,6 @@
                 },
                 "current_user": "Actualmente estás conectado como {fullName} .",
                 "is_owner": "Eres propietario.",
-                "logout": "Cerrar sesión",
                 "change_password": {
                     "header": "Cambiar contraseña",
                     "current_password": "Contraseña actual",
@@ -970,11 +985,53 @@
                     "refresh": "Actualizar"
                 },
                 "reload_lovelace": "Recargar Lovelace"
+            },
+            "page-demo": {
+                "cards": {
+                    "demo": {
+                        "demo_by": "por {name}",
+                        "next_demo": "Siguiente demostración",
+                        "introduction": "¡Bienvenido a casa! Ha llegado a la demostración de Home Assistant donde mostramos las mejores interfaces de usuario creadas por nuestra comunidad.",
+                        "learn_more": "Aprenda más sobre Home Assistant"
+                    }
+                },
+                "config": {
+                    "arsaboo": {
+                        "names": {
+                            "upstairs": "Piso de arriba",
+                            "family_room": "Habitación familiar",
+                            "kitchen": "Cocina",
+                            "patio": "Patio",
+                            "hallway": "Pasillo",
+                            "master_bedroom": "Recamara principal",
+                            "left": "Izquierda",
+                            "right": "Derecha",
+                            "mirror": "Espejo"
+                        },
+                        "labels": {
+                            "lights": "Luces",
+                            "information": "Información",
+                            "morning_commute": "Viaje de mañana",
+                            "commute_home": "Viaje a casa",
+                            "entertainment": "Entretenimiento",
+                            "activity": "Actividad",
+                            "hdmi_input": "Entrada HDMI",
+                            "hdmi_switcher": "Conmutador HDMI",
+                            "volume": "Volumen",
+                            "total_tv_time": "Tiempo total de TV",
+                            "turn_tv_off": "Apagar la televisión",
+                            "air": "Aire"
+                        },
+                        "unit": {
+                            "watching": "viendo",
+                            "minutes_abbr": "mín."
+                        }
+                    }
+                }
             }
         },
         "sidebar": {
             "log_out": "Cerrar sesión",
-            "developer_tools": "Herramientas para desarrolladores",
             "external_app_configuration": "Configuración de la aplicación"
         },
         "common": {
@@ -1078,7 +1135,8 @@
                 "fan_mode": "Modo del ventilador",
                 "swing_mode": "Modo de oscilación",
                 "away_mode": "Fuera de Casa",
-                "aux_heat": "Calor auxiliar"
+                "aux_heat": "Calor auxiliar",
+                "preset_mode": "Preestablecido"
             },
             "lock": {
                 "code": "Código",
@@ -1223,6 +1281,16 @@
                 "off": "Apagado",
                 "on": "Encendido",
                 "auto": "Auto"
+            },
+            "preset_mode": {
+                "none": "Ninguno",
+                "eco": "Eco",
+                "away": "Fuera de casa",
+                "boost": "Aumentar",
+                "comfort": "Comodidad",
+                "home": "En Casa",
+                "sleep": "Dormir",
+                "activity": "Actividad"
             }
         }
     },

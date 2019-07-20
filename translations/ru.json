@@ -7,12 +7,8 @@
         "history": "История",
         "mailbox": "Почта",
         "shopping_list": "Список покупок",
-        "dev-services": "Службы",
-        "dev-states": "Состояния",
-        "dev-events": "События",
-        "dev-templates": "Шаблоны",
-        "dev-mqtt": "MQTT",
         "dev-info": "Информация",
+        "developer_tools": "Панель разработчика",
         "calendar": "Календарь",
         "profile": "Профиль"
     },
@@ -133,7 +129,7 @@
         "climate": {
             "off": "Выкл",
             "on": "Вкл",
-            "heat": "Нагрев",
+            "heat": "Обогрев",
             "cool": "Охлаждение",
             "idle": "Бездействие",
             "auto": "Авто",
@@ -145,7 +141,8 @@
             "high_demand": "Большая нагрузка",
             "heat_pump": "Тепловой насос",
             "gas": "Газовый",
-            "manual": "Ручной режим"
+            "manual": "Ручной режим",
+            "heat_cool": "Нагрев \/ Охлаждение"
         },
         "configurator": {
             "configure": "Настроить",
@@ -311,6 +308,28 @@
                 "add_item": "Добавить элемент",
                 "microphone_tip": "Нажмите на микрофон в правом верхнем углу и скажите “Add candy to my shopping list”"
             },
+            "developer-tools": {
+                "tabs": {
+                    "services": {
+                        "title": "Службы"
+                    },
+                    "states": {
+                        "title": "Состояния"
+                    },
+                    "events": {
+                        "title": "События"
+                    },
+                    "templates": {
+                        "title": "Шаблоны"
+                    },
+                    "mqtt": {
+                        "title": "MQTT"
+                    },
+                    "info": {
+                        "title": "О системе"
+                    }
+                }
+            },
             "history": {
                 "showing_entries": "Отображение записей за",
                 "period": "Период"
@@ -327,7 +346,7 @@
             },
             "config": {
                 "header": "Настройка Home Assistant",
-                "introduction": "Здесь можно настроить Ваши компоненты и Home Assistant. Пока что не все можно настроить из интерфейса, но мы работаем над этим.",
+                "introduction": "Здесь можно настроить Home Assistant. Пока что не все настройки доступны из интерфейса, но мы работаем над этим.",
                 "core": {
                     "caption": "Общие",
                     "description": "Проверяйте Ваш файл конфигурации и управляйте сервером",
@@ -571,7 +590,31 @@
                 },
                 "zwave": {
                     "caption": "Z-Wave",
-                    "description": "Управляйте Вашей сетью Z-Wave"
+                    "description": "Управляйте Вашей сетью Z-Wave",
+                    "network_management": {
+                        "header": "Управление сетью Z-Wave",
+                        "introduction": "Управляйте сетью Z-Wave с помощью представленных команд. Информацию о результате выполненных команд Вы можете получить в журнале OZW."
+                    },
+                    "network_status": {
+                        "network_stopped": "Сеть Z-Wave отключена",
+                        "network_starting": "Запуск сети Z-Wave...",
+                        "network_starting_note": "Это может занять некоторое время в зависимости от размера Вашей сети.",
+                        "network_started": "Сеть Z-Wave работает",
+                        "network_started_note_some_queried": "Активные узлы были опрошены. Спящие узлы будут опрошены, когда выйдут из режима сна.",
+                        "network_started_note_all_queried": "Все узлы были опрошены."
+                    },
+                    "services": {
+                        "start_network": "Включить",
+                        "stop_network": "Отключить",
+                        "heal_network": "Исправить сеть",
+                        "test_network": "Тестировать",
+                        "soft_reset": "Сброс",
+                        "save_config": "Сохранить конфигурацию",
+                        "add_node_secure": "Добавить защищенный узел",
+                        "add_node": "Добавить узел",
+                        "remove_node": "Удалить узел",
+                        "cancel_command": "Отменить команду"
+                    }
                 },
                 "users": {
                     "caption": "Пользователи",
@@ -744,7 +787,6 @@
                 },
                 "current_user": "Добро пожаловать, {fullName}! Вы вошли в систему.",
                 "is_owner": "Вы являетесь владельцем.",
-                "logout": "Выйти",
                 "change_password": {
                     "header": "Изменить пароль",
                     "current_password": "Текущий пароль",
@@ -765,7 +807,8 @@
                     "step_done": "Настройка выполнена для {step}",
                     "close": "Закрыть",
                     "submit": "Подтвердить"
-                }
+                },
+                "logout": "Выйти"
             },
             "page-authorize": {
                 "initializing": "Инициализация",
@@ -990,17 +1033,17 @@
                             "patio": "Внутренний дворик",
                             "hallway": "Прихожая",
                             "master_bedroom": "Спальня",
-                            "left": "Влево",
-                            "right": "Вправо",
+                            "left": "Левая сторона",
+                            "right": "Правая сторона",
                             "mirror": "Зеркало"
                         },
                         "labels": {
-                            "lights": "Свет",
+                            "lights": "Освещение",
                             "information": "Информация",
                             "morning_commute": "Утренняя поездка",
                             "commute_home": "Поездка домой",
                             "entertainment": "Развлечения",
-                            "activity": "Активность",
+                            "activity": "Процесс",
                             "hdmi_input": "Вход HDMI",
                             "hdmi_switcher": "Переключатель HDMI",
                             "volume": "Громкость",
@@ -1018,7 +1061,6 @@
         },
         "sidebar": {
             "log_out": "Выход",
-            "developer_tools": "Инструменты разработчика",
             "external_app_configuration": "Настройки приложения"
         },
         "common": {
@@ -1122,7 +1164,8 @@
                 "fan_mode": "Режим вентилятора",
                 "swing_mode": "Режим качания",
                 "away_mode": "Режим ожидания",
-                "aux_heat": "Дополнительный нагрев"
+                "aux_heat": "Дополнительный нагрев",
+                "preset_mode": "Режим"
             },
             "lock": {
                 "code": "Код",
@@ -1267,6 +1310,16 @@
                 "off": "Выкл",
                 "on": "Вкл",
                 "auto": "Авто"
+            },
+            "preset_mode": {
+                "none": "Не выбран",
+                "eco": "Экономия",
+                "away": "Не дома",
+                "boost": "Турбо",
+                "comfort": "Комфорт",
+                "home": "Дома",
+                "sleep": "Сон",
+                "activity": "Активность"
             }
         }
     },
