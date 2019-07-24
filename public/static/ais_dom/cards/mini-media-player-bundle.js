@@ -1,7 +1,7 @@
 (function() {
   "use strict";
   function a() {
-    const b = ma(["<span class=", ">", "</span>"]);
+    const b = sa(["<span class=", ">", "</span>"]);
     return (
       (a = function() {
         return b;
@@ -10,7 +10,7 @@
     );
   }
   function b() {
-    const a = ma(["<span class=", ">", "</span>"]);
+    const a = sa(["<span class=", ">", "</span>"]);
     return (
       (b = function() {
         return a;
@@ -19,7 +19,7 @@
     );
   }
   function c() {
-    const a = ma([
+    const a = sa([
       "\n          <div>\n            <div class='marquee'>\n              ",
       "\n            </div>\n          </div>",
     ]);
@@ -31,7 +31,7 @@
     );
   }
   function d() {
-    const a = ma([
+    const a = sa([
       "\n      <div class='entity__info__media'\n        ?short=",
       "\n        ?short-scroll=",
       "\n        ?scroll=",
@@ -48,7 +48,7 @@
     );
   }
   function e() {
-    const a = ma([
+    const a = sa([
       "\n      <div class='entity__info__name'>\n        ",
       " ",
       "\n      </div>",
@@ -61,7 +61,7 @@
     );
   }
   function f() {
-    const a = ma([
+    const a = sa([
       "\n      <div class='entity__icon'>\n        <ha-icon .icon=",
       "></ha-icon>\n      </div>",
     ]);
@@ -73,7 +73,7 @@
     );
   }
   function g() {
-    const a = ma([
+    const a = sa([
       "\n        <div class='entity__artwork'\n          style='background-image: ",
       ";'\n          ?border=",
       "\n          state=",
@@ -87,7 +87,7 @@
     );
   }
   function h() {
-    const a = ma(["<div class='cover' style='background-image: ", ";'></div>"]);
+    const a = sa(["<div class='cover' style='background-image: ", ";'></div>"]);
     return (
       (h = function() {
         return a;
@@ -96,7 +96,7 @@
     );
   }
   function i() {
-    const a = ma([
+    const a = sa([
       "\n              <mmp-tts\n                .config=",
       "\n                .hass=",
       "\n                .entity=",
@@ -110,9 +110,10 @@
     );
   }
   function j() {
-    const a = ma([
+    const a = sa([
       "\n              <mmp-media-controls\n                .player=",
       "\n                .config=",
+      "\n                .break=",
       ">\n              </mmp-media-controls>\n            ",
     ]);
     return (
@@ -123,7 +124,7 @@
     );
   }
   function k() {
-    const a = ma([
+    const a = sa([
       "\n      <ha-card\n        @click=",
       "\n        class=",
       "\n        artwork=",
@@ -159,7 +160,7 @@
     );
   }
   function l() {
-    const a = ma([
+    const a = sa([
       "\n        :host {\n          display: flex;\n          line-height: 40px;\n          max-height: 40px;\n        }\n        :host([flow]) mmp-media-controls {\n          max-width: unset;\n        }\n        mmp-media-controls {\n          max-width: 200px;\n        }\n        .group-button {\n          height: 34px;\n          width: 34px;\n          min-width: 34px;\n          margin: 3px;\n        }\n        paper-icon-button {\n          min-width: 40px;\n        }\n      ",
     ]);
     return (
@@ -170,7 +171,7 @@
     );
   }
   function m() {
-    const a = ma([
+    const a = sa([
       "\n        <span class='label ellipsis'>\n          ",
       "\n        </span>\n      ",
     ]);
@@ -182,7 +183,7 @@
     );
   }
   function n() {
-    const a = ma([
+    const a = sa([
       "\n        <paper-icon-button\n          .icon=",
       "\n          @click=",
       ">\n        </paper-icon-button>",
@@ -195,7 +196,7 @@
     );
   }
   function o() {
-    const a = ma([
+    const a = sa([
       "\n        <paper-icon-button class='power-button'\n          .icon=",
       "\n          @click=",
       "\n          ?color=",
@@ -209,7 +210,7 @@
     );
   }
   function p() {
-    const a = ma([
+    const a = sa([
       "\n        <paper-icon-button class='group-button'\n          .icon=",
       "\n          ?inactive=",
       "\n          ?color=",
@@ -224,7 +225,7 @@
     );
   }
   function q() {
-    const a = ma([
+    const a = sa([
       "\n        <mmp-sound-menu\n          .player=",
       "\n          .icon=",
       "\n          ?full=",
@@ -238,7 +239,7 @@
     );
   }
   function r() {
-    const a = ma([
+    const a = sa([
       "\n        <mmp-source-menu\n          .player=",
       "\n          .icon=",
       "\n          ?full=",
@@ -252,7 +253,7 @@
     );
   }
   function s() {
-    const a = ma([
+    const a = sa([
       "\n        <mmp-media-controls\n          .player=",
       "\n          .config=",
       ">\n        </mmp-media-controls>\n      ",
@@ -265,7 +266,7 @@
     );
   }
   function t() {
-    const a = ma([
+    const a = sa([
       "\n      ",
       "\n      ",
       "\n      ",
@@ -282,7 +283,7 @@
     );
   }
   function u() {
-    const a = ma([
+    const a = sa([
       "\n        <span class='label ellipsis'>\n          ",
       "\n        </span>\n      ",
     ]);
@@ -294,8 +295,8 @@
     );
   }
   function v() {
-    const a = ma([
-      "\n        :host {\n          display: flex;\n          width: 100%;\n        }\n        .flex {\n          display: flex;\n          flex: 1;\n          justify-content: space-between;\n        }\n        ha-paper-slider {\n          max-width: none;\n          min-width: 100px;\n          width: 100%;\n        }\n        paper-icon-button {\n          min-width: 40px;\n        }\n        .mmp-media-controls__volume {\n          flex: 100;\n          max-height: 40px;\n        }\n        .mmp-media-controls__volume.--buttons {\n          justify-content: left;\n        }\n        .mmp-media-controls__media {\n          direction: ltr;\n          max-width: calc(40px * 3);\n          margin-right: 0;\n          margin-left: auto;\n        }\n        .mmp-media-controls__media[flow] {\n          max-width: none;\n        }\n        .mmp-media-controls__shuffle {\n          flex: 3;\n          flex-shrink: 200;\n          justify-content: center;\n        }\n        .mmp-media-controls__shuffle paper-icon-button {\n          height: 36px;\n          width: 36px;\n          min-width: 36px;\n          margin: 2px;\n        }\n      ",
+    const a = sa([
+      "\n        :host {\n          display: flex;\n          width: 100%;\n        }\n        .flex {\n          display: flex;\n          flex: 1;\n          justify-content: space-between;\n        }\n        ha-slider {\n          max-width: none;\n          min-width: 100px;\n          width: 100%;\n        }\n        paper-icon-button {\n          min-width: 40px;\n        }\n        .mmp-media-controls__volume {\n          flex: 100;\n          max-height: 40px;\n        }\n        .mmp-media-controls__volume.--buttons {\n          justify-content: left;\n        }\n        .mmp-media-controls__media {\n          direction: ltr;\n          max-width: calc(40px * 3);\n          margin-right: 0;\n          margin-left: auto;\n        }\n        .mmp-media-controls__media[flow] {\n          max-width: none;\n        }\n        .mmp-media-controls__shuffle {\n          flex: 3;\n          flex-shrink: 200;\n          justify-content: center;\n        }\n        .mmp-media-controls__shuffle paper-icon-button {\n          height: 36px;\n          width: 36px;\n          min-width: 36px;\n          margin: 2px;\n        }\n      ",
     ]);
     return (
       (v = function() {
@@ -305,7 +306,7 @@
     );
   }
   function w() {
-    const a = ma([
+    const a = sa([
       "\n          <paper-icon-button\n            @click=",
       "\n            .icon=",
       ">\n          </paper-icon-button>\n        ",
@@ -318,7 +319,7 @@
     );
   }
   function x() {
-    const a = ma([
+    const a = sa([
       "\n          <paper-icon-button\n            @click=",
       "\n            .icon=",
       ">\n          </paper-icon-button>\n        ",
@@ -331,7 +332,7 @@
     );
   }
   function y() {
-    const a = ma([
+    const a = sa([
       "\n          <paper-icon-button\n            @click=",
       "\n            .icon=",
       ">\n          </paper-icon-button>\n        ",
@@ -344,7 +345,7 @@
     );
   }
   function z() {
-    const a = ma([
+    const a = sa([
       "\n          <paper-icon-button\n            @click=",
       "\n            .icon=",
       ">\n          </paper-icon-button>\n        ",
@@ -357,7 +358,7 @@
     );
   }
   function A() {
-    const a = ma([
+    const a = sa([
       "\n      <div class='mmp-media-controls__volume --buttons flex'>\n        ",
       "\n        <paper-icon-button\n          @click=",
       "\n          .icon=",
@@ -373,16 +374,16 @@
     );
   }
   function B() {
-    const a = ma([
+    const a = sa([
       "\n      <div class='mmp-media-controls__volume --slider flex'>\n        ",
-      "\n        <ha-paper-slider\n          @change=",
+      "\n        <ha-slider\n          @change=",
       "\n          @click=",
       "\n          ?disabled=",
       "\n          min=",
       " max=",
       "\n          value=",
       "\n          dir=",
-      "\n          ignore-bar-touch pin>\n        </ha-paper-slider>\n      </div>",
+      "\n          ignore-bar-touch pin>\n        </ha-slider>\n      </div>",
     ]);
     return (
       (B = function() {
@@ -392,7 +393,16 @@
     );
   }
   function C() {
-    const a = ma([
+    const a = sa([""]);
+    return (
+      (C = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function D() {
+    const a = sa([
       "\n        <div class='flex mmp-media-controls__media' ?flow=",
       ">\n          <paper-icon-button\n            @click=",
       "\n            .icon=",
@@ -403,20 +413,6 @@
       ">\n          </paper-icon-button>\n        </div>\n      ",
     ]);
     return (
-      (C = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function D() {
-    const a = ma([
-      "\n        <div class='flex mmp-media-controls__shuffle'>\n          <paper-icon-button\n            class='shuffle-button'\n            @click=",
-      "\n            .icon=",
-      "\n            ?color=",
-      ">\n          </paper-icon-button>\n        </div>\n      ",
-    ]);
-    return (
       (D = function() {
         return a;
       }),
@@ -424,7 +420,7 @@
     );
   }
   function E() {
-    const a = ma(["\n      ", "\n      ", "\n      ", "\n    "]);
+    const a = sa([""]);
     return (
       (E = function() {
         return a;
@@ -433,8 +429,11 @@
     );
   }
   function F() {
-    const a = ma([
-      "\n      :host {\n        max-width: 120px;\n        min-width: 40px;\n      }\n      :host([full]) {\n        max-width: none;\n      }\n    ",
+    const a = sa([
+      "\n        <div class='flex mmp-media-controls__shuffle'>\n          <paper-icon-button\n            class='shuffle-button'\n            @click=",
+      "\n            .icon=",
+      "\n            ?color=",
+      ">\n          </paper-icon-button>\n        </div>\n      ",
     ]);
     return (
       (F = function() {
@@ -444,14 +443,7 @@
     );
   }
   function G() {
-    const a = ma([
-      "\n      <mmp-dropdown\n        @change=",
-      "\n        .items=",
-      "\n        .label=",
-      "\n        .selected=",
-      "\n        .icon=",
-      "\n      />\n    ",
-    ]);
+    const a = sa([""]);
     return (
       (G = function() {
         return a;
@@ -460,9 +452,7 @@
     );
   }
   function H() {
-    const a = ma([
-      "\n      :host {\n        max-width: 120px;\n        min-width: 40px;\n      }\n      :host([full]) {\n        max-width: none;\n      }\n    ",
-    ]);
+    const a = sa(["\n      ", "\n      ", "\n      ", "\n    "]);
     return (
       (H = function() {
         return a;
@@ -471,13 +461,8 @@
     );
   }
   function I() {
-    const a = ma([
-      "\n      <mmp-dropdown\n        @change=",
-      "\n        .items=",
-      "\n        .label=",
-      "\n        .selected=",
-      "\n        .icon=",
-      "\n      />\n    ",
+    const a = sa([
+      "\n      :host {\n        max-width: 120px;\n        min-width: 40px;\n      }\n      :host([full]) {\n        max-width: none;\n      }\n    ",
     ]);
     return (
       (I = function() {
@@ -487,8 +472,13 @@
     );
   }
   function J() {
-    const a = ma([
-      "\n      .mmp-progress {\n        cursor: pointer;\n        left: 0; right: 0; bottom: 0;\n        position: absolute;\n        pointer-events: auto;\n        min-height: 10px;\n      }\n      .mmp-progress__duration {\n        display: flex;\n        justify-content: space-between;\n        font-size: .8em;\n        margin: 8px calc(var(--ha-card-border-radius, 4) / 2);\n        margin-top: 0;\n        padding: 0 6px;\n      }\n      paper-progress {\n        height: var(--paper-progress-height, 4px);\n        bottom: 0;\n        position: absolute;\n        width: 100%;\n        --paper-progress-active-color: var(--mmp-accent-color);\n        --paper-progress-container-color: rgba(100,100,100,.15);\n        --paper-progress-transition-duration: 1s;\n        --paper-progress-transition-timing-function: linear;\n        --paper-progress-transition-delay: 0s;\n      }\n      .mmp-progress[paused] paper-progress {\n        --paper-progress-active-color: var(--disabled-text-color, rgba(150,150,150,.5));\n      }\n    ",
+    const a = sa([
+      "\n      <mmp-dropdown\n        @change=",
+      "\n        .items=",
+      "\n        .label=",
+      "\n        .selected=",
+      "\n        .icon=",
+      "\n      />\n    ",
     ]);
     return (
       (J = function() {
@@ -498,7 +488,9 @@
     );
   }
   function K() {
-    const a = ma([""]);
+    const a = sa([
+      "\n      :host {\n        max-width: 120px;\n        min-width: 40px;\n      }\n      :host([full]) {\n        max-width: none;\n      }\n    ",
+    ]);
     return (
       (K = function() {
         return a;
@@ -507,10 +499,13 @@
     );
   }
   function L() {
-    const a = ma([
-      "\n            <div class='mmp-progress__duration'>\n              <span>",
-      "</span>\n              <span>",
-      "</span>\n            </div>\n          ",
+    const a = sa([
+      "\n      <mmp-dropdown\n        @change=",
+      "\n        .items=",
+      "\n        .label=",
+      "\n        .selected=",
+      "\n        .icon=",
+      "\n      />\n    ",
     ]);
     return (
       (L = function() {
@@ -520,13 +515,8 @@
     );
   }
   function M() {
-    const a = ma([
-      "\n        <div class='mmp-progress'\n          @click=",
-      "\n          ?paused=",
-      ">\n          ",
-      "\n          <paper-progress class='transiting'\n            value=",
-      "\n            max=",
-      ">\n          </paper-progress>\n        </div>\n      ",
+    const a = sa([
+      "\n      .mmp-progress {\n        cursor: pointer;\n        left: 0; right: 0; bottom: 0;\n        position: absolute;\n        pointer-events: auto;\n        min-height: 10px;\n      }\n      .mmp-progress__duration {\n        display: flex;\n        justify-content: space-between;\n        font-size: .8em;\n        margin: 8px calc(var(--ha-card-border-radius, 4px) / 2);\n        margin-top: 0;\n        padding: 0 6px;\n      }\n      paper-progress {\n        height: var(--paper-progress-height, 4px);\n        bottom: 0;\n        position: absolute;\n        width: 100%;\n        --paper-progress-active-color: var(--mmp-accent-color);\n        --paper-progress-container-color: rgba(100,100,100,.15);\n        --paper-progress-transition-duration: 1s;\n        --paper-progress-transition-timing-function: linear;\n        --paper-progress-transition-delay: 0s;\n      }\n      .mmp-progress[paused] paper-progress {\n        --paper-progress-active-color: var(--disabled-text-color, rgba(150,150,150,.5));\n      }\n    ",
     ]);
     return (
       (M = function() {
@@ -536,9 +526,7 @@
     );
   }
   function N() {
-    const a = ma([
-      "\n      :host {\n        align-items: center;\n        margin-left: 8px;\n        display: flex;\n      }\n      .mmp-tts__input {\n        cursor: text;\n        flex: 1;\n        margin-right: 8px;\n        --paper-input-container-input: {\n          font-size: 1em;\n        };\n      }\n      ha-card[rtl] .mmp-tts__input {\n        margin-right: auto;\n        margin-left: 8px;\n      }\n      .mmp-tts__button {\n        margin: 0;\n        padding: .4em;\n      }\n      paper-input {\n        opacity: .75;\n        --paper-input-container-color: var(--primary-text-color);\n        --paper-input-container-focus-color: var(--primary-text-color);\n        --paper-input-container: {\n          padding: 0;\n        };\n      }\n      paper-input[focused] {\n        opacity: 1;\n      }\n\n      ha-card[artwork*='cover'][has-artwork] paper-input {\n        --paper-input-container-focus-color: #FFFFFF;\n      }\n      ha-card[artwork*='cover'][has-artwork] paper-input {\n        --paper-input-container-color: #FFFFFF;\n        --paper-input-container-input-color: #FFFFFF;\n      }\n    ",
-    ]);
+    const a = sa([""]);
     return (
       (N = function() {
         return a;
@@ -547,11 +535,10 @@
     );
   }
   function O() {
-    const a = ma([
-      "\n      <paper-input id=\"tts-input\" class='mmp-tts__input'\n        no-label-float\n        placeholder=",
-      "...\n        @click=",
-      ">\n      </paper-input>\n      <div>\n        <mwc-button class='mmp-tts__button' @click=",
-      ">\n          SEND\n        </mwc-button>\n      </div>\n    ",
+    const a = sa([
+      "\n            <div class='mmp-progress__duration'>\n              <span>",
+      "</span>\n              <span>",
+      "</span>\n            </div>\n          ",
     ]);
     return (
       (O = function() {
@@ -561,8 +548,13 @@
     );
   }
   function P() {
-    const a = ma([
-      "\n        .mmp-shortcuts__buttons {\n          box-sizing: border-box;\n          display: flex;\n          flex-wrap: wrap;\n          margin-top: 8px;\n        }\n        .mmp-shortcuts__button {\n          --mdc-theme-primary: transparent;\n          box-sizing: border-box;\n          margin: 4px;\n          min-width: 0;\n          min-width: calc(50% - 8px);\n          flex: 1;\n          overflow: hidden;\n          transition: background .5s;\n          background: rgba(255,255,255,0.25);\n          box-shadow:\n            0px 3px 1px -2px rgba(0, 0, 0, 0.2),\n            0px 2px 2px 0px rgba(0, 0, 0, 0.14),\n            0px 1px 5px 0px rgba(0,0,0,.12);\n        }\n        .mmp-shortcuts__button[color] {\n          background: var(--mmp-active-color);\n        }\n        .mmp-shortcuts__button[columns='0'] {\n          min-width: calc(100% - 8px);\n        }\n        .mmp-shortcuts__button[columns='3'] {\n          min-width: calc(33.33% - 8px);\n        }\n        .mmp-shortcuts__button[columns='4'] {\n          min-width: calc(25% - 8px);\n        }\n        .mmp-shortcuts__button > span {\n          line-height: 24px;\n          text-transform: initial;\n        }\n        .mmp-shortcuts__button > *:nth-child(2) {\n          margin-left: 4px;\n        }\n      ",
+    const a = sa([
+      "\n        <div class='mmp-progress'\n          @click=",
+      "\n          ?paused=",
+      ">\n          ",
+      "\n          <paper-progress class='transiting'\n            value=",
+      "\n            max=",
+      ">\n          </paper-progress>\n        </div>\n      ",
     ]);
     return (
       (P = function() {
@@ -572,7 +564,9 @@
     );
   }
   function Q() {
-    const a = ma(["\n      ", "\n      ", "\n    "]);
+    const a = sa([
+      "\n      :host {\n        align-items: center;\n        margin-left: 8px;\n        display: flex;\n      }\n      .mmp-tts__input {\n        cursor: text;\n        flex: 1;\n        margin-right: 8px;\n        --paper-input-container-input: {\n          font-size: 1em;\n        };\n      }\n      ha-card[rtl] .mmp-tts__input {\n        margin-right: auto;\n        margin-left: 8px;\n      }\n      .mmp-tts__button {\n        margin: 0;\n        height: 30px;\n        padding: 0 .4em;\n      }\n      paper-input {\n        opacity: .75;\n        --paper-input-container-color: var(--mmp-text-color);\n        --paper-input-container-focus-color: var(--mmp-text-color);\n        --paper-input-container: {\n          padding: 0;\n        };\n      }\n      paper-input[focused] {\n        opacity: 1;\n      }\n\n      ha-card[artwork*='cover'][has-artwork] paper-input {\n        --paper-input-container-focus-color: #FFFFFF;\n      }\n      ha-card[artwork*='cover'][has-artwork] paper-input {\n        --paper-input-container-color: #FFFFFF;\n        --paper-input-container-input-color: #FFFFFF;\n      }\n    ",
+    ]);
     return (
       (Q = function() {
         return a;
@@ -581,7 +575,12 @@
     );
   }
   function R() {
-    const a = ma(['<span class="ellipsis">', "</span>"]);
+    const a = sa([
+      "\n      <paper-input id=\"tts-input\" class='mmp-tts__input'\n        no-label-float\n        placeholder=",
+      "...\n        @click=",
+      ">\n      </paper-input>\n      <mmp-button class='mmp-tts__button' @click=",
+      ">\n        <span>SEND</span>\n      </mmp-button>\n    ",
+    ]);
     return (
       (R = function() {
         return a;
@@ -590,7 +589,9 @@
     );
   }
   function S() {
-    const a = ma(["<iron-icon .icon=", "></iron-icon>"]);
+    const a = sa([
+      "\n        .mmp-shortcuts__buttons {\n          box-sizing: border-box;\n          display: flex;\n          flex-wrap: wrap;\n          margin-top: 8px;\n        }\n        .mmp-shortcuts__button {\n          min-width: calc(50% - 8px);\n          flex: 1;\n        }\n        .mmp-shortcuts__button > div {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          width: 100%;\n        }\n        .mmp-shortcuts__button > div[align='left'] {\n          justify-content: flex-start;\n        }\n        .mmp-shortcuts__button > div[align='right'] {\n          justify-content: flex-end;\n        }\n        .mmp-shortcuts__button[columns='1'] {\n          min-width: calc(100% - 8px);\n        }\n        .mmp-shortcuts__button[columns='3'] {\n          min-width: calc(33.33% - 8px);\n        }\n        .mmp-shortcuts__button[columns='4'] {\n          min-width: calc(25% - 8px);\n        }\n        .mmp-shortcuts__button[columns='5'] {\n          min-width: calc(20% - 8px);\n        }\n        .mmp-shortcuts__button > div > span {\n          line-height: 24px;\n          text-transform: initial;\n        }\n        .mmp-shortcuts__button > div > *:nth-child(2) {\n          margin-left: 4px;\n        }\n      ",
+    ]);
     return (
       (S = function() {
         return a;
@@ -599,14 +600,7 @@
     );
   }
   function T() {
-    const a = ma([
-      "\n          <mwc-button\n            dense raised\n            columns=",
-      "\n            ?color=",
-      "\n            class='mmp-shortcuts__button'\n            @click='",
-      "'>\n            ",
-      "\n            ",
-      "\n          </mwc-button>",
-    ]);
+    const a = sa(["\n      ", "\n      ", "\n    "]);
     return (
       (T = function() {
         return a;
@@ -615,10 +609,7 @@
     );
   }
   function U() {
-    const a = ma([
-      "\n      <div class='mmp-shortcuts__buttons'>\n        ",
-      "\n      </div>\n    ",
-    ]);
+    const a = sa(['<span class="ellipsis">', "</span>"]);
     return (
       (U = function() {
         return a;
@@ -627,13 +618,7 @@
     );
   }
   function V() {
-    const a = ma([
-      "\n      <mmp-dropdown class='mmp-shortcuts__dropdown'\n        @change=",
-      "\n        .items=",
-      "\n        .label=",
-      "\n        .selected=",
-      ">\n      </mmp-dropdown>\n    ",
-    ]);
+    const a = sa(["<iron-icon .icon=", "></iron-icon>"]);
     return (
       (V = function() {
         return a;
@@ -642,8 +627,15 @@
     );
   }
   function W() {
-    const a = ma([
-      "\n        :host {\n          display: block;\n        }\n        :host([faded]) mwc-button {\n          opacity: .75;\n        }\n        .mmp-dropdown {\n          padding: 0;\n          display: block;\n        }\n        .mmp-dropdown__button {\n          display: flex;\n          font-size: 1em;\n          justify-content: space-between;\n          align-items: center;\n          height: 36px;\n          margin: 2px 0;\n        }\n        .mmp-dropdown__button.icon {\n          height: 40px;\n          margin: 0;\n        }\n        .mmp-dropdown__button > div {\n          display: flex;\n          flex: 1;\n          justify-content: space-between;\n          align-items: center;\n          height: 36px;\n          max-width: 100%;\n        }\n        .mmp-dropdown__label {\n          text-align: left;\n          text-transform: none;\n        }\n        .mmp-dropdown__icon {\n          height: 24px;\n          width: 24px;\n          min-width: 24px;\n        }\n        paper-item > *:nth-child(2) {\n          margin-left: 4px;\n        }\n\n        paper-menu-button[focused] mwc-button > div > iron-icon,\n        paper-menu-button[focused] paper-icon-button {\n          color: var(--mmp-accent-color);\n          transform: rotate(180deg);\n        }\n        paper-menu-button mwc-button:focus > div > iron-icon,\n        paper-menu-button mwc-button[focused] > div > iron-icon,\n        paper-menu-button[focused] paper-icon-button[focused] {\n          color: var(--mmp-text-color);\n          transform: rotate(0deg);\n        }\n        :host[small] .mmp-dropdown__label {\n          max-width: 60px;\n          display: block;\n          position: relative;\n          width: auto;\n          text-transform: initial;\n        }\n        :host[full] .mmp-dropdown__label {\n          max-width: none;\n        }\n      ",
+    const a = sa([
+      "\n          <mmp-button\n            style=",
+      "\n            raised\n            columns=",
+      "\n            ?color=",
+      "\n            class='mmp-shortcuts__button'\n            @click=",
+      ">\n            <div align=",
+      ">\n              ",
+      "\n              ",
+      "\n            </div>\n          </mmp-button>",
     ]);
     return (
       (W = function() {
@@ -653,7 +645,10 @@
     );
   }
   function X() {
-    const a = ma(["<span class='mmp-dropdown__item__label'>", "</span>"]);
+    const a = sa([
+      "\n      <div class='mmp-shortcuts__buttons'>\n        ",
+      "\n      </div>\n    ",
+    ]);
     return (
       (X = function() {
         return a;
@@ -662,7 +657,13 @@
     );
   }
   function Y() {
-    const a = ma(["<iron-icon .icon=", "></iron-icon>"]);
+    const a = sa([
+      "\n      <mmp-dropdown class='mmp-shortcuts__dropdown'\n        @change=",
+      "\n        .items=",
+      "\n        .label=",
+      "\n        .selected=",
+      ">\n      </mmp-dropdown>\n    ",
+    ]);
     return (
       (Y = function() {
         return a;
@@ -671,13 +672,7 @@
     );
   }
   function Z() {
-    const a = ma([
-      "\n            <paper-item\n              value=",
-      "\n              @click=",
-      ">\n              ",
-      "\n              ",
-      "\n            </paper-item>",
-    ]);
+    const a = sa([""]);
     return (
       (Z = function() {
         return a;
@@ -686,10 +681,8 @@
     );
   }
   function $() {
-    const a = ma([
-      "\n          <mwc-button class='mmp-dropdown__button' slot='dropdown-trigger'>\n            <div>\n              <span class='mmp-dropdown__label ellipsis'>\n                ",
-      "\n              </span>\n              <iron-icon class='mmp-dropdown__icon' .icon=",
-      "></iron-icon>\n            </div>\n          </mwc-button>\n        ",
+    const a = sa([
+      "\n        :host {\n          display: block;\n        }\n        :host([faded]) {\n          opacity: .75;\n        }\n        :host[small] .mmp-dropdown__label {\n          max-width: 60px;\n          display: block;\n          position: relative;\n          width: auto;\n          text-transform: initial;\n        }\n        :host[full] .mmp-dropdown__label {\n          max-width: none;\n        }\n        .mmp-dropdown {\n          padding: 0;\n          display: block;\n        }\n        .mmp-dropdown__button {\n          display: flex;\n          font-size: 1em;\n          justify-content: space-between;\n          align-items: center;\n          height: 36px;\n          margin: 2px 0;\n        }\n        .mmp-dropdown__button.icon {\n          height: 40px;\n          margin: 0;\n        }\n        .mmp-dropdown__button > div {\n          display: flex;\n          flex: 1;\n          justify-content: space-between;\n          align-items: center;\n          height: 36px;\n          max-width: 100%;\n        }\n        .mmp-dropdown__label {\n          text-align: left;\n          text-transform: none;\n        }\n        .mmp-dropdown__icon {\n          height: 24px;\n          width: 24px;\n          min-width: 24px;\n        }\n        paper-item > *:nth-child(2) {\n          margin-left: 4px;\n        }\n        paper-menu-button[focused] mmp-button iron-icon {\n          color: var(--mmp-accent-color);\n          transform: rotate(180deg);\n        }\n        paper-menu-button[focused] paper-icon-button {\n          color: var(--mmp-accent-color);\n          transform: rotate(180deg);\n        }\n        paper-menu-button[focused] paper-icon-button[focused] {\n          color: var(--mmp-text-color);\n          transform: rotate(0deg);\n        }\n      ",
     ]);
     return (
       ($ = function() {
@@ -699,10 +692,7 @@
     );
   }
   function _() {
-    const a = ma([
-      "\n          <paper-icon-button\n            class='mmp-dropdown__button icon'\n            slot='dropdown-trigger'\n            .icon=",
-      ">\n          </paper-icon-button>\n        ",
-    ]);
+    const a = sa(["<span class='mmp-dropdown__item__label'>", "</span>"]);
     return (
       (_ = function() {
         return a;
@@ -711,7 +701,56 @@
     );
   }
   function aa() {
-    const a = ma([
+    const a = sa(["<iron-icon .icon=", "></iron-icon>"]);
+    return (
+      (aa = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ba() {
+    const a = sa([
+      "\n            <paper-item\n              value=",
+      "\n              @click=",
+      ">\n              ",
+      "\n              ",
+      "\n            </paper-item>",
+    ]);
+    return (
+      (ba = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ca() {
+    const a = sa([
+      "\n          <mmp-button class='mmp-dropdown__button' slot='dropdown-trigger'>\n            <div>\n              <span class='mmp-dropdown__label ellipsis'>\n                ",
+      "\n              </span>\n              <iron-icon class='mmp-dropdown__icon' .icon=",
+      "></iron-icon>\n            </div>\n          </mmp-button>\n        ",
+    ]);
+    return (
+      (ca = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function da() {
+    const a = sa([
+      "\n          <paper-icon-button\n            class='mmp-dropdown__button icon'\n            slot='dropdown-trigger'\n            .icon=",
+      ">\n          </paper-icon-button>\n        ",
+    ]);
+    return (
+      (da = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ea() {
+    const a = sa([
       "\n      <paper-menu-button\n        class='mmp-dropdown'\n        noink no-animations\n        .horizontalAlign=",
       "\n        .verticalAlign=",
       "\n        .verticalOffset=",
@@ -722,46 +761,6 @@
       "\n        </paper-listbox>\n      </paper-menu-button>\n    ",
     ]);
     return (
-      (aa = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function ba() {
-    const a = ma([
-      "\n  .ellipsis {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }\n  .label {\n    margin: 0 8px;\n  }\n  paper-icon-button {\n    transition: color .25s;\n  }\n  paper-icon-button[color] {\n    color: var(--mmp-accent-color) !important;\n    opacity: 1 !important;\n  }\n  paper-icon-button[inactive] {\n    opacity: .5;\n  }\n  mwc-button[color] {\n    background: var(--mmp-accent-color) !important;\n    transition: background .25s;\n  }\n",
-    ]);
-    return (
-      (ba = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function ca() {
-    const a = ma([
-      "\n      .mmp-group-list {\n        display: flex;\n        flex-direction: column;\n        margin-left: 8px;\n      }\n      .mmp-group-list__title {\n        font-weight: 500;\n        letter-spacing: .1em;\n        margin: 8px 0 4px;\n        text-transform: uppercase;\n      }\n      .mmp-group-list__buttons {\n        display: flex;\n      }\n      .mmp-group-list__button {\n        margin: 8px 8px 0 0;\n        min-width: 0;\n        text-transform: uppercase;\n        text-align: center;\n        width: 50%;\n        --mdc-theme-primary: transparent;\n        background: rgba(255,255,255,0.25);\n      }\n    ",
-    ]);
-    return (
-      (ca = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function da() {
-    const a = ma([""]);
-    return (
-      (da = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function ea() {
-    const a = ma(["Leave"]);
-    return (
       (ea = function() {
         return a;
       }),
@@ -769,7 +768,9 @@
     );
   }
   function fa() {
-    const a = ma(["Ungroup"]);
+    const a = sa([
+      "\n  .ellipsis {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }\n  .label {\n    margin: 0 8px;\n  }\n  paper-icon-button {\n    transition: color .25s;\n  }\n  paper-icon-button[color] {\n    color: var(--mmp-accent-color) !important;\n    opacity: 1 !important;\n  }\n  paper-icon-button[inactive] {\n    opacity: .5;\n  }\n",
+    ]);
     return (
       (fa = function() {
         return a;
@@ -778,13 +779,8 @@
     );
   }
   function ga() {
-    const a = ma([
-      "\n          <mmp-group-item\n            @change=",
-      "\n            .item=",
-      "\n            .checked=",
-      "\n            .disabled=",
-      "\n            .master=",
-      "\n          />",
+    const a = sa([
+      "\n      .mmp-group-list {\n        display: flex;\n        flex-direction: column;\n        margin-left: 8px;\n      }\n      .mmp-group-list__title {\n        font-weight: 500;\n        letter-spacing: .1em;\n        margin: 8px 0 4px;\n        text-transform: uppercase;\n      }\n      .mmp-group-list__buttons {\n        display: flex;\n      }\n      .mmp-group-list__button {\n        margin: 8px 8px 0 0;\n        min-width: 0;\n        text-transform: uppercase;\n        text-align: center;\n        width: 50%;\n        --mdc-theme-primary: transparent;\n        background: rgba(255,255,255,0.25);\n      }\n    ",
     ]);
     return (
       (ga = function() {
@@ -794,16 +790,7 @@
     );
   }
   function ha() {
-    const a = ma([
-      "\n      <div class='mmp-group-list' ?visible=",
-      ">\n        <span class='mmp-group-list__title'>Group speakers</span>\n        ",
-      "\n        <div class='mmp-group-list__buttons'>\n          <mwc-button\n            class='mmp-group-list__button'\n            raised\n            ?disabled=",
-      "\n            @click='",
-      "'>\n            ",
-      "\n          </mwc-button>\n          <mwc-button\n            class='mmp-group-list__button'\n            raised\n            ?disabled=",
-      "\n            @click='",
-      "'>\n            Group all\n          </mwc-button>\n        </div>\n      </div>\n    ",
-    ]);
+    const a = sa([""]);
     return (
       (ha = function() {
         return a;
@@ -812,9 +799,7 @@
     );
   }
   function ia() {
-    const a = ma([
-      "\n      paper-checkbox {\n        padding: 8px 0;\n      }\n      paper-checkbox > span {\n        font-weight: 600;\n      }\n\n      ha-card[artwork*='cover'][has-artwork] paper-checkbox[disabled] {\n        --paper-checkbox-checkmark-color: rgba(0,0,0,.5);\n      }\n      ha-card[artwork*='cover'][has-artwork] paper-checkbox {\n        --paper-checkbox-unchecked-color: #FFFFFF;\n        --paper-checkbox-label-color: #FFFFFF;\n      }\n    ",
-    ]);
+    const a = sa(["Leave"]);
     return (
       (ia = function() {
         return a;
@@ -823,7 +808,7 @@
     );
   }
   function ja() {
-    const a = ma(["<span>(master)</span>"]);
+    const a = sa(["Ungroup"]);
     return (
       (ja = function() {
         return a;
@@ -832,14 +817,13 @@
     );
   }
   function ka() {
-    const a = ma([
-      "\n      <paper-checkbox\n        ?checked=",
-      "\n        ?disabled=",
-      "\n        @change='",
-      "'\n        @click='",
-      "'>\n        ",
-      "\n        ",
-      "\n      </paper-checkbox>\n    ",
+    const a = sa([
+      "\n          <mmp-group-item\n            @change=",
+      "\n            .item=",
+      "\n            .checked=",
+      "\n            .disabled=",
+      "\n            .master=",
+      "\n          />",
     ]);
     return (
       (ka = function() {
@@ -849,8 +833,15 @@
     );
   }
   function la() {
-    const a = ma([
-      "\n  :host {\n    display: block;\n    --mmp-accent-color: var(--mini-media-player-accent-color, var(--accent-color, #f39c12));\n    --mmp-overlay-color: var(--mini-media-player-overlay-color, rgba(0,0,0,0.5));\n    --mmp-overlay-base-color: var(--mini-media-player-overlay-base-color, #fff);\n    --mmp-media-cover-info-color: var(--mini-media-player-media-cover-info-color, --mmp-text-color);\n    --mmp-text-color: var(--primary-text-color);\n    --mmp-text-color-inverted: var(--disabled-text-color);\n    --mmp-active-color: var(--mmp-accent-color);\n    --mmp-icon-color: var(--paper-item-icon-color, #44739e);\n    --mmp-info-opacity: 1;\n    --mdc-theme-primary: var(--mmp-text-color);\n    --mdc-theme-on-primary: var(--mmp-text-color);\n    --paper-checkbox-unchecked-color: var(--mmp-text-color);\n    --paper-checkbox-label-color: var(--mmp-text-color);\n    color: var(--mmp-text-color);\n  }\n  ha-card.--has-artwork[artwork*='cover'] {\n    --mmp-text-color: var(--mmp-overlay-base-color);\n    --mmp-text-color-inverted: #000;\n    --mmp-active-color: rgba(255,255,255,.5);\n    --mmp-icon-color: var(--mmp-text-color);\n    --mmp-info-opacity: .75;\n    --paper-slider-container-color: var(--mini-media-player-overlay-color, rgba(255,255,255,.75));\n    --mdc-theme-primary: var(--mmp-text-color);\n    --mdc-theme-on-primary: var(--mmp-text-color);\n    --paper-checkbox-unchecked-color: var(--mmp-text-color);\n    --paper-checkbox-label-color: var(--mmp-text-color);\n    color: var(--mmp-text-color);\n  }\n  ha-card {\n    cursor: default;\n    display: flex;\n    background: transparent;\n    overflow: hidden;\n    padding: 0;\n    position: relative;\n  }\n  ha-card.--group {\n    box-shadow: none;\n  }\n  ha-card.--more-info {\n    cursor: pointer;\n  }\n  ha-card.--collapse {\n    overflow: visible;\n  }\n  .mmp__bg, .mmp__player, .mmp__container {\n    border-radius: var(--ha-card-border-radius, 0);\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n  }\n  .mmp__container {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    position: absolute;\n    pointer-events: none;\n  }\n  ha-card:before {\n    content: '';\n    padding-top: 0px;\n    transition: padding-top .5s cubic-bezier(.21,.61,.35,1);\n    will-change: padding-top;\n  }\n  ha-card.--initial .entity__artwork,\n  ha-card.--initial .entity__icon {\n    animation-duration: .001s;\n  }\n  ha-card.--initial:before,\n  ha-card.--initial .mmp-player {\n    transition: none;\n  }\n  header {\n    display: none;\n  }\n  ha-card[artwork='full-cover'].--has-artwork:before {\n    padding-top: 56%;\n  }\n  ha-card[artwork='full-cover'].--has-artwork[content='music']:before,\n  ha-card[artwork='full-cover-fit'].--has-artwork:before {\n    padding-top: 100%;\n  }\n  .mmp__bg {\n    background: var(--paper-card-background-color, white);\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n    overflow: hidden;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n  }\n  ha-card.--group .mmp__bg {\n    background: transparent;\n  }\n  .cover,\n  .cover:before {\n    display: block;\n    opacity: 0;\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n    transition: opacity .75s cubic-bezier(.21,.61,.35,1);\n    will-change: opacity;\n  }\n  .cover {\n    animation: fade-in .5s cubic-bezier(.21,.61,.35,1);\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center center;\n  }\n  .cover:before {\n    background: var(--mmp-overlay-color);\n    content: '';\n  }\n  ha-card[artwork*='full-cover'].--has-artwork .mmp-player {\n    background: linear-gradient(to top, var(--mmp-overlay-color) 25%, transparent 100%);\n    border-bottom-left-radius: var(--ha-card-border-radius, 0);\n    border-bottom-right-radius: var(--ha-card-border-radius, 0);\n  }\n  ha-card.--has-artwork .cover,\n  ha-card.--has-artwork[artwork='cover'] .cover:before,\n  ha-card.--bg .cover {\n    opacity: .999;\n  }\n  ha-card[artwork='default'] .cover {\n    display: none;\n  }\n  ha-card.--bg .cover {\n    display: block;\n  }\n  ha-card[artwork='full-cover-fit'].--has-artwork .cover {\n    background-color: black;\n    background-size: contain;\n  }\n  .mmp-player {\n    align-self: flex-end;\n    box-sizing: border-box;\n    position: relative;\n    padding: 16px;\n    transition: padding .25s ease-out;\n    width: 100%;\n    will-change: padding;\n  }\n  ha-card.--group .mmp-player {\n    padding: 2px 0;\n  }\n  .flex {\n    display: flex;\n    display: -ms-flexbox;\n    display: -webkit-flex;\n    flex-direction: row;\n  }\n  .mmp-player__core {\n    position: relative;\n  }\n  .entity__info {\n    justify-content: center;\n    display: flex;\n    flex-direction: column;\n    margin-left: 8px;\n    position: relative;\n    overflow: hidden;\n    user-select: none;\n  }\n  ha-card.--rtl .entity__info {\n    margin-left: auto;\n    margin-right: 8px;\n  }\n  ha-card[content='movie'] .attr__media_season,\n  ha-card[content='movie'] .attr__media_episode {\n    display: none;\n  }\n  .entity__icon {\n    color: var(--mmp-icon-color);\n  }\n  .entity__artwork, .entity__icon {\n    animation: fade-in .25s ease-out;\n    background-position: center center;\n    background-repeat: no-repeat;\n    background-size: cover;\n    border-radius: 100%;\n    height: 40px;\n    width: 40px;\n    min-width: 40px;\n    line-height: 40px;\n    margin-right: 8px;\n    position: relative;\n    text-align: center;\n    will-change: border-color;\n    transition: border-color .25s ease-out;\n  }\n  ha-card.--rtl .entity__artwork,\n  ha-card.--rtl .entity__icon {\n    margin-right: auto;\n  }\n  .entity__artwork[border] {\n    border: 2px solid var(--primary-text-color);\n    box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    -webkit-box-sizing: border-box;\n  }\n  .entity__artwork[border][state='playing'] {\n    border-color: var(--mmp-accent-color);\n  }\n  .entity__info__name,\n  .entity__info__media[short] {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }\n  .entity__info__name {\n    line-height: 20px;\n    color: var(--mmp-text-color);\n  }\n  .entity__info__media {\n    color: var(--secondary-text-color);\n    max-height: 6em;\n    word-break: break-word;\n    opacity: var(--mmp-info-opacity);\n    transition: color .5s;\n  }\n  .entity__info__media[short] {\n    max-height: 20px;\n    overflow: hidden;\n  }\n  .attr__app_name {\n    display: none;\n  }\n  .attr__app_name:first-child,\n  .attr__app_name:first-of-type {\n    display: inline;\n  }\n  .mmp-player__core[inactive] .entity__info__media {\n    color: var(--mmp-text-color);\n    max-width: 200px;\n    opacity: .5;\n  }\n  .mmp-player__core[inactive] .entity__info__media {\n  }\n  .entity__info__media[short-scroll] {\n    max-height: 20px;\n    white-space: nowrap;\n  }\n  .entity__info__media[scroll] > span {\n    visibility: hidden;\n  }\n  .entity__info__media[scroll] > div {\n    animation: move linear infinite;\n  }\n  .entity__info__media[scroll] .marquee {\n    animation: slide linear infinite;\n  }\n  .entity__info__media[scroll] .marquee,\n  .entity__info__media[scroll] > div {\n    animation-duration: inherit;\n    visibility: visible;\n  }\n  .entity__info__media[scroll] {\n    animation-duration: 10s;\n    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n  }\n  .marquee {\n    visibility: hidden;\n    position: absolute;\n    white-space: nowrap;\n  }\n  ha-card[artwork*='cover'].--has-artwork .entity__info__media {\n    color: var(--mmp-media-cover-info-color);\n  }\n  .entity__info__media span:before {\n    content: ' - ';\n  }\n  .entity__info__media span:first-of-type:before {\n    content: '';\n  }\n  .entity__info__media span:empty {\n    display: none;\n  }\n  .mmp-player__adds {\n    margin-left: 48px;\n    position: relative;\n  }\n  ha-card.--rtl .mmp-player__adds {\n    margin-left: auto;\n    margin-right: 48px;\n  }\n  .mmp-player__adds > *:nth-child(2) {\n    margin-top: 0px;\n  }\n  mmp-powerstrip {\n    flex: 1;\n    justify-content: flex-end;\n    margin-right: 0;\n    margin-left: auto;\n    width: auto;\n    max-width: 100%;\n  }\n  mmp-media-controls {\n    flex-wrap: wrap;\n    justify-content: center;\n  }\n  ha-card.--flow mmp-powerstrip {\n    justify-content: space-between;\n    margin-left: auto;\n  }\n  ha-card.--flow.--rtl mmp-powerstrip {\n    margin-right: auto;\n  }\n  ha-card.--flow .entity__info {\n    display: none;\n  }\n  ha-card.--responsive .mmp-player__adds {\n    margin-left: 0;\n  }\n  ha-card.--responsive.--rtl .mmp-player__adds {\n    margin-right: 0;\n  }\n  ha-card.--responsive .mmp-player__adds > mmp-media-controls {\n    padding: 0;\n  }\n  ha-card.--runtime .mmp-player {\n    padding-bottom: calc(16px + 8px);\n  }\n  ha-card.--runtime.--group .mmp-player {\n    padding-bottom: calc(16px + 8px);\n  }\n  .mmp-player div:empty {\n    display: none;\n  }\n  @keyframes slide {\n    100% { transform: translateX(-100%); }\n  }\n  @keyframes move {\n    from { transform: translateX(100%); }\n    to { transform: translateX(0); }\n  }\n  @keyframes fade-in {\n    from { opacity: 0; }\n    to { opacity: 1; }\n  }\n",
+    const a = sa([
+      "\n      <div class='mmp-group-list' ?visible=",
+      ">\n        <span class='mmp-group-list__title'>Group speakers</span>\n        ",
+      "\n        <div class='mmp-group-list__buttons'>\n          <mmp-button\n            class='mmp-group-list__button'\n            raised\n            ?disabled=",
+      "\n            @click=",
+      ">\n            <span>",
+      "</span>\n          </mmp-button>\n          <mmp-button\n            class='mmp-group-list__button'\n            raised\n            ?disabled=",
+      "\n            @click=",
+      ">\n            <span>Group all</span>\n          </mmp-button>\n        </div>\n      </div>\n    ",
     ]);
     return (
       (la = function() {
@@ -859,7 +850,77 @@
       a
     );
   }
-  function ma(a, b) {
+  function ma() {
+    const a = sa([
+      "\n      :host {\n        position: relative;\n        box-sizing: border-box;\n        margin: 4px;\n        min-width: 0;\n        overflow: hidden;\n        transition: background .5s;\n      }\n      :host([raised]) {\n        background: rgba(255,255,255,0.25);\n        min-height: 36px;\n        box-shadow:\n          0px 3px 1px -2px rgba(0, 0, 0, 0.2),\n          0px 2px 2px 0px rgba(0, 0, 0, 0.14),\n          0px 1px 5px 0px rgba(0,0,0,.12);\n      }\n      :host([color]) {\n        background: var(--mmp-active-color);\n        transition: background .25s;\n        opacity: 1;\n      }\n      :host([faded]) {\n        opacity: .75;\n      }\n      .container {\n        height: 100%;\n        width: 100%;\n      }\n      .slot-container {\n        height: 100%;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        margin: 0 8px;\n        width: auto;\n      }\n      paper-ripple {\n        position: absolute;\n        left: 0;\n        right: 0;\n        top: 0;\n        bottom: 0;\n      }\n    ",
+    ]);
+    return (
+      (ma = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function na() {
+    const a = sa([
+      '\n      <div class="container">\n        <div class="slot-container">\n          <slot></slot>\n        </div>\n        <paper-ripple></paper-ripple>\n      </div>\n    ',
+    ]);
+    return (
+      (na = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function oa() {
+    const a = sa([
+      "\n      paper-checkbox {\n        padding: 8px 0;\n      }\n      paper-checkbox > span {\n        font-weight: 600;\n      }\n\n      ha-card[artwork*='cover'][has-artwork] paper-checkbox[disabled] {\n        --paper-checkbox-checkmark-color: rgba(0,0,0,.5);\n      }\n      ha-card[artwork*='cover'][has-artwork] paper-checkbox {\n        --paper-checkbox-unchecked-color: #FFFFFF;\n        --paper-checkbox-label-color: #FFFFFF;\n      }\n    ",
+    ]);
+    return (
+      (oa = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function pa() {
+    const a = sa(["<span>(master)</span>"]);
+    return (
+      (pa = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function qa() {
+    const a = sa([
+      "\n      <paper-checkbox\n        ?checked=",
+      "\n        ?disabled=",
+      "\n        @change='",
+      "'\n        @click='",
+      "'>\n        ",
+      "\n        ",
+      "\n      </paper-checkbox>\n    ",
+    ]);
+    return (
+      (qa = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ra() {
+    const a = sa([
+      "\n  :host {\n    overflow: visible !important;\n    display: block;\n    --mmp-accent-color: var(--mini-media-player-accent-color, var(--accent-color, #f39c12));\n    --mmp-base-color: var(--mini-media-player-base-color, var(--primary-text-color, #000));\n    --mmp-overlay-color: var(--mini-media-player-overlay-color, rgba(0,0,0,0.5));\n    --mmp-overlay-base-color: var(--mini-media-player-overlay-base-color, #fff);\n    --mmp-overlay-accent-color: var(--mini-media-player-overlay-accent-color, --mmp-accent-color);\n    --mmp-text-color: var(--mini-media-player-base-color, --primary-text-color);\n    --mmp-media-cover-info-color: var(--mini-media-player-media-cover-info-color, --mmp-text-color);\n    --mmp-text-color-inverted: var(--disabled-text-color);\n    --mmp-active-color: var(--mmp-accent-color);\n    --mmp-icon-color: var(--mini-media-player-base-color, var(--paper-item-icon-color, #44739e));\n    --mmp-info-opacity: 1;\n    --mdc-theme-primary: var(--mmp-text-color);\n    --mdc-theme-on-primary: var(--mmp-text-color);\n    --paper-checkbox-unchecked-color: var(--mmp-text-color);\n    --paper-checkbox-label-color: var(--mmp-text-color);\n    color: var(--mmp-text-color);\n  }\n  ha-card.--bg {\n    --mmp-info-opacity: .75;\n  }\n  ha-card.--has-artwork[artwork*='cover'] {\n    --mmp-accent-color: var(--mini-media-player-overlay-accent-color, var(--mini-media-player-accent-color, var(--accent-color, #f39c12)));\n    --mmp-text-color: var(--mmp-overlay-base-color);\n    --mmp-text-color-inverted: #000;\n    --mmp-active-color: rgba(255,255,255,.5);\n    --mmp-icon-color: var(--mmp-text-color);\n    --mmp-info-opacity: .75;\n    --paper-slider-container-color: var(--mini-media-player-overlay-color, rgba(255,255,255,.75));\n    --mdc-theme-primary: var(--mmp-text-color);\n    --mdc-theme-on-primary: var(--mmp-text-color);\n    --paper-checkbox-unchecked-color: var(--mmp-text-color);\n    --paper-checkbox-label-color: var(--mmp-text-color);\n    color: var(--mmp-text-color);\n  }\n  ha-card {\n    cursor: default;\n    display: flex;\n    background: transparent;\n    overflow: hidden;\n    padding: 0;\n    position: relative;\n    color: inherit;\n  }\n  ha-card.--group {\n    box-shadow: none;\n  }\n  ha-card.--more-info {\n    cursor: pointer;\n  }\n  ha-card.--collapse {\n    overflow: visible;\n  }\n  .mmp__bg, .mmp__player, .mmp__container {\n    border-radius: var(--ha-card-border-radius, 0);\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n  }\n  .mmp__container {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    position: absolute;\n    pointer-events: none;\n  }\n  ha-card:before {\n    content: '';\n    padding-top: 0px;\n    transition: padding-top .5s cubic-bezier(.21,.61,.35,1);\n    will-change: padding-top;\n  }\n  ha-card.--initial .entity__artwork,\n  ha-card.--initial .entity__icon {\n    animation-duration: .001s;\n  }\n  ha-card.--initial:before,\n  ha-card.--initial .mmp-player {\n    transition: none;\n  }\n  header {\n    display: none;\n  }\n  ha-card[artwork='full-cover'].--has-artwork:before {\n    padding-top: 56%;\n  }\n  ha-card[artwork='full-cover'].--has-artwork[content='music']:before,\n  ha-card[artwork='full-cover-fit'].--has-artwork:before {\n    padding-top: 100%;\n  }\n  .mmp__bg {\n    background: var(--ha-card-background, var(--paper-card-background-color, white));\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n    overflow: hidden;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n  }\n  ha-card.--group .mmp__bg {\n    background: transparent;\n  }\n  .cover,\n  .cover:before {\n    display: block;\n    opacity: 0;\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n    transition: opacity .75s cubic-bezier(.21,.61,.35,1);\n    will-change: opacity;\n  }\n  .cover {\n    animation: fade-in .5s cubic-bezier(.21,.61,.35,1);\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center center;\n  }\n  .cover:before {\n    background: var(--mmp-overlay-color);\n    content: '';\n  }\n  ha-card[artwork*='full-cover'].--has-artwork .mmp-player {\n    background: linear-gradient(to top, var(--mmp-overlay-color) 25%, transparent 100%);\n    border-bottom-left-radius: var(--ha-card-border-radius, 0);\n    border-bottom-right-radius: var(--ha-card-border-radius, 0);\n  }\n  ha-card.--has-artwork .cover,\n  ha-card.--has-artwork[artwork='cover'] .cover:before,\n  ha-card.--bg .cover {\n    opacity: .999;\n  }\n  ha-card[artwork='default'] .cover {\n    display: none;\n  }\n  ha-card.--bg .cover {\n    display: block;\n  }\n  ha-card[artwork='full-cover-fit'].--has-artwork .cover {\n    background-color: black;\n    background-size: contain;\n  }\n  .mmp-player {\n    align-self: flex-end;\n    box-sizing: border-box;\n    position: relative;\n    padding: 16px;\n    transition: padding .25s ease-out;\n    width: 100%;\n    will-change: padding;\n  }\n  ha-card.--group .mmp-player {\n    padding: 2px 0;\n  }\n  .flex {\n    display: flex;\n    display: -ms-flexbox;\n    display: -webkit-flex;\n    flex-direction: row;\n  }\n  .mmp-player__core {\n    position: relative;\n  }\n  .entity__info {\n    justify-content: center;\n    display: flex;\n    flex-direction: column;\n    margin-left: 8px;\n    position: relative;\n    overflow: hidden;\n    user-select: none;\n  }\n  ha-card.--rtl .entity__info {\n    margin-left: auto;\n    margin-right: 8px;\n  }\n  ha-card[content='movie'] .attr__media_season,\n  ha-card[content='movie'] .attr__media_episode {\n    display: none;\n  }\n  .entity__icon {\n    color: var(--mmp-icon-color);\n  }\n  .entity__artwork, .entity__icon {\n    animation: fade-in .25s ease-out;\n    background-position: center center;\n    background-repeat: no-repeat;\n    background-size: cover;\n    border-radius: 100%;\n    height: 40px;\n    width: 40px;\n    min-width: 40px;\n    line-height: 40px;\n    margin-right: 8px;\n    position: relative;\n    text-align: center;\n    will-change: border-color;\n    transition: border-color .25s ease-out;\n  }\n  ha-card.--rtl .entity__artwork,\n  ha-card.--rtl .entity__icon {\n    margin-right: auto;\n  }\n  .entity__artwork[border] {\n    border: 2px solid var(--primary-text-color);\n    box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    -webkit-box-sizing: border-box;\n  }\n  .entity__artwork[border][state='playing'] {\n    border-color: var(--mmp-accent-color);\n  }\n  .entity__info__name,\n  .entity__info__media[short] {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }\n  .entity__info__name {\n    line-height: 20px;\n    color: var(--mmp-text-color);\n  }\n  .entity__info__media {\n    color: var(--secondary-text-color);\n    max-height: 6em;\n    word-break: break-word;\n    opacity: var(--mmp-info-opacity);\n    transition: color .5s;\n  }\n  .entity__info__media[short] {\n    max-height: 20px;\n    overflow: hidden;\n  }\n  .attr__app_name {\n    display: none;\n  }\n  .attr__app_name:first-child,\n  .attr__app_name:first-of-type {\n    display: inline;\n  }\n  .mmp-player__core[inactive] .entity__info__media {\n    color: var(--mmp-text-color);\n    max-width: 200px;\n    opacity: .5;\n  }\n  .entity__info__media[short-scroll] {\n    max-height: 20px;\n    white-space: nowrap;\n  }\n  .entity__info__media[scroll] > span {\n    visibility: hidden;\n  }\n  .entity__info__media[scroll] > div {\n    animation: move linear infinite;\n  }\n  .entity__info__media[scroll] .marquee {\n    animation: slide linear infinite;\n  }\n  .entity__info__media[scroll] .marquee,\n  .entity__info__media[scroll] > div {\n    animation-duration: inherit;\n    visibility: visible;\n  }\n  .entity__info__media[scroll] {\n    animation-duration: 10s;\n    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n  }\n  .marquee {\n    visibility: hidden;\n    position: absolute;\n    white-space: nowrap;\n  }\n  ha-card[artwork*='cover'].--has-artwork .entity__info__media,\n  ha-card.--bg .entity__info__media {\n    color: var(--mmp-media-cover-info-color);\n  }\n  .entity__info__media span:before {\n    content: ' - ';\n  }\n  .entity__info__media span:first-of-type:before {\n    content: '';\n  }\n  .entity__info__media span:empty {\n    display: none;\n  }\n  .mmp-player__adds {\n    margin-left: 48px;\n    position: relative;\n  }\n  ha-card.--rtl .mmp-player__adds {\n    margin-left: auto;\n    margin-right: 48px;\n  }\n  .mmp-player__adds > *:nth-child(2) {\n    margin-top: 0px;\n  }\n  mmp-powerstrip {\n    flex: 1;\n    justify-content: flex-end;\n    margin-right: 0;\n    margin-left: auto;\n    width: auto;\n    max-width: 100%;\n  }\n  mmp-media-controls {\n    flex-wrap: wrap;\n    justify-content: center;\n  }\n  ha-card.--flow mmp-powerstrip {\n    justify-content: space-between;\n    margin-left: auto;\n  }\n  ha-card.--flow.--rtl mmp-powerstrip {\n    margin-right: auto;\n  }\n  ha-card.--flow .entity__info {\n    display: none;\n  }\n  ha-card.--responsive .mmp-player__adds {\n    margin-left: 0;\n  }\n  ha-card.--responsive.--rtl .mmp-player__adds {\n    margin-right: 0;\n  }\n  ha-card.--responsive .mmp-player__adds > mmp-media-controls {\n    padding: 0;\n  }\n  ha-card.--runtime .mmp-player {\n    padding-bottom: calc(16px + 8px);\n  }\n  ha-card.--runtime.--group .mmp-player {\n    padding-bottom: calc(16px + 8px);\n  }\n  .mmp-player div:empty {\n    display: none;\n  }\n  @keyframes slide {\n    100% { transform: translateX(-100%); }\n  }\n  @keyframes move {\n    from { transform: translateX(100%); }\n    to { transform: translateX(0); }\n  }\n  @keyframes fade-in {\n    from { opacity: 0; }\n    to { opacity: 1; }\n  }\n",
+    ]);
+    return (
+      (ra = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function sa(a, b) {
     return (
       b || (b = a.slice(0)),
       Object.freeze(
@@ -867,7 +928,7 @@
       )
     );
   }
-  function na(a) {
+  function ta(a) {
     for (var b = 1; b < arguments.length; b++) {
       var c = null == arguments[b] ? {} : arguments[b],
         d = Object.keys(c);
@@ -878,12 +939,12 @@
           })
         )),
         d.forEach(function(b) {
-          oa(a, b, c[b]);
+          ua(a, b, c[b]);
         });
     }
     return a;
   }
-  function oa(a, b, c) {
+  function ua(a, b, c) {
     return (
       b in a
         ? Object.defineProperty(a, b, {
@@ -896,7 +957,7 @@
       a
     );
   }
-  function pa(a, b, c, d, e, f, g) {
+  function va(a, b, c, d, e, f, g) {
     try {
       var h = a[f](g),
         i = h.value;
@@ -905,16 +966,16 @@
     }
     h.done ? b(i) : Promise.resolve(i).then(d, e);
   }
-  function qa(a) {
+  function wa(a) {
     return function() {
       var b = this,
         c = arguments;
       return new Promise(function(d, e) {
         function f(a) {
-          pa(h, d, e, f, g, "next", a);
+          va(h, d, e, f, g, "next", a);
         }
         function g(a) {
-          pa(h, d, e, f, g, "throw", a);
+          va(h, d, e, f, g, "throw", a);
         }
         var h = a.apply(b, c);
         f(void 0);
@@ -928,27 +989,27 @@
       ? define(b)
       : b();
   })(this, function() {
-    function ma(a) {
-      let b = bb.get(a.type);
+    function sa(a) {
+      let b = jb.get(a.type);
       void 0 === b &&
         ((b = { stringsArray: new WeakMap(), keyString: new Map() }),
-        bb.set(a.type, b));
+        jb.set(a.type, b));
       let c = b.stringsArray.get(a.strings);
       if (void 0 !== c) return c;
-      const d = a.strings.join(Ia);
+      const d = a.strings.join(Oa);
       return (
         (c = b.keyString.get(d)),
         void 0 === c &&
-          ((c = new Ma(a, a.getTemplateElement())), b.keyString.set(d, c)),
+          ((c = new Sa(a, a.getTemplateElement())), b.keyString.set(d, c)),
         b.stringsArray.set(a.strings, c),
         c
       );
     }
-    function oa(a, b) {
+    function ua(a, b) {
       const c = a.element.content,
         d = a.parts,
-        e = document.createTreeWalker(c, fb, null, !1);
-      let f = hb(d),
+        e = document.createTreeWalker(c, nb, null, !1);
+      let f = pb(d),
         g = d[f],
         h = -1,
         i = 0;
@@ -963,51 +1024,51 @@
           g !== void 0 && g.index === h;
 
         )
-          (g.index = null === c ? g.index - i : -1), (f = hb(d, f)), (g = d[f]);
+          (g.index = null === c ? g.index - i : -1), (f = pb(d, f)), (g = d[f]);
       }
       j.forEach((a) => a.parentNode.removeChild(a));
     }
-    function pa(a, b) {
+    function va(a, b) {
       let c =
         2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : null;
       const d = a.element.content,
         e = a.parts;
       if (null === c || void 0 === c) return void d.appendChild(b);
-      const f = document.createTreeWalker(d, fb, null, !1);
-      let g = hb(e),
+      const f = document.createTreeWalker(d, nb, null, !1);
+      let g = pb(e),
         h = 0,
         i = -1;
       for (; f.nextNode(); ) {
         i++;
         const a = f.currentNode;
         for (
-          a === c && ((h = gb(b)), c.parentNode.insertBefore(b, c));
+          a === c && ((h = ob(b)), c.parentNode.insertBefore(b, c));
           -1 !== g && e[g].index === i;
 
         ) {
           if (0 < h) {
-            for (; -1 !== g; ) (e[g].index += h), (g = hb(e, g));
+            for (; -1 !== g; ) (e[g].index += h), (g = pb(e, g));
             return;
           }
-          g = hb(e, g);
+          g = pb(e, g);
         }
       }
     }
-    function ra(a) {
+    function xa(a) {
       let b =
         1 < arguments.length && arguments[1] !== void 0 ? arguments[1] : [];
       for (let c = 0, d = a.length; c < d; c++) {
         const d = a[c];
-        Array.isArray(d) ? ra(d, b) : b.push(d);
+        Array.isArray(d) ? xa(d, b) : b.push(d);
       }
       return b;
     }
-    function sa(a, b) {
+    function ya(a, b) {
       function c() {
         f && ((f = !1), a()), g && e();
       }
       function d() {
-        Nb(c);
+        Ub(c);
       }
       function e() {
         var a = Date.now();
@@ -1022,18 +1083,18 @@
         h = 0;
       return e;
     }
-    function ta(a) {
+    function za(a) {
       return parseFloat(a) || 0;
     }
-    function ua(a) {
+    function Aa(a) {
       for (var b = [], c = 1; c < arguments.length; c++)
         b[c - 1] = arguments[c];
       return b.reduce(function(b, c) {
         var d = a["border-" + c + "-width"];
-        return b + ta(d);
+        return b + za(d);
       }, 0);
     }
-    function va(a) {
+    function Ba(a) {
       for (
         var b = ["top", "right", "bottom", "left"], c = {}, d = 0, e = b;
         d < e.length;
@@ -1041,45 +1102,45 @@
       ) {
         var f = e[d],
           g = a["padding-" + f];
-        c[f] = ta(g);
+        c[f] = za(g);
       }
       return c;
     }
-    function wa(a) {
+    function Ca(a) {
       var b = a.getBBox();
-      return Ba(0, 0, b.width, b.height);
+      return Ha(0, 0, b.width, b.height);
     }
-    function xa(a) {
+    function Da(a) {
       var b = Math.abs,
         c = Math.round,
         d = a.clientWidth,
         e = a.clientHeight;
-      if (!d && !e) return Tb;
-      var f = Sb(a).getComputedStyle(a),
-        g = va(f),
+      if (!d && !e) return $b;
+      var f = Zb(a).getComputedStyle(a),
+        g = Ba(f),
         h = g.left + g.right,
         i = g.top + g.bottom,
-        j = ta(f.width),
-        k = ta(f.height);
+        j = za(f.width),
+        k = za(f.height);
       if (
         ("border-box" === f.boxSizing &&
-          (c(j + h) !== d && (j -= ua(f, "left", "right") + h),
-          c(k + i) !== e && (k -= ua(f, "top", "bottom") + i)),
-        !ya(a))
+          (c(j + h) !== d && (j -= Aa(f, "left", "right") + h),
+          c(k + i) !== e && (k -= Aa(f, "top", "bottom") + i)),
+        !Ea(a))
       ) {
         var l = c(j + h) - d,
           m = c(k + i) - e;
         1 !== b(l) && (j -= l), 1 !== b(m) && (k -= m);
       }
-      return Ba(g.left, g.top, j, k);
+      return Ha(g.left, g.top, j, k);
     }
-    function ya(a) {
-      return a === Sb(a).document.documentElement;
+    function Ea(a) {
+      return a === Zb(a).document.documentElement;
     }
-    function za(a) {
-      return Lb ? (Ub(a) ? wa(a) : xa(a)) : Tb;
+    function Fa(a) {
+      return Sb ? (_b(a) ? Ca(a) : Da(a)) : $b;
     }
-    function Aa(a) {
+    function Ga(a) {
       var b = a.x,
         c = a.y,
         d = a.width,
@@ -1087,7 +1148,7 @@
         f = "undefined" == typeof DOMRectReadOnly ? Object : DOMRectReadOnly,
         g = Object.create(f.prototype);
       return (
-        Rb(g, {
+        Yb(g, {
           x: b,
           y: c,
           width: d,
@@ -1100,154 +1161,176 @@
         g
       );
     }
-    function Ba(a, b, c, d) {
+    function Ha(a, b, c, d) {
       return { x: a, y: b, width: c, height: d };
     }
-    const Ca = new WeakMap(),
-      Da = (a) => "function" == typeof a && Ca.has(a),
-      Ea =
+    const Ia = new WeakMap(),
+      Ja = (a) => "function" == typeof a && Ia.has(a),
+      Ka =
         window.customElements !== void 0 &&
         window.customElements.polyfillWrapFlushCallback !== void 0,
-      Fa = function(a, b) {
-        let c =
-            2 < arguments.length && arguments[2] !== void 0
+      La = function(a, b) {
+        for (
+          let c =
+            2 < arguments.length && void 0 !== arguments[2]
               ? arguments[2]
-              : null,
-          d = b;
-        for (; d !== c; ) {
-          const b = d.nextSibling;
-          a.removeChild(d), (d = b);
+              : null;
+          b !== c;
+
+        ) {
+          const c = b.nextSibling;
+          a.removeChild(b), (b = c);
         }
       },
-      Ga = {},
-      Ha = {},
-      Ia = "{{lit-".concat((Math.random() + "").slice(2), "}}"),
-      Ja = "<!--".concat(Ia, "-->"),
-      Ka = new RegExp("".concat(Ia, "|").concat(Ja)),
-      La = "$lit$";
-    class Ma {
+      Ma = {},
+      Na = {},
+      Oa = "{{lit-".concat((Math.random() + "").slice(2), "}}"),
+      Pa = "<!--".concat(Oa, "-->"),
+      Qa = new RegExp("".concat(Oa, "|").concat(Pa)),
+      Ra = "$lit$";
+    class Sa {
       constructor(a, b) {
         (this.parts = []), (this.element = b);
-        let c = -1,
-          d = 0;
-        const e = [],
-          f = (b) => {
-            const g = b.content,
-              h = document.createTreeWalker(g, 133, null, !1);
-            for (let g = 0; h.nextNode(); ) {
-              c++;
-              const b = h.currentNode;
-              if (1 === b.nodeType) {
-                if (b.hasAttributes()) {
-                  const e = b.attributes;
-                  let f = 0;
-                  for (let a = 0; a < e.length; a++)
-                    0 <= e[a].value.indexOf(Ia) && f++;
-                  for (; 0 < f--; ) {
-                    const e = a.strings[d],
-                      f = Pa.exec(e)[2],
-                      g = f.toLowerCase() + La,
-                      h = b.getAttribute(g),
-                      i = h.split(Ka);
-                    this.parts.push({
-                      type: "attribute",
-                      index: c,
-                      name: f,
-                      strings: i,
-                    }),
-                      b.removeAttribute(g),
-                      (d += i.length - 1);
-                  }
-                }
-                "TEMPLATE" === b.tagName && f(b);
-              } else if (3 === b.nodeType) {
-                const a = b.data;
-                if (0 <= a.indexOf(Ia)) {
-                  const f = b.parentNode,
-                    g = a.split(Ka),
-                    h = g.length - 1;
-                  for (let a = 0; a < h; a++)
-                    f.insertBefore(
-                      "" === g[a] ? Oa() : document.createTextNode(g[a]),
-                      b
-                    ),
-                      this.parts.push({ type: "node", index: ++c });
-                  "" === g[h]
-                    ? (f.insertBefore(Oa(), b), e.push(b))
-                    : (b.data = g[h]),
-                    (d += h);
-                }
-              } else if (8 === b.nodeType)
-                if (b.data === Ia) {
-                  const a = b.parentNode;
-                  (null === b.previousSibling || c === g) &&
-                    (c++, a.insertBefore(Oa(), b)),
-                    (g = c),
-                    this.parts.push({ type: "node", index: c }),
-                    null === b.nextSibling ? (b.data = "") : (e.push(b), c--),
-                    d++;
-                } else
-                  for (let a = -1; -1 !== (a = b.data.indexOf(Ia, a + 1)); )
-                    this.parts.push({ type: "node", index: -1 });
+        const c = [],
+          d = [],
+          e = document.createTreeWalker(b.content, 133, null, !1);
+        let f = 0,
+          g = -1,
+          h = 0;
+        for (const i = a.strings, j = a.values.length; h < j; ) {
+          const a = e.nextNode();
+          if (null === a) {
+            e.currentNode = d.pop();
+            continue;
+          }
+          if ((g++, 1 === a.nodeType)) {
+            if (a.hasAttributes()) {
+              const b = a.attributes,
+                c = b.length;
+              let d = 0;
+              for (let a = 0; a < c; a++) Ta(b[a].name, Ra) && d++;
+              for (; 0 < d--; ) {
+                const b = i[h],
+                  c = Wa.exec(b)[2],
+                  d = c.toLowerCase() + Ra,
+                  e = a.getAttribute(d);
+                a.removeAttribute(d);
+                const f = e.split(Qa);
+                this.parts.push({
+                  type: "attribute",
+                  index: g,
+                  name: c,
+                  strings: f,
+                }),
+                  (h += f.length - 1);
+              }
             }
-          };
-        f(b);
-        for (const c of e) c.parentNode.removeChild(c);
+            "TEMPLATE" === a.tagName &&
+              (d.push(a), (e.currentNode = a.content));
+          } else if (3 === a.nodeType) {
+            const b = a.data;
+            if (0 <= b.indexOf(Oa)) {
+              const d = a.parentNode,
+                e = b.split(Qa),
+                f = e.length - 1;
+              for (let b = 0; b < f; b++) {
+                let c,
+                  f = e[b];
+                if ("" === f) c = Va();
+                else {
+                  const a = Wa.exec(f);
+                  null !== a &&
+                    Ta(a[2], Ra) &&
+                    (f =
+                      f.slice(0, a.index) +
+                      a[1] +
+                      a[2].slice(0, -Ra.length) +
+                      a[3]),
+                    (c = document.createTextNode(f));
+                }
+                d.insertBefore(c, a),
+                  this.parts.push({ type: "node", index: ++g });
+              }
+              "" === e[f]
+                ? (d.insertBefore(Va(), a), c.push(a))
+                : (a.data = e[f]),
+                (h += f);
+            }
+          } else if (8 === a.nodeType)
+            if (a.data === Oa) {
+              const b = a.parentNode;
+              (null === a.previousSibling || g == f) &&
+                (g++, b.insertBefore(Va(), a)),
+                (f = g),
+                this.parts.push({ type: "node", index: g }),
+                null === a.nextSibling ? (a.data = "") : (c.push(a), g--),
+                h++;
+            } else
+              for (let b = -1; -1 !== (b = a.data.indexOf(Oa, b + 1)); )
+                this.parts.push({ type: "node", index: -1 }), h++;
+        }
+        for (const d of c) d.parentNode.removeChild(d);
       }
     }
-    const Na = (a) => -1 !== a.index,
-      Oa = () => document.createComment(""),
-      Pa = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F \x09\x0a\x0c\x0d"'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
-    class Qa {
+    const Ta = (a, b) => {
+        const c = a.length - b.length;
+        return 0 <= c && a.slice(c) === b;
+      },
+      Ua = (a) => -1 !== a.index,
+      Va = () => document.createComment(""),
+      Wa = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
+    class Xa {
       constructor(a, b, c) {
-        (this._parts = []),
+        (this.__parts = []),
           (this.template = a),
           (this.processor = b),
           (this.options = c);
       }
       update(a) {
         let b = 0;
-        for (const c of this._parts) void 0 !== c && c.setValue(a[b]), b++;
-        for (const b of this._parts) void 0 !== b && b.commit();
+        for (const c of this.__parts) void 0 !== c && c.setValue(a[b]), b++;
+        for (const b of this.__parts) void 0 !== b && b.commit();
       }
       _clone() {
-        const a = Ea
+        const a = Ka
             ? this.template.element.content.cloneNode(!0)
             : document.importNode(this.template.element.content, !0),
-          b = this.template.parts;
-        let c = 0,
-          d = 0;
-        const e = (a) => {
-          const f = document.createTreeWalker(a, 133, null, !1);
-          for (let g = f.nextNode(); c < b.length && null !== g; ) {
-            const a = b[c];
-            if (!Na(a)) this._parts.push(void 0), c++;
-            else if (d === a.index) {
-              if ("node" === a.type) {
-                const a = this.processor.handleTextExpression(this.options);
-                a.insertAfterNode(g.previousSibling), this._parts.push(a);
-              } else
-                this._parts.push(
-                  ...this.processor.handleAttributeExpressions(
-                    g,
-                    a.name,
-                    a.strings,
-                    this.options
-                  )
-                );
-              c++;
-            } else
-              d++,
-                "TEMPLATE" === g.nodeName && e(g.content),
-                (g = f.nextNode());
+          b = [],
+          c = this.template.parts,
+          d = document.createTreeWalker(a, 133, null, !1);
+        let e,
+          f = 0,
+          g = 0,
+          h = d.nextNode();
+        for (; f < c.length; ) {
+          if (((e = c[f]), !Ua(e))) {
+            this.__parts.push(void 0), f++;
+            continue;
           }
-        };
-        return (
-          e(a), Ea && (document.adoptNode(a), customElements.upgrade(a)), a
-        );
+          for (; g < e.index; )
+            g++,
+              "TEMPLATE" === h.nodeName &&
+                (b.push(h), (d.currentNode = h.content)),
+              null === (h = d.nextNode()) &&
+                ((d.currentNode = b.pop()), (h = d.nextNode()));
+          if ("node" === e.type) {
+            const a = this.processor.handleTextExpression(this.options);
+            a.insertAfterNode(h.previousSibling), this.__parts.push(a);
+          } else
+            this.__parts.push(
+              ...this.processor.handleAttributeExpressions(
+                h,
+                e.name,
+                e.strings,
+                this.options
+              )
+            );
+          f++;
+        }
+        return Ka && (document.adoptNode(a), customElements.upgrade(a)), a;
       }
     }
-    class Ra {
+    class Ya {
       constructor(a, b, c, d) {
         (this.strings = a),
           (this.values = b),
@@ -1256,22 +1339,29 @@
       }
       getHTML() {
         const a = this.strings.length - 1;
-        let b = "";
-        for (let c = 0; c < a; c++) {
-          const a = this.strings[c],
-            d = Pa.exec(a);
-          b += d ? a.substr(0, d.index) + d[1] + d[2] + La + d[3] + Ia : a + Ja;
+        let b = "",
+          c = !1;
+        for (let d = 0; d < a; d++) {
+          const a = this.strings[d],
+            e = a.lastIndexOf("<!--");
+          c = (-1 < e || c) && -1 === a.indexOf("-->", e + 1);
+          const f = Wa.exec(a);
+          b +=
+            null === f
+              ? a + (c ? Oa : Pa)
+              : a.substr(0, f.index) + f[1] + f[2] + Ra + f[3] + Oa;
         }
-        return b + this.strings[a];
+        return (b += this.strings[a]), b;
       }
       getTemplateElement() {
         const a = document.createElement("template");
         return (a.innerHTML = this.getHTML()), a;
       }
     }
-    const Sa = (a) =>
-      null === a || ("object" != typeof a && "function" != typeof a);
-    class Ta {
+    const Za = (a) =>
+        null === a || ("object" != typeof a && "function" != typeof a),
+      $a = (a) => Array.isArray(a) || !!(a && a[Symbol.iterator]);
+    class _a {
       constructor(a, b, c) {
         (this.dirty = !0),
           (this.element = a),
@@ -1282,7 +1372,7 @@
           this.parts[d] = this._createPart();
       }
       _createPart() {
-        return new Ua(this);
+        return new ab(this);
       }
       _getValue() {
         const a = this.strings,
@@ -1293,12 +1383,8 @@
           const b = this.parts[d];
           if (void 0 !== b) {
             const a = b.value;
-            if (
-              null != a &&
-              (Array.isArray(a) || ("string" != typeof a && a[Symbol.iterator]))
-            )
-              for (const b of a) c += "string" == typeof b ? b : b + "";
-            else c += "string" == typeof a ? a : a + "";
+            if (Za(a) || !$a(a)) c += "string" == typeof a ? a : a + "";
+            else for (const b of a) c += "string" == typeof b ? b : b + "";
           }
         }
         return (c += a[b]), c;
@@ -1309,93 +1395,93 @@
           this.element.setAttribute(this.name, this._getValue()));
       }
     }
-    class Ua {
+    class ab {
       constructor(a) {
         (this.value = void 0), (this.committer = a);
       }
       setValue(a) {
-        a === Ga ||
-          (Sa(a) && a === this.value) ||
-          ((this.value = a), !Da(a) && (this.committer.dirty = !0));
+        a === Ma ||
+          (Za(a) && a === this.value) ||
+          ((this.value = a), !Ja(a) && (this.committer.dirty = !0));
       }
       commit() {
-        for (; Da(this.value); ) {
+        for (; Ja(this.value); ) {
           const a = this.value;
-          (this.value = Ga), a(this);
+          (this.value = Ma), a(this);
         }
-        this.value === Ga || this.committer.commit();
+        this.value === Ma || this.committer.commit();
       }
     }
-    class Va {
+    class bb {
       constructor(a) {
         (this.value = void 0),
-          (this._pendingValue = void 0),
+          (this.__pendingValue = void 0),
           (this.options = a);
       }
       appendInto(a) {
-        (this.startNode = a.appendChild(Oa())),
-          (this.endNode = a.appendChild(Oa()));
+        (this.startNode = a.appendChild(Va())),
+          (this.endNode = a.appendChild(Va()));
       }
       insertAfterNode(a) {
         (this.startNode = a), (this.endNode = a.nextSibling);
       }
       appendIntoPart(a) {
-        a._insert((this.startNode = Oa())), a._insert((this.endNode = Oa()));
+        a.__insert((this.startNode = Va())), a.__insert((this.endNode = Va()));
       }
       insertAfterPart(a) {
-        a._insert((this.startNode = Oa())),
+        a.__insert((this.startNode = Va())),
           (this.endNode = a.endNode),
           (a.endNode = this.startNode);
       }
       setValue(a) {
-        this._pendingValue = a;
+        this.__pendingValue = a;
       }
       commit() {
-        for (; Da(this._pendingValue); ) {
-          const a = this._pendingValue;
-          (this._pendingValue = Ga), a(this);
+        for (; Ja(this.__pendingValue); ) {
+          const a = this.__pendingValue;
+          (this.__pendingValue = Ma), a(this);
         }
-        const a = this._pendingValue;
-        a === Ga ||
-          (Sa(a)
-            ? a !== this.value && this._commitText(a)
-            : a instanceof Ra
-            ? this._commitTemplateResult(a)
+        const a = this.__pendingValue;
+        a === Ma ||
+          (Za(a)
+            ? a !== this.value && this.__commitText(a)
+            : a instanceof Ya
+            ? this.__commitTemplateResult(a)
             : a instanceof Node
-            ? this._commitNode(a)
-            : Array.isArray(a) || a[Symbol.iterator]
-            ? this._commitIterable(a)
-            : a === Ha
-            ? ((this.value = Ha), this.clear())
-            : this._commitText(a));
+            ? this.__commitNode(a)
+            : $a(a)
+            ? this.__commitIterable(a)
+            : a === Na
+            ? ((this.value = Na), this.clear())
+            : this.__commitText(a));
       }
-      _insert(a) {
+      __insert(a) {
         this.endNode.parentNode.insertBefore(a, this.endNode);
       }
-      _commitNode(a) {
-        this.value === a || (this.clear(), this._insert(a), (this.value = a));
+      __commitNode(a) {
+        this.value === a || (this.clear(), this.__insert(a), (this.value = a));
       }
-      _commitText(a) {
+      __commitText(a) {
         const b = this.startNode.nextSibling;
         (a = null == a ? "" : a),
           b === this.endNode.previousSibling && 3 === b.nodeType
             ? (b.data = a)
-            : this._commitNode(
+            : this.__commitNode(
                 document.createTextNode("string" == typeof a ? a : a + "")
               ),
           (this.value = a);
       }
-      _commitTemplateResult(a) {
+      __commitTemplateResult(a) {
         const b = this.options.templateFactory(a);
-        if (this.value instanceof Qa && this.value.template === b)
+        if (this.value instanceof Xa && this.value.template === b)
           this.value.update(a.values);
         else {
-          const c = new Qa(b, a.processor, this.options),
+          const c = new Xa(b, a.processor, this.options),
             d = c._clone();
-          c.update(a.values), this._commitNode(d), (this.value = c);
+          c.update(a.values), this.__commitNode(d), (this.value = c);
         }
       }
-      _commitIterable(a) {
+      __commitIterable(a) {
         Array.isArray(this.value) || ((this.value = []), this.clear());
         const b = this.value;
         let c,
@@ -1403,7 +1489,7 @@
         for (const e of a)
           (c = b[d]),
             void 0 === c &&
-              ((c = new Va(this.options)),
+              ((c = new bb(this.options)),
               b.push(c),
               0 == d ? c.appendIntoPart(this) : c.insertAfterPart(b[d - 1])),
             c.setValue(e),
@@ -1416,14 +1502,14 @@
           0 < arguments.length && arguments[0] !== void 0
             ? arguments[0]
             : this.startNode;
-        Fa(this.startNode.parentNode, a.nextSibling, this.endNode);
+        La(this.startNode.parentNode, a.nextSibling, this.endNode);
       }
     }
-    class Wa {
+    class cb {
       constructor(a, b, c) {
         if (
           ((this.value = void 0),
-          (this._pendingValue = void 0),
+          (this.__pendingValue = void 0),
           2 !== c.length || "" !== c[0] || "" !== c[1])
         )
           throw new Error(
@@ -1432,31 +1518,31 @@
         (this.element = a), (this.name = b), (this.strings = c);
       }
       setValue(a) {
-        this._pendingValue = a;
+        this.__pendingValue = a;
       }
       commit() {
-        for (; Da(this._pendingValue); ) {
-          const a = this._pendingValue;
-          (this._pendingValue = Ga), a(this);
+        for (; Ja(this.__pendingValue); ) {
+          const a = this.__pendingValue;
+          (this.__pendingValue = Ma), a(this);
         }
-        if (this._pendingValue !== Ga) {
-          const a = !!this._pendingValue;
+        if (this.__pendingValue !== Ma) {
+          const a = !!this.__pendingValue;
           this.value !== a &&
             (a
               ? this.element.setAttribute(this.name, "")
-              : this.element.removeAttribute(this.name)),
-            (this.value = a),
-            (this._pendingValue = Ga);
+              : this.element.removeAttribute(this.name),
+            (this.value = a)),
+            (this.__pendingValue = Ma);
         }
       }
     }
-    class Xa extends Ta {
+    class db extends _a {
       constructor(a, b, c) {
         super(a, b, c),
           (this.single = 2 === c.length && "" === c[0] && "" === c[1]);
       }
       _createPart() {
-        return new Ya(this);
+        return new eb(this);
       }
       _getValue() {
         return this.single ? this.parts[0].value : super._getValue();
@@ -1466,36 +1552,36 @@
           ((this.dirty = !1), (this.element[this.name] = this._getValue()));
       }
     }
-    class Ya extends Ua {}
-    let Za = !1;
+    class eb extends ab {}
+    let fb = !1;
     try {
       const a = {
         get capture() {
-          return (Za = !0), !1;
+          return (fb = !0), !1;
         },
       };
       window.addEventListener("test", a, a),
         window.removeEventListener("test", a, a);
     } catch (a) {}
-    class $a {
+    class gb {
       constructor(a, b, c) {
         (this.value = void 0),
-          (this._pendingValue = void 0),
+          (this.__pendingValue = void 0),
           (this.element = a),
           (this.eventName = b),
           (this.eventContext = c),
-          (this._boundHandleEvent = (a) => this.handleEvent(a));
+          (this.__boundHandleEvent = (a) => this.handleEvent(a));
       }
       setValue(a) {
-        this._pendingValue = a;
+        this.__pendingValue = a;
       }
       commit() {
-        for (; Da(this._pendingValue); ) {
-          const a = this._pendingValue;
-          (this._pendingValue = Ga), a(this);
+        for (; Ja(this.__pendingValue); ) {
+          const a = this.__pendingValue;
+          (this.__pendingValue = Ma), a(this);
         }
-        if (this._pendingValue === Ga) return;
-        const a = this._pendingValue,
+        if (this.__pendingValue === Ma) return;
+        const a = this.__pendingValue,
           b = this.value,
           c =
             null == a ||
@@ -1506,19 +1592,19 @@
         c &&
           this.element.removeEventListener(
             this.eventName,
-            this._boundHandleEvent,
-            this._options
+            this.__boundHandleEvent,
+            this.__options
           ),
           null != a &&
             (null == b || c) &&
-            ((this._options = _a(a)),
+            ((this.__options = hb(a)),
             this.element.addEventListener(
               this.eventName,
-              this._boundHandleEvent,
-              this._options
+              this.__boundHandleEvent,
+              this.__options
             )),
           (this.value = a),
-          (this._pendingValue = Ga);
+          (this.__pendingValue = Ma);
       }
       handleEvent(a) {
         "function" == typeof this.value
@@ -1526,98 +1612,98 @@
           : this.value.handleEvent(a);
       }
     }
-    const _a = (a) =>
+    const hb = (a) =>
       a &&
-      (Za
+      (fb
         ? { capture: a.capture, passive: a.passive, once: a.once }
         : a.capture);
-    const ab = new class {
+    const ib = new class {
         handleAttributeExpressions(a, b, c, d) {
           const e = b[0];
           if ("." === e) {
-            const d = new Xa(a, b.slice(1), c);
+            const d = new db(a, b.slice(1), c);
             return d.parts;
           }
-          if ("@" === e) return [new $a(a, b.slice(1), d.eventContext)];
-          if ("?" === e) return [new Wa(a, b.slice(1), c)];
-          const f = new Ta(a, b, c);
+          if ("@" === e) return [new gb(a, b.slice(1), d.eventContext)];
+          if ("?" === e) return [new cb(a, b.slice(1), c)];
+          const f = new _a(a, b, c);
           return f.parts;
         }
         handleTextExpression(a) {
-          return new Va(a);
+          return new bb(a);
         }
       }(),
-      bb = new Map(),
-      cb = new WeakMap(),
-      db = (a, b, c) => {
-        let d = cb.get(b);
+      jb = new Map(),
+      kb = new WeakMap(),
+      lb = (a, b, c) => {
+        let d = kb.get(b);
         d === void 0 &&
-          (Fa(b, b.firstChild),
-          cb.set(b, (d = new Va(Object.assign({ templateFactory: ma }, c)))),
+          (La(b, b.firstChild),
+          kb.set(b, (d = new bb(Object.assign({ templateFactory: sa }, c)))),
           d.appendInto(b)),
           d.setValue(a),
           d.commit();
       };
     (window.litHtmlVersions || (window.litHtmlVersions = [])).push("1.0.0");
-    const eb = function(a) {
+    const mb = function(a) {
         for (
           var b = arguments.length, c = Array(1 < b ? b - 1 : 0), d = 1;
           d < b;
           d++
         )
           c[d - 1] = arguments[d];
-        return new Ra(a, c, "html", ab);
+        return new Ya(a, c, "html", ib);
       },
-      fb = 133,
-      gb = (a) => {
+      nb = 133,
+      ob = (a) => {
         let b = 11 === a.nodeType ? 0 : 1;
         for (
-          const c = document.createTreeWalker(a, fb, null, !1);
+          const c = document.createTreeWalker(a, nb, null, !1);
           c.nextNode();
 
         )
           b++;
         return b;
       },
-      hb = function(a) {
+      pb = function(a) {
         let b =
           1 < arguments.length && arguments[1] !== void 0 ? arguments[1] : -1;
         for (let c = b + 1; c < a.length; c++) {
           const b = a[c];
-          if (Na(b)) return c;
+          if (Ua(b)) return c;
         }
         return -1;
       },
-      ib = (a, b) => "".concat(a, "--").concat(b);
-    let jb = !0;
+      qb = (a, b) => "".concat(a, "--").concat(b);
+    let rb = !0;
     "undefined" == typeof window.ShadyCSS
-      ? (jb = !1)
+      ? (rb = !1)
       : "undefined" == typeof window.ShadyCSS.prepareTemplateDom &&
         (console.warn(
-          "Incompatible ShadyCSS version detected.Please update to at least @webcomponents/webcomponentsjs@2.0.2 and@webcomponents/shadycss@1.3.1."
+          "Incompatible ShadyCSS version detected. Please update to at least @webcomponents/webcomponentsjs@2.0.2 and @webcomponents/shadycss@1.3.1."
         ),
-        (jb = !1));
-    const kb = (a) => (b) => {
-        const c = ib(b.type, a);
-        let d = bb.get(c);
+        (rb = !1));
+    const sb = (a) => (b) => {
+        const c = qb(b.type, a);
+        let d = jb.get(c);
         void 0 === d &&
           ((d = { stringsArray: new WeakMap(), keyString: new Map() }),
-          bb.set(c, d));
+          jb.set(c, d));
         let e = d.stringsArray.get(b.strings);
         if (void 0 !== e) return e;
-        const f = b.strings.join(Ia);
+        const f = b.strings.join(Oa);
         if (((e = d.keyString.get(f)), void 0 === e)) {
           const c = b.getTemplateElement();
-          jb && window.ShadyCSS.prepareTemplateDom(c, a),
-            (e = new Ma(b, c)),
+          rb && window.ShadyCSS.prepareTemplateDom(c, a),
+            (e = new Sa(b, c)),
             d.keyString.set(f, e);
         }
         return d.stringsArray.set(b.strings, e), e;
       },
-      lb = ["html", "svg"],
-      mb = (a) => {
-        lb.forEach((b) => {
-          const c = bb.get(ib(b, a));
+      tb = ["html", "svg"],
+      ub = (a) => {
+        tb.forEach((b) => {
+          const c = jb.get(qb(b, a));
           c !== void 0 &&
             c.keyString.forEach((a) => {
               const b = a.element.content,
@@ -1625,53 +1711,53 @@
               Array.from(b.querySelectorAll("style")).forEach((a) => {
                 c.add(a);
               }),
-                oa(a, c);
+                ua(a, c);
             });
         });
       },
-      nb = new Set(),
-      ob = (a, b, c) => {
-        nb.add(c);
-        const d = a.querySelectorAll("style");
-        if (0 === d.length)
+      vb = new Set(),
+      wb = (a, b, c) => {
+        vb.add(c);
+        const d = a.querySelectorAll("style"),
+          e = d.length;
+        if (0 === e)
           return void window.ShadyCSS.prepareTemplateStyles(b.element, c);
-        const e = document.createElement("style");
-        for (let f = 0; f < d.length; f++) {
-          const a = d[f];
-          a.parentNode.removeChild(a), (e.textContent += a.textContent);
+        const f = document.createElement("style");
+        for (let g = 0; g < e; g++) {
+          const a = d[g];
+          a.parentNode.removeChild(a), (f.textContent += a.textContent);
         }
-        if (
-          (mb(c),
-          pa(b, e, b.element.content.firstChild),
-          window.ShadyCSS.prepareTemplateStyles(b.element, c),
-          window.ShadyCSS.nativeShadow)
-        ) {
-          const c = b.element.content.querySelector("style");
-          a.insertBefore(c.cloneNode(!0), a.firstChild);
-        } else {
-          b.element.content.insertBefore(e, b.element.content.firstChild);
+        ub(c);
+        const g = b.element.content;
+        va(b, f, g.firstChild),
+          window.ShadyCSS.prepareTemplateStyles(b.element, c);
+        const h = g.querySelector("style");
+        if (window.ShadyCSS.nativeShadow && null !== h)
+          a.insertBefore(h.cloneNode(!0), a.firstChild);
+        else {
+          g.insertBefore(f, g.firstChild);
           const a = new Set();
-          a.add(e), oa(b, a);
+          a.add(f), ua(b, a);
         }
       },
-      pb = (a, b, c) => {
+      xb = (a, b, c) => {
         const d = c.scopeName,
-          e = cb.has(b),
-          f = b instanceof ShadowRoot && jb && a instanceof Ra,
-          g = f && !nb.has(d),
+          e = kb.has(b),
+          f = rb && 11 === b.nodeType && !!b.host && a instanceof Ya,
+          g = f && !vb.has(d),
           h = g ? document.createDocumentFragment() : b;
-        if ((db(a, h, Object.assign({ templateFactory: kb(d) }, c)), g)) {
-          const a = cb.get(h);
-          cb.delete(h),
-            a.value instanceof Qa && ob(h, a.value.template, d),
-            Fa(b, b.firstChild),
+        if ((lb(a, h, Object.assign({ templateFactory: sb(d) }, c)), g)) {
+          const a = kb.get(h);
+          kb.delete(h),
+            a.value instanceof Xa && wb(h, a.value.template, d),
+            La(b, b.firstChild),
             b.appendChild(h),
-            cb.set(b, a);
+            kb.set(b, a);
         }
         !e && f && window.ShadyCSS.styleElement(b.host);
       };
     window.JSCompiler_renameProperty = (a) => a;
-    const qb = {
+    const yb = {
         toAttribute(a, b) {
           return b === Boolean
             ? a
@@ -1695,26 +1781,26 @@
             : a;
         },
       },
-      rb = (a, b) => b !== a && (b === b || a === a),
-      sb = {
+      zb = (a, b) => b !== a && (b === b || a === a),
+      Ab = {
         attribute: !0,
         type: String,
-        converter: qb,
+        converter: yb,
         reflect: !1,
-        hasChanged: rb,
+        hasChanged: zb,
       },
-      tb = Promise.resolve(!0),
-      ub = 1,
-      vb = 4,
-      wb = 8,
-      xb = 16,
-      yb = 32;
-    class zb extends HTMLElement {
+      Bb = Promise.resolve(!0),
+      Cb = 1,
+      Db = 4,
+      Eb = 8,
+      Fb = 16,
+      Gb = 32;
+    class Hb extends HTMLElement {
       constructor() {
         super(),
           (this._updateState = 0),
           (this._instanceProperties = void 0),
-          (this._updatePromise = tb),
+          (this._updatePromise = Bb),
           (this._hasConnectedResolver = void 0),
           (this._changedProperties = new Map()),
           (this._reflectingProperties = void 0),
@@ -1744,7 +1830,7 @@
       }
       static createProperty(a) {
         let b =
-          1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : sb;
+          1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : Ab;
         if (
           (this._ensureClassProperties(),
           this._classProperties.set(a, b),
@@ -1802,12 +1888,12 @@
       }
       static _valueHasChanged(a, b) {
         let c =
-          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : rb;
+          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : zb;
         return c(a, b);
       }
       static _propertyValueFromAttribute(a, b) {
         const c = b.type,
-          d = b.converter || qb,
+          d = b.converter || yb,
           e = "function" == typeof d ? d : d.fromAttribute;
         return e ? e(a, c) : a;
       }
@@ -1815,7 +1901,7 @@
         if (void 0 === b.reflect) return;
         const c = b.type,
           d = b.converter,
-          e = (d && d.toAttribute) || qb.toAttribute;
+          e = (d && d.toAttribute) || yb.toAttribute;
         return e(a, c);
       }
       initialize() {
@@ -1837,7 +1923,7 @@
           (this._instanceProperties = void 0);
       }
       connectedCallback() {
-        (this._updateState |= yb),
+        (this._updateState |= Gb),
           this._hasConnectedResolver &&
             (this._hasConnectedResolver(),
             (this._hasConnectedResolver = void 0));
@@ -1848,38 +1934,38 @@
       }
       _propertyToAttribute(a, b) {
         let c =
-          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : sb;
+          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : Ab;
         const d = this.constructor,
           e = d._attributeNameForProperty(a, c);
         if (e !== void 0) {
           const a = d._propertyValueToAttribute(b, c);
           if (a === void 0) return;
-          (this._updateState |= wb),
+          (this._updateState |= Eb),
             null == a ? this.removeAttribute(e) : this.setAttribute(e, a),
-            (this._updateState &= ~wb);
+            (this._updateState &= ~Eb);
         }
       }
       _attributeToProperty(a, b) {
-        if (this._updateState & wb) return;
+        if (this._updateState & Eb) return;
         const c = this.constructor,
           d = c._attributeToPropertyMap.get(a);
         if (d !== void 0) {
-          const a = c._classProperties.get(d) || sb;
-          (this._updateState |= xb),
+          const a = c._classProperties.get(d) || Ab;
+          (this._updateState |= Fb),
             (this[d] = c._propertyValueFromAttribute(b, a)),
-            (this._updateState &= ~xb);
+            (this._updateState &= ~Fb);
         }
       }
       _requestUpdate(a, b) {
         let c = !0;
         if (a !== void 0) {
           const d = this.constructor,
-            e = d._classProperties.get(a) || sb;
+            e = d._classProperties.get(a) || Ab;
           d._valueHasChanged(this[a], b, e.hasChanged)
             ? (!this._changedProperties.has(a) &&
                 this._changedProperties.set(a, b),
               !0 === e.reflect &&
-                !(this._updateState & xb) &&
+                !(this._updateState & Fb) &&
                 (this._reflectingProperties === void 0 &&
                   (this._reflectingProperties = new Map()),
                 this._reflectingProperties.set(a, e)))
@@ -1892,8 +1978,8 @@
       }
       _enqueueUpdate() {
         var a = this;
-        return qa(function*() {
-          a._updateState |= vb;
+        return wa(function*() {
+          a._updateState |= Db;
           let b, c;
           const d = a._updatePromise;
           a._updatePromise = new Promise((a, d) => {
@@ -1914,13 +2000,13 @@
         })();
       }
       get _hasConnected() {
-        return this._updateState & yb;
+        return this._updateState & Gb;
       }
       get _hasRequestedUpdate() {
-        return this._updateState & vb;
+        return this._updateState & Db;
       }
       get hasUpdated() {
-        return this._updateState & ub;
+        return this._updateState & Cb;
       }
       performUpdate() {
         this._instanceProperties && this._applyInstanceProperties();
@@ -1934,12 +2020,12 @@
           this._markUpdated();
         }
         a &&
-          (!(this._updateState & ub) &&
-            ((this._updateState |= ub), this.firstUpdated(b)),
+          (!(this._updateState & Cb) &&
+            ((this._updateState |= Cb), this.firstUpdated(b)),
           this.updated(b));
       }
       _markUpdated() {
-        (this._changedProperties = new Map()), (this._updateState &= ~vb);
+        (this._changedProperties = new Map()), (this._updateState &= ~Db);
       }
       get updateComplete() {
         return this._updatePromise;
@@ -1958,14 +2044,14 @@
       updated(a) {}
       firstUpdated(a) {}
     }
-    zb.finalized = !0;
-    const Ab =
+    Hb.finalized = !0;
+    const Ib =
         "adoptedStyleSheets" in Document.prototype &&
         "replace" in CSSStyleSheet.prototype,
-      Bb = Symbol();
-    class Cb {
+      Jb = Symbol();
+    class Kb {
       constructor(a, b) {
-        if (b !== Bb)
+        if (b !== Jb)
           throw new Error(
             "CSSResult is not constructable. Use `unsafeCSS` or `css` instead."
           );
@@ -1974,7 +2060,7 @@
       get styleSheet() {
         return (
           void 0 === this._styleSheet &&
-            (Ab
+            (Ib
               ? ((this._styleSheet = new CSSStyleSheet()),
                 this._styleSheet.replaceSync(this.cssText))
               : (this._styleSheet = null)),
@@ -1985,8 +2071,9 @@
         return this.cssText;
       }
     }
-    const Db = (a) => {
-        if (a instanceof Cb) return a.cssText;
+    const Lb = (a) => {
+        if (a instanceof Kb) return a.cssText;
+        if ("number" == typeof a) return a;
         throw new Error(
           "Value passed to 'css' function must be a 'css' function result: ".concat(
             a,
@@ -1994,21 +2081,21 @@
           )
         );
       },
-      Eb = function(a) {
+      Mb = function(a) {
         for (
           var b = arguments.length, c = Array(1 < b ? b - 1 : 0), d = 1;
           d < b;
           d++
         )
           c[d - 1] = arguments[d];
-        const e = c.reduce((b, c, d) => b + Db(c) + a[d + 1], a[0]);
-        return new Cb(e, Bb);
+        const e = c.reduce((b, c, d) => b + Lb(c) + a[d + 1], a[0]);
+        return new Kb(e, Jb);
       };
     (window.litElementVersions || (window.litElementVersions = [])).push(
-      "2.0.1"
+      "2.2.0"
     );
-    const Fb = (a) => (a.flat ? a.flat(1 / 0) : ra(a));
-    class Gb extends zb {
+    const Nb = (a) => (a.flat ? a.flat(1 / 0) : xa(a));
+    class Ob extends Hb {
       static finalize() {
         super.finalize(),
           (this._styles = this.hasOwnProperty(
@@ -2021,7 +2108,7 @@
         const a = this.styles,
           b = [];
         if (Array.isArray(a)) {
-          const c = Fb(a),
+          const c = Nb(a),
             d = c.reduceRight((a, b) => (a.add(b), a), new Set());
           d.forEach((a) => b.unshift(a));
         } else a && b.push(a);
@@ -2041,7 +2128,7 @@
         const a = this.constructor._styles;
         0 === a.length ||
           (window.ShadyCSS === void 0 || window.ShadyCSS.nativeShadow
-            ? Ab
+            ? Ib
               ? (this.renderRoot.adoptedStyleSheets = a.map(
                   (a) => a.styleSheet
                 ))
@@ -2060,7 +2147,7 @@
       update(a) {
         super.update(a);
         const b = this.render();
-        b instanceof Ra &&
+        b instanceof Ya &&
           this.constructor.render(b, this.renderRoot, {
             scopeName: this.localName,
             eventContext: this,
@@ -2074,41 +2161,38 @@
       }
       render() {}
     }
-    (Gb.finalized = !0),
-      (Gb.render = pb),
-      window.navigator.userAgent.match("Trident") &&
-        (DOMTokenList.prototype.toggle = function(a, b) {
-          return (
-            void 0 === b || b ? this.add(a) : this.remove(a), void 0 === b || b
-          );
-        });
-    const Hb = new WeakMap(),
-      Ib = new WeakMap(),
-      Jb = ((a) =>
+    (Ob.finalized = !0), (Ob.render = xb);
+    const Pb = new WeakMap(),
+      Qb = ((a) =>
         function() {
           const b = a(...arguments);
-          return Ca.set(b, !0), b;
+          return Ia.set(b, !0), b;
         })((a) => (b) => {
         if (
-          !(b instanceof Ua) ||
-          b instanceof Ya ||
+          !(b instanceof ab) ||
+          b instanceof eb ||
           "class" !== b.committer.name ||
           1 < b.committer.parts.length
         )
           throw new Error(
             "The `classMap` directive must be used in the `class` attribute and must be the only part in the attribute."
           );
-        Ib.has(b) ||
-          ((b.committer.element.className = b.committer.strings.join(" ")),
-          Ib.set(b, !0));
-        const c = Hb.get(b);
-        for (const d in c) d in a || b.committer.element.classList.remove(d);
-        for (const d in a)
-          (c && c[d] === a[d]) ||
-            b.committer.element.classList.toggle(d, !!a[d]);
-        Hb.set(b, a);
+        const c = b.committer,
+          d = c.element;
+        Pb.has(b) || (d.className = c.strings.join(" "));
+        const e = d.classList,
+          f = Pb.get(b);
+        for (const c in f) c in a || e.remove(c);
+        for (const c in a) {
+          const b = a[c];
+          if (!f || b !== f[c]) {
+            const a = b ? "add" : "remove";
+            e[a](c);
+          }
+        }
+        Pb.set(b, a);
       });
-    var Kb = (function() {
+    var Rb = (function() {
         function a(a, b) {
           var c = -1;
           return (
@@ -2163,11 +2247,11 @@
             })()
           : Map;
       })(),
-      Lb =
+      Sb =
         "undefined" != typeof window &&
         "undefined" != typeof document &&
         window.document === document,
-      Mb = (function() {
+      Tb = (function() {
         return "undefined" != typeof global && global.Math === Math
           ? global
           : "undefined" != typeof self && self.Math === Math
@@ -2176,16 +2260,16 @@
           ? window
           : Function("return this")();
       })(),
-      Nb = (function() {
+      Ub = (function() {
         return "function" == typeof requestAnimationFrame
-          ? requestAnimationFrame.bind(Mb)
+          ? requestAnimationFrame.bind(Tb)
           : function(a) {
               return setTimeout(function() {
                 return a(Date.now());
               }, 1e3 / 60);
             };
       })(),
-      Ob = [
+      Vb = [
         "top",
         "right",
         "bottom",
@@ -2195,15 +2279,15 @@
         "size",
         "weight",
       ],
-      Pb = "undefined" != typeof MutationObserver,
-      Qb = (function() {
+      Wb = "undefined" != typeof MutationObserver,
+      Xb = (function() {
         function a() {
           (this.connected_ = !1),
             (this.mutationEventsAdded_ = !1),
             (this.mutationsObserver_ = null),
             (this.observers_ = []),
             (this.onTransitionEnd_ = this.onTransitionEnd_.bind(this)),
-            (this.refresh = sa(this.refresh.bind(this), 20));
+            (this.refresh = ya(this.refresh.bind(this), 20));
         }
         return (
           (a.prototype.addObserver = function(a) {
@@ -2232,14 +2316,14 @@
             );
           }),
           (a.prototype.connect_ = function() {
-            !Lb ||
+            !Sb ||
               this.connected_ ||
               (document.addEventListener(
                 "transitionend",
                 this.onTransitionEnd_
               ),
               window.addEventListener("resize", this.refresh),
-              Pb
+              Wb
                 ? ((this.mutationsObserver_ = new MutationObserver(
                     this.refresh
                   )),
@@ -2257,7 +2341,7 @@
               (this.connected_ = !0));
           }),
           (a.prototype.disconnect_ = function() {
-            Lb &&
+            Sb &&
               this.connected_ &&
               (document.removeEventListener(
                 "transitionend",
@@ -2277,7 +2361,7 @@
           (a.prototype.onTransitionEnd_ = function(a) {
             var b = a.propertyName,
               c = void 0 === b ? "" : b,
-              d = Ob.some(function(a) {
+              d = Vb.some(function(a) {
                 return !!~c.indexOf(a);
               });
             d && this.refresh();
@@ -2289,7 +2373,7 @@
           a
         );
       })(),
-      Rb = function(a, b) {
+      Yb = function(a, b) {
         for (var c, d = 0, e = Object.keys(b); d < e.length; d++)
           (c = e[d]),
             Object.defineProperty(a, c, {
@@ -2300,32 +2384,32 @@
             });
         return a;
       },
-      Sb = function(a) {
+      Zb = function(a) {
         var b = a && a.ownerDocument && a.ownerDocument.defaultView;
-        return b || Mb;
+        return b || Tb;
       },
-      Tb = Ba(0, 0, 0, 0),
-      Ub = (function() {
+      $b = Ha(0, 0, 0, 0),
+      _b = (function() {
         return "undefined" == typeof SVGGraphicsElement
           ? function(a) {
               return (
-                a instanceof Sb(a).SVGElement && "function" == typeof a.getBBox
+                a instanceof Zb(a).SVGElement && "function" == typeof a.getBBox
               );
             }
           : function(a) {
-              return a instanceof Sb(a).SVGGraphicsElement;
+              return a instanceof Zb(a).SVGGraphicsElement;
             };
       })(),
-      Vb = (function() {
+      ac = (function() {
         function a(a) {
           (this.broadcastWidth = 0),
             (this.broadcastHeight = 0),
-            (this.contentRect_ = Ba(0, 0, 0, 0)),
+            (this.contentRect_ = Ha(0, 0, 0, 0)),
             (this.target = a);
         }
         return (
           (a.prototype.isActive = function() {
-            var a = za(this.target);
+            var a = Fa(this.target);
             return (
               (this.contentRect_ = a),
               a.width !== this.broadcastWidth ||
@@ -2343,17 +2427,17 @@
           a
         );
       })(),
-      Wb = (function() {
+      bc = (function() {
         return function(a, b) {
-          var c = Aa(b);
-          Rb(this, { target: a, contentRect: c });
+          var c = Ga(b);
+          Yb(this, { target: a, contentRect: c });
         };
       })(),
-      Xb = (function() {
+      cc = (function() {
         function a(a, b, c) {
           if (
             ((this.activeObservations_ = []),
-            (this.observations_ = new Kb()),
+            (this.observations_ = new Rb()),
             "function" != typeof a)
           )
             throw new TypeError(
@@ -2366,11 +2450,11 @@
             if (!arguments.length)
               throw new TypeError("1 argument required, but only 0 present.");
             if ("undefined" != typeof Element && Element instanceof Object) {
-              if (!(a instanceof Sb(a).Element))
+              if (!(a instanceof Zb(a).Element))
                 throw new TypeError('parameter 1 is not of type "Element".');
               var b = this.observations_;
               b.has(a) ||
-                (b.set(a, new Vb(a)),
+                (b.set(a, new ac(a)),
                 this.controller_.addObserver(this),
                 this.controller_.refresh());
             }
@@ -2379,7 +2463,7 @@
             if (!arguments.length)
               throw new TypeError("1 argument required, but only 0 present.");
             if ("undefined" != typeof Element && Element instanceof Object) {
-              if (!(a instanceof Sb(a).Element))
+              if (!(a instanceof Zb(a).Element))
                 throw new TypeError('parameter 1 is not of type "Element".');
               var b = this.observations_;
               b.has(a) &&
@@ -2402,7 +2486,7 @@
             if (this.hasActive()) {
               var a = this.callbackCtx_,
                 b = this.activeObservations_.map(function(a) {
-                  return new Wb(a.target, a.broadcastRect());
+                  return new bc(a.target, a.broadcastRect());
                 });
               this.callback_.call(a, b, a), this.clearActive();
             }
@@ -2416,29 +2500,29 @@
           a
         );
       })(),
-      Yb = "undefined" == typeof WeakMap ? new Kb() : new WeakMap(),
-      Zb = (function() {
+      dc = "undefined" == typeof WeakMap ? new Rb() : new WeakMap(),
+      ec = (function() {
         function a(b) {
           if (!(this instanceof a))
             throw new TypeError("Cannot call a class as a function.");
           if (!arguments.length)
             throw new TypeError("1 argument required, but only 0 present.");
-          var c = Qb.getInstance(),
-            d = new Xb(b, c, this);
-          Yb.set(this, d);
+          var c = Xb.getInstance(),
+            d = new cc(b, c, this);
+          dc.set(this, d);
         }
         return a;
       })();
     ["observe", "unobserve", "disconnect"].forEach(function(a) {
-      Zb.prototype[a] = function() {
+      ec.prototype[a] = function() {
         var b;
-        return (b = Yb.get(this))[a].apply(b, arguments);
+        return (b = dc.get(this))[a].apply(b, arguments);
       };
     });
-    var $b = (function() {
-      return "undefined" == typeof Mb.ResizeObserver ? Zb : Mb.ResizeObserver;
+    var fc = (function() {
+      return "undefined" == typeof Tb.ResizeObserver ? ec : Tb.ResizeObserver;
     })();
-    const _b = {
+    const gc = {
         shuffle: !0,
         power_state: !0,
         artwork_border: !0,
@@ -2446,7 +2530,7 @@
         sound_mode: !0,
         runtime: !0,
       },
-      ac = {
+      hc = {
         DEFAULT: "mdi:cast",
         DROPDOWN: "mdi:chevron-down",
         GROUP: "mdi:speaker-multiple",
@@ -2462,9 +2546,9 @@
         VOL_DOWN: "mdi:volume-minus",
         VOL_UP: "mdi:volume-plus",
       },
-      bc = ["entity", "_overflow", "break", "thumbnail", "edit", "idle"],
-      cc = ["media_duration", "media_position", "media_position_updated_at"],
-      dc = [
+      ic = ["entity", "_overflow", "break", "thumbnail", "edit", "idle"],
+      jc = ["media_duration", "media_position", "media_position_updated_at"],
+      kc = [
         { attr: "media_title" },
         { attr: "media_artist" },
         { attr: "media_series_title" },
@@ -2472,7 +2556,7 @@
         { attr: "media_episode", prefix: "E" },
         { attr: "app_name" },
       ];
-    class ec {
+    class lc {
       constructor(a, b, c) {
         (this.hass = a || {}),
           (this.config = b || {}),
@@ -2573,15 +2657,15 @@
         );
       }
       get mediaInfo() {
-        return dc
-          .map((a) => na({ text: this.attr[a.attr], prefix: "" }, a))
+        return kc
+          .map((a) => ta({ text: this.attr[a.attr], prefix: "" }, a))
           .filter((a) => a.text);
       }
       get hasProgress() {
         return (
           !this.config.hide.progress &&
           !this.idle &&
-          cc.every((a) => a in this.attr)
+          jc.every((a) => a in this.attr)
         );
       }
       get progress() {
@@ -2628,7 +2712,7 @@
       }
       fetchThumbnail() {
         var a = this;
-        return qa(function*() {
+        return wa(function*() {
           try {
             const b = yield a.hass.callWS({
                 type: "media_player_thumbnail",
@@ -2661,7 +2745,7 @@
         this.callService(a, "select_source", { source: b });
       }
       setMedia(a, b) {
-        this.callService(a, "play_media", na({}, b));
+        this.callService(a, "play_media", ta({}, b));
       }
       playPause(a) {
         this.callService(a, "media_play_pause");
@@ -2724,7 +2808,13 @@
       toggleScript(a, b) {
         let c =
           2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : {};
-        this.callService(a, b.split(".").pop(), na({}, c), "script");
+        this.callService(a, b.split(".").pop(), ta({}, c), "script");
+      }
+      toggleService(a, b) {
+        let c =
+          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : {};
+        const d = b.split(".");
+        this.callService(a, d[1], ta({}, c), d[0]);
       }
       callService(a, b, c) {
         let d =
@@ -2732,11 +2822,11 @@
             ? arguments[3]
             : "media_player";
         a.stopPropagation(),
-          this.hass.callService(d, b, na({ entity_id: this.config.entity }, c));
+          this.hass.callService(d, b, ta({ entity_id: this.config.entity }, c));
       }
     }
-    const fc = Eb(la());
-    class gc extends Gb {
+    const mc = Mb(ra());
+    class nc extends Ob {
       static get properties() {
         return {
           item: {},
@@ -2746,14 +2836,14 @@
         };
       }
       render() {
-        return eb(
-          ka(),
+        return mb(
+          qa(),
           this.checked,
           this.disabled,
           (a) => a.stopPropagation(),
           this.handleClick,
           this.item.name,
-          this.master ? eb(ja()) : ""
+          this.master ? mb(pa()) : ""
         );
       }
       handleClick(a) {
@@ -2765,11 +2855,20 @@
           );
       }
       static get styles() {
-        return Eb(ia());
+        return Mb(oa());
       }
     }
-    customElements.define("mmp-group-item", gc);
-    class hc extends Gb {
+    customElements.define("mmp-group-item", nc);
+    class oc extends Ob {
+      render() {
+        return mb(na());
+      }
+      static get styles() {
+        return Mb(ma());
+      }
+    }
+    customElements.define("mmp-button", oc);
+    class pc extends Ob {
       static get properties() {
         return { entities: {}, player: {}, visible: Boolean };
       }
@@ -2797,12 +2896,12 @@
           c = a.master,
           d = a.isMaster;
         return this.visible
-          ? eb(
-              ha(),
+          ? mb(
+              la(),
               this.visible,
               this.entities.map((a) =>
-                eb(
-                  ga(),
+                mb(
+                  ka(),
                   this.handleGroupChange,
                   a,
                   a.entity_id === this.player.id || b.includes(a.entity_id),
@@ -2817,7 +2916,7 @@
                   d ? b : this.player.entity_id,
                   !1
                 ),
-              d ? eb(fa()) : eb(ea()),
+              d ? mb(ja()) : mb(ia()),
               !d,
               (a) =>
                 this.player.handleGroupChange(
@@ -2826,15 +2925,15 @@
                   !0
                 )
             )
-          : eb(da());
+          : mb(ha());
       }
       static get styles() {
-        return Eb(ca());
+        return Mb(ga());
       }
     }
-    customElements.define("mmp-group-list", hc);
-    const ic = Eb(ba());
-    class jc extends Gb {
+    customElements.define("mmp-group-list", pc);
+    const qc = Mb(fa());
+    class rc extends Ob {
       static get properties() {
         return { items: [], label: String, selected: String };
       }
@@ -2845,33 +2944,33 @@
         this.dispatchEvent(new CustomEvent("change", { detail: a }));
       }
       render() {
-        return eb(
-          aa(),
+        return mb(
+          ea(),
           "right",
           "top",
           44,
           (a) => a.stopPropagation(),
           this.icon
-            ? eb(_(), ac.DROPDOWN)
-            : eb($(), this.selected || this.label, ac.DROPDOWN),
+            ? mb(da(), hc.DROPDOWN)
+            : mb(ca(), this.selected || this.label, hc.DROPDOWN),
           this.selectedId,
           this.items.map((a) =>
-            eb(
-              Z(),
+            mb(
+              ba(),
               a.id || a.name,
               () => this.onChange(a),
-              a.icon ? eb(Y(), a.icon) : "",
-              a.name ? eb(X(), a.name) : ""
+              a.icon ? mb(aa(), a.icon) : "",
+              a.name ? mb(_(), a.name) : ""
             )
           )
         );
       }
       static get styles() {
-        return [ic, Eb(W())];
+        return [qc, Mb($())];
       }
     }
-    customElements.define("mmp-dropdown", jc);
-    class kc extends Gb {
+    customElements.define("mmp-dropdown", rc);
+    class sc extends Ob {
       static get properties() {
         return { player: {}, shortcuts: {} };
       }
@@ -2887,28 +2986,33 @@
       get active() {
         return this.player.getAttribute(this.shortcuts.attribute);
       }
+      get height() {
+        return this.shortcuts.column_height || 36;
+      }
       render() {
-        if (!this.show) return;
+        if (!this.show) return mb(Z());
         const a = this.active,
           b = this.list
-            ? eb(V(), this.handleShortcut, this.list, this.shortcuts.label, a)
+            ? mb(Y(), this.handleShortcut, this.list, this.shortcuts.label, a)
             : "",
           c = this.buttons
-            ? eb(
-                U(),
+            ? mb(
+                X(),
                 this.buttons.map((b) =>
-                  eb(
-                    T(),
+                  mb(
+                    W(),
+                    "min-height: ".concat(this.height, "px;"),
                     this.shortcuts.columns,
                     b.id === a,
                     (a) => this.handleShortcut(a, b),
-                    b.icon ? eb(S(), b.icon) : "",
-                    b.name ? eb(R(), b.name) : ""
+                    this.shortcuts.align_text,
+                    b.icon ? mb(V(), b.icon) : "",
+                    b.name ? mb(U(), b.name) : ""
                   )
                 )
               )
             : "";
-        return eb(Q(), c, b);
+        return mb(T(), c, b);
       }
       handleShortcut(a, b) {
         const c = b || a.detail,
@@ -2916,16 +3020,17 @@
           e = c.id,
           f = c.data;
         if ("source" === d) return this.player.setSource(a, e);
+        if ("service" === d) return this.player.toggleService(a, e, f);
         if ("script" === d) return this.player.toggleScript(a, e, f);
         if ("sound_mode" === d) return this.player.setSoundMode(a, e);
         this.player.setMedia(a, { media_content_type: d, media_content_id: e });
       }
       static get styles() {
-        return [ic, Eb(P())];
+        return [qc, Mb(S())];
       }
     }
-    customElements.define("mmp-shortcuts", kc);
-    const lc = function(a, b) {
+    customElements.define("mmp-shortcuts", sc);
+    const tc = function(a, b) {
       let c =
         2 < arguments.length && arguments[2] !== void 0
           ? arguments[2]
@@ -2934,12 +3039,12 @@
         e = a.resources[d];
       return e && e[b] ? e[b] : c;
     };
-    class mc extends Gb {
+    class uc extends Ob {
       static get properties() {
         return { hass: {}, config: {} };
       }
       get label() {
-        return lc(this.hass, "ui.card.media_player.text_to_speak", "Say");
+        return tc(this.hass, "ui.card.media_player.text_to_speak", "Say");
       }
       get input() {
         return this.shadowRoot.getElementById("tts-input");
@@ -2948,7 +3053,7 @@
         return this.input.value;
       }
       render() {
-        return eb(O(), this.label, (a) => a.stopPropagation(), this.handleTts);
+        return mb(R(), this.label, (a) => a.stopPropagation(), this.handleTts);
       }
       handleTts(a) {
         const b = this.config,
@@ -2967,6 +3072,12 @@
                 volume: b.volume || 0.5,
                 message: c,
               })
+            : "webos" === b.platform
+            ? this.hass.callService(
+                "notify",
+                d.entity_id.split(".").slice(-1)[0],
+                { message: c }
+              )
             : "ga" === b.platform
             ? this.hass.callService("notify", "ga_broadcast", { message: c })
             : this.hass.callService("tts", "".concat(b.platform, "_say"), d),
@@ -2977,11 +3088,11 @@
         this.input.value = "";
       }
       static get styles() {
-        return Eb(N());
+        return Mb(Q());
       }
     }
-    customElements.define("mmp-tts", mc);
-    var nc = (a) => {
+    customElements.define("mmp-tts", uc);
+    var vc = (a) => {
       let b = parseInt(a % 60, 10),
         c = parseInt((a / 60) % 60, 10),
         d = parseInt((a / 3600) % 24, 10);
@@ -2995,7 +3106,7 @@
           .concat(b)
       );
     };
-    class oc extends Gb {
+    class wc extends Ob {
       static get properties() {
         return {
           _player: {},
@@ -3020,17 +3131,17 @@
       }
       render() {
         return this.player.active && this.hasProgress
-          ? eb(
-              M(),
+          ? mb(
+              P(),
               this.handleSeek,
               !this.player.isPlaying,
               this.showTime
-                ? eb(L(), nc(this.progress), nc(this.duration))
+                ? mb(O(), vc(this.progress), vc(this.duration))
                 : "",
               this.progress,
               this.duration
             )
-          : eb(K());
+          : mb(N());
       }
       trackProgress() {
         (this.progress = this.player.progress),
@@ -3048,11 +3159,11 @@
         clearInterval(this.tracker);
       }
       static get styles() {
-        return Eb(J());
+        return Mb(M());
       }
     }
-    customElements.define("mmp-progress", oc);
-    class pc extends Gb {
+    customElements.define("mmp-progress", wc);
+    class xc extends Ob {
       static get properties() {
         return { player: {}, selected: String, icon: Boolean };
       }
@@ -3067,8 +3178,8 @@
         }));
       }
       render() {
-        return eb(
-          I(),
+        return mb(
+          L(),
           this.handleSource,
           this.sources,
           this.source,
@@ -3081,11 +3192,11 @@
         this.player.setSource(a, b), (this.selected = b);
       }
       static get styles() {
-        return Eb(H());
+        return Mb(K());
       }
     }
-    customElements.define("mmp-source-menu", pc);
-    class qc extends Gb {
+    customElements.define("mmp-source-menu", xc);
+    class yc extends Ob {
       static get properties() {
         return { player: {}, selected: String, icon: Boolean };
       }
@@ -3100,8 +3211,8 @@
         }));
       }
       render() {
-        return eb(
-          G(),
+        return mb(
+          J(),
           this.handleChange,
           this.modes,
           this.mode,
@@ -3114,13 +3225,13 @@
         this.player.setSoundMode(a, b), (this.selected = b);
       }
       static get styles() {
-        return Eb(F());
+        return Mb(I());
       }
     }
-    customElements.define("mmp-sound-menu", qc);
-    class rc extends Gb {
+    customElements.define("mmp-sound-menu", yc);
+    class zc extends Ob {
       static get properties() {
-        return { player: {}, config: {} };
+        return { player: {}, config: {}, break: Boolean };
       }
       get showShuffle() {
         return !this.config.hide.shuffle && this.player.supportsShuffle;
@@ -3133,28 +3244,28 @@
       }
       render() {
         const a = this.config.hide;
-        return eb(
-          E(),
-          a.volume ? "" : this.renderVolControls(this.player.muted),
+        return mb(
+          H(),
+          a.volume ? mb(G()) : this.renderVolControls(this.player.muted),
           this.showShuffle
-            ? eb(
-                D(),
+            ? mb(
+                F(),
                 (a) => this.player.toggleShuffle(a),
-                ac.SHUFFLE,
+                hc.SHUFFLE,
                 this.player.shuffle
               )
-            : "",
+            : mb(E()),
           a.controls
-            ? ""
-            : eb(
-                C(),
-                this.config.flow,
+            ? mb(C())
+            : mb(
+                D(),
+                this.config.flow || this.break,
                 (a) => this.player.prev(a),
-                ac.PREV,
+                hc.PREV,
                 (a) => this.player.playPause(a),
-                ac.PLAY[this.player.isPlaying],
+                hc.PLAY[this.player.isPlaying],
                 (a) => this.player.next(a),
-                ac.NEXT
+                hc.NEXT
               )
         );
       }
@@ -3164,7 +3275,7 @@
           : this.renderVolSlider(a);
       }
       renderVolSlider(a) {
-        return eb(
+        return mb(
           B(),
           this.renderMuteButton(a),
           this.handleVolumeChange,
@@ -3177,31 +3288,31 @@
         );
       }
       renderVolButtons(a) {
-        return eb(
+        return mb(
           A(),
           this.renderMuteButton(a),
           (a) => this.player.volumeDown(a),
-          ac.VOL_DOWN,
+          hc.VOL_DOWN,
           (a) => this.player.volumeUp(a),
-          ac.VOL_UP
+          hc.VOL_UP
         );
       }
       renderMuteButton(a) {
         if (!this.config.hide.mute)
           switch (this.config.replace_mute) {
             case "play":
-              return eb(
+              return mb(
                 z(),
                 (a) => this.player.playPause(a),
-                ac.PLAY[this.player.isPlaying]
+                hc.PLAY[this.player.isPlaying]
               );
             case "stop":
-              return eb(y(), (a) => this.player.stop(a), ac.STOP);
+              return mb(y(), (a) => this.player.stop(a), hc.STOP);
             case "next":
-              return eb(x(), (a) => this.player.next(a), ac.NEXT);
+              return mb(x(), (a) => this.player.next(a), hc.NEXT);
             default:
               return this.player.supportsMute
-                ? eb(w(), (a) => this.player.toggleMute(a), ac.MUTE[a])
+                ? mb(w(), (a) => this.player.toggleMute(a), hc.MUTE[a])
                 : void 0;
           }
       }
@@ -3210,11 +3321,11 @@
         this.player.setVolume(a, b);
       }
       static get styles() {
-        return [ic, Eb(v())];
+        return [qc, Mb(v())];
       }
     }
-    customElements.define("mmp-media-controls", rc);
-    class sc extends Gb {
+    customElements.define("mmp-media-controls", zc);
+    class Ac extends Ob {
       static get properties() {
         return {
           hass: {},
@@ -3253,15 +3364,15 @@
       }
       render() {
         return this.player.isUnavailable
-          ? eb(u(), lc(this.hass, "state.default.unavailable", "Unavailable"))
-          : eb(
+          ? mb(u(), tc(this.hass, "state.default.unavailable", "Unavailable"))
+          : mb(
               t(),
               this.idle ? this.renderIdleView : "",
               this.config.collapse && this.player.active
-                ? eb(s(), this.player, this.config)
+                ? mb(s(), this.player, this.config)
                 : "",
               this.hasSource
-                ? eb(
+                ? mb(
                     r(),
                     this.player,
                     this.sourceSize,
@@ -3269,7 +3380,7 @@
                   )
                 : "",
               this.hasSoundMode
-                ? eb(
+                ? mb(
                     q(),
                     this.player,
                     this.soundSize,
@@ -3277,18 +3388,18 @@
                   )
                 : "",
               this.showGroupButton
-                ? eb(
+                ? mb(
                     p(),
-                    ac.GROUP,
+                    hc.GROUP,
                     !this.player.isGrouped,
                     this.groupVisible,
                     this.handleGroupClick
                   )
                 : "",
               this.showPowerButton
-                ? eb(
+                ? mb(
                     o(),
-                    ac.POWER,
+                    hc.POWER,
                     (a) => this.player.toggle(a),
                     this.powerColor
                   )
@@ -3301,27 +3412,22 @@
       }
       get renderIdleView() {
         return this.player.isPaused
-          ? eb(n(), ac.PLAY[this.player.isPlaying], (a) =>
+          ? mb(n(), hc.PLAY[this.player.isPlaying], (a) =>
               this.player.playPause(a)
             )
-          : eb(m(), lc(this.hass, "state.media_player.idle", "Idle"));
+          : mb(m(), tc(this.hass, "state.media_player.idle", "Idle"));
       }
       static get styles() {
-        return [ic, Eb(l())];
+        return [qc, Mb(l())];
       }
     }
-    customElements.define("mmp-powerstrip", sc),
-      customElements.get("mwc-button") ||
+    customElements.define("mmp-powerstrip", Ac),
+      customElements.get("ha-slider") ||
         customElements.define(
-          "mwc-button",
-          class extends customElements.get("paper-button") {}
-        ),
-      customElements.get("ha-paper-slider") ||
-        customElements.define(
-          "ha-paper-slider",
+          "ha-slider",
           class extends customElements.get("paper-slider") {}
         );
-    class tc extends Gb {
+    class Bc extends Ob {
       constructor() {
         super(),
           (this._overflow = !1),
@@ -3348,7 +3454,7 @@
         };
       }
       static get styles() {
-        return fc;
+        return mc;
       }
       set hass(a) {
         if (a) {
@@ -3357,7 +3463,7 @@
             b &&
               this.entity !== b &&
               ((this.entity = b),
-              (this.player = new ec(a, this.config, b)),
+              (this.player = new lc(a, this.config, b)),
               (this.rtl = this.computeRTL(a)),
               (this.idle = this.player.idle),
               this.player.trackIdle && this.updateIdleStatus());
@@ -3380,7 +3486,7 @@
           throw new Error(
             "Specify an entity from within the media_player domain."
           );
-        const b = na(
+        const b = ta(
           {
             artwork: "default",
             info: "default",
@@ -3391,13 +3497,13 @@
           },
           a,
           {
-            hide: na({}, _b, a.hide),
-            speaker_group: na(
+            hide: ta({}, gc, a.hide),
+            speaker_group: ta(
               { show_group_count: !0, platform: "sonos" },
               a.sonos,
               a.speaker_group
             ),
-            shortcuts: na({ label: "Shortcuts..." }, a.shortcuts),
+            shortcuts: ta({ label: "Shortcuts..." }, a.shortcuts),
           }
         );
         (b.max_volume = +b.max_volume || 100),
@@ -3410,11 +3516,11 @@
       shouldUpdate(a) {
         return (
           void 0 === this.break && this.computeRect(this),
-          bc.some((b) => a.has(b)) && this.player
+          ic.some((b) => a.has(b)) && this.player
         );
       }
       firstUpdated() {
-        const a = new $b((a) => {
+        const a = new fc((a) => {
           a.forEach((a) => {
             window.requestAnimationFrame(() => {
               "scroll" === this.config.info && this.computeOverflow(),
@@ -3445,7 +3551,7 @@
               : this,
           b = a.config;
         const c = this.computeArtwork();
-        return eb(
+        return mb(
           k(),
           this.handleMoreInfo,
           this.computeClasses(),
@@ -3463,10 +3569,12 @@
           this.edit,
           this.idle,
           b.flow,
-          !b.collapse && this.player.active ? eb(j(), this.player, b) : "",
+          !b.collapse && this.player.active
+            ? mb(j(), this.player, b, this.break)
+            : "",
           this.player,
           b.shortcuts,
-          b.tts ? eb(i(), b.tts, this.hass, this.player.id) : "",
+          b.tts ? mb(i(), b.tts, this.hass, this.player.id) : "",
           this.edit,
           b.speaker_group.entities,
           this.player,
@@ -3480,44 +3588,44 @@
             this.config.background && (!a || "default" === this.config.artwork)
               ? "url(".concat(this.config.background, ")")
               : this.thumbnail;
-          return eb(h(), b);
+          return mb(h(), b);
         }
       }
       renderIcon(a) {
         return this.config.hide.icon
           ? void 0
           : this.player.active && a && "default" === this.config.artwork
-          ? eb(
+          ? mb(
               g(),
               this.thumbnail,
               !this.config.hide.artwork_border,
               this.player.state
             )
-          : eb(f(), this.computeIcon());
+          : mb(f(), this.computeIcon());
       }
       renderEntityName() {
         return this.config.hide.name
           ? void 0
-          : eb(e(), this.name, this.speakerCount());
+          : mb(e(), this.name, this.speakerCount());
       }
       renderMediaInfo() {
         if (!this.config.hide.info) {
           const e = this.player.mediaInfo;
-          return eb(
+          return mb(
             d(),
             "short" === this.config.info || !this.player.active,
             "scroll" === this.config.info,
             this.overflow,
             this.overflow,
             "scroll" === this.config.info
-              ? eb(
+              ? mb(
                   c(),
                   e.map((a) =>
-                    eb(b(), "attr__".concat(a.attr), a.prefix + a.text)
+                    mb(b(), "attr__".concat(a.attr), a.prefix + a.text)
                   )
                 )
               : "",
-            e.map((b) => eb(a(), "attr__".concat(b.attr), b.prefix + b.text))
+            e.map((b) => mb(a(), "attr__".concat(b.attr), b.prefix + b.text))
           );
         }
       }
@@ -3533,7 +3641,7 @@
               ? arguments[0]
               : this,
           b = a.config;
-        return Jb({
+        return Qb({
           "--responsive": this.break || b.hide.icon,
           "--initial": this.initial,
           "--bg": b.background,
@@ -3563,7 +3671,7 @@
       computeIcon() {
         return this.config.icon
           ? this.config.icon
-          : this.player.icon || ac.DEFAULT;
+          : this.player.icon || hc.DEFAULT;
       }
       computeOverflow() {
         const a = this.shadowRoot.querySelector(".marquee");
@@ -3589,11 +3697,20 @@
       toggleGroupList() {
         this.edit = !this.edit;
       }
-      handleMoreInfo() {
-        if (this.config.more_info) {
-          const a = new Event("hass-more-info", { composed: !0 });
-          (a.detail = { entityId: this.config.entity }), this.dispatchEvent(a);
-        }
+      handleMoreInfo(a) {
+        a.stopPropagation(),
+          this.config.more_info &&
+            this.fire("hass-more-info", { entityId: this.config.entity });
+      }
+      fire(a, b, c) {
+        const d = c || {},
+          f = null === b || void 0 === b ? {} : b,
+          g = new Event(a, {
+            bubbles: void 0 === d.bubbles || d.bubbles,
+            cancelable: !!d.cancelable,
+            composed: void 0 === d.composed || d.composed,
+          });
+        return (g.detail = f), this.dispatchEvent(g), g;
       }
       updateIdleStatus() {
         this._idleTracker && clearTimeout(this._idleTracker);
@@ -3609,6 +3726,6 @@
         return this.config.collapse ? 1 : 2;
       }
     }
-    customElements.define("mini-media-player", tc);
+    customElements.define("mini-media-player", Bc);
   });
 })();
