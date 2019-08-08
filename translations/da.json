@@ -349,11 +349,28 @@
                 "introduction": "Her er det muligt at konfigurere dine komponenter og Home Assistant. Ikke alt er muligt at konfigurere fra brugergrænsefladen endnu, men vi arbejder på det.",
                 "core": {
                     "caption": "Generelt",
-                    "description": "Valider din konfigurationsfil og kontroller serveren",
+                    "description": "Valider din konfigurationsfil og administrer serveren",
                     "section": {
                         "core": {
                             "header": "Konfiguration og server kontrol",
                             "introduction": "Ændring af din konfiguration kan det være en trættende proces. Vi ved det. Dette afsnit vil forsøge at gøre dit liv en smule nemmere.",
+                            "core_config": {
+                                "edit_requires_storage": "Editor er deaktiveret, fordi config er gemt i configuration.yaml.",
+                                "location_name": "Navn på din Home Assistant-installation",
+                                "latitude": "Breddegrad",
+                                "longitude": "Længdegrad",
+                                "elevation": "Højde",
+                                "elevation_meters": "meter",
+                                "time_zone": "Tidszone",
+                                "unit_system": "Enheds system",
+                                "unit_system_imperial": "Imperial",
+                                "unit_system_metric": "Metriske",
+                                "imperial_example": "Fahrenheit, pund",
+                                "metric_example": "Celsius, kg",
+                                "save_button": "Gem"
+                            }
+                        },
+                        "server_control": {
                             "validation": {
                                 "heading": "Konfigurations validering",
                                 "introduction": "Validér din konfiguration, hvis du for nylig lavede nogle ændringer i din konfiguration og vil sikre dig, at alt er validt",
@@ -374,21 +391,6 @@
                                 "introduction": "Kontroller din Home Assistant server... fra Home Assistant.",
                                 "restart": "Genstart",
                                 "stop": "Stop"
-                            },
-                            "core_config": {
-                                "edit_requires_storage": "Editor er deaktiveret, fordi config er gemt i configuration.yaml.",
-                                "location_name": "Navn på din Home Assistant-installation",
-                                "latitude": "Breddegrad",
-                                "longitude": "Længdegrad",
-                                "elevation": "Højde",
-                                "elevation_meters": "meter",
-                                "time_zone": "Tidszone",
-                                "unit_system": "Enheds system",
-                                "unit_system_imperial": "Imperial",
-                                "unit_system_metric": "Metriske",
-                                "imperial_example": "Fahrenheit, pund",
-                                "metric_example": "Celsius, kg",
-                                "save_button": "Gem"
                             }
                         }
                     }
@@ -618,10 +620,22 @@
                     "common": {
                         "value": "Værdi",
                         "instance": "Instans",
-                        "index": "Indeks"
+                        "index": "Indeks",
+                        "unknown": "ukendt",
+                        "wakeup_interval": "Vækningsinterval"
                     },
                     "values": {
                         "header": "Node værdier"
+                    },
+                    "node_config": {
+                        "header": "Indstillinger for node konfiguration",
+                        "seconds": "sekunder",
+                        "set_wakeup": "Indstil vækningsinterval",
+                        "config_parameter": "Konfigurationsparameter",
+                        "config_value": "Konfigurationsværdi",
+                        "true": "Sandt",
+                        "false": "Falsk",
+                        "set_config_parameter": "Indstil konfigurationsparameter"
                     }
                 },
                 "users": {
@@ -744,6 +758,33 @@
                         "device_tracker_intro": "Vælg de enheder, der tilhører denne person.",
                         "device_tracker_picked": "Spor enhed",
                         "device_tracker_pick": "Vælg en enhed, der skal spores"
+                    }
+                },
+                "server_control": {
+                    "caption": "Serveradministration",
+                    "description": "Genstart og stop Home Assistant serveren",
+                    "section": {
+                        "validation": {
+                            "heading": "Validering af konfiguration",
+                            "introduction": "Valider din konfiguration, hvis du for nylig har foretaget nogle ændringer i din konfiguration og vil sikre dig, at den er gyldig",
+                            "check_config": "Tjek konfiguration",
+                            "valid": "Konfiguration gyldig!",
+                            "invalid": "Konfiguration ugyldig"
+                        },
+                        "reloading": {
+                            "heading": "Genindlæser konfiguration",
+                            "introduction": "Nogle dele af Home Assistant kan genindlæses uden en genstart. Tryk på genindlæs for at aflæse den nuværende konfiguration og indlæse den nye.",
+                            "core": "Genindlæs system",
+                            "group": "Genindlæs grupper",
+                            "automation": "Genindlæs automatiseringer",
+                            "script": "Genindlæs scripts"
+                        },
+                        "server_management": {
+                            "heading": "Serveradministration",
+                            "introduction": "Administrer din Home Assistant server... fra Home Assistant.",
+                            "restart": "Genstart",
+                            "stop": "Stop"
+                        }
                     }
                 }
             },
