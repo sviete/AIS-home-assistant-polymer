@@ -5,7 +5,7 @@ setup(
     version="20190811.0",
     description="AIS dom frontend",
     url="https://github.com/sviete/home-assistant/home-assistant-polymer",
-    author="The AI-Speaker.com Authors",
+    author="The Authors of the AI-Speaker.com project.",
     author_email="info@sviete.pl",
     license="Apache License 2.0",
     packages=find_packages(include=["hass_frontend", "hass_frontend.*"]),
