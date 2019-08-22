@@ -982,7 +982,7 @@
                     "finish": "Koniec"
                 },
                 "core-config": {
-                    "intro": "{name}, witamy w Asystent domowy. Jak chcesz nazwać swój dom?",
+                    "intro": "{name}, witamy w  Asystencie domowym. Jak chcesz nazwać swój dom?",
                     "intro_location": "Chcielibyśmy wiedzieć gdzie mieszkasz. Te dane pomogą w wyświetlaniu informacji i konfigurowaniu automatyki opartej na położeniu słońca. Te dane nigdy nie będą udostępniane poza Twoją sieć lokalną.",
                     "intro_location_detect": "Możemy pomóc Ci wprowadzić te informacje, wysyłając jednorazowe zapytanie do usługi zewnętrznej.",
                     "location_name_default": "Asystent domowy",
