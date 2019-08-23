@@ -57,6 +57,20 @@ class HaConfigDashboard extends NavigateMixin(LocalizeMixin(PolymerElement)) {
           <span slot="header">[[localize('ui.panel.config.header')]]</span>
           <span slot="introduction">[[localize('ui.panel.config.introduction')]]</span>
 
+          <ha-card>
+            <a href='/config/ais_dom' tabindex="-1">
+              <paper-item>
+                <paper-item-body two-line>
+                  Ustawienia Bramki AIS dom
+                  <div secondary>
+                    Zarządzaj ustawieniami swojej bramki IoT i Audio
+                  </div>
+                </paper-item-body>
+                <ha-icon-next></ha-icon-next>
+              </paper-item>
+            </a>
+          </ha-card>
+
           <template is="dom-if" if="[[computeIsLoaded(hass, 'cloud')]]">
             <ha-card>
               <a href='/config/cloud' tabindex="-1">
@@ -113,7 +127,7 @@ class HaConfigDashboard extends NavigateMixin(LocalizeMixin(PolymerElement)) {
 
           <template is='dom-if' if='[[!showAdvanced]]'>
             <div class='promo-advanced'>
-              Missing config options? Enable advanced mode on <a href="/profile">your profile page.</a>
+              Brakuje opcji konfiguracji? Włącz tryb zaawansowany na <a href="/profile">stronie Twojego profilu.</a>
             </div>
           </template>
         </ha-config-section>

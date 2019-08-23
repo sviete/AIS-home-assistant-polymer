@@ -349,10 +349,10 @@
                 "introduction": "Tutaj można skonfigurować komponenty i Asystenta domowego. Nie wszystko jest możliwe do skonfigurowania z interfejsu użytkownika, ale pracujemy nad tym.",
                 "core": {
                     "caption": "Ogólne",
-                    "description": "Sprawdź poprawność pliku konfiguracyjnego i kontroluj serwer",
+                    "description": "Sprawdź poprawność pliku konfiguracyjnego i kontroluj serwis",
                     "section": {
                         "core": {
-                            "header": "Konfiguracja i kontrola serwera",
+                            "header": "Konfiguracja i kontrola serwisu",
                             "introduction": "Zmiana konfiguracji może być męczącym procesem. Wiemy. Ta sekcja postara się ułatwić Ci życie.",
                             "core_config": {
                                 "edit_requires_storage": "Edytor wyłączony, ponieważ konfiguracja jest przechowywana w pliku configuration.yaml.",
@@ -387,8 +387,8 @@
                                 "script": "Przeładuj skrypty"
                             },
                             "server_management": {
-                                "heading": "Zarządzanie serwerem",
-                                "introduction": "Kontroluj swój serwer Asystent domowy",
+                                "heading": "Zarządzanie serwisem",
+                                "introduction": "Kontroluj swój serwis Asystent domowy",
                                 "restart": "Uruchom ponownie",
                                 "stop": "Zatrzymaj"
                             }
@@ -761,8 +761,8 @@
                     }
                 },
                 "server_control": {
-                    "caption": "Kontrola serwera",
-                    "description": "Uruchom ponownie i zatrzymaj serwer Home Assistant",
+                    "caption": "Kontrola serwisu",
+                    "description": "Uruchom ponownie i zatrzymaj serwis Asystent domowy",
                     "section": {
                         "validation": {
                             "heading": "Sprawdzanie konfiguracji",
@@ -773,15 +773,15 @@
                         },
                         "reloading": {
                             "heading": "Przeładowanie konfiguracji",
-                            "introduction": "Niektóre części Home Assistant'a można przeładować bez konieczności ponownego uruchomienia. Kliknięcie przeładuj spowoduje ponowne wczytanie konfiguracji.",
+                            "introduction": "Niektóre części Asystenta domowego można przeładować bez konieczności ponownego uruchomienia. Kliknięcie przeładuj spowoduje ponowne wczytanie konfiguracji.",
                             "core": "Przeładuj rdzeń",
                             "group": "Przeładuj grupy",
                             "automation": "Przeładuj automatyzacje",
                             "script": "Przeładuj skrypty"
                         },
                         "server_management": {
-                            "heading": "Zarządzanie serwerem",
-                            "introduction": "Kontroluj swój serwer Home Assistant… z Home Assistant.",
+                            "heading": "Zarządzanie serwisem",
+                            "introduction": "Kontroluj swój serwis Asystent domowy… z Asystenta domowego.",
                             "restart": "Uruchom ponownie",
                             "stop": "Zatrzymaj"
                         }
@@ -1073,8 +1073,8 @@
                     "demo": {
                         "demo_by": "według {name}",
                         "next_demo": "Następna demonstracja",
-                        "introduction": "Witaj w domu! Dotarłeś do demonstracji Home Assistant, gdzie prezentujemy najlepsze interfejsy użytkownika stworzone przez naszą społeczność.",
-                        "learn_more": "Dowiedz się więcej o Home Assistant"
+                        "introduction": "Witaj w domu! Dotarłeś do demonstracji Asystenta domowego, gdzie prezentujemy najlepsze interfejsy użytkownika stworzone przez naszą społeczność.",
+                        "learn_more": "Dowiedz się więcej o Asystencie domowym"
                     }
                 },
                 "config": {
