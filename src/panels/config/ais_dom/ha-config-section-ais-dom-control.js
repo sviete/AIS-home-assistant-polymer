@@ -11,6 +11,7 @@ import "../ha-config-section";
 
 import isComponentLoaded from "../../../common/config/is_component_loaded";
 import LocalizeMixin from "../../../mixins/localize-mixin";
+import { fireEvent } from "../../../common/dom/fire_event";
 
 /*
  * @appliesMixin LocalizeMixin
@@ -42,6 +43,12 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         .spacer {
           flex-grow: 1;
         }
+        .barcode-button {
+          --paper-icon-button: {
+            width: 60px;
+            height: 60px;
+          }
+        }
       </style>
       <ha-config-section is-wide="[[isWide]]">
         <span slot="header">Kontrola bramki AIS dom</span>
@@ -68,14 +75,22 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
 
         <ha-card header="Zdalny dostęp z Internetu">
           <paper-toggle-button
-            .checked="true"
-            @change="changeRemote"
+            checked="{{remoteConnected}}"
+            on-change="changeRemote"
           ></paper-toggle-button>
           <div class="card-content">
             Tunel zapewnia bezpieczne zdalne połączenie z Twoim urządzeniem
-            kiedy jesteś z dala od domu. \nTwoja bramka dostępna jest pod
-            adresem
+            kiedy jesteś z dala od domu. Twoja bramka dostępna jest pod adresem
             <a href="[[remoteDomain]]" target="_blank">[[remoteDomain]]</a>.
+            <div class="validate-container">
+              <paper-icon-button
+                class="barcode-button"
+                icon="hass:qrcode-scan"
+                on-click="showBarcodeInfo"
+              ></paper-icon-button>
+              Kliknij ikonę powyżej, a następnie zeskanuj kod QR za pomocą
+              aplikacji na telefonie.
+            </div>
           </div>
           <div class="card-actions">
             <a
@@ -126,23 +141,31 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
 
       remoteDomain: {
         type: String,
-        computed: "_computeRemoteDomain(hass, _domain, _service)",
+        computed: "_computeRemoteDomain(hass)",
+      },
+
+      remoteConnected: {
+        type: Boolean,
+        computed: "_computeRremoteConnected(hass)",
       },
     };
   }
 
-  _computeRemoteDomain(hass, domain, service) {
+  _computeRemoteDomain(hass) {
     return hass.states["camera.remote_access"].state;
   }
-  // _computeRemoteConnected(hass, domain, service) {
-  //   if (hass.states["input_boolean.ais_remote_access"].state == "on") {
-  //     return "checked";
-  //   };
-  //   return "";
-  // }
+  _computeRremoteConnected(hass) {
+    return hass.states["input_boolean.ais_remote_access"].state == "on";
+  }
 
   changeRemote() {
-    console.log("OK");
+    this.hass.callService("input_boolean", "toggle", {
+      entity_id: "input_boolean.ais_remote_access",
+    });
+  }
+
+  showBarcodeInfo() {
+    fireEvent(this, "hass-more-info", { entityId: "camera.remote_access" });
   }
 }
 
