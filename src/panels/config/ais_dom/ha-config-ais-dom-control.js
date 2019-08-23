@@ -33,7 +33,7 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
         }
       </style>
 
-      <hass-subpage header="Kontrola bamki AIS dom">
+      <hass-subpage header="Konfiguracja bamki AIS dom">
         <div class$="[[computeClasses(isWide)]]">
           <ha-config-section-ais-dom-control
             is-wide="[[isWide]]"

@@ -51,10 +51,26 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         }
       </style>
       <ha-config-section is-wide="[[isWide]]">
-        <span slot="header">Kontrola bramki AIS dom</span>
+        <span slot="header">Oprogramowanie bramki Ais dom</span>
         <span slot="introduction"
-          >Na tej stronie możesz zmieniać parametry swojej bramki AIS dom</span
+          >Możesz zaktualizować system do najnowszej wersji i zsynchronizować
+          bramkę z Portalem Integratora</span
         >
+        <ha-card header="Wersja systemu Asystent domowy">
+          <div class="card-content">
+            [[aisVersionInfo]]
+            <div class="validate-container">
+              <ha-call-service-button
+                class="[[aisButtonVersionCheckUpgradeClass]]"
+                on-click="aisUpdateSystem"
+                hass="[[hass]]"
+                domain="script"
+                service="ais_update_system"
+                >[[aisButtonVersionCheckUpgrade]]
+              </ha-call-service-button>
+            </div>
+          </div>
+        </ha-card>
         <ha-card header="Synchronizacja z Portalem Integratora">
           <div class="card-content">
             Jeśli ostatnio wprowadzałeś zmiany w Portalu Integratora, takie jak
@@ -72,7 +88,12 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
             </div>
           </div>
         </ha-card>
-
+      </ha-config-section>
+      <ha-config-section is-wide="[[isWide]]">
+        <span slot="header">Konfiguracja bramki AIS dom</span>
+        <span slot="introduction"
+          >W tej sekcji możesz skonfigurować parametry bramki</span
+        >
         <ha-card header="Zdalny dostęp z Internetu">
           <paper-toggle-button
             checked="{{remoteConnected}}"
@@ -80,7 +101,8 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
           ></paper-toggle-button>
           <div class="card-content">
             Tunel zapewnia bezpieczne zdalne połączenie z Twoim urządzeniem
-            kiedy jesteś z dala od domu. Twoja bramka dostępna jest pod adresem
+            kiedy jesteś z dala od domu. Twoja bramka dostępna [[remoteInfo]]
+            pod adresem
             <a href="[[remoteDomain]]" target="_blank">[[remoteDomain]]</a>.
             <div class="validate-container">
               <paper-icon-button
@@ -139,6 +161,11 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         value: false,
       },
 
+      remoteInfo: {
+        type: String,
+        value: "jest",
+      },
+
       remoteDomain: {
         type: String,
         computed: "_computeRemoteDomain(hass)",
@@ -148,14 +175,48 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         type: Boolean,
         computed: "_computeRremoteConnected(hass)",
       },
+
+      aisVersionInfo: {
+        type: String,
+        computed: "_computeAisVersionInfo(hass)",
+      },
+
+      aisButtonVersionCheckUpgrade: {
+        type: String,
+        computed: "_computeAisButtonVersionCheckUpgrade(hass)",
+      },
+
+      aisButtonVersionCheckUpgradeClass: {
+        type: String,
+        value: "warning",
+      },
     };
   }
 
   _computeRemoteDomain(hass) {
     return hass.states["camera.remote_access"].state;
   }
+  _computeAisVersionInfo(hass) {
+    return hass.states["sensor.version_info"].state;
+  }
+  _computeAisButtonVersionCheckUpgrade(hass) {
+    if ("reinstall_dom_app" in hass.states["sensor.version_info"].attributes) {
+      if (hass.states["sensor.version_info"].attributes.reinstall_dom_app) {
+        this.aisButtonVersionCheckUpgradeClass = "info";
+        return "Zainstaluj aktualizację";
+      }
+    }
+    this.aisButtonVersionCheckUpgradeClass = "warning";
+    return "Sprawdz dostępność aktualizacji";
+  }
+
   _computeRremoteConnected(hass) {
-    return hass.states["input_boolean.ais_remote_access"].state == "on";
+    if (hass.states["input_boolean.ais_remote_access"].state == "on") {
+      this.remoteInfo = "jest";
+      return true;
+    }
+    this.remoteInfo = "będzie";
+    return false;
   }
 
   changeRemote() {
