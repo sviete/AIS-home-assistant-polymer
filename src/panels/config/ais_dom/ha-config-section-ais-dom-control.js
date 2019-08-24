@@ -9,6 +9,7 @@ import "../../../resources/ha-style";
 import "../../../state-summary/state-card-input_number";
 
 import "../ha-config-section";
+import "./ais-webhooks";
 
 import isComponentLoaded from "../../../common/config/is_component_loaded";
 import LocalizeMixin from "../../../mixins/localize-mixin";
@@ -255,6 +256,8 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
           </div>
         </ha-card>
 
+        <ais-webhooks hass="[[hass]]"></ais-webhooks>
+
         <ha-card header="Restart lub wyłączenie">
           <div class="card-content">
             W tej sekcji możesz zrestartować lub całkowicie wyłączyć bramkę
@@ -361,7 +364,6 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
   }
 
   personImgClass(selectedVoice, person) {
-    console.log(selectedVoice, person);
     if (selectedVoice == person) {
       return "person-img-selected";
     }
