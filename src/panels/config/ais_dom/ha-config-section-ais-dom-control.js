@@ -50,6 +50,23 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
             height: 60px;
           }
         }
+
+        div.person {
+          display: inline-block;
+          margin: 10px;
+        }
+
+        img {
+          border-radius: 50%;
+          width: 100px;
+          height: 100px;
+          border: 20px;
+        }
+        img.person-img-selected {
+          border: 7px solid #ff9800;
+          width: 110px;
+          height: 110px;
+        }
       </style>
       <ha-config-section is-wide="[[isWide]]">
         <span slot="header">Oprogramowanie bramki</span>
@@ -96,49 +113,109 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         <span slot="introduction">Wybierz głos swojego Asystenta domowego</span>
         <ha-card header="Konfiguracja głosu Asystenta domowego">
           <div class="card-content">
-            Wybierz głos asystenta
-            <paper-icon-button
-              class="barcode-button"
-              icon="hass:qrcode-scan"
-              on-click="showBarcodeInfo"
-            ></paper-icon-button>
-            <paper-icon-button
-              class="barcode-button"
-              icon="hass:qrcode-scan"
-              on-click="showBarcodeInfo"
-            ></paper-icon-button>
-            <paper-icon-button
-              class="barcode-button"
-              icon="hass:qrcode-scan"
-              on-click="showBarcodeInfo"
-            ></paper-icon-button>
-            <paper-icon-button
-              class="barcode-button"
-              icon="hass:qrcode-scan"
-              on-click="showBarcodeInfo"
-            ></paper-icon-button>
-            <paper-icon-button
-              class="barcode-button"
-              icon="hass:qrcode-scan"
-              on-click="showBarcodeInfo"
-            ></paper-icon-button>
-            <paper-icon-button
-              class="barcode-button"
-              icon="hass:qrcode-scan"
-              on-click="showBarcodeInfo"
-            ></paper-icon-button>
-            <paper-icon-button
-              class="barcode-button"
-              icon="hass:qrcode-scan"
-              on-click="showBarcodeInfo"
-            ></paper-icon-button>
-            <paper-icon-button
-              class="barcode-button"
-              icon="hass:qrcode-scan"
-              on-click="showBarcodeInfo"
-            ></paper-icon-button>
-            <state-card-input_number min="0.1" max="2" value="1" step="0.1">
-            </state-card-input_number>
+            <div class="person">
+              <img
+                class$='[[personImgClass(selectedVoice, "Jola online")]]'
+                data-voice="Jola online"
+                alt="Jola Online"
+                title="Jola Online"
+                on-click="switchTtsPerson"
+                src="/static/ais_dom/Ania.png"
+              />
+            </div>
+            <div class="person">
+              <img
+                class$='[[personImgClass(selectedVoice, "Jola lokalnie")]]'
+                data-voice="Jola lokalnie"
+                alt="Jola Lokalnie"
+                title="Jola Lokalnie"
+                on-click="switchTtsPerson"
+                src="/static/ais_dom/Asia.png"
+              />
+            </div>
+            <div class="person">
+              <img
+                class$='[[personImgClass(selectedVoice, "Celina")]]'
+                data-voice="Celina"
+                alt="Celina"
+                title="Celina"
+                on-click="switchTtsPerson"
+                src="/static/ais_dom/Celka.png"
+              />
+            </div>
+            <div class="person">
+              <img
+                class$='[[personImgClass(selectedVoice, "Anżela")]]'
+                data-voice="Anżela"
+                alt="Anżela"
+                title="Anżela"
+                on-click="switchTtsPerson"
+                src="/static/ais_dom/Anzela.png"
+              />
+            </div>
+            <div class="person">
+              <img
+                class$='[[personImgClass(selectedVoice, "Asia")]]'
+                data-voice="Asia"
+                alt="Asia"
+                title="Asia"
+                on-click="switchTtsPerson"
+                src="/static/ais_dom/Kasia.png"
+              />
+            </div>
+            <div class="person">
+              <img
+                class$='[[personImgClass(selectedVoice, "Sebastian")]]'
+                data-voice="Sebastian"
+                alt="Sebastian"
+                title="Sebastian"
+                on-click="switchTtsPerson"
+                src="/static/ais_dom/Sebastian.png"
+              />
+            </div>
+            <div class="person">
+              <img
+                class$='[[personImgClass(selectedVoice, "Bartek")]]'
+                data-voice="Bartek"
+                alt="Bartek"
+                title="Bartek"
+                on-click="switchTtsPerson"
+                src="/static/ais_dom/Bartek.png"
+              />
+            </div>
+            <div class="person">
+              <img
+                class$='[[personImgClass(selectedVoice, "Andrzej")]]'
+                data-voice="Andrzej"
+                alt="Andrzej"
+                title="Andrzej"
+                on-click="switchTtsPerson"
+                src="/static/ais_dom/Andrzej.png"
+              />
+            </div>
+          </div>
+          <div class="card-actions person-actions">
+            <div on-click="tuneVoiceTone">
+              <paper-icon-button
+                class="user-button"
+                icon="hass:tune"
+              ></paper-icon-button
+              ><mwc-button>Ton mowy</mwc-button>
+            </div>
+            <div on-click="tuneVoiceSpeed">
+              <paper-icon-button
+                class="user-button"
+                icon="hass:play-speed"
+              ></paper-icon-button
+              ><mwc-button>Szybkość mowy</mwc-button>
+            </div>
+            <div>
+              <paper-icon-button
+                class="user-button"
+                icon="hass:account"
+              ></paper-icon-button
+              ><mwc-button>[[selectedVoice]]</mwc-button>
+            </div>
           </div>
         </ha-card>
       </ha-config-section>
@@ -199,15 +276,6 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
             </ha-call-service-button>
           </div>
         </ha-card>
-
-        <ha-card header="x">
-          <div class="card-content">
-            yyy
-            <div class="center-container">
-              <ha-call-service-button></ha-call-service-button>
-            </div>
-          </div>
-        </ha-card>
       </ha-config-section>
     `;
   }
@@ -243,6 +311,11 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         computed: "_computeAisVersionInfo(hass)",
       },
 
+      selectedVoice: {
+        type: String,
+        computed: "_computeAisSelectedVoice(hass)",
+      },
+
       aisButtonVersionCheckUpgrade: {
         type: String,
         computed: "_computeAisButtonVersionCheckUpgrade(hass)",
@@ -256,7 +329,11 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
   }
 
   _computeRemoteDomain(hass) {
-    return hass.states["camera.remote_access"].state;
+    return (
+      "https://" +
+      hass.states["sensor.ais_secure_android_id_dom"].state +
+      ".paczka.pro"
+    );
   }
   _computeAisVersionInfo(hass) {
     return hass.states["sensor.version_info"].state;
@@ -279,6 +356,18 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
     return false;
   }
 
+  _computeAisSelectedVoice(hass) {
+    return hass.states["input_select.assistant_voice"].state;
+  }
+
+  personImgClass(selectedVoice, person) {
+    console.log(selectedVoice, person);
+    if (selectedVoice == person) {
+      return "person-img-selected";
+    }
+    return "";
+  }
+
   changeRemote() {
     this.hass.callService("input_boolean", "toggle", {
       entity_id: "input_boolean.ais_remote_access",
@@ -287,6 +376,25 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
 
   showBarcodeInfo() {
     fireEvent(this, "hass-more-info", { entityId: "camera.remote_access" });
+  }
+
+  tuneVoiceSpeed() {
+    fireEvent(this, "hass-more-info", {
+      entityId: "input_number.assistant_rate",
+    });
+  }
+
+  tuneVoiceTone() {
+    fireEvent(this, "hass-more-info", {
+      entityId: "input_number.assistant_tone",
+    });
+  }
+
+  switchTtsPerson(e) {
+    this.hass.callService("input_select", "select_option", {
+      entity_id: "input_select.assistant_voice",
+      option: e.target.dataset.voice,
+    });
   }
 }
 
