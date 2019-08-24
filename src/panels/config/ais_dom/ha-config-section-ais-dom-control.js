@@ -6,6 +6,7 @@ import { PolymerElement } from "@polymer/polymer/polymer-element";
 import "../../../components/ha-card";
 import "../../../components/buttons/ha-call-service-button";
 import "../../../resources/ha-style";
+import "../../../state-summary/state-card-input_number";
 
 import "../ha-config-section";
 
@@ -20,7 +21,7 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
   static get template() {
     return html`
       <style include="iron-flex ha-style">
-        .validate-container {
+        .center-container {
           @apply --layout-vertical;
           @apply --layout-center-center;
           height: 70px;
@@ -51,7 +52,7 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         }
       </style>
       <ha-config-section is-wide="[[isWide]]">
-        <span slot="header">Oprogramowanie bramki Ais dom</span>
+        <span slot="header">Oprogramowanie bramki</span>
         <span slot="introduction"
           >Możesz zaktualizować system do najnowszej wersji i zsynchronizować
           bramkę z Portalem Integratora</span
@@ -59,13 +60,13 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         <ha-card header="Wersja systemu Asystent domowy">
           <div class="card-content">
             [[aisVersionInfo]]
-            <div class="validate-container">
+            <div class="center-container">
               <ha-call-service-button
-                class="[[aisButtonVersionCheckUpgradeClass]]"
-                on-click="aisUpdateSystem"
+                class="warning"
                 hass="[[hass]]"
-                domain="script"
-                service="ais_update_system"
+                domain="ais_shell_command"
+                service="execute_upgrade"
+                service-data="[[aisUpdateSystemData]]"
                 >[[aisButtonVersionCheckUpgrade]]
               </ha-call-service-button>
             </div>
@@ -77,7 +78,7 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
             dodanie nowych typów audio czy też dostęp do zewnętrznych serwisów.
             To przyciskiem poniżej możesz uruchomić natychmiastowe pobranie tych
             zmian na bramkę bez czekania na automatyczną synchronizację.
-            <div class="validate-container">
+            <div class="center-container">
               <ha-call-service-button
                 class="warning"
                 hass="[[hass]]"
@@ -89,22 +90,75 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
           </div>
         </ha-card>
       </ha-config-section>
+
       <ha-config-section is-wide="[[isWide]]">
-        <span slot="header">Konfiguracja bramki AIS dom</span>
+        <span slot="header">Wybór głosu Asystenta</span>
+        <span slot="introduction">Wybierz głos swojego Asystenta domowego</span>
+        <ha-card header="Konfiguracja głosu Asystenta domowego">
+          <div class="card-content">
+            Wybierz głos asystenta
+            <paper-icon-button
+              class="barcode-button"
+              icon="hass:qrcode-scan"
+              on-click="showBarcodeInfo"
+            ></paper-icon-button>
+            <paper-icon-button
+              class="barcode-button"
+              icon="hass:qrcode-scan"
+              on-click="showBarcodeInfo"
+            ></paper-icon-button>
+            <paper-icon-button
+              class="barcode-button"
+              icon="hass:qrcode-scan"
+              on-click="showBarcodeInfo"
+            ></paper-icon-button>
+            <paper-icon-button
+              class="barcode-button"
+              icon="hass:qrcode-scan"
+              on-click="showBarcodeInfo"
+            ></paper-icon-button>
+            <paper-icon-button
+              class="barcode-button"
+              icon="hass:qrcode-scan"
+              on-click="showBarcodeInfo"
+            ></paper-icon-button>
+            <paper-icon-button
+              class="barcode-button"
+              icon="hass:qrcode-scan"
+              on-click="showBarcodeInfo"
+            ></paper-icon-button>
+            <paper-icon-button
+              class="barcode-button"
+              icon="hass:qrcode-scan"
+              on-click="showBarcodeInfo"
+            ></paper-icon-button>
+            <paper-icon-button
+              class="barcode-button"
+              icon="hass:qrcode-scan"
+              on-click="showBarcodeInfo"
+            ></paper-icon-button>
+            <state-card-input_number min="0.1" max="2" value="1" step="0.1">
+            </state-card-input_number>
+          </div>
+        </ha-card>
+      </ha-config-section>
+
+      <ha-config-section is-wide="[[isWide]]">
+        <span slot="header">Konfiguracja bramki</span>
         <span slot="introduction"
           >W tej sekcji możesz skonfigurować parametry bramki</span
         >
-        <ha-card header="Zdalny dostęp z Internetu">
+        <ha-card header="Zdalny dostęp">
           <paper-toggle-button
             checked="{{remoteConnected}}"
             on-change="changeRemote"
           ></paper-toggle-button>
           <div class="card-content">
             Tunel zapewnia bezpieczne zdalne połączenie z Twoim urządzeniem
-            kiedy jesteś z dala od domu. Twoja bramka dostępna [[remoteInfo]]
-            pod adresem
+            kiedy jesteś z dala od domu. Twoja bramka dostępna [[remoteInfo]] z
+            Internetu pod adresem
             <a href="[[remoteDomain]]" target="_blank">[[remoteDomain]]</a>.
-            <div class="validate-container">
+            <div class="center-container">
               <paper-icon-button
                 class="barcode-button"
                 icon="hass:qrcode-scan"
@@ -124,10 +178,9 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
           </div>
         </ha-card>
 
-        <ha-card header="Zarządzanie bramką">
+        <ha-card header="Restart lub wyłączenie">
           <div class="card-content">
-            W tej sekcji możesz zrestartować lub całkowicie wyłączyć swoją
-            bramkę AIS dom
+            W tej sekcji możesz zrestartować lub całkowicie wyłączyć bramkę
           </div>
           <div class="card-actions warning">
             <ha-call-service-button
@@ -144,6 +197,15 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
               service="ais_stop_system"
               >Zatrzymaj
             </ha-call-service-button>
+          </div>
+        </ha-card>
+
+        <ha-card header="x">
+          <div class="card-content">
+            yyy
+            <div class="center-container">
+              <ha-call-service-button></ha-call-service-button>
+            </div>
           </div>
         </ha-card>
       </ha-config-section>
@@ -186,9 +248,9 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         computed: "_computeAisButtonVersionCheckUpgrade(hass)",
       },
 
-      aisButtonVersionCheckUpgradeClass: {
-        type: String,
-        value: "warning",
+      aisUpdateSystemData: {
+        type: Object,
+        value: { say: true },
       },
     };
   }
@@ -202,11 +264,9 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
   _computeAisButtonVersionCheckUpgrade(hass) {
     if ("reinstall_dom_app" in hass.states["sensor.version_info"].attributes) {
       if (hass.states["sensor.version_info"].attributes.reinstall_dom_app) {
-        this.aisButtonVersionCheckUpgradeClass = "info";
         return "Zainstaluj aktualizację";
       }
     }
-    this.aisButtonVersionCheckUpgradeClass = "warning";
     return "Sprawdz dostępność aktualizacji";
   }
 

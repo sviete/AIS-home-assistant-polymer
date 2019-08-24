@@ -63,7 +63,7 @@ class HaConfigDashboard extends NavigateMixin(LocalizeMixin(PolymerElement)) {
                 <paper-item-body two-line>
                   Ustawienia Bramki AIS dom
                   <div secondary>
-                    Zarządzaj ustawieniami swojej bramki IoT i Audio
+                    Zarządzaj swoją bramką IoT i Audio
                   </div>
                 </paper-item-body>
                 <ha-icon-next></ha-icon-next>
