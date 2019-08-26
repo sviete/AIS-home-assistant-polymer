@@ -10,14 +10,9 @@ class HaPanelAisdocs extends PolymerElement {
         iframe {
           border: 0;
           width: 100%;
-          height: calc(100% - 64px);
+          height: 100%;
         }
       </style>
-      <app-toolbar>
-        <ha-menu-button hass="[[hass]]" narrow="[[narrow]]"></ha-menu-button>
-        <div main-title>[[panel.title]]</div>
-      </app-toolbar>
-
       <iframe
         src="//sviete.github.io/AIS-docs/"
         sandbox="allow-forms allow-popups allow-pointer-lock allow-same-origin allow-scripts"
