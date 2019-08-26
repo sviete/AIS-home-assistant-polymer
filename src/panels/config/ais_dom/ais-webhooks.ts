@@ -35,11 +35,11 @@ export class AisWebhooks extends LitElement {
       ${this.renderStyle()}
       <ha-card header="Wywołania zwrotne HTTP">
         <div class="card-content">
-          Wywołania zwrotne HTTP używane są do udostępniania powiadomień o
-          zdarzeniach. Wszystko, co jest skonfigurowane do uruchamiania przez
-          wywołanie zwrotne, ma publicznie dostępny unikalny adres URL, aby
-          umożliwić wysyłanie danych do Asystenta domowego z dowolnego miejsca.
-          ${this._renderBody()}
+          Wywołania zwrotne HTTP (Webhook) używane są do udostępniania
+          powiadomień o zdarzeniach. Wszystko, co jest skonfigurowane do
+          uruchamiania przez wywołanie zwrotne, ma publicznie dostępny unikalny
+          adres URL, aby umożliwić wysyłanie danych do Asystenta domowego z
+          dowolnego miejsca. ${this._renderBody()}
 
           <div class="footer">
             <a href="https://sviete.github.io/AIS-docs" target="_blank">

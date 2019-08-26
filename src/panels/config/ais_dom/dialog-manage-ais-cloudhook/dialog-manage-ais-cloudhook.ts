@@ -4,7 +4,6 @@ import {
   PropertyDeclarations,
   css,
   CSSResult,
-  property,
 } from "lit-element";
 
 import "@material/mwc-button";
@@ -17,7 +16,7 @@ import { HaPaperDialog } from "../../../../components/dialog/ha-paper-dialog";
 // tslint:disable-next-line
 import { PaperInputElement } from "@polymer/paper-input/paper-input";
 
-//import { HomeAssistant } from "../../../../types";
+import { HomeAssistant } from "../../../../types";
 import { haStyle } from "../../../../resources/styles";
 import { WebhookDialogParams } from "./show-dialog-manage-ais-cloudhook";
 
@@ -25,7 +24,7 @@ const inputLabel =
   "Publiczny unikalny adres URL – kliknij, aby skopiować do schowka.";
 
 export class DialogManageAisCloudhook extends LitElement {
-  //@property() public hass!: HomeAssistant;
+  public hass!: HomeAssistant;
   private _params?: WebhookDialogParams;
 
   static get properties(): PropertyDeclarations {
@@ -47,17 +46,17 @@ export class DialogManageAisCloudhook extends LitElement {
       return html``;
     }
     const { webhook } = this._params;
-    const docsUrl = "https://sviete.github.io/AIS-docs/";
-    //const gateId = this.hass.states["sensor.ais_secure_android_id_dom"].state
-    const gateId = "xxx";
+    const gateId = this.hass.states["sensor.ais_secure_android_id_dom"].state;
     const webhookUrl =
       "https://" + gateId + ".paczka.pro/api/webhook/" + webhook.webhook_id;
-    console.log(this.hass);
     return html`
       <ha-paper-dialog with-backdrop>
         <h2>Wywołanie zwrotne dla ${webhook.name}</h2>
         <div>
-          <p>Webhook jest dostępny pod następującym adresem URL:</p>
+          <p>
+            Wywołanie zwrotne HTTP (Webhook) jest dostępny pod następującym
+            adresem URL:
+          </p>
           <paper-input
             label="${inputLabel}"
             value="${webhookUrl}"
@@ -67,9 +66,6 @@ export class DialogManageAisCloudhook extends LitElement {
         </div>
 
         <div class="paper-dialog-buttons">
-          <a href="${docsUrl}" target="_blank">
-            <mwc-button>ZOBACZ DOKUMENTACJE</mwc-button>
-          </a>
           <mwc-button @click="${this._closeDialog}">ZAMKNIJ</mwc-button>
         </div>
       </ha-paper-dialog>

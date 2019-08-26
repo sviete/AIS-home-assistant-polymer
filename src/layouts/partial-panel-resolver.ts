@@ -39,6 +39,8 @@ const COMPONENTS = {
     import(/* webpackChunkName: "panel-profile" */ "../panels/profile/ha-panel-profile"),
   "shopping-list": () =>
     import(/* webpackChunkName: "panel-shopping-list" */ "../panels/shopping-list/ha-panel-shopping-list"),
+  aishelp: () =>
+    import(/* webpackChunkName: "panel-aishelp" */ "../panels/aishelp/ha-panel-aishelp"),
 };
 
 const getRoutes = (panels: Panels): RouterOptions => {

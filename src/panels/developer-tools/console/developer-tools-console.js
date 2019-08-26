@@ -1,7 +1,5 @@
 import "@polymer/paper-input/paper-textarea";
 import "@polymer/paper-spinner/paper-spinner";
-import { timeOut } from "@polymer/polymer/lib/utils/async";
-import { Debouncer } from "@polymer/polymer/lib/utils/debounce";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 

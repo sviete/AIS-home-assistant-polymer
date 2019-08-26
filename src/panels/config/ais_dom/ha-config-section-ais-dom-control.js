@@ -11,7 +11,7 @@ import "../../../state-summary/state-card-input_number";
 import "../ha-config-section";
 import "./ais-webhooks";
 
-import isComponentLoaded from "../../../common/config/is_component_loaded";
+import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
 import LocalizeMixin from "../../../mixins/localize-mixin";
 import { fireEvent } from "../../../common/dom/fire_event";
 
@@ -45,16 +45,6 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         .spacer {
           flex-grow: 1;
         }
-        .barcode-button {
-          --paper-icon-button: {
-            width: 60px;
-            height: 60px;
-          }
-        }
-        .barcode-button {
-          width: 60px;
-          height: 60px;
-        }
 
         div.person {
           display: inline-block;
@@ -71,6 +61,9 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
           border: 7px solid #ff9800;
           width: 110px;
           height: 110px;
+        }
+        div.aisInfoRow {
+          display: inline-block;
         }
       </style>
       <ha-config-section is-wide="[[isWide]]">
@@ -114,9 +107,51 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
       </ha-config-section>
 
       <ha-config-section is-wide="[[isWide]]">
-        <span slot="header">Wybór głosu Asystenta</span>
-        <span slot="introduction">Wybierz głos swojego Asystenta domowego</span>
-        <ha-card header="Konfiguracja głosu Asystenta domowego">
+        <span slot="header">Konfiguracja bramki</span>
+        <span slot="introduction"
+          >W tej sekcji możesz skonfigurować parametry bramki</span
+        >
+        <ha-card header="Parametry sieci">
+          <div class="card-content" style="display: flex;">
+            <div style="text-align: center;">
+              <div class="aisInfoRow">Lokalna nazwa hosta</div>
+              <div class="aisInfoRow">
+                <mwc-button on-click="showLocalIpInfo"
+                  >[[aisLocalHostName]]</mwc-button
+                ><paper-icon-button
+                  class="user-button"
+                  icon="hass:settings"
+                  on-click="createFlowHostName"
+                ></paper-icon-button>
+              </div>
+            </div>
+            <div on-click="showLocalIpInfo" style="text-align: center;">
+              <div class="aisInfoRow">Lokalny adres IP</div>
+              <div class="aisInfoRow">
+                <mwc-button>[[aisLocalIP]]</mwc-button>
+              </div>
+            </div>
+            <div on-click="showWiFiSpeedInfo" style="text-align: center;">
+              <div class="aisInfoRow">Prędkość połączenia WiFi</div>
+              <div class="aisInfoRow">
+                <mwc-button>[[aisWiFiSpeed]]</mwc-button>
+              </div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <div>
+              <paper-icon-button
+                class="user-button"
+                icon="hass:wifi"
+                on-click="showWiFiGroup"
+              ></paper-icon-button
+              ><mwc-button on-click="createFlowWifi"
+                >Konfigurator połączenia z siecą WiFi</mwc-button
+              >
+            </div>
+          </div>
+        </ha-card>
+        <ha-card header="Wybór głosu Asystenta">
           <div class="card-content">
             <div class="person">
               <img
@@ -226,11 +261,11 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
       </ha-config-section>
 
       <ha-config-section is-wide="[[isWide]]">
-        <span slot="header">Konfiguracja bramki</span>
+        <span slot="header">Zdalny dostęp</span>
         <span slot="introduction"
-          >W tej sekcji możesz skonfigurować parametry bramki</span
+          >W tej sekcji możesz skonfigurować zdalny dostęp do bramki</span
         >
-        <ha-card header="Zdalny dostęp">
+        <ha-card header="Szyfrowany tunel">
           <paper-toggle-button
             checked="{{remoteConnected}}"
             on-change="changeRemote"
@@ -240,12 +275,15 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
             kiedy jesteś z dala od domu. Twoja bramka dostępna [[remoteInfo]] z
             Internetu pod adresem
             <a href="[[remoteDomain]]" target="_blank">[[remoteDomain]]</a>.
-            <div class="center-container">
-              <paper-icon-button
-                class="barcode-button"
-                icon="hass:qrcode"
-                on-click="showBarcodeInfo"
-              ></paper-icon-button>
+            <div class="center-container" style="height:100px">
+              <div on-click="showBarcodeInfo">
+                <svg style="width:48px;height:48px" viewBox="0 0 24 24">
+                  <path
+                    fill="#ffffff"
+                    d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,15H9V21H3V15M5,17V19H7V17H5Z"
+                  />
+                </svg>
+              </div>
               Kliknij obrazek z kodem by go powiększyć, a następnie zeskanuj kod
               QR za pomocą aplikacji na telefonie.
             </div>
@@ -261,26 +299,40 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         </ha-card>
 
         <ais-webhooks hass="[[hass]]"></ais-webhooks>
-
+      </ha-config-section>
+      <ha-config-section is-wide="[[isWide]]">
+        <span slot="header">Wyłączenie bramki</span>
         <ha-card header="Restart lub wyłączenie">
           <div class="card-content">
             W tej sekcji możesz zrestartować lub całkowicie wyłączyć bramkę
           </div>
           <div class="card-actions warning">
-            <ha-call-service-button
-              class="warning"
-              hass="[[hass]]"
-              domain="script"
-              service="ais_restart_system"
-              >Uruchom ponownie
-            </ha-call-service-button>
-            <ha-call-service-button
-              class="warning"
-              hass="[[hass]]"
-              domain="script"
-              service="ais_stop_system"
-              >Zatrzymaj
-            </ha-call-service-button>
+            <div>
+              <paper-icon-button
+                class="user-button"
+                icon="hass:refresh"
+              ></paper-icon-button>
+              <ha-call-service-button
+                class="warning"
+                hass="[[hass]]"
+                domain="script"
+                service="ais_restart_system"
+                >Uruchom ponownie
+              </ha-call-service-button>
+            </div>
+            <div>
+              <paper-icon-button
+                class="user-button"
+                icon="hass:stop"
+              ></paper-icon-button>
+              <ha-call-service-button
+                class="warning"
+                hass="[[hass]]"
+                domain="script"
+                service="ais_stop_system"
+                >Zatrzymaj
+              </ha-call-service-button>
+            </div>
           </div>
         </ha-card>
       </ha-config-section>
@@ -332,8 +384,31 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         type: Object,
         value: { say: true },
       },
+
+      aisLocalHostName: {
+        type: String,
+        computed: "_computeAisLocalHostName(hass)",
+      },
+
+      aisLocalIP: {
+        type: String,
+        computed: "_computeAisLocalIP(hass)",
+      },
+
+      aisWiFiSpeed: {
+        type: String,
+        computed: "_computeAisWiFiSpeed(hass)",
+      },
     };
   }
+
+  // ready() {
+  //   super.ready();
+  //   this.addEventListener("hass-reload-entries", () => {
+  //     // eslint-disable-next-line no-console
+  //     console.log("OK");
+  //   });
+  // }
 
   _computeRemoteDomain(hass) {
     return (
@@ -342,9 +417,23 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
       ".paczka.pro"
     );
   }
+
   _computeAisVersionInfo(hass) {
     return hass.states["sensor.version_info"].state;
   }
+
+  _computeAisLocalHostName(hass) {
+    return hass.states["sensor.local_host_name"].state;
+  }
+
+  _computeAisLocalIP(hass) {
+    return hass.states["sensor.internal_ip_address"].state;
+  }
+
+  _computeAisWiFiSpeed(hass) {
+    return hass.states["sensor.ais_wifi_service_current_network_info"].state;
+  }
+
   _computeAisButtonVersionCheckUpgrade(hass) {
     if ("reinstall_dom_app" in hass.states["sensor.version_info"].attributes) {
       if (hass.states["sensor.version_info"].attributes.reinstall_dom_app) {
@@ -355,7 +444,7 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
   }
 
   _computeRremoteConnected(hass) {
-    if (hass.states["input_boolean.ais_remote_access"].state == "on") {
+    if (hass.states["input_boolean.ais_remote_access"].state === "on") {
       this.remoteInfo = "jest";
       return true;
     }
@@ -368,7 +457,7 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
   }
 
   personImgClass(selectedVoice, person) {
-    if (selectedVoice == person) {
+    if (selectedVoice === person) {
       return "person-img-selected";
     }
     return "";
@@ -401,6 +490,58 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
       entity_id: "input_select.assistant_voice",
       option: e.target.dataset.voice,
     });
+  }
+
+  showWiFiGroup() {
+    fireEvent(this, "hass-more-info", {
+      entityId: "group.internet_status",
+    });
+  }
+
+  showWiFiSpeedInfo() {
+    fireEvent(this, "hass-more-info", {
+      entityId: "sensor.ais_wifi_service_current_network_info",
+    });
+  }
+
+  showLocalIpInfo() {
+    fireEvent(this, "hass-more-info", {
+      entityId: "sensor.internal_ip_address",
+    });
+  }
+
+  _continueFlow(flowId) {
+    showConfigFlowDialog(this, {
+      continueFlowId: flowId,
+      dialogClosedCallback: () => {
+        // eslint-disable-next-line no-console
+        console.log("OK");
+      },
+    });
+  }
+
+  createFlowHostName() {
+    this.hass
+      .callApi("POST", "config/config_entries/flow", {
+        handler: "ais_host",
+      })
+      .then((result) => {
+        // eslint-disable-next-line no-console
+        console.log(result);
+        this._continueFlow(result.flow_id);
+      });
+  }
+
+  createFlowWifi() {
+    this.hass
+      .callApi("POST", "config/config_entries/flow", {
+        handler: "ais_wifi_service",
+      })
+      .then((result) => {
+        // eslint-disable-next-line no-console
+        console.log(result);
+        this._continueFlow(result.flow_id);
+      });
   }
 }
 

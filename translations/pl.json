@@ -1055,7 +1055,7 @@
                 "menu": {
                     "configure_ui": "Konfiguracja interfejsu użytkownika",
                     "unused_entities": "Nieużywane encje",
-                    "help": "Pomoc",
+                    "help": "Dokumentacja",
                     "refresh": "Odśwież"
                 },
                 "warning": {
