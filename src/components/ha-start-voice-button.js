@@ -6,7 +6,6 @@ import { EventsMixin } from "../mixins/events-mixin";
 
 import isComponentLoaded from "../common/config/is_component_loaded";
 import { fireEvent } from "../common/dom/fire_event";
-import { navigate } from "../common/navigate";
 
 /*
  * @appliesMixin EventsMixin
@@ -19,11 +18,6 @@ class HaStartVoiceButton extends EventsMixin(PolymerElement) {
         icon="hass:microphone"
         hidden$="[[!canListen]]"
         on-click="handleListenClick"
-      ></paper-icon-button>
-      <paper-icon-button
-        on-click="handleAishelpClick"
-        aria-label="Pomoc"
-        icon="hass:help-circle"
       ></paper-icon-button>
     `;
   }
@@ -57,10 +51,6 @@ class HaStartVoiceButton extends EventsMixin(PolymerElement) {
         import(/* webpackChunkName: "voice-command-dialog" */ "../dialogs/ha-voice-command-dialog"),
       dialogTag: "ha-voice-command-dialog",
     });
-  }
-
-  handleAishelpClick() {
-    navigate(this, `/aishelp`);
   }
 }
 

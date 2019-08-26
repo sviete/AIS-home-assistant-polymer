@@ -37,6 +37,8 @@ const TRANSLATION_FRAGMENTS = [
   "page-demo",
   "page-onboarding",
   "developer-tools",
+  "aishelp",
+  "aisdocs",
 ];
 
 const tasks = [];

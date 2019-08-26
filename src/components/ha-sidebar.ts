@@ -32,7 +32,13 @@ import { classMap } from "lit-html/directives/class-map";
 // tslint:disable-next-line: no-duplicate-imports
 import { PaperIconItemElement } from "@polymer/paper-item/paper-icon-item";
 
-const SHOW_AFTER_SPACER = ["config", "developer-tools", "hassio"];
+const SHOW_AFTER_SPACER = [
+  "config",
+  "developer-tools",
+  "hassio",
+  "aishelp",
+  "aisdocs",
+];
 
 const SUPPORT_SCROLL_IF_NEEDED = "scrollIntoViewIfNeeded" in document.body;
 
@@ -43,6 +49,8 @@ const SORT_VALUE_URL_PATHS = {
   "developer-tools": 9,
   hassio: 10,
   config: 11,
+  aishelp: 12,
+  aisdocs: 13,
 };
 
 const panelSorter = (a, b) => {

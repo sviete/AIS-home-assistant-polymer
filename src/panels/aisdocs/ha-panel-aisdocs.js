@@ -3,7 +3,7 @@ import { PolymerElement } from "@polymer/polymer/polymer-element";
 
 import "../states/ha-panel-states";
 
-class HaPanelAishelp extends PolymerElement {
+class HaPanelAisdocs extends PolymerElement {
   static get template() {
     return html`
       <style include="ha-style">
@@ -37,4 +37,4 @@ class HaPanelAishelp extends PolymerElement {
   }
 }
 
-customElements.define("ha-panel-aishelp", HaPanelAishelp);
+customElements.define("ha-panel-aisdocs", HaPanelAisdocs);
