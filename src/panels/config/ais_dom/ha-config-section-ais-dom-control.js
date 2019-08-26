@@ -51,6 +51,10 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
             height: 60px;
           }
         }
+        .barcode-button {
+          width: 60px;
+          height: 60px;
+        }
 
         div.person {
           display: inline-block;
@@ -239,11 +243,11 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
             <div class="center-container">
               <paper-icon-button
                 class="barcode-button"
-                icon="hass:qrcode-scan"
+                icon="hass:qrcode"
                 on-click="showBarcodeInfo"
               ></paper-icon-button>
-              Kliknij ikonę powyżej, a następnie zeskanuj kod QR za pomocą
-              aplikacji na telefonie.
+              Kliknij obrazek z kodem by go powiększyć, a następnie zeskanuj kod
+              QR za pomocą aplikacji na telefonie.
             </div>
           </div>
           <div class="card-actions">

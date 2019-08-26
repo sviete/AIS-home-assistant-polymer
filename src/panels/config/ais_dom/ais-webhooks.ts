@@ -1,36 +1,28 @@
-import {
-  html,
-  LitElement,
-  PropertyDeclarations,
-  PropertyValues,
-} from "lit-element";
+import { html, LitElement, PropertyDeclarations } from "lit-element";
 import "@polymer/paper-toggle-button/paper-toggle-button";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
 import "@polymer/paper-spinner/paper-spinner";
 import "../../../components/ha-card";
 
-import { HomeAssistant, WebhookError } from "../../../types";
+import { HomeAssistant } from "../../../types";
 import { Webhook, fetchWebhooks } from "../../../data/webhook";
 
-import { showManageCloudhookDialog } from "./dialog-manage-cloudhook/show-dialog-manage-cloudhook";
+import { showManageCloudhookDialog } from "./dialog-manage-ais-cloudhook/show-dialog-manage-ais-cloudhook";
 
 export class AisWebhooks extends LitElement {
   public hass?: HomeAssistant;
   private _localHooks?: Webhook[];
-  private _progress: string[];
 
   static get properties(): PropertyDeclarations {
     return {
       hass: {},
       _localHooks: {},
-      _progress: {},
     };
   }
 
   constructor() {
     super();
-    this._progress = [];
   }
 
   public connectedCallback() {
@@ -51,20 +43,12 @@ export class AisWebhooks extends LitElement {
 
           <div class="footer">
             <a href="https://sviete.github.io/AIS-docs" target="_blank">
-              Dowiedz się więcej o tworzeniu automatyzacji opartych na zwrotne
-              wywołaniu HTTP.
+              Dowiedz się więcej o zwrotnym wywołaniu HTTP.
             </a>
           </div>
         </div>
       </ha-card>
     `;
-  }
-
-  protected updated(changedProps: PropertyValues) {
-    super.updated(changedProps);
-    // if (changedProps.has("cloudStatus") && this.cloudStatus) {
-    //   this._cloudHooks = this.cloudStatus.prefs.cloudhooks || {};
-    // }
   }
 
   private _renderBody() {
@@ -118,9 +102,7 @@ export class AisWebhooks extends LitElement {
     const webhook = this._localHooks!.find(
       (ent) => ent.webhook_id === webhookId
     )!;
-    showManageCloudhookDialog(this, {
-      webhook,
-    });
+    showManageCloudhookDialog(this, { webhook });
   }
 
   private _handleManageButton(ev: MouseEvent) {

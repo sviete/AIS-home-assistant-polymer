@@ -4,6 +4,7 @@ import {
   PropertyDeclarations,
   css,
   CSSResult,
+  property,
 } from "lit-element";
 
 import "@material/mwc-button";
@@ -16,19 +17,21 @@ import { HaPaperDialog } from "../../../../components/dialog/ha-paper-dialog";
 // tslint:disable-next-line
 import { PaperInputElement } from "@polymer/paper-input/paper-input";
 
-import { HomeAssistant } from "../../../../types";
+//import { HomeAssistant } from "../../../../types";
 import { haStyle } from "../../../../resources/styles";
-import { WebhookDialogParams } from "./show-dialog-manage-cloudhook";
+import { WebhookDialogParams } from "./show-dialog-manage-ais-cloudhook";
 
-const inputLabel = "Public URL – Click to copy to clipboard";
+const inputLabel =
+  "Publiczny unikalny adres URL – kliknij, aby skopiować do schowka.";
 
-export class DialogManageCloudhook extends LitElement {
-  protected hass?: HomeAssistant;
+export class DialogManageAisCloudhook extends LitElement {
+  //@property() public hass!: HomeAssistant;
   private _params?: WebhookDialogParams;
 
   static get properties(): PropertyDeclarations {
     return {
       _params: {},
+      hass: {},
     };
   }
 
@@ -43,32 +46,31 @@ export class DialogManageCloudhook extends LitElement {
     if (!this._params) {
       return html``;
     }
-    const { webhook, cloudhook } = this._params;
-    const docsUrl =
-      webhook.domain === "automation"
-        ? "https://www.home-assistant.io/docs/automation/trigger/#webhook-trigger"
-        : `https://www.home-assistant.io/components/${webhook.domain}/`;
+    const { webhook } = this._params;
+    const docsUrl = "https://sviete.github.io/AIS-docs/";
+    //const gateId = this.hass.states["sensor.ais_secure_android_id_dom"].state
+    const gateId = "xxx";
+    const webhookUrl =
+      "https://" + gateId + ".paczka.pro/api/webhook/" + webhook.webhook_id;
+    console.log(this.hass);
     return html`
       <ha-paper-dialog with-backdrop>
-        <h2>Webhook for ${webhook.name}</h2>
+        <h2>Wywołanie zwrotne dla ${webhook.name}</h2>
         <div>
-          <p>The webhook is available at the following url:</p>
+          <p>Webhook jest dostępny pod następującym adresem URL:</p>
           <paper-input
             label="${inputLabel}"
-            value="xxxxxxxx"
+            value="${webhookUrl}"
             @click="${this._copyClipboard}"
             @blur="${this._restoreLabel}"
           ></paper-input>
-          <p>
-            This webhook is managed by an integration and cannot be disabled.
-          </p>
         </div>
 
         <div class="paper-dialog-buttons">
           <a href="${docsUrl}" target="_blank">
-            <mwc-button>VIEW DOCUMENTATION</mwc-button>
+            <mwc-button>ZOBACZ DOKUMENTACJE</mwc-button>
           </a>
-          <mwc-button @click="${this._closeDialog}">CLOSE</mwc-button>
+          <mwc-button @click="${this._closeDialog}">ZAMKNIJ</mwc-button>
         </div>
       </ha-paper-dialog>
     `;
@@ -86,15 +88,6 @@ export class DialogManageCloudhook extends LitElement {
     this._dialog.close();
   }
 
-  private async _disableWebhook() {
-    if (!confirm("Are you sure you want to disable this webhook?")) {
-      return;
-    }
-
-    this._params!.disableHook();
-    this._closeDialog();
-  }
-
   private _copyClipboard(ev: FocusEvent) {
     // paper-input -> iron-input -> input
     const paperInput = ev.currentTarget as PaperInputElement;
@@ -102,8 +95,8 @@ export class DialogManageCloudhook extends LitElement {
       .inputElement as HTMLInputElement;
     input.setSelectionRange(0, input.value.length);
     try {
-      document.execCommand("copy");
-      paperInput.label = "COPIED TO CLIPBOARD";
+      document.execCommand("kopiuj");
+      paperInput.label = "SKOPIOWANO DO SCHOWKA";
     } catch (err) {
       // Copying failed. Oh no
     }
@@ -136,8 +129,8 @@ export class DialogManageCloudhook extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "dialog-manage-cloudhook": DialogManageCloudhook;
+    "dialog-manage-ais-cloudhook": DialogManageAisCloudhook;
   }
 }
 
-customElements.define("dialog-manage-cloudhook", DialogManageCloudhook);
+customElements.define("dialog-manage-ais-cloudhook", DialogManageAisCloudhook);
