@@ -821,7 +821,7 @@
                 },
                 "long_lived_access_tokens": {
                     "header": "Tokeny dostępu",
-                    "description": "Długoterminowe tokeny dostępu umożliwiają skryptom interakcję z Asystent domowy. Każdy token będzie ważny przez 10 lat od utworzenia. Następujące tokeny są obecnie aktywne.",
+                    "description": "Długoterminowe tokeny dostępu umożliwiają skryptom interakcję z Asystentem domowym. Każdy token będzie ważny przez 10 lat od utworzenia. Następujące tokeny są obecnie aktywne.",
                     "learn_auth_requests": "Dowiedz się, jak tworzyć uwierzytelnione żądania.",
                     "created_at": "Utworzony {date}",
                     "confirm_delete": "Czy na pewno chcesz usunąć token dla {name}?",

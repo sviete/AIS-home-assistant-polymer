@@ -66,7 +66,7 @@ export class AisWebhooks extends LitElement {
           <a href="/config/integrations">
             integracji opartej na wywołaniu zwrotnym
           </a>
-          lub przez            tworzenie
+          lub przez tworzenie
           <a href="/config/automation/new"> automatyzacji typu webhook </a>.
         </div>
       `;

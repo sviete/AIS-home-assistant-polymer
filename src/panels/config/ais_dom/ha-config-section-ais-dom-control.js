@@ -65,9 +65,6 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         div.aisInfoRow {
           display: inline-block;
         }
-        div.card-content {
-          width: 600px;
-        }
       </style>
       <ha-config-section is-wide="[[isWide]]">
         <span slot="header">Oprogramowanie bramki</span>
@@ -351,7 +348,7 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
                 hass="[[hass]]"
                 domain="script"
                 service="ais_stop_system"
-                >Zatrzymaj
+                >Wyłącz
               </ha-call-service-button>
             </div>
           </div>

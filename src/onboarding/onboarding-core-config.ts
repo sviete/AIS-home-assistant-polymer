@@ -19,6 +19,7 @@ import {
   detectCoreConfig,
   saveCoreConfig,
 } from "../data/core";
+import { showConfigFlowDialog } from "../dialogs/config-flow/show-dialog-config-flow";
 import { PolymerChangedEvent } from "../polymer-types";
 import { onboardCoreConfigStep } from "../data/onboarding";
 import { fireEvent } from "../common/dom/fire_event";
@@ -103,6 +104,7 @@ class OnboardingCoreConfig extends LitElement {
           .location=${this._locationValue}
           .fitZoom=${14}
           @change=${this._locationChanged}
+          style="z-index:100"
         ></ha-location-editor>
       </div>
 
@@ -262,7 +264,22 @@ class OnboardingCoreConfig extends LitElement {
   }
 
   private _connectWifi() {
-    console.log("Wifi");
+    this.hass
+      .callApi("POST", "config/config_entries/flow", {
+        handler: "ais_wifi_service",
+      })
+      .then((result) => {
+        this._continueFlow(result.flow_id);
+      });
+  }
+
+  private _continueFlow(flowId) {
+    showConfigFlowDialog(this, {
+      continueFlowId: flowId,
+      dialogClosedCallback: () => {
+        return;
+      },
+    });
   }
 
   private async _save(ev) {
