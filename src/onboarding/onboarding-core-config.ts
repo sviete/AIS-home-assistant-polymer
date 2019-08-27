@@ -67,12 +67,27 @@ class OnboardingCoreConfig extends LitElement {
             "ui.panel.page-onboarding.core-config.intro_location"
           )}
         </p>
-
         <div class="row">
           <div>
             ${this.onboardingLocalize(
               "ui.panel.page-onboarding.core-config.intro_location_detect"
             )}
+            Do tego jest potrzebne połączenie z Internetem.
+          </div>
+          <mwc-button @click=${this._connectWifi}>
+            POŁĄCZ Z WIFI
+          </mwc-button>
+        </div>
+
+        <div class="row">
+          <div>
+            Ustal swoją lokalizację po adresie IP wysyłając jednorazowe
+            zapytanie do serwisu
+            <span
+              style="color:#FF9800; font-weight: bold;"
+              @click=${this._detect}
+              >ipapi.co</span
+            >
           </div>
           <mwc-button @click=${this._detect}>
             ${this.onboardingLocalize(
@@ -244,6 +259,10 @@ class OnboardingCoreConfig extends LitElement {
     } finally {
       this._working = false;
     }
+  }
+
+  private _connectWifi() {
+    console.log("Wifi");
   }
 
   private async _save(ev) {

@@ -65,6 +65,9 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         div.aisInfoRow {
           display: inline-block;
         }
+        div.card-content {
+          width: 600px;
+        }
       </style>
       <ha-config-section is-wide="[[isWide]]">
         <span slot="header">Oprogramowanie bramki</span>
@@ -149,6 +152,15 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
                 >Konfigurator połączenia z siecą WiFi</mwc-button
               >
             </div>
+          </div>
+          <div class="center-container" style="height: 0px;">
+            <ha-call-service-button
+              class="info"
+              hass="[[hass]]"
+              domain="script"
+              service="fake_script"
+            >
+            </ha-call-service-button>
           </div>
         </ha-card>
         <ha-card header="Wybór głosu Asystenta">
@@ -301,10 +313,19 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         <ais-webhooks hass="[[hass]]"></ais-webhooks>
       </ha-config-section>
       <ha-config-section is-wide="[[isWide]]">
-        <span slot="header">Wyłączenie bramki</span>
+        <span slot="header">Zatrzymanie bramki</span>
         <ha-card header="Restart lub wyłączenie">
           <div class="card-content">
             W tej sekcji możesz zrestartować lub całkowicie wyłączyć bramkę
+            <div class="center-container" style="height: 0px;">
+              <ha-call-service-button
+                class="info"
+                hass="[[hass]]"
+                domain="script"
+                service="fake_script"
+              >
+              </ha-call-service-button>
+            </div>
           </div>
           <div class="card-actions warning">
             <div>
@@ -401,14 +422,6 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
       },
     };
   }
-
-  // ready() {
-  //   super.ready();
-  //   this.addEventListener("hass-reload-entries", () => {
-  //     // eslint-disable-next-line no-console
-  //     console.log("OK");
-  //   });
-  // }
 
   _computeRemoteDomain(hass) {
     return (
