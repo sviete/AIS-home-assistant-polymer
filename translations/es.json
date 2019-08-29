@@ -352,7 +352,7 @@
                     "description": "Cambiar la configuración general de Home Assistant",
                     "section": {
                         "core": {
-                            "header": "Configuración y control del servidor",
+                            "header": "Configuración general",
                             "introduction": "Cambiar tu configuración puede ser un proceso tedioso. Lo sabemos. Esta sección tratará de hacer tu vida un poco más fácil.",
                             "core_config": {
                                 "edit_requires_storage": "Editor deshabilitado debido a la configuración almacenada en configuration.yaml.",
@@ -747,7 +747,10 @@
                         "unavailable": "Esta entidad no está disponible actualmente.",
                         "default_name": "Área Nueva",
                         "delete": "BORRAR",
-                        "update": "ACTUALIZAR"
+                        "update": "ACTUALIZAR",
+                        "enabled_label": "Habilitar entidad",
+                        "enabled_cause": "Desactivado por {cause}.",
+                        "enabled_description": "Las entidades deshabilitadas no se agregarán a Home Assistant."
                     }
                 },
                 "person": {
@@ -777,7 +780,8 @@
                             "core": "Recargar núcleo",
                             "group": "Recargar grupos",
                             "automation": "Recargar automatizaciones",
-                            "script": "Recargar los scripts"
+                            "script": "Recargar los scripts",
+                            "scene": "Recargar escenas"
                         },
                         "server_management": {
                             "heading": "Gestión del servidor",
@@ -1293,6 +1297,19 @@
                 "updater": {
                     "title": "Instrucciones de actualización"
                 }
+            },
+            "options_flow": {
+                "form": {
+                    "header": "Opciones"
+                },
+                "success": {
+                    "description": "Las opciones se guardaron correctamente."
+                }
+            },
+            "config_entry_system_options": {
+                "title": "Opciones del sistema",
+                "enable_new_entities_label": "Habilitar entidades recién agregadas.",
+                "enable_new_entities_description": "Si está deshabilitada, las nuevas entidades que se descubran no se agregarán automáticamente a Home Assistant."
             }
         },
         "auth_store": {
@@ -1315,7 +1332,7 @@
         "climate": "Climatización",
         "configurator": "Configurador",
         "conversation": "Conversación",
-        "cover": "Cubierta",
+        "cover": "Persiana",
         "device_tracker": "Rastreador de dispositivo",
         "fan": "Ventilador",
         "history_graph": "Historial gráfico",
@@ -1388,5 +1405,12 @@
         "system-admin": "Administradores",
         "system-users": "Usuarios",
         "system-read-only": "Usuarios de solo lectura"
+    },
+    "config_entry": {
+        "disabled_by": {
+            "user": "Usuario",
+            "integration": "Integración",
+            "config_entry": "Entrada de configuración"
+        }
     }
 }

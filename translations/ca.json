@@ -320,7 +320,7 @@
                         "title": "Esdeveniments"
                     },
                     "templates": {
-                        "title": "Plantilles"
+                        "title": "Plantilla"
                     },
                     "mqtt": {
                         "title": "MQTT"
@@ -349,10 +349,10 @@
                 "introduction": "Aquí pots configurar Home Assistant i els seus components. Encara no és possible configurar-ho tot des de la interfície d'usuari, però hi estem treballant.",
                 "core": {
                     "caption": "General",
-                    "description": "Valida la configuració i controla el servidor",
+                    "description": "Canviar la configuració general de Home Assistant",
                     "section": {
                         "core": {
-                            "header": "Configuració i control del servidor",
+                            "header": "Configuració general",
                             "introduction": "Sabem que canviar la configuració pot ser un procés molest. Aquesta secció intenta facilitar-te una mica més la vida.",
                             "core_config": {
                                 "edit_requires_storage": "L'editor està desactivat ja que la configuració es troba a configuration.yaml.",
@@ -747,7 +747,10 @@
                         "unavailable": "Aquesta entitat no està disponible actualment.",
                         "default_name": "Àrea nova",
                         "delete": "ELIMINA",
-                        "update": "ACTUALITZAR"
+                        "update": "ACTUALITZAR",
+                        "enabled_label": "Activa l’entitat",
+                        "enabled_cause": "Desactivat per {cause}.",
+                        "enabled_description": "Les entitats desactivades no s’afegiran a Home Assistant."
                     }
                 },
                 "person": {
@@ -777,7 +780,8 @@
                             "core": "Actualitza el nucli",
                             "group": "Actualitza grups",
                             "automation": "Actualitza automatismes",
-                            "script": "Actualitza programes"
+                            "script": "Actualitza programes",
+                            "scene": "Actualitza escenes"
                         },
                         "server_management": {
                             "heading": "Gestió del servidor",
@@ -1293,6 +1297,19 @@
                 "updater": {
                     "title": "Instruccions d'actualització"
                 }
+            },
+            "options_flow": {
+                "form": {
+                    "header": "Opcions"
+                },
+                "success": {
+                    "description": "Opcions guardades amb èxit."
+                }
+            },
+            "config_entry_system_options": {
+                "title": "Opcions de sistema",
+                "enable_new_entities_label": "Activa entitats afegides recentment.",
+                "enable_new_entities_description": "Si està desactivat, les entitats descobertes recentment no s’afegiran automàticament a Home Assistant."
             }
         },
         "auth_store": {
@@ -1388,5 +1405,12 @@
         "system-admin": "Administradors",
         "system-users": "Usuaris",
         "system-read-only": "Usuaris de només lectura"
+    },
+    "config_entry": {
+        "disabled_by": {
+            "user": "Usuari",
+            "integration": "Integració",
+            "config_entry": "Entrada de configuració"
+        }
     }
 }

@@ -747,7 +747,10 @@
                         "unavailable": "Denne enhed er ikke tilgængelig i øjeblikket.",
                         "default_name": "Nyt område",
                         "delete": "SLET",
-                        "update": "OPDATER"
+                        "update": "OPDATER",
+                        "enabled_label": "Aktivér enhed",
+                        "enabled_cause": "Deaktiveret af {cause}.",
+                        "enabled_description": "Deaktiverede enheder tilføjes ikke til Home Assistant."
                     }
                 },
                 "person": {
@@ -777,7 +780,8 @@
                             "core": "Genindlæs system",
                             "group": "Genindlæs grupper",
                             "automation": "Genindlæs automatiseringer",
-                            "script": "Genindlæs scripts"
+                            "script": "Genindlæs scripts",
+                            "scene": "Genindlæs scener"
                         },
                         "server_management": {
                             "heading": "Serveradministration",
@@ -1293,6 +1297,19 @@
                 "updater": {
                     "title": "Opdateringsvejledning"
                 }
+            },
+            "options_flow": {
+                "form": {
+                    "header": "Indstillinger"
+                },
+                "success": {
+                    "description": "Indstillingerne blev gemt."
+                }
+            },
+            "config_entry_system_options": {
+                "title": "Systemindstillinger",
+                "enable_new_entities_label": "Aktivér nyligt tilføjede enheder.",
+                "enable_new_entities_description": "Hvis deaktiveret, tilføjes nyligt opdagede enheder ikke automatisk til Home Assistant."
             }
         },
         "auth_store": {
@@ -1388,5 +1405,11 @@
         "system-admin": "Administratorer",
         "system-users": "Brugere",
         "system-read-only": "Read-Only-brugere"
+    },
+    "config_entry": {
+        "disabled_by": {
+            "user": "Bruger",
+            "integration": "Integration"
+        }
     }
 }

@@ -620,12 +620,21 @@
                     "common": {
                         "value": "Vrednost",
                         "instance": "Instanca",
-                        "index": "Indeks"
+                        "index": "Indeks",
+                        "unknown": "Neznano",
+                        "wakeup_interval": "Interval bujenja"
                     },
                     "values": {
                         "header": "Vrednosti vozlišča"
                     },
                     "node_config": {
+                        "header": "Možnosti konfiguracije vozlišča",
+                        "seconds": "Sekund",
+                        "set_wakeup": "Nastavite Interval bujenja",
+                        "config_parameter": "Vrednostni parameter",
+                        "config_value": "vrednost nastavite",
+                        "true": "Prav",
+                        "false": "Lažno",
                         "set_config_parameter": "Nastavite Config Parameter"
                     }
                 },
@@ -738,7 +747,10 @@
                         "unavailable": "Ta entiteta trenutno ni na voljo.",
                         "default_name": "Novo območje",
                         "delete": "BRISANJE",
-                        "update": "POSODOBITEV"
+                        "update": "POSODOBITEV",
+                        "enabled_label": "Omogoči entiteto",
+                        "enabled_cause": "Onemogočeno zaradi {cause}.",
+                        "enabled_description": "Onemogočeni subjekti ne bodo dodani v Home Assistant-a."
                     }
                 },
                 "person": {
@@ -768,7 +780,8 @@
                             "core": "Ponovno naloži jedro",
                             "group": "Ponovno naloži skupine",
                             "automation": "Ponovno naloži avtomatizacije",
-                            "script": "Ponovno naloži skripte"
+                            "script": "Ponovno naloži skripte",
+                            "scene": "Ponovno naloži scene"
                         },
                         "server_management": {
                             "heading": "Upravljanje strežnika",
@@ -1284,6 +1297,19 @@
                 "updater": {
                     "title": "Navodila za posodabitev"
                 }
+            },
+            "options_flow": {
+                "form": {
+                    "header": "Možnosti"
+                },
+                "success": {
+                    "description": "Možnosti so uspešno shranjene."
+                }
+            },
+            "config_entry_system_options": {
+                "title": "Sistemske možnosti",
+                "enable_new_entities_label": "Omogočite novo dodane subjekte.",
+                "enable_new_entities_description": "Če je onemogočeno, novo odkrite entitete ne bodo samodejno dodane v Home Assistant."
             }
         },
         "auth_store": {
@@ -1379,5 +1405,12 @@
         "system-admin": "Skrbniki",
         "system-users": "Uporabniki",
         "system-read-only": "Uporabniki \"samo za branje\""
+    },
+    "config_entry": {
+        "disabled_by": {
+            "user": "Uporabnik",
+            "integration": "Integracija",
+            "config_entry": "Vnos konfiguracije"
+        }
     }
 }
