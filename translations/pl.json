@@ -278,7 +278,7 @@
             "unknown": "niezn",
             "unavailable": "niedos",
             "error": "błąd",
-            "entity_not_found": "brak"
+            "entity_not_found": "Nie znaleziono encji"
         },
         "alarm_control_panel": {
             "armed": "uzbr",
@@ -320,7 +320,7 @@
                         "title": "Zdarzenia"
                     },
                     "templates": {
-                        "title": "Szablony"
+                        "title": "Szablon"
                     },
                     "mqtt": {
                         "title": "MQTT"
@@ -349,10 +349,10 @@
                 "introduction": "Tutaj można skonfigurować komponenty i Asystenta domowego. Nie wszystko jest możliwe do skonfigurowania z interfejsu użytkownika, ale pracujemy nad tym.",
                 "core": {
                     "caption": "Ogólne",
-                    "description": "Sprawdź poprawność pliku konfiguracyjnego i kontroluj serwis",
+                    "description": "Zmień ogólną konfigurację Asystenta domowego",
                     "section": {
                         "core": {
-                            "header": "Konfiguracja i kontrola serwisu",
+                            "header": "Konfiguracja ogólna serwisu",
                             "introduction": "Zmiana konfiguracji może być męczącym procesem. Wiemy. Ta sekcja postara się ułatwić Ci życie.",
                             "core_config": {
                                 "edit_requires_storage": "Edytor wyłączony, ponieważ konfiguracja jest przechowywana w pliku configuration.yaml.",
@@ -508,7 +508,7 @@
                             "add": "Dodaj warunek",
                             "duplicate": "Duplikuj",
                             "delete": "Usuń",
-                            "delete_confirm": "Jesteś pewien, że chcesz usunąć?",
+                            "delete_confirm": "Czy chcesz usunąć?",
                             "unsupported_condition": "Stan nieobsługiwany: {condition}",
                             "type_select": "Typ warunku",
                             "type": {
@@ -629,13 +629,13 @@
                     },
                     "node_config": {
                         "header": "Opcje konfiguracji węzła",
-                        "seconds": "sekund",
+                        "seconds": "sekundy",
                         "set_wakeup": "Ustaw interwał wybudzenia",
                         "config_parameter": "Parametr",
                         "config_value": "Wartość",
                         "true": "Prawda",
                         "false": "Fałsz",
-                        "set_config_parameter": "Ustaw parametr"
+                        "set_config_parameter": "Ustaw parametr konfiguracji"
                     }
                 },
                 "users": {
@@ -738,16 +738,19 @@
                     "description": "Przegląd wszystkich znanych encji",
                     "picker": {
                         "header": "Rejestr encji",
-                        "unavailable": "(niedostępna)",
-                        "introduction": "Asystent domowy prowadzi rejestr każdego podmiotu, jaki kiedykolwiek widział, i który można jednoznacznie zidentyfikować. Każda z tych jednostek będzie miała przypisany identyfikator podmiotu, który będzie zarezerwowany tylko dla tego podmiotu.",
-                        "introduction2": "Użyj rejestru jednostek, aby nadpisać nazwę, zmienić identyfikator jednostki lub usunąć wpis z Asystent domowy. Uwaga: usunięcie wpisu rejestru jednostki nie spowoduje usunięcia encji. Aby to zrobić, kliknij poniższy link i usuń go ze strony integracji.",
+                        "unavailable": "(niedostępne)",
+                        "introduction": "Asystent domowy prowadzi rejestr każdej encji, jaką kiedykolwiek widział i którą można jednoznacznie zidentyfikować. Każda z tych encji będzie miała przypisany unikalny identyfikator, który będzie zarezerwowany tylko dla niej.",
+                        "introduction2": "Użyj rejestru encji, aby nadpisać jej nazwę, zmienić jej identyfikator lub usunąć ją z Asystenta domowego. Uwaga: usunięcie wpisu rejestru encji nie spowoduje usunięcia encji. Aby to zrobić, kliknij poniższy link i usuń integracje encji.",
                         "integrations_page": "Strona integracji"
                     },
                     "editor": {
                         "unavailable": "Ta encja nie jest obecnie dostępna.",
                         "default_name": "Nowy obszar",
                         "delete": "USUŃ",
-                        "update": "UAKTUALNIJ"
+                        "update": "UAKTUALNIJ",
+                        "enabled_label": "Włącz encję",
+                        "enabled_cause": "Wyłączone przez {cause}.",
+                        "enabled_description": "Wyłączone encje nie będą dodawane do Home Assistant'a."
                     }
                 },
                 "person": {
@@ -772,12 +775,13 @@
                             "invalid": "Konfiguracja nieprawidłowa"
                         },
                         "reloading": {
-                            "heading": "Przeładowanie konfiguracji",
-                            "introduction": "Niektóre części Asystenta domowego można przeładować bez konieczności ponownego uruchomienia. Kliknięcie przeładuj spowoduje ponowne wczytanie konfiguracji.",
-                            "core": "Przeładuj rdzeń",
-                            "group": "Przeładuj grupy",
-                            "automation": "Przeładuj automatyzacje",
-                            "script": "Przeładuj skrypty"
+                            "heading": "Ponowne załadowanie konfiguracji",
+                            "introduction": "Niektóre części Asystenta domowego można przeładować bez konieczności ponownego uruchamiania. Naciśnięcie przycisku przeładowania spowoduje zwolnienie bieżącej konfiguracji i załadowanie nowej.",
+                            "core": "Załaduj ponownie rdzeń",
+                            "group": "Załaduj ponownie grupy",
+                            "automation": "Załaduj ponownie automatyzacje",
+                            "script": "Załaduj ponownie skrypty",
+                            "scene": "Załaduj ponownie sceny"
                         },
                         "server_management": {
                             "heading": "Zarządzanie serwisem",
@@ -1037,7 +1041,7 @@
                     },
                     "save_config": {
                         "header": "Przejmij kontrolę nad interfejsem użytkownika Lovelace",
-                        "para": "Domyślnie Asystent domowy będzie zarządzać interfejsem użytkownika, aktualizując go, gdy pojawią się nowe encje lub komponenty Lovelace. Jeśli przejmiesz kontrolę, Asystent domowy nie będzie już automatycznie wprowadzać dla ciebie zmian.",
+                        "para": "Domyślnie Asystent domowy będzie utrzymywał interfejs użytkownika, aktualizując go, gdy pojawią się nowe elementy lub komponenty Lovelace. Jeśli przejmiesz kontrolę, nie będziemy już dokonywać zmian automatycznie.",
                         "para_sure": "Czy na pewno chcesz przejąć kontrolę nad interfejsem użytkownika?",
                         "cancel": "Nieważne",
                         "save": "Przejmuję kontrolę"
@@ -1059,8 +1063,8 @@
                     "refresh": "Odśwież"
                 },
                 "warning": {
-                    "entity_not_found": "Ta encja nie jest dostępna: {entity}",
-                    "entity_non_numeric": "Ta encja nie jest numeryczna: {entity}"
+                    "entity_not_found": "Encja niedostępna: {entity}",
+                    "entity_non_numeric": "Encja nie jest numeryczna: {entity}"
                 },
                 "changed_toast": {
                     "message": "Zaktualizowano konfigurację Lovelace, czy chcesz odświeżyć?",
@@ -1293,6 +1297,19 @@
                 "updater": {
                     "title": "Instrukcje aktualizacji"
                 }
+            },
+            "options_flow": {
+                "form": {
+                    "header": "Opcje"
+                },
+                "success": {
+                    "description": "Opcje pomyślnie zapisane."
+                }
+            },
+            "config_entry_system_options": {
+                "title": "Opcje systemu",
+                "enable_new_entities_label": "Włącz dodawanie nowych encji.",
+                "enable_new_entities_description": "Jeśli wyłączone, nowo wykryte encje nie będą automatycznie dodawane do Home Assistant'a."
             }
         },
         "auth_store": {
@@ -1388,5 +1405,12 @@
         "system-admin": "Administratorzy",
         "system-users": "Użytkownicy",
         "system-read-only": "Użytkownicy (tylko odczyt)"
+    },
+    "config_entry": {
+        "disabled_by": {
+            "user": "Użytkownik",
+            "integration": "Integracja",
+            "config_entry": "Wpis konfiguracji"
+        }
     }
 }

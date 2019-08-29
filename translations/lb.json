@@ -747,7 +747,10 @@
                         "unavailable": "Dës Entitéit ass net erreechbar fir de Moment.",
                         "default_name": "Neie Beräich",
                         "delete": "Läschen",
-                        "update": "Aktualiséieren"
+                        "update": "Aktualiséieren",
+                        "enabled_label": "Entitéit aktivéieren",
+                        "enabled_cause": "Desaktivéiert duerch {cause}.",
+                        "enabled_description": "Desaktivéiert Entitéiten ginn net am Home Assistant bäigesat."
                     }
                 },
                 "person": {
@@ -777,7 +780,8 @@
                             "core": "Kär néi lueden",
                             "group": "Gruppe nei lueden",
                             "automation": "Automatisme nei lueden",
-                            "script": "Skripte nei lueden"
+                            "script": "Skripte nei lueden",
+                            "scene": "Szeene néi lueden"
                         },
                         "server_management": {
                             "heading": "Serververwaltung",
@@ -1293,6 +1297,19 @@
                 "updater": {
                     "title": "Instruktioune fir d'Mise à jour"
                 }
+            },
+            "options_flow": {
+                "form": {
+                    "header": "Optiounen"
+                },
+                "success": {
+                    "description": "Optiounen erfollegräich gespäichert."
+                }
+            },
+            "config_entry_system_options": {
+                "title": "System Optiounen",
+                "enable_new_entities_label": "Aktivéiert nei dobäigesate Entitéiten.",
+                "enable_new_entities_description": "Falls desaktivéiert, ginn nei entdeckten Entitéiten net automatesch zu Home Assistant dobäigesat."
             }
         },
         "auth_store": {
@@ -1388,5 +1405,12 @@
         "system-admin": "Administrateuren",
         "system-users": "Benotzer",
         "system-read-only": "Benotzer mat nëmmen Lies Rechter"
+    },
+    "config_entry": {
+        "disabled_by": {
+            "user": "Benotzer",
+            "integration": "Integratioun",
+            "config_entry": "Konfiguratioun's Entrée"
+        }
     }
 }
