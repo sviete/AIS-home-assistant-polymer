@@ -64,7 +64,7 @@ class HaPanelAishelp extends PolymerElement {
           <span slot="introduction"
             >W tej sekcji znajdziesz przydatne linki dotyczące twojej bramki</span
           >
-          <ha-card header="Aplikacja w przeglądarce">
+          <ha-card header="Aplikacja">
             <svg style="width:36px;height:36px" viewBox="0 0 24 24">
                 <path fill="#FF9800" d="M3,4H21A1,1 0 0,1 22,5V16A1,1 0 0,1 21,17H22L24,20V21H0V20L2,17H3A1,1 0 0,1 2,16V5A1,1 0 0,1 3,4M4,6V15H20V6H4Z" />
             </svg>
@@ -90,7 +90,7 @@ class HaPanelAishelp extends PolymerElement {
               >
             </div>
           </ha-card>
-          <ha-card header="Zdalne logowanie SSH">
+          <ha-card header="SSH">
             <svg style="width:36px;height:36px" viewBox="0 0 24 24">
                 <path fill="#FF9800" d="M20,19V7H4V19H20M20,3A2,2 0 0,1 22,5V19A2,2 0 0,1 20,21H4A2,2 0 0,1 2,19V5C2,3.89 2.9,3 4,3H20M13,17V15H18V17H13M9.58,13L5.57,9H8.4L11.7,12.3C12.09,12.69 12.09,13.33 11.7,13.72L8.42,17H5.59L9.58,13Z" />
             </svg>
@@ -101,7 +101,7 @@ class HaPanelAishelp extends PolymerElement {
               > połącz się ze swojej konsoli, poleceniem: <br>ssh [[aisLocalIP]] -p 8022 -i <ścieżka do pobranego klucza ssh>
             </div>
           </ha-card>
-          <ha-card header="Dostęp z Internetu">
+          <ha-card header="Tunel">
             <div class="svgStatusIconDiv" style="fill:[[serviceRemoteStatusColor]]">
              <svg style="width:36px;height:36px" viewBox="0 0 24 24">
                   <path d="M16.36,14C16.44,13.34 16.5,12.68 16.5,12C16.5,11.32 16.44,10.66 16.36,10H19.74C19.9,10.64 20,11.31 20,12C20,12.69 19.9,13.36 19.74,14M14.59,19.56C15.19,18.45 15.65,17.25 15.97,16H18.92C17.96,17.65 16.43,18.93 14.59,19.56M14.34,14H9.66C9.56,13.34 9.5,12.68 9.5,12C9.5,11.32 9.56,10.65 9.66,10H14.34C14.43,10.65 14.5,11.32 14.5,12C14.5,12.68 14.43,13.34 14.34,14M12,19.96C11.17,18.76 10.5,17.43 10.09,16H13.91C13.5,17.43 12.83,18.76 12,19.96M8,8H5.08C6.03,6.34 7.57,5.06 9.4,4.44C8.8,5.55 8.35,6.75 8,8M5.08,16H8C8.35,17.25 8.8,18.45 9.4,19.56C7.57,18.93 6.03,17.65 5.08,16M4.26,14C4.1,13.36 4,12.69 4,12C4,11.31 4.1,10.64 4.26,10H7.64C7.56,10.66 7.5,11.32 7.5,12C7.5,12.68 7.56,13.34 7.64,14M12,4.03C12.83,5.23 13.5,6.57 13.91,8H10.09C10.5,6.57 11.17,5.23 12,4.03M18.92,8H15.97C15.65,6.75 15.19,5.55 14.59,4.44C16.43,5.07 17.96,6.34 18.92,8M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
@@ -135,6 +135,16 @@ class HaPanelAishelp extends PolymerElement {
               >
             </div>
           </ha-card>
+          <ha-card header="ID bramki">
+            <svg style="width:36px;height:36px" viewBox="0 0 24 24">
+              <path fill="#FF9800" d="M6,18V8H8V18H6M6,4.5H8V6.5H6V4.5M17,4H19V18H17V17.75C17,17.75 15.67,18 15,18A5,5 0 0,1 10,13A5,5 0 0,1 15,8C15.67,8 17,8.25 17,8.25V4M17,10.25C17,10.25 15.67,10 15,10A3,3 0 0,0 12,13A3,3 0 0,0 15,16C15.67,16 17,15.75 17,15.75V10.25Z" />
+            </svg>
+            <div class="card-content">
+              To urządzenie posiada swój unikalny identyfikator, został on losowo wygenerowany przy pierwszym uruchomieniu i pozostanie stały przez cały okres użytkowania urządzenia.
+              Identyfikator tego urządzenia to <a href="#"> [[aisSecureAndroidId]] </a>
+              
+            </div>
+          </ha-card>
         </ha-config-section>
       </hss-subpage>
       </div>
@@ -162,6 +172,10 @@ class HaPanelAishelp extends PolymerElement {
         type: String,
         value: "#000000",
       },
+      aisSecureAndroidId: {
+        type: String,
+        value: "dom-xxxxxxxx",
+      },
     };
   }
 
@@ -170,11 +184,9 @@ class HaPanelAishelp extends PolymerElement {
   }
 
   _computeRemoteDomain(hass) {
-    return (
-      "https://" +
-      hass.states["sensor.ais_secure_android_id_dom"].state +
-      ".paczka.pro"
-    );
+    this.aisSecureAndroidId =
+      hass.states["sensor.ais_secure_android_id_dom"].state;
+    return "https://" + this.aisSecureAndroidId + ".paczka.pro";
   }
 
   _computeRremoteConnectedInfo(hass) {
