@@ -1,4 +1,5 @@
-// import { showConfigFlowDialog } from "../../../../src/dialogs/config-flow/show-dialog-config-flow";
+// import LegacyWrapperCard from "./hui-legacy-wrapper-card";
+import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
 
 class FilesCard extends HTMLElement {
   constructor() {
@@ -122,7 +123,7 @@ class FilesCard extends HTMLElement {
         cardContent += `</tbody></table>`;
 
         if (path === "dyski-zdalne:") {
-          cardContent += `<mwc-button id="addNewDrive" style="float:right">DODAJ DYSK ZDALNY</mwc-button>`;
+          cardContent += `<mwc-button id="addNewDrive" onclick="connectRemoteDrive" style="float:right">DODAJ DYSK ZDALNY</mwc-button>`;
         }
 
         root.getElementById("container").innerHTML = cardContent;
@@ -132,35 +133,10 @@ class FilesCard extends HTMLElement {
     } else {
       this.style.display = "none";
     }
-    //
-    // const addNewDrive = root.querySelectorAll("#addNewDrive");
-    // console.log(addNewDrive);
-    // addNewDrive.addEventListener("click", function() {
-    //   this.connectRemoteDrive(hass);
+
+    // root.getElementById("addNewDrive").addEventListener("click", function() {
+    //   connectRemoteDrive();
     // });
-
-    function continueFlow(flowId) {
-      showConfigFlowDialog(this, {
-        continueFlowId: flowId,
-        dialogClosedCallback: () => {
-          return;
-        },
-      });
-    }
-
-    function connectRemoteDrive() {
-      hass
-        .callApi("POST", "config/config_entries/flow", {
-          handler: "ais_drives_service",
-        })
-        .then((result) => {
-          continueFlow(result.flow_id);
-        });
-    }
-
-    root.getElementById("addNewDrive").addEventListener("click", function() {
-      connectRemoteDrive();
-    });
 
     //
     const files = root.querySelectorAll("tr.fileRow");
@@ -176,8 +152,27 @@ class FilesCard extends HTMLElement {
   }
 
   getCardSize() {
-    return 1;
+    return 4;
+  }
+
+  continueFlow(flowId) {
+    showConfigFlowDialog(this, {
+      continueFlowId: flowId,
+      dialogClosedCallback: () => {
+        return;
+      },
+    });
+  }
+
+  connectRemoteDrive() {
+    this.hass
+      .callApi("POST", "config/config_entries/flow", {
+        handler: "ais_drives_service",
+      })
+      .then((result) => {
+        this.continueFlow(result.flow_id);
+      });
   }
 }
 
-customElements.define("files-card", FilesCard);
+customElements.define("hui-ais-files-list-card", FilesCard);
