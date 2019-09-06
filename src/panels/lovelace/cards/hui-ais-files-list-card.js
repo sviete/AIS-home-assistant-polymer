@@ -1,4 +1,3 @@
-// import LegacyWrapperCard from "./hui-legacy-wrapper-card";
 import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
 
 class FilesCard extends HTMLElement {
@@ -26,15 +25,16 @@ class FilesCard extends HTMLElement {
             table {
               width: 100%;
               padding: 0 16px 16px 16px;
+              border-spacing: 0px;
+            }
+            tr.fileRow:hover td{
+              background-color:#ffc94761;
               cursor: pointer;
             }
-            tr:hover td{
-              background-color:#ffc94761;
-            }
-            tbody tr:nth-child(odd) {
+            tbody tr.fileRow:nth-child(odd) {
               background-color: var(--paper-card-background-color);
             }
-            tbody tr:nth-child(even) {
+            tbody tr.fileRow:nth-child(even) {
               background-color: var(--secondary-background-color);
             }
             tr th{
@@ -51,7 +51,7 @@ class FilesCard extends HTMLElement {
           `;
 
     content.id = "container";
-    cardConfig.title ? (card.header = cardConfig.title) : null;
+    card.header = cardConfig.title;
     card.appendChild(content);
     card.appendChild(style);
     root.appendChild(card);
@@ -61,8 +61,6 @@ class FilesCard extends HTMLElement {
   set hass(hass) {
     const config = this._config;
     const root = this.shadowRoot;
-    // const card = root.lastChild;
-    this.myHass = hass;
 
     if (hass.states[config.entity]) {
       const feed = hass.states[config.entity].attributes.files;
@@ -88,43 +86,36 @@ class FilesCard extends HTMLElement {
           '</th><th width="10%"></th></tr><tbody>';
         let iconStatus = "";
         let classStatus = "";
-        for (let entry in feed) {
+        for (var i = 0; i < feed.length; i++) {
           if (rows >= rowLimit) break;
-          if (feed.hasOwnProperty(entry)) {
-            if (path.length > 0 && feed[entry]["path"].endsWith(path)) {
-              iconStatus = '<ha-icon icon="mdi:play"></ha-icon>';
-              classStatus = "fileSelected";
-            } else {
-              iconStatus = "";
-              classStatus = "";
-            }
-            cardContent +=
-              `<tr class="fileRow ` +
-              classStatus +
-              `" data-path="${feed[entry]["path"]}">`;
-            cardContent += `<td><ha-icon icon="mdi:${
-              feed[entry]["icon"]
-            }"></ha-icon></td>`;
-            cardContent += `<td>${feed[entry]["name"]}</td>`;
-            cardContent += `<td>` + iconStatus + `</td>`;
-            cardContent += `</tr>`;
-            ++rows;
+          if (path.length > 0 && feed[i].path.endsWith(path)) {
+            iconStatus = '<ha-icon icon="mdi:play"></ha-icon>';
+            classStatus = "fileSelected";
+          } else {
+            iconStatus = "";
+            classStatus = "";
           }
+          cardContent +=
+            `<tr class="fileRow ` +
+            classStatus +
+            `" data-path="${feed[i].path}">`;
+          cardContent += `<td><ha-icon icon="mdi:${
+            feed[i].icon
+          }"></ha-icon></td>`;
+          cardContent += `<td>${feed[i].name}</td>`;
+          cardContent += `<td>` + iconStatus + `</td>`;
+          cardContent += `</tr>`;
+          ++rows;
         }
 
         // add new remote
         if (path === "dyski-zdalne:") {
-          cardContent += `<tr>`;
-          cardContent += `<td colspan="3" style="text-align:right;"><a style="color:#FF9800;" href="/config/integrations/dashboard">Dodaj nowy dysk zdalny</a></td>`;
+          cardContent += `<tr style="height:1em">`;
+          cardContent += `<td colspan="3" style="text-align:right;"><mwc-button id="addNewDrive" style="float:right">+ DYSK ZDALNY</mwc-button></td>`;
           cardContent += `</tr>`;
         }
-
         root.lastChild.hass = hass;
         cardContent += `</tbody></table>`;
-
-        if (path === "dyski-zdalne:") {
-          cardContent += `<mwc-button id="addNewDrive" onclick="connectRemoteDrive" style="float:right">DODAJ DYSK ZDALNY</mwc-button>`;
-        }
 
         root.getElementById("container").innerHTML = cardContent;
       } else {
@@ -134,44 +125,39 @@ class FilesCard extends HTMLElement {
       this.style.display = "none";
     }
 
-    // root.getElementById("addNewDrive").addEventListener("click", function() {
-    //   connectRemoteDrive();
-    // });
-
     //
     const files = root.querySelectorAll("tr.fileRow");
     // const container = root.querySelector('#container');
     files.forEach((file) => {
-      file.addEventListener("click", (event) => {
+      file.addEventListener("click", () => {
         hass.callService("ais_drives_service", "browse_path", {
           path: file.getAttribute("data-path"),
         });
         file.classList.add("fileSelected");
       });
     });
+
+    function continueFlow(flowId) {
+      showConfigFlowDialog(document.querySelector("home-assistant"), {
+        continueFlowId: flowId,
+        dialogClosedCallback: () => {},
+      });
+    }
+
+    const addNewDrive = root.getElementById("addNewDrive");
+    addNewDrive.addEventListener("click", function() {
+      hass
+        .callApi("POST", "config/config_entries/flow", {
+          handler: "ais_drives_service",
+        })
+        .then((result) => {
+          continueFlow(result.flow_id);
+        });
+    });
   }
 
   getCardSize() {
     return 4;
-  }
-
-  continueFlow(flowId) {
-    showConfigFlowDialog(this, {
-      continueFlowId: flowId,
-      dialogClosedCallback: () => {
-        return;
-      },
-    });
-  }
-
-  connectRemoteDrive() {
-    this.hass
-      .callApi("POST", "config/config_entries/flow", {
-        handler: "ais_drives_service",
-      })
-      .then((result) => {
-        this.continueFlow(result.flow_id);
-      });
   }
 }
 

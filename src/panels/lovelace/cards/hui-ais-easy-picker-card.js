@@ -98,19 +98,20 @@ class AisEasyPicker extends HTMLElement {
   _updateContent(element, options, state) {
     var a = "";
     var c = "";
+    var digit = "";
     options.map((option, index) => {
       if (index < 10) {
-        var digit = index.toString()[0];
+        digit = index.toString()[0];
       } else {
-        var digit = index.toString()[1];
+        digit = index.toString()[1];
       }
 
-      if (state == option) {
+      if (state === option) {
         c = "clicked";
       } else {
         c = "";
       }
-      a = a + `<a class="tag tag${digit} ${c}">${option}</a>`;
+      a += `<a class="tag tag${digit} ${c}">${option}</a>`;
     });
     element.innerHTML = `${a}`;
   }
@@ -118,13 +119,13 @@ class AisEasyPicker extends HTMLElement {
   set hass(hass) {
     const config = this._config;
     const root = this.shadowRoot;
-    let state = hass.states[config.entity].state;
-    let options = hass.states[config.entity].attributes.options;
+    const state = hass.states[config.entity].state;
+    const options = hass.states[config.entity].attributes.options;
     this._updateContent(root.getElementById("options"), options, state);
 
     const selectOptions = root.querySelectorAll("a.tag");
     selectOptions.forEach((option) => {
-      option.addEventListener("click", (event) => {
+      option.addEventListener("click", () => {
         hass.callService("input_select", "select_option", {
           option: option.text,
           entity_id: config.entity,
@@ -139,4 +140,4 @@ class AisEasyPicker extends HTMLElement {
   }
 }
 
-customElements.define("ais-easy-picker", AisEasyPicker);
+customElements.define("hui-ais-easy-picker-card", AisEasyPicker);

@@ -32,6 +32,7 @@ import "../cards/hui-thermostat-card";
 import "../cards/hui-weather-forecast-card";
 import "../cards/hui-gauge-card";
 import "../cards/hui-ais-files-list-card";
+import "../cards/hui-ais-easy-picker-card";
 import { LovelaceCard } from "../types";
 import { LovelaceCardConfig } from "../../../data/lovelace";
 
@@ -62,6 +63,7 @@ const CARD_TYPES = new Set([
   "vertical-stack",
   "weather-forecast",
   "ais-files-list",
+  "ais-easy-picker",
 ]);
 const CUSTOM_TYPE_PREFIX = "custom:";
 const TIMEOUT = 2000;
