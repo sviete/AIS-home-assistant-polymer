@@ -145,15 +145,17 @@ class FilesCard extends HTMLElement {
     }
 
     const addNewDrive = root.getElementById("addNewDrive");
-    addNewDrive.addEventListener("click", function() {
-      hass
-        .callApi("POST", "config/config_entries/flow", {
-          handler: "ais_drives_service",
-        })
-        .then((result) => {
-          continueFlow(result.flow_id);
-        });
-    });
+    if (addNewDrive !== null) {
+      addNewDrive.addEventListener("click", function() {
+        hass
+          .callApi("POST", "config/config_entries/flow", {
+            handler: "ais_drives_service",
+          })
+          .then((result) => {
+            continueFlow(result.flow_id);
+          });
+      });
+    }
   }
 
   getCardSize() {

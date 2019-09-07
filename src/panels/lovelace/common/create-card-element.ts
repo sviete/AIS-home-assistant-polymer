@@ -33,6 +33,10 @@ import "../cards/hui-weather-forecast-card";
 import "../cards/hui-gauge-card";
 import "../cards/hui-ais-files-list-card";
 import "../cards/hui-ais-easy-picker-card";
+import "../cards/hui-ais-list-card";
+import "../cards/hui-ais-button-card";
+import "../cards/hui-ais-mini-media-player-card";
+import "../cards/hui-ais-monster-card";
 import { LovelaceCard } from "../types";
 import { LovelaceCardConfig } from "../../../data/lovelace";
 
@@ -64,6 +68,10 @@ const CARD_TYPES = new Set([
   "weather-forecast",
   "ais-files-list",
   "ais-easy-picker",
+  "ais-list",
+  "ais-button",
+  "ais-mini-media-player",
+  "ais-monster",
 ]);
 const CUSTOM_TYPE_PREFIX = "custom:";
 const TIMEOUT = 2000;

@@ -142,4 +142,4 @@ class MonsterCard extends HTMLElement {
   }
 }
 
-customElements.define("monster-card", MonsterCard);
+customElements.define("hui-ais-monster-card", MonsterCard);

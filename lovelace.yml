@@ -1,32 +1,4 @@
-resources:
-  - type: module
-    url: /static/ais_dom/cards/markdown-mod.js?v=1.0
-  - type: js
-    url: /static/ais_dom/cards/card-tools.js?v=1.0
-  - type: module
-    url: /static/ais_dom/cards/monster-card.js?v=1.0
-  - type: js
-    url: /static/ais_dom/cards/list-card.js?v=2.4
-  - type: js
-    url: /static/ais_dom/cards/files-card.js?v=2.3
-  - type: module
-    url: /static/ais_dom/cards/mini-media-player-bundle.js?v=2.4
-  - type: module
-    url: /static/ais_dom/cards/button-card.js?v=2.3
-  - type: js
-    url: /static/ais_dom/cards/upcoming-media-card.js?v=2.3
-  - type: js
-    url: /static/ais_dom/cards/ais-tts.js?v=0.1
-  - type: js
-    url: /static/ais_dom/cards/lovelace-swipe-navigation.js?v=0.1
-  - type: module
-    url: /static/ais_dom/cards/compact-custom-header.js?v=0.1
-  - type: js
-    url: /static/ais_dom/cards/card-loader.js?v=1
-  - type: js
-    url: /static/ais_dom/cards/layout-card.js?v=1
-  - type: js
-    url: /static/ais_dom/cards/ais-easy-picker.js?v=1
+resources: []
 title: Asystent domowy
 views:
   - badges:
@@ -57,7 +29,7 @@ views:
         filter:
           include:
             - domain: person
-        type: 'custom:monster-card'
+        type: ais-monster
       - card:
           show_header_toggle: false
           title: Automatyzacje
@@ -67,14 +39,13 @@ views:
             - entity_id: automation.ais_*
           include:
             - domain: automation
-        type: 'custom:monster-card'
+        type: ais-monster
     icon: 'mdi:home-outline'
     path: default_view
     title: Dom
   - badges: []
     cards:
-    - card:
-        cards:
+      - cards:
           - artwork: full-cover
             entity: media_player.wbudowany_glosnik
             hide:
@@ -95,7 +66,7 @@ views:
                   type: script
               columns: 2
             show_progress: true
-            type: 'custom:mini-media-player'
+            type: ais-mini-media-player
           - cards:
               - cards:
                   - color: var(--primary-background-color)
@@ -113,7 +84,7 @@ views:
                       service: ais_ai_service.set_context
                       service_data:
                         text: ulubione
-                    type: 'custom:button-card'
+                    type: ais-button
                   - color: var(--primary-background-color)
                     color_type: icon
                     entity: sensor.ais_player_mode
@@ -129,7 +100,7 @@ views:
                       service: ais_ai_service.set_context
                       service_data:
                         text: zakładki
-                    type: 'custom:button-card'
+                    type: ais-button
                   - color: var(--primary-background-color)
                     color_type: icon
                     entity: sensor.ais_player_mode
@@ -145,7 +116,7 @@ views:
                       service: ais_ai_service.set_context
                       service_data:
                         text: wiadomości
-                    type: 'custom:button-card'
+                    type: ais-button
                   - color: var(--primary-background-color)
                     color_type: icon
                     entity: sensor.ais_player_mode
@@ -161,7 +132,7 @@ views:
                       service: ais_ai_service.set_context
                       service_data:
                         text: dyski
-                    type: 'custom:button-card'
+                    type: ais-button
                 type: horizontal-stack
               - cards:
                   - color: var(--primary-background-color)
@@ -179,7 +150,7 @@ views:
                       service: ais_ai_service.set_context
                       service_data:
                         text: radio
-                    type: 'custom:button-card'
+                    type: ais-button
                   - color: var(--primary-background-color)
                     color_type: icon
                     entity: sensor.ais_player_mode
@@ -195,7 +166,7 @@ views:
                       service: ais_ai_service.set_context
                       service_data:
                         text: podcast
-                    type: 'custom:button-card'
+                    type: ais-button
                   - color: var(--primary-background-color)
                     color_type: icon
                     entity: sensor.ais_player_mode
@@ -211,7 +182,7 @@ views:
                       service: ais_ai_service.set_context
                       service_data:
                         text: audiobook
-                    type: 'custom:button-card'
+                    type: ais-button
                   - color: var(--primary-background-color)
                     color_type: icon
                     entity: sensor.ais_player_mode
@@ -227,7 +198,7 @@ views:
                       service: ais_ai_service.set_context
                       service_data:
                         text: muzyka
-                    type: 'custom:button-card'
+                    type: ais-button
                 type: horizontal-stack
             type: vertical-stack
           - content: |
@@ -249,7 +220,7 @@ views:
                       tap_action:
                         action: call-service
                         service: ais_cloud.change_audio_service
-                      type: 'custom:button-card'
+                      type: ais-button
                     - color: var(--primary-background-color)
                       color_type: icon
                       entity: input_select.ais_music_service
@@ -263,7 +234,7 @@ views:
                       tap_action:
                         action: call-service
                         service: ais_cloud.change_audio_service
-                      type: 'custom:button-card'
+                      type: ais-button
                   type: horizontal-stack
                 - card:
                     cards:
@@ -302,7 +273,7 @@ views:
               cards:
                 - entity: input_select.rss_news_category
                   title: Kategoria wiadomości
-                  type: 'custom:ais-easy-picker'
+                  type: ais-easy-picker
               type: vertical-stack
             conditions:
               - entity: sensor.ais_player_mode
@@ -312,7 +283,7 @@ views:
               cards:
                 - entity: input_select.book_autor
                   title: Autor
-                  type: 'custom:ais-easy-picker'
+                  type: ais-easy-picker
               type: vertical-stack
             conditions:
               - entity: sensor.ais_player_mode
@@ -320,212 +291,178 @@ views:
             type: conditional
         show_header_toggle: false
         type: vertical-stack
-      type: 'custom:card-loader'
-      wait:
-        - mini-media-player
-        - list-card
-        - button-card
-    - cards:
-        - card:
-            entity: sensor.ais_drives
-            title: Przeglądanie Dysków
-            type: 'custom:files-card'
-          conditions:
-            - entity: sensor.ais_player_mode
-              state: local_audio
-          type: conditional
-        - card:
-            cards:
-              - entity: input_select.rss_news_channel
-                title: Kanał wiadomości
-                type: 'custom:ais-easy-picker'
-              - card:
-                  columns:
-                    - field: thumbnail
-                      title: ''
-                      type: image
-                    - field: name
-                      title: ''
-                    - field: icon
-                      title: ''
-                      type: icon
-                  entity:
-                    - sensor.rssnewslist
-                  media_source: News
-                  title: Artykuły
-                  type: 'custom:list-card'
-                conditions:
-                  - entity: sensor.ais_player_mode
-                    state: ais_rss_news_remote
-                type: conditional
-            type: vertical-stack
-          conditions:
-            - entity: sensor.ais_player_mode
-              state: ais_rss_news_remote
-          type: conditional
-        - card:
-            columns:
-              - field: icon_remove
-                title: ''
-                type: icon_remove
-              - field: thumbnail
-                title: ''
-                type: image
-              - field: name
-                title: ''
-              - field: media_position
-                title: ''
-              - field: icon
-                title: ''
-                type: icon
-            entity:
-              - sensor.aisbookmarkslist
-            media_source: Bookmark
-            title: Lista zakładek
-            type: 'custom:list-card'
-          conditions:
-            - entity: sensor.ais_player_mode
-              state: ais_bookmarks
-          type: conditional
-        - card:
-            columns:
-              - field: icon_remove
-                title: ''
-                type: icon_remove
-              - field: thumbnail
-                title: ''
-                type: image
-              - field: name
-                title: ''
-              - field: icon_type
-                title: ''
-                type: icon
-              - field: icon
-                title: ''
-                type: icon
-            entity:
-              - sensor.aisfavoriteslist
-            media_source: Favorite
-            title: Lista ulubionych audio
-            type: 'custom:list-card'
-          conditions:
-            - entity: sensor.ais_player_mode
-              state: ais_favorites
-          type: conditional
-        - card:
-            columns:
-              - field: thumbnail
-                title: ''
-                type: image
-              - field: name
-                title: ''
-              - field: icon
-                title: ''
-                type: icon
-            entity:
-              - sensor.youtubelist
-            media_source: Music
-            title: Lista utworów z YouTube
-            type: 'custom:list-card'
-          conditions:
-            - entity: sensor.ais_player_mode
-              state: music_player
-            - entity: input_select.ais_music_service
-              state: YouTube
-          type: conditional
-        - card:
-            columns:
-              - field: thumbnail
-                title: ''
-                type: image
-              - field: name
-                title: ''
-              - field: icon
-                title: ''
-                type: icon
-            entity:
-              - sensor.spotifysearchlist
-            media_source: SpotifySearch
-            title: Wynik wyszukania na Spotify
-            type: 'custom:list-card'
-          conditions:
-            - entity: sensor.ais_player_mode
-              state: music_player
-            - entity: input_select.ais_music_service
-              state: Spotify
-          type: conditional
-        - card:
-            entity: input_select.radio_type
-            title: Typ radia
-            type: 'custom:ais-easy-picker'
-          conditions:
-            - entity: sensor.ais_player_mode
-              state: radio_player
-          type: conditional
-        - card:
-            entity: input_select.podcast_type
-            title: Typ podcasta
-            type: 'custom:ais-easy-picker'
-          conditions:
-            - entity: sensor.ais_player_mode
-              state: podcast_player
-          type: conditional
-        - card:
-            columns:
-              - field: thumbnail
-                title: ''
-                type: image
-              - field: name
-                title: ''
-              - field: icon
-                title: ''
-                type: icon
-            entity:
-              - sensor.podcastnamelist
-            media_source: PodcastName
-            title: Audycje
-            type: 'custom:list-card'
-          conditions:
-            - entity: sensor.ais_player_mode
-              state: podcast_player
-          type: conditional
-        - card:
-            columns:
-              - field: thumbnail
-                title: ''
-                type: image
-              - field: name
-                title: ''
-              - field: icon
-                title: ''
-                type: icon
-            entity:
-              - sensor.audiobookslist
-            media_source: AudioBook
-            title: Książki
-            type: 'custom:list-card'
-          conditions:
-            - entity: sensor.ais_player_mode
-              state: audiobooks_player
-          type: conditional
-      type: vertical-stack
-    - card:
-        cards:
+      - cards:
+          - card:
+              entity: sensor.ais_drives
+              title: Przeglądanie Dysków
+              type: ais-files-list
+            conditions:
+              - entity: sensor.ais_player_mode
+                state: local_audio
+            type: conditional
+          - card:
+              cards:
+                - entity: input_select.rss_news_channel
+                  title: Kanał wiadomości
+                  type: ais-easy-picker
+                - card:
+                    columns:
+                      - field: thumbnail
+                        type: image
+                      - field: name
+                      - field: icon
+                        type: icon
+                    entity:
+                      - sensor.rssnewslist
+                    media_source: News
+                    title: Artykuły
+                    type: ais-list
+                  conditions:
+                    - entity: sensor.ais_player_mode
+                      state: ais_rss_news_remote
+                  type: conditional
+              type: vertical-stack
+            conditions:
+              - entity: sensor.ais_player_mode
+                state: ais_rss_news_remote
+            type: conditional
+          - card:
+              columns:
+                - field: icon_remove
+                  type: icon_remove
+                - field: thumbnail
+                  type: image
+                - field: name
+                - field: media_position
+                - field: icon
+                  type: icon
+              entity:
+                - sensor.aisbookmarkslist
+              media_source: Bookmark
+              title: Lista zakładek
+              type: ais-list
+            conditions:
+              - entity: sensor.ais_player_mode
+                state: ais_bookmarks
+            type: conditional
+          - card:
+              columns:
+                - field: icon_remove
+                  type: icon_remove
+                - field: thumbnail
+                  type: image
+                - field: name
+                - field: icon_type
+                  type: icon
+                - field: icon
+                  type: icon
+              entity:
+                - sensor.aisfavoriteslist
+              media_source: Favorite
+              title: Lista ulubionych audio
+              type: ais-list
+            conditions:
+              - entity: sensor.ais_player_mode
+                state: ais_favorites
+            type: conditional
           - card:
               columns:
                 - field: thumbnail
-                  title: ''
                   type: image
                 - field: name
-                  title: ''
                 - field: icon
-                  title: ''
+                  type: icon
+              entity:
+                - sensor.youtubelist
+              media_source: Music
+              title: Lista utworów z YouTube
+              type: ais-list
+            conditions:
+              - entity: sensor.ais_player_mode
+                state: music_player
+              - entity: input_select.ais_music_service
+                state: YouTube
+            type: conditional
+          - card:
+              columns:
+                - field: thumbnail
+                  type: image
+                - field: name
+                - field: icon
+                  type: icon
+              entity:
+                - sensor.spotifysearchlist
+              media_source: SpotifySearch
+              title: Wynik wyszukania na Spotify
+              type: ais-list
+            conditions:
+              - entity: sensor.ais_player_mode
+                state: music_player
+              - entity: input_select.ais_music_service
+                state: Spotify
+            type: conditional
+          - card:
+              entity: input_select.radio_type
+              title: Typ radia
+              type: ais-easy-picker
+            conditions:
+              - entity: sensor.ais_player_mode
+                state: radio_player
+            type: conditional
+          - card:
+              entity: input_select.podcast_type
+              title: Typ podcasta
+              type: ais-easy-picker
+            conditions:
+              - entity: sensor.ais_player_mode
+                state: podcast_player
+            type: conditional
+          - card:
+              columns:
+                - field: thumbnail
+                  type: image
+                - field: name
+                - field: icon
+                  type: icon
+              entity:
+                - sensor.podcastnamelist
+              media_source: PodcastName
+              title: Audycje
+              type: ais-list
+            conditions:
+              - entity: sensor.ais_player_mode
+                state: podcast_player
+            type: conditional
+          - card:
+              columns:
+                - field: thumbnail
+                  type: image
+                - field: name
+                - field: icon
+                  type: icon
+              entity:
+                - sensor.audiobookslist
+              media_source: AudioBook
+              title: Książki
+              type: ais-list
+            conditions:
+              - entity: sensor.ais_player_mode
+                state: audiobooks_player
+            type: conditional
+        type: vertical-stack
+      - cards:
+          - card:
+              columns:
+                - field: thumbnail
+                  type: image
+                - field: name
+                - field: icon
                   type: icon
               entity:
                 - sensor.spotifylist
               media_source: Spotify
               title: Lista utworów na Spotify
-              type: 'custom:list-card'
+              type: ais-list
             conditions:
               - entity: sensor.ais_player_mode
                 state: music_player
@@ -535,18 +472,15 @@ views:
           - card:
               columns:
                 - field: thumbnail
-                  title: ''
                   type: image
                 - field: name
-                  title: ''
                 - field: icon
-                  title: ''
                   type: icon
               entity:
                 - sensor.radiolist
               media_source: Radio
               title: Stacje radiowe
-              type: 'custom:list-card'
+              type: ais-list
             conditions:
               - entity: sensor.ais_player_mode
                 state: radio_player
@@ -554,18 +488,15 @@ views:
           - card:
               columns:
                 - field: thumbnail
-                  title: ''
                   type: image
                 - field: name
-                  title: ''
                 - field: icon
-                  title: ''
                   type: icon
               entity:
                 - sensor.podcastlist
               media_source: Podcast
               title: Odcinki audycji
-              type: 'custom:list-card'
+              type: ais-list
             conditions:
               - entity: sensor.ais_player_mode
                 state: podcast_player
@@ -573,18 +504,15 @@ views:
           - card:
               columns:
                 - field: thumbnail
-                  title: ''
                   type: image
                 - field: name
-                  title: ''
                 - field: icon
-                  title: ''
                   type: icon
               entity:
                 - sensor.audiobookschapterslist
               media_source: AudioBookChapter
               title: Rozdziały
-              type: 'custom:list-card'
+              type: ais-list
             conditions:
               - entity: sensor.ais_player_mode
                 state: audiobooks_player
@@ -599,11 +527,6 @@ views:
                 state: ais_rss_news_remote
             type: conditional
         type: vertical-stack
-      type: 'custom:card-loader'
-      wait:
-        - mini-media-player
-        - list-card
-        - files-card
     icon: 'mdi:music'
     path: audio
     title: Audio
@@ -633,7 +556,7 @@ views:
         filter:
           include:
             - domain: switch
-        type: 'custom:monster-card'
+        type: ais-monster
       - card:
           show_header_toggle: false
           title: Wszystkie czujniki
@@ -647,7 +570,7 @@ views:
                 device_class: humidity
               domain: sensor
             - entity_id: sensor.*_status
-        type: 'custom:monster-card'
+        type: ais-monster
       - card:
           show_header_toggle: false
           title: Wszystkie światła
@@ -655,7 +578,7 @@ views:
         filter:
           include:
             - domain: light
-        type: 'custom:monster-card'
+        type: ais-monster
       - cards:
           - entities:
               - entity: input_number.media_player_speed
@@ -669,7 +592,7 @@ views:
             filter:
               include:
                 - domain: media_player
-            type: 'custom:monster-card'
+            type: ais-monster
         show_header_toggle: false
         title: Dodawanie nowych urządzeń
         type: vertical-stack
@@ -794,7 +717,7 @@ views:
         filter:
           include:
             - domain: camera
-        type: 'custom:monster-card'
+        type: ais-monster
     icon: 'mdi:google-circles-extended'
     path: dev
     title: Urządzenia
