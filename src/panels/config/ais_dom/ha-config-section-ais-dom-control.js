@@ -10,6 +10,7 @@ import "../../../state-summary/state-card-input_number";
 
 import "../ha-config-section";
 import "./ais-webhooks";
+import "./ais-display-overscan";
 
 import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
 import LocalizeMixin from "../../../mixins/localize-mixin";
@@ -111,6 +112,11 @@ class HaConfigSectionAisDomControl extends LocalizeMixin(PolymerElement) {
         <span slot="introduction"
           >W tej sekcji możesz skonfigurować parametry bramki</span
         >
+        <ais-display-overscan
+          hass="[[hass]]"
+          is-wide="[[isWide]]"
+        ></ais-display-overscan>
+
         <ha-card header="Parametry sieci">
           <div class="card-content" style="display: flex;">
             <div style="text-align: center;">

@@ -58,7 +58,6 @@ export const loadLovelaceResources = (
     }
   });
   const aisModules = [
-    "/static/ais_dom/cards/monster-card.js",
     "/static/ais_dom/cards/compact-custom-header.js",
     "/static/ais_dom/cards/markdown-mod.js",
   ];
