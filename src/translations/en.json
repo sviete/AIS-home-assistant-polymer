@@ -281,6 +281,7 @@
     "weather": {
       "clear-night": "Clear, night",
       "cloudy": "Cloudy",
+      "exceptional": "Exceptional",
       "fog": "Fog",
       "hail": "Hail",
       "lightning": "Lightning",
@@ -416,7 +417,9 @@
       "fan": {
         "speed": "Speed",
         "oscillate": "Oscillate",
-        "direction": "Direction"
+        "direction": "Direction",
+        "forward": "Forward",
+        "reverse": "Reverse"
       },
       "light": {
         "brightness": "Brightness",
@@ -491,7 +494,8 @@
     "common": {
       "loading": "Loading",
       "cancel": "Cancel",
-      "save": "Save"
+      "save": "Save",
+      "successfully_saved": "Successfully saved"
     },
     "components": {
       "entity": {
@@ -647,7 +651,9 @@
               "heading": "Server management",
               "introduction": "Control your Home Assistant server… from Home Assistant.",
               "restart": "Restart",
-              "stop": "Stop"
+              "confirm_restart": "Are you sure you want to restart Home Assistant?",
+              "stop": "Stop",
+              "confirm_stop": "Are you sure you want to stop Home Assistant?"
             }
           }
         },
@@ -689,6 +695,9 @@
               "unsupported_platform": "Unsupported platform: {platform}",
               "type_select": "Trigger type",
               "type": {
+                "device": {
+                  "label": "Device"
+                },
                 "event": {
                   "label": "Event",
                   "event_type": "Event type",
@@ -1312,6 +1321,9 @@
         "tabs": {
           "info": {
             "title": "Info"
+          },
+          "logs": {
+            "title": "Logs"
           },
           "events": {
             "title": "Events"

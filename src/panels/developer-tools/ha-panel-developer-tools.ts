@@ -15,7 +15,6 @@ import "@polymer/paper-tabs/paper-tab";
 import "@polymer/paper-tabs/paper-tabs";
 
 import "../../components/ha-menu-button";
-import "../../resources/ha-style";
 import "./developer-tools-router";
 
 import scrollToTarget from "../../common/dom/scroll-to-target";
@@ -51,6 +50,9 @@ class PanelDeveloperTools extends LitElement {
           >
             <paper-tab page-name="info">
               ${this.hass.localize("ui.panel.developer-tools.tabs.info.title")}
+            </paper-tab>
+            <paper-tab page-name="logs">
+              ${this.hass.localize("ui.panel.developer-tools.tabs.logs.title")}
             </paper-tab>
             <paper-tab page-name="event">
               ${this.hass.localize(

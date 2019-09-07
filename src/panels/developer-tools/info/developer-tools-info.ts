@@ -10,8 +10,6 @@ import {
 import { HomeAssistant } from "../../../types";
 import { haStyle } from "../../../resources/styles";
 
-import "./system-log-card";
-import "./error-log-card";
 import "./system-health-card";
 
 const JS_TYPE = __BUILD__;
@@ -111,8 +109,6 @@ class HaPanelDevInfo extends LitElement {
       </div>
       <div class="content">
         <system-health-card .hass=${this.hass}></system-health-card>
-        <system-log-card .hass=${this.hass}></system-log-card>
-        <error-log-card .hass=${this.hass}></error-log-card>
       </div>
     `;
   }
@@ -173,6 +169,7 @@ class HaPanelDevInfo extends LitElement {
           display: block;
           max-width: 600px;
           margin: 0 auto;
+          padding-bottom: 16px;
         }
       `,
     ];
