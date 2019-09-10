@@ -115,9 +115,8 @@ class ListCard extends HTMLElement {
         let classStatus = "";
         let rowBgColor = "";
         for (const entry in feed) {
-          if (rows >= rowLimit) break;
-
           if (feed.hasOwnProperty(entry)) {
+            if (rows >= rowLimit) break;
             if (selectedId === rows) {
               classStatus = "itemSelected";
               rowBgColor = 'bgcolor="#ca7d0d"';

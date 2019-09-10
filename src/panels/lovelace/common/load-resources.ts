@@ -47,7 +47,6 @@ export const loadLovelaceResources = (
   console.log("Loading AIS Lovelace Resources");
   const aisJs = [
     "/static/ais_dom/cards/card-tools.js",
-    "/static/ais_dom/cards/upcoming-media-card.js",
     "/static/ais_dom/cards/ais-tts.js",
     "/static/ais_dom/cards/lovelace-swipe-navigation.js",
   ];

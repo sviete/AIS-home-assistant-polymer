@@ -8,20 +8,14 @@ class UpcomingMediaCard extends HTMLElement {
       card.appendChild(this.content);
       this.appendChild(card);
     }
-    // The Great Wall of Config & Defaults™
-    const style = document.createElement("style");
-    var service = this.config.service;
-    const entity = this.config.entity || `sensor.${service}_upcoming_media`;
-    if (!hass.states[entity]) {
-      console.log("entity doesn't exist");
-      return;
-    }
-    service = service ? this.config.service : this.config.entity.slice(7, 11);
-    const feed = hass.states[entity].attributes;
 
+    const entity = this.config.entity;
+    if (!hass.states[entity]) return;
+    let service = this.config.entity.slice(7, 11);
+    const feed = hass.states[entity].attributes;
     const view = this.config.image_style || "poster";
     const dateform = this.config.date || "mmdd";
-    let icon = this.config.icon || "mdi:play";
+    const icon = this.config.icon || feed[0]["icon"];
     const icon_hide = this.config.icon == "none" ? "display:none;" : "";
     const icon_color = this.config.icon_color || "white";
     const flag_color = this.config.flag_color || "var(--primary-color)";
@@ -31,10 +25,14 @@ class UpcomingMediaCard extends HTMLElement {
       hour: "2-digit",
       minute: "2-digit",
     };
-
-    const title_size = this.config.title_size || "medium";
+    const title_text = this.config.title_text || feed[0]["title_default"];
+    const line1_text = this.config.line1_text || feed[0]["line1_default"];
+    const line2_text = this.config.line2_text || feed[0]["line2_default"];
+    const line3_text = this.config.line3_text || feed[0]["line3_default"];
+    const line4_text = this.config.line4_text || feed[0]["line4_default"];
+    const title_size = this.config.title_size || "large";
     const line1_size =
-      this.config.line1_size || this.config.line_size || "small";
+      this.config.line1_size || this.config.line_size || "medium";
     const line2_size =
       this.config.line2_size || this.config.line_size || "small";
     const line3_size =
@@ -84,25 +82,15 @@ class UpcomingMediaCard extends HTMLElement {
         ? "5px 5px 10px"
         : "3px 2px 25px"
       : "";
+    const svgshdw = shadows(this.config.box_shadows) ? "url(#grad1)" : accent;
     const txtshdw = shadows(this.config.text_shadows) ? "1px 1px 3px" : "";
-    //const rowLimit = Math.min(Object.keys(feed).length, this.config.max || 5);
-    const rowLimit = 50;
-    window.cardSize = rowLimit;
-    let rows = 0;
-    const audioType = this.config.audio_type;
-    const selectedId = hass.states[this.config.entity].state;
-    if (view == "poster") {
+    const max = Math.min(feed.length - 1, this.config.max || 5);
+    window.cardSize = max;
+
+    let style = document.createElement("style");
+    style.setAttribute("id", "umc_style");
+    if (view == "poster" && !this.querySelector('[id="umc_style"]')) {
       style.textContent = `
-        div._fan_fanart:hover{
-          background-color:#ffc94761;
-          cursor: pointer;
-        }
-        div._fan_fanart:hover .${service}_flag_${view} {
-          fill:${flag_color};
-        }
-        div.itemSelected .${service}_flag_${view}{
-          fill:${flag_color};
-        }
         .${service}_${view} {
           width:100%;
           margin-left: auto;
@@ -138,7 +126,7 @@ class UpcomingMediaCard extends HTMLElement {
         .${service}_container_${view} {
           position:relative;
           outline: 5px solid #fff;
-          width:25%;
+          width:30%;
           outline:5px solid ${border};
           box-shadow:${boxshdw} rgba(0,0,0,.8);
           float:left;
@@ -154,6 +142,7 @@ class UpcomingMediaCard extends HTMLElement {
           position: absolute;
           bottom: 0;
           right: 0;
+          fill:${flag_color};
         }
         .${service}_flag_${view} svg{
           float:right;
@@ -189,18 +178,8 @@ class UpcomingMediaCard extends HTMLElement {
           fill:${line4_color};
           }
       `;
-    } else {
+    } else if (!this.querySelector('[id="umc_style"]')) {
       style.textContent = `
-        div._poster:hover{
-          background-color:#ffc94761;
-          cursor: pointer;
-        }
-        div._poster:hover .${service}_flag_${view} {
-          fill:${flag_color};
-        }
-        div.itemSelected .${service}_flag_${view}{
-          fill:${flag_color};
-        }
         .${service}_${view} {
           width:100%;
           overflow:hidden;
@@ -213,12 +192,12 @@ class UpcomingMediaCard extends HTMLElement {
           position:relative;
         }
         .${service}_${view} ha-icon {
-          top: 3px;
-          margin-right: -39px;
+          top: 5px;
+          margin-right: -19px;
           right:0;
           z-index: 2;
-          width: 25%;
-          height: 25%;
+          width: 15%;
+          height: 15%;
           position:absolute;
           color:${icon_color};
           filter: drop-shadow( 0px 0px 1px rgba(0,0,0,1));
@@ -246,6 +225,7 @@ class UpcomingMediaCard extends HTMLElement {
           margin-top:3px;
           margin-right:3px;
           right: 0;
+          fill:${flag_color};
         }
         .${service}_flag_${view} svg{
           float:right;
@@ -297,8 +277,7 @@ class UpcomingMediaCard extends HTMLElement {
             text.charAt(i).match(/( |:|-|;|"|'|,)/) &&
             text.charAt(i - 1).match(/[a-zA-Z0-9_]/)
           ) {
-            var truncated = `${text.substring(0, i)}...`;
-            return truncated;
+            return `${text.substring(0, i)}...`;
           }
         }
       } else {
@@ -308,11 +287,12 @@ class UpcomingMediaCard extends HTMLElement {
 
     function format_date(input_date) {
       // Match UTC ISO formatted date with time
+      let fd_day, fd_month;
       if (String(input_date).match(/[T]\d+[:]\d+[:]\d+[Z]/)) {
-        var fd_day = new Date(input_date).toLocaleDateString([], {
+        fd_day = new Date(input_date).toLocaleDateString([], {
           day: "2-digit",
         });
-        var fd_month = new Date(input_date).toLocaleDateString([], {
+        fd_month = new Date(input_date).toLocaleDateString([], {
           month: "2-digit",
         });
         // Match date string. ie: 2018-10-31
@@ -323,21 +303,19 @@ class UpcomingMediaCard extends HTMLElement {
       } else {
         return "";
       }
-      if (dateform == "ddmm") {
-        return `${fd_day}/${fd_month}`;
-      } else {
-        return `${fd_month}/${fd_day}`;
-      }
+      if (dateform == "ddmm") return `${fd_day}/${fd_month}`;
+      else return `${fd_month}/${fd_day}`;
     }
 
-    for (const item in feed) {
-      //if (!item("airdate")) continue;
-      if (rows >= rowLimit) break;
-      //let airdate = new Date(item("airdate"));
-      let airdate = new Date();
-      let dflag = "";
-      let image = feed[item]["thumbnail"];
-      let item_runtime = 25;
+    for (let count = 1; count <= max; count++) {
+      const item = (key) => feed[count][key];
+      if (!item("airdate")) continue;
+      if (this.config.hide_flagged && item("flag")) continue;
+      else if (this.config.hide_unflagged && !item("flag")) continue;
+      let airdate = new Date(item("airdate"));
+      let dflag = item("flag") && flag ? "" : "display:none;";
+      let image =
+        view == "poster" ? item("poster") : item("fanart") || item("poster");
       let daysBetween = Math.round(
         Math.abs(
           (new Date().getTime() - airdate.getTime()) / (24 * 60 * 60 * 1000)
@@ -347,34 +325,56 @@ class UpcomingMediaCard extends HTMLElement {
         daysBetween <= 7
           ? airdate.toLocaleDateString([], { weekday: "long" })
           : airdate.toLocaleDateString([], { weekday: "short" });
-      //
-      let classStatus = selectedId == rows ? "itemSelected" : "";
-      let svgshdw = selectedId == rows ? "url(#grad1)" : "";
 
       // Format runtime as either '23 min' or '01:23' if over an hour
-      let hrs = String(Math.floor(item_runtime / 60)).padStart(2, 0);
-      let min = String(Math.floor(item_runtime % 60)).padStart(2, 0);
+      let hrs = String(Math.floor(item("runtime") / 60)).padStart(2, 0);
+      let min = String(Math.floor(item("runtime") % 60)).padStart(2, 0);
       let runtime =
-        item_runtime > 0 ? (hrs > 0 ? `${hrs}:${min}` : `${min} min`) : "";
+        item("runtime") > 0 ? (hrs > 0 ? `${hrs}:${min}` : `${min} min`) : "";
 
       // Shifting images for fanart view since we use poster as fallback image.
-      let shiftimg = feed[item]["thumbnail"]
-        ? "background-position:100% 0;background-size: 54% auto;"
+      let shiftimg = item("fanart")
+        ? "background-position:100% 0;"
         : "background-size: 54% auto;background-position:100% 35%;";
 
       // First item in card needs no top margin.
-      if (item == "0") var top = "0px";
-      else view == "poster" ? "20px" : "10px";
+      let top;
+      if (count == 1) top = "margin-top: 0px;";
+      else top = view == "poster" ? "margin-top: 20px;" : "margin-top: 10px;";
 
-      let line = [
-        feed[item]["title"],
-        feed[item]["mediasource"],
-        feed[item]["name"],
-      ];
-      let char = [title_size, line1_size, line2_size];
+      let line = [title_text, line1_text, line2_text, line3_text, line4_text];
+      let char = [title_size, line1_size, line2_size, line3_size, line4_size];
 
+      // Keyword map for replacement, return null if empty so we can hide empty sections
+      let keywords = /\$title|\$episode|\$genres|\$number|\$rating|\$release|\$runtime|\$studio|\$day|\$date|\$time|\$aired/g;
+      let keys = {
+        $title: item("title") || null,
+        $episode: item("episode") || null,
+        $genres: item("genres") || null,
+        $number: item("number") || null,
+        $rating: item("rating") || null,
+        $release: item("release") || null,
+        $studio: item("studio") || null,
+        $runtime: runtime || null,
+        $day: day || null,
+        $time: airdate.toLocaleTimeString([], timeform) || null,
+        $date: format_date(item("airdate")) || null,
+        $aired: format_date(item("aired")) || null,
+      };
+
+      // Replace keywords in lines
       for (let i = 0; i < line.length; i++) {
-        let text = line[i];
+        line[i] = line[i].replace(" - ", "-");
+        // Split at '-' so we can ignore entire contents if keyword returns null
+        let text = line[i].replace(keywords, (val) => keys[val]).split("-");
+        let filtered = [];
+        // Rebuild lines, ignoring null
+        for (let t = 0; t < text.length; t++) {
+          if (text[t].match(null)) continue;
+          else filtered.push(text[t]);
+        }
+        // Replacing twice to get keywords in component generated strings
+        text = filtered.join(" - ").replace(keywords, (val) => keys[val]);
 
         // Shifting header text around depending on view & size
         let svgshift, y;
@@ -398,20 +398,19 @@ class UpcomingMediaCard extends HTMLElement {
               char[i]
             )}</tspan>`;
       }
-      icon = feed[item]["icon"];
       if (view == "poster") {
         this.content.innerHTML += `
-          <div id='ais_track' class='${service}_${view}' style='margin-top:${top};' data-id='${item}' data-audio-type='${audioType}'>
-             <div class="${service}_container_${view} ${classStatus}" style="background-image:url('${image}');">
+          <div id='main' class='${service}_${view}' style='${top}'>
+             <div class="${service}_container_${view}" style="background-image:url('${image}');">
                 <img src="${image}"/>
                 <ha-icon icon="${icon}" style="${dflag}"></ha-icon>
-                <div class="${service}_flag_${view} ${classStatus}" style="${dflag}">
+                <div class="${service}_flag_${view}" style="${dflag}">
                    <svg style="${dflag}" preserveAspectRatio="none" viewBox="0 0 100 100">
-                      <polygon points="100 35,60 0,100 0"></polygon>
+                      <polygon points="100 25,65 0,100 0"></polygon>
                    </svg>
                 </div>
              </div>
-             <svg class='${service}_svg_${view}' viewBox="0 0 200 80">
+             <svg class='${service}_svg_${view}' viewBox="0 0 200 100">
                 <defs>
                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%" style="stop-color:rgb(20,20,20,1);stop-opacity:1" />
@@ -419,53 +418,39 @@ class UpcomingMediaCard extends HTMLElement {
                    </linearGradient>
                 </defs>
                 <rect width="500px" height="23px" fill="${svgshdw}"/>
-                <text>${line[0]}
+                <text>
+                   ${line[0]}
                    <tspan dy="1.3em" style="font-size:3px;fill:transparent;text-shadow:0 0 transparent;">.</tspan>
-                   ${line[1]}${line[2]}
+                   ${line[1]}${line[2]}${line[3]}${line[4]}
                 </text>
              </svg>
           </div>
         `;
       } else {
         this.content.innerHTML += `
-          <div id='ais_track' class="${service}_${view} style='${top}'"
-             style="${shiftimg}background-image:url('${image}')" data-id='${item}' data-audio-type='${audioType}'>
-             <div class="${service}_fan_${view} ${classStatus}">
+          <div class="${service}_${view}"
+             style="${top} ${shiftimg}background-image:url('${image}')">
+             <div class="${service}_fan_${view}">
                 <ha-icon icon="${icon}" style="${dflag}"></ha-icon>
-                <div class="${service}_flag_${view} ${classStatus}" style="${dflag}">
+                <div class="${service}_flag_${view}" style="${dflag}">
                    <svg style="${dflag}" preserveAspectRatio="none" viewBox="0 0 100 100">
-                      <polygon points="100 40,88 0,100 0"></polygon>
+                      <polygon points="100 30,90 0,100 0"></polygon>
                    </svg>
                 </div>
-                <svg class="${service}_svg_${view}"viewBox="0 0 200 80">
-                   <text>${line[0]}${line[1]}${line[2]}</text>
+                <svg class="${service}_svg_${view}"viewBox="0 0 200 100">
+                   <text>${line[0]}${line[1]}${line[2]}${line[3]}${
+          line[4]
+        }</text>
                 </svg>
              </div>
           </div>
         `;
       }
-      rows++;
+      if (!this.querySelector('[id="umc_style"]')) this.appendChild(style);
     }
-    var s = this.getElementsByTagName("style");
-    if (s.length == 0) {
-      this.appendChild(style);
-    }
-
-    //
-    const tracks = this.querySelectorAll("div#ais_track");
-    tracks.forEach((track) => {
-      track.addEventListener("click", (event) => {
-        hass.callService("ais_cloud", "play_audio", {
-          id: track.getAttribute("data-id"),
-          audio_type: track.getAttribute("data-audio-type"),
-        });
-        track.classList.add("clicked");
-      });
-    });
   }
   setConfig(config) {
-    if (!config.service && !config.entity)
-      throw new Error("Define entity or service.");
+    if (!config.service && !config.entity) throw new Error("Define entity.");
     this.config = config;
   }
   getCardSize() {
@@ -473,4 +458,4 @@ class UpcomingMediaCard extends HTMLElement {
     return view == "poster" ? window.cardSize * 5 : window.cardSize * 3;
   }
 }
-customElements.define("upcoming-media-card", UpcomingMediaCard);
+customElements.define("hui-ais-upcoming-media-card", UpcomingMediaCard);
