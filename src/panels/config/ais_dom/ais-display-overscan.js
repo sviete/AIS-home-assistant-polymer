@@ -117,7 +117,7 @@ class DisplayOverscan extends PolymerElement {
       </style>
       <ha-card header="Ustawienia ekranu">
         <div class="card-content">
-          <div class="card-content" style="display: flex;">
+          <div class="card-content" style="display: inline-block;">
             <div style="text-align: center;">
               <svg style="width:60px;height:60px" viewBox="0 0 24 24">
                 <path
@@ -132,8 +132,8 @@ class DisplayOverscan extends PolymerElement {
               możesz dostosować obraz do rozmiaru ekranu.
             </div>
           </div>
-          <div class="card-content" style="display: flex; width:100%;">
-            <div style="width:50%; text-align: center;">
+          <div class="card-content" style="text-align: center;">
+            <div style="display: inline-block;">
               <p>Powiększanie</p>
               <div
                 class="buttons"
@@ -169,7 +169,9 @@ class DisplayOverscan extends PolymerElement {
                 </button>
               </div>
             </div>
-            <div style="width:50%; text-align: center;">
+            <div
+              style="text-align: center; display: inline-block; margin: 30px;"
+            >
               <p>Zmniejszanie</p>
               <div class="buttons" style="margin: 0 auto; display: table;">
                 <button
@@ -214,7 +216,7 @@ class DisplayOverscan extends PolymerElement {
                 on-click="wmRestoreSettings"
               ></paper-icon-button
               ><mwc-button on-click="wmOverscan" data-value="reset"
-                >Reset do ustawień domyślnych</mwc-button
+                >Reset ekranu do ustawień domyślnych</mwc-button
               >
             </div>
           </div>

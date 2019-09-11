@@ -16,57 +16,87 @@ class ListCard extends HTMLElement {
     const card = document.createElement("ha-card");
     const content = document.createElement("div");
     const style = document.createElement("style");
+    const iconColor = cardConfig.icon_color || "white";
+    const delIconHide =
+      cardConfig.show_delete_icon === true ? "" : "display:none;";
+    const border = "#4c4c4c";
+    const flagColor = "var(--primary-color)";
+    const accent = "var(--paper-card-background-color)";
+    const accentSelected = "var(--primary-color)";
+    const boxshdw = "3px 2px 25px";
     style.textContent = `
-            table {
-              width: 100%;
-              padding: 0 16px 16px 16px;
-              border-collapse: collapse;
-              padding: 0px;
-              border-spacing: 0px;
-            }
-            tr:hover td{
-              background-color:#ffc94761;
-            }
-            tr td.playItem:hover{
-              color:#FF9800;
-              cursor: pointer;
-            }
-            tr td.deleteItem:hover ha-icon{
-              color:red;
-              cursor: pointer;
-            }
-            thead th {
-              text-align: left;
-            }
-            .button {
-              overflow: auto;
-              padding: 16px;
-            }
-            paper-button {
-              float: right;
-            }
-            td a {
-              color: var(--primary-text-color);
-              text-decoration-line: none;
-              font-weight: normal;
-            }
-            td img{
-              display: block;
-              object-fit: cover;
-            } td.icon{
-              padding-right: 10px;
-            }
-            tbody tr.itemSelected td{
-              background-color:#ca7d0d;
-            }
-            tbody tr.itemSelected td.playItem ha-icon{
-              color:#ffc94761;
-            }
-            td.deleteItem {
-              padding-right: 15px;
-              padding-left: 15px;
-            }
-          `;
+        .fanart_view {
+          width:100%;
+          overflow:hidden;
+          margin-left: auto;
+          margin-right: auto;
+          margin-bottom: 10px;
+          background-repeat:no-repeat;
+          background-size:auto 100%;
+          box-shadow:${boxshdw} rgba(0,0,0,.8);
+          position:relative;
+        }
+        .fanart_view ha-icon {
+          top: 5px;
+          margin-right: -4%;
+          right:0;
+          z-index: 2;
+          width: 15%;
+          height: 15%;
+          position:absolute;
+          color:${iconColor};
+          filter: drop-shadow( 0px 0px 1px rgba(0,0,0,1));
+          cursor: pointer;
+        }
+        .fanart_svg_view {
+          overflow:visible;
+          width:55%;
+          margin-top:1%;
+          margin-left:2.5%;
+          alignment-baseline:text-after-edge;
+        }
+        .fanart_fan_view {
+          width:100%;
+          background:linear-gradient(to right, ${accent} 48%,
+          transparent 70%,${accent} 100%);
+          margin:auto;
+          box-shadow:inset 0 0 0 3px ${border};
+        }
+        .fanart_fan_view_selected {
+          width:100%;
+          background:linear-gradient(to right, ${accentSelected} 48%,
+          transparent 70%,${accentSelected} 100%);
+          margin:auto;
+          box-shadow:inset 0 0 0 3px ${border};
+        }
+        .fanart_flag_view {
+          z-index: 1;
+          height: 100%;
+          width: 100%;
+          position: absolute;
+          margin-top:3px;
+          margin-right:3px;
+          right: 0;
+          fill:${flagColor};
+        }
+        .fanart_flag_view svg{
+          float:right;
+          width: 100%;
+          height: 100%;
+          margin:0;
+          filter: drop-shadow( -1px 1px 1px rgba(0,0,0,.5));
+        }
+        ha-icon.delete {
+          ${delIconHide};
+          position: absolute;
+          left: 0px;
+          width: 8%;
+        }
+        ha-icon.delete:hover {
+          color: red;
+          cursor: pointer;
+        }
+      `;
 
     content.id = "container";
     card.header = cardConfig.title;
@@ -82,7 +112,6 @@ class ListCard extends HTMLElement {
     const selectedId = hass.states[config.entity].state;
     if (hass.states[config.entity]) {
       const feed = hass.states[config.entity].attributes;
-      const columns = config.columns;
       this.style.display = "block";
       const rowLimit = config.row_limit
         ? config.row_limit
@@ -91,142 +120,49 @@ class ListCard extends HTMLElement {
       const mediaSource = config.media_source;
 
       if (feed !== undefined && Object.keys(feed).length > 0) {
-        let cardContent = "<table><thread><tr>";
-
-        if (!columns) {
-          cardContent += `<tr>`;
-
-          for (const column in feed[0]) {
-            if (feed[0].hasOwnProperty(column)) {
-              cardContent += `<th>${feed[0][column]}</th>`;
-            }
-          }
-        } else {
-          for (const column in columns) {
-            if (columns.hasOwnProperty(column)) {
-              cardContent += `<th class=${columns[column].field}></th>`;
-            }
-          }
-        }
-
-        cardContent += `</tr></thead><tbody>`;
-
-        // eslint-disable-next-line guard-for-in
-        let classStatus = "";
-        let rowBgColor = "";
+        let cardContent = "";
         for (const entry in feed) {
-          if (feed.hasOwnProperty(entry)) {
+          if (entry in feed) {
             if (rows >= rowLimit) break;
-            if (selectedId === rows) {
-              classStatus = "itemSelected";
-              rowBgColor = 'bgcolor="#ca7d0d"';
-            } else {
-              classStatus = "";
-              rowBgColor = "";
+            const mediaSourceInfo = feed[entry].audio_type || mediaSource;
+            let selectedClass = "";
+            if (Number(selectedId) === rows) {
+              selectedClass = "_selected";
             }
-
-            if (!columns) {
-              for (const field in feed[entry]) {
-                if (feed[entry].hasOwnProperty(field)) {
-                  cardContent += `<td>${feed[entry][field]}</td>`;
-                }
-              }
-            } else {
-              let has_field = true;
-
-              for (const column in columns) {
-                if (!feed[entry].hasOwnProperty(columns[column].field)) {
-                  has_field = false;
-                  break;
-                }
-              }
-
-              if (!has_field) continue;
-              cardContent +=
-                `<tr ` +
-                rowBgColor +
-                ` class="trackRow ` +
-                classStatus +
-                `" data-id="${rows}" data-media-source="${mediaSource}">`;
-
-              for (const column in columns) {
-                if (columns.hasOwnProperty(column)) {
-                  if (columns[column].type === "icon") {
-                    cardContent += `<td align="right" class="${
-                      columns[column].field
-                    } playItem" data-id="${rows}" data-media-source="${mediaSource}">`;
-                  } else if (columns[column].type === "icon_remove") {
-                    cardContent += `<td align="center" class="${
-                      columns[column].field
-                    } deleteItem" data-id="${rows}" data-media-source="${mediaSource}">`;
-                  } else {
-                    cardContent += `<td class="${
-                      columns[column].field
-                    } playItem" data-id="${rows}" data-media-source="${mediaSource}">`;
-                  }
-
-                  if (columns[column].hasOwnProperty("add_link")) {
-                    cardContent += `<a href="${
-                      feed[entry][columns[column].add_link]
-                    }" target='_blank'>`;
-                  }
-
-                  if (columns[column].hasOwnProperty("type")) {
-                    if (columns[column].type === "image") {
-                      if (
-                        feed[entry][columns[column].field][0].hasOwnProperty(
-                          "url"
-                        )
-                      ) {
-                        cardContent += `<img src="${
-                          feed[entry][columns[column].field][0].url
-                        }" width="70" height="70">`;
-                      } else {
-                        cardContent += `<img src="${
-                          feed[entry][columns[column].field]
-                        }" width="70" height="70">`;
-                      }
-                    } else if (columns[column].type === "icon") {
-                      cardContent += `<ha-icon icon="${
-                        feed[entry][columns[column].field]
-                      }"></ha-icon>`;
-                    } else if (columns[column].type === "icon_remove") {
-                      cardContent += `<ha-icon icon="${
-                        feed[entry][columns[column].field]
-                      }"></ha-icon>`;
-                    }
-                  } else {
-                    let newText = feed[entry][columns[column].field];
-
-                    if (columns[column].hasOwnProperty("regex")) {
-                      newText = new RegExp(columns[column].regex).exec(
-                        feed[entry][columns[column].field]
-                      );
-                    } else if (columns[column].hasOwnProperty("prefix")) {
-                      newText = columns[column].prefix + newText;
-                    } else if (columns[column].hasOwnProperty("postfix")) {
-                      newText += columns[column].postfix;
-                    }
-
-                    cardContent += `${newText}`;
-                  }
-
-                  if (columns[column].hasOwnProperty("add_link")) {
-                    cardContent += `</a>`;
-                  }
-
-                  cardContent += `</td>`;
-                }
-              }
-            }
-
-            cardContent += `</tr>`;
+            cardContent +=
+              `
+            <div class="fanart_view playItem" data-id="${rows}" data-media-source="${mediaSource}"
+              style="margin-top: 0px; background-size: 54% auto;background-position:100% 35%; background-image:url(
+                ${feed[entry].thumbnail}
+              )">
+              <div class="fanart_fan_view` +
+              selectedClass +
+              `">
+                  <ha-icon icon="mdi:play"></ha-icon>
+                  <div class="fanart_flag_view">
+                    <svg preserveAspectRatio="none" viewBox="0 0 100 100">
+                        <polygon points="100 30,90 0,100 0"></polygon>
+                    </svg>
+                  </div>
+                  <svg class="fanart_svg_view" viewBox="0 -20 200 100">
+                    <foreignObject width="200" height="100" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <span xmlns="http://www.w3.org/1999/xhtml">${
+                          feed[entry].title
+                        }</span>
+                    </foreignObject>
+                    <foreignObject width="200" height="100" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:smaller; bottom: 25px; position: absolute;">${mediaSourceInfo}</div>
+                    </foreignObject>
+                  </svg>
+                  <ha-icon class="delete" icon="mdi:delete"></ha-icon>
+              </div>
+            </div>
+          `;
             ++rows;
           }
         }
 
         root.lastChild.hass = hass;
-        cardContent += `</tbody></table>`;
         root.getElementById("container").innerHTML = cardContent;
       } else {
         this.style.display = "none";
@@ -235,8 +171,8 @@ class ListCard extends HTMLElement {
       this.style.display = "none";
     }
     //
-    const playTracks = root.querySelectorAll("td.playItem");
-    const delTracks = root.querySelectorAll("td.deleteItem");
+    const playTracks = root.querySelectorAll("div.playItem");
+    const delTracks = root.querySelectorAll("ha-icon.delete");
     playTracks.forEach((track) => {
       track.addEventListener("click", () => {
         hass.callService("ais_cloud", "play_audio", {
