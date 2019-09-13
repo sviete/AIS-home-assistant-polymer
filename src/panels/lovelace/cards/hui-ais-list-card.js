@@ -88,9 +88,9 @@ class ListCard extends HTMLElement {
         }
         ha-icon.delete {
           ${delIconHide};
-          position: absolute;
           left: 0px;
           width: 8%;
+          position: initial;
         }
         ha-icon.delete:hover {
           color: red;
@@ -145,16 +145,17 @@ class ListCard extends HTMLElement {
                     </svg>
                   </div>
                   <svg class="fanart_svg_view" viewBox="0 -20 200 100">
-                    <foreignObject width="200" height="100" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                    <foreignObject width="200" height="80" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
                         <span xmlns="http://www.w3.org/1999/xhtml">${
                           feed[entry].title
                         }</span>
                     </foreignObject>
-                    <foreignObject width="200" height="100" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:smaller; bottom: 25px; position: absolute;">${mediaSourceInfo}</div>
+                    <foreignObject width="200" height="80" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:smaller; bottom: 25px; position: absolute;">
+                        <ha-icon class="delete" icon="mdi:delete"></ha-icon>${mediaSourceInfo}
+                        </div>
                     </foreignObject>
                   </svg>
-                  <ha-icon class="delete" icon="mdi:delete"></ha-icon>
               </div>
             </div>
           `;
@@ -182,6 +183,7 @@ class ListCard extends HTMLElement {
         track.classList.add("clicked");
       });
     });
+
     delTracks.forEach((track) => {
       track.addEventListener("click", () => {
         hass.callService("ais_cloud", "delete_audio", {
