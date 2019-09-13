@@ -81,20 +81,20 @@ class ListCard extends HTMLElement {
         }
         .fanart_flag_view svg{
           float:right;
-          width: 100%;
+          width: 90%;
           height: 100%;
           margin:0;
           filter: drop-shadow( -1px 1px 1px rgba(0,0,0,.5));
+          cursor: pointer;
         }
-        ha-icon.delete {
+        span.delete ha-icon {
           ${delIconHide};
           left: 0px;
           width: 8%;
-          position: initial;
-        }
-        ha-icon.delete:hover {
-          color: red;
           cursor: pointer;
+        }
+        span.delete:hover ha-icon{
+          color: red;
         }
       `;
 
@@ -131,19 +131,20 @@ class ListCard extends HTMLElement {
             }
             cardContent +=
               `
-            <div class="fanart_view playItem" data-id="${rows}" data-media-source="${mediaSource}"
+            <div class="fanart_view playItem"
               style="margin-top: 0px; background-size: 54% auto;background-position:100% 35%; background-image:url(
                 ${feed[entry].thumbnail}
               )">
               <div class="fanart_fan_view` +
               selectedClass +
               `">
-                  <ha-icon icon="mdi:play"></ha-icon>
+                  <ha-icon icon="mdi:play" class="play" data-id="${rows}" data-media-source="${mediaSource}"></ha-icon>
                   <div class="fanart_flag_view">
-                    <svg preserveAspectRatio="none" viewBox="0 0 100 100">
+                    <svg class="play" preserveAspectRatio="none" viewBox="0 0 100 100" data-id="${rows}" data-media-source="${mediaSource}">
                         <polygon points="100 30,90 0,100 0"></polygon>
                     </svg>
                   </div>
+                  <span class="delete" style="cursor: pointer; "><ha-icon icon="mdi:close" data-id="${rows}" data-media-source="${mediaSource}"></ha-icon></span>
                   <svg class="fanart_svg_view" viewBox="0 -20 200 100">
                     <foreignObject width="200" height="80" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
                         <span xmlns="http://www.w3.org/1999/xhtml">${
@@ -151,8 +152,8 @@ class ListCard extends HTMLElement {
                         }</span>
                     </foreignObject>
                     <foreignObject width="200" height="80" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:smaller; bottom: 25px; position: absolute;">
-                        <ha-icon class="delete" icon="mdi:delete"></ha-icon>${mediaSourceInfo}
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:smaller; bottom: 5px; position: absolute;">
+                        <span>${mediaSourceInfo}</span>
                         </div>
                     </foreignObject>
                   </svg>
@@ -172,15 +173,15 @@ class ListCard extends HTMLElement {
       this.style.display = "none";
     }
     //
-    const playTracks = root.querySelectorAll("div.playItem");
-    const delTracks = root.querySelectorAll("ha-icon.delete");
+    const playTracks = root.querySelectorAll(".play");
+    const delTracks = root.querySelectorAll("span.delete ha-icon");
     playTracks.forEach((track) => {
       track.addEventListener("click", () => {
         hass.callService("ais_cloud", "play_audio", {
           id: track.getAttribute("data-id"),
           media_source: track.getAttribute("data-media-source"),
         });
-        track.classList.add("clicked");
+        // track.classList.add("clicked");
       });
     });
 
