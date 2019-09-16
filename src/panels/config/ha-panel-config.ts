@@ -53,6 +53,36 @@ class HaPanelConfig extends HassRouterPage {
         load: () =>
           import(/* webpackChunkName: "panel-config-ais-dom-control" */ "./ais_dom/ha-config-ais-dom-control"),
       },
+      ais_dom_config_update: {
+        tag: "ha-config-ais-dom-config-update",
+        load: () =>
+          import(/* webpackChunkName: "panel-config-ais-dom-update" */ "./ais_dom/ha-config-ais-dom-config-update"),
+      },
+      ais_dom_config_wifi: {
+        tag: "ha-config-ais-dom-config-wifi",
+        load: () =>
+          import(/* webpackChunkName: "panel-config-ais-dom-wifi" */ "./ais_dom/ha-config-ais-dom-config-wifi"),
+      },
+      ais_dom_config_display: {
+        tag: "ha-config-ais-dom-config-display",
+        load: () =>
+          import(/* webpackChunkName: "panel-config-ais-dom-display" */ "./ais_dom/ha-config-ais-dom-config-display"),
+      },
+      ais_dom_config_tts: {
+        tag: "ha-config-ais-dom-config-tts",
+        load: () =>
+          import(/* webpackChunkName: "panel-config-ais-dom-tts" */ "./ais_dom/ha-config-ais-dom-config-tts"),
+      },
+      ais_dom_config_remote: {
+        tag: "ha-config-ais-dom-config-remote",
+        load: () =>
+          import(/* webpackChunkName: "panel-config-ais-dom-remote" */ "./ais_dom/ha-config-ais-dom-config-remote"),
+      },
+      ais_dom_config_power: {
+        tag: "ha-config-ais-dom-config-power",
+        load: () =>
+          import(/* webpackChunkName: "panel-config-ais-dom-power" */ "./ais_dom/ha-config-ais-dom-config-power"),
+      },
       server_control: {
         tag: "ha-config-server-control",
         load: () =>

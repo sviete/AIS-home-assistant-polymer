@@ -7,8 +7,7 @@ import { PolymerElement } from "@polymer/polymer/polymer-element";
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
-import "./ha-config-section-ais-dom-control";
-
+import "./ha-config-ais-dom-navigation";
 import LocalizeMixin from "../../../mixins/localize-mixin";
 
 /*
@@ -35,11 +34,21 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
 
       <hass-subpage header="Konfiguracja bamki AIS dom">
         <div class$="[[computeClasses(isWide)]]">
-          <ha-config-section-ais-dom-control
-            is-wide="[[isWide]]"
-            show-advanced="[[showAdvanced]]"
-            hass="[[hass]]"
-          ></ha-config-section-ais-dom-control>
+          <div class="content">
+            <ha-config-section is-wide="[[isWide]]">
+              <span slot="header">Konfiguracja bamki AIS dom</span>
+              <span slot="introduction"
+                >Tutaj możesz skonfigurować parametry bramki AIS dom. Pracujemy
+                nad tym, żeby wszystkie opcje bramki można było łatwo
+                konfigurować z interfejsu użytkownika.
+              </span>
+
+              <ha-config-ais-dom-navigation
+                hass="[[hass]]"
+                show-advanced="[[showAdvanced]]"
+              ></ha-config-ais-dom-navigation>
+            </ha-config-section>
+          </div>
         </div>
       </hass-subpage>
     `;
