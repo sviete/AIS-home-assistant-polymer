@@ -8,12 +8,12 @@ import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-navigation";
-import LocalizeMixin from "../../../mixins/localize-mixin";
 import { fireEvent } from "../../../common/dom/fire_event";
+import "./ais-webhooks";
 /*
- * @appliesMixin LocalizeMixin
+ *
  */
-class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
+class HaConfigAisDomControl extends PolymerElement {
   static get template() {
     return html`
       <style include="iron-flex ha-style">

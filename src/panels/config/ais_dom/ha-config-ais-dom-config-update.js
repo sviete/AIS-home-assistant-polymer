@@ -8,29 +8,25 @@ import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-navigation";
-import LocalizeMixin from "../../../mixins/localize-mixin";
 
 /*
- * @appliesMixin LocalizeMixin
+ *
  */
-class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
+class HaConfigAisDomControl extends PolymerElement {
   static get template() {
     return html`
       <style include="iron-flex ha-style">
         .content {
           padding-bottom: 32px;
         }
-
         .border {
           margin: 32px auto 0;
           border-bottom: 1px solid rgba(0, 0, 0, 0.12);
           max-width: 1040px;
         }
-
         .narrow .border {
           max-width: 640px;
         }
-
         .center-container {
           @apply --layout-vertical;
           @apply --layout-center-center;

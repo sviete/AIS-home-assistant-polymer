@@ -8,34 +8,33 @@ import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-navigation";
-import LocalizeMixin from "../../../mixins/localize-mixin";
 import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
 import { fireEvent } from "../../../common/dom/fire_event";
+
+import "../../../components/state-history-charts";
+import { processConfigEntities } from "../../lovelace/common/process-config-entities";
+
 /*
- * @appliesMixin LocalizeMixin
+ *
  */
-class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
+class HaConfigAisDomControl extends PolymerElement {
   static get template() {
     return html`
       <style include="iron-flex ha-style">
         .content {
           padding-bottom: 32px;
         }
-
         .border {
           margin: 32px auto 0;
           border-bottom: 1px solid rgba(0, 0, 0, 0.12);
           max-width: 1040px;
         }
-
         .narrow .border {
           max-width: 640px;
         }
-
         div.aisInfoRow {
           display: inline-block;
         }
-
         .center-container {
           @apply --layout-vertical;
           @apply --layout-center-center;
@@ -78,6 +77,15 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
                   </div>
                 </div>
               </div>
+              <state-history-charts
+                hass="[[hass]]"
+                history-data="[[_stateHistory]]"
+                is-loading-data="[[_stateHistoryLoading]]"
+                names="[[_names]]"
+                up-to-now
+                no-single
+              >
+              </state-history-charts>
               <div class="card-actions">
                 <div>
                   <paper-icon-button
@@ -116,6 +124,12 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
         type: String,
         computed: "_computeAisWiFiSpeed(hass)",
       },
+      _config: Object,
+      _names: Object,
+      _entities: Array,
+      _stateHistory: Object,
+      _stateHistoryLoading: Boolean,
+      _cacheConfig: Object,
     };
   }
 
@@ -170,7 +184,6 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
       })
       .then((result) => {
         // eslint-disable-next-line no-console
-        console.log(result);
         this._continueFlow(result.flow_id);
       });
   }
@@ -185,6 +198,33 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
         console.log(result);
         this._continueFlow(result.flow_id);
       });
+  }
+
+  ready() {
+    super.ready();
+    const entities = processConfigEntities([
+      "sensor.ais_wifi_service_current_network_info",
+    ]);
+    console.log(entities);
+
+    const _entities = [];
+    const _names = {};
+    for (const entity of entities) {
+      _entities.push(entity.entity);
+      if (entity.name) {
+        _names[entity.entity] = entity.name;
+      }
+    }
+
+    this.setProperties({
+      _cacheConfig: {
+        cacheKey: _entities.join(),
+        hoursToShow: 24,
+        refresh: 0,
+      },
+      _entities,
+      _names,
+    });
   }
 }
 

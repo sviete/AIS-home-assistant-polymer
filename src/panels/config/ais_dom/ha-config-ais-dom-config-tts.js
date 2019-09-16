@@ -8,13 +8,12 @@ import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-navigation";
-import LocalizeMixin from "../../../mixins/localize-mixin";
 import { fireEvent } from "../../../common/dom/fire_event";
 import "../../../components/paper-time-input.js";
 /*
- * @appliesMixin LocalizeMixin
+ *
  */
-class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
+class HaConfigAisDomControl extends PolymerElement {
   static get template() {
     return html`
       <style include="iron-flex ha-style">
@@ -69,7 +68,7 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
               >Możesz zmienić głos asystenta i dostosować szybkość i ton mowy
               oraz godziny w których asystent powinien być ściszony</span
             >
-            <ha-card header="Tryb cichy">
+            <ha-card header="Tryb nocny">
               <paper-toggle-button
                 checked="{{quietMode}}"
                 on-change="changeQuietMode"
@@ -85,22 +84,26 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
                 class="card-content"
                 style="display: flex; align-items: center;"
               >
-                Rozpocznij tryb cichy o godzinie
+                Rozpocznij tryb nocny o godzinie
                 <paper-time-input
-                  hour="22"
-                  min="00"
+                  id="ais_quiet_mode_start"
+                  hour="[[quietModeStartH]]"
+                  min="[[quietModeStartM]]"
                   amPm="false"
                   hide-label
                   format="24"
+                  maxlength="2"
                   on-change="_selectedValueChanged"
                 ></paper-time-input>
-                zakończ tryb cichy o godzinie
+                zakończ tryb nocny o godzinie
                 <paper-time-input
-                  hour="6"
-                  min="00"
+                  id="ais_quiet_mode_stop"
+                  hour="[[quietModeStopH]]"
+                  min="[[quietModeStopM]]"
                   amPm="false"
                   hide-label
                   format="24"
+                  maxlength="2"
                   on-change="_selectedValueChanged"
                 ></paper-time-input>
               </div>
@@ -232,6 +235,10 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
         computed: "_computeQuietMode(hass)",
       },
       quietModeInfo: String,
+      quietModeStartH: String,
+      quietModeStartM: String,
+      quietModeStopH: String,
+      quietModeStopM: String,
     };
   }
 
@@ -270,16 +277,34 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
   }
 
   _computeQuietMode(hass) {
+    this.quietModeStartH =
+      hass.states["input_datetime.ais_quiet_mode_start"].state.split(":")[0] ||
+      "22";
+    this.quietModeStartM =
+      hass.states["input_datetime.ais_quiet_mode_start"].state.split(":")[1] ||
+      "00";
+    this.quietModeStopH =
+      hass.states["input_datetime.ais_quiet_mode_stop"].state.split(":")[0] ||
+      "6";
+    this.quietModeStopM =
+      hass.states["input_datetime.ais_quiet_mode_stop"].state.split(":")[1] ||
+      "00";
+
     if (hass.states["input_boolean.ais_quiet_mode"].state === "off") {
-      this.quietModeInfo = "Jeśli włączysz tryb cichy to w ";
+      this.quietModeInfo = "Jeśli włączysz tryb nocny to w ";
       return false;
     }
     this.quietModeInfo = "W ";
     return true;
   }
 
-  _selectedValueChanged() {
-    console.log("xxx");
+  _selectedValueChanged(ev) {
+    var el = ev.target;
+    // call service
+    this.hass.callService("input_datetime", "set_datetime", {
+      entity_id: "input_datetime." + el.id,
+      time: el.value,
+    });
   }
 
   changeQuietMode() {
