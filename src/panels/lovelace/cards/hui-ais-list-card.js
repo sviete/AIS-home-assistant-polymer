@@ -30,7 +30,7 @@ class ListCard extends HTMLElement {
           overflow:hidden;
           margin-left: auto;
           margin-right: auto;
-          margin-bottom: 10px;
+          margin-bottom: 5px;
           background-repeat:no-repeat;
           background-size:auto 100%;
           box-shadow:${boxshdw} rgba(0,0,0,.8);
@@ -39,14 +39,12 @@ class ListCard extends HTMLElement {
         .fanart_view ha-icon {
           top: 3px;
           margin-right: -5%;
-          margin-bottom: 5px;
           right:0;
           z-index: 2;
           width: 15%;
           height: 15%;
           position:absolute;
           color:${iconColor};
-          filter: drop-shadow( 0px 3px 0px rgba(0,0,0,.8));
           cursor: pointer;
         }
         .fanart_svg_view {
