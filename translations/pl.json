@@ -408,7 +408,7 @@
                     "description": "Twórz i edytuj automatyzacje",
                     "picker": {
                         "header": "Edytor automatyzacji",
-                        "introduction": "Edytor automatyzacji pozwala tworzyć i edytować automatyzacje Kliknij poniższy link, aby przeczytać instrukcję, jak poprawnie skonfigurować automatyzacje w Asystent domowy.",
+                        "introduction": "Edytor automatyzacji pozwala tworzyć i edytować automatyzacje Kliknij poniższy link, aby przeczytać instrukcję, jak poprawnie skonfigurować automatyzacje w Asystencie domowym.",
                         "pick_automation": "Wybierz automatyzację do edycji",
                         "no_automations": "Nie znaleziono żadnych edytowalnych automatyzacji",
                         "add_automation": "Dodaj automatyzację",
@@ -718,7 +718,7 @@
                     "description": "Przegląd wszystkich obszarów w twoim domu",
                     "picker": {
                         "header": "Rejestr obszarów",
-                        "introduction": "Obszary służą do organizacji urządzeń. Informacje te będą używane w Asystent domowy, aby pomóc w organizacji interfejsu, uprawnień i integracji z innymi systemami.",
+                        "introduction": "Obszary służą do organizacji urządzeń. Informacje te będą używane w Asystencie domowym, aby pomóc w organizacji interfejsu, uprawnień i integracji z innymi systemami.",
                         "introduction2": "Aby umieścić urządzenia w danym obszarze, użyj poniższego linku, aby przejść do strony integracji, a następnie kliknij skonfigurowaną integrację, aby dostać się do kart urządzeń.",
                         "integrations_page": "Strona integracji",
                         "no_areas": "Wygląda na to, że nie masz jeszcze lokalizacji!",

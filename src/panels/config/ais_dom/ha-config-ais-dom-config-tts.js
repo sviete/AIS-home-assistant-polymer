@@ -60,7 +60,7 @@ class HaConfigAisDomControl extends PolymerElement {
         }
       </style>
 
-      <hass-subpage header="Konfiguracja bamki AIS dom">
+      <hass-subpage header="Konfiguracja bramki AIS dom">
         <div class$="[[computeClasses(isWide)]]">
           <ha-config-section is-wide="[[isWide]]">
             <span slot="header">Ustawienia głosu Asystenta</span>
@@ -175,11 +175,40 @@ class HaConfigAisDomControl extends PolymerElement {
                 </div>
               </div>
             </ha-card>
-            <ha-card header="Automatycznie uruchamiaj Tryb nocny*">
+            <ha-card header="Uruchamiaj Tryb nocny*">
               <paper-toggle-button
                 checked="{{quietMode}}"
                 on-change="changeQuietMode"
               ></paper-toggle-button>
+              <div
+                class="card-content"
+                style="display: flex; align-items: center;"
+              >
+                Rozpocznij o godzinie
+                <paper-time-input
+                  id="ais_quiet_mode_start"
+                  hour="[[quietModeStartH]]"
+                  min="[[quietModeStartM]]"
+                  amPm="false"
+                  hide-label
+                  format="24"
+                  maxlength="2"
+                  on-change="_selectedValueChanged"
+                  style="margin-right:7px;margin-left:7px;"
+                ></paper-time-input>
+                zakończ o godzinie
+                <paper-time-input
+                  id="ais_quiet_mode_stop"
+                  hour="[[quietModeStopH]]"
+                  min="[[quietModeStopM]]"
+                  amPm="false"
+                  hide-label
+                  format="24"
+                  maxlength="2"
+                  on-change="_selectedValueChanged"
+                  style="margin-right:7px;margin-left:7px;"
+                ></paper-time-input>
+              </div>
               <div class="card-content">
                 *[[quietModeInfo]] o godzinie
                 [[quietModeStartH]]:[[quietModeStartM]], asystent:
@@ -191,33 +220,6 @@ class HaConfigAisDomControl extends PolymerElement {
                 Po zakończeniu ciszy nocnej, o godzinie
                 [[quietModeStopH]]:[[quietModeStopM]] głośność i wygląd zostaną
                 automatycznie przywrócone do wartości przed ciszą nocną.
-              </div>
-              <div
-                class="card-content"
-                style="display: flex; align-items: center;"
-              >
-                Rozpocznij tryb nocny o godzinie
-                <paper-time-input
-                  id="ais_quiet_mode_start"
-                  hour="[[quietModeStartH]]"
-                  min="[[quietModeStartM]]"
-                  amPm="false"
-                  hide-label
-                  format="24"
-                  maxlength="2"
-                  on-change="_selectedValueChanged"
-                ></paper-time-input>
-                zakończ tryb nocny o godzinie
-                <paper-time-input
-                  id="ais_quiet_mode_stop"
-                  hour="[[quietModeStopH]]"
-                  min="[[quietModeStopM]]"
-                  amPm="false"
-                  hide-label
-                  format="24"
-                  maxlength="2"
-                  on-change="_selectedValueChanged"
-                ></paper-time-input>
               </div>
             </ha-card>
           </ha-config-section>

@@ -126,7 +126,7 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
         }
       </style>
 
-      <hass-subpage header="Konfiguracja bamki AIS dom">
+      <hass-subpage header="Konfiguracja bramki AIS dom">
         <div class$="[[computeClasses(isWide)]]">
           <ha-config-section is-wide="[[isWide]]">
             <span slot="header">Ustawienia ekranu</span>

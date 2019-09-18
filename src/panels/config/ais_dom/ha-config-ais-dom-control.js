@@ -32,11 +32,11 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
         }
       </style>
 
-      <hass-subpage header="Konfiguracja bamki AIS dom">
+      <hass-subpage header="Konfiguracja bramki AIS dom">
         <div class$="[[computeClasses(isWide)]]">
           <div class="content">
             <ha-config-section is-wide="[[isWide]]">
-              <span slot="header">Konfiguracja bamki AIS dom</span>
+              <span slot="header">Konfiguracja bramki AIS dom</span>
               <span slot="introduction"
                 >Tutaj możesz skonfigurować parametry bramki AIS dom. Pracujemy
                 nad tym, żeby wszystkie opcje bramki można było łatwo

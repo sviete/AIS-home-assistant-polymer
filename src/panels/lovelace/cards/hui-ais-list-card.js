@@ -19,7 +19,7 @@ class ListCard extends HTMLElement {
     const iconColor = cardConfig.icon_color || "white";
     const delIconHide =
       cardConfig.show_delete_icon === true ? "" : "display:none;";
-    const border = "#4c4c4c";
+    const border = "#252525";
     const flagColor = "var(--primary-color)";
     const accent = "var(--paper-card-background-color)";
     const accentSelected = "var(--primary-color)";
@@ -37,15 +37,16 @@ class ListCard extends HTMLElement {
           position:relative;
         }
         .fanart_view ha-icon {
-          top: 5px;
-          margin-right: -4%;
+          top: 3px;
+          margin-right: -5%;
+          margin-bottom: 5px;
           right:0;
           z-index: 2;
           width: 15%;
           height: 15%;
           position:absolute;
           color:${iconColor};
-          filter: drop-shadow( 0px 0px 1px rgba(0,0,0,1));
+          filter: drop-shadow( 0px 3px 0px rgba(0,0,0,.8));
           cursor: pointer;
         }
         .fanart_svg_view {
@@ -60,22 +61,22 @@ class ListCard extends HTMLElement {
           background:linear-gradient(to right, ${accent} 48%,
           transparent 70%,${accent} 100%);
           margin:auto;
-          box-shadow:inset 0 0 0 3px ${border};
+          box-shadow:inset 0 0 0 1px ${border};
         }
         .fanart_fan_view_selected {
           width:100%;
           background:linear-gradient(to right, ${accentSelected} 48%,
           transparent 70%,${accentSelected} 100%);
           margin:auto;
-          box-shadow:inset 0 0 0 3px ${border};
+          box-shadow:inset 0 0 0 1px ${border};
         }
         .fanart_flag_view {
           z-index: 1;
           height: 100%;
           width: 100%;
           position: absolute;
-          margin-top:3px;
-          margin-right:3px;
+          margin-top: 1px;
+          margin-right: 1px;
           right: 0;
           fill:${flagColor};
         }
@@ -90,7 +91,7 @@ class ListCard extends HTMLElement {
         span.delete ha-icon {
           ${delIconHide};
           left: 0px;
-          width: 8%;
+          width: 5%;
           cursor: pointer;
         }
         span.delete:hover ha-icon{
