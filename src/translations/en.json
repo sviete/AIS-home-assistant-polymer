@@ -446,6 +446,14 @@
       "script": {
         "execute": "Execute"
       },
+      "timer": {
+        "actions": {
+          "start": "start",
+          "pause": "pause",
+          "cancel": "cancel",
+          "finish": "finish"
+        }
+      },
       "vacuum": {
         "actions": {
           "resume_cleaning": "Resume cleaning",
@@ -554,6 +562,20 @@
         "title": "System Options",
         "enable_new_entities_label": "Enable newly added entities.",
         "enable_new_entities_description": "If disabled, newly discovered entities will not be automatically added to Home Assistant."
+      },
+      "zha_device_info": {
+        "manuf": "by {manufacturer}",
+        "no_area": "No Area",
+        "services": {
+          "reconfigure": "Reconfigure ZHA device (heal device). Use this if you are having issues with the device. If the device in question is a battery powered device please ensure it is awake and accepting commands when you use this service.",
+          "updateDeviceName": "Set a custom name for this device in the device registry.",
+          "remove": "Remove a device from the ZigBee network."
+        },
+        "zha_device_card": {
+          "device_name_placeholder": "User given name",
+          "area_picker_label": "Area",
+          "update_name_button": "Update Name"
+        }
       }
     },
     "duration": {
@@ -780,6 +802,9 @@
               "unsupported_condition": "Unsupported condition: {condition}",
               "type_select": "Condition type",
               "type": {
+                "device": {
+                  "label": "Device"
+                },
                 "state": {
                   "label": "[%key:ui::panel::config::automation::editor::triggers::type::state::label%]",
                   "state": "[%key:ui::panel::config::automation::editor::triggers::type::state::label%]"
@@ -846,6 +871,9 @@
                   "label": "Fire event",
                   "event": "[%key:ui::panel::config::automation::editor::triggers::type::homeassistant::event%]",
                   "service_data": "[%key:ui::panel::config::automation::editor::actions::type::service::service_data%]"
+                },
+                "device_id": {
+                  "label": "Device"
                 }
               }
             }
@@ -860,6 +888,10 @@
           "description_login": "Logged in as {email}",
           "description_not_login": "Not logged in",
           "description_features": "Control away from home, integrate with Alexa and Google Assistant."
+        },
+        "devices": {
+          "caption": "Devices",
+          "description": "Manage connected devices"
         },
         "entity_registry": {
           "caption": "Entity Registry",
@@ -892,7 +924,7 @@
         },
         "integrations": {
           "caption": "Integrations",
-          "description": "Manage connected devices and services",
+          "description": "Manage and setup integrations",
           "discovered": "Discovered",
           "configured": "Configured",
           "new": "Set up a new integration",
@@ -942,16 +974,6 @@
         "zha": {
           "caption": "ZHA",
           "description": "Zigbee Home Automation network management",
-          "services": {
-            "reconfigure": "Reconfigure ZHA device (heal device). Use this if you are having issues with the device. If the device in question is a battery powered device please ensure it is awake and accepting commands when you use this service.",
-            "updateDeviceName": "Set a custom name for this device in the device registry.",
-            "remove": "Remove a device from the ZigBee network."
-          },
-          "device_card": {
-            "device_name_placeholder": "User given name",
-            "area_picker_label": "Area",
-            "update_name_button": "Update Name"
-          },
           "add_device_page": {
             "header": "Zigbee Home Automation - Add Devices",
             "spinner": "Searching for ZHA Zigbee devices...",
@@ -1052,6 +1074,10 @@
             "save": "Save",
             "unsaved_changes": "Unsaved changes",
             "saved": "Saved"
+          },
+          "edit_lovelace": {
+            "header": "Title of your Lovelace UI",
+            "explanation": "This title is shown above all your views in Lovelace."
           },
           "edit_view": {
             "header": "View Configuration",
