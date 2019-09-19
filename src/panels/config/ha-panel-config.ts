@@ -88,6 +88,11 @@ class HaPanelConfig extends HassRouterPage {
         load: () =>
           import(/* webpackChunkName: "panel-config-ais-dom-power" */ "./ais_dom/ha-config-ais-dom-config-power"),
       },
+      devices: {
+        tag: "ha-config-devices",
+        load: () =>
+          import(/* webpackChunkName: "panel-config-devices" */ "./devices/ha-config-devices"),
+      },
       server_control: {
         tag: "ha-config-server-control",
         load: () =>

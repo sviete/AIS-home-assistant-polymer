@@ -268,7 +268,7 @@ class OnboardingCoreConfig extends LitElement {
       .callApi("POST", "config/config_entries/flow", {
         handler: "ais_wifi_service",
       })
-      .then((result) => {
+      .then((result: any) => {
         this._continueFlow(result.flow_id);
       });
   }

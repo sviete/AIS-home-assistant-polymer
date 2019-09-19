@@ -10,6 +10,7 @@ let worker: any | undefined;
 @customElement("ha-markdown")
 class HaMarkdown extends UpdatingElement {
   @property() public content = "";
+  @property({ type: Boolean }) public allowSvg = false;
 
   protected update(changedProps) {
     super.update(changedProps);
@@ -22,11 +23,17 @@ class HaMarkdown extends UpdatingElement {
   }
 
   private async _render() {
-    this.innerHTML = await worker.renderMarkdown(this.content, {
-      breaks: true,
-      gfm: true,
-      tables: true,
-    });
+    this.innerHTML = await worker.renderMarkdown(
+      this.content,
+      {
+        breaks: true,
+        gfm: true,
+        tables: true,
+      },
+      {
+        allowSvg: this.allowSvg,
+      }
+    );
 
     this._resize();
 
@@ -42,13 +49,17 @@ class HaMarkdown extends UpdatingElement {
 
       // Open external links in a new window
       if (
-        node.nodeName === "A" &&
-        (node as HTMLAnchorElement).host !== document.location.host
+        node instanceof HTMLAnchorElement &&
+        node.host !== document.location.host
       ) {
-        (node as HTMLAnchorElement).target = "_blank";
+        node.target = "_blank";
+
+        // protect referrer on external links and deny window.opener access for security reasons
+        // (see https://mathiasbynens.github.io/rel-noopener/)
+        node.rel = "noreferrer noopener";
 
         // Fire a resize event when images loaded to notify content resized
-      } else if (node.nodeName === "IMG") {
+      } else if (node) {
         node.addEventListener("load", this._resize);
       }
     }
