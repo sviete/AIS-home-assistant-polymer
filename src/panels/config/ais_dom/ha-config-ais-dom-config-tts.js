@@ -66,7 +66,7 @@ class HaConfigAisDomControl extends PolymerElement {
             <span slot="header">Ustawienia głosu Asystenta</span>
             <span slot="introduction"
               >Możesz zmienić głos asystenta i dostosować szybkość i ton mowy
-              oraz godziny w których asystent powinien być ściszony</span
+              oraz godziny, w których asystent powinien być ściszony</span
             >
             <ha-card header="Wybór głosu Asystenta">
               <div class="card-content">
@@ -175,53 +175,6 @@ class HaConfigAisDomControl extends PolymerElement {
                 </div>
               </div>
             </ha-card>
-            <ha-card header="Uruchamiaj Tryb nocny*">
-              <paper-toggle-button
-                checked="{{quietMode}}"
-                on-change="changeQuietMode"
-              ></paper-toggle-button>
-              <div
-                class="card-content"
-                style="display: flex; align-items: center;"
-              >
-                Rozpocznij o godzinie
-                <paper-time-input
-                  id="ais_quiet_mode_start"
-                  hour="[[quietModeStartH]]"
-                  min="[[quietModeStartM]]"
-                  amPm="false"
-                  hide-label
-                  format="24"
-                  maxlength="2"
-                  on-change="_selectedValueChanged"
-                  style="margin-right:7px;margin-left:7px;"
-                ></paper-time-input>
-                zakończ o godzinie
-                <paper-time-input
-                  id="ais_quiet_mode_stop"
-                  hour="[[quietModeStopH]]"
-                  min="[[quietModeStopM]]"
-                  amPm="false"
-                  hide-label
-                  format="24"
-                  maxlength="2"
-                  on-change="_selectedValueChanged"
-                  style="margin-right:7px;margin-left:7px;"
-                ></paper-time-input>
-              </div>
-              <div class="card-content">
-                *[[quietModeInfo]] o godzinie
-                [[quietModeStartH]]:[[quietModeStartM]], asystent:
-                <ul>
-                  <li>zredukuje głośność czytanych powiadomień do 20%</li>
-                  <li>zredukuje głośność odtwarzacza audio do 20%</li>
-                  <li>zmieni motyw wyglądu aplikacji na nocny</li>
-                </ul>
-                Po zakończeniu ciszy nocnej, o godzinie
-                [[quietModeStopH]]:[[quietModeStopM]] głośność i wygląd zostaną
-                automatycznie przywrócone do wartości przed ciszą nocną.
-              </div>
-            </ha-card>
           </ha-config-section>
         </div>
       </hass-subpage>
@@ -237,15 +190,6 @@ class HaConfigAisDomControl extends PolymerElement {
         type: String,
         computed: "_computeAisSelectedVoice(hass)",
       },
-      quietMode: {
-        type: Boolean,
-        computed: "_computeQuietMode(hass)",
-      },
-      quietModeInfo: String,
-      quietModeStartH: String,
-      quietModeStartM: String,
-      quietModeStopH: String,
-      quietModeStopM: String,
     };
   }
 
@@ -280,43 +224,6 @@ class HaConfigAisDomControl extends PolymerElement {
     this.hass.callService("input_select", "select_option", {
       entity_id: "input_select.assistant_voice",
       option: e.target.dataset.voice,
-    });
-  }
-
-  _computeQuietMode(hass) {
-    this.quietModeStartH =
-      hass.states["input_datetime.ais_quiet_mode_start"].state.split(":")[0] ||
-      "22";
-    this.quietModeStartM =
-      hass.states["input_datetime.ais_quiet_mode_start"].state.split(":")[1] ||
-      "00";
-    this.quietModeStopH =
-      hass.states["input_datetime.ais_quiet_mode_stop"].state.split(":")[0] ||
-      "6";
-    this.quietModeStopM =
-      hass.states["input_datetime.ais_quiet_mode_stop"].state.split(":")[1] ||
-      "00";
-
-    if (hass.states["input_boolean.ais_quiet_mode"].state === "off") {
-      this.quietModeInfo = "Jeśli włączysz tryb nocny to ";
-      return false;
-    }
-    this.quietModeInfo = "";
-    return true;
-  }
-
-  _selectedValueChanged(ev) {
-    var el = ev.target;
-    // call service
-    this.hass.callService("input_datetime", "set_datetime", {
-      entity_id: "input_datetime." + el.id,
-      time: el.value,
-    });
-  }
-
-  changeQuietMode() {
-    this.hass.callService("input_boolean", "toggle", {
-      entity_id: "input_boolean.ais_quiet_mode",
     });
   }
 }

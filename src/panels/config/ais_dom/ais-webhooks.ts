@@ -61,7 +61,7 @@ export class AisWebhooks extends LitElement {
     if (this._localHooks.length === 1) {
       return html`
         <div class="body-text">
-          Wygląda na to, że nie masz jeszcze zdefiniowanych żadnych wyołań
+          Wygląda na to, że nie masz jeszcze zdefiniowanych żadnych wywołań
           zwrotnych. Rozpocznij od skonfigurowania
           <a href="/config/integrations">
             integracji opartej na wywołaniu zwrotnym

@@ -42,6 +42,11 @@ const PAGES: Array<{
     description: "Ustawienia głosu asystenta",
   },
   {
+    page: "ais_dom_config_night",
+    caption: "Tryb nocny",
+    description: "Ustawienie godzin, w których asystent ma działać ciszej",
+  },
+  {
     page: "ais_dom_config_remote",
     caption: "Zdalny dostęp",
     description: "Konfiguracja zdalnego dostępu do bramki",

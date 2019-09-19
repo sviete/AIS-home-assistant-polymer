@@ -61,7 +61,7 @@ class HaConfigAisDomControl extends PolymerElement {
               <div class="card-content">
                 Jeśli ostatnio wprowadzałeś zmiany w Portalu Integratora, takie
                 jak dodanie nowych typów audio czy też dostęp do zewnętrznych
-                serwisów. To przyciskiem poniżej możesz uruchomić natychmiastowe
+                serwisów, to przyciskiem poniżej możesz uruchomić natychmiastowe
                 pobranie tych zmian na bramkę bez czekania na automatyczną
                 synchronizację.
                 <div class="center-container">
