@@ -27,6 +27,12 @@ class HaConfigAisDomControl extends PolymerElement {
         .narrow .border {
           max-width: 640px;
         }
+        ha-card > paper-toggle-button {
+          margin: -4px 0;
+          position: absolute;
+          top: 32px;
+          right: 8px;
+        }
         .center-container {
           @apply --layout-vertical;
           @apply --layout-center-center;
@@ -55,6 +61,15 @@ class HaConfigAisDomControl extends PolymerElement {
                     >[[aisButtonVersionCheckUpgrade]]
                   </ha-call-service-button>
                 </div>
+              </div>
+            </ha-card>
+            <ha-card header="Autoaktualizacje">
+              <paper-toggle-button
+                checked="{{autoUpdateMode}}"
+                on-change="changeAutoUpdateMode"
+              ></paper-toggle-button>
+              <div class="card-content">
+                [[aisAutoUpdateInfo]]
               </div>
             </ha-card>
             <ha-card header="Synchronizacja z Portalem Integratora">
@@ -90,6 +105,9 @@ class HaConfigAisDomControl extends PolymerElement {
         type: String,
         computed: "_computeAisVersionInfo(hass)",
       },
+      aisAutoUpdateInfo: {
+        type: String,
+      },
       aisButtonVersionCheckUpgrade: {
         type: String,
         computed: "_computeAisButtonVersionCheckUpgrade(hass)",
@@ -97,6 +115,10 @@ class HaConfigAisDomControl extends PolymerElement {
       aisUpdateSystemData: {
         type: Object,
         value: { say: true },
+      },
+      autoUpdateMode: {
+        type: Boolean,
+        computed: "_computeAutoUpdateMode(hass)",
       },
     };
   }
@@ -116,6 +138,22 @@ class HaConfigAisDomControl extends PolymerElement {
       }
     }
     return "Sprawdz dostępność aktualizacji";
+  }
+
+  _computeAutoUpdateMode(hass) {
+    if (hass.states["input_boolean.ais_auto_update"].state === "off") {
+      this.aisAutoUpdateInfo =
+        "System Asystent domowy możesz aktualizować samodzielnie w dogodnym dla Ciebie czasie, lub włączyć aktualizację automatyczną. Gdy aktualizacja automatyczna zostanie włączona, to każdego dnia system sprawdza, czy są dostępne nowe wersje komponentów i je automatycznie aktualizuje. Dzięki czemu zawsze korzystasz z najnowszych funkcji systemu oraz poprawek zapewniających bezpieczeństwo i stabilność działania aplikacji.";
+      return false;
+    }
+    this.aisAutoUpdateInfo = "Autoaktualizacja włączona.";
+    return true;
+  }
+
+  changeAutoUpdateMode() {
+    this.hass.callService("input_boolean", "toggle", {
+      entity_id: "input_boolean.ais_auto_update",
+    });
   }
 }
 
