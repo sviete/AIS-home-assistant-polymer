@@ -59,7 +59,11 @@ class HaConfigAisDomControl extends PolymerElement {
                       on-change="changeAutoUpdateMode"
                       style="position: absolute; right: 20px;"
                     ></paper-toggle-button
-                    ><span><h3>Autoaktualizacja</h3></span>
+                    ><span
+                      ><h3>
+                        Autoaktualizacja
+                        <iron-icon icon="[[aisAutoUpdateIcon]]"></iron-icon></h3
+                    ></span>
                   </div>
                 </div>
 
@@ -68,7 +72,10 @@ class HaConfigAisDomControl extends PolymerElement {
                     [[aisAutoUpdateInfo]]
                   </div>
                   <div style="margin-top: 15px;">
-                    <table>
+                    Aktualizacje dostarczają najnowsze funkcjonalności oraz
+                    poprawki zapewniające bezpieczeństwo i stabilność działania
+                    systemu.
+                    <table style="margin-top: 10px;">
                       <template
                         is="dom-repeat"
                         items="[[aisAutoUpdatFullInfo]]"
@@ -87,7 +94,7 @@ class HaConfigAisDomControl extends PolymerElement {
                   <ha-call-service-button
                     class="warning"
                     hass="[[hass]]"
-                    domain="ais_shell_command"
+                    domain="ais_updater"
                     service="execute_upgrade"
                     service-data="[[aisUpdateSystemData]]"
                     >[[aisButtonVersionCheckUpgrade]]
@@ -130,9 +137,8 @@ class HaConfigAisDomControl extends PolymerElement {
         computed: "_computeAisVersionInfo(hass)",
       },
 
-      aisAutoUpdateInfo: {
-        type: String,
-      },
+      aisAutoUpdateInfo: { type: String },
+      aisAutoUpdateIcon: { type: String },
       aisAutoUpdatFullInfo: {
         type: Array,
         value: [],
@@ -157,38 +163,6 @@ class HaConfigAisDomControl extends PolymerElement {
   }
 
   _computeAisVersionInfo(hass) {
-    function getVersionName(status) {
-      var retS = "Nieznany";
-      if (status === "checking") {
-        retS = "Sprawdzanie";
-      } else if (status === "outdated") {
-        retS = "Nieaktualny";
-      } else if (status === "downloading") {
-        retS = "Pobieranie";
-      } else if (status === "installing") {
-        retS = "Instalowanie";
-      } else if (status === "updated") {
-        retS = "Aktualny";
-      }
-      return retS;
-    }
-
-    function getVersionIcon(status) {
-      var retS = "";
-      if (status === "checking") {
-        retS = "mdi:cloud-sync";
-      } else if (status === "outdated") {
-        retS = "";
-      } else if (status === "downloading") {
-        retS = "mdi:progress-download";
-      } else if (status === "installing") {
-        retS = "mdi:progress-wrench";
-      } else if (status === "updated") {
-        retS = "mdi:emoticon-happy-outline";
-      }
-      return retS;
-    }
-
     var versionInfo = hass.states["sensor.version_info"];
     var versionInfoAttr = versionInfo.attributes;
     this.aisAutoUpdatFullInfo = [];
@@ -204,8 +178,8 @@ class HaConfigAisDomControl extends PolymerElement {
     if ("update_status" in versionInfoAttr) {
       this.aisAutoUpdatFullInfo.push({
         name: "Status",
-        value: getVersionName(versionInfoAttr.update_status),
-        icon: getVersionIcon(versionInfoAttr.update_status),
+        value: this.getVersionName(versionInfoAttr.update_status),
+        icon: this.getVersionIcon(versionInfoAttr.update_status),
       });
     }
 
@@ -227,35 +201,75 @@ class HaConfigAisDomControl extends PolymerElement {
           : "hass:check",
       });
     }
-    if ("linux_current_version" in versionInfoAttr) {
+    if ("linux_apt_current_version" in versionInfoAttr) {
       this.aisAutoUpdatFullInfo.push({
         name: "Linux",
-        value: versionInfoAttr.linux_current_version,
+        value: versionInfoAttr.linux_apt_current_version,
         new_value: versionInfoAttr.linux_apt_newest_version,
-        icon: versionInfoAttr.reinstall_linux_app ? "hass:alert" : "hass:check",
+        icon: versionInfoAttr.reinstall_linux_apt ? "hass:alert" : "hass:check",
       });
     }
 
     return versionInfo.state;
   }
 
+  getVersionName(status) {
+    var retS = "Nieznany";
+    if (status === "checking") {
+      retS = "Sprawdzanie";
+    } else if (status === "outdated") {
+      retS = "Nieaktualny";
+    } else if (status === "downloading") {
+      retS = "Pobieranie";
+    } else if (status === "installing") {
+      retS = "Instalowanie";
+    } else if (status === "updated") {
+      retS = "Aktualny";
+    }
+    return retS;
+  }
+
+  getVersionIcon(status) {
+    var retS = "";
+    if (status === "checking") {
+      retS = "mdi:cloud-sync";
+    } else if (status === "outdated") {
+      retS = "";
+    } else if (status === "downloading") {
+      retS = "mdi:progress-download";
+    } else if (status === "installing") {
+      retS = "mdi:progress-wrench";
+    } else if (status === "updated") {
+      retS = "mdi:emoticon-happy-outline";
+    }
+    return retS;
+  }
+
   _computeAisButtonVersionCheckUpgrade(hass) {
-    if ("reinstall_dom_app" in hass.states["sensor.version_info"].attributes) {
-      if (hass.states["sensor.version_info"].attributes.reinstall_dom_app) {
+    var attr = hass.states["sensor.version_info"].attributes;
+    if (
+      attr.reinstall_dom_app ||
+      attr.reinstall_android_app ||
+      attr.reinstall_linux_apt
+    ) {
+      if (attr.update_status === "outdated") {
         return "Zainstaluj teraz aktualizację";
       }
+      return "Aktualizacja -> " + this.getVersionName(attr.update_status);
     }
     return "Sprawdz dostępność aktualizacji";
   }
 
   _computeAutoUpdateMode(hass) {
     if (hass.states["input_boolean.ais_auto_update"].state === "off") {
+      this.aisAutoUpdateIcon = "mdi:sync-off";
       this.aisAutoUpdateInfo =
-        "System Asystent domowy możesz aktualizować samodzielnie w dogodnym dla Ciebie czasie lub włączyć aktualizację automatyczną. Gdy aktualizacja automatyczna zostanie włączona, to każdego dnia system sprawdza, czy są dostępne nowe wersje komponentów systemu i je automatycznie aktualizuje. Dzięki czemu zawsze korzystasz z najnowszych funkcji systemu oraz poprawek zapewniających bezpieczeństwo i stabilność działania aplikacji.";
+        "Możesz aktualizować system samodzielnie w dogodnym dla Ciebie czasie lub włączyć aktualizację automatyczną.";
       return false;
     }
+    this.aisAutoUpdateIcon = "mdi:sync";
     this.aisAutoUpdateInfo =
-      "Autoaktualizacja komponentów systemu Asystent domowy jest włączona. Jeśli podczas codziennego sprawdzenia dostępności nowej wersji będzie dostępna aktualizacja, to ją automatycznie zainstalujemy.";
+      "Codziennie sprawdzimy i automatycznie zainstalujemy dostępne aktualizacje.";
     return true;
   }
 
