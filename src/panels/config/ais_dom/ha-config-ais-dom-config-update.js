@@ -214,7 +214,7 @@ class HaConfigAisDomControl extends PolymerElement {
   }
 
   getVersionName(status) {
-    var retS = "Nieznany";
+    var retS = status;
     if (status === "checking") {
       retS = "Sprawdzanie";
     } else if (status === "outdated") {
@@ -225,6 +225,10 @@ class HaConfigAisDomControl extends PolymerElement {
       retS = "Instalowanie";
     } else if (status === "updated") {
       retS = "Aktualny";
+    } else if (status === "unknown") {
+      retS = "Nieznany";
+    } else if (status === "restart") {
+      retS = "Restartowanie";
     }
     return retS;
   }
@@ -241,6 +245,10 @@ class HaConfigAisDomControl extends PolymerElement {
       retS = "mdi:progress-wrench";
     } else if (status === "updated") {
       retS = "mdi:emoticon-happy-outline";
+    } else if (status === "unknown") {
+      retS = "mdi:help-circle-outline";
+    } else if (status === "restart") {
+      retS = "mdi:restart-alert";
     }
     return retS;
   }
@@ -254,6 +262,9 @@ class HaConfigAisDomControl extends PolymerElement {
     ) {
       if (attr.update_status === "outdated") {
         return "Zainstaluj teraz aktualizację";
+      }
+      if (attr.update_status === "unknown") {
+        return "Spróbuj ponownie";
       }
       return "Aktualizacja -> " + this.getVersionName(attr.update_status);
     }
