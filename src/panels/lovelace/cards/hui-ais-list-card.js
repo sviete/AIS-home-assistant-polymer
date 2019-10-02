@@ -36,7 +36,7 @@ class ListCard extends HTMLElement {
           box-shadow:${boxshdw} rgba(0,0,0,.8);
           position:relative;
         }
-        .fanart_view ha-icon {
+        .fanart_view ha-icon.play {
           top: 3px;
           margin-right: -5%;
           right:0;
@@ -86,13 +86,18 @@ class ListCard extends HTMLElement {
           filter: drop-shadow( -1px 1px 1px rgba(0,0,0,.5));
           cursor: pointer;
         }
-        span.delete ha-icon {
+        div.delete {
+          width: 20px;
+          height: 20px;
+          position: fixed;
+          padding: 4px;
+          z-index: 99999;
+        }
+        div.delete ha-icon {
           ${delIconHide};
-          left: 0px;
-          width: 5%;
           cursor: pointer;
         }
-        span.delete:hover ha-icon{
+        div.delete:hover ha-icon{
           color: red;
         }
       `;
@@ -143,7 +148,7 @@ class ListCard extends HTMLElement {
                         <polygon points="100 30,90 0,100 0"></polygon>
                     </svg>
                   </div>
-                  <span class="delete" style="cursor: pointer; "><ha-icon icon="mdi:close" data-id="${rows}" data-media-source="${mediaSource}"></ha-icon></span>
+                  <div class="delete" data-id="${rows}" data-media-source="${mediaSource}" style="cursor: pointer; "><ha-icon class="delete" icon="mdi:close"></ha-icon></div>
                   <svg class="fanart_svg_view" viewBox="0 -20 200 100">
                     <foreignObject width="200" height="80" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
                         <span xmlns="http://www.w3.org/1999/xhtml">${
@@ -173,7 +178,7 @@ class ListCard extends HTMLElement {
     }
     //
     const playTracks = root.querySelectorAll(".play");
-    const delTracks = root.querySelectorAll("span.delete ha-icon");
+    const delTracks = root.querySelectorAll("div.delete");
     playTracks.forEach((track) => {
       track.addEventListener("click", () => {
         hass.callService("ais_cloud", "play_audio", {
