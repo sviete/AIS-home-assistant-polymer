@@ -233,7 +233,7 @@
                 "ready": "Klar"
             },
             "query_stage": {
-                "initializing": "Initialiserer ({query_stage})",
+                "initializing": "Initialiserer ( {query_stage} )",
                 "dead": "Død ({query_stage})"
             }
         },
@@ -554,6 +554,12 @@
                                 },
                                 "device": {
                                     "label": "Enhed"
+                                },
+                                "and": {
+                                    "label": "Og"
+                                },
+                                "or": {
+                                    "label": "Eller"
                                 }
                             },
                             "learn_more": "Lær om betingelser"
@@ -596,7 +602,11 @@
                             "learn_more": "Lær om handlinger"
                         },
                         "load_error_not_editable": "Kun automatiseringer i automations.yaml kan redigeres.",
-                        "load_error_unknown": "Fejl ved indlæsning af automatisering ( {err_no} )."
+                        "load_error_unknown": "Fejl ved indlæsning af automatisering ({err_no}).",
+                        "description": {
+                            "label": "Beskrivelse",
+                            "placeholder": "Valgfri beskrivelse"
+                        }
                     }
                 },
                 "script": {
@@ -713,7 +723,7 @@
                     "services": {
                         "reconfigure": "Genkonfigurer ZHA-enhed (helbred enhed). Brug dette hvis du har problemer med enheden. Hvis den pågældende enhed er en batteridrevet enhed skal du sørge for at den er vågen og accepterer kommandoer når du bruger denne service.",
                         "updateDeviceName": "Angiv et brugerdefineret navn til denne enhed i enhedsopsætningen",
-                        "remove": "Fjern en enhed fra ZigBee netværket."
+                        "remove": "Fjern en enhed fra Zigbee netværket."
                     },
                     "device_card": {
                         "device_name_placeholder": "Navn",
@@ -754,7 +764,8 @@
                         "unavailable": "(utilgængelig)",
                         "introduction": "Home Assistant opbevarer en registrering over hver unikke enhed det nogensinde har set. Hver af disse enheder vil have et registrerings ID tildelt som er forbeholdt netop denne enhed.",
                         "introduction2": "Brug enhedsregistrering til at overskrive navnet, ændre enheds ID eller fjerne enheden fra Home Assistant. Bemærk at fjernelse af enhedens registrering ikke fjerner enheden. For at gøre det skal du følge linket herunder og fjerne det fra integrationssiden.",
-                        "integrations_page": "Integrationsside"
+                        "integrations_page": "Integrationsside",
+                        "show_disabled": "Vis deaktiverede enheder"
                     },
                     "editor": {
                         "unavailable": "Denne enhed er ikke tilgængelig i øjeblikket.",
@@ -763,7 +774,8 @@
                         "update": "OPDATER",
                         "enabled_label": "Aktivér enhed",
                         "enabled_cause": "Deaktiveret af {cause}.",
-                        "enabled_description": "Deaktiverede enheder tilføjes ikke til Home Assistant."
+                        "enabled_description": "Deaktiverede enheder tilføjes ikke til Home Assistant.",
+                        "confirm_delete": "Er du sikker på, at du vil slette denne enhed?"
                     }
                 },
                 "person": {
@@ -803,6 +815,21 @@
                             "stop": "Stop",
                             "confirm_restart": "Er du sikker på, at du vil genstarte Home Assistant?",
                             "confirm_stop": "Er du sikker på, at du vil stoppe Home Assistant?"
+                        }
+                    }
+                },
+                "devices": {
+                    "caption": "Enheder",
+                    "description": "Administrer tilsluttede enheder",
+                    "automation": {
+                        "triggers": {
+                            "caption": "Gør noget, når ..."
+                        },
+                        "conditions": {
+                            "caption": "Gør kun noget, hvis ..."
+                        },
+                        "actions": {
+                            "caption": "Når noget udløses ..."
                         }
                     }
                 }
@@ -880,6 +907,10 @@
                 "force_narrow": {
                     "header": "Skjul altid sidepanelet",
                     "description": "Dette vil skjule sidepanelet som standard, svarende til den mobile oplevelse."
+                },
+                "vibrate": {
+                    "header": "Vibrere",
+                    "description": "Aktivér eller deaktiver vibrationer på denne enhed, når du styrer enheder."
                 }
             },
             "page-authorize": {
@@ -1025,9 +1056,9 @@
                         "hold": "Hold:",
                         "tap": "Tryk på:",
                         "navigate_to": "Naviger til {location}",
-                        "toggle": "Skift {navn}",
+                        "toggle": "Skift {name}",
                         "call_service": "Kald service {name}",
-                        "more_info": "Vis mere-info: {Name}"
+                        "more_info": "Vis mere-info: {name}"
                     }
                 },
                 "editor": {
@@ -1044,7 +1075,7 @@
                     "migrate": {
                         "header": "Konfiguration ikke færdiggjort",
                         "para_no_id": "Dette element har ikke et id. Tilføj venligst et id til dette element i \"ui-lovelace.yaml\".",
-                        "para_migrate": "Hjem assistent kan tilføje id'er til alle dine kort og oversigter automatisk for dig ved at trykke på knappen 'Overfør configuration'.",
+                        "para_migrate": "Home Assistant kan tilføje id'er til alle dine kort og oversigter automatisk for dig ved at trykke på knappen 'Overfør configuration'.",
                         "migrate": "Migrer opsætning"
                     },
                     "header": "Rediger UI",
@@ -1073,6 +1104,62 @@
                     "edit_lovelace": {
                         "header": "Titel på din Lovelace UI",
                         "explanation": "Denne titel vises over alle dine visninger i Lovelace."
+                    },
+                    "card": {
+                        "alarm_panel": {
+                            "available_states": "Tilgængelige tilstande"
+                        },
+                        "config": {
+                            "required": "Påkrævet",
+                            "optional": "Valgfri"
+                        },
+                        "gauge": {
+                            "severity": {
+                                "define": "Definer alvorlighed?",
+                                "green": "Grøn",
+                                "red": "Rød",
+                                "yellow": "Gul"
+                            }
+                        },
+                        "glance": {
+                            "columns": "Kolonner"
+                        },
+                        "generic": {
+                            "aspect_ratio": "Billedproportion",
+                            "camera_image": "Kameraenhed",
+                            "camera_view": "Kameravisning",
+                            "entities": "Enheder",
+                            "entity": "Enhed",
+                            "hold_action": "Hold handling",
+                            "icon": "Ikon",
+                            "icon_height": "Ikonhøjde",
+                            "image": "Sti til billede",
+                            "maximum": "Maksimum",
+                            "minimum": "Minimum",
+                            "name": "Navn",
+                            "refresh_interval": "Opdateringsinterval",
+                            "show_icon": "Vis ikon?",
+                            "show_name": "Vis navn?",
+                            "show_state": "Vis tilstand?",
+                            "tap_action": "Tap handling",
+                            "title": "Titel",
+                            "theme": "Tema",
+                            "unit": "Enhed",
+                            "url": "Url"
+                        },
+                        "map": {
+                            "geo_location_sources": "Geolokationskilder",
+                            "dark_mode": "Mørk tilstand?",
+                            "default_zoom": "Standard zoom",
+                            "source": "Kilde"
+                        },
+                        "markdown": {
+                            "content": "Indhold"
+                        },
+                        "sensor": {
+                            "graph_detail": "Graf detaljer",
+                            "graph_type": "Graf type"
+                        }
                     }
                 },
                 "menu": {
@@ -1096,8 +1183,8 @@
                     "demo": {
                         "demo_by": "af {name}",
                         "next_demo": "Næste demo",
-                        "introduction": "Velkommen hjem! Du er kommet til Home assistant's demo hvor vi viser de bedste bruger interfaces lavet i bruger gruppen.\n",
-                        "learn_more": "Læs mere om Home-Assistent"
+                        "introduction": "Velkommen hjem! Du er kommet til Home Assistant's demo hvor vi viser de bedste bruger interfaces lavet i bruger gruppen.",
+                        "learn_more": "Læs mere om Home Assistant"
                     }
                 },
                 "config": {
@@ -1303,7 +1390,7 @@
             }
         },
         "notification_toast": {
-            "entity_turned_on": "Tændte for {entity} .",
+            "entity_turned_on": "Tændte for {entity}.",
             "entity_turned_off": "Slukkede for {entity}.",
             "service_called": "Servicen {service} kaldes.",
             "service_call_failed": "Kunne ikke få forbindelse til servicen {service} .",
@@ -1346,7 +1433,8 @@
                 "no_area": "Intet område",
                 "services": {
                     "reconfigure": "Genkonfigurer ZHA-enhed (helbred enhed). Brug dette hvis du har problemer med enheden. Hvis den pågældende enhed er en batteridrevet enhed skal du sørge for at den er vågen og accepterer kommandoer når du bruger denne service.",
-                    "remove": "Fjern en enhed fra ZigBee-netværket."
+                    "updateDeviceName": "Angiv et brugerdefineret navn til denne enhed i enhedsopsætningen",
+                    "remove": "Fjern en enhed fra Zigbee-netværket."
                 },
                 "zha_device_card": {
                     "device_name_placeholder": "Navn",
@@ -1452,7 +1540,8 @@
     "config_entry": {
         "disabled_by": {
             "user": "Bruger",
-            "integration": "Integration"
+            "integration": "Integration",
+            "config_entry": "Konfigurationstilstand"
         }
     }
 }

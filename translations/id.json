@@ -231,8 +231,8 @@
                 "ready": "Siap"
             },
             "query_stage": {
-                "initializing": "Menginisialisasi ({query_stage})",
-                "dead": "Padam ({query_stage})"
+                "initializing": "Inisialisasi ( {query_stage} )",
+                "dead": "Mati ({query_stage})"
             }
         },
         "weather": {
@@ -765,6 +765,18 @@
                             "abort": {
                                 "not_whitelisted": "Komputer Anda tidak masuk daftar putih."
                             }
+                        },
+                        "command_line": {
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "username": "Nama pengguna"
+                                    }
+                                },
+                                "mfa": {
+                                    "description": "Buka ** {mfa_module_name} ** pada perangkat Anda untuk melihat kode otentikasi dua-faktor Anda dan verifikasi identitas Anda:"
+                                }
+                            }
                         }
                     }
                 }
@@ -788,7 +800,7 @@
                     "finish": "Selesai"
                 },
                 "core-config": {
-                    "intro": "Halo {name} , selamat datang di Asisten Rumah. Bagaimana Anda ingin memberi nama rumah Anda?",
+                    "intro": "Halo {name}, selamat datang di Asisten Rumah. Bagaimana Anda ingin memberi nama rumah Anda?",
                     "intro_location_detect": "Kami dapat membantu Anda mengisi informasi ini dengan membuat permintaan satu kali ke layanan eksternal.",
                     "location_name_default": "Beranda",
                     "button_detect": "Deteksi",
