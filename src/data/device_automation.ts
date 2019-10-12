@@ -1,5 +1,5 @@
 import { HomeAssistant } from "../types";
-import compute_state_name from "../common/entity/compute_state_name";
+import { computeStateName } from "../common/entity/compute_state_name";
 
 export interface DeviceAutomation {
   device_id: string;
@@ -39,6 +39,17 @@ export const fetchDeviceTriggers = (hass: HomeAssistant, deviceId: string) =>
     device_id: deviceId,
   });
 
+export const fetchDeviceTriggerCapabilities = (
+  hass: HomeAssistant,
+  trigger: DeviceTrigger
+) =>
+  hass.callWS<DeviceTrigger[]>({
+    type: "device_automation/trigger/capabilities",
+    trigger,
+  });
+
+const whitelist = ["above", "below", "for"];
+
 export const deviceAutomationsEqual = (
   a: DeviceAutomation,
   b: DeviceAutomation
@@ -48,11 +59,17 @@ export const deviceAutomationsEqual = (
   }
 
   for (const property in a) {
+    if (whitelist.includes(property)) {
+      continue;
+    }
     if (!Object.is(a[property], b[property])) {
       return false;
     }
   }
   for (const property in b) {
+    if (whitelist.includes(property)) {
+      continue;
+    }
     if (!Object.is(a[property], b[property])) {
       return false;
     }
@@ -69,7 +86,7 @@ export const localizeDeviceAutomationAction = (
   return hass.localize(
     `component.${action.domain}.device_automation.action_type.${action.type}`,
     "entity_name",
-    state ? compute_state_name(state) : "<unknown>",
+    state ? computeStateName(state) : "<unknown>",
     "subtype",
     hass.localize(
       `component.${action.domain}.device_automation.action_subtype.${
@@ -91,7 +108,7 @@ export const localizeDeviceAutomationCondition = (
       condition.type
     }`,
     "entity_name",
-    state ? compute_state_name(state) : "<unknown>",
+    state ? computeStateName(state) : "<unknown>",
     "subtype",
     hass.localize(
       `component.${condition.domain}.device_automation.condition_subtype.${
@@ -111,7 +128,7 @@ export const localizeDeviceAutomationTrigger = (
       trigger.type
     }`,
     "entity_name",
-    state ? compute_state_name(state) : "<unknown>",
+    state ? computeStateName(state) : "<unknown>",
     "subtype",
     hass.localize(
       `component.${trigger.domain}.device_automation.trigger_subtype.${

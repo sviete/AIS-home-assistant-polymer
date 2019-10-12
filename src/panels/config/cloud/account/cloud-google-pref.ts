@@ -7,13 +7,13 @@ import {
   css,
 } from "lit-element";
 import "@material/mwc-button";
-import "@polymer/paper-toggle-button/paper-toggle-button";
-// tslint:disable-next-line
-import { PaperToggleButtonElement } from "@polymer/paper-toggle-button/paper-toggle-button";
 import "../../../../components/buttons/ha-call-api-button";
 
 import "../../../../components/ha-card";
+import "../../../../components/ha-switch";
 
+// tslint:disable-next-line
+import { HaSwitch } from "../../../../components/ha-switch";
 import { fireEvent } from "../../../../common/dom/fire_event";
 import { HomeAssistant } from "../../../../types";
 import { CloudStatusLoggedIn, updateCloudPref } from "../../../../data/cloud";
@@ -38,16 +38,19 @@ export class CloudGooglePref extends LitElement {
 
     const {
       google_enabled,
+      google_report_state,
       google_secure_devices_pin,
     } = this.cloudStatus.prefs;
 
     return html`
       <ha-card header="Google Assistant">
-        <paper-toggle-button
-          id="google_enabled"
-          .checked="${google_enabled}"
-          @change="${this._toggleChanged}"
-        ></paper-toggle-button>
+        <div class="switch">
+          <ha-switch
+            id="google_enabled"
+            .checked="${google_enabled}"
+            @change="${this._enableToggleChanged}"
+          ></ha-switch>
+        </div>
         <div class="card-content">
           With the Google Assistant integration for Home Assistant Cloud you'll
           be able to control all your Home Assistant devices via any Google
@@ -76,6 +79,17 @@ export class CloudGooglePref extends LitElement {
           >
           ${google_enabled
             ? html`
+                <h3>Enable State Reporting</h3>
+                <p>
+                  If you enable state reporting, Home Assistant will send
+                  <b>all</b> state changes of exposed entities to Google. This
+                  allows you to always see the latest states in the Google app.
+                </p>
+                <ha-switch
+                  .checked=${google_report_state}
+                  @change=${this._reportToggleChanged}
+                ></ha-switch>
+
                 <div class="secure_devices">
                   Please enter a pin to interact with security devices. Security
                   devices are doors, garage doors and locks. You will be asked
@@ -109,12 +123,29 @@ export class CloudGooglePref extends LitElement {
     `;
   }
 
-  private async _toggleChanged(ev) {
-    const toggle = ev.target as PaperToggleButtonElement;
+  private async _enableToggleChanged(ev) {
+    const toggle = ev.target as HaSwitch;
     try {
       await updateCloudPref(this.hass!, { [toggle.id]: toggle.checked! });
       fireEvent(this, "ha-refresh-cloud-status");
     } catch (err) {
+      toggle.checked = !toggle.checked;
+    }
+  }
+
+  private async _reportToggleChanged(ev) {
+    const toggle = ev.target as HaSwitch;
+    try {
+      await updateCloudPref(this.hass!, {
+        google_report_state: toggle.checked!,
+      });
+      fireEvent(this, "ha-refresh-cloud-status");
+    } catch (err) {
+      alert(
+        `Unable to ${toggle.checked ? "enable" : "disable"} report state. ${
+          err.message
+        }`
+      );
       toggle.checked = !toggle.checked;
     }
   }
@@ -138,10 +169,9 @@ export class CloudGooglePref extends LitElement {
       a {
         color: var(--primary-color);
       }
-      ha-card > paper-toggle-button {
-        margin: -4px 0;
+      .switch {
         position: absolute;
-        right: 8px;
+        right: 24px;
         top: 32px;
       }
       ha-call-api-button {

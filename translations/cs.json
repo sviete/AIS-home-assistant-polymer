@@ -141,7 +141,8 @@
             "high_demand": "Vysoký výkon",
             "heat_pump": "Tepelné čerpadlo",
             "gas": "Plyn",
-            "manual": "Ruční"
+            "manual": "Ruční",
+            "heat_cool": "Vytápění\/Chlazení"
         },
         "configurator": {
             "configure": "Nakonfigurovat",
@@ -232,7 +233,7 @@
                 "ready": "Připraveno"
             },
             "query_stage": {
-                "initializing": "Inicializace ({query_stage})",
+                "initializing": "Inicializace ( {query_stage} )",
                 "dead": "Nereaguje ({query_stage})"
             }
         },
@@ -250,7 +251,8 @@
             "snowy-rainy": "Déšť se sněhem",
             "sunny": "Slunečno",
             "windy": "Větrno",
-            "windy-variant": "Větrno"
+            "windy-variant": "Větrno",
+            "exceptional": "Vyjímečné"
         },
         "vacuum": {
             "cleaning": "Čistí",
@@ -326,6 +328,9 @@
                     },
                     "info": {
                         "title": "Informace"
+                    },
+                    "logs": {
+                        "title": "Logy"
                     }
                 }
             },
@@ -497,6 +502,9 @@
                                     "event": "Událost:",
                                     "enter": "Vstup",
                                     "leave": "Opuštění"
+                                },
+                                "device": {
+                                    "label": "Zařízení"
                                 }
                             },
                             "learn_more": "Další informace o spouštěčích"
@@ -543,6 +551,15 @@
                                     "label": "Zóna",
                                     "entity": "Entita s umístěním",
                                     "zone": "Zóna"
+                                },
+                                "device": {
+                                    "label": "Zařízení"
+                                },
+                                "and": {
+                                    "label": "A"
+                                },
+                                "or": {
+                                    "label": "Nebo"
                                 }
                             },
                             "learn_more": "Další informace o podmínkách"
@@ -577,12 +594,19 @@
                                     "label": "Spustit událost",
                                     "event": "Událost:",
                                     "service_data": "Data služby"
+                                },
+                                "device_id": {
+                                    "label": "Zařízení"
                                 }
                             },
                             "learn_more": "Další informace o akcích"
                         },
                         "load_error_not_editable": "Lze upravovat pouze automatizace v automations.yaml.",
-                        "load_error_unknown": "Chyba při načítání automatizace ({err_no})."
+                        "load_error_unknown": "Chyba při načítání automatizace ({err_no}).",
+                        "description": {
+                            "label": "Popis",
+                            "placeholder": "Volitelný popis"
+                        }
                     }
                 },
                 "script": {
@@ -592,17 +616,48 @@
                 "zwave": {
                     "caption": "Z-Wave",
                     "description": "Spravujte svou síť Z-Wave",
+                    "network_management": {
+                        "header": "Správa sítě Z-Wave",
+                        "introduction": "Spusťte příkazy, které ovlivňují síť Z-Wave. Nebudete mít zpětnou vazbu o tom, zda většina příkazů uspěla, ale můžete se podívat na protokol OZW a pokusit se to zjistit."
+                    },
+                    "network_status": {
+                        "network_stopped": "Síť Z-Wave byla zastavena",
+                        "network_starting": "Spouštění sítě Z-Wave...",
+                        "network_starting_note": "V závislosti na velikosti vaší sítě to může chvíli trvat.",
+                        "network_started": "Síť Z-Wave spuštěna",
+                        "network_started_note_some_queried": "Probuzené uzly byly zkontaktovány. Spící uzly budou zkontaktovány jakmile se probudí.",
+                        "network_started_note_all_queried": "Všechny uzly byly zkontaktovány."
+                    },
                     "services": {
+                        "start_network": "Spustit síť",
+                        "stop_network": "Zastavit síť",
+                        "heal_network": "Vyléčit síť",
                         "test_network": "Testovat síť",
+                        "soft_reset": "Měkký reset",
                         "save_config": "Uložit konfiguraci",
+                        "add_node_secure": "Přidat zabezpečení uzlu",
+                        "add_node": "Přidat uzel",
+                        "remove_node": "Odebrat uzel",
                         "cancel_command": "Zrušit příkaz"
                     },
                     "common": {
                         "value": "Hodnota",
-                        "unknown": "neznámý"
+                        "instance": "Instance",
+                        "index": "Index",
+                        "unknown": "neznámý",
+                        "wakeup_interval": "Interval probuzení"
+                    },
+                    "values": {
+                        "header": "Hodnoty uzlu"
                     },
                     "node_config": {
+                        "header": "Možnosti konfigurace uzlu",
                         "seconds": "sekund",
+                        "set_wakeup": "Nastavit interval probuzení",
+                        "config_parameter": "Konfigurační parametr",
+                        "config_value": "Konfigurační hodnota",
+                        "true": "True",
+                        "false": "False",
                         "set_config_parameter": "Nastavte konfigurační parametr"
                     }
                 },
@@ -709,13 +764,19 @@
                         "unavailable": "(není k dispozici)",
                         "introduction": "Homa Assistant uchovává registr všech entit, které kdy viděl a mohou být jednoznačně identifikovány. Každá z těchto entit bude mít přiděleno ID, které bude rezervováno pouze pro tuto entitu.",
                         "introduction2": "Pomocí registru entit můžete přepsat název, změnit identifikátor entity nebo odebrat entitu. Poznámka: odebrání entity z registru entit nesmaže entitu. Pro smazání přejděte na stránku integrací pomocí odkazu níže.",
-                        "integrations_page": "Stránka integrací"
+                        "integrations_page": "Stránka integrací",
+                        "show_disabled": "Zobrazit zakázané entity"
                     },
                     "editor": {
                         "unavailable": "Tato entita není momentálně k dispozici.",
                         "default_name": "Nová oblast",
                         "delete": "SMAZAT",
-                        "update": "UPRAVIT"
+                        "update": "UPRAVIT",
+                        "enabled_label": "Povolit entitu",
+                        "enabled_cause": "Zakázáno {cause}.",
+                        "enabled_description": "Zakázané entity nebudou přidány do Home Assistant.",
+                        "confirm_delete": "Opravdu chcete tuto položku smazat?",
+                        "confirm_delete2": "Odstranění položky neodstraní entitu z Home Assistant. K tomu budete muset odebrat integraci '{platform}' z Home Assistant."
                     }
                 },
                 "person": {
@@ -755,6 +816,21 @@
                             "stop": "Zastavit",
                             "confirm_restart": "Opravdu chcete restartovat Home Assistant?",
                             "confirm_stop": "Opravdu chcete zastavit službu Home Assistant?"
+                        }
+                    }
+                },
+                "devices": {
+                    "caption": "Zařízení",
+                    "description": "Správa připojených zařízení",
+                    "automation": {
+                        "triggers": {
+                            "caption": "Udělej něco, když ..."
+                        },
+                        "conditions": {
+                            "caption": "Udělej něco, jen když ..."
+                        },
+                        "actions": {
+                            "caption": "Když je něco spuštěno ..."
                         }
                     }
                 }
@@ -819,7 +895,7 @@
                     "header": "Multifaktorové autentizační moduly",
                     "disable": "Zakázat",
                     "enable": "Povolit",
-                    "confirm_disable": "Opravdu chcete zakázat {name} ?"
+                    "confirm_disable": "Opravdu chcete zakázat {name}?"
                 },
                 "mfa_setup": {
                     "title_aborted": "Zrušeno",
@@ -832,6 +908,10 @@
                 "force_narrow": {
                     "header": "Vždy skrýt postranní panel",
                     "description": "Tato volba skryje postranním panelu jako výchozí nastavení, podobně jako na mobilním zažízení."
+                },
+                "vibrate": {
+                    "header": "Vibrovat",
+                    "description": "Povolit nebo zakázat vibrace na tomto zařízení při ovládání ostatních zařízení."
                 }
             },
             "page-authorize": {
@@ -979,7 +1059,8 @@
                         "navigate_to": "Přejděte na {location}",
                         "toggle": "Přepnout {name}",
                         "call_service": "Zavolat službu {name}",
-                        "more_info": "Zobrazit více informací: {name}"
+                        "more_info": "Zobrazit více informací: {name}",
+                        "url": "Otevřít okno adresy {url_path}"
                     }
                 },
                 "editor": {
@@ -1021,6 +1102,70 @@
                         "save": "Uložit",
                         "unsaved_changes": "Neuložené změny",
                         "saved": "Uloženo"
+                    },
+                    "edit_lovelace": {
+                        "header": "Název vašeho uživatelského rozhraní Lovelace",
+                        "explanation": "Tento název je zobrazen nad všemi vašimi zobrazeními v Lovelace."
+                    },
+                    "card": {
+                        "alarm_panel": {
+                            "available_states": "Dostupné stavy"
+                        },
+                        "config": {
+                            "required": "Povinné",
+                            "optional": "Volitelné"
+                        },
+                        "entities": {
+                            "show_header_toggle": "Zobrazit přepínač záhlaví?"
+                        },
+                        "gauge": {
+                            "severity": {
+                                "define": "Definovat závažnost?",
+                                "green": "Zelená",
+                                "red": "Červaná",
+                                "yellow": "Žlutá"
+                            }
+                        },
+                        "glance": {
+                            "columns": "Sloupce"
+                        },
+                        "generic": {
+                            "aspect_ratio": "Poměr stran",
+                            "camera_image": "Entita kamery",
+                            "camera_view": "Zobrazení kamery",
+                            "entities": "Entity",
+                            "entity": "Entita",
+                            "hold_action": "Akce při podržení",
+                            "hours_to_show": "Hodin k zobrazení",
+                            "icon": "Ikona",
+                            "icon_height": "Výška ikony",
+                            "image": "Cesta obrázku",
+                            "maximum": "Maximum",
+                            "minimum": "Minimum",
+                            "name": "Název",
+                            "refresh_interval": "Interval obnovení",
+                            "show_icon": "Zobrazit ikonu?",
+                            "show_name": "Zobrazit název?",
+                            "show_state": "Zobrazit stav?",
+                            "tap_action": "Akce při stisknutí",
+                            "title": "Název",
+                            "theme": "Motiv",
+                            "unit": "Jednotka",
+                            "url": "Url"
+                        },
+                        "map": {
+                            "geo_location_sources": "Zdroje geolokace",
+                            "dark_mode": "Tmavý režim?",
+                            "default_zoom": "Výchozí zvětšení",
+                            "source": "Zdroj"
+                        },
+                        "markdown": {
+                            "content": "Obsah"
+                        },
+                        "sensor": {
+                            "graph_detail": "Detail grafu",
+                            "graph_type": "Typ grafu"
+                        }
                     }
                 },
                 "menu": {
@@ -1076,7 +1221,7 @@
                             "air": "Vzduch"
                         },
                         "unit": {
-                            "watching": "tarkkaillaan",
+                            "watching": "sledování",
                             "minutes_abbr": "min"
                         }
                     }
@@ -1090,7 +1235,8 @@
         "common": {
             "loading": "Načítání",
             "cancel": "Zrušit",
-            "save": "Uložit"
+            "save": "Uložit",
+            "successfully_saved": "Úspěšně uloženo"
         },
         "duration": {
             "day": "{count} {count, plural,\none {den}\nfew {dny}\nother {dnů}\n}",
@@ -1166,7 +1312,9 @@
             "fan": {
                 "speed": "Rychlost",
                 "oscillate": "Oscilovat",
-                "direction": "Směr"
+                "direction": "Směr",
+                "forward": "Vpřed",
+                "reverse": "Vzad"
             },
             "light": {
                 "brightness": "Jas",
@@ -1188,7 +1336,8 @@
                 "fan_mode": "Režim ventilátoru",
                 "swing_mode": "Režim kmitání",
                 "away_mode": "Úsporný režim",
-                "aux_heat": "Pomocné teplo"
+                "aux_heat": "Pomocné teplo",
+                "preset_mode": "Předvolba"
             },
             "lock": {
                 "code": "Kód",
@@ -1210,6 +1359,14 @@
                 "target_temperature": "Cílová teplota",
                 "operation": "Provoz",
                 "away_mode": "Prázdninový režim"
+            },
+            "timer": {
+                "actions": {
+                    "start": "Spustit",
+                    "pause": "pauza",
+                    "cancel": "Zrušit",
+                    "finish": "Dokončit"
+                }
             }
         },
         "components": {
@@ -1230,7 +1387,7 @@
                     "minute": "{count} {count, plural,\none {minutu}\nfew {minuty}\nother {minut}\n}",
                     "hour": "{count} {count, plural,\none {hodinu}\nfew {hodiny}\nother {hodin}\n}",
                     "day": "{count} {count, plural,\none {den}\nfew {dny}\nother {dnů}\n}",
-                    "week": "{count} {count, plural,\none {týden}\nfew {týdny}\nother {týdnů}\n}"
+                    "week": "{count} {count, plural,\none {týden}\nother {týdnů}\n}"
                 }
             },
             "history_charts": {
@@ -1267,6 +1424,28 @@
             "options_flow": {
                 "form": {
                     "header": "Nastavení"
+                },
+                "success": {
+                    "description": "Volby byly úspěšně uloženy."
+                }
+            },
+            "config_entry_system_options": {
+                "title": "Volby systému",
+                "enable_new_entities_label": "Povolit nově přidané entity.",
+                "enable_new_entities_description": "Pokud je zakázáno, nově objevené entity nebudou automaticky přidány do Home Assistant."
+            },
+            "zha_device_info": {
+                "manuf": "od {manufacturer}",
+                "no_area": "Žádná oblast",
+                "services": {
+                    "reconfigure": "Překonfigurovat zařízení ZHA (opravit zařízení). Použijte, pokud se zařízením máte problémy. Je-li dotyčné zařízení napájené bateriemi, ujistěte se prosím, že je při používání této služby spuštěné a přijímá příkazy.",
+                    "updateDeviceName": "Nastavte vlastní název tohoto zařízení v registru zařízení.",
+                    "remove": "Odebrat zařízení ze sítě Zigbee."
+                },
+                "zha_device_card": {
+                    "device_name_placeholder": "Název přidělený uživatelem",
+                    "area_picker_label": "Oblast",
+                    "update_name_button": "Název aktualizace"
                 }
             }
         },
@@ -1339,6 +1518,16 @@
                 "on": "Zapnuto",
                 "auto": "Automaticky"
             },
+            "preset_mode": {
+                "none": "Žádná",
+                "eco": "Eco",
+                "away": "Pryč",
+                "boost": "Boost",
+                "comfort": "Komfort",
+                "home": "Doma",
+                "sleep": "Spánek",
+                "activity": "Aktivita"
+            },
             "hvac_action": {
                 "off": "Vypnuto",
                 "heating": "Topení",
@@ -1357,7 +1546,8 @@
     "config_entry": {
         "disabled_by": {
             "user": "Uživatel",
-            "integration": "Integrace"
+            "integration": "Integrace",
+            "config_entry": "Položka konfigurace"
         }
     }
 }
