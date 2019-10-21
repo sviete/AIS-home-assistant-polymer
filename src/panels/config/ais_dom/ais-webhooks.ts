@@ -1,5 +1,4 @@
 import { html, LitElement, PropertyDeclarations } from "lit-element";
-import "@polymer/paper-toggle-button/paper-toggle-button";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
 import "@polymer/paper-spinner/paper-spinner";
