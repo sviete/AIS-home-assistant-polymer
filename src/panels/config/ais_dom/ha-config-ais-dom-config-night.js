@@ -1,6 +1,5 @@
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import "@polymer/paper-icon-button/paper-icon-button";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 
@@ -9,6 +8,7 @@ import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-navigation";
 import "../../../components/paper-time-input.js";
+import "../../../components/ha-switch";
 /*
  *
  */
@@ -31,7 +31,7 @@ class HaConfigAisDomControl extends PolymerElement {
         .card-actions {
           display: flex;
         }
-        ha-card > paper-toggle-button {
+        ha-card > div#ha-switch-id {
           margin: -4px 0;
           position: absolute;
           top: 32px;
@@ -68,10 +68,12 @@ class HaConfigAisDomControl extends PolymerElement {
               zmieniać wygląd aplikacji na "nocny"</span
             >
             <ha-card header="Uruchamiaj tryb nocny*">
-              <paper-toggle-button
-                checked="{{quietMode}}"
-                on-change="changeQuietMode"
-              ></paper-toggle-button>
+              <div id="ha-switch-id">
+                <ha-switch
+                  checked="{{quietMode}}"
+                  on-change="changeQuietMode"
+                ></ha-switch>
+              </div>
               <div
                 class="card-content"
                 style="display: flex; align-items: center;"

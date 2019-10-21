@@ -10,6 +10,8 @@ import "../../../resources/ha-style";
 import "./ha-config-ais-dom-navigation";
 import { fireEvent } from "../../../common/dom/fire_event";
 import "./ais-webhooks";
+import "../../../components/ha-switch";
+
 /*
  *
  */
@@ -36,7 +38,7 @@ class HaConfigAisDomControl extends PolymerElement {
           @apply --layout-center-center;
           height: 70px;
         }
-        ha-card > paper-toggle-button {
+        ha-card > div#ha-switch-id {
           margin: -4px 0;
           position: absolute;
           right: 8px;
@@ -55,10 +57,12 @@ class HaConfigAisDomControl extends PolymerElement {
               >W tej sekcji możesz skonfigurować zdalny dostęp do bramki</span
             >
             <ha-card header="Szyfrowany tunel">
-              <paper-toggle-button
-                checked="{{remoteConnected}}"
-                on-change="changeRemote"
-              ></paper-toggle-button>
+              <div id="ha-switch-id">
+                <ha-switch
+                  checked="{{remoteConnected}}"
+                  on-change="changeRemote"
+                ></ha-switch>
+              </div>
               <div class="card-content">
                 Tunel zapewnia bezpieczne zdalne połączenie z Twoim urządzeniem
                 kiedy jesteś z dala od domu. Twoja bramka dostępna

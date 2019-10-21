@@ -1,6 +1,5 @@
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import "@polymer/paper-icon-button/paper-icon-button";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 
@@ -8,6 +7,7 @@ import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-navigation";
+import "../../../components/ha-switch";
 
 /*
  *
@@ -53,12 +53,12 @@ class HaConfigAisDomControl extends PolymerElement {
               <div class="card-content">
                 [[aisVersionInfo]]
                 <div>
-                  <div style="margin-top:30px;">
-                    <paper-toggle-button
+                  <div style="margin-top:30px;" id="ha-switch-id">
+                    <ha-switch
                       checked="{{autoUpdateMode}}"
                       on-change="changeAutoUpdateMode"
                       style="position: absolute; right: 20px;"
-                    ></paper-toggle-button
+                    ></ha-switch
                     ><span
                       ><h3>
                         Autoaktualizacja
