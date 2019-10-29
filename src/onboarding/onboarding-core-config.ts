@@ -29,7 +29,7 @@ import { LocalizeFunc } from "../common/translations/localize";
 import { createTimezoneListEl } from "../components/timezone-datalist";
 import "../components/map/ha-location-editor";
 
-const amsterdam = [52.3731339, 4.8903147];
+const amsterdam = [52.069521, 19.480343];
 
 @customElement("onboarding-core-config")
 class OnboardingCoreConfig extends LitElement {
