@@ -79,7 +79,7 @@ class AisEasyPicker extends HTMLElement {
           font-size: 1.2em;
       }
       .tag .clicked{
-        background: #FF9800;
+        background: var(--primary-color);
         padding: 4px;
         color: white;
         font-weight: bolder;

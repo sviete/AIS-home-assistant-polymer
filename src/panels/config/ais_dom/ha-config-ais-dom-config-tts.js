@@ -54,7 +54,7 @@ class HaConfigAisDomControl extends PolymerElement {
           border: 20px;
         }
         img.person-img-selected {
-          border: 7px solid #ff9800;
+          border: 7px solid var(--primary-color);
           width: 110px;
           height: 110px;
         }

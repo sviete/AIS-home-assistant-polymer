@@ -11,6 +11,7 @@ import "@material/mwc-button/mwc-button";
 import "@polymer/paper-input/paper-input";
 import "@polymer/paper-radio-group/paper-radio-group";
 import "@polymer/paper-radio-button/paper-radio-button";
+import "@polymer/paper-listbox/paper-listbox";
 // tslint:disable-next-line: no-duplicate-imports
 import { PaperInputElement } from "@polymer/paper-input/paper-input";
 import { HomeAssistant } from "../types";

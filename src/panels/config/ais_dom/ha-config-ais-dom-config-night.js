@@ -52,11 +52,6 @@ class HaConfigAisDomControl extends PolymerElement {
           height: 100px;
           border: 20px;
         }
-        img.person-img-selected {
-          border: 7px solid #ff9800;
-          width: 110px;
-          height: 110px;
-        }
       </style>
 
       <hass-subpage header="Konfiguracja bramki AIS dom">
