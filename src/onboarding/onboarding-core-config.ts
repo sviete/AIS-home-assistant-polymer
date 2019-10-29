@@ -1,3 +1,4 @@
+import "web-animations-js/web-animations-next-lite.min";
 import {
   LitElement,
   customElement,
@@ -85,9 +86,7 @@ class OnboardingCoreConfig extends LitElement {
           <div>
             Ustal swoją lokalizację po adresie IP wysyłając jednorazowe
             zapytanie do serwisu
-            <span
-              style="color:#FF9800; font-weight: bold;"
-              @click=${this._detect}
+            <span style="font-weight: bold;" @click=${this._detect}
               >ipapi.co</span
             >
           </div>
