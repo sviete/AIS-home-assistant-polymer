@@ -1,6 +1,6 @@
 import { h, Component } from "preact";
-import yaml from "js-yaml";
-import "../../../components/ha-textarea";
+import { safeDump, safeLoad } from "js-yaml";
+import "../../../components/ha-code-editor";
 
 const isEmpty = (obj: object) => {
   for (const key in obj) {
@@ -19,7 +19,7 @@ export default class YAMLTextArea extends Component<any, any> {
     try {
       value =
         props.value && !isEmpty(props.value)
-          ? yaml.safeDump(props.value)
+          ? safeDump(props.value)
           : undefined;
     } catch (err) {
       alert(`There was an error converting to YAML: ${err}`);
@@ -34,13 +34,13 @@ export default class YAMLTextArea extends Component<any, any> {
   }
 
   public onChange(ev) {
-    const value = ev.target.value;
+    const value = ev.detail.value;
     let parsed;
     let isValid = true;
 
     if (value) {
       try {
-        parsed = yaml.safeLoad(value);
+        parsed = safeLoad(value);
         isValid = true;
       } catch (err) {
         // Invalid YAML
@@ -64,17 +64,17 @@ export default class YAMLTextArea extends Component<any, any> {
       minWidth: 300,
       width: "100%",
     };
-    if (!isValid) {
-      style.border = "1px solid red";
-    }
     return (
-      <ha-textarea
-        label={label}
-        value={value}
-        style={style}
-        onvalue-changed={this.onChange}
-        dir="ltr"
-      />
+      <div>
+        <p>{label}</p>
+        <ha-code-editor
+          mode="yaml"
+          style={style}
+          value={value}
+          error={isValid === false}
+          onvalue-changed={this.onChange}
+        />
+      </div>
     );
   }
 }

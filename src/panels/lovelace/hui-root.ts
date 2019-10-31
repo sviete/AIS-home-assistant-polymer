@@ -73,14 +73,6 @@ class HUIRoot extends LitElement {
     );
   }
 
-  protected firstUpdated(changedProperties: PropertyValues): void {
-    super.firstUpdated(changedProperties);
-    this.classList.toggle(
-      "disable-text-select",
-      /Chrome/.test(navigator.userAgent) && /Android/.test(navigator.userAgent)
-    );
-  }
-
   protected render(): TemplateResult | void {
     return html`
     <app-route .route="${this.route}" pattern="/:view" data="${
@@ -118,7 +110,9 @@ class HUIRoot extends LitElement {
                     horizontal-offset="-5"
                   >
                     <paper-icon-button
-                      aria-label="Open Lovelace menu"
+                      aria-label=${this.hass!.localize(
+                        "ui.panel.lovelace.editor.menu.open"
+                      )}
                       icon="hass:dots-vertical"
                       slot="dropdown-trigger"
                     ></paper-icon-button>
@@ -238,7 +232,20 @@ class HUIRoot extends LitElement {
                   >
                     ${this.lovelace!.config.views.map(
                       (view) => html`
-                        <paper-tab aria-label="${view.title}">
+                        <paper-tab
+                          aria-label="${view.title}"
+                          class="${classMap({
+                            "hide-tab": Boolean(
+                              !this._editMode &&
+                                view.visible !== undefined &&
+                                ((Array.isArray(view.visible) &&
+                                  !view.visible.some(
+                                    (e) => e.user === this.hass!.user!.id
+                                  )) ||
+                                  view.visible === false)
+                            ),
+                          })}"
+                        >
                           ${this._editMode
                             ? html`
                                 <ha-paper-icon-button-arrow-prev
@@ -310,9 +317,6 @@ class HUIRoot extends LitElement {
         :host {
           --dark-color: #455a64;
           --text-dark-color: #fff;
-        }
-
-        :host(.disable-text-select) {
           -ms-user-select: none;
           -webkit-user-select: none;
           -moz-user-select: none;
@@ -393,6 +397,9 @@ class HUIRoot extends LitElement {
         }
         paper-item {
           cursor: pointer;
+        }
+        .hide-tab {
+          display: none;
         }
       `,
     ];
