@@ -1,9 +1,21 @@
+---
+name: Bug report
+about: Create a report to help us improve
+title: ""
+labels: bug
+assignees: ""
+---
+
 <!-- READ THIS FIRST:
 - If you need additional help with this template please refer to https://www.home-assistant.io/help/reporting_issues/
 - Make sure you are running the latest version of Home Assistant before reporting an issue: https://github.com/home-assistant/home-assistant/releases
-- This is for bugs only. Feature and enhancement requests should go in our community forum: https://community.home-assistant.io/c/feature-requests
 - Provide as many details as possible. Do not delete any text from this template!
 -->
+
+**Checklist:**
+
+- [ ] I updated to the latest version available
+- [ ] I cleared the cache of my browser
 
 **Home Assistant release with the issue:**
 
