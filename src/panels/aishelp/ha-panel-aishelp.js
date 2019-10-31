@@ -122,7 +122,7 @@ class HaPanelAishelp extends PolymerElement {
             <div class="card-content">
               Portal Integratora to miejsce w którym można dodawać własne stacje radiowe, podcasty oraz
               konfigurować inne składowe systemu
-              <a href="https://ai-speaker.com/ords/f?p=100" target="_blank"
+              <a href="https://www.ai-speaker.com/ords/f?p=100" target="_blank"
                 >Przejdz do Portalu Integratora</a
               >
             </div>
@@ -145,7 +145,7 @@ class HaPanelAishelp extends PolymerElement {
             <div class="card-content">
               To urządzenie posiada swój unikalny identyfikator, został on losowo wygenerowany przy pierwszym uruchomieniu i pozostanie stały przez cały okres użytkowania urządzenia.
               Identyfikator tego urządzenia to <a href="#"> [[aisSecureAndroidId]] </a>
-              
+
             </div>
           </ha-card>
         </ha-config-section>
