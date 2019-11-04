@@ -17,6 +17,10 @@ import "./ha-config-navigation";
 import isComponentLoaded from "../../../common/config/is_component_loaded";
 import LocalizeMixin from "../../../mixins/localize-mixin";
 import NavigateMixin from "../../../mixins/navigate-mixin";
+import {
+  DeviceRegistryEntry,
+  subscribeDeviceRegistry,
+} from "../../../data/device_registry";
 
 /*
  * @appliesMixin LocalizeMixin
@@ -69,6 +73,19 @@ class HaConfigDashboard extends NavigateMixin(LocalizeMixin(PolymerElement)) {
                 <ha-icon-next></ha-icon-next>
               </paper-item>
             </a>
+            <template is="dom-if" if="[[computeIsRf433(hass)]]">
+              <a href='/config/ais_dom' tabindex="-1">
+                <paper-item>
+                  <paper-item-body two-line>
+                    Konfiguracja Bramki RF 433
+                    <div secondary>
+                      Zarządzaj swoją bramką AIS dom RF 433
+                    </div>
+                  </paper-item-body>
+                  <ha-icon-next></ha-icon-next>
+                </paper-item>
+              </a>
+            </template>
           </ha-card>
 
           <template is="dom-if" if="[[computeIsLoaded(hass, 'cloud')]]">
@@ -154,11 +171,27 @@ class HaConfigDashboard extends NavigateMixin(LocalizeMixin(PolymerElement)) {
       isWide: Boolean,
       cloudStatus: Object,
       showAdvanced: Boolean,
+      devices: Object,
     };
   }
 
   computeIsLoaded(hass, component) {
     return isComponentLoaded(hass, component);
+  }
+
+  computeIsRf433(hass) {
+    this._unsubDevices = subscribeDeviceRegistry(hass.connection, (devices) => {
+      this.devices = devices;
+      console.log("devices: " + devices);
+      console.log("typeof: " + typeof this.devices);
+      var i;
+      for (i = 0; i < this.devices.length; i++) {
+        console.log("i" + i + ": " + String(this.devices[i].model));
+      }
+    });
+    console.log("typeof: " + typeof this.devices);
+
+    return true;
   }
 }
 
