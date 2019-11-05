@@ -55,9 +55,7 @@ export class HaDeviceEntitiesCard extends LitElement {
   @property() public deviceId!: string;
   @property() public entities!: EntityRegistryStateEntry[];
   @property() public narrow!: boolean;
-  @property() private topic = "dom/cmnd/rfraw";
   @property() private listenTopic = "+/tele/RESULT";
-  @property() private payload = "177";
   @property() private _subscribed?: () => void;
   @property() private _messages: Array<{
     id: number;
@@ -97,20 +95,26 @@ export class HaDeviceEntitiesCard extends LitElement {
                 .label=${this._subscribed ? "Nasłuchuje" : "Temat"}
                 .disabled=${1 === 1}
                 .value=${this.listenTopic}
-                @value-changed=${this._valueChanged}
               ></paper-input>
             </form>
             <div class="events">
               ${this._messages.map(
                 (msg) => html`
-                  if ('RfRaw' in msg.payload){
                   <pre>${msg.payload}</pre>
                   <div class="bottom">
-                    <mwc-button @click=${this._handleSubmit} type="submit">
+                    <mwc-button
+                      @click=${this._handleSubmitSwitch}
+                      type="submit"
+                    >
                       Dodaj do przełączników
                     </mwc-button>
+                    <mwc-button
+                      @click=${this._handleSubmitSensor}
+                      type="submit"
+                    >
+                      Dodaj do czujników
+                    </mwc-button>
                   </div>
-                  }
                 `
               )}
             </div>
@@ -122,28 +126,40 @@ export class HaDeviceEntitiesCard extends LitElement {
     `;
   }
 
-  private _valueChanged(ev: CustomEvent): void {
-    this.listenTopic = ev.detail.value;
-  }
-
   private async _handleSubmit(): Promise<void> {
-    this.hass.callService("mqtt", "publish", {
-      topic: this.topic,
-      payload_template: this.payload,
-    });
-    this.hass.callService("ais_ai_service", "say_it", {
-      text: "Bramka RF w trybie uczenia",
-    });
     if (this._subscribed) {
       this._subscribed();
       this._subscribed = undefined;
+      this.hass.callService("mqtt", "publish", {
+        topic: "dom/cmnd/rfraw",
+        payload_template: 177,
+      });
+      this.hass.callService("ais_ai_service", "say_it", {
+        text: "Koniec trybu uczenia bramki RF",
+      });
+      this._messages = [];
     } else {
       this._subscribed = await subscribeMQTTTopic(
         this.hass!,
         this.listenTopic,
         (message) => this._handleMessage(message)
       );
+      this.hass.callService("mqtt", "publish", {
+        topic: "dom/cmnd/rfraw",
+        payload_template: 177,
+      });
+      this.hass.callService("ais_ai_service", "say_it", {
+        text: "Bramka RF w trybie uczenia",
+      });
     }
+  }
+
+  private async _handleSubmitSwitch(): Promise<void> {
+    console.log("_handleSubmitSwitch");
+  }
+
+  private async _handleSubmitSensor(): Promise<void> {
+    console.log("_handleSubmitSensor");
   }
 
   private _handleMessage(message: MQTTMessage) {
@@ -151,18 +167,20 @@ export class HaDeviceEntitiesCard extends LitElement {
       this._messages.length > 30 ? this._messages.slice(0, 29) : this._messages;
     let payload: string;
     try {
-      payload = JSON.stringify(JSON.parse(message.payload), null, 4);
+      payload = JSON.parse(message.payload).RfRaw.Data;
+      // if (payload.includes("B1")) {
+      this._messages = [
+        {
+          payload,
+          message,
+          time: new Date(),
+          id: this._messageCount++,
+        },
+        ...tail,
+      ];
+      // }
     } catch (e) {
-      payload = message.payload;
+      console.log("message.payload: " + message.payload + " e: " + e);
     }
-    this._messages = [
-      {
-        payload,
-        message,
-        time: new Date(),
-        id: this._messageCount++,
-      },
-      ...tail,
-    ];
   }
 }
