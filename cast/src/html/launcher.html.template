@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Home Assistant Cast</title>
+    <title>Asystent domowy Cast</title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="icon" href="/images/ha-cast-icon.png" type="image/png" />
     <%= renderTemplate('_style_base') %>
