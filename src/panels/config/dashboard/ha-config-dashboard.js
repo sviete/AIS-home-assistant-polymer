@@ -13,14 +13,12 @@ import "../../../components/ha-icon-next";
 
 import "../ha-config-section";
 import "./ha-config-navigation";
+import { navigate } from "../../../common/navigate";
 
 import isComponentLoaded from "../../../common/config/is_component_loaded";
 import LocalizeMixin from "../../../mixins/localize-mixin";
 import NavigateMixin from "../../../mixins/navigate-mixin";
-import {
-  DeviceRegistryEntry,
-  subscribeDeviceRegistry,
-} from "../../../data/device_registry";
+import { subscribeDeviceRegistry } from "../../../data/device_registry";
 
 /*
  * @appliesMixin LocalizeMixin
@@ -73,13 +71,13 @@ class HaConfigDashboard extends NavigateMixin(LocalizeMixin(PolymerElement)) {
                 <ha-icon-next></ha-icon-next>
               </paper-item>
             </a>
-            <template is="dom-if" if="[[computeIsRf433(hass)]]">
-              <a href='/config/ais_dom' tabindex="-1">
+            <template is='dom-if' if='[[showRF433]]'>
+              <a on-click='_handleRFClicked' tabindex="-1">
                 <paper-item>
                   <paper-item-body two-line>
-                    Konfiguracja Bramki RF 433
+                    Konfiguracja Urządzeń AIS dom
                     <div secondary>
-                      Zarządzaj swoją bramką AIS dom RF 433
+                      Zarządzaj swoimi urządzeniami z oprogramowaniem AIS dom
                     </div>
                   </paper-item-body>
                   <ha-icon-next></ha-icon-next>
@@ -172,26 +170,36 @@ class HaConfigDashboard extends NavigateMixin(LocalizeMixin(PolymerElement)) {
       cloudStatus: Object,
       showAdvanced: Boolean,
       devices: Object,
+      showRF433: Boolean,
+      idRF433: String,
     };
+  }
+
+  ready() {
+    this._unsubDevices = subscribeDeviceRegistry(
+      this.hass.connection,
+      (devices) => {
+        this.devices = devices;
+        var i;
+        for (i = 0; i < this.devices.length; i++) {
+          if (this.devices[i].model === "Sonoff Bridge") {
+            this.showRF433 = true;
+            this.idRF433 = this.devices[i].id;
+          }
+        }
+      }
+    );
+    this.showRF433 = false;
+
+    super.ready();
+  }
+
+  _handleRFClicked() {
+    navigate(this, `/config/ais_dom_devices`);
   }
 
   computeIsLoaded(hass, component) {
     return isComponentLoaded(hass, component);
-  }
-
-  computeIsRf433(hass) {
-    this._unsubDevices = subscribeDeviceRegistry(hass.connection, (devices) => {
-      this.devices = devices;
-      console.log("devices: " + devices);
-      console.log("typeof: " + typeof this.devices);
-      var i;
-      for (i = 0; i < this.devices.length; i++) {
-        console.log("i" + i + ": " + String(this.devices[i].model));
-      }
-    });
-    console.log("typeof: " + typeof this.devices);
-
-    return true;
   }
 }
 
