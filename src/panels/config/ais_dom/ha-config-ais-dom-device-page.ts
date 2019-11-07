@@ -17,6 +17,7 @@ import "../devices/device-detail/ha-device-card";
 import "../devices/device-detail/ha-device-triggers-card";
 import "../devices/device-detail/ha-device-conditions-card";
 import "../devices/device-detail/ha-device-actions-card";
+import "./ais_dom_devices/ha-ais-dom-device-entities-card";
 import "./ais_dom_devices/ha-ais-dom-rf433-config-card";
 import { HomeAssistant } from "../../../types";
 import { ConfigEntry } from "../../../data/config_entries";
@@ -160,11 +161,11 @@ export class HaConfigDevicePage extends LitElement {
           ${entities.length
             ? html`
                 <div class="header">Encje</div>
-                <ha-device-entities-card
+                <ha-ais-dom-device-entities-card
                   .hass=${this.hass}
                   .entities=${entities}
                 >
-                </ha-device-entities-card>
+                </ha-ais-dom-device-entities-card>
               `
             : html``}
           ${this._triggers.length ||

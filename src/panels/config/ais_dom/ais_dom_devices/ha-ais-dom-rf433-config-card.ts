@@ -166,6 +166,10 @@ export class HaDeviceEntitiesCard extends LitElement {
       deviceId: this.deviceId,
       codes: this._payloadsArray,
     });
+    // reset codes
+    this._messages = [];
+    this._payloadsArray = [];
+    //
   }
 
   private _valueChanged(ev: CustomEvent): void {
