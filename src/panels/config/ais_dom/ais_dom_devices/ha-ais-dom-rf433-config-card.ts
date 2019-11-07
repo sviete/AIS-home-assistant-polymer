@@ -21,7 +21,6 @@ import "../../../../components/ha-icon";
 import "../../../../components/ha-switch";
 import { EntityRegistryStateEntry } from "../../devices/ha-config-device-page";
 import { subscribeMQTTTopic, MQTTMessage } from "../../../../data/mqtt";
-import format_time from "../../../../common/datetime/format_time";
 
 @customElement("ha-ais-dom-rf433-config-card")
 export class HaDeviceEntitiesCard extends LitElement {
@@ -74,12 +73,11 @@ export class HaDeviceEntitiesCard extends LitElement {
     id: number;
     message: MQTTMessage;
     payload: string;
-    time: Date;
     buttons: any;
   }> = [];
 
   private _messageCount = 0;
-  private _payloadsArray: MQTTMessage[];
+  private _payloadsArray: MQTTMessage[] = [];
 
   public disconnectedCallback() {
     super.disconnectedCallback();
@@ -165,6 +163,7 @@ export class HaDeviceEntitiesCard extends LitElement {
   private async _handleSubmitSwitch(): Promise<void> {
     this.hass.callService("ais_dom_device", "add_new_rf433_switch", {
       name: this.newButtonName,
+      deviceId: this.deviceId,
       codes: this._payloadsArray,
     });
   }
@@ -214,7 +213,6 @@ export class HaDeviceEntitiesCard extends LitElement {
           {
             payload,
             message,
-            time: new Date(),
             id: this._messageCount,
             buttons: displayButtons,
           },

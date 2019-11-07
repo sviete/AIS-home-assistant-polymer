@@ -117,7 +117,9 @@ class HaConfigDevices extends HassRouterPage {
         this._entityRegistryEntries = entries;
       }),
       subscribeDeviceRegistry(this.hass.connection, (entries) => {
-        this._deviceRegistryEntries = entries;
+        this._deviceRegistryEntries = entries.filter(
+          (entity) => entity.manufacturer === "Tasmota"
+        );
       }),
     ];
   }

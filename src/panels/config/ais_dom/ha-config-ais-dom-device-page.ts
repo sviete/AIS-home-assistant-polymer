@@ -152,6 +152,7 @@ export class HaConfigDevicePage extends LitElement {
                 <ha-ais-dom-rf433-config-card
                   .hass=${this.hass}
                   .entities=${entities}
+                  .deviceId=${this.deviceId}
                 >
                 </ha-ais-dom-rf433-config-card>
               `

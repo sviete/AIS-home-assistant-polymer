@@ -28,7 +28,7 @@ export class HaConfigDeviceDashboard extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <hass-subpage header="Urządzenia AIS">
+      <hass-subpage header="Urządzenia AIS dom">
         <div class="content">
           <ha-ais-dom-devices-data-table
             .hass=${this.hass}
