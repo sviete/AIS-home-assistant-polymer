@@ -118,7 +118,7 @@ class HaConfigDevices extends HassRouterPage {
       }),
       subscribeDeviceRegistry(this.hass.connection, (entries) => {
         this._deviceRegistryEntries = entries.filter(
-          (entity) => entity.manufacturer === "Tasmota"
+          (entity) => entity.manufacturer === "AI-Speaker"
         );
       }),
     ];

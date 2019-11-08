@@ -1,5 +1,5 @@
-import "../../../components/data-table/ha-data-table";
-import "../../../components/entity/ha-state-icon";
+import "../../../../components/data-table/ha-data-table";
+import "../../../../components/entity/ha-state-icon";
 
 import memoizeOne from "memoize-one";
 
@@ -10,21 +10,21 @@ import {
   property,
   customElement,
 } from "lit-element";
-import { HomeAssistant } from "../../../types";
+import { HomeAssistant } from "../../../../types";
 // tslint:disable-next-line
 import {
   DataTableColumnContainer,
   RowClickedEvent,
   DataTableRowData,
-} from "../../../components/data-table/ha-data-table";
+} from "../../../../components/data-table/ha-data-table";
 // tslint:disable-next-line
-import { DeviceRegistryEntry } from "../../../data/device_registry";
-import { EntityRegistryEntry } from "../../../data/entity_registry";
-import { ConfigEntry } from "../../../data/config_entries";
-import { AreaRegistryEntry } from "../../../data/area_registry";
-import { navigate } from "../../../common/navigate";
-import { LocalizeFunc } from "../../../common/translations/localize";
-import { computeStateName } from "../../../common/entity/compute_state_name";
+import { DeviceRegistryEntry } from "../../../../data/device_registry";
+import { EntityRegistryEntry } from "../../../../data/entity_registry";
+import { ConfigEntry } from "../../../../data/config_entries";
+import { AreaRegistryEntry } from "../../../../data/area_registry";
+import { navigate } from "../../../../common/navigate";
+import { LocalizeFunc } from "../../../../common/translations/localize";
+import { computeStateName } from "../../../../common/entity/compute_state_name";
 
 export interface DeviceRowData extends DeviceRegistryEntry {
   device?: DeviceRowData;
@@ -106,7 +106,9 @@ export class HaDevicesDataTable extends LitElement {
             "No name",
           model: device.model || "<unknown>",
           manufacturer: device.manufacturer || "<unknown>",
-          area: device.area_id ? areaLookup[device.area_id].name : "No area",
+          area: device.area_id
+            ? areaLookup[device.area_id].name
+            : "Brak obszaru",
           integration: device.config_entries.length
             ? device.config_entries
                 .filter((entId) => entId in entryLookup)
@@ -159,13 +161,13 @@ export class HaDevicesDataTable extends LitElement {
           }
         : {
             name: {
-              title: "Device",
+              title: "Urządzenie",
               sortable: true,
               filterable: true,
               direction: "asc",
             },
             manufacturer: {
-              title: "Manufacturer",
+              title: "Producent",
               sortable: true,
               filterable: true,
             },
@@ -175,35 +177,9 @@ export class HaDevicesDataTable extends LitElement {
               filterable: true,
             },
             area: {
-              title: "Area",
+              title: "Obszar",
               sortable: true,
               filterable: true,
-            },
-            integration: {
-              title: "Integration",
-              sortable: true,
-              filterable: true,
-            },
-            battery_entity: {
-              title: "Battery",
-              sortable: true,
-              type: "numeric",
-              template: (batteryEntity: string) => {
-                const battery = batteryEntity
-                  ? this.hass.states[batteryEntity]
-                  : undefined;
-                return battery
-                  ? html`
-                      ${battery.state}%
-                      <ha-state-icon
-                        .hass=${this.hass!}
-                        .stateObj=${battery}
-                      ></ha-state-icon>
-                    `
-                  : html`
-                      -
-                    `;
-              },
             },
           }
   );

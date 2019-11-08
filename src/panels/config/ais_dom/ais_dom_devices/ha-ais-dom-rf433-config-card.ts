@@ -66,7 +66,7 @@ export class HaDeviceEntitiesCard extends LitElement {
   @property() public deviceId!: string;
   @property() public entities!: EntityRegistryStateEntry[];
   @property() public narrow!: boolean;
-  @property() private listenTopic = "+/tele/RESULT";
+  @property() private listenTopic = "aisdomrf/tele/RESULT";
   @property() private newButtonName = "Nowy przełącznik";
   @property() private _subscribed?: () => void;
   @property() private _messages: Array<{
@@ -133,10 +133,6 @@ export class HaDeviceEntitiesCard extends LitElement {
     if (this._subscribed) {
       this._subscribed();
       this._subscribed = undefined;
-      this.hass.callService("mqtt", "publish", {
-        topic: "dom/cmnd/RfRaw",
-        payload_template: "AAB155",
-      });
       this.hass.callService("ais_ai_service", "say_it", {
         text: "Koniec trybu uczenia bramki RF",
       });
@@ -150,10 +146,7 @@ export class HaDeviceEntitiesCard extends LitElement {
         this.listenTopic,
         (message) => this._handleMessage(message)
       );
-      this.hass.callService("mqtt", "publish", {
-        topic: "dom/cmnd/RfRaw",
-        payload_template: "AAB155",
-      });
+      this.hass.callService("ais_dom_device", "convert_rf_code_b1_to_b0");
       this.hass.callService("ais_ai_service", "say_it", {
         text: "Bramka RF w trybie uczenia",
       });
@@ -178,14 +171,14 @@ export class HaDeviceEntitiesCard extends LitElement {
 
   private _handleMessage(message: MQTTMessage) {
     const tail =
-      this._messages.length > 4 ? this._messages.slice(0, 4) : this._messages;
+      this._messages.length > 30 ? this._messages.slice(0, 29) : this._messages;
     let payload: string;
     try {
-      payload = JSON.parse(message.payload).RfRaw.Data;
+      payload = JSON.parse(message.payload).code;
       if (payload.includes("B1")) {
         this._messageCount++;
         let displayButtons = html``;
-        if (this._messageCount % 5 === 0) {
+        if (this._messageCount % 5 === 10) {
           // stop lerning mode
           this._handleSubmit();
           //
