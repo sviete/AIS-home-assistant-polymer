@@ -66,7 +66,7 @@ export class HaDeviceEntitiesCard extends LitElement {
       }
       .event {
         border-bottom: 3px solid var(--divider-color);
-        padding-bottom: 46px;
+        /* padding-bottom: 46px; */
         padding-top: 26px;
       }
       .event:first-child {
@@ -75,34 +75,42 @@ export class HaDeviceEntitiesCard extends LitElement {
       .event:last-child {
         border-bottom: 0;
       }
+      pre {
+        margin: 0px;
+        max-width: 600px;
+        display: block;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
     `;
   }
   @property() public hass!: HomeAssistant;
   @property() public deviceId!: string;
   @property() public entities!: EntityRegistryStateEntry[];
   @property() public narrow!: boolean;
-  @property() private newButtonName = "Przycisk / Sensor";
-  @property() private _sniffing: boolean = false;
+  @property() private _currentMode: number = 0;
+  @property() private _currentModeHeader: string = "Uczenie kodów RF";
   @property() private _instructionInfo: string =
-    "Aby nauczyć Asystenta kodów z pilota (lub innego urządzenia wysyłającego kody radiowe o częstotliwości 433), uruchom tryb uczenia kodów RF naciskając przycisk poniżej";
+    "Aby nauczyć Asystenta kodów pilota radiosego (lub innego urządzenia wysyłającego kody radiowe o częstotliwości 433), uruchom tryb uczenia kodów RF, naciskając przycisk poniżej.";
 
   protected render(): TemplateResult {
     const stateObj: HassEntity = this.hass.states[
       "sensor.ais_dom_mqtt_rf_sensor"
     ];
-    // if (stateObj.attributes.codes.length > 0) {
-    //   this._sniffing = true;
-    // }
     return html`
       <div class="content">
-        <ha-card header="Tryb uczenia">
+        <ha-card header=${this._currentModeHeader}>
           <div class="card-content">
             <p>
               ${this._instructionInfo}
             </p>
             <div class="div-right">
-              <mwc-button @click=${this._handleSubmit} type="submit">
-                ${this._sniffing ? "Koniec uczenia" : "Start uczenia"}
+              <mwc-button @click=${this._handleModeSubmit} type="submit">
+                ${this._currentMode === 0
+                  ? "Start nasłuchiwania kodów"
+                  : this._currentMode === 1
+                  ? "Start testowania/dodawania"
+                  : "Koniec testowania/dodawania"}
               </mwc-button>
             </div>
             <div class="events">
@@ -112,52 +120,52 @@ export class HaDeviceEntitiesCard extends LitElement {
                     <div class="event">
                       Rozpoznany kod RF:
                       <span
-                        style="font-size:xx-small; width:100%; display: flex;"
+                        style="font-size:xx-small; width:100%; display: block; white-space: pre-wrap; word-wrap: break-word; text-align: left;"
+                        >(${msg.B1})</span
                       >
-                        (${msg.B1})
-                      </span>
-                      <pre
-                        style="font-size:smaller; width:100%; display: flex;"
-                      >
-                        ${msg.B0}
-                      </pre
-                      >
-                      <div class="bottom">
-                        <paper-input
-                          label="Nazwa"
-                          .value=${this.newButtonName}
-                          @value-changed=${this._valueChanged}
-                        ></paper-input>
-                        <div class="div-right">
-                          <mwc-button
-                            @click=${this._handleTestCode}
-                            .data-b0=${msg.B0}
-                            .data-topic=${msg.topic}
-                            type="submit"
-                          >
-                            <iron-icon icon="mdi:rocket"></iron-icon>
-                            Testuj
-                          </mwc-button>
-                          <mwc-button
-                            @click=${this._handleSubmitEntitySwitch}
-                            .data-b0=${msg.B0}
-                            .data-topic=${msg.topic}
-                            type="submit"
-                          >
-                            <iron-icon icon="mdi:flash"></iron-icon>
-                            Dodaj Przycisk
-                          </mwc-button>
-                          <mwc-button
-                            @click=${this._handleSubmitEntitySensor}
-                            .data-b0=${msg.B0}
-                            .data-topic=${msg.topic}
-                            type="submit"
-                          >
-                            <iron-icon icon="hass:eye"></iron-icon>
-                            Dodaj Sensor
-                          </mwc-button>
-                        </div>
-                      </div>
+                      <pre>${msg.B0}</pre>
+                      ${this._currentMode === 2
+                        ? html`
+                            <div class="bottom">
+                              <paper-input
+                                label="Nazwa"
+                                value="Nazwa przycisku / czujnika"
+                                }
+                              ></paper-input>
+                              <div class="div-right">
+                                <mwc-button
+                                  @click=${this._handleTestCode}
+                                  .data-b0=${msg.B0}
+                                  .data-topic=${msg.topic}
+                                  .parentNode
+                                  type="submit"
+                                >
+                                  <iron-icon icon="mdi:rocket"></iron-icon>
+                                  Testuj
+                                </mwc-button>
+                                <mwc-button
+                                  @click=${this._handleSubmitEntitySwitch}
+                                  .data-b0=${msg.B0}
+                                  .data-topic=${msg.topic}
+                                  .parentNode
+                                  type="submit"
+                                >
+                                  <iron-icon icon="mdi:flash"></iron-icon>
+                                  Dodaj Przycisk
+                                </mwc-button>
+                                <mwc-button
+                                  @click=${this._handleSubmitEntitySensor}
+                                  .data-b0=${msg.B0}
+                                  .data-topic=${msg.topic}
+                                  type="submit"
+                                >
+                                  <iron-icon icon="hass:eye"></iron-icon>
+                                  Dodaj Sensor
+                                </mwc-button>
+                              </div>
+                            </div>
+                          `
+                        : html``}
                     </div>
                   `
               )}
@@ -170,17 +178,29 @@ export class HaDeviceEntitiesCard extends LitElement {
     `;
   }
 
-  private async _handleSubmit(): Promise<void> {
-    if (this._sniffing) {
-      this._sniffing = false;
-      this.hass.callService("ais_dom_device", "stop_rf_sniffing");
-      this._instructionInfo =
-        "Aby nauczyć Asystenta kodów z pilota (lub innego urządzenia wysyłającego kody radiowe o częstotliwości 433), uruchom tryb uczenia kodów RF naciskając przycisk poniżej.";
-    } else {
-      this._sniffing = true;
-      this._instructionInfo =
-        "Teraz wyślij kilka kodów (naciśnij kilka razy przyciski na pilocie).";
+  private async _handleModeSubmit(): Promise<void> {
+    if (this._currentMode === 0) {
+      this._currentMode = 1;
       this.hass.callService("ais_dom_device", "start_rf_sniffing");
+      this._currentModeHeader = "Nasłuchiwanie kodów RF";
+      this._instructionInfo =
+        "Teraz wyślij kilka kodów (naciśnij kilka razy przyciski na pilocie). Po skończeniu wysyłania przejdz w tryb testowania kodów naciskając przycisk poniżej.";
+    } else if (this._currentMode === 1) {
+      this._currentMode = 2;
+      this.hass.callService("ais_dom_device", "stop_rf_sniffing", {
+        clear: false,
+      });
+      this._currentModeHeader = "Testowanie i zapisanie kodów RF";
+      this._instructionInfo =
+        "Przetestuj odebrane kody, ten który działa dodaj jako przycisk lub czujnik do systemu. By zakończyć tryb testowania/dodawania naciśnij przycisk poniżej.";
+    } else if (this._currentMode === 2) {
+      this._currentMode = 0;
+      this._currentModeHeader = "Uczenie kodów RF";
+      this._instructionInfo =
+        "Aby nauczyć Asystenta kodów z pilota (lub innego urządzenia wysyłającego kody radiowe o częstotliwości 433), uruchom tryb uczenia kodów RF naciskając przycisk poniżej";
+      this.hass.callService("ais_dom_device", "stop_rf_sniffing", {
+        clear: true,
+      });
     }
   }
 
@@ -200,8 +220,11 @@ export class HaDeviceEntitiesCard extends LitElement {
     if (ev.currentTarget != null) {
       const b0 = ev.currentTarget["data-b0"];
       const gateTopic = ev.currentTarget["data-topic"];
+      const entityName = "todo";
+      const parent = ev.currentTarget["parentNode"];
+      console.log(parent);
       this.hass.callService("ais_dom_device", "add_ais_dom_entity", {
-        name: this.newButtonName,
+        name: entityName,
         topic: gateTopic,
         deviceId: this.deviceId,
         code: b0,
@@ -214,17 +237,14 @@ export class HaDeviceEntitiesCard extends LitElement {
     if (ev.currentTarget != null) {
       const b0 = ev.currentTarget["data-b0"];
       const gateTopic = ev.currentTarget["data-topic"];
+      const entityName = "todo";
       this.hass.callService("ais_dom_device", "add_ais_dom_entity", {
-        name: this.newButtonName,
+        name: entityName,
         topic: gateTopic,
         deviceId: this.deviceId,
         code: b0,
         type: "sensor",
       });
     }
-  }
-
-  private _valueChanged(ev: CustomEvent): void {
-    this.newButtonName = ev.detail.value;
   }
 }
