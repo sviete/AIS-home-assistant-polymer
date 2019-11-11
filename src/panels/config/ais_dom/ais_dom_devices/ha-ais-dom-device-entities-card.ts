@@ -109,7 +109,7 @@ export class HaDeviceEntitiesCard extends LitElement {
   }
 
   private _deleteEntry(_entry): void {
-    this.hass.callService("ais_dom_device", "remove_ais_dom_device", {
+    this.hass.callService("ais_dom_device", "remove_ais_dom_entity", {
       entity_id: _entry.entity_id,
     });
   }

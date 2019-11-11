@@ -15,12 +15,13 @@ import "../../../../components/entity/state-badge";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-icon-item";
 import "@polymer/paper-item/paper-item-body";
+import "@polymer/iron-icon";
 
 import "../../../../components/ha-card";
 import "../../../../components/ha-icon";
 import "../../../../components/ha-switch";
 import { EntityRegistryStateEntry } from "../../devices/ha-config-device-page";
-import { subscribeMQTTTopic, MQTTMessage } from "../../../../data/mqtt";
+import { HassEntity } from "home-assistant-js-websocket";
 
 @customElement("ha-ais-dom-rf433-config-card")
 export class HaDeviceEntitiesCard extends LitElement {
@@ -48,17 +49,31 @@ export class HaDeviceEntitiesCard extends LitElement {
       paper-icon-item:not(.disabled-entry) paper-item-body {
         cursor: pointer;
       }
-      .div-full {
-        height: 40px;
-        width: 100%;
-      }
-      .div-left {
-        float: left;
-        width: 50%;
-      }
       .div-right {
-        float: right;
-        width: 50%;
+        width: 100%;
+        text-align: right;
+      }
+      .bottom {
+        font-size: 80%;
+        color: var(--secondary-text-color);
+      }
+      form {
+        display: block;
+        padding: 16px;
+      }
+      .events {
+        margin: 26px 0;
+      }
+      .event {
+        border-bottom: 3px solid var(--divider-color);
+        padding-bottom: 46px;
+        padding-top: 26px;
+      }
+      .event:first-child {
+        border-top: 2px solid var(--divider-color);
+      }
+      .event:last-child {
+        border-bottom: 0;
       }
     `;
   }
@@ -66,58 +81,84 @@ export class HaDeviceEntitiesCard extends LitElement {
   @property() public deviceId!: string;
   @property() public entities!: EntityRegistryStateEntry[];
   @property() public narrow!: boolean;
-  @property() private listenTopic = "aisdomrf/tele/RESULT";
-  @property() private newButtonName = "Nowy przełącznik";
-  @property() private _subscribed?: () => void;
-  @property() private _messages: Array<{
-    id: number;
-    message: MQTTMessage;
-    payload: string;
-    buttons: any;
-  }> = [];
-
-  private _messageCount = 0;
-  private _payloadsArray: MQTTMessage[] = [];
-
-  public disconnectedCallback() {
-    super.disconnectedCallback();
-    if (this._subscribed) {
-      this._subscribed();
-      this._subscribed = undefined;
-    }
-  }
+  @property() private newButtonName = "Przycisk / Sensor";
+  @property() private _sniffing: boolean = false;
+  @property() private _instructionInfo: string =
+    "Aby nauczyć Asystenta kodów z pilota (lub innego urządzenia wysyłającego kody radiowe o częstotliwości 433), uruchom tryb uczenia kodów RF naciskając przycisk poniżej";
 
   protected render(): TemplateResult {
+    const stateObj: HassEntity = this.hass.states[
+      "sensor.ais_dom_mqtt_rf_sensor"
+    ];
+    // if (stateObj.attributes.codes.length > 0) {
+    //   this._sniffing = true;
+    // }
     return html`
       <div class="content">
         <ha-card header="Tryb uczenia">
           <div class="card-content">
             <p>
-              Uruchom tryb uczenia kodów RF naciskając przycisk
-              <b>START UCZENIA</b>
+              ${this._instructionInfo}
             </p>
-            <mwc-button
-              .disabled=${this.listenTopic === ""}
-              @click=${this._handleSubmit}
-              type="submit"
-            >
-              ${this._subscribed ? "Koniec uczenia" : "Start uczenia"}
-            </mwc-button>
-            <form>
-              <paper-input
-                .label=${this._subscribed ? "Nasłuchuje" : "Temat"}
-                disabled="true"
-                .value=${this.listenTopic}
-              ></paper-input>
-            </form>
+            <div class="div-right">
+              <mwc-button @click=${this._handleSubmit} type="submit">
+                ${this._sniffing ? "Koniec uczenia" : "Start uczenia"}
+              </mwc-button>
+            </div>
             <div class="events">
-              ${this._messages.map(
+              ${stateObj.attributes.codes.map(
                 (msg) =>
                   html`
-                    <p>${msg.buttons}</p>
-                    <p style="font-size:smaller; width:100%; display: flex;">
-                      ${msg.payload}
-                    </p>
+                    <div class="event">
+                      Rozpoznany kod RF:
+                      <span
+                        style="font-size:xx-small; width:100%; display: flex;"
+                      >
+                        (${msg.B1})
+                      </span>
+                      <pre
+                        style="font-size:smaller; width:100%; display: flex;"
+                      >
+                        ${msg.B0}
+                      </pre
+                      >
+                      <div class="bottom">
+                        <paper-input
+                          label="Nazwa"
+                          .value=${this.newButtonName}
+                          @value-changed=${this._valueChanged}
+                        ></paper-input>
+                        <div class="div-right">
+                          <mwc-button
+                            @click=${this._handleTestCode}
+                            .data-b0=${msg.B0}
+                            .data-topic=${msg.topic}
+                            type="submit"
+                          >
+                            <iron-icon icon="mdi:rocket"></iron-icon>
+                            Testuj
+                          </mwc-button>
+                          <mwc-button
+                            @click=${this._handleSubmitEntitySwitch}
+                            .data-b0=${msg.B0}
+                            .data-topic=${msg.topic}
+                            type="submit"
+                          >
+                            <iron-icon icon="mdi:flash"></iron-icon>
+                            Dodaj Przycisk
+                          </mwc-button>
+                          <mwc-button
+                            @click=${this._handleSubmitEntitySensor}
+                            .data-b0=${msg.B0}
+                            .data-topic=${msg.topic}
+                            type="submit"
+                          >
+                            <iron-icon icon="hass:eye"></iron-icon>
+                            Dodaj Sensor
+                          </mwc-button>
+                        </div>
+                      </div>
+                    </div>
                   `
               )}
             </div>
@@ -130,95 +171,60 @@ export class HaDeviceEntitiesCard extends LitElement {
   }
 
   private async _handleSubmit(): Promise<void> {
-    if (this._subscribed) {
-      this._subscribed();
-      this._subscribed = undefined;
-      this.hass.callService("ais_ai_service", "say_it", {
-        text: "Koniec trybu uczenia bramki RF",
-      });
+    if (this._sniffing) {
+      this._sniffing = false;
+      this.hass.callService("ais_dom_device", "stop_rf_sniffing");
+      this._instructionInfo =
+        "Aby nauczyć Asystenta kodów z pilota (lub innego urządzenia wysyłającego kody radiowe o częstotliwości 433), uruchom tryb uczenia kodów RF naciskając przycisk poniżej.";
     } else {
-      // reset codes
-      this._messages = [];
-      this._payloadsArray = [];
-      //
-      this._subscribed = await subscribeMQTTTopic(
-        this.hass!,
-        this.listenTopic,
-        (message) => this._handleMessage(message)
-      );
-      this.hass.callService("ais_dom_device", "convert_rf_code_b1_to_b0");
-      this.hass.callService("ais_ai_service", "say_it", {
-        text: "Bramka RF w trybie uczenia",
+      this._sniffing = true;
+      this._instructionInfo =
+        "Teraz wyślij kilka kodów (naciśnij kilka razy przyciski na pilocie).";
+      this.hass.callService("ais_dom_device", "start_rf_sniffing");
+    }
+  }
+
+  private async _handleTestCode(ev: CustomEvent) {
+    if (ev.currentTarget != null) {
+      const b0 = ev.currentTarget["data-b0"];
+      const gateTopic = ev.currentTarget["data-topic"];
+      this.hass.callService("ais_dom_device", "send_rf_code", {
+        topic: gateTopic,
+        deviceId: this.deviceId,
+        code: b0,
       });
     }
   }
 
-  private async _handleSubmitSwitch(): Promise<void> {
-    this.hass.callService("ais_dom_device", "add_new_rf433_switch", {
-      name: this.newButtonName,
-      deviceId: this.deviceId,
-      codes: this._payloadsArray,
-    });
-    // reset codes
-    this._messages = [];
-    this._payloadsArray = [];
-    //
+  private async _handleSubmitEntitySwitch(ev: CustomEvent) {
+    if (ev.currentTarget != null) {
+      const b0 = ev.currentTarget["data-b0"];
+      const gateTopic = ev.currentTarget["data-topic"];
+      this.hass.callService("ais_dom_device", "add_ais_dom_entity", {
+        name: this.newButtonName,
+        topic: gateTopic,
+        deviceId: this.deviceId,
+        code: b0,
+        type: "switch",
+      });
+    }
+  }
+
+  private async _handleSubmitEntitySensor(ev: CustomEvent) {
+    if (ev.currentTarget != null) {
+      const b0 = ev.currentTarget["data-b0"];
+      const gateTopic = ev.currentTarget["data-topic"];
+      this.hass.callService("ais_dom_device", "add_ais_dom_entity", {
+        name: this.newButtonName,
+        topic: gateTopic,
+        deviceId: this.deviceId,
+        code: b0,
+        type: "sensor",
+      });
+    }
   }
 
   private _valueChanged(ev: CustomEvent): void {
     this.newButtonName = ev.detail.value;
-  }
-
-  private _handleMessage(message: MQTTMessage) {
-    const tail =
-      this._messages.length > 30 ? this._messages.slice(0, 29) : this._messages;
-    let payload: string;
-    try {
-      payload = JSON.parse(message.payload).code;
-      if (payload.includes("B1")) {
-        this._messageCount++;
-        let displayButtons = html``;
-        if (this._messageCount % 5 === 10) {
-          // stop lerning mode
-          this._handleSubmit();
-          //
-          displayButtons = html`
-            <div class="bottom">
-              <form>
-                <div class="div-full">
-                  <div class="div-left">
-                    <paper-input
-                      label="Nazwa przełącznika"
-                      .value=${this.newButtonName}
-                      @value-changed=${this._valueChanged}
-                    ></paper-input>
-                  </div>
-                  <div class="div-right">
-                    <mwc-button
-                      @click=${this._handleSubmitSwitch}
-                      type="submit"
-                    >
-                      Dodaj do przełączników
-                    </mwc-button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          `;
-        }
-        this._messages = [
-          {
-            payload,
-            message,
-            id: this._messageCount,
-            buttons: displayButtons,
-          },
-          ...tail,
-        ];
-        this._payloadsArray.push(message);
-      }
-    } catch (e) {
-      console.log("message.payload: " + message.payload + " e: " + e);
-    }
   }
 }
