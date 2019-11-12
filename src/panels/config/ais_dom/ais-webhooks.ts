@@ -1,4 +1,4 @@
-import { html, LitElement, PropertyDeclarations } from "lit-element";
+import { html, LitElement, PropertyDeclarations, property } from "lit-element";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
 import "@polymer/paper-spinner/paper-spinner";
@@ -10,8 +10,8 @@ import { Webhook, fetchWebhooks } from "../../../data/webhook";
 import { showManageCloudhookDialog } from "./dialog-manage-ais-cloudhook/show-dialog-manage-ais-cloudhook";
 
 export class AisWebhooks extends LitElement {
-  public hass?: HomeAssistant;
-  private _localHooks?: Webhook[];
+  @property() public hass?: HomeAssistant;
+  @property() private _localHooks?: Webhook[];
 
   static get properties(): PropertyDeclarations {
     return {
@@ -51,6 +51,7 @@ export class AisWebhooks extends LitElement {
   }
 
   private _renderBody() {
+    console.log("pobieranie");
     if (!this._localHooks) {
       return html`
         <div class="body-text">Pobieranie…</div>
@@ -110,9 +111,7 @@ export class AisWebhooks extends LitElement {
   }
 
   private async _fetchData() {
-    this._localHooks = this.hass!.config.components.includes("webhook")
-      ? await fetchWebhooks(this.hass!)
-      : [];
+    this._localHooks = await fetchWebhooks(this.hass!);
   }
 
   private renderStyle() {

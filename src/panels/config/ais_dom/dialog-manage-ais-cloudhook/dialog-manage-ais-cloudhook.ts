@@ -4,6 +4,7 @@ import {
   PropertyDeclarations,
   css,
   CSSResult,
+  property,
 } from "lit-element";
 
 import "@material/mwc-button";
@@ -25,7 +26,7 @@ const inputLabel =
 
 export class DialogManageAisCloudhook extends LitElement {
   public hass!: HomeAssistant;
-  private _params?: WebhookDialogParams;
+  @property() private _params?: WebhookDialogParams;
 
   static get properties(): PropertyDeclarations {
     return {
