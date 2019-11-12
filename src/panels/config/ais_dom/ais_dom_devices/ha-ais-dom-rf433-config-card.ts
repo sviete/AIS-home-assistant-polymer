@@ -22,6 +22,10 @@ import "../../../../components/ha-icon";
 import "../../../../components/ha-switch";
 import { EntityRegistryStateEntry } from "../../devices/ha-config-device-page";
 import { HassEntity } from "home-assistant-js-websocket";
+import {
+  loadAddAisDomDeviceDialog,
+  showAddAisDomDeviceDialog,
+} from "./show-dialog-ais-dom-device-detail";
 
 @customElement("ha-ais-dom-rf433-config-card")
 export class HaDeviceEntitiesCard extends LitElement {
@@ -82,6 +86,11 @@ export class HaDeviceEntitiesCard extends LitElement {
         white-space: pre-wrap;
         word-wrap: break-word;
       }
+      span.idx {
+        color: var(--secondary-text-color);
+        font-size: large;
+        font-weight: bold;
+      }
     `;
   }
   @property() public hass!: HomeAssistant;
@@ -106,19 +115,23 @@ export class HaDeviceEntitiesCard extends LitElement {
             </p>
             <div class="div-right">
               <mwc-button @click=${this._handleModeSubmit} type="submit">
-                ${this._currentMode === 0
-                  ? "Start nasłuchiwania kodów"
-                  : this._currentMode === 1
-                  ? "Start testowania/dodawania"
-                  : "Koniec testowania/dodawania"}
+                ${
+                  this._currentMode === 0
+                    ? "Start nasłuchiwania kodów"
+                    : this._currentMode === 1
+                    ? "Start testowania/dodawania"
+                    : "Koniec testowania/dodawania"
+                }
               </mwc-button>
             </div>
-            <div class="events">
+            ${
+              this._currentMode !== 0
+                ? html`<div class="events">
               ${stateObj.attributes.codes.map(
-                (msg) =>
+                (msg, idx) =>
                   html`
                     <div class="event">
-                      Rozpoznany kod RF:
+                      <span class="idx">[${idx + 1}]</span> Rozpoznany kod RF:
                       <span
                         style="font-size:xx-small; width:100%; display: block; white-space: pre-wrap; word-wrap: break-word; text-align: left;"
                         >(${msg.B1})</span
@@ -129,7 +142,8 @@ export class HaDeviceEntitiesCard extends LitElement {
                             <div class="bottom">
                               <paper-input
                                 label="Nazwa"
-                                value="Nazwa przycisku / czujnika"
+                                value="Nazwa przycisku"
+                                id=${"name_" + idx}
                                 }
                               ></paper-input>
                               <div class="div-right">
@@ -137,7 +151,7 @@ export class HaDeviceEntitiesCard extends LitElement {
                                   @click=${this._handleTestCode}
                                   .data-b0=${msg.B0}
                                   .data-topic=${msg.topic}
-                                  .parentNode
+                                  .data-idx=${idx}
                                   type="submit"
                                 >
                                   <iron-icon icon="mdi:rocket"></iron-icon>
@@ -147,13 +161,13 @@ export class HaDeviceEntitiesCard extends LitElement {
                                   @click=${this._handleSubmitEntitySwitch}
                                   .data-b0=${msg.B0}
                                   .data-topic=${msg.topic}
-                                  .parentNode
+                                  .data-idx=${idx}
                                   type="submit"
                                 >
                                   <iron-icon icon="mdi:flash"></iron-icon>
                                   Dodaj Przycisk
                                 </mwc-button>
-                                <mwc-button
+                                <!-- <mwc-button
                                   @click=${this._handleSubmitEntitySensor}
                                   .data-b0=${msg.B0}
                                   .data-topic=${msg.topic}
@@ -161,7 +175,7 @@ export class HaDeviceEntitiesCard extends LitElement {
                                 >
                                   <iron-icon icon="hass:eye"></iron-icon>
                                   Dodaj Sensor
-                                </mwc-button>
+                                </mwc-button> -->
                               </div>
                             </div>
                           `
@@ -171,11 +185,19 @@ export class HaDeviceEntitiesCard extends LitElement {
               )}
             </div>
           </div>
+          `
+                : html``
+            }
         </ha-card>
 
         <mqtt-subscribe-card .hass=${this.hass}></mqtt-subscribe-card>
       </div>
     `;
+  }
+
+  protected firstUpdated(changedProps) {
+    super.firstUpdated(changedProps);
+    loadAddAisDomDeviceDialog();
   }
 
   private async _handleModeSubmit(): Promise<void> {
@@ -220,11 +242,10 @@ export class HaDeviceEntitiesCard extends LitElement {
     if (ev.currentTarget != null) {
       const b0 = ev.currentTarget["data-b0"];
       const gateTopic = ev.currentTarget["data-topic"];
-      const entityName = "todo";
-      const parent = ev.currentTarget["parentNode"];
-      console.log(parent);
+      const idx = ev.currentTarget["data-idx"];
+      const entityName = this.shadowRoot!.getElementById("name_" + idx);
       this.hass.callService("ais_dom_device", "add_ais_dom_entity", {
-        name: entityName,
+        name: entityName!.value,
         topic: gateTopic,
         deviceId: this.deviceId,
         code: b0,
@@ -234,6 +255,8 @@ export class HaDeviceEntitiesCard extends LitElement {
   }
 
   private async _handleSubmitEntitySensor(ev: CustomEvent) {
+    // TODO
+    showAddAisDomDeviceDialog(this, { entityType: "sensor" });
     if (ev.currentTarget != null) {
       const b0 = ev.currentTarget["data-b0"];
       const gateTopic = ev.currentTarget["data-topic"];
