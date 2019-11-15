@@ -61,6 +61,11 @@ export class HaDeviceEntitiesCard extends LitElement {
         font-size: 80%;
         color: var(--secondary-text-color);
       }
+      div.left {
+        position: absolute;
+        left: 22px;
+        color: var(--secondary-text-color);
+      }
       form {
         display: block;
         padding: 16px;
@@ -69,15 +74,17 @@ export class HaDeviceEntitiesCard extends LitElement {
         margin: 26px 0;
       }
       .event {
-        border-bottom: 3px solid var(--divider-color);
-        /* padding-bottom: 46px; */
+        border: 3px solid var(--divider-color);
+        padding: 4px;
+        margin-top: 4px;
         padding-top: 26px;
+        background-repeat: no-repeat;
+        background-position: right;
+        background-size: 20%;
+        background-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 5 24"><path fill="b9b2b2" fill-opacity="0.1" d="M4.93,4.93C3.12,6.74 2,9.24 2,12C2,14.76 3.12,17.26 4.93,19.07L6.34,17.66C4.89,16.22 4,14.22 4,12C4,9.79 4.89,7.78 6.34,6.34L4.93,4.93M19.07,4.93L17.66,6.34C19.11,7.78 20,9.79 20,12C20,14.22 19.11,16.22 17.66,17.66L19.07,19.07C20.88,17.26 22,14.76 22,12C22,9.24 20.88,6.74 19.07,4.93M7.76,7.76C6.67,8.85 6,10.35 6,12C6,13.65 6.67,15.15 7.76,16.24L9.17,14.83C8.45,14.11 8,13.11 8,12C8,10.89 8.45,9.89 9.17,9.17L7.76,7.76M16.24,7.76L14.83,9.17C15.55,9.89 16,10.89 16,12C16,13.11 15.55,14.11 14.83,14.83L16.24,16.24C17.33,15.15 18,13.65 18,12C18,10.35 17.33,8.85 16.24,7.76M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"></path></svg>');
       }
       .event:first-child {
         border-top: 2px solid var(--divider-color);
-      }
-      .event:last-child {
-        border-bottom: 0;
       }
       pre {
         margin: 0px;
@@ -100,7 +107,7 @@ export class HaDeviceEntitiesCard extends LitElement {
   @property() private _currentMode: number = 0;
   @property() private _currentModeHeader: string = "Uczenie kodów RF";
   @property() private _instructionInfo: string =
-    "Aby nauczyć Asystenta kodów pilota radiosego (lub innego urządzenia wysyłającego kody radiowe o częstotliwości 433), uruchom tryb uczenia kodów RF, naciskając przycisk poniżej.";
+    "Aby nauczyć Asystenta kodów pilota radiowego (lub innego urządzenia wysyłającego kody radiowe o częstotliwości 433), uruchom tryb uczenia kodów RF, naciskając przycisk poniżej.";
 
   protected render(): TemplateResult {
     const stateObj: HassEntity = this.hass.states[
@@ -130,7 +137,7 @@ export class HaDeviceEntitiesCard extends LitElement {
               ${stateObj.attributes.codes.map(
                 (msg, idx) =>
                   html`
-                    <div class="event">
+                    <div class="event" id="event_${idx}">
                       <span class="idx">[${idx + 1}]</span> Rozpoznany kod RF:
                       <span
                         style="font-size:xx-small; width:100%; display: block; white-space: pre-wrap; word-wrap: break-word; text-align: left;"
@@ -147,6 +154,15 @@ export class HaDeviceEntitiesCard extends LitElement {
                                 }
                               ></paper-input>
                               <div class="div-right">
+                                <div class="left">
+                                  <mwc-button
+                                    @click=${this._handleCloseCode}
+                                    .data-idx=${idx}
+                                    type="submit"
+                                  >
+                                    <iron-icon icon="mdi:eye-off"></iron-icon>
+                                  </mwc-button>
+                                </div>
                                 <mwc-button
                                   @click=${this._handleTestCode}
                                   .data-b0=${msg.B0}
@@ -167,15 +183,6 @@ export class HaDeviceEntitiesCard extends LitElement {
                                   <iron-icon icon="mdi:flash"></iron-icon>
                                   Dodaj Przycisk
                                 </mwc-button>
-                                <!-- <mwc-button
-                                  @click=${this._handleSubmitEntitySensor}
-                                  .data-b0=${msg.B0}
-                                  .data-topic=${msg.topic}
-                                  type="submit"
-                                >
-                                  <iron-icon icon="hass:eye"></iron-icon>
-                                  Dodaj Sensor
-                                </mwc-button> -->
                               </div>
                             </div>
                           `
@@ -206,7 +213,7 @@ export class HaDeviceEntitiesCard extends LitElement {
       this.hass.callService("ais_dom_device", "start_rf_sniffing");
       this._currentModeHeader = "Nasłuchiwanie kodów RF";
       this._instructionInfo =
-        "Teraz wyślij kilka kodów (naciśnij kilka razy przyciski na pilocie). Po skończeniu wysyłania przejdz w tryb testowania kodów naciskając przycisk poniżej.";
+        "Teraz wyślij kilka kodów (naciśnij kilka razy przyciski na pilocie). Po skończeniu wysyłania przejdź w tryb testowania kodów, naciskając przycisk poniżej.";
     } else if (this._currentMode === 1) {
       this._currentMode = 2;
       this.hass.callService("ais_dom_device", "stop_rf_sniffing", {
@@ -214,12 +221,12 @@ export class HaDeviceEntitiesCard extends LitElement {
       });
       this._currentModeHeader = "Testowanie i zapisanie kodów RF";
       this._instructionInfo =
-        "Przetestuj odebrane kody, ten który działa dodaj jako przycisk lub czujnik do systemu. By zakończyć tryb testowania/dodawania naciśnij przycisk poniżej.";
+        "Przetestuj odebrane kody, ten, który działa dodaj jako przycisk do systemu. By zakończyć tryb testowania/dodawania naciśnij przycisk poniżej.";
     } else if (this._currentMode === 2) {
       this._currentMode = 0;
       this._currentModeHeader = "Uczenie kodów RF";
       this._instructionInfo =
-        "Aby nauczyć Asystenta kodów z pilota (lub innego urządzenia wysyłającego kody radiowe o częstotliwości 433), uruchom tryb uczenia kodów RF naciskając przycisk poniżej";
+        "Aby nauczyć Asystenta kodów pilota radiowego (lub innego urządzenia wysyłającego kody radiowe o częstotliwości 433), uruchom tryb uczenia kodów RF, naciskając przycisk poniżej.";
       this.hass.callService("ais_dom_device", "stop_rf_sniffing", {
         clear: true,
       });
@@ -238,6 +245,13 @@ export class HaDeviceEntitiesCard extends LitElement {
     }
   }
 
+  private async _handleCloseCode(ev: CustomEvent) {
+    if (ev.currentTarget != null) {
+      const idx = ev.currentTarget["data-idx"];
+      this.shadowRoot!.getElementById("event_" + idx)!.style.display = "none";
+    }
+  }
+
   private async _handleSubmitEntitySwitch(ev: CustomEvent) {
     if (ev.currentTarget != null) {
       const b0 = ev.currentTarget["data-b0"];
@@ -251,23 +265,7 @@ export class HaDeviceEntitiesCard extends LitElement {
         code: b0,
         type: "switch",
       });
-    }
-  }
-
-  private async _handleSubmitEntitySensor(ev: CustomEvent) {
-    // TODO
-    showAddAisDomDeviceDialog(this, { entityType: "sensor" });
-    if (ev.currentTarget != null) {
-      const b0 = ev.currentTarget["data-b0"];
-      const gateTopic = ev.currentTarget["data-topic"];
-      const entityName = "todo";
-      this.hass.callService("ais_dom_device", "add_ais_dom_entity", {
-        name: entityName,
-        topic: gateTopic,
-        deviceId: this.deviceId,
-        code: b0,
-        type: "sensor",
-      });
+      this.shadowRoot!.getElementById("event_" + idx)!.style.display = "none";
     }
   }
 }

@@ -102,8 +102,8 @@ export class HaDeviceEntitiesCard extends LitElement {
   private _confirmDeleteEntry(ev: MouseEvent): void {
     const entry = (ev.currentTarget! as any).closest("paper-icon-item").entry;
     showConfirmationDialog(this, {
-      title: "Usuwanie",
-      text: "Czy napewno?",
+      title: "Usuwanie encji z systemu",
+      text: "Czy na pewno usunąć tę pozycję?",
       confirm: () => this._deleteEntry(entry),
     });
   }

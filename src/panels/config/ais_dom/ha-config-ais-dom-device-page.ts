@@ -139,7 +139,7 @@ export class HaConfigDevicePage extends LitElement {
         <ha-config-section .isWide=${!this.narrow}>
           <span slot="header">Urządzenie AIS dom</span>
           <span slot="introduction">
-            Na tej stronie możesz konfigurować swoje urzadzenie AIS dom.
+            Na tej stronie możesz konfigurować swoje urządzenia AIS dom.
           </span>
           <ha-device-card
             .hass=${this.hass}
