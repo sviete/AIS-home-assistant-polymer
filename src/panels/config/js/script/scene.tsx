@@ -24,7 +24,7 @@ export default class SceneAction extends Component<any> {
           value={scene}
           onChange={this.sceneChanged}
           hass={hass}
-          domainFilter="scene"
+          includeDomains={["scene"]}
           allowCustomEntity
         />
       </div>
@@ -33,6 +33,5 @@ export default class SceneAction extends Component<any> {
 }
 
 (SceneAction as any).defaultConfig = {
-  alias: "",
   scene: "",
 };
