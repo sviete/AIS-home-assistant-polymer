@@ -1651,10 +1651,10 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@thomasloven/round-slider@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@thomasloven/round-slider/-/round-slider-0.2.2.tgz#498e2d0b545cefd457c1249e3f90dec9b91dd91b"
-  integrity sha512-nh4Um3srnTnWaOWkq6sMaXsSgn07MfV/u5rjFZAoSETJrLCBkwWM5IToN3Tqy9SSQk6Zonk1/wpcY5tdACq2lg==
+"@thomasloven/round-slider@0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@thomasloven/round-slider/-/round-slider-0.3.6.tgz#242eba698197d55555f024e1fdb3a26263618c97"
+  integrity sha512-GtaHo42yS8EV7s0xMwlMJ860IhQOEo1qIt9pKZLu7ThJBd2MjZ52kIwlV9x3FMvqKyFZHE6MFOJqP6gb3BzKhQ==
   dependencies:
     lit-element "^2.2.1"
 
@@ -2036,6 +2036,11 @@
   integrity sha512-2iYpNuOl98SrLPBZfEN9Mh2JCJ2EI9HU35SfgBEb51DcmaHkhp8cKMblYeBqMQiwXMgAD3W60DbQ4i/UdLiXhw==
   dependencies:
     "@types/node" "*"
+
+"@types/webspeechapi@^0.0.29":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@types/webspeechapi/-/webspeechapi-0.0.29.tgz#8f3c6b31b779df7a9bbac7f89acfce0c3bcb1972"
+  integrity sha512-AYEhqEJLdR08YPBOwYa73IHTiGU4DdngbKbtZdW+bzuM7s8LzKBed0Fwgl/a3oMqMY227qOT+3Lpr5A0WSmm+A==
 
 "@types/whatwg-url@^6.4.0":
   version "6.4.0"
