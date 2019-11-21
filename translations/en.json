@@ -1255,6 +1255,14 @@
                     "note_about_integrations": "Not all integrations can be configured via the UI yet.",
                     "note_about_website_reference": "More are available on the "
                 },
+                "ais_dom": {
+                    "caption": " AIS Home Gateway Settings",
+                    "description": "Manage your IoT and Audio gateway"
+                },
+                "ais_dom_devices": {
+                    "caption": "Configuration of AIS home Devices",
+                    "description": "Manage your devices with AIS dom software"
+                },
                 "introduction": "Here it is possible to configure your components and Home Assistant. Not everything is possible to configure from the UI yet, but we're working on it.",
                 "person": {
                     "add_person": "Add Person",

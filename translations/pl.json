@@ -613,7 +613,7 @@
                 }
             },
             "voice_command": {
-                "did_not_hear": "Asystent domowy niczego nie słyszał",
+                "did_not_hear": "nic nie słychać...",
                 "error": "Ups, wystąpił błąd",
                 "found": "Znalazłem dla Ciebie:",
                 "how_can_i_help": "Jak mogę pomóc?",
@@ -1254,6 +1254,14 @@
                     "none": "Nic jeszcze nie zostało skonfigurowane",
                     "note_about_integrations": "Jeszcze nie wszystkie integracje można skonfigurować za pomocą interfejsu użytkownika.",
                     "note_about_website_reference": "Więcej jest dostępnych na stronie integracji "
+                },
+                "ais_dom": {
+                    "caption": "Ustawienia Bramki AIS dom",
+                    "description": "Zarządzaj swoją bramką IoT i Audio"
+                },
+                "ais_dom_devices": {
+                    "caption": "Konfiguracja Urządzeń AIS dom",
+                    "description": "Zarządzaj swoimi urządzeniami z oprogramowaniem AIS dom"
                 },
                 "introduction": "Tutaj możesz skonfigurować Asystenta domowego i jego komponenty. Nie wszystkie opcje można konfigurować z interfejsu użytkownika, ale pracujemy nad tym.",
                 "person": {

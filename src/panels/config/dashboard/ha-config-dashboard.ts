@@ -87,6 +87,16 @@ class HaConfigDashboard extends LitElement {
         `
             : ""}
 
+          <!-- AIS DOM -->
+          <ha-config-navigation
+            .hass=${this.hass}
+            .showAdvanced=${this.showAdvanced}
+            .pages=${[
+              { page: "ais_dom", core: true },
+              { page: "ais_dom_devices", core: true },
+            ]}
+          ></ha-config-navigation>
+
           <ha-config-navigation
             .hass=${this.hass}
             .showAdvanced=${this.showAdvanced}
