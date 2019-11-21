@@ -145,7 +145,9 @@ class HaPanelAishelp extends PolymerElement {
             <div class="card-content">
               To urządzenie posiada swój unikalny identyfikator, został on losowo wygenerowany przy pierwszym uruchomieniu i pozostanie stały przez cały okres użytkowania urządzenia.
               Identyfikator tego urządzenia to <a href="#"> [[aisSecureAndroidId]] </a>
-
+              <div style="text-align: center; margin-top: 10px;">
+                <img src="local/dom_access_code.png"> 
+              </div>
             </div>
           </ha-card>
         </ha-config-section>
