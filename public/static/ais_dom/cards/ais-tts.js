@@ -1,4 +1,4 @@
-let hass = document.querySelector("home-assistant").hass;
+const hass = document.querySelector("home-assistant").hass;
 hass.connection.subscribeEvents((event) => {
   if (
     event.data.domain === "ais_ai_service" &&

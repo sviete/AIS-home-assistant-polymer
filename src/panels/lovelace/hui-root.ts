@@ -173,7 +173,7 @@ class HUIRoot extends LitElement {
                     ? html`
                         <paper-icon-button
                           aria-label="Rozpocznij rozmowę"
-                          icon="hass:microphone"
+                          icon="mdi:forum-outline"
                           @click=${this._showVoiceCommandDialog}
                         ></paper-icon-button>
                       `

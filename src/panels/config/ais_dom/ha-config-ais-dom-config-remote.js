@@ -68,17 +68,14 @@ class HaConfigAisDomControl extends PolymerElement {
                 kiedy jesteś z dala od domu. Twoja bramka dostępna
                 [[remoteInfo]] z Internetu pod adresem
                 <a href="[[remoteDomain]]" target="_blank">[[remoteDomain]]</a>.
-                <div class="center-container" style="height:100px">
-                  <div on-click="showBarcodeInfo">
-                    <svg style="width:48px;height:48px" viewBox="0 0 24 24">
-                      <path
-                        fill="#ffffff"
-                        d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,15H9V21H3V15M5,17V19H7V17H5Z"
-                      />
-                    </svg>
+                <div class="center-container" style="height: 320px;">
+                  <div
+                    style="text-align: center; margin-top: 10px;"
+                    on-click="showBarcodeInfo"
+                  >
+                    <img src="/local/dom_access_code.png" />
                   </div>
-                  Kliknij obrazek z kodem by go powiększyć, a następnie zeskanuj
-                  kod QR za pomocą aplikacji na telefonie.
+                  Zeskanuj kod QR za pomocą aplikacji na telefonie.
                 </div>
               </div>
               <div class="card-actions">
