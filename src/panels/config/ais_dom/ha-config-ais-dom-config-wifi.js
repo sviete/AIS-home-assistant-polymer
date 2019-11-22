@@ -77,15 +77,6 @@ class HaConfigAisDomControl extends PolymerElement {
                   </div>
                 </div>
               </div>
-              <state-history-charts
-                hass="[[hass]]"
-                history-data="[[_stateHistory]]"
-                is-loading-data="[[_stateHistoryLoading]]"
-                names="[[_names]]"
-                up-to-now
-                no-single
-              >
-              </state-history-charts>
               <div class="card-actions">
                 <div>
                   <paper-icon-button
@@ -127,8 +118,6 @@ class HaConfigAisDomControl extends PolymerElement {
       _config: Object,
       _names: Object,
       _entities: Array,
-      _stateHistory: Object,
-      _stateHistoryLoading: Boolean,
       _cacheConfig: Object,
     };
   }
@@ -205,7 +194,6 @@ class HaConfigAisDomControl extends PolymerElement {
     const entities = processConfigEntities([
       "sensor.ais_wifi_service_current_network_info",
     ]);
-    console.log(entities);
 
     const _entities = [];
     const _names = {};
