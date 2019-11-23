@@ -13,80 +13,41 @@ class AisEasyPicker extends HTMLElement {
     const content = document.createElement("div");
     const style = document.createElement("style");
     style.textContent = `
-      div.tag {
+      div.tags {
         width: 100%;
         padding-bottom: 10px;
-        padding-left: 10px;
-        padding-top: 0em;
+        padding-top: 10px;
         text-align: left;
-        display: table-cell;
-        vertical-align: top;
-        font-size: 100%;
+          vertical-align: top;
         margin: 0px;
         cursor: pointer;
+        text-align: center;
+        background-color: var(--primary-background-color);
       }
-      .tag a {
+      div.tag {
         display: inline-block;
-        margin: .125em 0.75em .125em 0;
-        line-height: 1.2em;
-        word-break: break-all;
+        line-height: 30px;
+        word-break: break-word;
+        text-overflow: ellipsis;
         vertical-align: middle;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-      a {
-        text-decoration: none;
-      }
-      .tag .tag0 {
-        color: #0748cb;
-        font-size: 1.25em;
-      }
-      .tag .tag1 {
-          color: #e86e0b;
-          font-size: 1em;
-      }
-      .tag .tag2 {
-          color: #d9b904;
-          font-size: 1.1em;
-      }
-      .tag .tag3 {
-          color: #574ece;
-          font-size: 1.25em;
-      }
-      .tag .tag4 {
-          color: #47ac33;
-          font-size: 1.15em;
-      }
-      .tag .tag5 {
-          color: #3599cd;
-          font-size: 1.1875em;
-      }
-      .tag .tag6 {
-          color: #c3365a;
-          font-size: 1.25em;
-      }
-      .tag .tag7 {
-          color: #19838c;
-          font-size: 1.375em;
-      }
-      .tag .tag8 {
-          color: #a2a097;
-          font-size: 1.4em;
-      }
-      .tag .tag9 {
-          color: #93a558;
-          font-size: 1.2em;
-      }
-      .tag .clicked{
-        background: var(--primary-color);
+        color: var(--paper-grey-500);
+        width: 120px;
+        height: 30px;
+        margin: 4px;
         padding: 4px;
-        color: white;
+        position: relative; 
+        background-color: var(--paper-card-background-color);
+        text-decoration: none;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      div.clicked{
+        color: var(--primary-color);
         font-weight: bolder;
       }
     `;
     content.innerHTML = `
-      <div id='options' class='tag'>
+      <div id='options' class='tags'>
       </div>
       `;
     card.appendChild(style);
@@ -98,20 +59,13 @@ class AisEasyPicker extends HTMLElement {
   _updateContent(element, options, state) {
     var a = "";
     var c = "";
-    var digit = "";
-    options.map((option, index) => {
-      if (index < 10) {
-        digit = index.toString()[0];
-      } else {
-        digit = index.toString()[1];
-      }
-
+    options.map((option) => {
       if (state === option) {
         c = "clicked";
       } else {
         c = "";
       }
-      a += `<a class="tag tag${digit} ${c}">${option}</a>`;
+      a += `<div class="tag ${c}" data-option="${option}"> ${option} </div>`;
     });
     element.innerHTML = `${a}`;
   }
@@ -123,11 +77,11 @@ class AisEasyPicker extends HTMLElement {
     const options = hass.states[config.entity].attributes.options;
     this._updateContent(root.getElementById("options"), options, state);
 
-    const selectOptions = root.querySelectorAll("a.tag");
+    const selectOptions = root.querySelectorAll("div.tag");
     selectOptions.forEach((option) => {
       option.addEventListener("click", () => {
         hass.callService("input_select", "select_option", {
-          option: option.text,
+          option: option.getAttribute("data-option"),
           entity_id: config.entity,
         });
         option.classList.add("clicked");

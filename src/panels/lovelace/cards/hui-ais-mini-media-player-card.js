@@ -1,7 +1,7 @@
 (function() {
   "use strict";
   function a() {
-    const b = sa(["<span class=", ">", "</span>"]);
+    const b = ya(["<span class=", ">", "</span>"]);
     return (
       (a = function() {
         return b;
@@ -10,7 +10,7 @@
     );
   }
   function b() {
-    const a = sa(["<span class=", ">", "</span>"]);
+    const a = ya(["<span class=", ">", "</span>"]);
     return (
       (b = function() {
         return a;
@@ -19,7 +19,7 @@
     );
   }
   function c() {
-    const a = sa([
+    const a = ya([
       "\n          <div>\n            <div class='marquee'>\n              ",
       "\n            </div>\n          </div>",
     ]);
@@ -31,7 +31,7 @@
     );
   }
   function d() {
-    const a = sa([
+    const a = ya([
       "\n      <div class='entity__info__media'\n        ?short=",
       "\n        ?short-scroll=",
       "\n        ?scroll=",
@@ -48,7 +48,7 @@
     );
   }
   function e() {
-    const a = sa([
+    const a = ya([
       "\n      <div class='entity__info__name'>\n        ",
       " ",
       "\n      </div>",
@@ -61,7 +61,7 @@
     );
   }
   function f() {
-    const a = sa([
+    const a = ya([
       "\n      <div class='entity__icon'>\n        <ha-icon .icon=",
       "></ha-icon>\n      </div>",
     ]);
@@ -73,7 +73,7 @@
     );
   }
   function g() {
-    const a = sa([
+    const a = ya([
       "\n        <div class='entity__artwork'\n          style='background-image: ",
       ";'\n          ?border=",
       "\n          state=",
@@ -87,7 +87,7 @@
     );
   }
   function h() {
-    const a = sa(["<div class='cover' style='background-image: ", ";'></div>"]);
+    const a = ya(["<div class='cover' style='background-image: ", ";'></div>"]);
     return (
       (h = function() {
         return a;
@@ -96,11 +96,10 @@
     );
   }
   function i() {
-    const a = sa([
-      "\n              <mmp-tts\n                .config=",
-      "\n                .hass=",
-      "\n                .entity=",
-      ">\n              </mmp-tts>\n            ",
+    const a = ya([
+      "\n            <mmp-progress\n              .player=",
+      "\n              .showTime=",
+      ">\n            </mmp-progress>\n          ",
     ]);
     return (
       (i = function() {
@@ -110,11 +109,11 @@
     );
   }
   function j() {
-    const a = sa([
-      "\n              <mmp-media-controls\n                .player=",
-      "\n                .config=",
-      "\n                .break=",
-      ">\n              </mmp-media-controls>\n            ",
+    const a = ya([
+      "\n              <mmp-tts\n                .config=",
+      "\n                .hass=",
+      "\n                .entity=",
+      ">\n              </mmp-tts>\n            ",
     ]);
     return (
       (j = function() {
@@ -124,7 +123,21 @@
     );
   }
   function k() {
-    const a = sa([
+    const a = ya([
+      "\n              <mmp-media-controls\n                .player=",
+      "\n                .config=",
+      "\n                .break=",
+      ">\n              </mmp-media-controls>\n            ",
+    ]);
+    return (
+      (k = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function l() {
+    const a = ya([
       "\n      <ha-card\n        @click=",
       "\n        class=",
       "\n        artwork=",
@@ -148,20 +161,8 @@
       "\n            <mmp-group-list\n              .visible=",
       "\n              .entities=",
       "\n              .player=",
-      ">\n            </mmp-group-list>\n          </div>\n        </div>\n        <div class='mmp__container'>\n          <mmp-progress\n            .player=",
-      "\n            .showTime=",
-      ">\n          </mmp-progress>\n        </div>\n      </ha-card>\n    ",
-    ]);
-    return (
-      (k = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function l() {
-    const a = sa([
-      "\n        :host {\n          display: flex;\n          line-height: 40px;\n          max-height: 40px;\n        }\n        :host([flow]) mmp-media-controls {\n          max-width: unset;\n        }\n        mmp-media-controls {\n          max-width: 200px;\n        }\n        .group-button {\n          height: 34px;\n          width: 34px;\n          min-width: 34px;\n          margin: 3px;\n        }\n        paper-icon-button {\n          min-width: 40px;\n        }\n      ",
+      ">\n            </mmp-group-list>\n          </div>\n        </div>\n        <div class='mmp__container'>\n          ",
+      "\n        </div>\n      </ha-card>\n    ",
     ]);
     return (
       (l = function() {
@@ -171,9 +172,8 @@
     );
   }
   function m() {
-    const a = sa([
-      "\n        <span class='label ellipsis'>\n          ",
-      "\n        </span>\n      ",
+    const a = ya([
+      "\n        :host {\n          display: flex;\n          line-height: 40px;\n          max-height: 40px;\n        }\n        :host([flow]) mmp-media-controls {\n          max-width: unset;\n        }\n        mmp-media-controls {\n          max-width: 200px;\n          line-height: initial;\n        }\n        .group-button {\n          height: 34px;\n          width: 34px;\n          min-width: 34px;\n          margin: 3px;\n        }\n        paper-icon-button {\n          min-width: 40px;\n        }\n      ",
     ]);
     return (
       (m = function() {
@@ -183,10 +183,9 @@
     );
   }
   function n() {
-    const a = sa([
-      "\n        <paper-icon-button\n          .icon=",
-      "\n          @click=",
-      ">\n        </paper-icon-button>",
+    const a = ya([
+      "\n        <span class='label ellipsis'>\n          ",
+      "\n        </span>\n      ",
     ]);
     return (
       (n = function() {
@@ -196,10 +195,9 @@
     );
   }
   function o() {
-    const a = sa([
-      "\n        <paper-icon-button class='power-button'\n          .icon=",
+    const a = ya([
+      "\n        <paper-icon-button\n          .icon=",
       "\n          @click=",
-      "\n          ?color=",
       ">\n        </paper-icon-button>",
     ]);
     return (
@@ -210,11 +208,10 @@
     );
   }
   function p() {
-    const a = sa([
-      "\n        <paper-icon-button class='group-button'\n          .icon=",
-      "\n          ?inactive=",
-      "\n          ?color=",
+    const a = ya([
+      "\n        <paper-icon-button class='power-button'\n          .icon=",
       "\n          @click=",
+      "\n          ?color=",
       ">\n        </paper-icon-button>",
     ]);
     return (
@@ -225,11 +222,12 @@
     );
   }
   function q() {
-    const a = sa([
-      "\n        <mmp-sound-menu\n          .player=",
-      "\n          .icon=",
-      "\n          ?full=",
-      ">\n        </mmp-sound-menu>",
+    const a = ya([
+      "\n        <paper-icon-button class='group-button'\n          .icon=",
+      "\n          ?inactive=",
+      "\n          ?color=",
+      "\n          @click=",
+      ">\n        </paper-icon-button>",
     ]);
     return (
       (q = function() {
@@ -239,11 +237,11 @@
     );
   }
   function r() {
-    const a = sa([
-      "\n        <mmp-source-menu\n          .player=",
+    const a = ya([
+      "\n        <mmp-sound-menu\n          .player=",
       "\n          .icon=",
       "\n          ?full=",
-      ">\n        </mmp-source-menu>",
+      ">\n        </mmp-sound-menu>",
     ]);
     return (
       (r = function() {
@@ -253,10 +251,11 @@
     );
   }
   function s() {
-    const a = sa([
-      "\n        <mmp-media-controls\n          .player=",
-      "\n          .config=",
-      ">\n        </mmp-media-controls>\n      ",
+    const a = ya([
+      "\n        <mmp-source-menu\n          .player=",
+      "\n          .icon=",
+      "\n          ?full=",
+      ">\n        </mmp-source-menu>",
     ]);
     return (
       (s = function() {
@@ -266,14 +265,10 @@
     );
   }
   function t() {
-    const a = sa([
-      "\n      ",
-      "\n      ",
-      "\n      ",
-      "\n      ",
-      "\n      ",
-      "\n      ",
-      "\n    ",
+    const a = ya([
+      "\n        <mmp-media-controls\n          .player=",
+      "\n          .config=",
+      ">\n        </mmp-media-controls>\n      ",
     ]);
     return (
       (t = function() {
@@ -283,9 +278,14 @@
     );
   }
   function u() {
-    const a = sa([
-      "\n        <span class='label ellipsis'>\n          ",
-      "\n        </span>\n      ",
+    const a = ya([
+      "\n      ",
+      "\n      ",
+      "\n      ",
+      "\n      ",
+      "\n      ",
+      "\n      ",
+      "\n    ",
     ]);
     return (
       (u = function() {
@@ -295,8 +295,9 @@
     );
   }
   function v() {
-    const a = sa([
-      "\n        :host {\n          display: flex;\n          width: 100%;\n        }\n        .flex {\n          display: flex;\n          flex: 1;\n          justify-content: space-between;\n        }\n        ha-slider {\n          max-width: none;\n          min-width: 100px;\n          width: 100%;\n        }\n        paper-icon-button {\n          min-width: 40px;\n        }\n        .mmp-media-controls__volume {\n          flex: 100;\n          max-height: 40px;\n        }\n        .mmp-media-controls__volume.--buttons {\n          justify-content: left;\n        }\n        .mmp-media-controls__media {\n          direction: ltr;\n          max-width: calc(40px * 3);\n          margin-right: 0;\n          margin-left: auto;\n        }\n        .mmp-media-controls__media[flow] {\n          max-width: none;\n        }\n        .mmp-media-controls__shuffle {\n          flex: 3;\n          flex-shrink: 200;\n          justify-content: center;\n        }\n        .mmp-media-controls__shuffle paper-icon-button {\n          height: 36px;\n          width: 36px;\n          min-width: 36px;\n          margin: 2px;\n        }\n      ",
+    const a = ya([
+      "\n        <span class='label ellipsis'>\n          ",
+      "\n        </span>\n      ",
     ]);
     return (
       (v = function() {
@@ -306,10 +307,8 @@
     );
   }
   function w() {
-    const a = sa([
-      "\n          <paper-icon-button\n            @click=",
-      "\n            .icon=",
-      ">\n          </paper-icon-button>\n        ",
+    const a = ya([
+      "\n        :host {\n          display: flex;\n          width: 100%;\n        }\n        .flex {\n          display: flex;\n          flex: 1;\n          justify-content: space-between;\n        }\n        ha-slider {\n          max-width: none;\n          min-width: 100px;\n          width: 100%;\n        }\n        paper-icon-button {\n          min-width: 40px;\n        }\n        .mmp-media-controls__volume {\n          flex: 100;\n          max-height: 40px;\n        }\n        .mmp-media-controls__volume.--buttons {\n          justify-content: left;\n        }\n        .mmp-media-controls__media {\n          justify-content: flex-end;\n          max-width: calc(40px * 4);\n          margin-right: 0;\n          margin-left: auto;\n        }\n        .mmp-media-controls__media[flow] {\n          max-width: none;\n          justify-content: space-between;\n        }\n        .mmp-media-controls__shuffle {\n          flex: 3;\n          flex-shrink: 200;\n          justify-content: center;\n        }\n        .mmp-media-controls__shuffle paper-icon-button {\n          height: 36px;\n          width: 36px;\n          min-width: 36px;\n          margin: 2px;\n        }\n      ",
     ]);
     return (
       (w = function() {
@@ -319,11 +318,7 @@
     );
   }
   function x() {
-    const a = sa([
-      "\n          <paper-icon-button\n            @click=",
-      "\n            .icon=",
-      ">\n          </paper-icon-button>\n        ",
-    ]);
+    const a = ya([""]);
     return (
       (x = function() {
         return a;
@@ -332,10 +327,10 @@
     );
   }
   function y() {
-    const a = sa([
-      "\n          <paper-icon-button\n            @click=",
-      "\n            .icon=",
-      ">\n          </paper-icon-button>\n        ",
+    const a = ya([
+      "\n        <paper-icon-button\n          @click=",
+      "\n          .icon=",
+      ">\n        </paper-icon-button>\n      ",
     ]);
     return (
       (y = function() {
@@ -345,11 +340,7 @@
     );
   }
   function z() {
-    const a = sa([
-      "\n          <paper-icon-button\n            @click=",
-      "\n            .icon=",
-      ">\n          </paper-icon-button>\n        ",
-    ]);
+    const a = ya([""]);
     return (
       (z = function() {
         return a;
@@ -358,13 +349,10 @@
     );
   }
   function A() {
-    const a = sa([
-      "\n      <div class='mmp-media-controls__volume --buttons flex'>\n        ",
+    const a = ya([
       "\n        <paper-icon-button\n          @click=",
       "\n          .icon=",
-      ">\n        </paper-icon-button>\n        <paper-icon-button\n          @click=",
-      "\n          .icon=",
-      ">\n        </paper-icon-button>\n      </div>",
+      ">\n        </paper-icon-button>\n      ",
     ]);
     return (
       (A = function() {
@@ -374,7 +362,97 @@
     );
   }
   function B() {
-    const a = sa([
+    const a = ya(["\n      ", "\n      ", "\n    "]);
+    return (
+      (B = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function C() {
+    const a = ya([
+      "\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n        ",
+    ]);
+    return (
+      (C = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function D() {
+    const a = ya([
+      "\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n        ",
+    ]);
+    return (
+      (D = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function E() {
+    const a = ya([
+      "\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n        ",
+    ]);
+    return (
+      (E = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function F() {
+    const a = ya([
+      "\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n        ",
+    ]);
+    return (
+      (F = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function G() {
+    const a = ya([
+      "\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n        ",
+    ]);
+    return (
+      (G = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function H() {
+    const a = ya([
+      "\n      <div class='mmp-media-controls__volume --buttons flex'>\n        ",
+      "\n        <paper-icon-button\n          @click=",
+      "\n          .icon=",
+      ">\n        </paper-icon-button>\n        <paper-icon-button\n          @click=",
+      "\n          .icon=",
+      ">\n        </paper-icon-button>\n      </div>",
+    ]);
+    return (
+      (H = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function I() {
+    const a = ya([
       "\n      <div class='mmp-media-controls__volume --slider flex'>\n        ",
       "\n        <ha-slider\n          @change=",
       "\n          @click=",
@@ -386,85 +464,6 @@
       "\n          ignore-bar-touch pin>\n        </ha-slider>\n      </div>",
     ]);
     return (
-      (B = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function C() {
-    const a = sa([""]);
-    return (
-      (C = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function D() {
-    const a = sa([
-      "\n        <div class='flex mmp-media-controls__media' ?flow=",
-      ">\n          <paper-icon-button\n            @click=",
-      "\n            .icon=",
-      ">\n          </paper-icon-button>\n          <paper-icon-button\n            @click=",
-      "\n            .icon=",
-      ">\n          </paper-icon-button>\n          <paper-icon-button\n            @click=",
-      "\n            .icon=",
-      ">\n          </paper-icon-button>\n        </div>\n      ",
-    ]);
-    return (
-      (D = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function E() {
-    const a = sa([""]);
-    return (
-      (E = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function F() {
-    const a = sa([
-      "\n        <div class='flex mmp-media-controls__shuffle'>\n          <paper-icon-button\n            class='shuffle-button'\n            @click=",
-      "\n            .icon=",
-      "\n            ?color=",
-      ">\n          </paper-icon-button>\n        </div>\n      ",
-    ]);
-    return (
-      (F = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function G() {
-    const a = sa([""]);
-    return (
-      (G = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function H() {
-    const a = sa(["\n      ", "\n      ", "\n      ", "\n    "]);
-    return (
-      (H = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function I() {
-    const a = sa([
-      "\n      :host {\n        max-width: 120px;\n        min-width: 40px;\n      }\n      :host([full]) {\n        max-width: none;\n      }\n    ",
-    ]);
-    return (
       (I = function() {
         return a;
       }),
@@ -472,14 +471,7 @@
     );
   }
   function J() {
-    const a = sa([
-      "\n      <mmp-dropdown\n        @change=",
-      "\n        .items=",
-      "\n        .label=",
-      "\n        .selected=",
-      "\n        .icon=",
-      "\n      />\n    ",
-    ]);
+    const a = ya([""]);
     return (
       (J = function() {
         return a;
@@ -488,8 +480,14 @@
     );
   }
   function K() {
-    const a = sa([
-      "\n      :host {\n        max-width: 120px;\n        min-width: 40px;\n      }\n      :host([full]) {\n        max-width: none;\n      }\n    ",
+    const a = ya([
+      "\n        <div class='flex mmp-media-controls__media' ?flow=",
+      ">\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n          ",
+      "\n          <paper-icon-button\n            @click=",
+      "\n            .icon=",
+      ">\n          </paper-icon-button>\n        </div>\n      ",
     ]);
     return (
       (K = function() {
@@ -499,14 +497,7 @@
     );
   }
   function L() {
-    const a = sa([
-      "\n      <mmp-dropdown\n        @change=",
-      "\n        .items=",
-      "\n        .label=",
-      "\n        .selected=",
-      "\n        .icon=",
-      "\n      />\n    ",
-    ]);
+    const a = ya([""]);
     return (
       (L = function() {
         return a;
@@ -515,8 +506,11 @@
     );
   }
   function M() {
-    const a = sa([
-      "\n      .mmp-progress {\n        cursor: pointer;\n        left: 0; right: 0; bottom: 0;\n        position: absolute;\n        pointer-events: auto;\n        min-height: 10px;\n      }\n      .mmp-progress__duration {\n        display: flex;\n        justify-content: space-between;\n        font-size: .8em;\n        margin: 8px calc(var(--ha-card-border-radius, 4px) / 2);\n        margin-top: 0;\n        padding: 0 6px;\n      }\n      paper-progress {\n        height: var(--paper-progress-height, 4px);\n        bottom: 0;\n        position: absolute;\n        width: 100%;\n        --paper-progress-active-color: var(--mmp-accent-color);\n        --paper-progress-container-color: rgba(100,100,100,.15);\n        --paper-progress-transition-duration: 1s;\n        --paper-progress-transition-timing-function: linear;\n        --paper-progress-transition-delay: 0s;\n      }\n      .mmp-progress[paused] paper-progress {\n        --paper-progress-active-color: var(--disabled-text-color, rgba(150,150,150,.5));\n      }\n    ",
+    const a = ya([
+      "\n        <div class='flex mmp-media-controls__shuffle'>\n          <paper-icon-button\n            class='shuffle-button'\n            @click=",
+      "\n            .icon=",
+      "\n            ?color=",
+      ">\n          </paper-icon-button>\n        </div>\n      ",
     ]);
     return (
       (M = function() {
@@ -526,7 +520,7 @@
     );
   }
   function N() {
-    const a = sa([""]);
+    const a = ya([""]);
     return (
       (N = function() {
         return a;
@@ -535,11 +529,7 @@
     );
   }
   function O() {
-    const a = sa([
-      "\n            <div class='mmp-progress__duration'>\n              <span>",
-      "</span>\n              <span>",
-      "</span>\n            </div>\n          ",
-    ]);
+    const a = ya(["\n      ", "\n      ", "\n      ", "\n    "]);
     return (
       (O = function() {
         return a;
@@ -548,13 +538,8 @@
     );
   }
   function P() {
-    const a = sa([
-      "\n        <div class='mmp-progress'\n          @click=",
-      "\n          ?paused=",
-      ">\n          ",
-      "\n          <paper-progress class='transiting'\n            value=",
-      "\n            max=",
-      ">\n          </paper-progress>\n        </div>\n      ",
+    const a = ya([
+      "\n      :host {\n        max-width: 120px;\n        min-width: 40px;\n      }\n      :host([full]) {\n        max-width: none;\n      }\n    ",
     ]);
     return (
       (P = function() {
@@ -564,8 +549,13 @@
     );
   }
   function Q() {
-    const a = sa([
-      "\n      :host {\n        align-items: center;\n        margin-left: 8px;\n        display: flex;\n      }\n      .mmp-tts__input {\n        cursor: text;\n        flex: 1;\n        margin-right: 8px;\n        --paper-input-container-input: {\n          font-size: 1em;\n        };\n      }\n      ha-card[rtl] .mmp-tts__input {\n        margin-right: auto;\n        margin-left: 8px;\n      }\n      .mmp-tts__button {\n        margin: 0;\n        height: 30px;\n        padding: 0 .4em;\n      }\n      paper-input {\n        opacity: .75;\n        --paper-input-container-color: var(--mmp-text-color);\n        --paper-input-container-focus-color: var(--mmp-text-color);\n        --paper-input-container: {\n          padding: 0;\n        };\n      }\n      paper-input[focused] {\n        opacity: 1;\n      }\n\n      ha-card[artwork*='cover'][has-artwork] paper-input {\n        --paper-input-container-focus-color: #FFFFFF;\n      }\n      ha-card[artwork*='cover'][has-artwork] paper-input {\n        --paper-input-container-color: #FFFFFF;\n        --paper-input-container-input-color: #FFFFFF;\n      }\n    ",
+    const a = ya([
+      "\n      <mmp-dropdown\n        @change=",
+      "\n        .items=",
+      "\n        .label=",
+      "\n        .selected=",
+      "\n        .icon=",
+      "\n      />\n    ",
     ]);
     return (
       (Q = function() {
@@ -575,11 +565,8 @@
     );
   }
   function R() {
-    const a = sa([
-      "\n      <paper-input id=\"tts-input\" class='mmp-tts__input'\n        no-label-float\n        placeholder=",
-      "...\n        @click=",
-      ">\n      </paper-input>\n      <mmp-button class='mmp-tts__button' @click=",
-      ">\n        <span>SEND</span>\n      </mmp-button>\n    ",
+    const a = ya([
+      "\n      :host {\n        max-width: 120px;\n        min-width: 40px;\n      }\n      :host([full]) {\n        max-width: none;\n      }\n    ",
     ]);
     return (
       (R = function() {
@@ -589,8 +576,13 @@
     );
   }
   function S() {
-    const a = sa([
-      "\n        .mmp-shortcuts__buttons {\n          box-sizing: border-box;\n          display: flex;\n          flex-wrap: wrap;\n          margin-top: 8px;\n        }\n        .mmp-shortcuts__button {\n          min-width: calc(50% - 8px);\n          flex: 1;\n        }\n        .mmp-shortcuts__button > div {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          width: 100%;\n        }\n        .mmp-shortcuts__button > div[align='left'] {\n          justify-content: flex-start;\n        }\n        .mmp-shortcuts__button > div[align='right'] {\n          justify-content: flex-end;\n        }\n        .mmp-shortcuts__button[columns='1'] {\n          min-width: calc(100% - 8px);\n        }\n        .mmp-shortcuts__button[columns='3'] {\n          min-width: calc(33.33% - 8px);\n        }\n        .mmp-shortcuts__button[columns='4'] {\n          min-width: calc(25% - 8px);\n        }\n        .mmp-shortcuts__button[columns='5'] {\n          min-width: calc(20% - 8px);\n        }\n        .mmp-shortcuts__button > div > span {\n          line-height: 24px;\n          text-transform: initial;\n        }\n        .mmp-shortcuts__button > div > *:nth-child(2) {\n          margin-left: 4px;\n        }\n      ",
+    const a = ya([
+      "\n      <mmp-dropdown\n        @change=",
+      "\n        .items=",
+      "\n        .label=",
+      "\n        .selected=",
+      "\n        .icon=",
+      "\n      />\n    ",
     ]);
     return (
       (S = function() {
@@ -600,7 +592,9 @@
     );
   }
   function T() {
-    const a = sa(["\n      ", "\n      ", "\n    "]);
+    const a = ya([
+      "\n      .mmp-progress {\n        cursor: pointer;\n        left: 0; right: 0; bottom: 0;\n        position: absolute;\n        pointer-events: auto;\n        min-height: calc(var(--mmp-progress-height) + 10px);\n      }\n      .mmp-progress__duration {\n        left: calc(var(--ha-card-border-radius, 4px) / 2);\n        right: calc(var(--ha-card-border-radius, 4px) / 2);\n        bottom: calc(var(--mmp-progress-height) + 6px);\n        position: absolute;\n        display: flex;\n        justify-content: space-between;\n        font-size: .8em;\n        padding: 0 6px;\n        z-index: 2\n      }\n      paper-progress {\n        height: var(--mmp-progress-height);\n        --paper-progress-height: var(--mmp-progress-height);\n        bottom: 0;\n        position: absolute;\n        width: 100%;\n        transition: height 0;\n        z-index: 1;\n        --paper-progress-active-color: var(--mmp-accent-color);\n        --paper-progress-container-color: rgba(100,100,100,.15);\n        --paper-progress-transition-duration: 1s;\n        --paper-progress-transition-timing-function: linear;\n        --paper-progress-transition-delay: 0s;\n      }\n      paper-progress.seeking {\n        transition: height .15s ease-out;\n        height: calc(var(--mmp-progress-height) + 4px);\n        --paper-progress-height: calc(var(--mmp-progress-height) + 4px);\n      }\n      .mmp-progress[paused] paper-progress {\n        --paper-progress-active-color: var(--disabled-text-color, rgba(150,150,150,.5));\n      }\n    ",
+    ]);
     return (
       (T = function() {
         return a;
@@ -609,7 +603,11 @@
     );
   }
   function U() {
-    const a = sa(['<span class="ellipsis">', "</span>"]);
+    const a = ya([
+      "\n          <div class='mmp-progress__duration'>\n            <span>",
+      "</span>\n            <span>",
+      "</span>\n          </div>\n        ",
+    ]);
     return (
       (U = function() {
         return a;
@@ -618,7 +616,20 @@
     );
   }
   function V() {
-    const a = sa(["<iron-icon .icon=", "></iron-icon>"]);
+    const a = ya([
+      "\n      <div class='mmp-progress'\n        @touchstart=",
+      "\n        @touchend=",
+      "\n        @mousedown=",
+      "\n        @mouseup=",
+      "\n        @mouseleave=",
+      "\n        @click=",
+      "\n        ?paused=",
+      ">\n        ",
+      "\n        <paper-progress class=",
+      "\n          value=",
+      "\n          max=",
+      ">\n        </paper-progress>\n      </div>\n    ",
+    ]);
     return (
       (V = function() {
         return a;
@@ -627,7 +638,70 @@
     );
   }
   function W() {
-    const a = sa([
+    const a = ya([
+      "\n      :host {\n        align-items: center;\n        margin-left: 8px;\n        display: flex;\n      }\n      .mmp-tts__input {\n        cursor: text;\n        flex: 1;\n        margin-right: 8px;\n        --paper-input-container-input: {\n          font-size: 1em;\n        };\n      }\n      ha-card[rtl] .mmp-tts__input {\n        margin-right: auto;\n        margin-left: 8px;\n      }\n      .mmp-tts__button {\n        margin: 0;\n        height: 30px;\n        padding: 0 .4em;\n      }\n      paper-input {\n        opacity: .75;\n        --paper-input-container-color: var(--mmp-text-color);\n        --paper-input-container-focus-color: var(--mmp-text-color);\n        --paper-input-container: {\n          padding: 0;\n        };\n      }\n      paper-input[focused] {\n        opacity: 1;\n      }\n\n      ha-card[artwork*='cover'][has-artwork] paper-input {\n        --paper-input-container-focus-color: #FFFFFF;\n      }\n      ha-card[artwork*='cover'][has-artwork] paper-input {\n        --paper-input-container-color: #FFFFFF;\n        --paper-input-container-input-color: #FFFFFF;\n      }\n    ",
+    ]);
+    return (
+      (W = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function X() {
+    const a = ya([
+      "\n      <paper-input id=\"tts-input\" class='mmp-tts__input'\n        no-label-float\n        placeholder=",
+      "...\n        @click=",
+      ">\n      </paper-input>\n      <mmp-button class='mmp-tts__button' @click=",
+      ">\n        <span>SEND</span>\n      </mmp-button>\n    ",
+    ]);
+    return (
+      (X = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function Y() {
+    const a = ya([
+      "\n        .mmp-shortcuts__buttons {\n          box-sizing: border-box;\n          display: flex;\n          flex-wrap: wrap;\n          margin-top: 8px;\n        }\n        .mmp-shortcuts__button {\n          min-width: calc(50% - 8px);\n          flex: 1;\n        }\n        .mmp-shortcuts__button > div {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          width: 100%;\n        }\n        .mmp-shortcuts__button > div[align='left'] {\n          justify-content: flex-start;\n        }\n        .mmp-shortcuts__button > div[align='right'] {\n          justify-content: flex-end;\n        }\n        .mmp-shortcuts__button[columns='1'] {\n          min-width: calc(100% - 8px);\n        }\n        .mmp-shortcuts__button[columns='3'] {\n          min-width: calc(33.33% - 8px);\n        }\n        .mmp-shortcuts__button[columns='4'] {\n          min-width: calc(25% - 8px);\n        }\n        .mmp-shortcuts__button[columns='5'] {\n          min-width: calc(20% - 8px);\n        }\n        .mmp-shortcuts__button[columns='6'] {\n          min-width: calc(16.66% - 8px);\n        }\n        .mmp-shortcuts__button > div > span {\n          line-height: 24px;\n          text-transform: initial;\n        }\n        .mmp-shortcuts__button > div > *:nth-child(2) {\n          margin-left: 4px;\n        }\n      ",
+    ]);
+    return (
+      (Y = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function Z() {
+    const a = ya(["\n      ", "\n      ", "\n    "]);
+    return (
+      (Z = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function $() {
+    const a = ya(['<span class="ellipsis">', "</span>"]);
+    return (
+      ($ = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function _() {
+    const a = ya(["<iron-icon .icon=", "></iron-icon>"]);
+    return (
+      (_ = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function aa() {
+    const a = ya([
       "\n          <mmp-button\n            style=",
       "\n            raised\n            columns=",
       "\n            ?color=",
@@ -638,71 +712,6 @@
       "\n            </div>\n          </mmp-button>",
     ]);
     return (
-      (W = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function X() {
-    const a = sa([
-      "\n      <div class='mmp-shortcuts__buttons'>\n        ",
-      "\n      </div>\n    ",
-    ]);
-    return (
-      (X = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function Y() {
-    const a = sa([
-      "\n      <mmp-dropdown class='mmp-shortcuts__dropdown'\n        @change=",
-      "\n        .items=",
-      "\n        .label=",
-      "\n        .selected=",
-      ">\n      </mmp-dropdown>\n    ",
-    ]);
-    return (
-      (Y = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function Z() {
-    const a = sa([""]);
-    return (
-      (Z = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function $() {
-    const a = sa([
-      "\n        :host {\n          display: block;\n        }\n        :host([faded]) {\n          opacity: .75;\n        }\n        :host[small] .mmp-dropdown__label {\n          max-width: 60px;\n          display: block;\n          position: relative;\n          width: auto;\n          text-transform: initial;\n        }\n        :host[full] .mmp-dropdown__label {\n          max-width: none;\n        }\n        .mmp-dropdown {\n          padding: 0;\n          display: block;\n        }\n        .mmp-dropdown__button {\n          display: flex;\n          font-size: 1em;\n          justify-content: space-between;\n          align-items: center;\n          height: 36px;\n          margin: 2px 0;\n        }\n        .mmp-dropdown__button.icon {\n          height: 40px;\n          margin: 0;\n        }\n        .mmp-dropdown__button > div {\n          display: flex;\n          flex: 1;\n          justify-content: space-between;\n          align-items: center;\n          height: 36px;\n          max-width: 100%;\n        }\n        .mmp-dropdown__label {\n          text-align: left;\n          text-transform: none;\n        }\n        .mmp-dropdown__icon {\n          height: 24px;\n          width: 24px;\n          min-width: 24px;\n        }\n        paper-item > *:nth-child(2) {\n          margin-left: 4px;\n        }\n        paper-menu-button[focused] mmp-button iron-icon {\n          color: var(--mmp-accent-color);\n          transform: rotate(180deg);\n        }\n        paper-menu-button[focused] paper-icon-button {\n          color: var(--mmp-accent-color);\n          transform: rotate(180deg);\n        }\n        paper-menu-button[focused] paper-icon-button[focused] {\n          color: var(--mmp-text-color);\n          transform: rotate(0deg);\n        }\n      ",
-    ]);
-    return (
-      ($ = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function _() {
-    const a = sa(["<span class='mmp-dropdown__item__label'>", "</span>"]);
-    return (
-      (_ = function() {
-        return a;
-      }),
-      a
-    );
-  }
-  function aa() {
-    const a = sa(["<iron-icon .icon=", "></iron-icon>"]);
-    return (
       (aa = function() {
         return a;
       }),
@@ -710,12 +719,9 @@
     );
   }
   function ba() {
-    const a = sa([
-      "\n            <paper-item\n              value=",
-      "\n              @click=",
-      ">\n              ",
-      "\n              ",
-      "\n            </paper-item>",
+    const a = ya([
+      "\n      <div class='mmp-shortcuts__buttons'>\n        ",
+      "\n      </div>\n    ",
     ]);
     return (
       (ba = function() {
@@ -725,10 +731,12 @@
     );
   }
   function ca() {
-    const a = sa([
-      "\n          <mmp-button class='mmp-dropdown__button' slot='dropdown-trigger'>\n            <div>\n              <span class='mmp-dropdown__label ellipsis'>\n                ",
-      "\n              </span>\n              <iron-icon class='mmp-dropdown__icon' .icon=",
-      "></iron-icon>\n            </div>\n          </mmp-button>\n        ",
+    const a = ya([
+      "\n      <mmp-dropdown class='mmp-shortcuts__dropdown'\n        @change=",
+      "\n        .items=",
+      "\n        .label=",
+      "\n        .selected=",
+      ">\n      </mmp-dropdown>\n    ",
     ]);
     return (
       (ca = function() {
@@ -738,10 +746,7 @@
     );
   }
   function da() {
-    const a = sa([
-      "\n          <paper-icon-button\n            class='mmp-dropdown__button icon'\n            slot='dropdown-trigger'\n            .icon=",
-      ">\n          </paper-icon-button>\n        ",
-    ]);
+    const a = ya([""]);
     return (
       (da = function() {
         return a;
@@ -750,7 +755,76 @@
     );
   }
   function ea() {
-    const a = sa([
+    const a = ya([
+      "\n        :host {\n          display: block;\n        }\n        :host([faded]) {\n          opacity: .75;\n        }\n        :host[small] .mmp-dropdown__label {\n          max-width: 60px;\n          display: block;\n          position: relative;\n          width: auto;\n          text-transform: initial;\n        }\n        :host[full] .mmp-dropdown__label {\n          max-width: none;\n        }\n        .mmp-dropdown {\n          padding: 0;\n          display: block;\n        }\n        .mmp-dropdown__button {\n          display: flex;\n          font-size: 1em;\n          justify-content: space-between;\n          align-items: center;\n          height: 36px;\n          margin: 2px 0;\n        }\n        .mmp-dropdown__button.icon {\n          height: 40px;\n          margin: 0;\n        }\n        .mmp-dropdown__button > div {\n          display: flex;\n          flex: 1;\n          justify-content: space-between;\n          align-items: center;\n          height: 36px;\n          max-width: 100%;\n        }\n        .mmp-dropdown__label {\n          text-align: left;\n          text-transform: none;\n        }\n        .mmp-dropdown__icon {\n          height: 24px;\n          width: 24px;\n          min-width: 24px;\n        }\n        paper-item > *:nth-child(2) {\n          margin-left: 4px;\n        }\n        paper-menu-button[focused] mmp-button iron-icon {\n          color: var(--mmp-accent-color);\n          transform: rotate(180deg);\n        }\n        paper-menu-button[focused] paper-icon-button {\n          color: var(--mmp-accent-color);\n          transform: rotate(180deg);\n        }\n        paper-menu-button[focused] paper-icon-button[focused] {\n          color: var(--mmp-text-color);\n          transform: rotate(0deg);\n        }\n      ",
+    ]);
+    return (
+      (ea = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function fa() {
+    const a = ya(["<span class='mmp-dropdown__item__label'>", "</span>"]);
+    return (
+      (fa = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ga() {
+    const a = ya(["<iron-icon .icon=", "></iron-icon>"]);
+    return (
+      (ga = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ha() {
+    const a = ya([
+      "\n            <paper-item\n              value=",
+      "\n              @click=",
+      ">\n              ",
+      "\n              ",
+      "\n            </paper-item>",
+    ]);
+    return (
+      (ha = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ia() {
+    const a = ya([
+      "\n          <mmp-button class='mmp-dropdown__button' slot='dropdown-trigger'>\n            <div>\n              <span class='mmp-dropdown__label ellipsis'>\n                ",
+      "\n              </span>\n              <iron-icon class='mmp-dropdown__icon' .icon=",
+      "></iron-icon>\n            </div>\n          </mmp-button>\n        ",
+    ]);
+    return (
+      (ia = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ja() {
+    const a = ya([
+      "\n          <paper-icon-button\n            class='mmp-dropdown__button icon'\n            slot='dropdown-trigger'\n            .icon=",
+      ">\n          </paper-icon-button>\n        ",
+    ]);
+    return (
+      (ja = function() {
+        return a;
+      }),
+      a
+    );
+  }
+  function ka() {
+    const a = ya([
       "\n      <paper-menu-button\n        class='mmp-dropdown'\n        noink no-animations\n        .horizontalAlign=",
       "\n        .verticalAlign=",
       "\n        .verticalOffset=",
@@ -761,63 +835,63 @@
       "\n        </paper-listbox>\n      </paper-menu-button>\n    ",
     ]);
     return (
-      (ea = function() {
+      (ka = function() {
         return a;
       }),
       a
     );
   }
-  function fa() {
-    const a = sa([
-      "\n  .ellipsis {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }\n  .label {\n    margin: 0 8px;\n  }\n  paper-icon-button {\n    transition: color .25s;\n  }\n  paper-icon-button[color] {\n    color: var(--mmp-accent-color) !important;\n    opacity: 1 !important;\n  }\n  paper-icon-button[inactive] {\n    opacity: .5;\n  }\n",
+  function la() {
+    const a = ya([
+      "\n  .ellipsis {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }\n  .label {\n    margin: 0 8px;\n  }\n  paper-icon-button {\n    color: var(--mmp-text-color);\n    transition: color .25s;\n  }\n  paper-icon-button[color] {\n    color: var(--mmp-accent-color) !important;\n    opacity: 1 !important;\n  }\n  paper-icon-button[inactive] {\n    opacity: .5;\n  }\n",
     ]);
     return (
-      (fa = function() {
+      (la = function() {
         return a;
       }),
       a
     );
   }
-  function ga() {
-    const a = sa([
+  function ma() {
+    const a = ya([
       "\n      .mmp-group-list {\n        display: flex;\n        flex-direction: column;\n        margin-left: 8px;\n        margin-bottom: 8px;\n      }\n      .mmp-group-list__title {\n        font-weight: 500;\n        letter-spacing: .1em;\n        margin: 8px 0 4px;\n        text-transform: uppercase;\n      }\n      .mmp-group-list__buttons {\n        display: flex;\n      }\n      .mmp-group-list__button {\n        margin: 8px 8px 0 0;\n        min-width: 0;\n        text-transform: uppercase;\n        text-align: center;\n        width: 50%;\n        --mdc-theme-primary: transparent;\n        background: rgba(255,255,255,0.25);\n      }\n    ",
     ]);
     return (
-      (ga = function() {
+      (ma = function() {
         return a;
       }),
       a
     );
   }
-  function ha() {
-    const a = sa([""]);
+  function na() {
+    const a = ya([""]);
     return (
-      (ha = function() {
+      (na = function() {
         return a;
       }),
       a
     );
   }
-  function ia() {
-    const a = sa(["Leave"]);
+  function oa() {
+    const a = ya(["Leave"]);
     return (
-      (ia = function() {
+      (oa = function() {
         return a;
       }),
       a
     );
   }
-  function ja() {
-    const a = sa(["Ungroup"]);
+  function pa() {
+    const a = ya(["Ungroup"]);
     return (
-      (ja = function() {
+      (pa = function() {
         return a;
       }),
       a
     );
   }
-  function ka() {
-    const a = sa([
+  function qa() {
+    const a = ya([
       "\n          <mmp-group-item\n            @change=",
       "\n            .item=",
       "\n            .checked=",
@@ -826,14 +900,14 @@
       "\n          />",
     ]);
     return (
-      (ka = function() {
+      (qa = function() {
         return a;
       }),
       a
     );
   }
-  function la() {
-    const a = sa([
+  function ra() {
+    const a = ya([
       "\n      <div class='mmp-group-list' ?visible=",
       ">\n        <span class='mmp-group-list__title'>Group speakers</span>\n        ",
       "\n        <div class='mmp-group-list__buttons'>\n          <mmp-button\n            class='mmp-group-list__button'\n            raised\n            ?disabled=",
@@ -844,56 +918,56 @@
       ">\n            <span>Group all</span>\n          </mmp-button>\n        </div>\n      </div>\n    ",
     ]);
     return (
-      (la = function() {
+      (ra = function() {
         return a;
       }),
       a
     );
   }
-  function ma() {
-    const a = sa([
+  function sa() {
+    const a = ya([
       "\n      :host {\n        position: relative;\n        box-sizing: border-box;\n        margin: 4px;\n        min-width: 0;\n        overflow: hidden;\n        transition: background .5s;\n      }\n      :host([raised]) {\n        background: rgba(255,255,255,0.25);\n        min-height: 36px;\n        box-shadow:\n          0px 3px 1px -2px rgba(0, 0, 0, 0.2),\n          0px 2px 2px 0px rgba(0, 0, 0, 0.14),\n          0px 1px 5px 0px rgba(0,0,0,.12);\n      }\n      :host([color]) {\n        background: var(--mmp-active-color);\n        transition: background .25s;\n        opacity: 1;\n      }\n      :host([faded]) {\n        opacity: .75;\n      }\n      .container {\n        height: 100%;\n        width: 100%;\n      }\n      .slot-container {\n        height: 100%;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        margin: 0 8px;\n        width: auto;\n      }\n      paper-ripple {\n        position: absolute;\n        left: 0;\n        right: 0;\n        top: 0;\n        bottom: 0;\n      }\n    ",
     ]);
     return (
-      (ma = function() {
+      (sa = function() {
         return a;
       }),
       a
     );
   }
-  function na() {
-    const a = sa([
+  function ta() {
+    const a = ya([
       '\n      <div class="container">\n        <div class="slot-container">\n          <slot></slot>\n        </div>\n        <paper-ripple></paper-ripple>\n      </div>\n    ',
     ]);
     return (
-      (na = function() {
+      (ta = function() {
         return a;
       }),
       a
     );
   }
-  function oa() {
-    const a = sa([
+  function ua() {
+    const a = ya([
       "\n      paper-checkbox {\n        padding: 8px 0;\n      }\n      paper-checkbox > span {\n        font-weight: 600;\n      }\n\n      ha-card[artwork*='cover'][has-artwork] paper-checkbox[disabled] {\n        --paper-checkbox-checkmark-color: rgba(0,0,0,.5);\n      }\n      ha-card[artwork*='cover'][has-artwork] paper-checkbox {\n        --paper-checkbox-unchecked-color: #FFFFFF;\n        --paper-checkbox-label-color: #FFFFFF;\n      }\n    ",
     ]);
     return (
-      (oa = function() {
+      (ua = function() {
         return a;
       }),
       a
     );
   }
-  function pa() {
-    const a = sa(["<span>(master)</span>"]);
+  function va() {
+    const a = ya(["<span>(master)</span>"]);
     return (
-      (pa = function() {
+      (va = function() {
         return a;
       }),
       a
     );
   }
-  function qa() {
-    const a = sa([
+  function wa() {
+    const a = ya([
       "\n      <paper-checkbox\n        ?checked=",
       "\n        ?disabled=",
       "\n        @change='",
@@ -903,24 +977,24 @@
       "\n      </paper-checkbox>\n    ",
     ]);
     return (
-      (qa = function() {
+      (wa = function() {
         return a;
       }),
       a
     );
   }
-  function ra() {
-    const a = sa([
-      "\n  :host {\n    overflow: visible !important;\n    display: block;\n    --mmp-accent-color: var(--mini-media-player-accent-color, var(--accent-color, #f39c12));\n    --mmp-base-color: var(--mini-media-player-base-color, var(--primary-text-color, #000));\n    --mmp-overlay-color: var(--mini-media-player-overlay-color, rgba(0,0,0,0.5));\n    --mmp-overlay-base-color: var(--mini-media-player-overlay-base-color, #fff);\n    --mmp-overlay-accent-color: var(--mini-media-player-overlay-accent-color, --mmp-accent-color);\n    --mmp-text-color: var(--mini-media-player-base-color, --primary-text-color);\n    --mmp-media-cover-info-color: var(--mini-media-player-media-cover-info-color, --mmp-text-color);\n    --mmp-text-color-inverted: var(--disabled-text-color);\n    --mmp-active-color: var(--mmp-accent-color);\n    --mmp-icon-color: var(--mini-media-player-icon-color, var(--mini-media-player-base-color, var(--paper-item-icon-color, #44739e)));\n    --mmp-info-opacity: 1;\n    --mmp-artwork-opacity: var(--mini-media-player-artwork-opacity, 1);\n    --mdc-theme-primary: var(--mmp-text-color);\n    --mdc-theme-on-primary: var(--mmp-text-color);\n    --paper-checkbox-unchecked-color: var(--mmp-text-color);\n    --paper-checkbox-label-color: var(--mmp-text-color);\n    color: var(--mmp-text-color);\n  }\n  ha-card.--bg {\n    --mmp-info-opacity: .75;\n  }\n  ha-card.--has-artwork[artwork*='cover'] {\n    --mmp-accent-color: var(--mini-media-player-overlay-accent-color, var(--mini-media-player-accent-color, var(--accent-color, #f39c12)));\n    --mmp-text-color: var(--mmp-overlay-base-color);\n    --mmp-text-color-inverted: #000;\n    --mmp-active-color: rgba(255,255,255,.5);\n    --mmp-icon-color: var(--mmp-text-color);\n    --mmp-info-opacity: .75;\n    --paper-slider-container-color: var(--mini-media-player-overlay-color, rgba(255,255,255,.75));\n    --mdc-theme-primary: var(--mmp-text-color);\n    --mdc-theme-on-primary: var(--mmp-text-color);\n    --paper-checkbox-unchecked-color: var(--mmp-text-color);\n    --paper-checkbox-label-color: var(--mmp-text-color);\n    color: var(--mmp-text-color);\n  }\n  ha-card {\n    cursor: default;\n    display: flex;\n    background: transparent;\n    overflow: hidden;\n    padding: 0;\n    position: relative;\n    color: inherit;\n  }\n  ha-card.--group {\n    box-shadow: none;\n  }\n  ha-card.--more-info {\n    cursor: pointer;\n  }\n  ha-card.--collapse {\n    overflow: visible;\n  }\n  .mmp__bg, .mmp__player, .mmp__container {\n    border-radius: var(--ha-card-border-radius, 0);\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n  }\n  .mmp__container {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    position: absolute;\n    pointer-events: none;\n  }\n  ha-card:before {\n    content: '';\n    padding-top: 0px;\n    transition: padding-top .5s cubic-bezier(.21,.61,.35,1);\n    will-change: padding-top;\n  }\n  ha-card.--initial .entity__artwork,\n  ha-card.--initial .entity__icon {\n    animation-duration: .001s;\n  }\n  ha-card.--initial:before,\n  ha-card.--initial .mmp-player {\n    transition: none;\n  }\n  header {\n    display: none;\n  }\n  ha-card[artwork='full-cover'].--has-artwork:before {\n    padding-top: 56%;\n  }\n  ha-card[artwork='full-cover'].--has-artwork[content='music']:before,\n  ha-card[artwork='full-cover-fit'].--has-artwork:before {\n    padding-top: 100%;\n  }\n  .mmp__bg {\n    background: var(--ha-card-background, var(--paper-card-background-color, white));\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n    overflow: hidden;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n  }\n  ha-card[artwork*='cover'].--has-artwork .mmp__bg {\n    opacity: var(--mmp-artwork-opacity);\n    background: transparent;\n  }\n  ha-card.--group .mmp__bg {\n    background: transparent;\n  }\n  .cover,\n  .cover:before {\n    display: block;\n    opacity: 0;\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n    transition: opacity .75s cubic-bezier(.21,.61,.35,1);\n    will-change: opacity;\n  }\n  .cover {\n    animation: fade-in .5s cubic-bezier(.21,.61,.35,1);\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center center;\n  }\n  .cover:before {\n    background: var(--mmp-overlay-color);\n    content: '';\n  }\n  ha-card[artwork*='full-cover'].--has-artwork .mmp-player {\n    background: linear-gradient(to top, var(--mmp-overlay-color) 25%, transparent 100%);\n    border-bottom-left-radius: var(--ha-card-border-radius, 0);\n    border-bottom-right-radius: var(--ha-card-border-radius, 0);\n  }\n  ha-card.--has-artwork .cover,\n  ha-card.--has-artwork[artwork='cover'] .cover:before,\n  ha-card.--bg .cover {\n    opacity: .999;\n  }\n  ha-card[artwork='default'] .cover {\n    display: none;\n  }\n  ha-card.--bg .cover {\n    display: block;\n  }\n  ha-card[artwork='full-cover-fit'].--has-artwork .cover {\n    background-color: black;\n    background-size: contain;\n  }\n  .mmp-player {\n    align-self: flex-end;\n    box-sizing: border-box;\n    position: relative;\n    padding: 16px;\n    transition: padding .25s ease-out;\n    width: 100%;\n    will-change: padding;\n  }\n  ha-card.--group .mmp-player {\n    padding: 2px 0;\n  }\n  .flex {\n    display: flex;\n    display: -ms-flexbox;\n    display: -webkit-flex;\n    flex-direction: row;\n  }\n  .mmp-player__core {\n    position: relative;\n  }\n  .entity__info {\n    justify-content: center;\n    display: flex;\n    flex-direction: column;\n    margin-left: 8px;\n    position: relative;\n    overflow: hidden;\n    user-select: none;\n  }\n  ha-card.--rtl .entity__info {\n    margin-left: auto;\n    margin-right: 8px;\n  }\n  ha-card[content='movie'] .attr__media_season,\n  ha-card[content='movie'] .attr__media_episode {\n    display: none;\n  }\n  .entity__icon {\n    color: var(--mmp-icon-color);\n  }\n  .entity__artwork, .entity__icon {\n    animation: fade-in .25s ease-out;\n    background-position: center center;\n    background-repeat: no-repeat;\n    background-size: cover;\n    border-radius: 100%;\n    height: 40px;\n    width: 40px;\n    min-width: 40px;\n    line-height: 40px;\n    margin-right: 8px;\n    position: relative;\n    text-align: center;\n    will-change: border-color;\n    transition: border-color .25s ease-out;\n  }\n  ha-card.--rtl .entity__artwork,\n  ha-card.--rtl .entity__icon {\n    margin-right: auto;\n  }\n  .entity__artwork[border] {\n    border: 2px solid var(--primary-text-color);\n    box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    -webkit-box-sizing: border-box;\n  }\n  .entity__artwork[border][state='playing'] {\n    border-color: var(--mmp-accent-color);\n  }\n  .entity__info__name,\n  .entity__info__media[short] {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }\n  .entity__info__name {\n    line-height: 20px;\n    color: var(--mmp-text-color);\n  }\n  .entity__info__media {\n    color: var(--secondary-text-color);\n    max-height: 6em;\n    word-break: break-word;\n    opacity: var(--mmp-info-opacity);\n    transition: color .5s;\n  }\n  .entity__info__media[short] {\n    max-height: 20px;\n    overflow: hidden;\n  }\n  .attr__app_name {\n    display: none;\n  }\n  .attr__app_name:first-child,\n  .attr__app_name:first-of-type {\n    display: inline;\n  }\n  .mmp-player__core[inactive] .entity__info__media {\n    color: var(--mmp-text-color);\n    max-width: 200px;\n    opacity: .5;\n  }\n  .entity__info__media[short-scroll] {\n    max-height: 20px;\n    white-space: nowrap;\n  }\n  .entity__info__media[scroll] > span {\n    visibility: hidden;\n  }\n  .entity__info__media[scroll] > div {\n    animation: move linear infinite;\n  }\n  .entity__info__media[scroll] .marquee {\n    animation: slide linear infinite;\n  }\n  .entity__info__media[scroll] .marquee,\n  .entity__info__media[scroll] > div {\n    animation-duration: inherit;\n    visibility: visible;\n  }\n  .entity__info__media[scroll] {\n    animation-duration: 10s;\n    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n  }\n  .marquee {\n    visibility: hidden;\n    position: absolute;\n    white-space: nowrap;\n  }\n  ha-card[artwork*='cover'].--has-artwork .entity__info__media,\n  ha-card.--bg .entity__info__media {\n    color: var(--mmp-media-cover-info-color);\n  }\n  .entity__info__media span:before {\n    content: ' - ';\n  }\n  .entity__info__media span:first-of-type:before {\n    content: '';\n  }\n  .entity__info__media span:empty {\n    display: none;\n  }\n  .mmp-player__adds {\n    margin-left: 48px;\n    position: relative;\n  }\n  ha-card.--rtl .mmp-player__adds {\n    margin-left: auto;\n    margin-right: 48px;\n  }\n  .mmp-player__adds > *:nth-child(2) {\n    margin-top: 0px;\n  }\n  mmp-powerstrip {\n    flex: 1;\n    justify-content: flex-end;\n    margin-right: 0;\n    margin-left: auto;\n    width: auto;\n    max-width: 100%;\n  }\n  mmp-media-controls {\n    flex-wrap: wrap;\n    justify-content: center;\n  }\n  ha-card.--flow mmp-powerstrip {\n    justify-content: space-between;\n    margin-left: auto;\n  }\n  ha-card.--flow.--rtl mmp-powerstrip {\n    margin-right: auto;\n  }\n  ha-card.--flow .entity__info {\n    display: none;\n  }\n  ha-card.--responsive .mmp-player__adds {\n    margin-left: 0;\n  }\n  ha-card.--responsive.--rtl .mmp-player__adds {\n    margin-right: 0;\n  }\n  ha-card.--responsive .mmp-player__adds > mmp-media-controls {\n    padding: 0;\n  }\n  ha-card.--runtime .mmp-player {\n    padding-bottom: calc(16px + 8px);\n  }\n  ha-card.--runtime.--group .mmp-player {\n    padding-bottom: calc(16px + 8px);\n  }\n  .mmp-player div:empty {\n    display: none;\n  }\n  @keyframes slide {\n    100% { transform: translateX(-100%); }\n  }\n  @keyframes move {\n    from { transform: translateX(100%); }\n    to { transform: translateX(0); }\n  }\n  @keyframes fade-in {\n    from { opacity: 0; }\n    to { opacity: 1; }\n  }\n",
+  function xa() {
+    const a = ya([
+      "\n  :host {\n    overflow: visible !important;\n    display: block;\n    --mmp-accent-color: var(--mini-media-player-accent-color, var(--accent-color, #f39c12));\n    --mmp-base-color: var(--mini-media-player-base-color, var(--primary-text-color, #000));\n    --mmp-overlay-color: var(--mini-media-player-overlay-color, rgba(0,0,0,0.5));\n    --mmp-overlay-color-stop: var(--mini-media-player-overlay-color-stop, 25%);\n    --mmp-overlay-base-color: var(--mini-media-player-overlay-base-color, #fff);\n    --mmp-overlay-accent-color: var(--mini-media-player-overlay-accent-color, --mmp-accent-color);\n    --mmp-text-color: var(--mini-media-player-base-color, var(--primary-text-color, #000));\n    --mmp-media-cover-info-color: var(--mini-media-player-media-cover-info-color, --mmp-text-color);\n    --mmp-text-color-inverted: var(--disabled-text-color);\n    --mmp-active-color: var(--mmp-accent-color);\n    --mmp-icon-color:\n      var(--mini-media-player-icon-color,\n        var(--mini-media-player-base-color,\n          var(--paper-item-icon-colo, #44739e)));\n    --mmp-info-opacity: 1;\n    --mmp-artwork-opacity: var(--mini-media-player-artwork-opacity, 1);\n    --mmp-progress-height: var(--mini-media-player-progress-height, 6px);\n    --mdc-theme-primary: var(--mmp-text-color);\n    --mdc-theme-on-primary: var(--mmp-text-color);\n    --paper-checkbox-unchecked-color: var(--mmp-text-color);\n    --paper-checkbox-label-color: var(--mmp-text-color);\n    color: var(--mmp-text-color);\n  }\n  ha-card.--bg {\n    --mmp-info-opacity: .75;\n  }\n  ha-card.--has-artwork[artwork*='cover'] {\n    --mmp-accent-color: var(--mini-media-player-overlay-accent-color, var(--mini-media-player-accent-color, var(--accent-color, #f39c12)));\n    --mmp-text-color: var(--mmp-overlay-base-color);\n    --mmp-text-color-inverted: #000;\n    --mmp-active-color: rgba(255,255,255,.5);\n    --mmp-icon-color: var(--mmp-text-color);\n    --mmp-info-opacity: .75;\n    --paper-slider-container-color: var(--mini-media-player-overlay-color, rgba(255,255,255,.75));\n    --mdc-theme-primary: var(--mmp-text-color);\n    --mdc-theme-on-primary: var(--mmp-text-color);\n    --paper-checkbox-unchecked-color: var(--mmp-text-color);\n    --paper-checkbox-label-color: var(--mmp-text-color);\n    color: var(--mmp-text-color);\n  }\n  ha-card {\n    cursor: default;\n    display: flex;\n    background: transparent;\n    overflow: hidden;\n    padding: 0;\n    position: relative;\n    color: inherit;\n  }\n  ha-card.--group {\n    box-shadow: none;\n    --mmp-progress-height: var(--mini-media-player-progress-height, 4px);\n  }\n  ha-card.--more-info {\n    cursor: pointer;\n  }\n  .mmp__bg, .mmp__player, .mmp__container {\n    border-radius: var(--ha-card-border-radius, 0);\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n  }\n  .mmp__container {\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    position: absolute;\n    pointer-events: none;\n  }\n  ha-card:before {\n    content: '';\n    padding-top: 0px;\n    transition: padding-top .5s cubic-bezier(.21,.61,.35,1);\n    will-change: padding-top;\n  }\n  ha-card.--initial .entity__artwork,\n  ha-card.--initial .entity__icon {\n    animation-duration: .001s;\n  }\n  ha-card.--initial:before,\n  ha-card.--initial .mmp-player {\n    transition: none;\n  }\n  header {\n    display: none;\n  }\n  ha-card[artwork='full-cover'].--has-artwork:before {\n    padding-top: 56%;\n  }\n  ha-card[artwork='full-cover'].--has-artwork[content='music']:before,\n  ha-card[artwork='full-cover-fit'].--has-artwork:before {\n    padding-top: 100%;\n  }\n  .mmp__bg {\n    background: var(--ha-card-background, var(--paper-card-background-color, white));\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n    overflow: hidden;\n    -webkit-transform: translateZ(0);\n    transform: translateZ(0);\n  }\n  ha-card[artwork*='cover'].--has-artwork .mmp__bg {\n    opacity: var(--mmp-artwork-opacity);\n    background: transparent;\n  }\n  ha-card.--group .mmp__bg {\n    background: transparent;\n  }\n  .cover,\n  .cover:before {\n    display: block;\n    opacity: 0;\n    position: absolute;\n    top: 0; right: 0; bottom: 0; left: 0;\n    transition: opacity .75s cubic-bezier(.21,.61,.35,1);\n    will-change: opacity;\n  }\n  .cover {\n    animation: fade-in .5s cubic-bezier(.21,.61,.35,1);\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center center;\n  }\n  .cover:before {\n    background: var(--mmp-overlay-color);\n    content: '';\n  }\n  ha-card[artwork*='full-cover'].--has-artwork .mmp-player {\n    background: linear-gradient(to top, var(--mmp-overlay-color) var(--mmp-overlay-color-stop), transparent 100%);\n    border-bottom-left-radius: var(--ha-card-border-radius, 0);\n    border-bottom-right-radius: var(--ha-card-border-radius, 0);\n  }\n  ha-card.--has-artwork .cover,\n  ha-card.--has-artwork[artwork='cover'] .cover:before,\n  ha-card.--bg .cover {\n    opacity: .999;\n  }\n  ha-card[artwork='default'] .cover {\n    display: none;\n  }\n  ha-card.--bg .cover {\n    display: block;\n  }\n  ha-card[artwork='full-cover-fit'].--has-artwork .cover {\n    background-color: black;\n    background-size: contain;\n  }\n  .mmp-player {\n    align-self: flex-end;\n    box-sizing: border-box;\n    position: relative;\n    padding: 16px;\n    transition: padding .25s ease-out;\n    width: 100%;\n    will-change: padding;\n  }\n  ha-card.--group .mmp-player {\n    padding: 10px 0;\n  }\n  .flex {\n    display: flex;\n    display: -ms-flexbox;\n    display: -webkit-flex;\n    flex-direction: row;\n  }\n  .mmp-player__core {\n    position: relative;\n  }\n  .entity__info {\n    justify-content: center;\n    display: flex;\n    flex-direction: column;\n    margin-left: 8px;\n    position: relative;\n    overflow: hidden;\n    user-select: none;\n  }\n  ha-card.--rtl .entity__info {\n    margin-left: auto;\n    margin-right: 8px;\n  }\n  ha-card[content='movie'] .attr__media_season,\n  ha-card[content='movie'] .attr__media_episode {\n    display: none;\n  }\n  .entity__icon {\n    color: var(--mmp-icon-color);\n  }\n  .entity__artwork, .entity__icon {\n    animation: fade-in .25s ease-out;\n    background-position: center center;\n    background-repeat: no-repeat;\n    background-size: cover;\n    border-radius: 100%;\n    height: 40px;\n    width: 40px;\n    min-width: 40px;\n    line-height: 40px;\n    margin-right: 8px;\n    position: relative;\n    text-align: center;\n    will-change: border-color;\n    transition: border-color .25s ease-out;\n  }\n  ha-card.--rtl .entity__artwork,\n  ha-card.--rtl .entity__icon {\n    margin-right: auto;\n  }\n  .entity__artwork[border] {\n    border: 2px solid var(--primary-text-color);\n    box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    -webkit-box-sizing: border-box;\n  }\n  .entity__artwork[border][state='playing'] {\n    border-color: var(--mmp-accent-color);\n  }\n  .entity__info__name,\n  .entity__info__media[short] {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }\n  .entity__info__name {\n    line-height: 20px;\n    color: var(--mmp-text-color);\n  }\n  .entity__info__media {\n    color: var(--secondary-text-color);\n    max-height: 6em;\n    word-break: break-word;\n    opacity: var(--mmp-info-opacity);\n    transition: color .5s;\n  }\n  .entity__info__media[short] {\n    max-height: 20px;\n    overflow: hidden;\n  }\n  .attr__app_name {\n    display: none;\n  }\n  .attr__app_name:first-child,\n  .attr__app_name:first-of-type {\n    display: inline;\n  }\n  .mmp-player__core[inactive] .entity__info__media {\n    color: var(--mmp-text-color);\n    max-width: 200px;\n    opacity: .5;\n  }\n  .entity__info__media[short-scroll] {\n    max-height: 20px;\n    white-space: nowrap;\n  }\n  .entity__info__media[scroll] > span {\n    visibility: hidden;\n  }\n  .entity__info__media[scroll] > div {\n    animation: move linear infinite;\n  }\n  .entity__info__media[scroll] .marquee {\n    animation: slide linear infinite;\n  }\n  .entity__info__media[scroll] .marquee,\n  .entity__info__media[scroll] > div {\n    animation-duration: inherit;\n    visibility: visible;\n  }\n  .entity__info__media[scroll] {\n    animation-duration: 10s;\n    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);\n  }\n  .marquee {\n    visibility: hidden;\n    position: absolute;\n    white-space: nowrap;\n  }\n  ha-card[artwork*='cover'].--has-artwork .entity__info__media,\n  ha-card.--bg .entity__info__media {\n    color: var(--mmp-media-cover-info-color);\n  }\n  .entity__info__media span:before {\n    content: ' - ';\n  }\n  .entity__info__media span:first-of-type:before {\n    content: '';\n  }\n  .entity__info__media span:empty {\n    display: none;\n  }\n  .mmp-player__adds {\n    margin-left: 48px;\n    position: relative;\n  }\n  ha-card.--rtl .mmp-player__adds {\n    margin-left: auto;\n    margin-right: 48px;\n  }\n  .mmp-player__adds > *:nth-child(2) {\n    margin-top: 0px;\n  }\n  mmp-powerstrip {\n    flex: 1;\n    justify-content: flex-end;\n    margin-right: 0;\n    margin-left: auto;\n    width: auto;\n    max-width: 100%;\n  }\n  mmp-media-controls {\n    flex-wrap: wrap;\n    justify-content: center;\n  }\n  ha-card.--flow mmp-powerstrip {\n    justify-content: space-between;\n    margin-left: auto;\n  }\n  ha-card.--flow.--rtl mmp-powerstrip {\n    margin-right: auto;\n  }\n  ha-card.--flow .entity__info {\n    display: none;\n  }\n  ha-card.--responsive .mmp-player__adds {\n    margin-left: 0;\n  }\n  ha-card.--responsive.--rtl .mmp-player__adds {\n    margin-right: 0;\n  }\n  ha-card.--responsive .mmp-player__adds > mmp-media-controls {\n    padding: 0;\n  }\n  ha-card.--progress .mmp-player {\n    padding-bottom: calc(16px + calc(var(--mini-media-player-progress-height, 6px) - 6px));\n  }\n  ha-card.--progress.--group .mmp-player {\n    padding-bottom: calc(10px + calc(var(--mini-media-player-progress-height, 6px) - 6px));\n  }\n  ha-card.--runtime .mmp-player {\n    padding-bottom: calc(16px + 16px + var(--mini-media-player-progress-height, 0px));\n  }\n  ha-card.--runtime.--group .mmp-player {\n    padding-bottom: calc(16px + 12px + var(--mini-media-player-progress-height, 0px));\n  }\n  ha-card.--inactive .mmp-player {\n    padding: 16px;\n  }\n  ha-card.--inactive.--group .mmp-player {\n    padding: 10px 0;\n  }\n  .mmp-player div:empty {\n    display: none;\n  }\n  @keyframes slide {\n    100% { transform: translateX(-100%); }\n  }\n  @keyframes move {\n    from { transform: translateX(100%); }\n    to { transform: translateX(0); }\n  }\n  @keyframes fade-in {\n    from { opacity: 0; }\n    to { opacity: 1; }\n  }\n",
     ]);
     return (
-      (ra = function() {
+      (xa = function() {
         return a;
       }),
       a
     );
   }
-  function sa(a, b) {
+  function ya(a, b) {
     return (
       b || (b = a.slice(0)),
       Object.freeze(
@@ -928,13 +1002,13 @@
       )
     );
   }
-  function ta(a, b) {
-    return wa(a) || va(a, b) || ua();
+  function za(a, b) {
+    return Ca(a) || Ba(a, b) || Aa();
   }
-  function ua() {
+  function Aa() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
-  function va(a, b) {
+  function Ba(a, b) {
     var c = [],
       d = !0,
       e = !1,
@@ -956,10 +1030,10 @@
     }
     return c;
   }
-  function wa(a) {
+  function Ca(a) {
     if (Array.isArray(a)) return a;
   }
-  function xa(a) {
+  function Da(a) {
     for (var b = 1; b < arguments.length; b++) {
       var c = null == arguments[b] ? {} : arguments[b],
         d = Object.keys(c);
@@ -970,12 +1044,12 @@
           })
         )),
         d.forEach(function(b) {
-          ya(a, b, c[b]);
+          Ea(a, b, c[b]);
         });
     }
     return a;
   }
-  function ya(a, b, c) {
+  function Ea(a, b, c) {
     return (
       b in a
         ? Object.defineProperty(a, b, {
@@ -988,7 +1062,7 @@
       a
     );
   }
-  function za(a, b, c, d, e, f, g) {
+  function Fa(a, b, c, d, e, f, g) {
     try {
       var h = a[f](g),
         i = h.value;
@@ -997,16 +1071,16 @@
     }
     h.done ? b(i) : Promise.resolve(i).then(d, e);
   }
-  function Aa(a) {
+  function Ga(a) {
     return function() {
       var b = this,
         c = arguments;
       return new Promise(function(d, e) {
         function f(a) {
-          za(h, d, e, f, g, "next", a);
+          Fa(h, d, e, f, g, "next", a);
         }
         function g(a) {
-          za(h, d, e, f, g, "throw", a);
+          Fa(h, d, e, f, g, "throw", a);
         }
         var h = a.apply(b, c);
         f(void 0);
@@ -1020,27 +1094,27 @@
       ? define(b)
       : b();
   })(this, function() {
-    function sa(a) {
-      let b = kb.get(a.type);
+    function ya(a) {
+      let b = qb.get(a.type);
       void 0 === b &&
         ((b = { stringsArray: new WeakMap(), keyString: new Map() }),
-        kb.set(a.type, b));
+        qb.set(a.type, b));
       let c = b.stringsArray.get(a.strings);
       if (void 0 !== c) return c;
-      const d = a.strings.join(Pa);
+      const d = a.strings.join(Va);
       return (
         (c = b.keyString.get(d)),
         void 0 === c &&
-          ((c = new Ta(a, a.getTemplateElement())), b.keyString.set(d, c)),
+          ((c = new Za(a, a.getTemplateElement())), b.keyString.set(d, c)),
         b.stringsArray.set(a.strings, c),
         c
       );
     }
-    function ua(a, b) {
+    function Aa(a, b) {
       const c = a.element.content,
         d = a.parts,
-        e = document.createTreeWalker(c, ob, null, !1);
-      let f = qb(d),
+        e = document.createTreeWalker(c, ub, null, !1);
+      let f = wb(d),
         g = d[f],
         h = -1,
         i = 0;
@@ -1055,51 +1129,51 @@
           g !== void 0 && g.index === h;
 
         )
-          (g.index = null === c ? g.index - i : -1), (f = qb(d, f)), (g = d[f]);
+          (g.index = null === c ? g.index - i : -1), (f = wb(d, f)), (g = d[f]);
       }
       j.forEach((a) => a.parentNode.removeChild(a));
     }
-    function va(a, b) {
+    function Ba(a, b) {
       let c =
         2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : null;
       const d = a.element.content,
         e = a.parts;
       if (null === c || void 0 === c) return void d.appendChild(b);
-      const f = document.createTreeWalker(d, ob, null, !1);
-      let g = qb(e),
+      const f = document.createTreeWalker(d, ub, null, !1);
+      let g = wb(e),
         h = 0,
         i = -1;
       for (; f.nextNode(); ) {
         i++;
         const a = f.currentNode;
         for (
-          a === c && ((h = pb(b)), c.parentNode.insertBefore(b, c));
+          a === c && ((h = vb(b)), c.parentNode.insertBefore(b, c));
           -1 !== g && e[g].index === i;
 
         ) {
           if (0 < h) {
-            for (; -1 !== g; ) (e[g].index += h), (g = qb(e, g));
+            for (; -1 !== g; ) (e[g].index += h), (g = wb(e, g));
             return;
           }
-          g = qb(e, g);
+          g = wb(e, g);
         }
       }
     }
-    function wa(a) {
+    function Ca(a) {
       let b =
         1 < arguments.length && arguments[1] !== void 0 ? arguments[1] : [];
       for (let c = 0, d = a.length; c < d; c++) {
         const d = a[c];
-        Array.isArray(d) ? wa(d, b) : b.push(d);
+        Array.isArray(d) ? Ca(d, b) : b.push(d);
       }
       return b;
     }
-    function ya(a, b) {
+    function Ea(a, b) {
       function c() {
         f && ((f = !1), a()), g && e();
       }
       function d() {
-        Vb(c);
+        _b(c);
       }
       function e() {
         var a = Date.now();
@@ -1114,18 +1188,18 @@
         h = 0;
       return e;
     }
-    function za(a) {
+    function Fa(a) {
       return parseFloat(a) || 0;
     }
-    function Ba(a) {
+    function Ha(a) {
       for (var b = [], c = 1; c < arguments.length; c++)
         b[c - 1] = arguments[c];
       return b.reduce(function(b, c) {
         var d = a["border-" + c + "-width"];
-        return b + za(d);
+        return b + Fa(d);
       }, 0);
     }
-    function Ca(a) {
+    function Ia(a) {
       for (
         var b = ["top", "right", "bottom", "left"], c = {}, d = 0, e = b;
         d < e.length;
@@ -1133,45 +1207,45 @@
       ) {
         var f = e[d],
           g = a["padding-" + f];
-        c[f] = za(g);
+        c[f] = Fa(g);
       }
       return c;
     }
-    function Da(a) {
+    function Ja(a) {
       var b = a.getBBox();
-      return Ia(0, 0, b.width, b.height);
+      return Oa(0, 0, b.width, b.height);
     }
-    function Ea(a) {
+    function Ka(a) {
       var b = Math.abs,
         c = Math.round,
         d = a.clientWidth,
         e = a.clientHeight;
-      if (!d && !e) return _b;
-      var f = $b(a).getComputedStyle(a),
-        g = Ca(f),
+      if (!d && !e) return fc;
+      var f = ec(a).getComputedStyle(a),
+        g = Ia(f),
         h = g.left + g.right,
         i = g.top + g.bottom,
-        j = za(f.width),
-        k = za(f.height);
+        j = Fa(f.width),
+        k = Fa(f.height);
       if (
         ("border-box" === f.boxSizing &&
-          (c(j + h) !== d && (j -= Ba(f, "left", "right") + h),
-          c(k + i) !== e && (k -= Ba(f, "top", "bottom") + i)),
-        !Fa(a))
+          (c(j + h) !== d && (j -= Ha(f, "left", "right") + h),
+          c(k + i) !== e && (k -= Ha(f, "top", "bottom") + i)),
+        !La(a))
       ) {
         var l = c(j + h) - d,
           m = c(k + i) - e;
         1 !== b(l) && (j -= l), 1 !== b(m) && (k -= m);
       }
-      return Ia(g.left, g.top, j, k);
+      return Oa(g.left, g.top, j, k);
     }
-    function Fa(a) {
-      return a === $b(a).document.documentElement;
+    function La(a) {
+      return a === ec(a).document.documentElement;
     }
-    function Ga(a) {
-      return Tb ? (ac(a) ? Da(a) : Ea(a)) : _b;
+    function Ma(a) {
+      return Zb ? (gc(a) ? Ja(a) : Ka(a)) : fc;
     }
-    function Ha(a) {
+    function Na(a) {
       var b = a.x,
         c = a.y,
         d = a.width,
@@ -1179,7 +1253,7 @@
         f = "undefined" == typeof DOMRectReadOnly ? Object : DOMRectReadOnly,
         g = Object.create(f.prototype);
       return (
-        Zb(g, {
+        dc(g, {
           x: b,
           y: c,
           width: d,
@@ -1192,15 +1266,15 @@
         g
       );
     }
-    function Ia(a, b, c, d) {
+    function Oa(a, b, c, d) {
       return { x: a, y: b, width: c, height: d };
     }
-    const Ja = new WeakMap(),
-      Ka = (a) => "function" == typeof a && Ja.has(a),
-      La =
+    const Pa = new WeakMap(),
+      Qa = (a) => "function" == typeof a && Pa.has(a),
+      Ra =
         window.customElements !== void 0 &&
         window.customElements.polyfillWrapFlushCallback !== void 0,
-      Ma = function(a, b) {
+      Sa = function(a, b) {
         for (
           let c =
             2 < arguments.length && void 0 !== arguments[2]
@@ -1213,13 +1287,13 @@
           a.removeChild(b), (b = c);
         }
       },
-      Na = {},
-      Oa = {},
-      Pa = "{{lit-".concat((Math.random() + "").slice(2), "}}"),
-      Qa = "<!--".concat(Pa, "-->"),
-      Ra = new RegExp("".concat(Pa, "|").concat(Qa)),
-      Sa = "$lit$";
-    class Ta {
+      Ta = {},
+      Ua = {},
+      Va = "{{lit-".concat((Math.random() + "").slice(2), "}}"),
+      Wa = "<!--".concat(Va, "-->"),
+      Xa = new RegExp("".concat(Va, "|").concat(Wa)),
+      Ya = "$lit$";
+    class Za {
       constructor(a, b) {
         (this.parts = []), (this.element = b);
         const c = [],
@@ -1239,14 +1313,14 @@
               const b = a.attributes,
                 c = b.length;
               let d = 0;
-              for (let a = 0; a < c; a++) Ua(b[a].name, Sa) && d++;
+              for (let a = 0; a < c; a++) $a(b[a].name, Ya) && d++;
               for (; 0 < d--; ) {
                 const b = i[h],
-                  c = Xa.exec(b)[2],
-                  d = c.toLowerCase() + Sa,
+                  c = bb.exec(b)[2],
+                  d = c.toLowerCase() + Ya,
                   e = a.getAttribute(d);
                 a.removeAttribute(d);
-                const f = e.split(Ra);
+                const f = e.split(Xa);
                 this.parts.push({
                   type: "attribute",
                   index: g,
@@ -1260,22 +1334,22 @@
               (d.push(a), (e.currentNode = a.content));
           } else if (3 === a.nodeType) {
             const b = a.data;
-            if (0 <= b.indexOf(Pa)) {
+            if (0 <= b.indexOf(Va)) {
               const d = a.parentNode,
-                e = b.split(Ra),
+                e = b.split(Xa),
                 f = e.length - 1;
               for (let b = 0; b < f; b++) {
                 let c,
                   f = e[b];
-                if ("" === f) c = Wa();
+                if ("" === f) c = ab();
                 else {
-                  const a = Xa.exec(f);
+                  const a = bb.exec(f);
                   null !== a &&
-                    Ua(a[2], Sa) &&
+                    $a(a[2], Ya) &&
                     (f =
                       f.slice(0, a.index) +
                       a[1] +
-                      a[2].slice(0, -Sa.length) +
+                      a[2].slice(0, -Ya.length) +
                       a[3]),
                     (c = document.createTextNode(f));
                 }
@@ -1283,34 +1357,34 @@
                   this.parts.push({ type: "node", index: ++g });
               }
               "" === e[f]
-                ? (d.insertBefore(Wa(), a), c.push(a))
+                ? (d.insertBefore(ab(), a), c.push(a))
                 : (a.data = e[f]),
                 (h += f);
             }
           } else if (8 === a.nodeType)
-            if (a.data === Pa) {
+            if (a.data === Va) {
               const b = a.parentNode;
               (null === a.previousSibling || g == f) &&
-                (g++, b.insertBefore(Wa(), a)),
+                (g++, b.insertBefore(ab(), a)),
                 (f = g),
                 this.parts.push({ type: "node", index: g }),
                 null === a.nextSibling ? (a.data = "") : (c.push(a), g--),
                 h++;
             } else
-              for (let b = -1; -1 !== (b = a.data.indexOf(Pa, b + 1)); )
+              for (let b = -1; -1 !== (b = a.data.indexOf(Va, b + 1)); )
                 this.parts.push({ type: "node", index: -1 }), h++;
         }
         for (const d of c) d.parentNode.removeChild(d);
       }
     }
-    const Ua = (a, b) => {
+    const $a = (a, b) => {
         const c = a.length - b.length;
         return 0 <= c && a.slice(c) === b;
       },
-      Va = (a) => -1 !== a.index,
-      Wa = () => document.createComment(""),
-      Xa = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
-    class Ya {
+      _a = (a) => -1 !== a.index,
+      ab = () => document.createComment(""),
+      bb = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
+    class cb {
       constructor(a, b, c) {
         (this.__parts = []),
           (this.template = a),
@@ -1323,7 +1397,7 @@
         for (const b of this.__parts) void 0 !== b && b.commit();
       }
       _clone() {
-        const a = La
+        const a = Ra
             ? this.template.element.content.cloneNode(!0)
             : document.importNode(this.template.element.content, !0),
           b = [],
@@ -1334,7 +1408,7 @@
           g = 0,
           h = d.nextNode();
         for (; f < c.length; ) {
-          if (((e = c[f]), !Va(e))) {
+          if (((e = c[f]), !_a(e))) {
             this.__parts.push(void 0), f++;
             continue;
           }
@@ -1358,10 +1432,10 @@
             );
           f++;
         }
-        return La && (document.adoptNode(a), customElements.upgrade(a)), a;
+        return Ra && (document.adoptNode(a), customElements.upgrade(a)), a;
       }
     }
-    class Za {
+    class db {
       constructor(a, b, c, d) {
         (this.strings = a),
           (this.values = b),
@@ -1376,11 +1450,11 @@
           const a = this.strings[d],
             e = a.lastIndexOf("<!--");
           c = (-1 < e || c) && -1 === a.indexOf("-->", e + 1);
-          const f = Xa.exec(a);
+          const f = bb.exec(a);
           b +=
             null === f
-              ? a + (c ? Pa : Qa)
-              : a.substr(0, f.index) + f[1] + f[2] + Sa + f[3] + Pa;
+              ? a + (c ? Va : Wa)
+              : a.substr(0, f.index) + f[1] + f[2] + Ya + f[3] + Va;
         }
         return (b += this.strings[a]), b;
       }
@@ -1389,10 +1463,10 @@
         return (a.innerHTML = this.getHTML()), a;
       }
     }
-    const $a = (a) =>
+    const eb = (a) =>
         null === a || ("object" != typeof a && "function" != typeof a),
-      _a = (a) => Array.isArray(a) || !!(a && a[Symbol.iterator]);
-    class ab {
+      fb = (a) => Array.isArray(a) || !!(a && a[Symbol.iterator]);
+    class gb {
       constructor(a, b, c) {
         (this.dirty = !0),
           (this.element = a),
@@ -1403,7 +1477,7 @@
           this.parts[d] = this._createPart();
       }
       _createPart() {
-        return new bb(this);
+        return new hb(this);
       }
       _getValue() {
         const a = this.strings,
@@ -1414,7 +1488,7 @@
           const b = this.parts[d];
           if (void 0 !== b) {
             const a = b.value;
-            if ($a(a) || !_a(a)) c += "string" == typeof a ? a : a + "";
+            if (eb(a) || !fb(a)) c += "string" == typeof a ? a : a + "";
             else for (const b of a) c += "string" == typeof b ? b : b + "";
           }
         }
@@ -1426,41 +1500,41 @@
           this.element.setAttribute(this.name, this._getValue()));
       }
     }
-    class bb {
+    class hb {
       constructor(a) {
         (this.value = void 0), (this.committer = a);
       }
       setValue(a) {
-        a === Na ||
-          ($a(a) && a === this.value) ||
-          ((this.value = a), !Ka(a) && (this.committer.dirty = !0));
+        a === Ta ||
+          (eb(a) && a === this.value) ||
+          ((this.value = a), !Qa(a) && (this.committer.dirty = !0));
       }
       commit() {
-        for (; Ka(this.value); ) {
+        for (; Qa(this.value); ) {
           const a = this.value;
-          (this.value = Na), a(this);
+          (this.value = Ta), a(this);
         }
-        this.value === Na || this.committer.commit();
+        this.value === Ta || this.committer.commit();
       }
     }
-    class cb {
+    class ib {
       constructor(a) {
         (this.value = void 0),
           (this.__pendingValue = void 0),
           (this.options = a);
       }
       appendInto(a) {
-        (this.startNode = a.appendChild(Wa())),
-          (this.endNode = a.appendChild(Wa()));
+        (this.startNode = a.appendChild(ab())),
+          (this.endNode = a.appendChild(ab()));
       }
       insertAfterNode(a) {
         (this.startNode = a), (this.endNode = a.nextSibling);
       }
       appendIntoPart(a) {
-        a.__insert((this.startNode = Wa())), a.__insert((this.endNode = Wa()));
+        a.__insert((this.startNode = ab())), a.__insert((this.endNode = ab()));
       }
       insertAfterPart(a) {
-        a.__insert((this.startNode = Wa())),
+        a.__insert((this.startNode = ab())),
           (this.endNode = a.endNode),
           (a.endNode = this.startNode);
       }
@@ -1468,22 +1542,22 @@
         this.__pendingValue = a;
       }
       commit() {
-        for (; Ka(this.__pendingValue); ) {
+        for (; Qa(this.__pendingValue); ) {
           const a = this.__pendingValue;
-          (this.__pendingValue = Na), a(this);
+          (this.__pendingValue = Ta), a(this);
         }
         const a = this.__pendingValue;
-        a === Na ||
-          ($a(a)
+        a === Ta ||
+          (eb(a)
             ? a !== this.value && this.__commitText(a)
-            : a instanceof Za
+            : a instanceof db
             ? this.__commitTemplateResult(a)
             : a instanceof Node
             ? this.__commitNode(a)
-            : _a(a)
+            : fb(a)
             ? this.__commitIterable(a)
-            : a === Oa
-            ? ((this.value = Oa), this.clear())
+            : a === Ua
+            ? ((this.value = Ua), this.clear())
             : this.__commitText(a));
       }
       __insert(a) {
@@ -1504,10 +1578,10 @@
       }
       __commitTemplateResult(a) {
         const b = this.options.templateFactory(a);
-        if (this.value instanceof Ya && this.value.template === b)
+        if (this.value instanceof cb && this.value.template === b)
           this.value.update(a.values);
         else {
-          const c = new Ya(b, a.processor, this.options),
+          const c = new cb(b, a.processor, this.options),
             d = c._clone();
           c.update(a.values), this.__commitNode(d), (this.value = c);
         }
@@ -1520,7 +1594,7 @@
         for (const e of a)
           (c = b[d]),
             void 0 === c &&
-              ((c = new cb(this.options)),
+              ((c = new ib(this.options)),
               b.push(c),
               0 == d ? c.appendIntoPart(this) : c.insertAfterPart(b[d - 1])),
             c.setValue(e),
@@ -1533,10 +1607,10 @@
           0 < arguments.length && arguments[0] !== void 0
             ? arguments[0]
             : this.startNode;
-        Ma(this.startNode.parentNode, a.nextSibling, this.endNode);
+        Sa(this.startNode.parentNode, a.nextSibling, this.endNode);
       }
     }
-    class db {
+    class jb {
       constructor(a, b, c) {
         if (
           ((this.value = void 0),
@@ -1552,28 +1626,28 @@
         this.__pendingValue = a;
       }
       commit() {
-        for (; Ka(this.__pendingValue); ) {
+        for (; Qa(this.__pendingValue); ) {
           const a = this.__pendingValue;
-          (this.__pendingValue = Na), a(this);
+          (this.__pendingValue = Ta), a(this);
         }
-        if (this.__pendingValue !== Na) {
+        if (this.__pendingValue !== Ta) {
           const a = !!this.__pendingValue;
           this.value !== a &&
             (a
               ? this.element.setAttribute(this.name, "")
               : this.element.removeAttribute(this.name),
             (this.value = a)),
-            (this.__pendingValue = Na);
+            (this.__pendingValue = Ta);
         }
       }
     }
-    class eb extends ab {
+    class kb extends gb {
       constructor(a, b, c) {
         super(a, b, c),
           (this.single = 2 === c.length && "" === c[0] && "" === c[1]);
       }
       _createPart() {
-        return new fb(this);
+        return new lb(this);
       }
       _getValue() {
         return this.single ? this.parts[0].value : super._getValue();
@@ -1583,18 +1657,18 @@
           ((this.dirty = !1), (this.element[this.name] = this._getValue()));
       }
     }
-    class fb extends bb {}
-    let gb = !1;
+    class lb extends hb {}
+    let mb = !1;
     try {
       const a = {
         get capture() {
-          return (gb = !0), !1;
+          return (mb = !0), !1;
         },
       };
       window.addEventListener("test", a, a),
         window.removeEventListener("test", a, a);
     } catch (a) {}
-    class hb {
+    class nb {
       constructor(a, b, c) {
         (this.value = void 0),
           (this.__pendingValue = void 0),
@@ -1607,11 +1681,11 @@
         this.__pendingValue = a;
       }
       commit() {
-        for (; Ka(this.__pendingValue); ) {
+        for (; Qa(this.__pendingValue); ) {
           const a = this.__pendingValue;
-          (this.__pendingValue = Na), a(this);
+          (this.__pendingValue = Ta), a(this);
         }
-        if (this.__pendingValue === Na) return;
+        if (this.__pendingValue === Ta) return;
         const a = this.__pendingValue,
           b = this.value,
           c =
@@ -1628,14 +1702,14 @@
           ),
           null != a &&
             (null == b || c) &&
-            ((this.__options = ib(a)),
+            ((this.__options = ob(a)),
             this.element.addEventListener(
               this.eventName,
               this.__boundHandleEvent,
               this.__options
             )),
           (this.value = a),
-          (this.__pendingValue = Na);
+          (this.__pendingValue = Ta);
       }
       handleEvent(a) {
         "function" == typeof this.value
@@ -1643,98 +1717,98 @@
           : this.value.handleEvent(a);
       }
     }
-    const ib = (a) =>
+    const ob = (a) =>
       a &&
-      (gb
+      (mb
         ? { capture: a.capture, passive: a.passive, once: a.once }
         : a.capture);
-    const jb = new class {
+    const pb = new class {
         handleAttributeExpressions(a, b, c, d) {
           const e = b[0];
           if ("." === e) {
-            const d = new eb(a, b.slice(1), c);
+            const d = new kb(a, b.slice(1), c);
             return d.parts;
           }
-          if ("@" === e) return [new hb(a, b.slice(1), d.eventContext)];
-          if ("?" === e) return [new db(a, b.slice(1), c)];
-          const f = new ab(a, b, c);
+          if ("@" === e) return [new nb(a, b.slice(1), d.eventContext)];
+          if ("?" === e) return [new jb(a, b.slice(1), c)];
+          const f = new gb(a, b, c);
           return f.parts;
         }
         handleTextExpression(a) {
-          return new cb(a);
+          return new ib(a);
         }
       }(),
-      kb = new Map(),
-      lb = new WeakMap(),
-      mb = (a, b, c) => {
-        let d = lb.get(b);
+      qb = new Map(),
+      rb = new WeakMap(),
+      sb = (a, b, c) => {
+        let d = rb.get(b);
         d === void 0 &&
-          (Ma(b, b.firstChild),
-          lb.set(b, (d = new cb(Object.assign({ templateFactory: sa }, c)))),
+          (Sa(b, b.firstChild),
+          rb.set(b, (d = new ib(Object.assign({ templateFactory: ya }, c)))),
           d.appendInto(b)),
           d.setValue(a),
           d.commit();
       };
     (window.litHtmlVersions || (window.litHtmlVersions = [])).push("1.0.0");
-    const nb = function(a) {
+    const tb = function(a) {
         for (
           var b = arguments.length, c = Array(1 < b ? b - 1 : 0), d = 1;
           d < b;
           d++
         )
           c[d - 1] = arguments[d];
-        return new Za(a, c, "html", jb);
+        return new db(a, c, "html", pb);
       },
-      ob = 133,
-      pb = (a) => {
+      ub = 133,
+      vb = (a) => {
         let b = 11 === a.nodeType ? 0 : 1;
         for (
-          const c = document.createTreeWalker(a, ob, null, !1);
+          const c = document.createTreeWalker(a, ub, null, !1);
           c.nextNode();
 
         )
           b++;
         return b;
       },
-      qb = function(a) {
+      wb = function(a) {
         let b =
           1 < arguments.length && arguments[1] !== void 0 ? arguments[1] : -1;
         for (let c = b + 1; c < a.length; c++) {
           const b = a[c];
-          if (Va(b)) return c;
+          if (_a(b)) return c;
         }
         return -1;
       },
-      rb = (a, b) => "".concat(a, "--").concat(b);
-    let sb = !0;
+      xb = (a, b) => "".concat(a, "--").concat(b);
+    let yb = !0;
     "undefined" == typeof window.ShadyCSS
-      ? (sb = !1)
+      ? (yb = !1)
       : "undefined" == typeof window.ShadyCSS.prepareTemplateDom &&
         (console.warn(
           "Incompatible ShadyCSS version detected. Please update to at least @webcomponents/webcomponentsjs@2.0.2 and @webcomponents/shadycss@1.3.1."
         ),
-        (sb = !1));
-    const tb = (a) => (b) => {
-        const c = rb(b.type, a);
-        let d = kb.get(c);
+        (yb = !1));
+    const zb = (a) => (b) => {
+        const c = xb(b.type, a);
+        let d = qb.get(c);
         void 0 === d &&
           ((d = { stringsArray: new WeakMap(), keyString: new Map() }),
-          kb.set(c, d));
+          qb.set(c, d));
         let e = d.stringsArray.get(b.strings);
         if (void 0 !== e) return e;
-        const f = b.strings.join(Pa);
+        const f = b.strings.join(Va);
         if (((e = d.keyString.get(f)), void 0 === e)) {
           const c = b.getTemplateElement();
-          sb && window.ShadyCSS.prepareTemplateDom(c, a),
-            (e = new Ta(b, c)),
+          yb && window.ShadyCSS.prepareTemplateDom(c, a),
+            (e = new Za(b, c)),
             d.keyString.set(f, e);
         }
         return d.stringsArray.set(b.strings, e), e;
       },
-      ub = ["html", "svg"],
-      vb = (a) => {
-        ub.forEach((b) => {
-          const c = kb.get(rb(b, a));
+      Ab = ["html", "svg"],
+      Bb = (a) => {
+        Ab.forEach((b) => {
+          const c = qb.get(xb(b, a));
           c !== void 0 &&
             c.keyString.forEach((a) => {
               const b = a.element.content,
@@ -1742,13 +1816,13 @@
               Array.from(b.querySelectorAll("style")).forEach((a) => {
                 c.add(a);
               }),
-                ua(a, c);
+                Aa(a, c);
             });
         });
       },
-      wb = new Set(),
-      xb = (a, b, c) => {
-        wb.add(c);
+      Cb = new Set(),
+      Db = (a, b, c) => {
+        Cb.add(c);
         const d = a.querySelectorAll("style"),
           e = d.length;
         if (0 === e)
@@ -1758,9 +1832,9 @@
           const a = d[g];
           a.parentNode.removeChild(a), (f.textContent += a.textContent);
         }
-        vb(c);
+        Bb(c);
         const g = b.element.content;
-        va(b, f, g.firstChild),
+        Ba(b, f, g.firstChild),
           window.ShadyCSS.prepareTemplateStyles(b.element, c);
         const h = g.querySelector("style");
         if (window.ShadyCSS.nativeShadow && null !== h)
@@ -1768,27 +1842,27 @@
         else {
           g.insertBefore(f, g.firstChild);
           const a = new Set();
-          a.add(f), ua(b, a);
+          a.add(f), Aa(b, a);
         }
       },
-      yb = (a, b, c) => {
+      Eb = (a, b, c) => {
         const d = c.scopeName,
-          e = lb.has(b),
-          f = sb && 11 === b.nodeType && !!b.host && a instanceof Za,
-          g = f && !wb.has(d),
+          e = rb.has(b),
+          f = yb && 11 === b.nodeType && !!b.host && a instanceof db,
+          g = f && !Cb.has(d),
           h = g ? document.createDocumentFragment() : b;
-        if ((mb(a, h, Object.assign({ templateFactory: tb(d) }, c)), g)) {
-          const a = lb.get(h);
-          lb.delete(h),
-            a.value instanceof Ya && xb(h, a.value.template, d),
-            Ma(b, b.firstChild),
+        if ((sb(a, h, Object.assign({ templateFactory: zb(d) }, c)), g)) {
+          const a = rb.get(h);
+          rb.delete(h),
+            a.value instanceof cb && Db(h, a.value.template, d),
+            Sa(b, b.firstChild),
             b.appendChild(h),
-            lb.set(b, a);
+            rb.set(b, a);
         }
         !e && f && window.ShadyCSS.styleElement(b.host);
       };
     window.JSCompiler_renameProperty = (a) => a;
-    const zb = {
+    const Fb = {
         toAttribute(a, b) {
           return b === Boolean
             ? a
@@ -1812,26 +1886,26 @@
             : a;
         },
       },
-      Ab = (a, b) => b !== a && (b === b || a === a),
-      Bb = {
+      Gb = (a, b) => b !== a && (b === b || a === a),
+      Hb = {
         attribute: !0,
         type: String,
-        converter: zb,
+        converter: Fb,
         reflect: !1,
-        hasChanged: Ab,
+        hasChanged: Gb,
       },
-      Cb = Promise.resolve(!0),
-      Db = 1,
-      Eb = 4,
-      Fb = 8,
-      Gb = 16,
-      Hb = 32;
-    class Ib extends HTMLElement {
+      Ib = Promise.resolve(!0),
+      Jb = 1,
+      Kb = 4,
+      Lb = 8,
+      Mb = 16,
+      Nb = 32;
+    class Ob extends HTMLElement {
       constructor() {
         super(),
           (this._updateState = 0),
           (this._instanceProperties = void 0),
-          (this._updatePromise = Cb),
+          (this._updatePromise = Ib),
           (this._hasConnectedResolver = void 0),
           (this._changedProperties = new Map()),
           (this._reflectingProperties = void 0),
@@ -1861,7 +1935,7 @@
       }
       static createProperty(a) {
         let b =
-          1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : Bb;
+          1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : Hb;
         if (
           (this._ensureClassProperties(),
           this._classProperties.set(a, b),
@@ -1919,12 +1993,12 @@
       }
       static _valueHasChanged(a, b) {
         let c =
-          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : Ab;
+          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : Gb;
         return c(a, b);
       }
       static _propertyValueFromAttribute(a, b) {
         const c = b.type,
-          d = b.converter || zb,
+          d = b.converter || Fb,
           e = "function" == typeof d ? d : d.fromAttribute;
         return e ? e(a, c) : a;
       }
@@ -1932,7 +2006,7 @@
         if (void 0 === b.reflect) return;
         const c = b.type,
           d = b.converter,
-          e = (d && d.toAttribute) || zb.toAttribute;
+          e = (d && d.toAttribute) || Fb.toAttribute;
         return e(a, c);
       }
       initialize() {
@@ -1954,7 +2028,7 @@
           (this._instanceProperties = void 0);
       }
       connectedCallback() {
-        (this._updateState |= Hb),
+        (this._updateState |= Nb),
           this._hasConnectedResolver &&
             (this._hasConnectedResolver(),
             (this._hasConnectedResolver = void 0));
@@ -1965,38 +2039,38 @@
       }
       _propertyToAttribute(a, b) {
         let c =
-          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : Bb;
+          2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : Hb;
         const d = this.constructor,
           e = d._attributeNameForProperty(a, c);
         if (e !== void 0) {
           const a = d._propertyValueToAttribute(b, c);
           if (a === void 0) return;
-          (this._updateState |= Fb),
+          (this._updateState |= Lb),
             null == a ? this.removeAttribute(e) : this.setAttribute(e, a),
-            (this._updateState &= ~Fb);
+            (this._updateState &= ~Lb);
         }
       }
       _attributeToProperty(a, b) {
-        if (this._updateState & Fb) return;
+        if (this._updateState & Lb) return;
         const c = this.constructor,
           d = c._attributeToPropertyMap.get(a);
         if (d !== void 0) {
-          const a = c._classProperties.get(d) || Bb;
-          (this._updateState |= Gb),
+          const a = c._classProperties.get(d) || Hb;
+          (this._updateState |= Mb),
             (this[d] = c._propertyValueFromAttribute(b, a)),
-            (this._updateState &= ~Gb);
+            (this._updateState &= ~Mb);
         }
       }
       _requestUpdate(a, b) {
         let c = !0;
         if (a !== void 0) {
           const d = this.constructor,
-            e = d._classProperties.get(a) || Bb;
+            e = d._classProperties.get(a) || Hb;
           d._valueHasChanged(this[a], b, e.hasChanged)
             ? (!this._changedProperties.has(a) &&
                 this._changedProperties.set(a, b),
               !0 === e.reflect &&
-                !(this._updateState & Gb) &&
+                !(this._updateState & Mb) &&
                 (this._reflectingProperties === void 0 &&
                   (this._reflectingProperties = new Map()),
                 this._reflectingProperties.set(a, e)))
@@ -2009,8 +2083,8 @@
       }
       _enqueueUpdate() {
         var a = this;
-        return Aa(function*() {
-          a._updateState |= Eb;
+        return Ga(function*() {
+          a._updateState |= Kb;
           let b, c;
           const d = a._updatePromise;
           a._updatePromise = new Promise((a, d) => {
@@ -2031,13 +2105,13 @@
         })();
       }
       get _hasConnected() {
-        return this._updateState & Hb;
+        return this._updateState & Nb;
       }
       get _hasRequestedUpdate() {
-        return this._updateState & Eb;
+        return this._updateState & Kb;
       }
       get hasUpdated() {
-        return this._updateState & Db;
+        return this._updateState & Jb;
       }
       performUpdate() {
         this._instanceProperties && this._applyInstanceProperties();
@@ -2051,12 +2125,12 @@
           this._markUpdated();
         }
         a &&
-          (!(this._updateState & Db) &&
-            ((this._updateState |= Db), this.firstUpdated(b)),
+          (!(this._updateState & Jb) &&
+            ((this._updateState |= Jb), this.firstUpdated(b)),
           this.updated(b));
       }
       _markUpdated() {
-        (this._changedProperties = new Map()), (this._updateState &= ~Eb);
+        (this._changedProperties = new Map()), (this._updateState &= ~Kb);
       }
       get updateComplete() {
         return this._updatePromise;
@@ -2075,14 +2149,14 @@
       updated(a) {}
       firstUpdated(a) {}
     }
-    Ib.finalized = !0;
-    const Jb =
+    Ob.finalized = !0;
+    const Pb =
         "adoptedStyleSheets" in Document.prototype &&
         "replace" in CSSStyleSheet.prototype,
-      Kb = Symbol();
-    class Lb {
+      Qb = Symbol();
+    class Rb {
       constructor(a, b) {
-        if (b !== Kb)
+        if (b !== Qb)
           throw new Error(
             "CSSResult is not constructable. Use `unsafeCSS` or `css` instead."
           );
@@ -2091,7 +2165,7 @@
       get styleSheet() {
         return (
           void 0 === this._styleSheet &&
-            (Jb
+            (Pb
               ? ((this._styleSheet = new CSSStyleSheet()),
                 this._styleSheet.replaceSync(this.cssText))
               : (this._styleSheet = null)),
@@ -2102,8 +2176,8 @@
         return this.cssText;
       }
     }
-    const Mb = (a) => {
-        if (a instanceof Lb) return a.cssText;
+    const Sb = (a) => {
+        if (a instanceof Rb) return a.cssText;
         if ("number" == typeof a) return a;
         throw new Error(
           "Value passed to 'css' function must be a 'css' function result: ".concat(
@@ -2112,21 +2186,21 @@
           )
         );
       },
-      Nb = function(a) {
+      Tb = function(a) {
         for (
           var b = arguments.length, c = Array(1 < b ? b - 1 : 0), d = 1;
           d < b;
           d++
         )
           c[d - 1] = arguments[d];
-        const e = c.reduce((b, c, d) => b + Mb(c) + a[d + 1], a[0]);
-        return new Lb(e, Kb);
+        const e = c.reduce((b, c, d) => b + Sb(c) + a[d + 1], a[0]);
+        return new Rb(e, Qb);
       };
     (window.litElementVersions || (window.litElementVersions = [])).push(
       "2.2.0"
     );
-    const Ob = (a) => (a.flat ? a.flat(1 / 0) : wa(a));
-    class Pb extends Ib {
+    const Ub = (a) => (a.flat ? a.flat(1 / 0) : Ca(a));
+    class Vb extends Ob {
       static finalize() {
         super.finalize(),
           (this._styles = this.hasOwnProperty(
@@ -2139,7 +2213,7 @@
         const a = this.styles,
           b = [];
         if (Array.isArray(a)) {
-          const c = Ob(a),
+          const c = Ub(a),
             d = c.reduceRight((a, b) => (a.add(b), a), new Set());
           d.forEach((a) => b.unshift(a));
         } else a && b.push(a);
@@ -2159,7 +2233,7 @@
         const a = this.constructor._styles;
         0 === a.length ||
           (window.ShadyCSS === void 0 || window.ShadyCSS.nativeShadow
-            ? Jb
+            ? Pb
               ? (this.renderRoot.adoptedStyleSheets = a.map(
                   (a) => a.styleSheet
                 ))
@@ -2178,7 +2252,7 @@
       update(a) {
         super.update(a);
         const b = this.render();
-        b instanceof Za &&
+        b instanceof db &&
           this.constructor.render(b, this.renderRoot, {
             scopeName: this.localName,
             eventContext: this,
@@ -2192,16 +2266,16 @@
       }
       render() {}
     }
-    (Pb.finalized = !0), (Pb.render = yb);
-    const Qb = new WeakMap(),
-      Rb = ((a) =>
+    (Vb.finalized = !0), (Vb.render = Eb);
+    const Wb = new WeakMap(),
+      Xb = ((a) =>
         function() {
           const b = a(...arguments);
-          return Ja.set(b, !0), b;
+          return Pa.set(b, !0), b;
         })((a) => (b) => {
         if (
-          !(b instanceof bb) ||
-          b instanceof fb ||
+          !(b instanceof hb) ||
+          b instanceof lb ||
           "class" !== b.committer.name ||
           1 < b.committer.parts.length
         )
@@ -2210,9 +2284,9 @@
           );
         const c = b.committer,
           d = c.element;
-        Qb.has(b) || (d.className = c.strings.join(" "));
+        Wb.has(b) || (d.className = c.strings.join(" "));
         const e = d.classList,
-          f = Qb.get(b);
+          f = Wb.get(b);
         for (const c in f) c in a || e.remove(c);
         for (const c in a) {
           const b = a[c];
@@ -2221,9 +2295,9 @@
             e[a](c);
           }
         }
-        Qb.set(b, a);
+        Wb.set(b, a);
       });
-    var Sb = (function() {
+    var Yb = (function() {
         function a(a, b) {
           var c = -1;
           return (
@@ -2278,11 +2352,11 @@
             })()
           : Map;
       })(),
-      Tb =
+      Zb =
         "undefined" != typeof window &&
         "undefined" != typeof document &&
         window.document === document,
-      Ub = (function() {
+      $b = (function() {
         return "undefined" != typeof global && global.Math === Math
           ? global
           : "undefined" != typeof self && self.Math === Math
@@ -2291,16 +2365,16 @@
           ? window
           : Function("return this")();
       })(),
-      Vb = (function() {
+      _b = (function() {
         return "function" == typeof requestAnimationFrame
-          ? requestAnimationFrame.bind(Ub)
+          ? requestAnimationFrame.bind($b)
           : function(a) {
               return setTimeout(function() {
                 return a(Date.now());
               }, 1e3 / 60);
             };
       })(),
-      Wb = [
+      ac = [
         "top",
         "right",
         "bottom",
@@ -2310,15 +2384,15 @@
         "size",
         "weight",
       ],
-      Xb = "undefined" != typeof MutationObserver,
-      Yb = (function() {
+      bc = "undefined" != typeof MutationObserver,
+      cc = (function() {
         function a() {
           (this.connected_ = !1),
             (this.mutationEventsAdded_ = !1),
             (this.mutationsObserver_ = null),
             (this.observers_ = []),
             (this.onTransitionEnd_ = this.onTransitionEnd_.bind(this)),
-            (this.refresh = ya(this.refresh.bind(this), 20));
+            (this.refresh = Ea(this.refresh.bind(this), 20));
         }
         return (
           (a.prototype.addObserver = function(a) {
@@ -2347,14 +2421,14 @@
             );
           }),
           (a.prototype.connect_ = function() {
-            !Tb ||
+            !Zb ||
               this.connected_ ||
               (document.addEventListener(
                 "transitionend",
                 this.onTransitionEnd_
               ),
               window.addEventListener("resize", this.refresh),
-              Xb
+              bc
                 ? ((this.mutationsObserver_ = new MutationObserver(
                     this.refresh
                   )),
@@ -2372,7 +2446,7 @@
               (this.connected_ = !0));
           }),
           (a.prototype.disconnect_ = function() {
-            Tb &&
+            Zb &&
               this.connected_ &&
               (document.removeEventListener(
                 "transitionend",
@@ -2392,7 +2466,7 @@
           (a.prototype.onTransitionEnd_ = function(a) {
             var b = a.propertyName,
               c = void 0 === b ? "" : b,
-              d = Wb.some(function(a) {
+              d = ac.some(function(a) {
                 return !!~c.indexOf(a);
               });
             d && this.refresh();
@@ -2404,7 +2478,7 @@
           a
         );
       })(),
-      Zb = function(a, b) {
+      dc = function(a, b) {
         for (var c, d = 0, e = Object.keys(b); d < e.length; d++)
           (c = e[d]),
             Object.defineProperty(a, c, {
@@ -2415,32 +2489,32 @@
             });
         return a;
       },
-      $b = function(a) {
+      ec = function(a) {
         var b = a && a.ownerDocument && a.ownerDocument.defaultView;
-        return b || Ub;
+        return b || $b;
       },
-      _b = Ia(0, 0, 0, 0),
-      ac = (function() {
+      fc = Oa(0, 0, 0, 0),
+      gc = (function() {
         return "undefined" == typeof SVGGraphicsElement
           ? function(a) {
               return (
-                a instanceof $b(a).SVGElement && "function" == typeof a.getBBox
+                a instanceof ec(a).SVGElement && "function" == typeof a.getBBox
               );
             }
           : function(a) {
-              return a instanceof $b(a).SVGGraphicsElement;
+              return a instanceof ec(a).SVGGraphicsElement;
             };
       })(),
-      bc = (function() {
+      hc = (function() {
         function a(a) {
           (this.broadcastWidth = 0),
             (this.broadcastHeight = 0),
-            (this.contentRect_ = Ia(0, 0, 0, 0)),
+            (this.contentRect_ = Oa(0, 0, 0, 0)),
             (this.target = a);
         }
         return (
           (a.prototype.isActive = function() {
-            var a = Ga(this.target);
+            var a = Ma(this.target);
             return (
               (this.contentRect_ = a),
               a.width !== this.broadcastWidth ||
@@ -2458,17 +2532,17 @@
           a
         );
       })(),
-      cc = (function() {
+      ic = (function() {
         return function(a, b) {
-          var c = Ha(b);
-          Zb(this, { target: a, contentRect: c });
+          var c = Na(b);
+          dc(this, { target: a, contentRect: c });
         };
       })(),
-      dc = (function() {
+      jc = (function() {
         function a(a, b, c) {
           if (
             ((this.activeObservations_ = []),
-            (this.observations_ = new Sb()),
+            (this.observations_ = new Yb()),
             "function" != typeof a)
           )
             throw new TypeError(
@@ -2481,11 +2555,11 @@
             if (!arguments.length)
               throw new TypeError("1 argument required, but only 0 present.");
             if ("undefined" != typeof Element && Element instanceof Object) {
-              if (!(a instanceof $b(a).Element))
+              if (!(a instanceof ec(a).Element))
                 throw new TypeError('parameter 1 is not of type "Element".');
               var b = this.observations_;
               b.has(a) ||
-                (b.set(a, new bc(a)),
+                (b.set(a, new hc(a)),
                 this.controller_.addObserver(this),
                 this.controller_.refresh());
             }
@@ -2494,7 +2568,7 @@
             if (!arguments.length)
               throw new TypeError("1 argument required, but only 0 present.");
             if ("undefined" != typeof Element && Element instanceof Object) {
-              if (!(a instanceof $b(a).Element))
+              if (!(a instanceof ec(a).Element))
                 throw new TypeError('parameter 1 is not of type "Element".');
               var b = this.observations_;
               b.has(a) &&
@@ -2517,7 +2591,7 @@
             if (this.hasActive()) {
               var a = this.callbackCtx_,
                 b = this.activeObservations_.map(function(a) {
-                  return new cc(a.target, a.broadcastRect());
+                  return new ic(a.target, a.broadcastRect());
                 });
               this.callback_.call(a, b, a), this.clearActive();
             }
@@ -2531,37 +2605,41 @@
           a
         );
       })(),
-      ec = "undefined" == typeof WeakMap ? new Sb() : new WeakMap(),
-      fc = (function() {
+      kc = "undefined" == typeof WeakMap ? new Yb() : new WeakMap(),
+      lc = (function() {
         function a(b) {
           if (!(this instanceof a))
             throw new TypeError("Cannot call a class as a function.");
           if (!arguments.length)
             throw new TypeError("1 argument required, but only 0 present.");
-          var c = Yb.getInstance(),
-            d = new dc(b, c, this);
-          ec.set(this, d);
+          var c = cc.getInstance(),
+            d = new jc(b, c, this);
+          kc.set(this, d);
         }
         return a;
       })();
     ["observe", "unobserve", "disconnect"].forEach(function(a) {
-      fc.prototype[a] = function() {
+      lc.prototype[a] = function() {
         var b;
-        return (b = ec.get(this))[a].apply(b, arguments);
+        return (b = kc.get(this))[a].apply(b, arguments);
       };
     });
-    var gc = (function() {
-      return "undefined" == typeof Ub.ResizeObserver ? fc : Ub.ResizeObserver;
+    var mc = (function() {
+      return "undefined" == typeof $b.ResizeObserver ? lc : $b.ResizeObserver;
     })();
-    const hc = {
+    const nc = {
         shuffle: !0,
         power_state: !0,
         artwork_border: !0,
         icon_state: !0,
         sound_mode: !0,
         runtime: !0,
+        volume: !1,
+        controls: !1,
+        play_pause: !1,
+        play_stop: !0,
       },
-      ic = {
+      oc = {
         DEFAULT: "mdi:cast",
         DROPDOWN: "mdi:chevron-down",
         GROUP: "mdi:speaker-multiple",
@@ -2573,13 +2651,13 @@
         PREV: "mdi:skip-previous",
         SEND: "mdi:send",
         SHUFFLE: "mdi:shuffle",
-        STOP: "mdi:stop",
+        STOP: { true: "mdi:stop", false: "mdi:play" },
         VOL_DOWN: "mdi:volume-minus",
         VOL_UP: "mdi:volume-plus",
       },
-      jc = ["entity", "_overflow", "break", "thumbnail", "edit", "idle"],
-      kc = ["media_duration", "media_position", "media_position_updated_at"],
-      lc = [
+      pc = ["entity", "_overflow", "break", "thumbnail", "edit", "idle"],
+      qc = ["media_duration", "media_position", "media_position_updated_at"],
+      rc = [
         { attr: "media_title" },
         { attr: "media_artist" },
         { attr: "media_series_title" },
@@ -2587,7 +2665,7 @@
         { attr: "media_episode", prefix: "E" },
         { attr: "app_name" },
       ];
-    class mc {
+    class sc {
       constructor(a, b, c) {
         (this.hass = a || {}),
           (this.config = b || {}),
@@ -2688,15 +2766,15 @@
         );
       }
       get mediaInfo() {
-        return lc
-          .map((a) => xa({ text: this.attr[a.attr], prefix: "" }, a))
+        return rc
+          .map((a) => Da({ text: this.attr[a.attr], prefix: "" }, a))
           .filter((a) => a.text);
       }
       get hasProgress() {
         return (
           !this.config.hide.progress &&
           !this.idle &&
-          kc.every((a) => a in this.attr)
+          qc.every((a) => a in this.attr)
         );
       }
       get progress() {
@@ -2743,7 +2821,7 @@
       }
       fetchThumbnail() {
         var a = this;
-        return Aa(function*() {
+        return Ga(function*() {
           try {
             const b = yield a.hass.callWS({
                 type: "media_player_thumbnail",
@@ -2776,10 +2854,15 @@
         this.callService(a, "select_source", { source: b });
       }
       setMedia(a, b) {
-        this.callService(a, "play_media", xa({}, b));
+        this.callService(a, "play_media", Da({}, b));
       }
       playPause(a) {
         this.callService(a, "media_play_pause");
+      }
+      playStop(a) {
+        this.isPlaying
+          ? this.callService(a, "media_stop")
+          : this.callService(a, "media_play");
       }
       setSoundMode(a, b) {
         this.callService(a, "select_sound_mode", { sound_mode: b });
@@ -2840,17 +2923,17 @@
       toggleScript(a, b) {
         let c =
           2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : {};
-        this.callService(a, b.split(".").pop(), xa({}, c), "script");
+        this.callService(a, b.split(".").pop(), Da({}, c), "script");
       }
       toggleService(a, b) {
         let c =
           2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : {};
         a.stopPropagation();
         const d = b.split("."),
-          e = ta(d, 2),
+          e = za(d, 2),
           f = e[0],
           g = e[1];
-        this.hass.callService(f, g, xa({}, c));
+        this.hass.callService(f, g, Da({}, c));
       }
       callService(a, b, c) {
         let d =
@@ -2858,11 +2941,11 @@
             ? arguments[3]
             : "media_player";
         a.stopPropagation(),
-          this.hass.callService(d, b, xa({ entity_id: this.config.entity }, c));
+          this.hass.callService(d, b, Da({ entity_id: this.config.entity }, c));
       }
     }
-    const nc = Nb(ra());
-    class oc extends Pb {
+    const tc = Tb(xa());
+    class uc extends Vb {
       static get properties() {
         return {
           item: {},
@@ -2872,14 +2955,14 @@
         };
       }
       render() {
-        return nb(
-          qa(),
+        return tb(
+          wa(),
           this.checked,
           this.disabled,
           (a) => a.stopPropagation(),
           this.handleClick,
           this.item.name,
-          this.master ? nb(pa()) : ""
+          this.master ? tb(va()) : ""
         );
       }
       handleClick(a) {
@@ -2891,20 +2974,20 @@
           );
       }
       static get styles() {
-        return Nb(oa());
+        return Tb(ua());
       }
     }
-    customElements.define("mmp-group-item", oc);
-    class pc extends Pb {
+    customElements.define("mmp-group-item", uc);
+    class vc extends Vb {
       render() {
-        return nb(na());
+        return tb(ta());
       }
       static get styles() {
-        return Nb(ma());
+        return Tb(sa());
       }
     }
-    customElements.define("mmp-button", pc);
-    class qc extends Pb {
+    customElements.define("mmp-button", vc);
+    class wc extends Vb {
       static get properties() {
         return { entities: {}, player: {}, visible: Boolean };
       }
@@ -2932,12 +3015,12 @@
           c = a.master,
           d = a.isMaster;
         return this.visible
-          ? nb(
-              la(),
+          ? tb(
+              ra(),
               this.visible,
               this.entities.map((a) =>
-                nb(
-                  ka(),
+                tb(
+                  qa(),
                   this.handleGroupChange,
                   a,
                   a.entity_id === this.player.id || b.includes(a.entity_id),
@@ -2952,7 +3035,7 @@
                   d ? b : this.player.entity_id,
                   !1
                 ),
-              d ? nb(ja()) : nb(ia()),
+              d ? tb(pa()) : tb(oa()),
               !d,
               (a) =>
                 this.player.handleGroupChange(
@@ -2961,15 +3044,15 @@
                   !0
                 )
             )
-          : nb(ha());
+          : tb(na());
       }
       static get styles() {
-        return Nb(ga());
+        return Tb(ma());
       }
     }
-    customElements.define("mmp-group-list", qc);
-    const rc = Nb(fa());
-    class sc extends Pb {
+    customElements.define("mmp-group-list", wc);
+    const xc = Tb(la());
+    class yc extends Vb {
       static get properties() {
         return { items: [], label: String, selected: String };
       }
@@ -2980,33 +3063,33 @@
         this.dispatchEvent(new CustomEvent("change", { detail: a }));
       }
       render() {
-        return nb(
-          ea(),
+        return tb(
+          ka(),
           "right",
           "top",
           44,
           (a) => a.stopPropagation(),
           this.icon
-            ? nb(da(), ic.DROPDOWN)
-            : nb(ca(), this.selected || this.label, ic.DROPDOWN),
+            ? tb(ja(), oc.DROPDOWN)
+            : tb(ia(), this.selected || this.label, oc.DROPDOWN),
           this.selectedId,
           this.items.map((a) =>
-            nb(
-              ba(),
+            tb(
+              ha(),
               a.id || a.name,
               () => this.onChange(a),
-              a.icon ? nb(aa(), a.icon) : "",
-              a.name ? nb(_(), a.name) : ""
+              a.icon ? tb(ga(), a.icon) : "",
+              a.name ? tb(fa(), a.name) : ""
             )
           )
         );
       }
       static get styles() {
-        return [rc, Nb($())];
+        return [xc, Tb(ea())];
       }
     }
-    customElements.define("mmp-dropdown", sc);
-    class tc extends Pb {
+    customElements.define("mmp-dropdown", yc);
+    class zc extends Vb {
       static get properties() {
         return { player: {}, shortcuts: {} };
       }
@@ -3026,29 +3109,29 @@
         return this.shortcuts.column_height || 36;
       }
       render() {
-        if (!this.show) return nb(Z());
+        if (!this.show) return tb(da());
         const a = this.active,
           b = this.list
-            ? nb(Y(), this.handleShortcut, this.list, this.shortcuts.label, a)
+            ? tb(ca(), this.handleShortcut, this.list, this.shortcuts.label, a)
             : "",
           c = this.buttons
-            ? nb(
-                X(),
+            ? tb(
+                ba(),
                 this.buttons.map((b) =>
-                  nb(
-                    W(),
+                  tb(
+                    aa(),
                     "min-height: ".concat(this.height, "px;"),
                     this.shortcuts.columns,
                     b.id === a,
                     (a) => this.handleShortcut(a, b),
                     this.shortcuts.align_text,
-                    b.icon ? nb(V(), b.icon) : "",
-                    b.name ? nb(U(), b.name) : ""
+                    b.icon ? tb(_(), b.icon) : "",
+                    b.name ? tb($(), b.name) : ""
                   )
                 )
               )
             : "";
-        return nb(T(), c, b);
+        return tb(Z(), c, b);
       }
       handleShortcut(a, b) {
         const c = b || a.detail,
@@ -3062,11 +3145,11 @@
         this.player.setMedia(a, { media_content_type: d, media_content_id: e });
       }
       static get styles() {
-        return [rc, Nb(S())];
+        return [xc, Tb(Y())];
       }
     }
-    customElements.define("mmp-shortcuts", tc);
-    const uc = function(a, b) {
+    customElements.define("mmp-shortcuts", zc);
+    const Ac = function(a, b) {
       let c =
         2 < arguments.length && arguments[2] !== void 0
           ? arguments[2]
@@ -3075,12 +3158,12 @@
         e = a.resources[d];
       return e && e[b] ? e[b] : c;
     };
-    class vc extends Pb {
+    class Bc extends Vb {
       static get properties() {
         return { hass: {}, config: {} };
       }
       get label() {
-        return uc(this.hass, "ui.card.media_player.text_to_speak", "Say");
+        return Ac(this.hass, "ui.card.media_player.text_to_speak", "Say");
       }
       get input() {
         return this.shadowRoot.getElementById("tts-input");
@@ -3089,7 +3172,7 @@
         return this.input.value;
       }
       render() {
-        return nb(R(), this.label, (a) => a.stopPropagation(), this.handleTts);
+        return tb(X(), this.label, (a) => a.stopPropagation(), this.handleTts);
       }
       handleTts(a) {
         const b = this.config,
@@ -3124,11 +3207,11 @@
         this.input.value = "";
       }
       static get styles() {
-        return Nb(Q());
+        return Tb(W());
       }
     }
-    customElements.define("mmp-tts", vc);
-    var wc = (a) => {
+    customElements.define("mmp-tts", Bc);
+    var Cc = (a) => {
       let b = parseInt(a % 60, 10),
         c = parseInt((a / 60) % 60, 10),
         d = parseInt((a / 3600) % 24, 10);
@@ -3142,7 +3225,7 @@
           .concat(b)
       );
     };
-    class xc extends Pb {
+    class Dc extends Vb {
       static get properties() {
         return {
           _player: {},
@@ -3150,6 +3233,8 @@
           progress: Number,
           duration: Number,
           tracker: {},
+          seekProgress: Number,
+          seekWidth: Number,
           track: Boolean,
         };
       }
@@ -3165,19 +3250,35 @@
       get hasProgress() {
         return this.player.hasProgress;
       }
+      get width() {
+        return this.shadowRoot.querySelector(".mmp-progress").offsetWidth;
+      }
+      get offset() {
+        return this.getBoundingClientRect().left;
+      }
+      get classes() {
+        return Xb({
+          transiting: !this.seekProgress,
+          seeking: this.seekProgress,
+        });
+      }
       render() {
-        return this.player.active && this.hasProgress
-          ? nb(
-              P(),
-              this.handleSeek,
-              !this.player.isPlaying,
-              this.showTime
-                ? nb(O(), wc(this.progress), wc(this.duration))
-                : "",
-              this.progress,
-              this.duration
-            )
-          : nb(N());
+        return tb(
+          V(),
+          this.initSeek,
+          this.handleSeek,
+          this.initSeek,
+          this.handleSeek,
+          this.resetSeek,
+          (a) => a.stopPropagation(),
+          !this.player.isPlaying,
+          this.showTime
+            ? tb(U(), Cc(this.seekProgress || this.progress), Cc(this.duration))
+            : "",
+          this.classes,
+          this.seekProgress || this.progress,
+          this.duration
+        );
       }
       trackProgress() {
         (this.progress = this.player.progress),
@@ -3186,20 +3287,42 @@
           this.player.isPlaying ||
             (clearInterval(this.tracker), (this.tracker = null));
       }
+      initSeek(a) {
+        const b = a.offsetX || a.touches[0].pageX - this.offset;
+        (this.seekWidth = this.width),
+          (this.seekProgress = this.calcProgress(b)),
+          this.addEventListener("touchmove", this.moveSeek),
+          this.addEventListener("mousemove", this.moveSeek);
+      }
+      resetSeek() {
+        (this.seekProgress = null),
+          this.removeEventListener("touchmove", this.moveSeek),
+          this.removeEventListener("mousemove", this.moveSeek);
+      }
+      moveSeek(a) {
+        a.preventDefault();
+        const b = a.offsetX || a.touches[0].pageX - this.offset;
+        this.seekProgress = this.calcProgress(b);
+      }
       handleSeek(a) {
-        const b = this.duration,
-          c = (a.offsetX / a.target.offsetWidth) * b;
+        this.resetSeek();
+        const b = a.offsetX || a.changedTouches[0].pageX - this.offset,
+          c = this.calcProgress(b);
         this.player.seek(a, c);
       }
       disconnectedCallback() {
-        clearInterval(this.tracker);
+        this.resetSeek(), clearInterval(this.tracker);
+      }
+      calcProgress(a) {
+        const b = (a / this.seekWidth) * this.duration;
+        return Math.min(Math.max(b, 0.1), this.duration);
       }
       static get styles() {
-        return Nb(M());
+        return Tb(T());
       }
     }
-    customElements.define("mmp-progress", xc);
-    class yc extends Pb {
+    customElements.define("mmp-progress", Dc);
+    class Ec extends Vb {
       static get properties() {
         return { player: {}, selected: String, icon: Boolean };
       }
@@ -3214,8 +3337,8 @@
         }));
       }
       render() {
-        return nb(
-          L(),
+        return tb(
+          S(),
           this.handleSource,
           this.sources,
           this.source,
@@ -3228,11 +3351,11 @@
         this.player.setSource(a, b), (this.selected = b);
       }
       static get styles() {
-        return Nb(K());
+        return Tb(R());
       }
     }
-    customElements.define("mmp-source-menu", yc);
-    class zc extends Pb {
+    customElements.define("mmp-source-menu", Ec);
+    class Fc extends Vb {
       static get properties() {
         return { player: {}, selected: String, icon: Boolean };
       }
@@ -3247,8 +3370,8 @@
         }));
       }
       render() {
-        return nb(
-          J(),
+        return tb(
+          Q(),
           this.handleChange,
           this.modes,
           this.mode,
@@ -3261,11 +3384,11 @@
         this.player.setSoundMode(a, b), (this.selected = b);
       }
       static get styles() {
-        return Nb(I());
+        return Tb(P());
       }
     }
-    customElements.define("mmp-sound-menu", zc);
-    class Ac extends Pb {
+    customElements.define("mmp-sound-menu", Fc);
+    class Gc extends Vb {
       static get properties() {
         return { player: {}, config: {}, break: Boolean };
       }
@@ -3280,28 +3403,27 @@
       }
       render() {
         const a = this.config.hide;
-        return nb(
-          H(),
-          a.volume ? nb(G()) : this.renderVolControls(this.player.muted),
+        return tb(
+          O(),
+          a.volume ? tb(N()) : this.renderVolControls(this.player.muted),
           this.showShuffle
-            ? nb(
-                F(),
+            ? tb(
+                M(),
                 (a) => this.player.toggleShuffle(a),
-                ic.SHUFFLE,
+                oc.SHUFFLE,
                 this.player.shuffle
               )
-            : nb(E()),
+            : tb(L()),
           a.controls
-            ? nb(C())
-            : nb(
-                D(),
+            ? tb(J())
+            : tb(
+                K(),
                 this.config.flow || this.break,
                 (a) => this.player.prev(a),
-                ic.PREV,
-                (a) => this.player.playPause(a),
-                ic.PLAY[this.player.isPlaying],
+                oc.PREV,
+                this.renderPlayButtons(),
                 (a) => this.player.next(a),
-                ic.NEXT
+                oc.NEXT
               )
         );
       }
@@ -3311,8 +3433,8 @@
           : this.renderVolSlider(a);
       }
       renderVolSlider(a) {
-        return nb(
-          B(),
+        return tb(
+          I(),
           this.renderMuteButton(a),
           this.handleVolumeChange,
           (a) => a.stopPropagation(),
@@ -3324,44 +3446,76 @@
         );
       }
       renderVolButtons(a) {
-        return nb(
-          A(),
+        return tb(
+          H(),
           this.renderMuteButton(a),
           (a) => this.player.volumeDown(a),
-          ic.VOL_DOWN,
+          oc.VOL_DOWN,
           (a) => this.player.volumeUp(a),
-          ic.VOL_UP
+          oc.VOL_UP
         );
       }
       renderMuteButton(a) {
         if (!this.config.hide.mute)
           switch (this.config.replace_mute) {
             case "play":
-              return nb(
-                z(),
+            case "play_pause":
+              return tb(
+                G(),
                 (a) => this.player.playPause(a),
-                ic.PLAY[this.player.isPlaying]
+                oc.PLAY[this.player.isPlaying]
               );
             case "stop":
-              return nb(y(), (a) => this.player.stop(a), ic.STOP);
+              return tb(F(), (a) => this.player.stop(a), oc.STOP.true);
+            case "play_stop":
+              return tb(
+                E(),
+                (a) => this.player.playStop(a),
+                oc.STOP[this.player.isPlaying]
+              );
             case "next":
-              return nb(x(), (a) => this.player.next(a), ic.NEXT);
+              return tb(D(), (a) => this.player.next(a), oc.NEXT);
             default:
               return this.player.supportsMute
-                ? nb(w(), (a) => this.player.toggleMute(a), ic.MUTE[a])
+                ? tb(C(), (a) => this.player.toggleMute(a), oc.MUTE[a])
                 : void 0;
           }
+      }
+      renderPlayButtons() {
+        const a = this.config.hide;
+        return tb(
+          B(),
+          a.play_pause
+            ? tb(z())
+            : tb(
+                A(),
+                (a) => this.player.playPause(a),
+                oc.PLAY[this.player.isPlaying]
+              ),
+          a.play_stop
+            ? tb(x())
+            : tb(
+                y(),
+                (a) => this.handleStop(a),
+                a.play_pause ? oc.STOP[this.player.isPlaying] : oc.STOP.true
+              )
+        );
+      }
+      handleStop(a) {
+        return this.config.hide.play_pause
+          ? this.player.playStop(a)
+          : this.player.stop(a);
       }
       handleVolumeChange(a) {
         const b = parseFloat(a.target.value) / 100;
         this.player.setVolume(a, b);
       }
       static get styles() {
-        return [rc, Nb(v())];
+        return [xc, Tb(w())];
       }
     }
-    customElements.define("mmp-media-controls", Ac);
-    class Bc extends Pb {
+    customElements.define("mmp-media-controls", Gc);
+    class Hc extends Vb {
       static get properties() {
         return {
           hass: {},
@@ -3372,7 +3526,7 @@
         };
       }
       get icon() {
-        return this.config.speaker_group.icon || ic.GROUP;
+        return this.config.speaker_group.icon || oc.GROUP;
       }
       get showGroupButton() {
         return this.config.speaker_group.entities;
@@ -3407,30 +3561,30 @@
       }
       render() {
         return this.player.isUnavailable
-          ? nb(u(), uc(this.hass, "state.default.unavailable", "Unavailable"))
-          : nb(
-              t(),
+          ? tb(v(), Ac(this.hass, "state.default.unavailable", "Unavailable"))
+          : tb(
+              u(),
               this.idle ? this.renderIdleView : "",
-              this.hasControls ? nb(s(), this.player, this.config) : "",
+              this.hasControls ? tb(t(), this.player, this.config) : "",
               this.hasSource
-                ? nb(
-                    r(),
+                ? tb(
+                    s(),
                     this.player,
                     this.sourceSize,
                     "full" === this.config.source
                   )
                 : "",
               this.hasSoundMode
-                ? nb(
-                    q(),
+                ? tb(
+                    r(),
                     this.player,
                     this.soundSize,
                     "full" === this.config.sound_mode
                   )
                 : "",
               this.showGroupButton
-                ? nb(
-                    p(),
+                ? tb(
+                    q(),
                     this.icon,
                     !this.player.isGrouped,
                     this.groupVisible,
@@ -3438,9 +3592,9 @@
                   )
                 : "",
               this.showPowerButton
-                ? nb(
-                    o(),
-                    ic.POWER,
+                ? tb(
+                    p(),
+                    oc.POWER,
                     (a) => this.player.toggle(a),
                     this.powerColor
                   )
@@ -3453,22 +3607,22 @@
       }
       get renderIdleView() {
         return this.player.isPaused
-          ? nb(n(), ic.PLAY[this.player.isPlaying], (a) =>
+          ? tb(o(), oc.PLAY[this.player.isPlaying], (a) =>
               this.player.playPause(a)
             )
-          : nb(m(), uc(this.hass, "state.media_player.idle", "Idle"));
+          : tb(n(), Ac(this.hass, "state.media_player.idle", "Idle"));
       }
       static get styles() {
-        return [rc, Nb(l())];
+        return [xc, Tb(m())];
       }
     }
-    customElements.define("mmp-powerstrip", Bc),
+    customElements.define("mmp-powerstrip", Hc),
       customElements.get("ha-slider") ||
         customElements.define(
           "ha-slider",
           class extends customElements.get("paper-slider") {}
         );
-    class Cc extends Pb {
+    class Ic extends Vb {
       constructor() {
         super(),
           (this._overflow = !1),
@@ -3495,7 +3649,7 @@
         };
       }
       static get styles() {
-        return nc;
+        return tc;
       }
       set hass(a) {
         if (a) {
@@ -3504,7 +3658,7 @@
             b &&
               this.entity !== b &&
               ((this.entity = b),
-              (this.player = new mc(a, this.config, b)),
+              (this.player = new sc(a, this.config, b)),
               (this.rtl = this.computeRTL(a)),
               (this.idle = this.player.idle),
               this.player.trackIdle && this.updateIdleStatus());
@@ -3527,7 +3681,7 @@
           throw new Error(
             "Specify an entity from within the media_player domain."
           );
-        const b = xa(
+        const b = Da(
           {
             artwork: "default",
             info: "default",
@@ -3538,13 +3692,13 @@
           },
           a,
           {
-            hide: xa({}, hc, a.hide),
-            speaker_group: xa(
+            hide: Da({}, nc, a.hide),
+            speaker_group: Da(
               { show_group_count: !0, platform: "sonos" },
               a.sonos,
               a.speaker_group
             ),
-            shortcuts: xa({ label: "Shortcuts..." }, a.shortcuts),
+            shortcuts: Da({ label: "Shortcuts..." }, a.shortcuts),
           }
         );
         (b.max_volume = +b.max_volume || 100),
@@ -3557,11 +3711,11 @@
       shouldUpdate(a) {
         return (
           void 0 === this.break && this.computeRect(this),
-          jc.some((b) => a.has(b)) && this.player
+          pc.some((b) => a.has(b)) && this.player
         );
       }
       firstUpdated() {
-        const a = new gc((a) => {
+        const a = new mc((a) => {
           a.forEach((a) => {
             window.requestAnimationFrame(() => {
               "scroll" === this.config.info && this.computeOverflow(),
@@ -3592,8 +3746,8 @@
               : this,
           b = a.config;
         const c = this.computeArtwork();
-        return nb(
-          k(),
+        return tb(
+          l(),
           this.handleMoreInfo,
           this.computeClasses(),
           b.artwork,
@@ -3611,16 +3765,17 @@
           this.idle,
           b.flow,
           !b.collapse && this.player.active
-            ? nb(j(), this.player, b, this.break)
+            ? tb(k(), this.player, b, this.break)
             : "",
           this.player,
           b.shortcuts,
-          b.tts ? nb(i(), b.tts, this.hass, this.player.id) : "",
+          b.tts ? tb(j(), b.tts, this.hass, this.player.id) : "",
           this.edit,
           b.speaker_group.entities,
           this.player,
-          this.player,
-          !this.config.hide.runtime
+          this.player.active && this.player.hasProgress
+            ? tb(i(), this.player, !this.config.hide.runtime)
+            : ""
         );
       }
       renderArtwork(a) {
@@ -3629,44 +3784,44 @@
             this.config.background && (!a || "default" === this.config.artwork)
               ? "url(".concat(this.config.background, ")")
               : this.thumbnail;
-          return nb(h(), b);
+          return tb(h(), b);
         }
       }
       renderIcon(a) {
         return this.config.hide.icon
           ? void 0
           : this.player.active && a && "default" === this.config.artwork
-          ? nb(
+          ? tb(
               g(),
               this.thumbnail,
               !this.config.hide.artwork_border,
               this.player.state
             )
-          : nb(f(), this.computeIcon());
+          : tb(f(), this.computeIcon());
       }
       renderEntityName() {
         return this.config.hide.name
           ? void 0
-          : nb(e(), this.name, this.speakerCount());
+          : tb(e(), this.name, this.speakerCount());
       }
       renderMediaInfo() {
         if (!this.config.hide.info) {
           const e = this.player.mediaInfo;
-          return nb(
+          return tb(
             d(),
             "short" === this.config.info || !this.player.active,
             "scroll" === this.config.info,
             this.overflow,
             this.overflow,
             "scroll" === this.config.info
-              ? nb(
+              ? tb(
                   c(),
                   e.map((a) =>
-                    nb(b(), "attr__".concat(a.attr), a.prefix + a.text)
+                    tb(b(), "attr__".concat(a.attr), a.prefix + a.text)
                   )
                 )
               : "",
-            e.map((b) => nb(a(), "attr__".concat(b.attr), b.prefix + b.text))
+            e.map((b) => tb(a(), "attr__".concat(b.attr), b.prefix + b.text))
           );
         }
       }
@@ -3682,7 +3837,7 @@
               ? arguments[0]
               : this,
           b = a.config;
-        return Rb({
+        return Xb({
           "--responsive": this.break || b.hide.icon,
           "--initial": this.initial,
           "--bg": b.background,
@@ -3692,7 +3847,9 @@
           "--flow": b.flow,
           "--collapse": b.collapse,
           "--rtl": this.rtl,
+          "--progress": this.player.hasProgress,
           "--runtime": !b.hide.runtime && this.player.hasProgress,
+          "--inactive": !this.player.isActive,
         });
       }
       computeArtwork() {
@@ -3712,7 +3869,7 @@
       computeIcon() {
         return this.config.icon
           ? this.config.icon
-          : this.player.icon || ic.DEFAULT;
+          : this.player.icon || oc.DEFAULT;
       }
       computeOverflow() {
         const a = this.shadowRoot.querySelector(".marquee");
@@ -3767,6 +3924,6 @@
         return this.config.collapse ? 1 : 2;
       }
     }
-    customElements.define("hui-ais-mini-media-player-card", Cc);
+    customElements.define("hui-ais-mini-media-player-card", Ic);
   });
 })();

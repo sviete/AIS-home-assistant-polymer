@@ -36,7 +36,7 @@ import "../cards/hui-ais-easy-picker-card";
 import "../cards/hui-ais-list-card";
 import "../cards/hui-ais-button-card";
 import "../cards/hui-ais-mini-media-player-card";
-import "../cards/hui-ais-monster-card";
+import "../cards/hui-ais-auto-entities-card";
 import { LovelaceCard } from "../types";
 import { LovelaceCardConfig } from "../../../data/lovelace";
 
@@ -71,7 +71,7 @@ const CARD_TYPES = new Set([
   "ais-list",
   "ais-button",
   "ais-mini-media-player",
-  "ais-monster",
+  "ais-auto-entities",
 ]);
 const CUSTOM_TYPE_PREFIX = "custom:";
 const TIMEOUT = 2000;
