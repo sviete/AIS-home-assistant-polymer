@@ -78,7 +78,7 @@ export const haStyleDialog = css`
       width: 100% !important;
       max-height: calc(100% - 64px);
 
-      position: fixed !important;
+      position: sticky !important;
       bottom: 0px;
       left: 0px;
       right: 0px;
