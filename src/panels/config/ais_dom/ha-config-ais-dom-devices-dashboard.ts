@@ -1,6 +1,6 @@
 import "../../../layouts/hass-subpage";
 import "./ais_dom_devices/ha-ais-dom-devices-data-table";
-
+import "../../../components/ha-fab";
 import {
   LitElement,
   html,
@@ -27,6 +27,12 @@ export class HaConfigDeviceDashboard extends LitElement {
       ha-ais-dom-devices-data-table {
         width: 100%;
       }
+      ha-fab {
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        z-index: 1;
+      }
     `;
   }
   @property() public hass!: HomeAssistant;
@@ -40,11 +46,6 @@ export class HaConfigDeviceDashboard extends LitElement {
   protected render(): TemplateResult {
     return html`
       <hass-subpage header="Urządzenia AIS dom">
-        <paper-icon-button
-          slot="toolbar-icon"
-          icon="mdi:plus-box"
-          @click=${this._addDevice}
-        ></paper-icon-button>
         <div class="content">
           <ha-ais-dom-devices-data-table
             .hass=${this.hass}
@@ -57,6 +58,13 @@ export class HaConfigDeviceDashboard extends LitElement {
           ></ha-ais-dom-devices-data-table>
         </div>
       </hass-subpage>
+      <ha-fab
+        ?is-wide=${true}
+        icon="hass:plus"
+        title="Dodaj urządzenie"
+        @click=${this._addDevice}
+        class=""
+      ></ha-fab>
     `;
   }
 
