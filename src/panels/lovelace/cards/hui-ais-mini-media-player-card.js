@@ -4910,6 +4910,12 @@
           }
         }
       }
+      this.shortcuts.list.push({
+        name: "Wyszukaj dostępne głośniki",
+        icon: "mdi:sync",
+        id: "ais_shell_command.scan_network_for_devices",
+        type: "service",
+      });
       return this.shortcuts.list;
     }
 
@@ -5078,7 +5084,7 @@
           class="mmp-tts__input"
           no-label-float
           placeholder="${this.label}..."
-          @keypress=${this.handleTts}
+          @keypress=${this.handleTtsKeyPres}
           @click=${(e) => e.stopPropagation()}
         >
         </paper-input>
@@ -5104,10 +5110,15 @@
       return !!pattern.test(str);
     }
 
-    handleTts(e) {
+    handleTtsKeyPres(e) {
       if (e.charCode !== 13) {
+        e.stopPropagation();
         return true;
       }
+      this.handleTts(e);
+    }
+
+    handleTts(e) {
       const { config, message } = this;
       const opts = {
         message,
@@ -5210,6 +5221,9 @@
     minutes = minutes < 10 ? `0${minutes}` : minutes;
     seconds = seconds < 10 ? `0${seconds}` : seconds;
 
+    if (hours === "00" && minutes === "00" && seconds === "00") {
+      return "";
+    }
     return `${hours !== "00" ? `${hours}:` : ""}${minutes}:${seconds}`;
   };
 
