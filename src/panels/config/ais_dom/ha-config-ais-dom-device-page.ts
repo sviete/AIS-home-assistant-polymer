@@ -148,11 +148,14 @@ export class HaConfigDevicePage extends LitElement {
             .devices=${this.devices}
             .device=${device}
           ></ha-device-card>
-          <div class="header">Konfiguracja urządzenia</div>
-          <ais-dom-iframe-view
-            .hass=${this.hass}
-            url="http://192.168.5.146"
-          ></ais-dom-iframe-view>
+          ${window.location.protocol === "http:"
+            ? html`
+                <ais-dom-iframe-view
+                  .hass=${this.hass}
+                  .entities=${entities}
+                ></ais-dom-iframe-view>
+              `
+            : html``}
           ${device.model === "Sonoff Bridge"
             ? html`
                 <div class="header">Konfiguracja Bramki RF 433</div>

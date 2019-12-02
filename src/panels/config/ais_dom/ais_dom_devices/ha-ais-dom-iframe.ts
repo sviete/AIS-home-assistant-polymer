@@ -10,17 +10,34 @@ import {
 import { HomeAssistant } from "../../../../../src/types";
 import "../../../../../src/layouts/hass-loading-screen";
 import "../../../../../src/layouts/hass-subpage";
+import { EntityRegistryStateEntry } from "../ha-config-ais-dom-device-page";
 
 @customElement("ais-dom-iframe-view")
 class AisDomIframeView extends LitElement {
   @property() public hass!: HomeAssistant;
   @property() public url!: string;
+  @property() public entities!: EntityRegistryStateEntry[];
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     return html`
-      <div .header="OK">
-        <iframe src=${this.url}></iframe>
-      </div>
+      <ha-card>
+        ${this.entities.length
+          ? this.entities.map((entry: EntityRegistryStateEntry) => {
+              const stateObj = this.hass.states[entry.entity_id];
+              return html`
+                ${stateObj.attributes.IPAddress
+                  ? html`
+                      <div class="header">Konfiguracja urządzenia</div>
+                        <iframe
+                          .src="http://${stateObj.attributes.IPAddress}"
+                        ></iframe>
+                      </div>
+                    `
+                  : html``}
+              `;
+            })
+          : html``}
+      </ha-card>
     `;
   }
 
