@@ -19,6 +19,7 @@ import "../devices/device-detail/ha-device-conditions-card";
 import "../devices/device-detail/ha-device-actions-card";
 import "./ais_dom_devices/ha-ais-dom-device-entities-card";
 import "./ais_dom_devices/ha-ais-dom-rf433-config-card";
+import "./ais_dom_devices/ha-ais-dom-iframe";
 import { HomeAssistant } from "../../../types";
 import { ConfigEntry } from "../../../data/config_entries";
 import {
@@ -147,6 +148,11 @@ export class HaConfigDevicePage extends LitElement {
             .devices=${this.devices}
             .device=${device}
           ></ha-device-card>
+          <div class="header">Konfiguracja urządzenia</div>
+          <ais-dom-iframe-view
+            .hass=${this.hass}
+            url="http://192.168.5.146"
+          ></ais-dom-iframe-view>
           ${device.model === "Sonoff Bridge"
             ? html`
                 <div class="header">Konfiguracja Bramki RF 433</div>

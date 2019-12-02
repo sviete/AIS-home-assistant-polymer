@@ -38,6 +38,7 @@ import "../cards/hui-ais-button-card";
 import "../cards/hui-ais-mini-media-player-card";
 import "../cards/hui-ais-auto-entities-card";
 import "../cards/hui-ais-monster-card";
+import "../cards/hui-ais-fold-entity-row-card";
 import { LovelaceCard } from "../types";
 import { LovelaceCardConfig } from "../../../data/lovelace";
 
@@ -74,6 +75,7 @@ const CARD_TYPES = new Set([
   "ais-mini-media-player",
   "ais-auto-entities",
   "ais-monster",
+  "ais-fold-entity-row",
 ]);
 const CUSTOM_TYPE_PREFIX = "custom:";
 const TIMEOUT = 2000;
