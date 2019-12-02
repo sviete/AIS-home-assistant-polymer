@@ -27,11 +27,9 @@ class AisDomIframeView extends LitElement {
               return html`
                 ${stateObj.attributes.IPAddress
                   ? html`
-                      <div class="header">Konfiguracja urządzenia</div>
-                        <iframe
-                          .src="http://${stateObj.attributes.IPAddress}"
-                        ></iframe>
-                      </div>
+                      <iframe
+                        .src="http://${stateObj.attributes.IPAddress}"
+                      ></iframe>
                     `
                   : html``}
               `;

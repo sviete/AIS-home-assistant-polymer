@@ -35,6 +35,7 @@ import {
   loadDeviceRegistryDetailDialog,
   showDeviceRegistryDetailDialog,
 } from "../../../dialogs/device-registry-detail/show-dialog-device-registry-detail";
+import { showConfirmationDialog } from "../../../dialogs/confirmation/show-dialog-confirmation";
 
 import {
   DeviceTrigger,
@@ -137,6 +138,12 @@ export class HaConfigDevicePage extends LitElement {
           icon="hass:settings"
           @click=${this._showSettings}
         ></paper-icon-button>
+        <paper-icon-button
+          slot="toolbar-icon"
+          icon="hass:delete"
+          title="Usuwanie"
+          @click=${this._confirmRemoveDevice}
+        ></paper-icon-button>
         <ha-config-section .isWide=${!this.narrow}>
           <span slot="header">Urządzenie AIS dom</span>
           <span slot="introduction">
@@ -148,14 +155,6 @@ export class HaConfigDevicePage extends LitElement {
             .devices=${this.devices}
             .device=${device}
           ></ha-device-card>
-          ${window.location.protocol === "http:"
-            ? html`
-                <ais-dom-iframe-view
-                  .hass=${this.hass}
-                  .entities=${entities}
-                ></ais-dom-iframe-view>
-              `
-            : html``}
           ${device.model === "Sonoff Bridge"
             ? html`
                 <div class="header">Konfiguracja Bramki RF 433</div>
@@ -175,6 +174,15 @@ export class HaConfigDevicePage extends LitElement {
                   .entities=${entities}
                 >
                 </ha-ais-dom-device-entities-card>
+              `
+            : html``}
+          ${window.location.protocol === "http:"
+            ? html`
+                <div class="header">Konfiguracja urządzenia</div>
+                <ais-dom-iframe-view
+                  .hass=${this.hass}
+                  .entities=${entities}
+                ></ais-dom-iframe-view>
               `
             : html``}
           ${this._triggers.length ||
@@ -211,6 +219,27 @@ export class HaConfigDevicePage extends LitElement {
         </ha-config-section>
       </hass-subpage>
     `;
+  }
+
+  private _confirmRemoveDevice() {
+    showConfirmationDialog(this, {
+      text: "Czy napewno usunąć to urządzenie?",
+      confirm: () => this._removeDevice(),
+    });
+  }
+
+  private _removeDevice() {
+    // deleteConfigEntry(this.hass, this.configEntryId).then((result) => {
+    //   fireEvent(this, "hass-reload-entries");
+    //   if (result.require_restart) {
+    //     alert(
+    //       this.hass.localize(
+    //         "ui.panel.config.integrations.config_entry.restart_confirm"
+    //       )
+    //     );
+    //   }
+    //   navigate(this, "/config/integrations/dashboard", true);
+    // });
   }
 
   private _computeEntityName(entity) {
