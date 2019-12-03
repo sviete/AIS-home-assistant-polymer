@@ -12,7 +12,7 @@ import memoizeOne from "memoize-one";
 import "../../../layouts/hass-subpage";
 import "../../../layouts/hass-error-screen";
 import "../ha-config-section";
-
+import { navigate } from "../../../../src/common/navigate";
 import "../devices/device-detail/ha-device-card";
 import "../devices/device-detail/ha-device-triggers-card";
 import "../devices/device-detail/ha-device-conditions-card";
@@ -178,7 +178,7 @@ export class HaConfigDevicePage extends LitElement {
             : html``}
           ${window.location.protocol === "http:"
             ? html`
-                <div class="header">Konfiguracja urządzenia</div>
+                <div class="header">Strona urządzenia</div>
                 <ais-dom-iframe-view
                   .hass=${this.hass}
                   .entities=${entities}
@@ -229,17 +229,10 @@ export class HaConfigDevicePage extends LitElement {
   }
 
   private _removeDevice() {
-    // deleteConfigEntry(this.hass, this.configEntryId).then((result) => {
-    //   fireEvent(this, "hass-reload-entries");
-    //   if (result.require_restart) {
-    //     alert(
-    //       this.hass.localize(
-    //         "ui.panel.config.integrations.config_entry.restart_confirm"
-    //       )
-    //     );
-    //   }
-    //   navigate(this, "/config/integrations/dashboard", true);
-    // });
+    this.hass.callService("ais_dom_device", "remove_ais_dom_device", {
+      device_id: this.deviceId,
+    });
+    navigate(this, "/config/ais_dom_devices/dashboard", true);
   }
 
   private _computeEntityName(entity) {
