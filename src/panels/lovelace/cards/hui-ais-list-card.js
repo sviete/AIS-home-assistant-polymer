@@ -33,7 +33,6 @@ class ListCard extends HTMLElement {
           margin-bottom: 5px;
           background-repeat:no-repeat;
           background-size:auto 100%;
-          box-shadow:${boxshdw} rgba(0,0,0,.8);
           position:relative;
         }
         .fanart_view ha-icon.play {
@@ -59,14 +58,12 @@ class ListCard extends HTMLElement {
           background:linear-gradient(to right, ${accent} 48%,
           transparent 70%,${accent} 100%);
           margin:auto;
-          box-shadow:inset 0 0 0 1px ${border};
         }
         .fanart_fan_view_selected {
           width:100%;
           background:linear-gradient(to right, ${accentSelected} 48%,
           transparent 70%,${accentSelected} 100%);
           margin:auto;
-          box-shadow:inset 0 0 0 1px ${border};
         }
         .fanart_flag_view {
           z-index: 1;
@@ -90,15 +87,19 @@ class ListCard extends HTMLElement {
           width: 20px;
           height: 20px;
           position: fixed;
-          padding: 4px;
+          padding-left: 4px;
           z-index: 99999;
         }
         div.delete ha-icon {
           ${delIconHide};
           cursor: pointer;
+          width: 12px;
         }
         div.delete:hover ha-icon{
           color: red;
+        }
+        div#container{
+          background: var(--primary-background-color);
         }
       `;
 

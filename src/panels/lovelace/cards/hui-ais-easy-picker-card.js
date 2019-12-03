@@ -15,10 +15,7 @@ class AisEasyPicker extends HTMLElement {
     style.textContent = `
       div.tags {
         width: 100%;
-        padding-bottom: 10px;
-        padding-top: 10px;
-        text-align: left;
-          vertical-align: top;
+        vertical-align: top;
         margin: 0px;
         cursor: pointer;
         text-align: center;
@@ -26,24 +23,31 @@ class AisEasyPicker extends HTMLElement {
       }
       div.tag {
         display: inline-block;
-        line-height: 30px;
         word-break: break-word;
         text-overflow: ellipsis;
         vertical-align: middle;
         color: var(--paper-grey-500);
-        width: 120px;
-        height: 30px;
-        margin: 4px;
-        padding: 4px;
+        width: 47%;
+        height: 50px;
+        margin: 3px;
         position: relative; 
         background-color: var(--paper-card-background-color);
         text-decoration: none;
-        white-space: nowrap;
         overflow: hidden;
+        border-radius: 3px;
+        align-items: center;
+        justify-content: center;
       }
       div.clicked{
         color: var(--primary-color);
         font-weight: bolder;
+      }
+      div.text{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 98%
       }
     `;
     content.innerHTML = `
@@ -65,7 +69,7 @@ class AisEasyPicker extends HTMLElement {
       } else {
         c = "";
       }
-      a += `<div class="tag ${c}" data-option="${option}"> ${option} </div>`;
+      a += `<div class="tag ${c}" data-option="${option}"><div class="text"> ${option} </div> </div>`;
     });
     element.innerHTML = `${a}`;
   }
