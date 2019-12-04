@@ -43,6 +43,8 @@ const COMPONENTS = {
     import(/* webpackChunkName: "panel-aishelp" */ "../panels/aishelp/ha-panel-aishelp"),
   aisdocs: () =>
     import(/* webpackChunkName: "panel-aisdocs" */ "../panels/aisdocs/ha-panel-aisdocs"),
+  aisgalery: () =>
+    import(/* webpackChunkName: "panel-aisgalery" */ "../panels/aisgalery/ha-panel-aisgalery"),
 };
 
 const getRoutes = (panels: Panels): RouterOptions => {

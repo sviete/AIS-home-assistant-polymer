@@ -39,6 +39,7 @@ const SHOW_AFTER_SPACER = [
   "hassio",
   "aishelp",
   "aisdocs",
+  "aisgalery",
 ];
 
 const SUPPORT_SCROLL_IF_NEEDED = "scrollIntoViewIfNeeded" in document.body;
@@ -47,6 +48,7 @@ const SORT_VALUE_URL_PATHS = {
   map: 1,
   logbook: 2,
   history: 3,
+  aisgalery: 4,
   "developer-tools": 9,
   hassio: 10,
   config: 11,

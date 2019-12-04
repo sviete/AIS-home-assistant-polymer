@@ -98,6 +98,12 @@ export class HaDeviceEntitiesCard extends LitElement {
         font-size: large;
         font-weight: bold;
       }
+
+      div.right iron-icon {
+        position: relative;
+        top: -20px;
+        color: var(--primary-color);
+      }
     `;
   }
   @property() public hass!: HomeAssistant;
@@ -138,6 +144,13 @@ export class HaDeviceEntitiesCard extends LitElement {
                 (msg, idx) =>
                   html`
                     <div class="event" id="event_${idx}">
+                      <div class="right">
+                        <iron-icon
+                          icon="mdi:close"
+                          @click=${this._handleCloseCode}
+                          .data-idx=${idx}
+                        ></iron-icon>
+                      </div>
                       <span class="idx">[${idx + 1}]</span> Rozpoznany kod RF:
                       <span
                         style="font-size:xx-small; width:100%; display: block; white-space: pre-wrap; word-wrap: break-word; text-align: left;"
@@ -149,20 +162,11 @@ export class HaDeviceEntitiesCard extends LitElement {
                             <div class="bottom">
                               <paper-input
                                 label="Nazwa"
-                                value="Nazwa przycisku"
+                                value="Nazwa"
                                 id=${"name_" + idx}
                                 }
                               ></paper-input>
                               <div class="div-right">
-                                <div class="left">
-                                  <mwc-button
-                                    @click=${this._handleCloseCode}
-                                    .data-idx=${idx}
-                                    type="submit"
-                                  >
-                                    <iron-icon icon="mdi:eye-off"></iron-icon>
-                                  </mwc-button>
-                                </div>
                                 <mwc-button
                                   @click=${this._handleTestCode}
                                   .data-b0=${msg.B0}
@@ -174,14 +178,28 @@ export class HaDeviceEntitiesCard extends LitElement {
                                   Testuj
                                 </mwc-button>
                                 <mwc-button
-                                  @click=${this._handleSubmitEntitySwitch}
+                                  @click=${this._handleSubmitEntity}
                                   .data-b0=${msg.B0}
                                   .data-topic=${msg.topic}
                                   .data-idx=${idx}
+                                  .data-type="switch"
                                   type="submit"
                                 >
                                   <iron-icon icon="mdi:flash"></iron-icon>
                                   Dodaj Przycisk
+                                </mwc-button>
+                                <mwc-button
+                                  @click=${this._handleSubmitEntity}
+                                  .data-b0=${msg.B0}
+                                  .data-topic=${msg.topic}
+                                  .data-idx=${idx}
+                                  .data-type="sensor"
+                                  type="submit"
+                                >
+                                  <iron-icon
+                                    icon="mdi:motion-sensor"
+                                  ></iron-icon>
+                                  Dodaj Czujnik
                                 </mwc-button>
                               </div>
                             </div>
@@ -252,18 +270,19 @@ export class HaDeviceEntitiesCard extends LitElement {
     }
   }
 
-  private async _handleSubmitEntitySwitch(ev: CustomEvent) {
+  private async _handleSubmitEntity(ev: CustomEvent) {
     if (ev.currentTarget != null) {
       const b0 = ev.currentTarget["data-b0"];
       const gateTopic = ev.currentTarget["data-topic"];
       const idx = ev.currentTarget["data-idx"];
+      const entityType = ev.currentTarget["data-type"];
       const entityName = this.shadowRoot!.getElementById("name_" + idx);
       this.hass.callService("ais_dom_device", "add_ais_dom_entity", {
         name: entityName!.value,
         topic: gateTopic,
         deviceId: this.deviceId,
         code: b0,
-        type: "switch",
+        type: entityType,
       });
       this.shadowRoot!.getElementById("event_" + idx)!.style.display = "none";
     }
