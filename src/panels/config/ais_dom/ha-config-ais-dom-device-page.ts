@@ -155,7 +155,7 @@ export class HaConfigDevicePage extends LitElement {
             .devices=${this.devices}
             .device=${device}
           ></ha-device-card>
-          ${device.model === "Sonoff S2X"
+          ${device.model === "Sonoff Bridge"
             ? html`
                 <div class="header">Konfiguracja Bramki RF 433</div>
                 <ha-ais-dom-rf433-config-card

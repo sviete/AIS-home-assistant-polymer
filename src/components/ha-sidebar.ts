@@ -39,7 +39,6 @@ const SHOW_AFTER_SPACER = [
   "hassio",
   "aishelp",
   "aisdocs",
-  "aisgalery",
 ];
 
 const SUPPORT_SCROLL_IF_NEEDED = "scrollIntoViewIfNeeded" in document.body;
