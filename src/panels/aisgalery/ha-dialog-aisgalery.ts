@@ -1,8 +1,8 @@
 import "@polymer/iron-icon/iron-icon";
 import "@polymer/paper-icon-button/paper-icon-button";
 import "../../components/dialog/ha-paper-dialog";
-import "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
-
+import "@vaadin/vaadin-upload";
+import { loadTokens } from "../../../src/common/auth/token_storage";
 import {
   LitElement,
   html,
@@ -10,49 +10,68 @@ import {
   CSSResult,
   css,
   customElement,
-  query,
   PropertyValues,
   TemplateResult,
 } from "lit-element";
 import { HomeAssistant } from "../../types";
-import { processText } from "../../data/conversation";
-import { PaperInputElement } from "@polymer/paper-input/paper-input";
 import { haStyleDialog } from "../../resources/styles";
-// tslint:disable-next-line
-import { PaperDialogScrollableElement } from "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
-
-interface Message {
-  who: string;
-  text?: string;
-  error?: boolean;
-}
-
-interface Results {
-  transcript: string;
-  final: boolean;
-}
 
 @customElement("ha-dialog-aisgalery")
 export class HaDialogAisgalery extends LitElement {
+  static get styles(): CSSResult[] {
+    return [
+      haStyleDialog,
+      css`
+        :host {
+          z-index: 103;
+        }
+
+        paper-icon-button {
+          color: var(--secondary-text-color);
+        }
+
+        paper-icon-button[active] {
+          color: var(--primary-color);
+        }
+
+        ha-paper-dialog {
+          width: 450px;
+          height: 350px;
+        }
+        a.button {
+          text-decoration: none;
+        }
+        a.button > mwc-button {
+          width: 100%;
+        }
+        .onboarding {
+          padding: 0 24px;
+        }
+        paper-dialog-scrollable.top-border::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: var(--divider-color);
+        }
+      `,
+    ];
+  }
   @property() public hass!: HomeAssistant;
-  @property() public results: Results | null = null;
-  @property() private _conversation: Message[] = [
-    {
-      who: "hass",
-      text: "",
-    },
-  ];
   @property() private _opened = false;
-  @query("#messages") private messages!: PaperDialogScrollableElement;
-  private recognition!: SpeechRecognition;
-  private _conversationId?: string;
+
+  constructor() {
+    super();
+    this.loadVaadin();
+  }
 
   public async showDialog(): Promise<void> {
     this._opened = true;
   }
 
   protected render(): TemplateResult {
-    // CSS custom property mixins only work in render https://github.com/Polymer/lit-element/issues/633
     return html`
       <style>
         paper-dialog-scrollable {
@@ -84,20 +103,51 @@ export class HaDialogAisgalery extends LitElement {
             }
           }
         }
+        app-toolbar {
+          margin: 0;
+          padding: 0 16px;
+          color: var(--primary-text-color);
+          background-color: var(--secondary-background-color);
+        }
+        app-toolbar [main-title] {
+          margin-left: 16px;
+        }
       </style>
       <ha-paper-dialog
         with-backdrop
         .opened=${this._opened}
         @opened-changed=${this._openedChanged}
       >
-        <paper-dialog-scrollable id="messages" class="">
-          okokok
-        </paper-dialog-scrollable>
-        <div class="input">
-          <paper-input type="file" label="Wybierz plik"></paper-input>
-        </div>
+        <app-toolbar>
+          <paper-icon-button
+            icon="hass:close"
+            dialog-dismiss=""
+          ></paper-icon-button>
+          <div main-title="">Dodawanie zdjęć</div>
+        </app-toolbar>
+        <vaadin-upload capture="camera" accept="image/*" noAuto="false">
+          <span slot="drop-label"
+            >Możesz przeciągnąć i upuścić swoje zdjęcia tu</span
+          >
+        </vaadin-upload>
       </ha-paper-dialog>
     `;
+  }
+
+  protected async loadVaadin() {
+    customElements.whenDefined("vaadin-upload").then(async () => {
+      const upload = this.shadowRoot!.querySelector("vaadin-upload");
+      const tokens = loadTokens();
+      if (upload !== null) {
+        upload.set("i18n.addFiles.many", "Wybierz zdjęcia...");
+        upload.set("method", "POST");
+        upload.set("withCredentials", true);
+        upload.set("target", "api/ais_file/upload");
+        upload.set("headers", {
+          authorization: "Bearer " + tokens.access_token,
+        });
+      }
+    });
   }
 
   protected firstUpdated(changedProps: PropertyValues) {
@@ -109,118 +159,6 @@ export class HaDialogAisgalery extends LitElement {
 
   private _openedChanged(ev: CustomEvent) {
     this._opened = ev.detail.value;
-    if (!this._opened && this.recognition) {
-      this.recognition.abort();
-    }
-  }
-
-  private testPost() {
-    //this.hass.callApi("POST", "cloud/google_actions/sync");
-    this.hass.callApi("GET", "ais_file/upload");
-  }
-
-  private _addMessage(message: Message) {
-    this._conversation = [...this._conversation, message];
-  }
-
-  private _handleKeyUp(ev: KeyboardEvent) {
-    const input = ev.target as PaperInputElement;
-    if (ev.keyCode === 13 && input.value) {
-      this._processText(input.value);
-      input.value = "";
-    }
-  }
-
-  private async _processText(text: string) {
-    if (this.recognition) {
-      this.recognition.abort();
-    }
-
-    const message: Message = {
-      who: "hass",
-      text: "…",
-    };
-    // To make sure the answer is placed at the right user text, we add it before we process it
-    this._addMessage(message);
-    try {
-      const response = await processText(
-        this.hass,
-        text,
-        this._conversationId!
-      );
-      const plain = response.speech.plain;
-      message.text = plain.speech;
-
-      this.requestUpdate("_conversation");
-    } catch {
-      message.text = this.hass.localize("ui.dialogs.voice_command.error");
-      message.error = true;
-      this.requestUpdate("_conversation");
-    }
-  }
-
-  static get styles(): CSSResult[] {
-    return [
-      haStyleDialog,
-      css`
-        :host {
-          z-index: 103;
-        }
-
-        paper-icon-button {
-          color: var(--secondary-text-color);
-        }
-
-        paper-icon-button[active] {
-          color: var(--primary-color);
-        }
-
-        .input {
-          margin: 0 0 16px 0;
-        }
-
-        ha-paper-dialog {
-          width: 450px;
-        }
-        a.button {
-          text-decoration: none;
-        }
-        a.button > mwc-button {
-          width: 100%;
-        }
-        .onboarding {
-          padding: 0 24px;
-        }
-        paper-dialog-scrollable.top-border::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 1px;
-          background: var(--divider-color);
-        }
-        .side-by-side {
-          display: flex;
-          margin: 8px 0;
-        }
-        .side-by-side > * {
-          flex: 1 0;
-          padding: 4px;
-        }
-        .attribution {
-          color: var(--secondary-text-color);
-        }
-        .message.error {
-          background-color: var(--google-red-500);
-          color: var(--text-primary-color);
-        }
-
-        .interimTranscript {
-          color: var(--secondary-text-color);
-        }
-      `,
-    ];
   }
 }
 

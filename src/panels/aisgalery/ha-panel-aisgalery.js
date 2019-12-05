@@ -181,7 +181,9 @@ class HaPanelAisgalery extends PolymerElement {
                 <button class="btn btn-left" on-click="previousImage">
                   &lt;
                 </button>
-                <button class="btn btn-right" on-click="nextImage">&gt;</button>
+                <button class="btn btn-right" on-click="nextImage">
+                  &gt;
+                </button>
               </div>
               <div class="image-menu">
                 <template is="dom-repeat" items="{{images}}">
@@ -251,7 +253,7 @@ class HaPanelAisgalery extends PolymerElement {
   }
 
   imageChanged(newVal, oldVal) {
-    var elt = document.getElementById("#image" + newVal);
+    var elt = document.getElementById("image" + newVal);
     if (elt)
       elt.scrollIntoView({
         behavior: "smooth",
@@ -317,7 +319,6 @@ class HaPanelAisgalery extends PolymerElement {
     this.images = [];
     this.currentImageIndex = null;
 
-    // TODO get files from sensor
     var paths = [];
     if (idx === 0) {
       paths = this.hass.states["sensor.ais_gallery_img"].attributes.fileList;
