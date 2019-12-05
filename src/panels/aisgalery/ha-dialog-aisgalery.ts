@@ -20,7 +20,6 @@ import { PaperInputElement } from "@polymer/paper-input/paper-input";
 import { haStyleDialog } from "../../resources/styles";
 // tslint:disable-next-line
 import { PaperDialogScrollableElement } from "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
-import { uid } from "../../common/util/uid";
 
 interface Message {
   who: string;
@@ -113,6 +112,11 @@ export class HaDialogAisgalery extends LitElement {
     if (!this._opened && this.recognition) {
       this.recognition.abort();
     }
+  }
+
+  private testPost() {
+    //this.hass.callApi("POST", "cloud/google_actions/sync");
+    this.hass.callApi("GET", "ais_file/upload");
   }
 
   private _addMessage(message: Message) {
