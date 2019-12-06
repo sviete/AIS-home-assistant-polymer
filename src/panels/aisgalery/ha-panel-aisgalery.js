@@ -23,7 +23,6 @@ class HaPanelAisgalery extends PolymerElement {
           width: 100%;
           min-height: 80%;
           position: absolute;
-          margin-top: 50px;
         }
         figcaption {
           text-align: center;
@@ -144,16 +143,6 @@ class HaPanelAisgalery extends PolymerElement {
           <ha-menu-button hass="[[hass]]" narrow="[[narrow]]"></ha-menu-button>
           <div main-title>[[panel.title]]</div>
         </app-toolbar>
-        <app-header-layout has-scrolling-region>
-          <app-header slot="header" fixed>
-            <paper-tabs role="tablist">
-              <paper-tab role="tab" on-tap="switchTabToImg">Zdjęcia</paper-tab>
-              <paper-tab role="tab" on-tap="switchTabToVideo"
-                >Nagrania</paper-tab
-              >
-            </paper-tabs>
-          </app-header>
-        </app-header-layout>
         <has-subpage>
           <div class="galery_content" id="content">
             <div class="image-viewer">
@@ -238,7 +227,10 @@ class HaPanelAisgalery extends PolymerElement {
         value: false,
       },
       panel: Object,
-      images: Object,
+      images: {
+        type: Object,
+        computed: "getImages(hass)",
+      },
       currentImage: {
         type: Object,
         computed: "getImage(currentImageIndex)",
@@ -253,11 +245,13 @@ class HaPanelAisgalery extends PolymerElement {
     };
   }
 
-  _deleteImage() {
+  async _deleteImage() {
     const img = this.getImage(this.currentImageIndex);
-    this.hass.callService("ais_files", "remove_file", {
+    await this.hass.callService("ais_files", "remove_file", {
       path: img.path,
     });
+    this.getImages(this.hass);
+    this.nextImage();
   }
 
   addImage() {
@@ -299,34 +293,18 @@ class HaPanelAisgalery extends PolymerElement {
     else this.currentImageIndex++;
   }
 
-  switchTabToImg() {
-    this.loadTab(0);
-  }
-
-  switchTabToVideo() {
-    this.loadTab(1);
-  }
-
   ready() {
     super.ready();
-    this.loadTab(0);
+    this.autoPlayVideo = false;
+    this.currentImageIndex = 0;
+    this.getImages(this.hass);
   }
 
-  loadTab(idx) {
-    console.log(idx);
-    this.autoPlayVideo = false;
-    this.images = [];
-    this.currentImageIndex = null;
-
+  getImages(hass) {
     var paths = [];
-    if (idx === 0) {
-      paths = this.hass.states["sensor.ais_gallery_img"].attributes.fileList;
-    } else {
-      paths = this.hass.states["sensor.ais_gallery_video"].attributes.fileList;
-    }
-
+    paths = hass.states["sensor.ais_gallery_img"].attributes.fileList;
     var lastIndex = 0;
-
+    var lImages = [];
     for (let i = paths.length - 1; i >= lastIndex; i--) {
       var path = paths[i];
       var imageLocation = path.replace(
@@ -348,11 +326,11 @@ class HaPanelAisgalery extends PolymerElement {
         name: imageName,
         extension: ext,
         date: imageDate,
-        index: this.images.length,
+        index: lImages.length,
       };
-      this.images.push(image);
+      lImages.push(image);
     }
-    this.currentImageIndex = 0;
+    return lImages;
   }
 
   getImageMenuClass(image, idx) {

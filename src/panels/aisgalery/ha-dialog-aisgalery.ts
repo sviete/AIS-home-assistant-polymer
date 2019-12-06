@@ -113,6 +113,15 @@ export class HaDialogAisgalery extends LitElement {
           margin-left: 16px;
         }
       </style>
+      <dom-module id="my-button" theme-for="vaadin-button">
+        <template>
+          <style>
+            :host {
+              color: var(--primary-text-color);
+            }
+          </style>
+        </template>
+      </dom-module>
       <ha-paper-dialog
         with-backdrop
         .opened=${this._opened}
@@ -125,9 +134,9 @@ export class HaDialogAisgalery extends LitElement {
           ></paper-icon-button>
           <div main-title="">Dodawanie zdjęć</div>
         </app-toolbar>
-        <vaadin-upload capture="camera" accept="image/*" noAuto="false">
-          <span slot="drop-label"
-            >Możesz przeciągnąć i upuścić swoje zdjęcia tu</span
+        <vaadin-upload accept="image/*" noAuto="false">
+          <span slot="drop-label" style="color:white;"
+            >Możesz przeciągnąć i upuścić tu.</span
           >
         </vaadin-upload>
       </ha-paper-dialog>
@@ -139,10 +148,10 @@ export class HaDialogAisgalery extends LitElement {
       const upload = this.shadowRoot!.querySelector("vaadin-upload");
       const tokens = loadTokens();
       if (upload !== null) {
-        upload.set("i18n.addFiles.many", "Wybierz zdjęcia...");
+        upload.set("i18n.addFiles.many", "Wybierz z dysku [1 MB max] ...");
         upload.set(
           "i18n.fileIsTooBig",
-          "Plik jest za duży. Maksymalnie można przesłać 0.5 MB"
+          "Plik jest za duży. Maksymalnie można przesłać 1 MB"
         );
         upload.set("method", "POST");
         upload.set("withCredentials", true);
@@ -150,6 +159,9 @@ export class HaDialogAisgalery extends LitElement {
         // upload.set("maxFileSize", 500000);
         upload.set("headers", {
           authorization: "Bearer " + tokens.access_token,
+        });
+        upload.addEventListener("file-reject", function(event) {
+          console.log(event.detail.file.name + " error: " + event.detail.error);
         });
       }
     });
