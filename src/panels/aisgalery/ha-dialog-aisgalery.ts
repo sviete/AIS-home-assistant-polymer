@@ -140,9 +140,14 @@ export class HaDialogAisgalery extends LitElement {
       const tokens = loadTokens();
       if (upload !== null) {
         upload.set("i18n.addFiles.many", "Wybierz zdjęcia...");
+        upload.set(
+          "i18n.fileIsTooBig",
+          "Plik jest za duży. Maksymalnie można przesłać 0.5 MB"
+        );
         upload.set("method", "POST");
         upload.set("withCredentials", true);
         upload.set("target", "api/ais_file/upload");
+        // upload.set("maxFileSize", 500000);
         upload.set("headers", {
           authorization: "Bearer " + tokens.access_token,
         });
@@ -158,7 +163,11 @@ export class HaDialogAisgalery extends LitElement {
   }
 
   private _openedChanged(ev: CustomEvent) {
+    console.log("_openedChanged");
     this._opened = ev.detail.value;
+    if (this._opened) {
+      this.loadVaadin();
+    }
   }
 }
 

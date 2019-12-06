@@ -21,8 +21,9 @@ class HaPanelAisgalery extends PolymerElement {
         .galery_content {
           overflow: hidden;
           width: 100%;
-          min-height: 100%;
-          position: fixed;
+          min-height: 80%;
+          position: absolute;
+          margin-top: 50px;
         }
         figcaption {
           text-align: center;
@@ -106,7 +107,6 @@ class HaPanelAisgalery extends PolymerElement {
             position: absolute;
             top: 0px;
             right: 0px;
-            margin-right: 3%;
           }
         }
 
@@ -144,76 +144,78 @@ class HaPanelAisgalery extends PolymerElement {
           <ha-menu-button hass="[[hass]]" narrow="[[narrow]]"></ha-menu-button>
           <div main-title>[[panel.title]]</div>
         </app-toolbar>
+        <app-header-layout has-scrolling-region>
+          <app-header slot="header" fixed>
+            <paper-tabs role="tablist">
+              <paper-tab role="tab" on-tap="switchTabToImg">Zdjęcia</paper-tab>
+              <paper-tab role="tab" on-tap="switchTabToVideo"
+                >Nagrania</paper-tab
+              >
+            </paper-tabs>
+          </app-header>
+        </app-header-layout>
         <has-subpage>
-          <app-header-layout has-scrolling-region>
-            <app-header slot="header" fixed>
-              <paper-tabs role="tablist">
-                <paper-tab role="tab" on-tap="switchTabToImg"
-                  >Zdjęcia</paper-tab
+          <div class="galery_content" id="content">
+            <div class="image-viewer">
+              <figure>
+                <img
+                  src="{{currentImage.path}}"
+                  hidden$="[[isVideo(currentImage.extension)]]"
+                />
+                <video
+                  controls
+                  src="{{currentImage.path}}#t=0.1"
+                  hidden$="[[!isVideo(currentImage.extension)]]"
+                  on-loadedmetadata="videoLoaded"
+                  on-canplay="startVideo"
+                ></video>
+                <figcaption>
+                  <paper-icon-button
+                    icon="hass:delete"
+                    on-click="_deleteImage"
+                  ></paper-icon-button>
+                  {{currentImage.path}}
+                  <span
+                    class="duration"
+                    hidden$="[[!isVideo(currentImage.extension)]]"
+                  ></span>
+                </figcaption>
+              </figure>
+              <button class="btn btn-left" on-click="previousImage">
+                &lt;
+              </button>
+              <button class="btn btn-right" on-click="nextImage">
+                &gt;
+              </button>
+            </div>
+            <div class="image-menu">
+              <template is="dom-repeat" items="{{images}}">
+                <figure
+                  id="image[[item.index]]"
+                  data-imageIndex="{{item.index}}"
+                  on-click="imageMenuClick"
+                  class$="[[getImageMenuClass(item, currentImageIndex)]]"
                 >
-                <paper-tab role="tab" on-tap="switchTabToVideo"
-                  >Nagrania</paper-tab
-                >
-              </paper-tabs>
-            </app-header>
-            <div id="content" class="galery_content">
-              <div class="image-viewer">
-                <figure>
                   <img
-                    src="{{currentImage.path}}"
-                    hidden$="[[isVideo(currentImage.extension)]]"
+                    src="{{item.path}}"
+                    hidden$="[[isVideo(item.extension)]]"
                   />
                   <video
-                    controls
-                    src="{{currentImage.path}}#t=0.1"
-                    hidden$="[[!isVideo(currentImage.extension)]]"
+                    src="{{item.path}}#t=0.1"
+                    hidden$="[[!isVideo(item.extension)]]"
                     on-loadedmetadata="videoLoaded"
-                    on-canplay="startVideo"
                   ></video>
                   <figcaption>
-                    {{currentImage.path}}
+                    {{item.date}}
                     <span
                       class="duration"
-                      hidden$="[[!isVideo(currentImage.extension)]]"
+                      hidden$="[[!isVideo(item.extension)]]"
                     ></span>
                   </figcaption>
                 </figure>
-                <button class="btn btn-left" on-click="previousImage">
-                  &lt;
-                </button>
-                <button class="btn btn-right" on-click="nextImage">
-                  &gt;
-                </button>
-              </div>
-              <div class="image-menu">
-                <template is="dom-repeat" items="{{images}}">
-                  <figure
-                    id="image[[item.index]]"
-                    data-imageIndex="{{item.index}}"
-                    on-click="imageMenuClick"
-                    class$="[[getImageMenuClass(item, currentImageIndex)]]"
-                  >
-                    <img
-                      src="{{item.path}}"
-                      hidden$="[[isVideo(item.extension)]]"
-                    />
-                    <video
-                      src="{{item.path}}#t=0.1"
-                      hidden$="[[!isVideo(item.extension)]]"
-                      on-loadedmetadata="videoLoaded"
-                    ></video>
-                    <figcaption>
-                      {{item.date}}
-                      <span
-                        class="duration"
-                        hidden$="[[!isVideo(item.extension)]]"
-                      ></span>
-                    </figcaption>
-                  </figure>
-                </template>
-              </div>
+              </template>
             </div>
-          </app-header-layout>
+          </div>
           <ha-fab
             slot="fab"
             is-wide$="[[isWide]]"
@@ -243,7 +245,6 @@ class HaPanelAisgalery extends PolymerElement {
       },
       currentImageIndex: {
         type: Number,
-        observer: "imageChanged",
       },
       autoPlayVideo: {
         type: Boolean,
@@ -252,14 +253,11 @@ class HaPanelAisgalery extends PolymerElement {
     };
   }
 
-  imageChanged(newVal, oldVal) {
-    var elt = document.getElementById("image" + newVal);
-    if (elt)
-      elt.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "nearest",
-      });
+  _deleteImage() {
+    const img = this.getImage(this.currentImageIndex);
+    this.hass.callService("ais_files", "remove_file", {
+      path: img.path,
+    });
   }
 
   addImage() {
@@ -315,6 +313,7 @@ class HaPanelAisgalery extends PolymerElement {
   }
 
   loadTab(idx) {
+    console.log(idx);
     this.autoPlayVideo = false;
     this.images = [];
     this.currentImageIndex = null;
