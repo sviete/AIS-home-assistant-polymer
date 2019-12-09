@@ -67,6 +67,18 @@ class HaPanelAishelp extends PolymerElement {
           <span slot="introduction"
             >W tej sekcji znajdziesz przydatne linki dotyczące twojej bramki</span
           >
+          <ha-card header="Unikalny identyfikator bramki">
+            <svg style="width:36px;height:36px" viewBox="0 0 24 24">
+              <path d="M6,18V8H8V18H6M6,4.5H8V6.5H6V4.5M17,4H19V18H17V17.75C17,17.75 15.67,18 15,18A5,5 0 0,1 10,13A5,5 0 0,1 15,8C15.67,8 17,8.25 17,8.25V4M17,10.25C17,10.25 15.67,10 15,10A3,3 0 0,0 12,13A3,3 0 0,0 15,16C15.67,16 17,15.75 17,15.75V10.25Z" />
+            </svg>
+            <div class="card-content">
+              To urządzenie posiada swój unikalny identyfikator, został on losowo wygenerowany przy pierwszym uruchomieniu i pozostanie stały przez cały okres użytkowania urządzenia.
+              Identyfikator tego urządzenia to <a href="#"> [[aisSecureAndroidId]] </a>
+              <div style="text-align: center; margin-top: 10px;">
+                <img src="local/dom_access_code.png"> 
+              </div>Aplikacja dostępna jest w sieci lokalnej
+            </div>
+          </ha-card>
           <ha-card header="Aplikacja">
             <svg style="width:36px;height:36px" viewBox="0 0 24 24">
                 <path d="M3,4H21A1,1 0 0,1 22,5V16A1,1 0 0,1 21,17H22L24,20V21H0V20L2,17H3A1,1 0 0,1 2,16V5A1,1 0 0,1 3,4M4,6V15H20V6H4Z" />
@@ -136,18 +148,6 @@ class HaPanelAishelp extends PolymerElement {
               <a href="/local/upgrade_log.txt" target="_blank"
                 >logi aktualizacji</a
               >
-            </div>
-          </ha-card>
-          <ha-card header="ID bramki">
-            <svg style="width:36px;height:36px" viewBox="0 0 24 24">
-              <path d="M6,18V8H8V18H6M6,4.5H8V6.5H6V4.5M17,4H19V18H17V17.75C17,17.75 15.67,18 15,18A5,5 0 0,1 10,13A5,5 0 0,1 15,8C15.67,8 17,8.25 17,8.25V4M17,10.25C17,10.25 15.67,10 15,10A3,3 0 0,0 12,13A3,3 0 0,0 15,16C15.67,16 17,15.75 17,15.75V10.25Z" />
-            </svg>
-            <div class="card-content">
-              To urządzenie posiada swój unikalny identyfikator, został on losowo wygenerowany przy pierwszym uruchomieniu i pozostanie stały przez cały okres użytkowania urządzenia.
-              Identyfikator tego urządzenia to <a href="#"> [[aisSecureAndroidId]] </a>
-              <div style="text-align: center; margin-top: 10px;">
-                <img src="local/dom_access_code.png"> 
-              </div>
             </div>
           </ha-card>
         </ha-config-section>
