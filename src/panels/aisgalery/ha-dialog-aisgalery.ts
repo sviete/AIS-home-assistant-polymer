@@ -69,6 +69,7 @@ export class HaDialogAisgalery extends LitElement {
 
   public async showDialog(): Promise<void> {
     this._opened = true;
+    this.loadVaadin();
   }
 
   protected render(): TemplateResult {
@@ -117,7 +118,7 @@ export class HaDialogAisgalery extends LitElement {
         <template>
           <style>
             :host {
-              color: var(--primary-text-color);
+              color: var(--primary-color);
             }
           </style>
         </template>
@@ -134,7 +135,7 @@ export class HaDialogAisgalery extends LitElement {
           ></paper-icon-button>
           <div main-title="">Dodawanie zdjęć</div>
         </app-toolbar>
-        <vaadin-upload accept="image/*" noAuto="false">
+        <vaadin-upload capture="camera" accept="image/*" noAuto="false">
           <span slot="drop-label" style="color:white;"
             >Możesz przeciągnąć i upuścić tu.</span
           >
@@ -148,15 +149,14 @@ export class HaDialogAisgalery extends LitElement {
       const upload = this.shadowRoot!.querySelector("vaadin-upload");
       const tokens = loadTokens();
       if (upload !== null) {
-        upload.set("i18n.addFiles.many", "Wybierz z dysku [1 MB max] ...");
+        upload.set("i18n.addFiles.many", "Wybierz [pliki 5MB max] ...");
         upload.set(
           "i18n.fileIsTooBig",
-          "Plik jest za duży. Maksymalnie można przesłać 1 MB"
+          "Plik jest za duży. Maksymalnie można przesłać 5MB"
         );
         upload.set("method", "POST");
         upload.set("withCredentials", true);
         upload.set("target", "api/ais_file/upload");
-        // upload.set("maxFileSize", 500000);
         upload.set("headers", {
           authorization: "Bearer " + tokens.access_token,
         });
@@ -175,11 +175,8 @@ export class HaDialogAisgalery extends LitElement {
   }
 
   private _openedChanged(ev: CustomEvent) {
-    console.log("_openedChanged");
     this._opened = ev.detail.value;
-    if (this._opened) {
-      this.loadVaadin();
-    }
+    this.loadVaadin();
   }
 }
 

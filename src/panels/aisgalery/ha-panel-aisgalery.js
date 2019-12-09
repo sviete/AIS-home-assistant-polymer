@@ -145,45 +145,47 @@ class HaPanelAisgalery extends PolymerElement {
         </app-toolbar>
         <has-subpage>
           <div class="galery_content" id="content">
-            <div class="image-viewer">
-              <figure>
-                <img
-                  src="{{currentImage.path}}"
-                  hidden$="[[isVideo(currentImage.extension)]]"
-                />
-                <video
-                  controls
-                  src="{{currentImage.path}}#t=0.1"
-                  hidden$="[[!isVideo(currentImage.extension)]]"
-                  on-loadedmetadata="videoLoaded"
-                  on-canplay="startVideo"
-                ></video>
-                <figcaption>
-                  <paper-icon-button
-                    icon="hass:delete"
-                    on-click="_deleteImage"
-                  ></paper-icon-button>
-                  {{currentImage.path}}
-                  <span
-                    class="duration"
+            <template is="dom-if" if="[[showImages]]">
+              <div class="image-viewer">
+                <figure>
+                  <img
+                    src="{{currentImage.path}}"
+                    hidden$="[[isVideo(currentImage.extension)]]"
+                  />
+                  <video
+                    controls
+                    src="{{currentImage.path}}#t=0.1"
                     hidden$="[[!isVideo(currentImage.extension)]]"
-                  ></span>
-                </figcaption>
-              </figure>
-              <button class="btn btn-left" on-click="previousImage">
-                &lt;
-              </button>
-              <button class="btn btn-right" on-click="nextImage">
-                &gt;
-              </button>
-            </div>
+                    on-loadedmetadata="videoLoaded"
+                    on-canplay="startVideo"
+                  ></video>
+                  <figcaption>
+                    <paper-icon-button
+                      icon="hass:delete"
+                      on-click="_deleteImage"
+                    ></paper-icon-button>
+                    {{currentImage.path}}
+                    <span
+                      class="duration"
+                      hidden$="[[!isVideo(currentImage.extension)]]"
+                    ></span>
+                  </figcaption>
+                </figure>
+                <button class="btn btn-left" on-click="previousImage">
+                  &lt;
+                </button>
+                <button class="btn btn-right" on-click="nextImage">
+                  &gt;
+                </button>
+              </div>
+            </template>
             <div class="image-menu">
               <template is="dom-repeat" items="{{images}}">
                 <figure
                   id="image[[item.index]]"
                   data-imageIndex="{{item.index}}"
                   on-click="imageMenuClick"
-                  class$="[[getImageMenuClass(item, currentImageIndex)]]"
+                  class$="[[getImageMenuClass(item, currentImgIdx)]]"
                 >
                   <img
                     src="{{item.path}}"
@@ -231,27 +233,24 @@ class HaPanelAisgalery extends PolymerElement {
         type: Object,
         computed: "getImages(hass)",
       },
-      currentImage: {
-        type: Object,
-        computed: "getImage(currentImageIndex)",
-      },
-      currentImageIndex: {
+      currentImage: Object,
+      currentImgIdx: {
         type: Number,
+        computed: "getcurrentImgIdx(hass)",
       },
       autoPlayVideo: {
         type: Boolean,
         value: false,
       },
+      showImages: Boolean,
     };
   }
 
   async _deleteImage() {
-    const img = this.getImage(this.currentImageIndex);
+    const img = this.getImage(this.currentImgIdx);
     await this.hass.callService("ais_files", "remove_file", {
       path: img.path,
     });
-    this.getImages(this.hass);
-    this.nextImage();
   }
 
   addImage() {
@@ -276,28 +275,48 @@ class HaPanelAisgalery extends PolymerElement {
 
   imageMenuClick(e) {
     this.autoPlayVideo = true;
-    this.currentImageIndex = e.model.item.index;
+    this.setcurrentImgIdx(e.model.item.index);
   }
 
   previousImage() {
+    var idx = 0;
     this.autoPlayVideo = true;
-    if (this.currentImageIndex === 0)
-      this.currentImageIndex = this.images.length - 1;
-    else this.currentImageIndex--;
+    if (this.currentImgIdx === 0) {
+      idx = this.images.length - 1;
+    } else {
+      idx = Number(this.currentImgIdx) - 1;
+    }
+
+    this.setcurrentImgIdx(idx);
   }
 
   nextImage() {
+    var idx = 0;
     this.autoPlayVideo = true;
-    if (this.currentImageIndex >= this.images.length - 1)
-      this.currentImageIndex = 0;
-    else this.currentImageIndex++;
+    if (this.currentImgIdx >= this.images.length - 1) {
+      idx = 0;
+    } else {
+      idx = Number(this.currentImgIdx) + 1;
+    }
+    this.setcurrentImgIdx(idx);
   }
 
   ready() {
     super.ready();
     this.autoPlayVideo = false;
-    this.currentImageIndex = 0;
+    this.setcurrentImgIdx(0);
+  }
+
+  setcurrentImgIdx(i) {
+    this.hass.callService("ais_files", "pick_file", { idx: i });
     this.getImages(this.hass);
+    this.currentImage = this.getImage(i);
+  }
+
+  getcurrentImgIdx(hass) {
+    var idx = Number(hass.states["sensor.ais_gallery_img"].state);
+    this.currentImage = this.getImage(idx);
+    return idx;
   }
 
   getImages(hass) {
@@ -307,28 +326,25 @@ class HaPanelAisgalery extends PolymerElement {
     var lImages = [];
     for (let i = paths.length - 1; i >= lastIndex; i--) {
       var path = paths[i];
-      var imageLocation = path.replace(
-        "/data/data/pl.sviete.dom/files/home/AIS/www/",
-        "/local/"
-      );
       var arPath = path.split("/");
       var imageName = arPath[arPath.length - 1];
-
       var arFileName = imageName.split(".");
       var ext = arFileName[arFileName.length - 1].toLowerCase();
       imageName = imageName.substring(0, imageName.length - ext.length - 1);
 
-      var imageDate = "";
-      imageDate = imageName;
-
       var image = {
-        path: imageLocation,
+        path: path,
         name: imageName,
         extension: ext,
-        date: imageDate,
+        date: imageName,
         index: lImages.length,
       };
       lImages.push(image);
+    }
+    if (lImages.length > 0) {
+      this.showImages = true;
+    } else {
+      this.showImages = false;
     }
     return lImages;
   }
