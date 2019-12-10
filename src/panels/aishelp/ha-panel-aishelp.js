@@ -76,7 +76,7 @@ class HaPanelAishelp extends PolymerElement {
               Identyfikator tego urządzenia to <a href="#"> [[aisSecureAndroidId]] </a>
               <div style="text-align: center; margin-top: 10px;">
                 <img src="local/dom_access_code.png"> 
-              </div>Aplikacja dostępna jest w sieci lokalnej
+              </div>
             </div>
           </ha-card>
           <ha-card header="Aplikacja">
