@@ -119,6 +119,7 @@ export class HaDialogAisgalery extends LitElement {
           <style>
             :host {
               color: var(--primary-color);
+              border: 1px solid;
             }
           </style>
         </template>
@@ -135,7 +136,12 @@ export class HaDialogAisgalery extends LitElement {
           ></paper-icon-button>
           <div main-title="">Dodawanie zdjęć</div>
         </app-toolbar>
-        <vaadin-upload capture="camera" accept="image/*" noAuto="false">
+        <vaadin-upload
+          capture="camera"
+          accept="image/*"
+          noAuto="false"
+          style="text-align: center;"
+        >
           <span slot="drop-label" style="color:white;"
             >Możesz przeciągnąć i upuścić tu.</span
           >
@@ -149,7 +155,7 @@ export class HaDialogAisgalery extends LitElement {
       const upload = this.shadowRoot!.querySelector("vaadin-upload");
       const tokens = loadTokens();
       if (upload !== null) {
-        upload.set("i18n.addFiles.many", "Wybierz [pliki 5MB max] ...");
+        upload.set("i18n.addFiles.many", "Wyślij zdjęcie [plik 5MB max] ...");
         upload.set(
           "i18n.fileIsTooBig",
           "Plik jest za duży. Maksymalnie można przesłać 5MB"
