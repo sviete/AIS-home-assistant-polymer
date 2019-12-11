@@ -218,7 +218,9 @@ class HuiWeatherForecastCard extends LitElement implements LovelaceCard {
                             ? html`
                                 ${new Date(item.datetime).toLocaleTimeString(
                                   this.hass!.language,
-                                  { hour: "numeric" }
+                                  {
+                                    hour: "numeric",
+                                  }
                                 )}
                               `
                             : ""}
