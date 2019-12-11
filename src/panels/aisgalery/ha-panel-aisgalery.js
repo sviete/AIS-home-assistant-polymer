@@ -314,14 +314,22 @@ class HaPanelAisgalery extends PolymerElement {
   }
 
   getcurrentImgIdx(hass) {
-    var idx = Number(hass.states["sensor.ais_gallery_img"].state);
-    this.currentImage = this.getImage(idx);
-    return idx;
+    try {
+      var idx = Number(hass.states["sensor.ais_gallery_img"].state);
+      this.currentImage = this.getImage(idx);
+      return idx;
+    } catch (error) {
+      return 0;
+    }
   }
 
   getImages(hass) {
     var paths = [];
-    paths = hass.states["sensor.ais_gallery_img"].attributes.fileList;
+    try {
+      paths = hass.states["sensor.ais_gallery_img"].attributes.fileList;
+    } catch (error) {
+      console.log("getImages error: " + error);
+    }
     var lastIndex = 0;
     var lImages = [];
     for (let i = paths.length - 1; i >= lastIndex; i--) {

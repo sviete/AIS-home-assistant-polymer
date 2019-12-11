@@ -23,13 +23,16 @@ class AisDomIframeView extends LitElement {
       <ha-card>
         ${this.entities.length
           ? this.entities.map((entry: EntityRegistryStateEntry) => {
-              const stateObj = this.hass.states[entry.entity_id];
+              let devUrl = false;
+              try {
+                devUrl = this.hass.states[entry.entity_id].attributes.IPAddress;
+              } catch {
+                devUrl = false;
+              }
               return html`
-                ${stateObj.attributes.IPAddress
+                ${devUrl
                   ? html`
-                      <iframe
-                        .src="http://${stateObj.attributes.IPAddress}"
-                      ></iframe>
+                      <iframe .src="http://${devUrl}"></iframe>
                     `
                   : html``}
               `;
