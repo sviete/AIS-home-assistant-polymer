@@ -80,6 +80,11 @@ class HUIRoot extends LitElement {
   }
 
   protected render(): TemplateResult | void {
+    // ais dom audio fix
+    if (this.route!.path === "/audio" && this._editMode) {
+      // disable edit mode
+      this._editModeDisable();
+    }
     return html`
     <app-route .route="${this.route}" pattern="/:view" data="${
       this._routeData
@@ -89,7 +94,34 @@ class HUIRoot extends LitElement {
         "edit-mode": this._editMode,
       })}" fixed condenses>
         ${
-          this._editMode
+          // aid dom audio fix
+          this.route!.path === "/audio"
+            ? html`
+                <app-toolbar>
+                  <ha-menu-button
+                    .hass=${this.hass}
+                    .narrow=${this.narrow}
+                  ></ha-menu-button>
+                  <div main-title>
+                    Audio
+                  </div>
+                  ${this._conversation(this.hass.config.components)
+                    ? html`
+                  <paper-icon-button
+                    aria-label="Rozpocznij rozmowę"
+                    icon="mdi:forum-outline"
+                    @click=${this._showVoiceCommandDialog}
+                  ></paper-icon-button>
+                  </app-toolbar>`
+                    : ""}
+                  <paper-menu-button
+                    no-animations
+                    horizontal-align="right"
+                    horizontal-offset="-5"
+                  ></paper-menu-button
+                ></app-toolbar>
+              `
+            : this._editMode
             ? html`
                 <app-toolbar class="edit-mode">
                   <paper-icon-button
@@ -256,7 +288,8 @@ class HUIRoot extends LitElement {
         }
 
         ${
-          this.lovelace!.config.views.length > 1 || this._editMode
+          ((this.lovelace!.config.views.length > 1 || this._editMode) &&
+          this.route!.path !== "/audio")
             ? html`
                 <div sticky>
                   <paper-tabs
@@ -271,13 +304,14 @@ class HUIRoot extends LitElement {
                           aria-label="${view.title}"
                           class="${classMap({
                             "hide-tab": Boolean(
-                              !this._editMode &&
-                                view.visible !== undefined &&
-                                ((Array.isArray(view.visible) &&
-                                  !view.visible.some(
-                                    (e) => e.user === this.hass!.user!.id
-                                  )) ||
-                                  view.visible === false)
+                              // ais dom fix for audio
+                              this.route!.path === "/audio" ||
+                                (view.visible !== undefined &&
+                                  ((Array.isArray(view.visible) &&
+                                    !view.visible.some(
+                                      (e) => e.user === this.hass!.user!.id
+                                    )) ||
+                                    view.visible === false))
                             ),
                           })}"
                         >
