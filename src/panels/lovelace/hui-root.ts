@@ -81,9 +81,13 @@ class HUIRoot extends LitElement {
 
   protected render(): TemplateResult | void {
     // ais dom audio fix
-    if (this.route!.path === "/audio" && this._editMode) {
-      // disable edit mode
-      this._editModeDisable();
+    let aisStyle = "";
+    if (this.route!.path === "/audio") {
+      aisStyle = "display: none";
+      if (this._editMode) {
+        // disable edit mode
+        this._editModeDisable();
+      }
     }
     return html`
     <app-route .route="${this.route}" pattern="/:view" data="${
@@ -288,8 +292,7 @@ class HUIRoot extends LitElement {
         }
 
         ${
-          ((this.lovelace!.config.views.length > 1 || this._editMode) &&
-          this.route!.path !== "/audio")
+          this.lovelace!.config.views.length > 1 || this._editMode
             ? html`
                 <div sticky>
                   <paper-tabs
@@ -302,6 +305,7 @@ class HUIRoot extends LitElement {
                       (view) => html`
                         <paper-tab
                           aria-label="${view.title}"
+                          .style="${aisStyle}"
                           class="${classMap({
                             "hide-tab": Boolean(
                               // ais dom fix for audio
@@ -701,13 +705,13 @@ class HUIRoot extends LitElement {
     if (viewIndex === "hass-unused-entities") {
       const unusedEntities = document.createElement("hui-unused-entities");
       // Wait for promise to resolve so that the element has been upgraded.
-      import(/* webpackChunkName: "hui-unused-entities" */ "./editor/unused-entities/hui-unused-entities").then(
-        () => {
-          unusedEntities.hass = this.hass!;
-          unusedEntities.lovelace = this.lovelace!;
-          unusedEntities.narrow = this.narrow;
-        }
-      );
+      import(
+        /* webpackChunkName: "hui-unused-entities" */ "./editor/unused-entities/hui-unused-entities"
+      ).then(() => {
+        unusedEntities.hass = this.hass!;
+        unusedEntities.lovelace = this.lovelace!;
+        unusedEntities.narrow = this.narrow;
+      });
       if (this.config.background) {
         unusedEntities.style.setProperty(
           "--lovelace-background",
