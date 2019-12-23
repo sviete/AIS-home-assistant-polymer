@@ -39,6 +39,7 @@ import "../cards/hui-ais-mini-media-player-card";
 import "../cards/hui-ais-auto-entities-card";
 import "../cards/hui-ais-monster-card";
 import "../cards/hui-ais-fold-entity-row-card";
+import "../cards/hui-ais-zigbee2mqtt-card";
 import { LovelaceCard } from "../types";
 import { LovelaceCardConfig } from "../../../data/lovelace";
 
@@ -76,6 +77,7 @@ const CARD_TYPES = new Set([
   "ais-auto-entities",
   "ais-monster",
   "ais-fold-entity-row",
+  "ais-zigbee2mqtt",
 ]);
 const CUSTOM_TYPE_PREFIX = "custom:";
 const TIMEOUT = 2000;

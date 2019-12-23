@@ -82,7 +82,7 @@ class HUIRoot extends LitElement {
   protected render(): TemplateResult | void {
     // ais dom audio fix
     let aisStyle = "";
-    if (this.route!.path === "/audio") {
+    if (this.route!.path === "/audio" || this.route!.path === "/ais_zigbee") {
       aisStyle = "display: none";
       if (this._editMode) {
         // disable edit mode
@@ -99,7 +99,7 @@ class HUIRoot extends LitElement {
       })}" fixed condenses>
         ${
           // aid dom audio fix
-          this.route!.path === "/audio"
+          this.route!.path === "/audio" || this.route!.path === "/ais_zigbee"
             ? html`
                 <app-toolbar>
                   <ha-menu-button
@@ -310,6 +310,7 @@ class HUIRoot extends LitElement {
                             "hide-tab": Boolean(
                               // ais dom fix for audio
                               this.route!.path === "/audio" ||
+                                this.route!.path === "/ais_zigbee" ||
                                 (view.visible !== undefined &&
                                   ((Array.isArray(view.visible) &&
                                     !view.visible.some(
