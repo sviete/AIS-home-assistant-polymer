@@ -107,7 +107,7 @@ class HUIRoot extends LitElement {
                     .narrow=${this.narrow}
                   ></ha-menu-button>
                   <div main-title>
-                    Audio
+                    ${this.route!.path === "/audio" ? "Audio" : "Zigbee2Mqtt"}
                   </div>
                   ${this._conversation(this.hass.config.components)
                     ? html`
