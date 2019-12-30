@@ -503,8 +503,6 @@ class HaConfigAisDomControl extends PolymerElement {
   }
 
   _isEqualTo(currentStep, stepNumber) {
-    console.log("currentStep " + currentStep);
-    console.log("stepNumber " + stepNumber);
     return currentStep === stepNumber;
   }
 
