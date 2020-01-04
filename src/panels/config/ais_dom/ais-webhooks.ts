@@ -51,7 +51,6 @@ export class AisWebhooks extends LitElement {
   }
 
   private _renderBody() {
-    console.log("pobieranie");
     if (!this._localHooks) {
       return html`
         <div class="body-text">Pobieranie…</div>

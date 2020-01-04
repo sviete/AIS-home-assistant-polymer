@@ -8,10 +8,9 @@ import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-navigation";
-import { fireEvent } from "../../../common/dom/fire_event";
 import "./ais-webhooks";
 import "../../../components/ha-switch";
-
+import "./ais-timer";
 /*
  *
  */
@@ -25,9 +24,13 @@ class HaConfigAisDomControl extends PolymerElement {
         a {
           color: var(--primary-color);
         }
+        span.pin {
+          color: var(--primary-color);
+          font-size: 2em;
+        }
         .border {
-          margin: 32px auto 0;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+          margin-bottom: 12px;
+          border-bottom: 2px solid rgba(0, 0, 0, 0.11);
           max-width: 1040px;
         }
         .narrow .border {
@@ -68,15 +71,39 @@ class HaConfigAisDomControl extends PolymerElement {
                 kiedy jesteś z dala od domu. Twoja bramka dostępna
                 [[remoteInfo]] z Internetu pod adresem
                 <a href="[[remoteDomain]]" target="_blank">[[remoteDomain]]</a>.
-                <div class="center-container" style="height: 320px;">
-                  <div
-                    style="text-align: center; margin-top: 10px;"
-                    on-click="showBarcodeInfo"
-                  >
+                <div class="center-container border" style="height: 320px;">
+                  <div style="text-align: center; margin-top: 10px;">
                     <img src="/local/dom_access_code.png" />
                   </div>
                   Zeskanuj kod QR za pomocą aplikacji na telefonie.
                 </div>
+              </div>
+              <div class="card-content" style="text-align:center;">
+                <svg style="width:48px;height:48px" viewBox="0 0 24 24">
+                  <path
+                    fill="#f5f0f0"
+                    d="M1,11H6L3.5,8.5L4.92,7.08L9.84,12L4.92,16.92L3.5,15.5L6,13H1V11M8,0H16L16.83,5H17A2,2 0 0,1 19,7V17C19,18.11 18.1,19 17,19H16.83L16,24H8L7.17,19H7C6.46,19 6,18.79 5.62,18.44L7.06,17H17V7H7.06L5.62,5.56C6,5.21 6.46,5 7,5H7.17L8,0Z"
+                  />
+                </svg>
+                <br />
+                <template is="dom-if" if="[[!gatePinPairing]]">
+                  [[gatePinPairingInfo]]
+                  <br />
+                  <mwc-button on-click="enableGatePariringByPin"
+                    >Generuj kod PIN</mwc-button
+                  >
+                </template>
+                <template is="dom-if" if="[[gatePinPairing]]">
+                  <span class="pin">[[gatePin]]</span><br />
+                  [[gatePinPairingInfo]]
+                  <template is="dom-if" if="[[stateObj]]">
+                    <ais-timer
+                      hass="[[hass]]"
+                      state-obj="[[stateObj]]"
+                      in-dialog
+                    ></ais-timer>
+                  </template>
+                </template>
               </div>
               <div class="card-actions">
                 <a
@@ -114,6 +141,24 @@ class HaConfigAisDomControl extends PolymerElement {
         type: Boolean,
         computed: "_computeRremoteConnected(hass)",
       },
+
+      gatePinPairingInfo: {
+        type: String,
+      },
+
+      gatePin: {
+        type: String,
+      },
+
+      gatePinPairing: {
+        type: Boolean,
+        computed: "_computeGatePinPairing(hass)",
+      },
+
+      stateObj: {
+        type: Object,
+        computed: "_computeStateObj(hass)",
+      },
     };
   }
 
@@ -123,6 +168,22 @@ class HaConfigAisDomControl extends PolymerElement {
       hass.states["sensor.ais_secure_android_id_dom"].state +
       ".paczka.pro"
     );
+  }
+
+  _computeStateObj(hass) {
+    return hass.states["timer.ais_dom_pin_join"];
+  }
+
+  _computeGatePinPairing(hass) {
+    if (hass.states["timer.ais_dom_pin_join"].state === "active") {
+      this.gatePin = hass.states["sensor.gate_pairing_pin"].state;
+      this.gatePinPairingInfo = "PIN aktywny przez dwie munuty:";
+      return true;
+    }
+
+    this.gatePin = "";
+    this.gatePinPairingInfo = "Włącz parowanie z bramką za pomocą PIN";
+    return false;
   }
 
   _computeRremoteConnected(hass) {
@@ -140,8 +201,8 @@ class HaConfigAisDomControl extends PolymerElement {
     });
   }
 
-  showBarcodeInfo() {
-    fireEvent(this, "hass-more-info", { entityId: "camera.remote_access" });
+  enableGatePariringByPin() {
+    this.hass.callService("ais_cloud", "enable_gate_pairing_by_pin");
   }
 }
 
