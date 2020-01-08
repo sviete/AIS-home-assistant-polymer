@@ -86,9 +86,9 @@ class HaPanelAishelp extends PolymerElement {
             <div class="card-content">
               Aplikacja dostępna jest w sieci lokalnej pod adresem:
               <a
-                href="http://[[aisLocalIP]]:8180"
+                href="http://[[aisLocalIP]]"
                 target="_blank"
-                >http://[[aisLocalIP]]:8180</a
+                >http://[[aisLocalIP]]</a
               >
             </div>
           </ha-card>
@@ -99,9 +99,9 @@ class HaPanelAishelp extends PolymerElement {
             <div class="card-content">
               Na urządzeniu działa serwer ftp dostępny pod adresem:
               <a
-                href="ftp://[[aisLocalIP]]:1024"
+                href="ftp://[[aisLocalIP]]"
                 target="_blank"
-                >ftp://[[aisLocalIP]]:1024</a
+                >ftp://[[aisLocalIP]]</a
               >
             </div>
           </ha-card>
@@ -113,7 +113,8 @@ class HaPanelAishelp extends PolymerElement {
               pobierz
               <a href="/local/id_rsa_ais?v=1" target="_blank"
                 >autoryzowany klucz ssh</a
-              > połącz się ze swojej konsoli, poleceniem: <br>ssh [[aisLocalIP]] -p 8022 -i <ścieżka do pobranego klucza ssh>
+              > połącz się ze swojej konsoli, poleceniem: <br>ssh [[aisLocalIP]] -i <ścieżka do pobranego klucza ssh>
+              <br><br>Możesz też łączyć się za pmocą hasła:<br><a>ssh [[aisLocalIP]]</a><br>szczegóły w <a href="https://sviete.github.io/AIS-docs/docs/en/ais_bramka_remote_ssh.html#dost%C4%99p-do-konsoli-z-klienta-ssh)" target="_blank">dokumentacji</a>
             </div>
           </ha-card>
           <ha-card header="Tunel">
