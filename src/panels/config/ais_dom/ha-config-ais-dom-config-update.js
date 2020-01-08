@@ -39,6 +39,32 @@ class HaConfigAisDomControl extends PolymerElement {
         td:first-child {
           width: 33%;
         }
+
+        .validate-container {
+          @apply --layout-vertical;
+          @apply --layout-center-center;
+          min-height: 140px;
+        }
+
+        .validate-result {
+          color: var(--google-green-500);
+          font-weight: 500;
+        }
+
+        .config-invalid .text {
+          color: var(--google-red-500);
+          font-weight: 500;
+        }
+
+        .config-invalid {
+          text-align: center;
+          margin-top: 20px;
+        }
+
+        .validate-log {
+          white-space: pre-wrap;
+          direction: ltr;
+        }
       </style>
 
       <hass-subpage header="Konfiguracja bramki AIS dom">
@@ -46,8 +72,9 @@ class HaConfigAisDomControl extends PolymerElement {
           <ha-config-section is-wide="[[isWide]]">
             <span slot="header">Oprogramowanie bramki</span>
             <span slot="introduction"
-              >Możesz zaktualizować system do najnowszej wersji i
-              zsynchronizować bramkę z Portalem Integratora</span
+              >Możesz zaktualizować system do najnowszej wersji, wykonać kopię
+              zapasową ustawień i zsynchronizować bramkę z Portalem
+              Integratora</span
             >
             <ha-card header="Wersja systemu Asystent domowy">
               <div class="card-content">
@@ -103,6 +130,121 @@ class HaConfigAisDomControl extends PolymerElement {
               </div>
             </ha-card>
 
+            <ha-card header="Kopia konfiguracji Bramki">
+              <div class="card-content">
+                W tym miejscu możesz, sprawdzić poprawność ustawień bramki,
+                wykonać jej kopię i przesłać ją do portalu integratora. <b>Uwaga,
+                ponieważ konfiguracja może zawierać hasła i tokeny dostępu do
+                usług, zalecamy zaszyfrować ją hasłem</b>, Gdy kopia jest
+                zabezpieczona hasłem, to można ją otworzyć/przywrócić tylko po
+                podaniu hasła.
+                <h2>
+                  Nowa kopia ustawień
+                  <iron-icon icon="mdi:cloud-upload-outline"></iron-icon>
+                </h2>
+                Przed wykonaniem nowej kopii usatawień sprawdz poprawność
+                konfiguracji
+                <div style="border-bottom: 1px solid white;">
+                  <template is="dom-if" if="[[!validateLog]]">
+                    <div class="validate-container">
+                      <div class="validate-result" id="result">
+                        [[backupInfo]]
+                      </div>
+                      <template is="dom-if" if="[[!validating]]">
+                        <div class="config-invalid">
+                          <span class="text">
+                            [[backupError]]
+                          </span>
+                        </div>
+                        <template
+                          is="dom-if"
+                          if="[[_isEqualTo(backupStep, '1')]]"
+                        >
+                          <paper-input
+                            placeholder="hasło"
+                            no-label-float=""
+                            type="password"
+                            id="password1"
+                          ></paper-input>
+                        </template>
+                        <mwc-button raised="" on-click="doBackup">
+                          <template
+                            is="dom-if"
+                            if="[[_isEqualTo(backupStep, '0')]]"
+                          >
+                            Sprawdz konfigurację
+                          </template>
+                          <template
+                            is="dom-if"
+                            if="[[_isEqualTo(backupStep, '1')]]"
+                          >
+                            Wykonaj kopie konfiguracji
+                          </template>
+                        </mwc-button>
+                      </template>
+                      <template is="dom-if" if="[[validating]]">
+                        <paper-spinner active=""></paper-spinner>
+                      </template>
+                    </div>
+                  </template>
+                  <template is="dom-if" if="[[validateLog]]">
+                    <div class="config-invalid">
+                      <mwc-button raised="" on-click="doBackup">
+                        Popraw i sprawdz ponownie
+                      </mwc-button>
+                    </div>
+                    <p></p>
+                    <div id="configLog" class="validate-log">
+                      [[validateLog]]
+                    </div>
+                  </template>
+                </div>
+
+                <template is="dom-if" if="[[isBackupValid]]">
+                  <h2>
+                    Przywracanie ustawień
+                    <iron-icon icon="mdi:backup-restore"></iron-icon>
+                  </h2>
+                  <div class="validate-container">
+                    <table style="margin-top: 40px; margin-bottom: 10px;">
+                      <template is="dom-repeat" items="[[aisBackupFullInfo]]">
+                        <tr>
+                          <td>[[item.name]]</td>
+                          <td>[[item.value]]</td>
+                          <td>[[item.new_value]]</td>
+                          <td><iron-icon icon="[[item.icon]]"></iron-icon></td>
+                        </tr>
+                      </template>
+                    </table>
+                      <div class="validate-container">
+                        <div class="validate-result" id="result">
+                          [[restoreInfo]]
+                        </div>
+                        <template is="dom-if" if="[[!validating]]">
+                        <div class="config-invalid">
+                          <span class="text">
+                            [[restoreError]]
+                          </span>
+                        </div>
+                        <paper-input
+                          placeholder="hasło"
+                          no-label-float=""
+                          type="password"
+                          id="password2"
+                        ></paper-input>
+                        <mwc-button raised="" on-click="restoreBackup">
+                          Przywróć konfigurację z kopii
+                        </mwc-button>
+                      </div>
+                    </template>
+                    <template is="dom-if" if="[[validating]]">
+                      <paper-spinner active=""></paper-spinner>
+                    </template>
+                  </div>
+                </template>
+              </div>
+            </ha-card>
+
             <ha-card header="Synchronizacja z Portalem Integratora">
               <div class="card-content">
                 Jeśli ostatnio wprowadzałeś zmiany w Portalu Integratora, takie
@@ -131,15 +273,21 @@ class HaConfigAisDomControl extends PolymerElement {
     return {
       hass: Object,
       isWide: Boolean,
-      showAdvanced: Boolean,
       aisVersionInfo: {
         type: String,
         computed: "_computeAisVersionInfo(hass)",
       },
-
+      aisBackupInfo: {
+        type: String,
+        computed: "_computeAisBackupInfo(hass)",
+      },
       aisAutoUpdateInfo: { type: String },
       aisAutoUpdateIcon: { type: String },
       aisAutoUpdatFullInfo: {
+        type: Array,
+        value: [],
+      },
+      aisBackupFullInfo: {
         type: Array,
         value: [],
       },
@@ -155,7 +303,48 @@ class HaConfigAisDomControl extends PolymerElement {
         type: Boolean,
         computed: "_computeAutoUpdateMode(hass)",
       },
+      validating: {
+        type: Boolean,
+        value: false,
+      },
+      backupStep: {
+        type: String,
+        value: "0",
+        computed: "_computeAisBackupStep(hass)",
+      },
+      validateLog: {
+        type: String,
+        value: "",
+      },
+      backupInfo: {
+        type: String,
+        value: "",
+      },
+      backupError: {
+        type: String,
+        value: "",
+      },
+      restoreInfo: {
+        type: String,
+        value: "",
+      },
+      restoreError: {
+        type: String,
+        value: "",
+      },
+      isBackupValid: {
+        type: Boolean,
+        value: null,
+      },
     };
+  }
+
+  ready() {
+    super.ready();
+    this.hass.callService("ais_cloud", "set_backup_step", {
+      step: "0",
+    });
+    this.hass.callService("ais_cloud", "get_backup_info");
   }
 
   computeClasses(isWide) {
@@ -211,6 +400,35 @@ class HaConfigAisDomControl extends PolymerElement {
     }
 
     return versionInfo.state;
+  }
+
+  _computeAisBackupStep(hass) {
+    var backupInfo = hass.states["sensor.aisbackupinfo"];
+    if (backupInfo.state === "0") {
+      this.validating = false;
+    }
+    return backupInfo.state;
+  }
+
+  _computeAisBackupInfo(hass) {
+    var backupInfo = hass.states["sensor.aisbackupinfo"];
+    var backupInfoAttr = backupInfo.attributes;
+    this.aisBackupFullInfo = [];
+    this.isBackupValid = false;
+    this.backupInfo = backupInfoAttr.backup_info;
+    this.backupError = backupInfoAttr.backup_error;
+    this.restoreInfo = backupInfoAttr.restore_info;
+    this.restoreError = backupInfoAttr.restore_error;
+    if ("file_size" in backupInfoAttr) {
+      this.isBackupValid = !!backupInfoAttr.file_name;
+      this.aisBackupFullInfo.push({
+        name: "Kopia zapasowa",
+        value: backupInfoAttr.file_name,
+        new_value: backupInfoAttr.file_size,
+        icon: "mdi:check",
+      });
+    }
+    return backupInfo.state;
   }
 
   getVersionName(status) {
@@ -284,9 +502,56 @@ class HaConfigAisDomControl extends PolymerElement {
     return true;
   }
 
+  _isEqualTo(currentStep, stepNumber) {
+    return currentStep === stepNumber;
+  }
+
   changeAutoUpdateMode() {
     this.hass.callService("input_boolean", "toggle", {
       entity_id: "input_boolean.ais_auto_update",
+    });
+  }
+
+  doBackup() {
+    // 1. validation
+    if (this.backupStep === "0") {
+      this.validating = true;
+      this.validateLog = "";
+
+      this.hass.callApi("POST", "config/core/check_config").then((result) => {
+        this.validating = false;
+        var valid = result.result === "valid" ? "1" : "0";
+        if (valid === "0") {
+          this.hass.callService("ais_cloud", "set_backup_step", {
+            step: valid,
+            backup_error: "Konfiguracja niepoprawana",
+          });
+          this.validateLog = result.errors;
+        } else {
+          this.hass.callService("ais_cloud", "set_backup_step", {
+            step: valid,
+            backup_info: "Konfiguracja poprawna można wykonać kopie",
+          });
+          this.validateLog = "";
+        }
+      });
+    } else {
+      // 2. backup and transfer
+      this.validating = true;
+      this.validateLog = "";
+      var password = this.shadowRoot.getElementById("password1").value;
+      this.hass.callService("ais_cloud", "do_backup", {
+        password: password,
+      });
+    }
+  }
+
+  restoreBackup() {
+    this.validating = true;
+    this.validateLog = "";
+    var password = this.shadowRoot.getElementById("password2").value;
+    this.hass.callService("ais_cloud", "restore_backup", {
+      password: password,
     });
   }
 }
