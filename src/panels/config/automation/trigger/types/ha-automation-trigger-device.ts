@@ -28,9 +28,8 @@ export class HaDeviceTrigger extends LitElement {
   }
 
   protected render() {
-    if (this._deviceId === undefined) {
-      this._deviceId = this.trigger.device_id;
-    }
+    const deviceId = this._deviceId || this.trigger.device_id;
+
     const extraFieldsData =
       this._capabilities && this._capabilities.extra_fields
         ? this._capabilities.extra_fields.map((item) => {
@@ -40,14 +39,14 @@ export class HaDeviceTrigger extends LitElement {
 
     return html`
       <ha-device-picker
-        .value=${this._deviceId}
+        .value=${deviceId}
         @value-changed=${this._devicePicked}
         .hass=${this.hass}
         label="Device"
       ></ha-device-picker>
       <ha-device-trigger-picker
         .value=${this.trigger}
-        .deviceId=${this._deviceId}
+        .deviceId=${deviceId}
         @value-changed=${this._deviceTriggerPicked}
         .hass=${this.hass}
         label="Trigger"
@@ -122,9 +121,7 @@ export class HaDeviceTrigger extends LitElement {
     // Returns a callback for ha-form to calculate labels per schema object
     return (schema) =>
       localize(
-        `ui.panel.config.automation.editor.triggers.type.device.extra_fields.${
-          schema.name
-        }`
+        `ui.panel.config.automation.editor.triggers.type.device.extra_fields.${schema.name}`
       ) || schema.name;
   }
 }

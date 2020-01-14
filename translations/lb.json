@@ -587,9 +587,11 @@
                 "title": "Domäner ëmschalten"
             },
             "more_info_control": {
+                "dismiss": "Dialog ofbriechen",
                 "script": {
                     "last_action": "Läscht Aktioun"
                 },
+                "settings": "Astellunge vun der Entitéit",
                 "sun": {
                     "elevation": "Héicht",
                     "rising": "Sonnenopgank",
@@ -600,6 +602,7 @@
                 }
             },
             "more_info_settings": {
+                "back": "Géi zréck",
                 "entity_id": "Entitéit ID",
                 "name": "Numm iwwerschreiwen",
                 "save": "Späicheren"
@@ -658,6 +661,7 @@
         },
         "notification_drawer": {
             "click_to_configure": "Dréck de Knäppchen fir {entity} ze konfiguréieren",
+            "close": "Zoumaachen",
             "empty": "Keng Notifikatioune",
             "title": "Notifikatioune"
         },
@@ -806,6 +810,8 @@
                             "label": "Beschreiwung",
                             "placeholder": "Optional Beschreiwung"
                         },
+                        "edit_ui": "Mam Benotzer Inteface änneren",
+                        "edit_yaml": "Als YAML änneren",
                         "introduction": "Benotzt Automatismen fir däin Haus zum Liewen ze bréngen",
                         "load_error_not_editable": "Nëmmen Automatiounen am automations.yaml kënnen editéiert ginn.",
                         "load_error_unknown": "Feeler beim luede vun der Automatioun ({err_no}).",
@@ -1172,7 +1178,6 @@
                     "description": "Verwalt verbonnen Apparater",
                     "details": "Hei sinn all Detailer vun ärem Apparat.",
                     "device_not_found": "Apparat net fonnt.",
-                    "entities": "Entitéiten",
                     "info": "Informatioune vum Apparat",
                     "unknown_error": "Onbekannten Feeler",
                     "unnamed_device": "Apparat ouni Numm"
@@ -1247,8 +1252,20 @@
                     "configure": "Astellen",
                     "configured": "Konfiguréiert",
                     "description": "Verwalt verbonnen Apparater an Servicen",
+                    "details": "Detailer vun der Integratioun",
                     "discovered": "Entdeckt",
                     "home_assistant_website": "Home Assistant Websäit",
+                    "ignore": {
+                        "confirm_delete_ignore": "Dëst wäert d'Integratioun an Ären entdeckten Integratiounen erëm siichtbar maache wann se entdeckt gëtt. Dëst kann e Restart erfuerderen oder e bëssi Zäit brauchen.",
+                        "confirm_delete_ignore_title": "Ophale mam ignoréieren vun {name}?",
+                        "confirm_ignore": "Sidd Dir sécher, datt Dir dës Integratioun net wëll ariichten? Dir kënnt dëst annuléieren andeems Dir op 'Ignoréiert Integratiounen uweisen' am Menü uewe riets klickt.",
+                        "confirm_ignore_title": "Entdeckung vun {name} ignoréieren?",
+                        "hide_ignored": "Ignoréiert Integratiounen verstoppen",
+                        "ignore": "Ignoréieren",
+                        "ignored": "Ignoréiert",
+                        "show_ignored": "Ignoréiert Integratiounen uweisen",
+                        "stop_ignore": "Ophale mam ignoréieren"
+                    },
                     "integration_not_found": "Integratioun net fonnt.",
                     "new": "Eng nei Integratioun ariichten",
                     "none": "Nach näischt konfiguréiert",
@@ -1327,6 +1344,7 @@
                     "caption": "Skript",
                     "description": "Skript erstellen an änneren",
                     "editor": {
+                        "alias": "Numm",
                         "default_name": "Neie Skript",
                         "delete_confirm": "Sécher fir dësen Skript ze läsche?",
                         "delete_script": "Skript läschen",
@@ -1611,6 +1629,10 @@
                     "states": {
                         "alert_entity_field": "Entitéit ass e obligatorescht Feld",
                         "attributes": "Attributer",
+                        "copied": "An de Tëschespäicher kopéiert",
+                        "copy_entity_attribute": "Attributer kopéieren",
+                        "copy_entity_id": "ID kopéieren",
+                        "copy_entity_state": "Zoustand kopéieren",
                         "current_entities": "Aktuell Entitéiten",
                         "description1": "Setzt d'Representatioun vun engem Apparat am Home Assistant.",
                         "description2": "Dëst wäert net mam aktuellen Apparat kommunizéieren.",
@@ -1802,7 +1824,7 @@
                         "move": "Réckelen",
                         "options": "Méi Optiounen",
                         "pick_card": "Wielt eng Kaart aus déi soll dobäigesat ginn.",
-                        "pick_card_view_title": "Wéieng Kaart wëllt dir zu ärer {name] Usiicht dobäisetzen?",
+                        "pick_card_view_title": "Wéieng Kaart wëllt dir zu ärer {name}Usiicht dobäisetzen?",
                         "save": "Späicheren",
                         "show_code_editor": "Code Editeur uweisen",
                         "show_visual_editor": "Visuellen Editeur uweisen",
@@ -1861,6 +1883,7 @@
                 "menu": {
                     "close": "Zoumaachen",
                     "configure_ui": "UI konfiguréieren",
+                    "exit_edit_mode": "Benotzer Interface Editéierungsmodus verloossen",
                     "help": "Hëllef",
                     "refresh": "Erneieren",
                     "unused_entities": "Onbenotzt Entitéiten"
