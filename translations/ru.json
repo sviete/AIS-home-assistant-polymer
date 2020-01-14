@@ -405,9 +405,9 @@
                 "arm_home": "Охрана (дома)",
                 "arm_night": "Ночная охрана",
                 "armed_custom_bypass": "Охрана с исключениями",
-                "clear_code": "Очистить",
+                "clear_code": "Сброс",
                 "code": "Код",
-                "disarm": "Без охраны"
+                "disarm": "Снять с охраны"
             },
             "automation": {
                 "last_triggered": "Последний запуск",
@@ -587,9 +587,11 @@
                 "title": "Переключить домены"
             },
             "more_info_control": {
+                "dismiss": "Закрыть диалог",
                 "script": {
                     "last_action": "Последнее действие"
                 },
+                "settings": "Настройки объекта",
                 "sun": {
                     "elevation": "Высота над горизонтом",
                     "rising": "Восход",
@@ -600,6 +602,7 @@
                 }
             },
             "more_info_settings": {
+                "back": "Вернуться",
                 "entity_id": "ID объекта",
                 "name": "Название",
                 "save": "Сохранить"
@@ -658,6 +661,7 @@
         },
         "notification_drawer": {
             "click_to_configure": "Нажмите кнопку, чтобы настроить {entity}",
+            "close": "Закрыть",
             "empty": "Нет уведомлений",
             "title": "Уведомления"
         },
@@ -806,6 +810,8 @@
                             "label": "Описание",
                             "placeholder": "Дополнительное описание"
                         },
+                        "edit_ui": "Форма ввода",
+                        "edit_yaml": "Текстовый редактор",
                         "introduction": "Используйте автоматизацию, чтобы оживить Ваш дом.",
                         "load_error_not_editable": "Доступны для редактирования только автоматизации из automations.yaml.",
                         "load_error_unknown": "Ошибка загрузки автоматизации ({err_no}).",
@@ -1172,7 +1178,6 @@
                     "description": "Управляйте подключенными устройствами",
                     "details": "Здесь приведена вся доступная информация об этом устройстве.",
                     "device_not_found": "Устройство не найдено.",
-                    "entities": "Объекты",
                     "info": "Информация об устройстве",
                     "unknown_error": "Неизвестная ошибка.",
                     "unnamed_device": "Безымянное устройство"
@@ -1247,8 +1252,20 @@
                     "configure": "Настроить",
                     "configured": "Настроено",
                     "description": "Добавляйте и настраивайте интеграции",
+                    "details": "Детали интеграции",
                     "discovered": "Обнаружено",
                     "home_assistant_website": "сайте Home Assistant",
+                    "ignore": {
+                        "confirm_delete_ignore": "Эта интеграция станет доступна для обнаружения системой. Обнаружение произойдёт автоматически в течении некоторого времени, либо после перезапуска системы.",
+                        "confirm_delete_ignore_title": "Прекратить игнорировать {name}?",
+                        "confirm_ignore": "Вы сможете снова включить обнаружение этой интеграции системой. Для этого откройте меню в правом верхнем углу и нажмите «Показать игнорируемые интеграции».",
+                        "confirm_ignore_title": "Игнорировать обнаружение интеграции {name}?",
+                        "hide_ignored": "Скрыть игнорируемые интеграции",
+                        "ignore": "Игнорировать",
+                        "ignored": "Игнорируется",
+                        "show_ignored": "Показать игнорируемые интеграции",
+                        "stop_ignore": "Прекратить игнорировать"
+                    },
                     "integration_not_found": "Интеграция не найдена.",
                     "new": "Интеграции",
                     "none": "Пока ничего не настроено",
@@ -1260,7 +1277,7 @@
                     "add_person": "Добавить персону",
                     "caption": "Люди",
                     "confirm_delete": "Вы уверены, что хотите удалить эту персону?",
-                    "confirm_delete2": "Все устройства, связанные с этой персоной, станут неназначенными.",
+                    "confirm_delete2": "Все устройства, связанные с этой персоной, станут не назначенными.",
                     "create_person": "Добавить персону",
                     "description": "Определяйте людей, которых может отслеживать Home Assistant",
                     "detail": {
@@ -1327,6 +1344,7 @@
                     "caption": "Сценарии",
                     "description": "Создавайте и редактируйте сценарии",
                     "editor": {
+                        "alias": "Название",
                         "default_name": "Новый сценарий",
                         "delete_confirm": "Вы уверены, что хотите удалить этот сценарий?",
                         "delete_script": "Удалить сценарий",
@@ -1535,7 +1553,7 @@
                     "events": {
                         "alert_event_type": "Укажите событие.",
                         "available_events": "Доступные события",
-                        "count_listeners": "(подписано: {count})",
+                        "count_listeners": " (подписано: {count})",
                         "data": "Данные события в формате YAML (необязательно)",
                         "description": "Здесь Вы можете создать и отправить событие в Home Assistant.",
                         "documentation": "Узнайте больше о событиях.",
@@ -1611,6 +1629,10 @@
                     "states": {
                         "alert_entity_field": "Укажите объект.",
                         "attributes": "Атрибуты",
+                        "copied": "Скопировано в буфер обмена",
+                        "copy_entity_attribute": "Копировать атрибуты",
+                        "copy_entity_id": "Копировать ID",
+                        "copy_entity_state": "Скопировать состояние",
                         "current_entities": "Список актуальных объектов",
                         "description1": "Здесь Вы можете вручную изменить состояние устройства в Home Assistant.",
                         "description2": "Изменённое состояние не будет синхронизировано с устройством.",
@@ -1678,7 +1700,7 @@
                         },
                         "alarm-panel": {
                             "available_states": "Доступные состояния",
-                            "name": "Alarm Panel"
+                            "name": "Панель сигнализации"
                         },
                         "conditional": {
                             "name": "Conditional"
@@ -1688,12 +1710,12 @@
                             "required": "обязательно"
                         },
                         "entities": {
-                            "name": "Entities",
+                            "name": "Объекты",
                             "show_header_toggle": "Переключатель в заголовке",
                             "toggle": "Переключить объекты"
                         },
                         "entity-button": {
-                            "name": "Entity Button"
+                            "name": "Объект кнопка"
                         },
                         "entity-filter": {
                             "name": "Entity Filter"
@@ -1733,25 +1755,25 @@
                         },
                         "glance": {
                             "columns": "Столбцы",
-                            "name": "Glance"
+                            "name": "Просмотр"
                         },
                         "history-graph": {
                             "name": "History Graph"
                         },
                         "horizontal-stack": {
-                            "name": "Horizontal Stack"
+                            "name": "Горизонтальная панель"
                         },
                         "iframe": {
                             "name": "iFrame"
                         },
                         "light": {
-                            "name": "Light"
+                            "name": "Свет"
                         },
                         "map": {
                             "dark_mode": "Ночной режим",
                             "default_zoom": "Масштаб по умолчанию",
                             "geo_location_sources": "Источники геолокации",
-                            "name": "Map",
+                            "name": "Карта",
                             "source": "Источник"
                         },
                         "markdown": {
@@ -1759,19 +1781,19 @@
                             "name": "Markdown"
                         },
                         "media-control": {
-                            "name": "Media Control"
+                            "name": "Управление медиа плеером"
                         },
                         "picture-elements": {
-                            "name": "Picture Elements"
+                            "name": "Элементы картинки"
                         },
                         "picture-entity": {
-                            "name": "Picture Entity"
+                            "name": "Картинка объекта"
                         },
                         "picture-glance": {
-                            "name": "Picture Glance"
+                            "name": "Вид картинки"
                         },
                         "picture": {
-                            "name": "Picture"
+                            "name": "Картинка"
                         },
                         "plant-status": {
                             "name": "Plant Status"
@@ -1779,7 +1801,7 @@
                         "sensor": {
                             "graph_detail": "Детализация графика",
                             "graph_type": "Тип графика",
-                            "name": "Sensor"
+                            "name": "Датчик"
                         },
                         "shopping-list": {
                             "name": "Список покупок"
@@ -1861,6 +1883,7 @@
                 "menu": {
                     "close": "Закрыть",
                     "configure_ui": "Настройка интерфейса",
+                    "exit_edit_mode": "Выход из режима редактирования интерфейса",
                     "help": "Справка",
                     "refresh": "Обновить",
                     "unused_entities": "Неиспользуемые объекты"

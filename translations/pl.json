@@ -533,6 +533,7 @@
         },
         "common": {
             "cancel": "Anuluj",
+            "close": "Zamknij",
             "loading": "Ładowanie",
             "no": "Nie",
             "save": "Zapisz",
@@ -576,7 +577,7 @@
             "config_entry_system_options": {
                 "enable_new_entities_description": "Jeśli wyłączone, nowo wykryte encje nie będą automatycznie dodawane do Asystenta domowego.",
                 "enable_new_entities_label": "Włącz dodawanie nowych encji.",
-                "title": "Opcje systemu"
+                "title": "Opcje systemowe dla {integration}"
             },
             "confirmation": {
                 "cancel": "Anuluj",
@@ -587,9 +588,18 @@
                 "title": "Przełączanie domen"
             },
             "more_info_control": {
+                "dismiss": "Zamknij okno dialogowe",
+                "restored": {
+                    "confirm_remove_text": "Czy na pewno chcesz usunąć tę encję?",
+                    "confirm_remove_title": "Usunąć encję?",
+                    "not_provided": "Ta encja jest obecnie niedostępna i jest osierocona po usuniętej, zmienionej lub dysfunkcyjnej integracji, lub urządzeniu.",
+                    "remove_action": "Usuń encje",
+                    "remove_intro": "Jeśli encja nie jest używana możesz ją usunąć."
+                },
                 "script": {
                     "last_action": "Ostatnia akcja"
                 },
+                "settings": "Ustawienia encji",
                 "sun": {
                     "elevation": "Wysokość",
                     "rising": "Wschód",
@@ -600,6 +610,7 @@
                 }
             },
             "more_info_settings": {
+                "back": "Wróć",
                 "entity_id": "Identyfikator encji",
                 "name": "Nadpisanie nazwy",
                 "save": "Zapisz"
@@ -658,6 +669,7 @@
         },
         "notification_drawer": {
             "click_to_configure": "Kliknij przycisk, aby skonfigurować {entity}",
+            "close": "Zamknij",
             "empty": "Brak powiadomień",
             "title": "Powiadomienia"
         },
@@ -806,6 +818,8 @@
                             "label": "Opis",
                             "placeholder": "Opcjonalny opis"
                         },
+                        "edit_ui": "Edytuj za pomocą interfejsu użytkownika",
+                        "edit_yaml": "Edycja jako YAML",
                         "introduction": "Użyj automatyzacji, aby ożywić swój dom",
                         "load_error_not_editable": "Tylko automatyzacje zdefiniowane w pliku automations.yaml są edytowalne.",
                         "load_error_unknown": "Wystąpił błąd podczas ładowania automatyzacji ({err_no}).",
@@ -1140,8 +1154,8 @@
                         "introduction": "Dostosuj atrybuty encji. Dodawane/edytowane dostosowywania zostaną wprowadzone natychmiast. Usunięte dostosowania zostaną uwzględnione, gdy encja zostanie zaktualizowana."
                     },
                     "warning": {
-                        "include_link": "zawierają customize.yaml.",
-                        "include_sentence": "Wygląda na to, że Twój plik configuration.yaml nie jest prawidłowy.",
+                        "include_link": "plik customize.yaml.",
+                        "include_sentence": "Wygląda na to, że Twój plik configuration.yaml nieprawidłowo załącza",
                         "not_applied": "Wprowadzone tutaj zmiany są w nim zapisane, ale nie zostaną zastosowane po ponownym wczytaniu konfiguracji, chyba że dołączony plik jest na miejscu."
                     }
                 },
@@ -1172,7 +1186,10 @@
                     "description": "Zarządzaj podłączonymi urządzeniami",
                     "details": "Oto wszystkie szczegóły dotyczące twojego urządzenia.",
                     "device_not_found": "Urządzenie nie zostało znalezione.",
-                    "entities": "Encje",
+                    "entities": {
+                        "entities": "Encje",
+                        "none": "To urządzenie nie ma żadnych encji"
+                    },
                     "info": "Informacje o urządzeniu",
                     "unknown_error": "Nieznany błąd",
                     "unnamed_device": "Nienazwane urządzenie"
@@ -1247,8 +1264,20 @@
                     "configure": "Konfiguruj",
                     "configured": "Skonfigurowane",
                     "description": "Zarządzaj integracjami",
+                    "details": "Szczegóły integracji",
                     "discovered": "Wykryte",
                     "home_assistant_website": "Asystenta domowego",
+                    "ignore": {
+                        "confirm_delete_ignore": "Spowoduje to, że integracja pojawi się ponownie w wykrytych integracjach. Może to wymagać ponownego uruchomienia lub czasu.",
+                        "confirm_delete_ignore_title": "Przestać ignorować {name}?",
+                        "confirm_ignore": "Na pewno chcesz ignorować tę integrację? Możesz to cofnąć, klikając „Pokaż ignorowane integracje” w menu w prawym górnym rogu.",
+                        "confirm_ignore_title": "Ignorować wykrywanie {name}?",
+                        "hide_ignored": "Ukryj ignorowane integracje",
+                        "ignore": "Ignoruj",
+                        "ignored": "Ignorowana",
+                        "show_ignored": "Pokaż ignorowane integracje",
+                        "stop_ignore": "Wyłączenie ignorowania"
+                    },
                     "integration_not_found": "Nie znaleziono integracji.",
                     "new": "Konfiguruj nową integrację",
                     "none": "Nic jeszcze nie zostało skonfigurowane",
@@ -1335,6 +1364,7 @@
                     "caption": "Skrypty",
                     "description": "Twórz i edytuj skrypty",
                     "editor": {
+                        "alias": "Nazwa",
                         "default_name": "Nowy skrypt",
                         "delete_confirm": "Na pewno chcesz usunąć ten skrypt?",
                         "delete_script": "Usuń skrypt",
@@ -1619,6 +1649,10 @@
                     "states": {
                         "alert_entity_field": "Encja jest polem obowiązkowym",
                         "attributes": "Atrybuty",
+                        "copied": "Skopiowano do schowka",
+                        "copy_entity_attribute": "Skopiuj atrybuty",
+                        "copy_entity_id": "Skopiuj identyfikator",
+                        "copy_entity_state": "Skopiuj status encji",
                         "current_entities": "Bieżące encje",
                         "description1": "Ustaw stany encji urządzeń Asystenta domowego.",
                         "description2": "Nie wpłynie to na rzeczywiste urządzenia.",
@@ -1869,6 +1903,7 @@
                 "menu": {
                     "close": "Zamknij",
                     "configure_ui": "Konfiguracja interfejsu użytkownika",
+                    "exit_edit_mode": "Wyjdź z trybu edycji interfejsu użytkownika",
                     "help": "Pomoc",
                     "refresh": "Wczytaj ponownie",
                     "unused_entities": "Nieużywane encje"
@@ -2052,7 +2087,7 @@
                     "intro": "Urządzenia i usługi są reprezentowane w Asystent domowy jako integracje. Możesz je teraz skonfigurować lub zrobić to później w konfiguracji.",
                     "more_integrations": "Więcej"
                 },
-                "intro": "Czy jesteś gotowy, aby ożywić swój dom, odzyskać prywatność i dołączyć do światowej społeczności majsterkowiczów?",
+                "intro": "Czy jesteś gotowy, aby ożywić swój dom, odzyskać prywatność i dołączyć do społeczności fanów automatyki domowej?",
                 "user": {
                     "create_account": "Utwórz konto",
                     "data": {

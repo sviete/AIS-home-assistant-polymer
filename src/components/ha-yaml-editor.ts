@@ -1,9 +1,15 @@
 import { safeDump, safeLoad } from "js-yaml";
 import "./ha-code-editor";
-import { LitElement, property, customElement, html } from "lit-element";
+import { LitElement, property, customElement, html, query } from "lit-element";
 import { fireEvent } from "../common/dom/fire_event";
+import { afterNextRender } from "../common/util/render-status";
+// tslint:disable-next-line
+import { HaCodeEditor } from "./ha-code-editor";
 
 const isEmpty = (obj: object) => {
+  if (typeof obj !== "object") {
+    return false;
+  }
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
       return false;
@@ -18,14 +24,23 @@ export class HaYamlEditor extends LitElement {
   @property() public isValid = true;
   @property() public label?: string;
   @property() private _yaml?: string;
+  @query("ha-code-editor") private _editor?: HaCodeEditor;
 
-  protected firstUpdated() {
+  public setValue(value) {
     try {
-      this._yaml =
-        this.value && !isEmpty(this.value) ? safeDump(this.value) : "";
+      this._yaml = value && !isEmpty(value) ? safeDump(value) : "";
     } catch (err) {
       alert(`There was an error converting to YAML: ${err}`);
     }
+    afterNextRender(() => {
+      if (this._editor?.codemirror) {
+        this._editor.codemirror.refresh();
+      }
+    });
+  }
+
+  protected firstUpdated() {
+    this.setValue(this.value);
   }
 
   protected render() {
