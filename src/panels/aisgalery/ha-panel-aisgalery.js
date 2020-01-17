@@ -1,5 +1,6 @@
 import "@material/mwc-button";
 import "@polymer/paper-input/paper-input";
+import "@polymer/paper-icon-button/paper-icon-button";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 import { showAisgaleryDialog } from "./show-ha-aisgalery-dialog";
@@ -142,6 +143,11 @@ class HaPanelAisgalery extends PolymerElement {
         <app-toolbar>
           <ha-menu-button hass="[[hass]]" narrow="[[narrow]]"></ha-menu-button>
           <div main-title>[[panel.title]]</div>
+          <paper-icon-button
+            aria-label="Instrukcja"
+            icon="mdi:information-outline"
+            on-click="_showHelp"
+          ></paper-icon-button>
         </app-toolbar>
         <has-subpage>
           <div class="galery_content" id="content">
@@ -160,6 +166,10 @@ class HaPanelAisgalery extends PolymerElement {
                     on-canplay="startVideo"
                   ></video>
                   <figcaption>
+                    <paper-icon-button
+                      icon="mdi:image-edit-outline"
+                      on-click="_editImage"
+                    ></paper-icon-button>
                     <paper-icon-button
                       icon="hass:delete"
                       on-click="_deleteImage"
@@ -251,6 +261,23 @@ class HaPanelAisgalery extends PolymerElement {
     await this.hass.callService("ais_files", "remove_file", {
       path: img.path,
     });
+  }
+
+  async _editImage() {
+    const img = this.getImage(this.currentImgIdx);
+    var win = window.open(
+      "/static/ais_dom/design_tool/index.html?img=" + img.path,
+      "_blank"
+    );
+    win.focus();
+  }
+
+  async _showHelp() {
+    var win = window.open(
+      "https://sviete.github.io/AIS-docs/docs/en/next/ais_app_integration_gallery.html",
+      "_blank"
+    );
+    win.focus();
   }
 
   addImage() {

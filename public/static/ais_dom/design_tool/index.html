@@ -1,0 +1,228 @@
+<html>
+<head>
+<TITLE>CSS Generator Tool</TITLE> 
+<meta http-equiv="X-UA-Compatible" content="IE=9;IE=8; IE=7; IE=EDGE" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="0">
+<style>
+
+
+
+.demo2 {
+	z-index: 33;	
+	position: fixed;	
+	top: 0;
+	right: 0;	
+	width: 100%;	
+}
+
+.demo {
+	z-index: 33;	
+	position: absolute;		
+	top: 0;
+	right: 0;
+	width: 100%;	
+}
+
+
+.idem {
+	position: fixed;
+	z-index: 35;
+}
+
+
+
+.frontdiv{
+	z-index: 50;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	right: 0;	
+}
+
+.toolbox {
+	border: 3px solid #c66900;
+	background: rgba(0,0,0,.5);
+	box-shadow: 8px 8px 6px 1px rgba(0, 0, 0, .7); 
+}
+
+.toolbox td, th{
+	font-family: tahoma;
+	color: white;
+	text-shadow: 2px 2px rgba(0, 0, 0, 1); 
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.toolbox th{
+	background: black;	
+}
+
+.toolbox th a{
+	text-decoration: none;
+	font-size: 20pt;
+	color: #ffffff;
+}
+.ssizer {
+	opacity: 0;
+}
+body {
+	background: black;	
+}
+
+input{
+	font-size: 1.5em;
+	width: 90px;
+}
+</style>
+
+
+<script>
+
+function DoSkew(){
+	var rT = document.getElementById("rT").value;
+	var rX = document.getElementById("rX").value;
+	var rY = document.getElementById("rY").value;
+	var sX = document.getElementById("sX").value;
+	var sY = document.getElementById("sY").value;
+	
+	var sW = document.getElementById("sW").value;
+	var MT = document.getElementById("MT").value;
+	var ML = document.getElementById("ML").value;	
+	
+	var imgURL = "front.png";
+	var bmgURL = location.search.split('img=')[1];
+	
+	var OutVal = "";
+	
+	if (rT != 0){ rTv = 'rotate(' + rT + 'deg) ';} else { rTv = '';}
+	if (rX != 0){ rXv = 'rotateX(' + rX + 'deg) ';} else { rXv = '';}
+	if (rY != 0){ rYv = 'rotateY(' + rY + 'deg) ';} else { rYv = '';}
+	if (sX != 0){ sXv = 'skewX(' + sX + 'deg) ';} else { sXv = '';}
+	if (sY != 0){ sYv = 'skewY(' + sY + 'deg) ';} else { sYv = '';}
+	
+	if (sW != 0){ 
+		sWv = 'width="' + sW + '%" ';
+		OutVal = OutVal + 'width: ' + sW + '%\n';
+	} else { sWv = '';}
+	
+	if (MT != 0){
+		MTv = 'translateY(' + MT + '%) ';
+		OutVal = OutVal + 'top: ' + MT + '%\n';
+	} else { MTv = '';}
+	
+	if (ML != 0){ 
+		MLv = 'translateX(' + ML + '%) ';
+		OutVal = OutVal + 'left: ' + ML + '%\n';
+	} else { MLv = '';}
+
+	
+	var DemoVal = rTv + rXv + rYv + sXv + sYv;
+	var DemoVal2 = MTv + MLv ;
+ 
+  
+	document.getElementById("demo2").innerHTML = '<img src="' + bmgURL + '" width=100%><div class="demo" id="demo"><img class="idem" id="idem" ' + sWv + 'src="' + imgURL + '"><img src="' + bmgURL + '" class="ssizer" width=100%></div>';
+	
+	
+	document.getElementById("idem").style.transform = DemoVal;
+	document.getElementById("demo").style.transform = DemoVal2;
+	
+	OutVal = OutVal + 'transform: ' + DemoVal + '\n';
+	document.getElementById("DVal").value = OutVal;
+
+	
+ }
+ 
+ function moveit(mdr){
+	if (mdr == 'l') {
+		document.getElementById("tbox").align = 'left';
+		document.getElementById("mvr").innerHTML = '<a href="#" title="move right" onclick="moveit(\'r\');"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#c66900" d="M12.08,4.08L20,12L12.08,19.92L10.67,18.5L16.17,13H2V11H16.17L10.67,5.5L12.08,4.08M20,12V22H22V2H20V12Z" /></svg></a>';
+	} else {
+		document.getElementById("tbox").align = 'right';
+		document.getElementById("mvr").innerHTML = '<a href="#" title="move left" onclick="moveit(\'l\');"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#c66900" d="M11.92,19.92L4,12L11.92,4.08L13.33,5.5L7.83,11H22V13H7.83L13.34,18.5L11.92,19.92M4,12V2H2V22H4V12Z" /></svg></a>';
+	}
+ 
+ }
+ 
+</script>
+
+</head>
+<body>
+
+<table width=100%>
+<tr><td class="demo2" id="demo2"><img src="floorplan.jpg" width=100%>
+<div class="demo" id="demo"><img src="front.png" id="idem"></div>
+</td></tr>
+</table>
+
+
+
+
+
+
+
+<table class="frontdiv" width=100% height=100%>
+<tr><td id="tbox" valign="bottom">
+<form>
+<p>
+<table class="toolbox">
+<tr><td style="text-align: center;width: 60px;">
+	<svg style="width:24px;height:24px" viewBox="0 0 24 24">
+		<path fill="red" d="M13,21H21V13H19V17.59L6.41,5H11V3H3V11H5V6.41L17.59,19H13V21Z" />
+	</svg>
+</td><td><input type="number" id="sW" min=1 max=200 value="10" oninput="DoSkew()"> %</td>
+<td id="mvr" style="text-align: right;"><a href="#" title="move right" onclick="moveit('r');">
+	<svg style="width:24px;height:24px" viewBox="0 0 24 24">
+		<path fill="#c66900" d="M12.08,4.08L20,12L12.08,19.92L10.67,18.5L16.17,13H2V11H16.17L10.67,5.5L12.08,4.08M20,12V22H22V2H20V12Z" />
+	</svg>
+</a></td>
+</tr>
+<tr><td style="text-align: center;width: 60px;">
+	<svg style="width:36px;height:36px" viewBox="0 0 24 24">
+		<path fill="red" d="M9,3L5,7H8V14H10V7H13M16,17V10H14V17H11L15,21L19,17H16Z" />
+	</svg>
+</td><td><input type="number" id="MT" min=-100 max=100 value="20" oninput="DoSkew()"> %</td></tr>
+<tr><td style="text-align: center;width: 60px;">
+	<svg style="width:36px;height:36px" viewBox="0 0 24 24">
+		<path fill="red" d="M21,9L17,5V8H10V10H17V13M7,11L3,15L7,19V16H14V14H7V11Z" />
+	</svg>
+</td><td><input type="number" id="ML" min=-100 max=100 value="45" oninput="DoSkew()"> %</td></tr>
+<tr><td style="text-align: center;width: 60px;">
+	<svg style="width:36px;height:36px" viewBox="0 0 24 24">
+		<path fill="red" d="M7.34,6.41L0.86,12.9L7.35,19.38L13.84,12.9L7.34,6.41M3.69,12.9L7.35,9.24L11,12.9L7.34,16.56L3.69,12.9M19.36,6.64C17.61,4.88 15.3,4 13,4V0.76L8.76,5L13,9.24V6C14.79,6 16.58,6.68 17.95,8.05C20.68,10.78 20.68,15.22 17.95,17.95C16.58,19.32 14.79,20 13,20C12.03,20 11.06,19.79 10.16,19.39L8.67,20.88C10,21.62 11.5,22 13,22C15.3,22 17.61,21.12 19.36,19.36C22.88,15.85 22.88,10.15 19.36,6.64Z" />
+	</svg>
+</td><td><input type="number" id="rT" min=-359 max=359 value="0" oninput="DoSkew()"></td></tr>
+<tr><td style="text-align: center;width: 60px;">
+	<svg style="width:36px;height:36px" viewBox="0 0 24 24">
+		<path fill="red" d="M12 14L8 10L4 14H7.1C7.56 18.56 9.58 22 12 22S16.44 18.56 16.9 14H14.91C14.57 17.45 13.4 20 12 20S9.43 17.45 9.09 14H12M12 4C13.4 4 14.57 6.55 14.91 10H16.9C16.44 5.44 14.42 2 12 2C9.84 2 8 4.74 7.3 8.58L8 7.88L9.21 9.08C9.64 6.11 10.73 4 12 4M22 13V11H11L13 13H22M2 13H3L5 11H2V13Z" />
+	</svg>
+</td><td><input type="number" id="rX" min=-359 max=359 value="0" oninput="DoSkew()"></td></tr>
+<tr><td style="text-align: center;width: 60px;">
+	<svg style="width:36px;height:36px" viewBox="0 0 24 24">
+		<path fill="red" d="M14,12L10,16L14,20V16.9C18.56,16.44 22,14.42 22,12C22,9.58 18.56,7.56 14,7.1V9.09C17.45,9.43 20,10.6 20,12C20,13.4 17.45,14.57 14,14.91V12M4,12C4,10.6 6.55,9.43 10,9.09V7.1C5.44,7.56 2,9.58 2,12C2,14.16 4.74,16 8.58,16.7L7.88,16L9.08,14.79C6.11,14.36 4,13.27 4,12M13,2H11V13L13,11V2M13,22V21L11,19V22H13Z" />
+	</svg>
+</td><td><input type="number" id="rY" min=-359 max=359 value="0" oninput="DoSkew()"></td></tr>
+<tr><td style="text-align: center;width: 60px;">
+	<svg style="width:36px;height:36px" viewBox="0 0 24 24">
+		<path fill="red" d="M17.5,11L15.41,20H10.5L12.59,11H17.5M20,9H11L8,22H17L20,9M4,6L8,2V5H16V7H8V10L4,6Z" />
+	</svg>
+</td><td><input type="number" id="sX" min=-100 max=100 value="0" oninput="DoSkew()"></td></tr>
+<tr><td style="text-align: center;width: 60px;">
+	<svg style="width:36px;height:36px" viewBox="0 0 24 24" transform="rotate(90)">
+		<path fill="red" d="M12.5,11L10.41,20H5.5L7.59,11H12.5M15,9H6L3,22H12L15,9M21,6L17,2V5H9V7H17V10L21,6Z"/>
+	</svg>
+</td><td><input type="number" id="sY" min=-100 max=100 value="0" oninput="DoSkew()"></td></tr>
+<tr><td colspan=3><textarea id="DVal" cols=60 rows=5></textarea></td></tr>
+</table>
+</td></tr></table>
+</form>
+
+
+</body>
+<script>
+	DoSkew();
+</script>
+</html>
+

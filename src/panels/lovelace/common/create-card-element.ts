@@ -40,6 +40,8 @@ import "../cards/hui-ais-auto-entities-card";
 import "../cards/hui-ais-monster-card";
 import "../cards/hui-ais-fold-entity-row-card";
 import "../cards/hui-ais-zigbee2mqtt-card";
+import "../cards/hui-ais-now-playing-poster-card";
+import "../cards/hui-ais-color-lite-card";
 import { LovelaceCard } from "../types";
 import { LovelaceCardConfig } from "../../../data/lovelace";
 
@@ -78,6 +80,8 @@ const CARD_TYPES = new Set([
   "ais-monster",
   "ais-fold-entity-row",
   "ais-zigbee2mqtt",
+  "ais-now-playing-poster",
+  "ais-color-lite",
 ]);
 const CUSTOM_TYPE_PREFIX = "custom:";
 const TIMEOUT = 2000;

@@ -32,9 +32,9 @@ export const loadLovelaceResources = (
         break;
 
       case "html":
-        import(/* webpackChunkName: "import-href-polyfill" */ "../../../resources/html-import/import-href").then(
-          ({ importHref }) => importHref(normalizedUrl)
-        );
+        import(
+          /* webpackChunkName: "import-href-polyfill" */ "../../../resources/html-import/import-href"
+        ).then(({ importHref }) => importHref(normalizedUrl));
         break;
 
       default:
@@ -59,6 +59,7 @@ export const loadLovelaceResources = (
   const aisModules = [
     "/static/ais_dom/cards/compact-custom-header.js",
     "/static/ais_dom/cards/markdown-mod.js",
+    "/static/ais_dom/cards/card-mod.js",
   ];
   aisModules.forEach((resource) => {
     loadModule(new URL(resource, hassUrl).toString());
