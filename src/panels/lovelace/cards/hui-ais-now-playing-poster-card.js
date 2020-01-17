@@ -27,14 +27,14 @@ class NowPlayingPoster extends HTMLElement {
 					<img src="${offposter}" width=100% align="center" style="">
 					`;
           } else {
-            this.content.innerHTML = `		
-					<!-- now playing card ${entityId}  no image-->			
+            this.content.innerHTML = `
+					<!-- now playing card ${entityId}  no image-->
 					`;
           }
         } else {
-          this.content.innerHTML = `		
+          this.content.innerHTML = `
 			<!-- now playing card ${entityId}  -->
-			<img src="${movposter}" width=100% height=100%">	  
+			<img src="${movposter}" width=100% height=100%" style="">
 			`;
         }
       } else if (offposter) {
@@ -43,13 +43,13 @@ class NowPlayingPoster extends HTMLElement {
 				<img src="${offposter}" width=100% align="center" style="">
 				`;
       } else {
-        this.content.innerHTML = `		
-				<!-- now playing card ${entityId}  no image-->			
+        this.content.innerHTML = `
+				<!-- now playing card ${entityId}  no image-->
 				`;
       }
     } else {
-      this.content.innerHTML = `		
-	<!-- now playing card ${entityId} not playing --> 
+      this.content.innerHTML = `
+	<!-- now playing card ${entityId} not playing -->
     `;
     }
   }

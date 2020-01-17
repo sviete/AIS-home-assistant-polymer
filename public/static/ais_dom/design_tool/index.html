@@ -14,7 +14,8 @@
 	position: fixed;	
 	top: 0;
 	right: 0;	
-	width: 100%;	
+	width: 100%;
+	margin-top: 112px;	
 }
 
 .demo {
@@ -69,7 +70,8 @@
 	opacity: 0;
 }
 body {
-	background: black;	
+	background: black;
+	margin: 0px;	
 }
 
 input{
@@ -96,6 +98,8 @@ function DoSkew(){
 	var bmgURL = location.search.split('img=')[1];
 	
 	var OutVal = "";
+	OutVal = OutVal + "style: |\n"
+	OutVal = OutVal + "  ha-card {\n"
 	
 	if (rT != 0){ rTv = 'rotate(' + rT + 'deg) ';} else { rTv = '';}
 	if (rX != 0){ rXv = 'rotateX(' + rX + 'deg) ';} else { rXv = '';}
@@ -105,17 +109,17 @@ function DoSkew(){
 	
 	if (sW != 0){ 
 		sWv = 'width="' + sW + '%" ';
-		OutVal = OutVal + 'width: ' + sW + '%\n';
+		OutVal = OutVal + '    width: ' + sW + '%\n';
 	} else { sWv = '';}
 	
 	if (MT != 0){
 		MTv = 'translateY(' + MT + '%) ';
-		OutVal = OutVal + 'top: ' + MT + '%\n';
+		OutVal = OutVal + '    top: ' + MT + '%\n';
 	} else { MTv = '';}
 	
 	if (ML != 0){ 
 		MLv = 'translateX(' + ML + '%) ';
-		OutVal = OutVal + 'left: ' + ML + '%\n';
+		OutVal = OutVal + '    left: ' + ML + '%\n';
 	} else { MLv = '';}
 
 	
@@ -129,12 +133,10 @@ function DoSkew(){
 	document.getElementById("idem").style.transform = DemoVal;
 	document.getElementById("demo").style.transform = DemoVal2;
 	
-	OutVal = OutVal + 'transform: ' + DemoVal + '\n';
-	document.getElementById("DVal").value = OutVal;
-
-	
+	OutVal = OutVal + '    transform: ' + DemoVal + '\n';
+	OutVal = OutVal + "  }\n"
+	document.getElementById("DVal").value = OutVal;	
  }
- 
  function moveit(mdr){
 	if (mdr == 'l') {
 		document.getElementById("tbox").align = 'left';
@@ -145,23 +147,16 @@ function DoSkew(){
 	}
  
  }
- 
 </script>
 
 </head>
 <body>
-
+<div style="height: 112px; background-color: #FF9800;" ><span style="color: #fff; font-size: 2em; padding: 20px;display: block;">AIS style generator</span></div>
 <table width=100%>
-<tr><td class="demo2" id="demo2"><img src="floorplan.jpg" width=100%>
+<tr><td class="demo2" id="demo2"><img src="front.png" width=100%>
 <div class="demo" id="demo"><img src="front.png" id="idem"></div>
 </td></tr>
 </table>
-
-
-
-
-
-
 
 <table class="frontdiv" width=100% height=100%>
 <tr><td id="tbox" valign="bottom">
@@ -214,7 +209,7 @@ function DoSkew(){
 		<path fill="red" d="M12.5,11L10.41,20H5.5L7.59,11H12.5M15,9H6L3,22H12L15,9M21,6L17,2V5H9V7H17V10L21,6Z"/>
 	</svg>
 </td><td><input type="number" id="sY" min=-100 max=100 value="0" oninput="DoSkew()"></td></tr>
-<tr><td colspan=3><textarea id="DVal" cols=60 rows=5></textarea></td></tr>
+<tr><td colspan=3><textarea id="DVal" cols=50 rows=8></textarea></td></tr>
 </table>
 </td></tr></table>
 </form>
