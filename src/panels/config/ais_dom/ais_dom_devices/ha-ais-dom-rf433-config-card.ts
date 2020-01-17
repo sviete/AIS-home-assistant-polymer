@@ -182,7 +182,7 @@ export class HaDeviceEntitiesCard extends LitElement {
                                   .data-b0=${msg.B0}
                                   .data-topic=${msg.topic}
                                   .data-idx=${idx}
-                                  .data-type="switch"
+                                  .data-ttt=${"switch"}
                                   type="submit"
                                 >
                                   <iron-icon icon="mdi:flash"></iron-icon>
@@ -193,7 +193,7 @@ export class HaDeviceEntitiesCard extends LitElement {
                                   .data-b0=${msg.B0}
                                   .data-topic=${msg.topic}
                                   .data-idx=${idx}
-                                  .data-type="sensor"
+                                  .data-ttt=${"sensor"}
                                   type="submit"
                                 >
                                   <iron-icon
@@ -275,14 +275,17 @@ export class HaDeviceEntitiesCard extends LitElement {
       const b0 = ev.currentTarget["data-b0"];
       const gateTopic = ev.currentTarget["data-topic"];
       const idx = ev.currentTarget["data-idx"];
-      const entityType = ev.currentTarget["data-type"];
+      const entityTtt = ev.currentTarget["data-ttt"];
       const entityName = this.shadowRoot!.getElementById("name_" + idx);
+      console.log("xxx");
+      console.log("entityTyp " + entityTtt);
+      console.log("ev.currentTarget:" + ev.currentTarget);
       this.hass.callService("ais_dom_device", "add_ais_dom_entity", {
         name: entityName!.value,
         topic: gateTopic,
         deviceId: this.deviceId,
         code: b0,
-        type: entityType,
+        type: entityTtt,
       });
       this.shadowRoot!.getElementById("event_" + idx)!.style.display = "none";
     }
