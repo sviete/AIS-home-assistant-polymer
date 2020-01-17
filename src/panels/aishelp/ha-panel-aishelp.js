@@ -75,7 +75,7 @@ class HaPanelAishelp extends PolymerElement {
               To urządzenie posiada swój unikalny identyfikator, został on losowo wygenerowany przy pierwszym uruchomieniu i pozostanie stały przez cały okres użytkowania urządzenia.
               Identyfikator tego urządzenia to <a href="#"> [[aisSecureAndroidId]] </a>
               <div style="text-align: center; margin-top: 10px;">
-                <img src="local/dom_access_code.png"> 
+                <img src="local/dom_access_code.png">
               </div>
             </div>
           </ha-card>
@@ -110,11 +110,11 @@ class HaPanelAishelp extends PolymerElement {
                 <path d="M20,19V7H4V19H20M20,3A2,2 0 0,1 22,5V19A2,2 0 0,1 20,21H4A2,2 0 0,1 2,19V5C2,3.89 2.9,3 4,3H20M13,17V15H18V17H13M9.58,13L5.57,9H8.4L11.7,12.3C12.09,12.69 12.09,13.33 11.7,13.72L8.42,17H5.59L9.58,13Z" />
             </svg>
             <div class="card-content">
-              pobierz
+              Pobierz
               <a href="/local/id_rsa_ais?v=1" target="_blank"
                 >autoryzowany klucz ssh</a
-              > połącz się ze swojej konsoli, poleceniem: <br>ssh [[aisLocalIP]] -i <ścieżka do pobranego klucza ssh>
-              <br><br>Możesz też łączyć się za pmocą hasła:<br><a>ssh [[aisLocalIP]]</a><br>szczegóły w <a href="https://sviete.github.io/AIS-docs/docs/en/ais_bramka_remote_ssh.html#dost%C4%99p-do-konsoli-z-klienta-ssh)" target="_blank">dokumentacji</a>
+              > i połącz się ze swojej konsoli poleceniem: <br>ssh [[aisLocalIP]] -i <ścieżka do pobranego klucza ssh>
+              <br><br>Możesz też łączyć się za pomocą hasła:<br><a>ssh [[aisLocalIP]]</a><br>szczegóły w <a href="https://sviete.github.io/AIS-docs/docs/en/ais_bramka_remote_ssh.html#dost%C4%99p-do-konsoli-z-klienta-ssh)" target="_blank">dokumentacji</a>
             </div>
           </ha-card>
           <ha-card header="Tunel">
@@ -133,7 +133,7 @@ class HaPanelAishelp extends PolymerElement {
               <path d="M15.5,12C18,12 20,14 20,16.5C20,17.38 19.75,18.21 19.31,18.9L22.39,22L21,23.39L17.88,20.32C17.19,20.75 16.37,21 15.5,21C13,21 11,19 11,16.5C11,14 13,12 15.5,12M15.5,14A2.5,2.5 0 0,0 13,16.5A2.5,2.5 0 0,0 15.5,19A2.5,2.5 0 0,0 18,16.5A2.5,2.5 0 0,0 15.5,14M22,13A3,3 0 0,0 19,10H17.5V9.5A5.5,5.5 0 0,0 12,4C9.5,4 7.37,5.69 6.71,8H6A4,4 0 0,0 2,12A4,4 0 0,0 6,16H9V16.5C9,17 9.06,17.5 9.17,18H6A6,6 0 0,1 0,12C0,8.9 2.34,6.36 5.35,6.04C6.6,3.64 9.11,2 12,2C15.64,2 18.67,4.59 19.36,8.04C21.95,8.22 24,10.36 24,13C24,14.65 23.21,16.1 22,17V16.5C22,15.77 21.88,15.06 21.65,14.4C21.87,14 22,13.5 22,13Z" />
             </svg>
             <div class="card-content">
-              Portal Integratora to miejsce w którym można dodawać własne stacje radiowe, podcasty oraz
+              Portal Integratora to miejsce, w którym można dodawać własne stacje radiowe, podcasty oraz
               konfigurować inne składowe systemu
               <a href="https://www.ai-speaker.com/ords/f?p=100" target="_blank"
                 >Przejdz do Portalu Integratora</a

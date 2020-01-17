@@ -135,14 +135,14 @@ class HaConfigAisDomControl extends PolymerElement {
                 W tym miejscu możesz, sprawdzić poprawność ustawień bramki,
                 wykonać jej kopię i przesłać ją do portalu integratora. <b>Uwaga,
                 ponieważ konfiguracja może zawierać hasła i tokeny dostępu do
-                usług, zalecamy zaszyfrować ją hasłem</b>, Gdy kopia jest
+                usług, zalecamy zaszyfrować ją hasłem</b>. Gdy kopia jest
                 zabezpieczona hasłem, to można ją otworzyć/przywrócić tylko po
                 podaniu hasła.
                 <h2>
                   Nowa kopia ustawień
                   <iron-icon icon="mdi:cloud-upload-outline"></iron-icon>
                 </h2>
-                Przed wykonaniem nowej kopii usatawień sprawdz poprawność
+                Przed wykonaniem nowej kopii ustawień sprawdź poprawność
                 konfiguracji
                 <div style="border-bottom: 1px solid white;">
                   <template is="dom-if" if="[[!validateLog]]">
@@ -172,7 +172,7 @@ class HaConfigAisDomControl extends PolymerElement {
                             is="dom-if"
                             if="[[_isEqualTo(backupStep, '0')]]"
                           >
-                            Sprawdz konfigurację
+                            Sprawdź konfigurację
                           </template>
                           <template
                             is="dom-if"
@@ -190,7 +190,7 @@ class HaConfigAisDomControl extends PolymerElement {
                   <template is="dom-if" if="[[validateLog]]">
                     <div class="config-invalid">
                       <mwc-button raised="" on-click="doBackup">
-                        Popraw i sprawdz ponownie
+                        Popraw i sprawdź ponownie
                       </mwc-button>
                     </div>
                     <p></p>
@@ -486,7 +486,7 @@ class HaConfigAisDomControl extends PolymerElement {
       }
       return "Aktualizacja -> " + this.getVersionName(attr.update_status);
     }
-    return "Sprawdz dostępność aktualizacji";
+    return "Sprawdź dostępność aktualizacji";
   }
 
   _computeAutoUpdateMode(hass) {
@@ -524,13 +524,13 @@ class HaConfigAisDomControl extends PolymerElement {
         if (valid === "0") {
           this.hass.callService("ais_cloud", "set_backup_step", {
             step: valid,
-            backup_error: "Konfiguracja niepoprawana",
+            backup_error: "Konfiguracja niepoprawna",
           });
           this.validateLog = result.errors;
         } else {
           this.hass.callService("ais_cloud", "set_backup_step", {
             step: valid,
-            backup_info: "Konfiguracja poprawna można wykonać kopie",
+            backup_info: "Konfiguracja poprawna można wykonać kopię",
           });
           this.validateLog = "";
         }
