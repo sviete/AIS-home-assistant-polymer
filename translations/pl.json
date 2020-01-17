@@ -1878,6 +1878,8 @@
                     "raw_editor": {
                         "confirm_unsaved_changes": "Masz niezapisane zmiany. Na pewno chcesz wyjść?",
                         "confirm_unsaved_comments": "Twoja konfiguracja zawiera komentarze, które nie zostaną zapisane. Czy chcesz kontynuować?",
+                        "confirm_remove_config_title": "Czy na pewno chcesz usunąć konfigurację Lovelace? Będziemy automatycznie generować Twoje widoki Lovelace z twoich obszarów i urządzeń.",
+                        "confirm_remove_config_text": "Jeśli usuniesz konfigurację Lovelace, automatycznie wygenerujemy Twoje widoki Lovelace z twoich obszarów i urządzeń.",
                         "error_invalid_config": "Twoja konfiguracja jest nieprawidłowa: {error}",
                         "error_parse_yaml": "Nie można przeanalizować YAML: {error}",
                         "error_save_yaml": "Nie można zapisać YAML: {error}",
