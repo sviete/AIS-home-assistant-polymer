@@ -23,13 +23,22 @@
     </footer>
 </body>
   <script type="text/javascript">
-        var TheUrl = window.JavascriptHandler.showTheUrl();
+        var TheUrl = "";
+        try {
+            TheUrl = window.JavascriptHandler.showTheUrl();
+        }
+        catch(error) {
+            console.log(error);
+        }
+        
         window.onload = function(){
             document.getElementById("the_url").innerHTML = TheUrl;
         }
         function goToAis() {
             console.log("go to AIS ...");
-            document.location.href = TheUrl;
+            if (TheUrl !== "") {
+                document.location.href = TheUrl;
+            }
         }
         setInterval(goToAis, 8000);
     </script>

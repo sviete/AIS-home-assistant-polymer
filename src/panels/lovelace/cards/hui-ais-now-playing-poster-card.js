@@ -22,35 +22,20 @@ class NowPlayingPoster extends HTMLElement {
       if (stateStr === "playing") {
         if (!movposter) {
           if (offposter) {
-            this.content.innerHTML = `
-					<!-- now playing card ${entityId} -->
-					<img src="${offposter}" width=100% align="center" style="">
-					`;
+            this.content.innerHTML = `<img src="${offposter}" width=100% align="center" style="">`;
           } else {
-            this.content.innerHTML = `
-					<!-- now playing card ${entityId}  no image-->
-					`;
+            this.content.innerHTML = `<img src="/static/icons/tile-win-310x150.png" width=100% align="center" style="">`;
           }
         } else {
-          this.content.innerHTML = `
-			<!-- now playing card ${entityId}  -->
-			<img src="${movposter}" width=100% height=100%" style="">
-			`;
+          this.content.innerHTML = `<img src="${movposter}" width=100% height=100%" style="">`;
         }
       } else if (offposter) {
-        this.content.innerHTML = `
-				<!-- now playing card ${entityId} -->
-				<img src="${offposter}" width=100% align="center" style="">
-				`;
+        this.content.innerHTML = `<img src="${offposter}" width=100% align="center" style="">`;
       } else {
-        this.content.innerHTML = `
-				<!-- now playing card ${entityId}  no image-->
-				`;
+        this.content.innerHTML = `<img src="/static/icons/tile-win-310x150.png" width=100% align="center" style="">`;
       }
     } else {
-      this.content.innerHTML = `
-	<!-- now playing card ${entityId} not playing -->
-    `;
+      this.content.innerHTML = `<img src="/static/icons/tile-win-310x150.png" width=100% align="center" style="">`;
     }
   }
 

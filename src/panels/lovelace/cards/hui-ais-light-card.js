@@ -4,43 +4,52 @@ class ColorLite extends HTMLElement {
       const card = document.createElement("ha-card");
       this.content = document.createElement("div");
       card.appendChild(this.content);
-      card.style.background = "none";
+      card.style =
+        "background:none; width: 110px; border-radius: 52.5px; cursor: pointer;";
       this.appendChild(card);
+      this.addEventListener("click", function() {
+        this._onClick(hass);
+      });
     }
 
     const entityId = this.config.entity;
     const state = hass.states[entityId];
-
+    const imageOn =
+      this.config.image_on || "/static/ais_dom/design_tool/light_on.png";
+    const imageOff =
+      this.config.image_off || "/static/ais_dom/design_tool/light_off.png";
     //  if the light is on
     if (state) {
       if (state.state === "on") {
-        const imageURLId = this.config.image;
-        var ImURL = imageURLId;
-        const imageURLCId = this.config.color_image;
+        var ImURL = imageOn;
         var rgbval = state.attributes.rgb_color;
         var hsval = state.attributes.hs_color;
         var hsar = "";
         if (hsval) {
           if (rgbval !== "255,255,255") {
             hsar = " hue-rotate(" + hsval[0] + "deg)";
-            if (imageURLCId) {
-              ImURL = imageURLCId;
-            }
           }
         }
         var bbritef = state.attributes.brightness;
         var bbrite = bbritef / 205;
 
-        this.content.innerHTML = `	
-<!-- Custom Lite Card for x${rgbval}x -->	
-<img src="${ImURL}" style="filter: opacity(${bbrite})${hsar}!important;" width="100%" height="100%">
-`;
+        this.content.innerHTML = `<img src="${ImURL}" style="filter: opacity(${bbrite})${hsar}!important;>`;
       } else {
-        this.content.innerHTML = `
-	<!-- Custom Lite Card for ${entityId} is turned off -->
-	`;
+        this.content.innerHTML = `<img src="${imageOff}" style="">`;
       }
     }
+  }
+
+  _onClick(hass) {
+    console.log("_onClick ");
+    const onTap = this.config.tap_action || "togle";
+    hass.callService("light", onTap, {
+      entity_id: this.config.entity,
+    });
+  }
+
+  ready() {
+    super.ready();
   }
 
   setConfig(config) {
@@ -50,11 +59,9 @@ class ColorLite extends HTMLElement {
     this.config = config;
   }
 
-  // The height of your card. Home Assistant uses this to automatically
-  // distribute all cards over the available columns.
   getCardSize() {
     return 3;
   }
 }
 
-customElements.define("hui-ais-color-lite-card", ColorLite);
+customElements.define("hui-ais-light-card", ColorLite);

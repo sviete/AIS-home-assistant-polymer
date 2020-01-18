@@ -77,7 +77,7 @@ class HaConfigAisDomControl extends PolymerElement {
                     alt="Jola Online"
                     title="Jola Online"
                     on-click="switchTtsPerson"
-                    src="/static/ais_dom/Ania.png"
+                    src="/static/ais_dom/Ania.jpg"
                   />
                 </div>
                 <div class="person">
@@ -87,7 +87,7 @@ class HaConfigAisDomControl extends PolymerElement {
                     alt="Jola Lokalnie"
                     title="Jola Lokalnie"
                     on-click="switchTtsPerson"
-                    src="/static/ais_dom/Asia.png"
+                    src="/static/ais_dom/Asia.jpg"
                   />
                 </div>
                 <div class="person">
@@ -97,7 +97,7 @@ class HaConfigAisDomControl extends PolymerElement {
                     alt="Celina"
                     title="Celina"
                     on-click="switchTtsPerson"
-                    src="/static/ais_dom/Celka.png"
+                    src="/static/ais_dom/Celka.jpg"
                   />
                 </div>
                 <div class="person">
@@ -107,7 +107,7 @@ class HaConfigAisDomControl extends PolymerElement {
                     alt="Anżela"
                     title="Anżela"
                     on-click="switchTtsPerson"
-                    src="/static/ais_dom/Anzela.png"
+                    src="/static/ais_dom/Anzela.jpg"
                   />
                 </div>
                 <div class="person">
@@ -117,7 +117,7 @@ class HaConfigAisDomControl extends PolymerElement {
                     alt="Asia"
                     title="Asia"
                     on-click="switchTtsPerson"
-                    src="/static/ais_dom/Kasia.png"
+                    src="/static/ais_dom/Kasia.jpg"
                   />
                 </div>
                 <div class="person">
@@ -127,7 +127,7 @@ class HaConfigAisDomControl extends PolymerElement {
                     alt="Sebastian"
                     title="Sebastian"
                     on-click="switchTtsPerson"
-                    src="/static/ais_dom/Sebastian.png"
+                    src="/static/ais_dom/Sebastian.jpg"
                   />
                 </div>
                 <div class="person">
@@ -137,7 +137,7 @@ class HaConfigAisDomControl extends PolymerElement {
                     alt="Bartek"
                     title="Bartek"
                     on-click="switchTtsPerson"
-                    src="/static/ais_dom/Bartek.png"
+                    src="/static/ais_dom/Bartek.jpg"
                   />
                 </div>
                 <div class="person">
@@ -147,7 +147,7 @@ class HaConfigAisDomControl extends PolymerElement {
                     alt="Andrzej"
                     title="Andrzej"
                     on-click="switchTtsPerson"
-                    src="/static/ais_dom/Andrzej.png"
+                    src="/static/ais_dom/Andrzej.jpg"
                   />
                 </div>
               </div>
