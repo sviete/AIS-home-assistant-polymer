@@ -2636,6 +2636,84 @@
   //# sourceMappingURL=class-map.js.map
 
   /**
+   * @license
+   * Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
+   * This code may only be used under the BSD style license found at
+   * http://polymer.github.io/LICENSE.txt
+   * The complete set of authors may be found at
+   * http://polymer.github.io/AUTHORS.txt
+   * The complete set of contributors may be found at
+   * http://polymer.github.io/CONTRIBUTORS.txt
+   * Code distributed by Google as part of the polymer project is also
+   * subject to an additional IP rights grant found at
+   * http://polymer.github.io/PATENTS.txt
+   */
+  /**
+   * Stores the StyleInfo object applied to a given AttributePart.
+   * Used to unset existing values when a new StyleInfo object is applied.
+   */
+  const styleMapCache = new WeakMap();
+  /**
+   * A directive that applies CSS properties to an element.
+   *
+   * `styleMap` can only be used in the `style` attribute and must be the only
+   * expression in the attribute. It takes the property names in the `styleInfo`
+   * object and adds the property values as CSS propertes. Property names with
+   * dashes (`-`) are assumed to be valid CSS property names and set on the
+   * element's style object using `setProperty()`. Names without dashes are
+   * assumed to be camelCased JavaScript property names and set on the element's
+   * style object using property assignment, allowing the style object to
+   * translate JavaScript-style names to CSS property names.
+   *
+   * For example `styleMap({backgroundColor: 'red', 'border-top': '5px', '--size':
+   * '0'})` sets the `background-color`, `border-top` and `--size` properties.
+   *
+   * @param styleInfo {StyleInfo}
+   */
+  const styleMap = directive((styleInfo) => (part) => {
+    if (
+      !(part instanceof AttributePart) ||
+      part instanceof PropertyPart ||
+      part.committer.name !== "style" ||
+      part.committer.parts.length > 1
+    ) {
+      throw new Error(
+        "The `styleMap` directive must be used in the style attribute " +
+          "and must be the only part in the attribute."
+      );
+    }
+    const { committer } = part;
+    const { style } = committer.element;
+    // Handle static styles the first time we see a Part
+    if (!styleMapCache.has(part)) {
+      style.cssText = committer.strings.join(" ");
+    }
+    // Remove old properties that no longer exist in styleInfo
+    const oldInfo = styleMapCache.get(part);
+    for (const name in oldInfo) {
+      if (!(name in styleInfo)) {
+        if (name.indexOf("-") === -1) {
+          // tslint:disable-next-line:no-any
+          style[name] = null;
+        } else {
+          style.removeProperty(name);
+        }
+      }
+    }
+    // Add or update properties
+    for (const name in styleInfo) {
+      if (name.indexOf("-") === -1) {
+        // tslint:disable-next-line:no-any
+        style[name] = styleInfo[name];
+      } else {
+        style.setProperty(name, styleInfo[name]);
+      }
+    }
+    styleMapCache.set(part, styleInfo);
+  });
+  //# sourceMappingURL=style-map.js.map
+
+  /**
    * A collection of shims that provide minimal functionality of the ES6 collections.
    *
    * These implementations are not meant to be used outside of the ResizeObserver
@@ -3753,7 +3831,7 @@
     }
 
     get master() {
-      return this.group[0] || this.config.entity;
+      return this.config.entity;
     }
 
     get isMaster() {
@@ -4012,6 +4090,8 @@
     :host {
       overflow: visible !important;
       display: block;
+      --mmp-scale: var(--mini-media-player-scale, 1);
+      --mmp-unit: calc(var(--mmp-scale) * 40px);
       --mmp-accent-color: var(
         --mini-media-player-accent-color,
         var(--accent-color, #f39c12)
@@ -4050,10 +4130,15 @@
         --mini-media-player-icon-color,
         var(
           --mini-media-player-base-color,
-          var(--paper-item-icon-colo, #44739e)
+          var(--paper-item-icon-color, #44739e)
         )
       );
+      --mmp-icon-active-color: var(
+        --paper-item-icon-active-color,
+        --mmp-active-color
+      );
       --mmp-info-opacity: 1;
+      --mmp-bg-opacity: var(--mini-media-player-background-opacity, 1);
       --mmp-artwork-opacity: var(--mini-media-player-artwork-opacity, 1);
       --mmp-progress-height: var(--mini-media-player-progress-height, 6px);
       --mdc-theme-primary: var(--mmp-text-color);
@@ -4074,6 +4159,7 @@
       --mmp-text-color-inverted: #000;
       --mmp-active-color: rgba(255, 255, 255, 0.5);
       --mmp-icon-color: var(--mmp-text-color);
+      --mmp-icon-active-color: var(--mmp-text-color);
       --mmp-info-opacity: 0.75;
       --paper-slider-container-color: var(
         --mini-media-player-overlay-color,
@@ -4089,10 +4175,11 @@
       cursor: default;
       display: flex;
       background: transparent;
-      overflow: hidden;
+      overflow: visible;
       padding: 0;
       position: relative;
       color: inherit;
+      font-size: calc(var(--mmp-unit) * 0.35);
     }
     ha-card.--group {
       box-shadow: none;
@@ -4102,11 +4189,9 @@
       cursor: pointer;
     }
     .mmp__bg,
-    .mmp__player,
+    .mmp-player,
     .mmp__container {
       border-radius: var(--ha-card-border-radius, 0);
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
     }
     .mmp__container {
       overflow: hidden;
@@ -4152,6 +4237,7 @@
       overflow: hidden;
       -webkit-transform: translateZ(0);
       transform: translateZ(0);
+      opacity: var(--mmp-bg-opacity);
     }
     ha-card[artwork*="cover"].--has-artwork .mmp__bg {
       opacity: var(--mmp-artwork-opacity);
@@ -4177,6 +4263,8 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
+      border-radius: var(--ha-card-border-radius, 0);
+      overflow: hidden;
     }
     .cover:before {
       background: var(--mmp-overlay-color);
@@ -4216,7 +4304,7 @@
       will-change: padding;
     }
     ha-card.--group .mmp-player {
-      padding: 10px 0;
+      padding: 2px 0;
     }
     .flex {
       display: flex;
@@ -4238,7 +4326,7 @@
     }
     ha-card.--rtl .entity__info {
       margin-left: auto;
-      margin-right: 8px;
+      margin-right: calc(var(--mmp-unit) / 5);
     }
     ha-card[content="movie"] .attr__media_season,
     ha-card[content="movie"] .attr__media_episode {
@@ -4247,6 +4335,9 @@
     .entity__icon {
       color: var(--mmp-icon-color);
     }
+    .entity__icon[color] {
+      color: var(--mmp-icon-active-color);
+    }
     .entity__artwork,
     .entity__icon {
       animation: fade-in 0.25s ease-out;
@@ -4254,11 +4345,11 @@
       background-repeat: no-repeat;
       background-size: cover;
       border-radius: 100%;
-      height: 40px;
-      width: 40px;
-      min-width: 40px;
-      line-height: 40px;
-      margin-right: 8px;
+      height: var(--mmp-unit);
+      width: var(--mmp-unit);
+      min-width: var(--mmp-unit);
+      line-height: var(--mmp-unit);
+      margin-right: calc(var(--mmp-unit) / 5);
       position: relative;
       text-align: center;
       will-change: border-color;
@@ -4284,7 +4375,7 @@
       white-space: nowrap;
     }
     .entity__info__name {
-      line-height: 20px;
+      line-height: calc(var(--mmp-unit) / 2);
       color: var(--mmp-text-color);
     }
     .entity__info__media {
@@ -4295,7 +4386,7 @@
       transition: color 0.5s;
     }
     .entity__info__media[short] {
-      max-height: 20px;
+      max-height: calc(var(--mmp-unit) / 2);
       overflow: hidden;
     }
     .attr__app_name {
@@ -4311,7 +4402,7 @@
       opacity: 0.5;
     }
     .entity__info__media[short-scroll] {
-      max-height: 20px;
+      max-height: calc(var(--mmp-unit) / 2);
       white-space: nowrap;
     }
     .entity__info__media[scroll] > span {
@@ -4364,12 +4455,12 @@
       display: none;
     }
     .mmp-player__adds {
-      margin-left: 48px;
+      margin-left: calc(var(--mmp-unit) * 1.2);
       position: relative;
     }
     ha-card.--rtl .mmp-player__adds {
       margin-left: auto;
-      margin-right: 48px;
+      margin-right: calc(var(--mmp-unit) * 1.2);
     }
     .mmp-player__adds > *:nth-child(2) {
       margin-top: 0px;
@@ -4384,7 +4475,6 @@
     }
     mmp-media-controls {
       flex-wrap: wrap;
-      justify-content: center;
     }
     ha-card.--flow mmp-powerstrip {
       justify-content: space-between;
@@ -4429,7 +4519,7 @@
       padding: 16px;
     }
     ha-card.--inactive.--group .mmp-player {
-      padding: 10px 0;
+      padding: 2px 0;
     }
     .mmp-player div:empty {
       display: none;
@@ -4456,6 +4546,68 @@
       }
     }
   `;
+
+  const sharedStyle = css`
+    .ellipsis {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .label {
+      margin: 0 8px;
+    }
+    ha-icon {
+      width: calc(var(--mmp-unit) * 0.6);
+      height: calc(var(--mmp-unit) * 0.6);
+    }
+    paper-icon-button {
+      width: var(--mmp-unit);
+      height: var(--mmp-unit);
+      color: var(--mmp-text-color, var(--primary-text-color));
+      transition: color 0.25s;
+    }
+    paper-icon-button[color] {
+      color: var(--mmp-accent-color, var(--accent-color)) !important;
+      opacity: 1 !important;
+    }
+    paper-icon-button[inactive] {
+      opacity: 0.5;
+    }
+  `;
+
+  var handleClick = (node, hass, config, actionConfig, entityId) => {
+    let e;
+    // eslint-disable-next-line default-case
+    switch (actionConfig.action) {
+      case "more-info": {
+        e = new Event("hass-more-info", { composed: true });
+        e.detail = {
+          entityId: actionConfig.entity || entityId,
+        };
+        node.dispatchEvent(e);
+        break;
+      }
+      case "navigate": {
+        if (!actionConfig.navigation_path) return;
+        window.history.pushState(null, "", actionConfig.navigation_path);
+        e = new Event("location-changed", { composed: true });
+        e.detail = { replace: false };
+        window.dispatchEvent(e);
+        break;
+      }
+      case "call-service": {
+        if (!actionConfig.service) return;
+        const [domain, service] = actionConfig.service.split(".", 2);
+        const serviceData = { ...actionConfig.service_data };
+        hass.callService(domain, service, serviceData);
+        break;
+      }
+      case "url": {
+        if (!actionConfig.url) return;
+        window.location.href = actionConfig.url;
+      }
+    }
+  };
 
   class MiniMediaPlayerGroupItem extends LitElement {
     static get properties() {
@@ -4542,7 +4694,7 @@
         }
         :host([raised]) {
           background: rgba(255, 255, 255, 0.25);
-          min-height: 36px;
+          min-height: calc(var(--mmp-unit) * 0.8);
           box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
             0px 2px 2px 0px rgba(0, 0, 0, 0.14),
             0px 1px 5px 0px rgba(0, 0, 0, 0.12);
@@ -4609,7 +4761,7 @@
       return this.visible
         ? html`
             <div class="mmp-group-list" ?visible=${this.visible}>
-              <span class="mmp-group-list__title">Group speakers</span>
+              <span class="mmp-group-list__title">GRUPA GŁOŚNIKÓW</span>
               ${this.entities.map(
                 (item) => html`
                   <mmp-group-item
@@ -4638,10 +4790,10 @@
                   <span
                     >${isMaster
                       ? html`
-                          Ungroup
+                          Rozgrupuj
                         `
                       : html`
-                          Leave
+                          Opuść
                         `}</span
                   >
                 </mmp-button>
@@ -4656,7 +4808,7 @@
                       true
                     )}
                 >
-                  <span>Group all</span>
+                  <span>Grupuj</span>
                 </mmp-button>
               </div>
             </div>
@@ -4695,28 +4847,6 @@
 
   customElements.define("mmp-group-list", MiniMediaPlayerGroupList);
 
-  const sharedStyle = css`
-    .ellipsis {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .label {
-      margin: 0 8px;
-    }
-    paper-icon-button {
-      color: var(--mmp-text-color);
-      transition: color 0.25s;
-    }
-    paper-icon-button[color] {
-      color: var(--mmp-accent-color) !important;
-      opacity: 1 !important;
-    }
-    paper-icon-button[inactive] {
-      opacity: 0.5;
-    }
-  `;
-
   class MiniMediaPlayerDropdown extends LitElement {
     static get properties() {
       return {
@@ -4730,12 +4860,16 @@
       return this.items.map((item) => item.id).indexOf(this.selected);
     }
 
-    onChange(item) {
-      this.dispatchEvent(
-        new CustomEvent("change", {
-          detail: item,
-        })
-      );
+    onChange(e) {
+      const id = e.target.selected;
+      if (id !== this.selectedId && this.items[id]) {
+        this.dispatchEvent(
+          new CustomEvent("change", {
+            detail: this.items[id],
+          })
+        );
+        e.target.selected = -1;
+      }
     }
 
     render() {
@@ -4747,6 +4881,7 @@
           .horizontalAlign=${"right"}
           .verticalAlign=${"top"}
           .verticalOffset=${44}
+          .dynamicAlign=${true}
           @click=${(e) => e.stopPropagation()}
         >
           ${this.icon
@@ -4774,13 +4909,14 @@
                   </div>
                 </mmp-button>
               `}
-          <paper-listbox slot="dropdown-content" selected=${this.selectedId}>
+          <paper-listbox
+            slot="dropdown-content"
+            .selected=${this.selectedId}
+            @iron-select=${this.onChange}
+          >
             ${this.items.map(
               (item) => html`
-                <paper-item
-                  value=${item.id || item.name}
-                  @click=${() => this.onChange(item)}
-                >
+                <paper-item value=${item.id || item.name}>
                   ${item.icon
                     ? html`
                         <iron-icon .icon=${item.icon}></iron-icon>
@@ -4830,11 +4966,11 @@
             font-size: 1em;
             justify-content: space-between;
             align-items: center;
-            height: 36px;
+            height: calc(var(--mmp-unit) - 4px);
             margin: 2px 0;
           }
           .mmp-dropdown__button.icon {
-            height: 40px;
+            height: var(--mmp-unit);
             margin: 0;
           }
           .mmp-dropdown__button > div {
@@ -4842,7 +4978,7 @@
             flex: 1;
             justify-content: space-between;
             align-items: center;
-            height: 36px;
+            height: calc(var(--mmp-unit) - 4px);
             max-width: 100%;
           }
           .mmp-dropdown__label {
@@ -4850,9 +4986,9 @@
             text-transform: none;
           }
           .mmp-dropdown__icon {
-            height: 24px;
-            width: 24px;
-            min-width: 24px;
+            height: calc(var(--mmp-unit) * 0.6);
+            width: calc(var(--mmp-unit) * 0.6);
+            min-width: calc(var(--mmp-unit) * 0.6);
           }
           paper-item > *:nth-child(2) {
             margin-left: 4px;
@@ -4913,7 +5049,7 @@
       this.shortcuts.list.push({
         name: "Wyszukaj dostępne głośniki",
         icon: "mdi:sync",
-        id: "ais_shell_command.scan_network_for_devices",
+        id: "ais_shell_command.scan_network_for_ais_players",
         type: "service",
       });
       return this.shortcuts.list;
@@ -4967,6 +5103,11 @@
                             <iron-icon .icon=${item.icon}></iron-icon>
                           `
                         : ""}
+                      ${item.image
+                        ? html`
+                            <img src=${item.image} />
+                          `
+                        : ""}
                       ${item.name
                         ? html`
                             <span class="ellipsis">${item.name}</span>
@@ -5017,6 +5158,7 @@
             justify-content: center;
             align-items: center;
             width: 100%;
+            padding: 0.2em 0;
           }
           .mmp-shortcuts__button > div[align="left"] {
             justify-content: flex-start;
@@ -5040,11 +5182,18 @@
             min-width: calc(16.66% - 8px);
           }
           .mmp-shortcuts__button > div > span {
-            line-height: 24px;
+            line-height: calc(var(--mmp-unit) * 0.6);
             text-transform: initial;
+          }
+          .mmp-shortcuts__button > div > iron-icon {
+            width: calc(var(--mmp-unit) * 0.6);
+            height: calc(var(--mmp-unit) * 0.6);
           }
           .mmp-shortcuts__button > div > *:nth-child(2) {
             margin-left: 4px;
+          }
+          .mmp-shortcuts__button > div > img {
+            height: 24px;
           }
         `,
       ];
@@ -5412,7 +5561,6 @@
     static get properties() {
       return {
         player: {},
-        selected: String,
         icon: Boolean,
       };
     }
@@ -5435,23 +5583,22 @@
           @change=${this.handleSource}
           .items=${this.sources}
           .label=${this.source}
-          .selected=${this.selected || this.source}
+          .selected=${this.source}
           .icon=${this.icon}
-        />
+        ></mmp-dropdown>
       `;
     }
 
     handleSource(ev) {
       const { id } = ev.detail;
       this.player.setSource(ev, id);
-      this.selected = id;
     }
 
     static get styles() {
       return css`
         :host {
           max-width: 120px;
-          min-width: 40px;
+          min-width: var(--mmp-unit);
         }
         :host([full]) {
           max-width: none;
@@ -5490,7 +5637,7 @@
           .label=${this.mode}
           .selected=${this.selected || this.mode}
           .icon=${this.icon}
-        />
+        ></mmp-dropdown>
       `;
     }
 
@@ -5504,7 +5651,7 @@
       return css`
         :host {
           max-width: 120px;
-          min-width: 40px;
+          min-width: var(--mmp-unit);
         }
         :host([full]) {
           max-width: none;
@@ -5710,6 +5857,7 @@
           :host {
             display: flex;
             width: 100%;
+            justify-content: space-between;
           }
           .flex {
             display: flex;
@@ -5722,20 +5870,19 @@
             width: 100%;
           }
           paper-icon-button {
-            min-width: 40px;
+            min-width: var(--mmp-unit);
           }
           .mmp-media-controls__volume {
             flex: 100;
-            max-height: 40px;
+            max-height: var(--mmp-unit);
           }
           .mmp-media-controls__volume.--buttons {
             justify-content: left;
           }
           .mmp-media-controls__media {
-            justify-content: flex-end;
-            max-width: calc(40px * 4);
             margin-right: 0;
             margin-left: auto;
+            justify-content: inherit;
           }
           .mmp-media-controls__media[flow] {
             max-width: none;
@@ -5905,24 +6052,25 @@
         css`
           :host {
             display: flex;
-            line-height: 40px;
-            max-height: 40px;
+            line-height: var(--mmp-unit);
+            max-height: var(--mmp-unit);
           }
           :host([flow]) mmp-media-controls {
             max-width: unset;
           }
           mmp-media-controls {
-            max-width: 200px;
+            max-width: calc(var(--mmp-unit) * 5);
             line-height: initial;
+            justify-content: flex-end;
           }
           .group-button {
-            height: 34px;
-            width: 34px;
-            min-width: 34px;
+            height: calc(var(--mmp-unit) * 0.85);
+            width: calc(var(--mmp-unit) * 0.85);
+            min-width: calc(var(--mmp-unit) * 0.85);
             margin: 3px;
           }
           paper-icon-button {
-            min-width: 40px;
+            min-width: var(--mmp-unit);
           }
         `,
       ];
@@ -5967,7 +6115,7 @@
     }
 
     static get styles() {
-      return style;
+      return [sharedStyle, style];
     }
 
     set hass(hass) {
@@ -5981,6 +6129,22 @@
         this.idle = this.player.idle;
         if (this.player.trackIdle) this.updateIdleStatus();
       }
+      // ais
+      const allEntities = Object.keys(hass.states);
+      this.ais_speaker_group_entities = [];
+      let i;
+      for (i = 0; i < allEntities.length; i += 1) {
+        if (allEntities[i].startsWith("media_player.")) {
+          const attr = hass.states[allEntities[i]].attributes;
+          this.ais_speaker_group_entities.push({
+            entity_id: hass.states[allEntities[i]].entity_id,
+            name: attr.friendly_name || "Głośnik",
+          });
+        }
+      }
+      this.config.speaker_group.show_group_count = true;
+      this.config.speaker_group.platform = "ais_exo_player";
+      this.config.speaker_group.entities = this.ais_speaker_group_entities;
     }
 
     get hass() {
@@ -6012,6 +6176,9 @@
         source: "default",
         sound_mode: "default",
         toggle_power: true,
+        tap_action: {
+          action: "more-info",
+        },
         ...config,
         hide: { ...DEFAULT_HIDE, ...config.hide },
         speaker_group: {
@@ -6072,8 +6239,9 @@
 
       return html`
         <ha-card
-          @click=${this.handleMoreInfo}
           class=${this.computeClasses()}
+          style=${this.computeStyles()}
+          @click=${(e) => this.handlePopup(e)}
           artwork=${config.artwork}
           content=${this.player.content}
         >
@@ -6161,6 +6329,17 @@
       `;
     }
 
+    handlePopup(e) {
+      e.stopPropagation();
+      handleClick(
+        this,
+        this._hass,
+        this.config,
+        this.config.tap_action,
+        this.player.id
+      );
+    }
+
     renderIcon(artwork) {
       if (this.config.hide.icon) return;
       if (this.player.active && artwork && this.config.artwork === "default")
@@ -6173,8 +6352,9 @@
           ></div>
         `;
 
+      const state = !this.config.hide.icon_state && this.player.isActive;
       return html`
-        <div class="entity__icon">
+        <div class="entity__icon" ?color=${state}>
           <ha-icon .icon=${this.computeIcon()}></ha-icon>
         </div>
       `;
@@ -6239,7 +6419,7 @@
         "--initial": this.initial,
         "--bg": config.background,
         "--group": config.group,
-        "--more-info": config.more_info,
+        "--more-info": config.tap_action !== "none",
         "--has-artwork": this.player.hasArtwork && this.thumbnail,
         "--flow": config.flow,
         "--collapse": config.collapse,
@@ -6247,6 +6427,13 @@
         "--progress": this.player.hasProgress,
         "--runtime": !config.hide.runtime && this.player.hasProgress,
         "--inactive": !this.player.isActive,
+      });
+    }
+
+    computeStyles() {
+      const { scale } = this.config;
+      return styleMap({
+        ...(scale && { "--mmp-unit": `${40 * scale}px` }),
       });
     }
 
@@ -6292,12 +6479,6 @@
 
     toggleGroupList() {
       this.edit = !this.edit;
-    }
-
-    handleMoreInfo(e) {
-      e.stopPropagation();
-      if (this.config.more_info)
-        this.fire("hass-more-info", { entityId: this.config.entity });
     }
 
     fire(type, inDetail, inOptions) {
