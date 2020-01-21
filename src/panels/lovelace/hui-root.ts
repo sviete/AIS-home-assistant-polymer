@@ -82,7 +82,10 @@ class HUIRoot extends LitElement {
   protected render(): TemplateResult | void {
     // ais dom audio fix
     let aisStyle = "";
-    if (this.route!.path === "/audio" || this.route!.path === "/ais_zigbee") {
+    if (
+      this.route!.path === "/ais_audio" ||
+      this.route!.path === "/ais_zigbee"
+    ) {
       aisStyle = "display: none";
       if (this._editMode) {
         // disable edit mode
@@ -99,7 +102,7 @@ class HUIRoot extends LitElement {
       })}" fixed condenses>
         ${
           // aid dom audio fix
-          this.route!.path === "/audio" || this.route!.path === "/ais_zigbee"
+          this.route!.path in ["/ais_audio", "/ais_zigbee"]
             ? html`
                 <app-toolbar>
                   <ha-menu-button
@@ -107,7 +110,9 @@ class HUIRoot extends LitElement {
                     .narrow=${this.narrow}
                   ></ha-menu-button>
                   <div main-title>
-                    ${this.route!.path === "/audio" ? "Audio" : "Zigbee2Mqtt"}
+                    ${this.route!.path === "/ais_audio"
+                      ? "Audio"
+                      : "Zigbee2Mqtt"}
                   </div>
                   ${this._conversation(this.hass.config.components)
                     ? html`
@@ -309,8 +314,8 @@ class HUIRoot extends LitElement {
                           class="${classMap({
                             "hide-tab": Boolean(
                               // ais dom fix for audio
-                              this.route!.path === "/audio" ||
-                                this.route!.path === "/ais_zigbee" ||
+                              this.route!.path in
+                                ["/ais_audio", "/ais_zigbee"] ||
                                 (view.visible !== undefined &&
                                   ((Array.isArray(view.visible) &&
                                     !view.visible.some(
