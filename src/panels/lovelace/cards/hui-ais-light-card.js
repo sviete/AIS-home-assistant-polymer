@@ -13,6 +13,9 @@ class ColorLite extends HTMLElement {
     }
 
     const entityId = this.config.entity;
+    const entityClass =
+      this.config.class || this.config.entity.replace(".", "_");
+    this.setAttribute("class", entityClass);
     const state = hass.states[entityId];
     const imageOn =
       this.config.image_on || "/static/ais_dom/design_tool/light_on.png";
@@ -33,15 +36,16 @@ class ColorLite extends HTMLElement {
         var bbritef = state.attributes.brightness;
         var bbrite = bbritef / 205;
 
-        this.content.innerHTML = `<img src="${ImURL}" style="filter: opacity(${bbrite})${hsar}!important;>`;
+        this.content.innerHTML = `<img src="${ImURL}" style="position: absolute; filter: opacity(${bbrite})${hsar}!important;>`;
       } else {
-        this.content.innerHTML = `<img src="${imageOff}" style="">`;
+        this.content.innerHTML = `<img src="${imageOff}" class="${entityClass}"  style="position: absolute;">`;
       }
+    } else {
+      this.content.innerHTML = `<img src="${imageOff}" class="${entityClass}" style="position: absolute;">`;
     }
   }
 
   _onClick(hass) {
-    console.log("_onClick ");
     const onTap = this.config.tap_action || "togle";
     hass.callService("light", onTap, {
       entity_id: this.config.entity,

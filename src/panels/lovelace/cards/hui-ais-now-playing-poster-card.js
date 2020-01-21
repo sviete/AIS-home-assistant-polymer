@@ -15,6 +15,9 @@ class NowPlayingPoster extends HTMLElement {
     const entityId = this.config.entity;
     const state = hass.states[entityId];
     const stateStr = state ? state.state : "unavailable";
+    const entityClass =
+      this.config.class || this.config.entity.replace(".", "_");
+    this.setAttribute("class", entityClass);
 
     if (state) {
       const movposter = state.attributes.entity_picture;
