@@ -69,7 +69,6 @@
   const isDirective = (o) => {
     return typeof o === "function" && directives.has(o);
   };
-  //# sourceMappingURL=directive.js.map
 
   /**
    * @license
@@ -101,7 +100,6 @@
       start = n;
     }
   };
-  //# sourceMappingURL=dom.js.map
 
   /**
    * @license
@@ -125,7 +123,6 @@
    * A sentinel value that signals a NodePart to fully clear its content.
    */
   const nothing = {};
-  //# sourceMappingURL=part.js.map
 
   /**
    * @license
@@ -353,7 +350,6 @@
    *    * (') then any non-(')
    */
   const lastAttributeNameRegex = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
-  //# sourceMappingURL=template.js.map
 
   /**
    * @license
@@ -497,7 +493,6 @@
       return fragment;
     }
   }
-  //# sourceMappingURL=template-instance.js.map
 
   /**
    * @license
@@ -590,7 +585,6 @@
       return template;
     }
   }
-  //# sourceMappingURL=template-result.js.map
 
   /**
    * @license
@@ -1045,7 +1039,6 @@
     (eventOptionsSupported
       ? { capture: o.capture, passive: o.passive, once: o.once }
       : o.capture);
-  //# sourceMappingURL=parts.js.map
 
   /**
    * @license
@@ -1101,7 +1094,6 @@
     }
   }
   const defaultTemplateProcessor = new DefaultTemplateProcessor();
-  //# sourceMappingURL=default-template-processor.js.map
 
   /**
    * @license
@@ -1149,7 +1141,6 @@
     return template;
   }
   const templateCaches = new Map();
-  //# sourceMappingURL=template-factory.js.map
 
   /**
    * @license
@@ -1193,7 +1184,6 @@
     part.setValue(result);
     part.commit();
   };
-  //# sourceMappingURL=render.js.map
 
   /**
    * @license
@@ -1218,7 +1208,6 @@
    */
   const html = (strings, ...values) =>
     new TemplateResult(strings, values, "html", defaultTemplateProcessor);
-  //# sourceMappingURL=lit-html.js.map
 
   /**
    * @license
@@ -1365,7 +1354,6 @@
       }
     }
   }
-  //# sourceMappingURL=modify-template.js.map
 
   /**
    * @license
@@ -1651,7 +1639,6 @@
       window.ShadyCSS.styleElement(container.host);
     }
   };
-  //# sourceMappingURL=shady-render.js.map
 
   /**
    * @license
@@ -2284,7 +2271,6 @@
    * Marks class as having finished creating properties.
    */
   UpdatingElement[_a] = true;
-  //# sourceMappingURL=updating-element.js.map
 
   /**
    * @license
@@ -2299,18 +2285,17 @@
    * subject to an additional IP rights grant found at
    * http://polymer.github.io/PATENTS.txt
    */
-  //# sourceMappingURL=decorators.js.map
 
   /**
-    @license
-    Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
-    This code may only be used under the BSD style license found at
-    http://polymer.github.io/LICENSE.txt The complete set of authors may be found at
-    http://polymer.github.io/AUTHORS.txt The complete set of contributors may be
-    found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
-    part of the polymer project is also subject to an additional IP rights grant
-    found at http://polymer.github.io/PATENTS.txt
-    */
+  @license
+  Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
+  This code may only be used under the BSD style license found at
+  http://polymer.github.io/LICENSE.txt The complete set of authors may be found at
+  http://polymer.github.io/AUTHORS.txt The complete set of contributors may be
+  found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
+  part of the polymer project is also subject to an additional IP rights grant
+  found at http://polymer.github.io/PATENTS.txt
+  */
   const supportsAdoptingStyleSheets =
     "adoptedStyleSheets" in Document.prototype &&
     "replace" in CSSStyleSheet.prototype;
@@ -2350,7 +2335,7 @@
       return value;
     } else {
       throw new Error(`Value passed to 'css' function must be a 'css' function result: ${value}. Use 'unsafeCSS' to pass non-literal values, but
-            take care to ensure page security.`);
+          take care to ensure page security.`);
     }
   };
   /**
@@ -2366,7 +2351,6 @@
     );
     return new CSSResult(cssText, constructionToken);
   };
-  //# sourceMappingURL=css-tag.js.map
 
   /**
    * @license
@@ -2565,7 +2549,6 @@
    * @nocollapse
    */
   LitElement.render = render$1;
-  //# sourceMappingURL=lit-element.js.map
 
   /**
    * @license
@@ -2633,7 +2616,6 @@
     }
     classMapCache.set(part, classInfo);
   });
-  //# sourceMappingURL=class-map.js.map
 
   /**
    * @license
@@ -2711,7 +2693,6 @@
     }
     styleMapCache.set(part, styleInfo);
   });
-  //# sourceMappingURL=style-map.js.map
 
   /**
    * A collection of shims that provide minimal functionality of the ES6 collections.
@@ -3735,7 +3716,7 @@
   const BREAKPOINT = 390;
 
   // AIS dom
-  const LABEL_SHORTCUT = "Wyślij audio na głośnik";
+  const LABEL_SHORTCUT = "Przekieruj media na";
 
   const MEDIA_INFO = [
     { attr: "media_title" },
@@ -4761,7 +4742,7 @@
       return this.visible
         ? html`
             <div class="mmp-group-list" ?visible=${this.visible}>
-              <span class="mmp-group-list__title">GRUPA GŁOŚNIKÓW</span>
+              <span class="mmp-group-list__title">GRUPA ODTWARZACZY</span>
               ${this.entities.map(
                 (item) => html`
                   <mmp-group-item
@@ -4790,7 +4771,16 @@
                   <span
                     >${isMaster
                       ? html`
-                          Rozgrupuj
+                          <svg
+                            style="width:24px;height:24px; vertical-align:middle;"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              fill="#fff"
+                              d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"
+                            />
+                          </svg>
+                          Wszystkie
                         `
                       : html`
                           Opuść
@@ -4808,7 +4798,18 @@
                       true
                     )}
                 >
-                  <span>Grupuj</span>
+                  <span
+                    ><svg
+                      style="width:24px;height:24px; vertical-align:middle;"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="#fff"
+                        d="M19,19H5V5H15V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+                      />
+                    </svg>
+                    Wszystkie</span
+                  >
                 </mmp-button>
               </div>
             </div>
@@ -5037,17 +5038,15 @@
             this.shortcuts.list.push({
               name: attr.friendly_name,
               icon: "mdi:speaker",
-              id: "ais_cloud.send_audio_to_speaker",
+              id: "ais_exo_player.redirect_media",
               type: "service",
-              data: {
-                media_player: this.hass.states[allEntities[i]].entity_id,
-              },
+              data: { entity_id: this.hass.states[allEntities[i]].entity_id },
             });
           }
         }
       }
       this.shortcuts.list.push({
-        name: "Wyszukaj dostępne głośniki",
+        name: "Wyszukaj dostępne odtwarzacze",
         icon: "mdi:sync",
         id: "ais_shell_command.scan_network_for_ais_players",
         type: "service",
@@ -5215,7 +5214,7 @@
     get label() {
       // return getLabel(this.hass, 'ui.card.media_player.text_to_speak', 'Play');
       // AIS dom
-      return "Odtwarzanie url / tekst";
+      return "Wyślij media lub tekst do odtwarzaczy";
     }
 
     get input() {
@@ -5295,15 +5294,9 @@
       else if (config.platform === "ga")
         this.hass.callService("notify", "ga_broadcast", { message });
       else if (config.platform === "ais")
-        if (this.validURL(message)) {
-          this.hass.callService("media_player", "play_media", {
-            entity_id: "media_player.wbudowany_glosnik",
-            media_content_id: "music",
-            media_content_type: "music",
-          });
-        } else {
-          this.hass.callService("ais_ai_service", "say_it", { text: message });
-        }
+        this.hass.callService("ais_exo_player", "play_text_or_url", {
+          text: message,
+        });
       else this.hass.callService("tts", `${config.platform}_say`, opts);
       e.stopPropagation();
       // this.reset();
