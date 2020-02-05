@@ -5,6 +5,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="expires" content="0">
+<link rel="icon" href="./favicon.ico" />
 <style>
 .demo2 {
 	z-index: 33;
@@ -13,6 +14,10 @@
 	right: 0;
 	width: 100%;
 	margin-top: 112px;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
 }
 .demo {
 	z-index: 33;
@@ -24,6 +29,7 @@
 .idem {
 	position: fixed;
 	z-index: 35;
+	cursor: move;
 }
 .frontdiv{
 	z-index: 50;
@@ -127,8 +133,10 @@ function DoSkew(){
 	var DemoVal = rTv + rXv + rYv + sXv + sYv;
 	var DemoVal2 = MTv + MLv ;
 
-
-	document.getElementById("demo2").innerHTML = '<img src="' + bmgURL + '" width=100%><div class="demo" id="demo"><img class="idem" id="idem" ' + sWv + 'src="' + imgURL + '"><img src="' + bmgURL + '" class="ssizer" width=100%></div>';
+	// center / cover no-repeat url("/local/img/floorplan.jpg") fixed
+	document.getElementById("demo2").innerHTML = '<img src="1x1.png" width=100%><div class="demo" id="demo"><img class="idem" id="idem" '
+		+ sWv + 'src="' + imgURL + '"><img src="' + bmgURL + '" class="ssizer" width=100%></div>';
+	document.getElementById("demo2").style.backgroundImage = 'url("' + bmgURL + '")';
 
 
 	document.getElementById("idem").style.transform = DemoVal;
@@ -154,10 +162,17 @@ function DoSkew(){
 </head>
 <body>
 <div style="height: 112px; background-color: #FF9800;" ><span style="color: #fff; font-size: 2em; padding: 20px;display: block;"></span></div>
+<div class="demo2" id="demo2" style="height: 100%; width: 100%; background-color: black;">
+	<div class="demo" id="demo"><img src="front.png" id="idem"></div>
+</div>
 <table width=100%>
-<tr><td class="demo2" id="demo2"><img src="front.png" width=100%>
-<div class="demo" id="demo"><img src="front.png" id="idem"></div>
-</td></tr>
+<tr>
+	<td class="demo2" id="demo2">
+		<img src="1x1.png" width=100%>
+    	<div class="demo" id="demo">
+		<img src="1x1.png" id="idem"></div>
+	</td>
+</tr>
 </table>
 
 <table class="frontdiv" width=100% height=100%>
