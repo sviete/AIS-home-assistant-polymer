@@ -50,7 +50,7 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
   @property() private _loading = false;
   @property() private _steps?: OnboardingStep[];
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     const step = this._curStep()!;
 
     if (this._loading || !step) {
@@ -79,13 +79,18 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
         ></onboarding-integrations>
       `;
     }
+    return html``;
   }
 
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
     this._fetchOnboardingSteps();
-    import(/* webpackChunkName: "onboarding-integrations" */ "./onboarding-integrations");
-    import(/* webpackChunkName: "onboarding-core-config" */ "./onboarding-core-config");
+    import(
+      /* webpackChunkName: "onboarding-integrations" */ "./onboarding-integrations"
+    );
+    import(
+      /* webpackChunkName: "onboarding-core-config" */ "./onboarding-core-config"
+    );
     registerServiceWorker(false);
     this.addEventListener("onboarding-step", (ev) => this._handleStepDone(ev));
   }

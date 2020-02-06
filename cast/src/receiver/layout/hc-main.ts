@@ -50,7 +50,7 @@ export class HcMain extends HassElement {
     }
   }
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     if (this._showDemo) {
       return html`
         <hc-demo .lovelacePath=${this._lovelacePath}></hc-demo>
@@ -175,9 +175,9 @@ export class HcMain extends HassElement {
       } catch (err) {
         // Generate a Lovelace config.
         this._unsubLovelace = () => undefined;
-        const {
-          generateLovelaceConfigFromHass,
-        } = await import("../../../../src/panels/lovelace/common/generate-lovelace-config");
+        const { generateLovelaceConfigFromHass } = await import(
+          "../../../../src/panels/lovelace/common/generate-lovelace-config"
+        );
         this._handleNewLovelaceConfig(
           await generateLovelaceConfigFromHass(this.hass!)
         );

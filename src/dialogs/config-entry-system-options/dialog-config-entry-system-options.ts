@@ -48,7 +48,7 @@ class DialogConfigEntrySystemOptions extends LitElement {
     await this.updateComplete;
   }
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     if (!this._params) {
       return html``;
     }
@@ -98,9 +98,7 @@ class DialogConfigEntrySystemOptions extends LitElement {
                           "ui.dialogs.config_entry_system_options.enable_new_entities_description",
                           "integration",
                           this.hass.localize(
-                            `component.${
-                              this._params.entry.domain
-                            }.config.title`
+                            `component.${this._params.entry.domain}.config.title`
                           ) || this._params.entry.domain
                         )}
                       </p>
@@ -117,7 +115,7 @@ class DialogConfigEntrySystemOptions extends LitElement {
                   .disabled=${this._submitting}
                 >
                   ${this.hass.localize(
-                    "ui.panel.config.entity_registry.editor.update"
+                    "ui.panel.config.entities.editor.update"
                   )}
                 </mwc-button>
               </div>

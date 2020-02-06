@@ -26,11 +26,14 @@ import {
 } from "../../../data/shopping-list";
 import { ShoppingListCardConfig, SensorCardConfig } from "./types";
 import { applyThemesOnElement } from "../../../common/dom/apply_themes_on_element";
+import { actionHandler } from "../common/directives/action-handler-directive";
 
 @customElement("hui-shopping-list-card")
 class HuiShoppingListCard extends LitElement implements LovelaceCard {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    await import(/* webpackChunkName: "hui-shopping-list-editor" */ "../editor/config-elements/hui-shopping-list-editor");
+    await import(
+      /* webpackChunkName: "hui-shopping-list-editor" */ "../editor/config-elements/hui-shopping-list-editor"
+    );
     return document.createElement("hui-shopping-list-card-editor");
   }
 
@@ -99,7 +102,7 @@ class HuiShoppingListCard extends LitElement implements LovelaceCard {
     }
   }
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     if (!this._config || !this.hass) {
       return html``;
     }
@@ -163,7 +166,9 @@ class HuiShoppingListCard extends LitElement implements LovelaceCard {
                 </span>
                 <ha-icon
                   class="clearall"
-                  @click="${this._clearItems}"
+                  @action=${this._clearItems}
+                  .actionHandler=${actionHandler()}
+                  tabindex="0"
                   icon="hass:notification-clear-all"
                   .title="${this.hass!.localize(
                     "ui.panel.lovelace.cards.shopping-list.clear_items"

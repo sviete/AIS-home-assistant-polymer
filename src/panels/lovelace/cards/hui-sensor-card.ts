@@ -25,6 +25,7 @@ import { fireEvent } from "../../../common/dom/fire_event";
 import { fetchRecent } from "../../../data/history";
 import { SensorCardConfig } from "./types";
 import { hasConfigOrEntityChanged } from "../common/has-changed";
+import { actionHandler } from "../common/directives/action-handler-directive";
 
 const midPoint = (
   _Ax: number,
@@ -108,8 +109,14 @@ const coordinates = (
   history.forEach((item) => (item.state = Number(item.state)));
   history = history.filter((item) => !Number.isNaN(item.state));
 
-  const min = Math.min.apply(Math, history.map((item) => item.state));
-  const max = Math.max.apply(Math, history.map((item) => item.state));
+  const min = Math.min.apply(
+    Math,
+    history.map((item) => item.state)
+  );
+  const max = Math.max.apply(
+    Math,
+    history.map((item) => item.state)
+  );
   const now = new Date().getTime();
 
   const reduce = (res, item, point) => {
@@ -141,7 +148,9 @@ const coordinates = (
 @customElement("hui-sensor-card")
 class HuiSensorCard extends LitElement implements LovelaceCard {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    await import(/* webpackChunkName: "hui-sensor-card-editor" */ "../editor/config-elements/hui-sensor-card-editor");
+    await import(
+      /* webpackChunkName: "hui-sensor-card-editor" */ "../editor/config-elements/hui-sensor-card-editor"
+    );
     return document.createElement("hui-sensor-card-editor");
   }
 
@@ -182,7 +191,7 @@ class HuiSensorCard extends LitElement implements LovelaceCard {
     return 3;
   }
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     if (!this._config || !this.hass) {
       return html``;
     }
@@ -233,7 +242,11 @@ class HuiSensorCard extends LitElement implements LovelaceCard {
       graph = "";
     }
     return html`
-      <ha-card @click="${this._handleClick}">
+      <ha-card
+        @action=${this._handleClick}
+        .actionHandler=${actionHandler()}
+        tabindex="0"
+      >
         <div class="flex">
           <div class="icon">
             <ha-icon
@@ -343,6 +356,11 @@ class HuiSensorCard extends LitElement implements LovelaceCard {
         padding: 16px;
         position: relative;
         cursor: pointer;
+      }
+
+      ha-card:focus {
+        outline: none;
+        background: var(--divider-color);
       }
 
       .flex {

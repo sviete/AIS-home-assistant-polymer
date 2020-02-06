@@ -476,7 +476,11 @@
         },
         "panel": {
             "config": {
-                "area_registry": {
+                "advanced_mode": {
+                    "hint_enable": "Opsiynau ffurfweddu ar goll? Galluogi modd uwch ymlaen",
+                    "link_profile_page": "eich tudalen proffil"
+                },
+                "areas": {
                     "caption": "Gofrestrfa ardal",
                     "create_area": "CREU ARDAL",
                     "description": "Trosolwg o bob ardal yn eich cartref.",
@@ -763,7 +767,7 @@
                     "unknown_error": "Gwall anhysbys",
                     "unnamed_device": "Dyfais ddienw"
                 },
-                "entity_registry": {
+                "entities": {
                     "caption": "Gofrestrfa Endid",
                     "description": "Trosolwg o holl endidau hysbys.",
                     "editor": {
@@ -1273,8 +1277,6 @@
             "profile": {
                 "advanced_mode": {
                     "description": "Mae Home Assistant yn cuddio nodweddion uwch ac opsiynau yn ddiofyn. Gallwch wneud y nodweddion hyn yn hygyrch trwy ticio'r toggle hwn. Mae hwn yn leoliad penodol i ddefnyddwyr ac nid yw'n effeithio ar ddefnyddwyr eraill sy'n defnyddio Home Assistant.",
-                    "hint_enable": "Opsiynau ffurfweddu ar goll? Galluogi modd uwch ymlaen",
-                    "link_profile_page": "eich tudalen proffil",
                     "title": "Modd Uwch"
                 }
             },

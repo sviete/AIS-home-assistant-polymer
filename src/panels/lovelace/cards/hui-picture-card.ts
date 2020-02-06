@@ -8,6 +8,7 @@ import {
   CSSResult,
   PropertyValues,
 } from "lit-element";
+import { ifDefined } from "lit-html/directives/if-defined";
 
 import "../../../components/ha-card";
 
@@ -24,7 +25,9 @@ import { handleAction } from "../common/handle-action";
 @customElement("hui-picture-card")
 export class HuiPictureCard extends LitElement implements LovelaceCard {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    await import(/* webpackChunkName: "hui-picture-card-editor" */ "../editor/config-elements/hui-picture-card-editor");
+    await import(
+      /* webpackChunkName: "hui-picture-card-editor" */ "../editor/config-elements/hui-picture-card-editor"
+    );
     return document.createElement("hui-picture-card-editor");
   }
   public static getStubConfig(): object {
@@ -72,7 +75,7 @@ export class HuiPictureCard extends LitElement implements LovelaceCard {
     }
   }
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     if (!this._config || !this.hass) {
       return html``;
     }
@@ -84,9 +87,14 @@ export class HuiPictureCard extends LitElement implements LovelaceCard {
           hasHold: hasAction(this._config!.hold_action),
           hasDoubleClick: hasAction(this._config!.double_tap_action),
         })}
+        tabindex=${ifDefined(
+          hasAction(this._config.tap_action) ? "0" : undefined
+        )}
         class="${classMap({
           clickable: Boolean(
-            this._config.tap_action || this._config.hold_action
+            this._config.tap_action ||
+              this._config.hold_action ||
+              this._config.double_tap_action
           ),
         })}"
       >

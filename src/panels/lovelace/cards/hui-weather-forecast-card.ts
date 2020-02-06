@@ -23,6 +23,7 @@ import { computeRTL } from "../../../common/util/compute_rtl";
 import { fireEvent } from "../../../common/dom/fire_event";
 import { toggleAttribute } from "../../../common/dom/toggle_attribute";
 import { applyThemesOnElement } from "../../../common/dom/apply_themes_on_element";
+import { actionHandler } from "../common/directives/action-handler-directive";
 
 const cardinalDirections = [
   "N",
@@ -65,7 +66,9 @@ const weatherIcons = {
 @customElement("hui-weather-forecast-card")
 class HuiWeatherForecastCard extends LitElement implements LovelaceCard {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    await import(/* webpackChunkName: "hui-weather-forecast-card-editor" */ "../editor/config-elements/hui-weather-forecast-card-editor");
+    await import(
+      /* webpackChunkName: "hui-weather-forecast-card-editor" */ "../editor/config-elements/hui-weather-forecast-card-editor"
+    );
     return document.createElement("hui-weather-forecast-card-editor");
   }
   public static getStubConfig(): object {
@@ -115,7 +118,7 @@ class HuiWeatherForecastCard extends LitElement implements LovelaceCard {
     }
   }
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     if (!this._config || !this.hass) {
       return html``;
     }
@@ -139,7 +142,11 @@ class HuiWeatherForecastCard extends LitElement implements LovelaceCard {
       : undefined;
 
     return html`
-      <ha-card @click="${this.handleClick}">
+      <ha-card
+        @action=${this._handleAction}
+        .actionHandler=${actionHandler()}
+        tabindex="0"
+      >
         <div class="header">
           ${this.hass.localize(`state.weather.${stateObj.state}`) ||
             stateObj.state}
@@ -272,7 +279,7 @@ class HuiWeatherForecastCard extends LitElement implements LovelaceCard {
     return hasConfigOrEntityChanged(this, changedProps);
   }
 
-  private handleClick(): void {
+  private _handleAction(): void {
     fireEvent(this, "hass-more-info", { entityId: this._config!.entity });
   }
 

@@ -51,7 +51,7 @@ class OnboardingIntegrations extends LitElement {
     }
   }
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     if (!this._entries || !this._discovered) {
       return html``;
     }
@@ -124,7 +124,9 @@ class OnboardingIntegrations extends LitElement {
     loadConfigFlowDialog();
     this._loadConfigEntries();
     /* polyfill for paper-dropdown */
-    import(/* webpackChunkName: "polyfill-web-animations-next" */ "web-animations-js/web-animations-next-lite.min");
+    import(
+      /* webpackChunkName: "polyfill-web-animations-next" */ "web-animations-js/web-animations-next-lite.min"
+    );
   }
 
   private _createFlow() {
