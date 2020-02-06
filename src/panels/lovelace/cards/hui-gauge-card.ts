@@ -33,7 +33,9 @@ export const severityMap = {
 @customElement("hui-gauge-card")
 class HuiGaugeCard extends LitElement implements LovelaceCard {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    await import(/* webpackChunkName: "hui-gauge-card-editor" */ "../editor/config-elements/hui-gauge-card-editor");
+    await import(
+      /* webpackChunkName: "hui-gauge-card-editor" */ "../editor/config-elements/hui-gauge-card-editor"
+    );
     return document.createElement("hui-gauge-card-editor");
   }
   public static getStubConfig(): object {
@@ -66,7 +68,7 @@ class HuiGaugeCard extends LitElement implements LovelaceCard {
     this._setBaseUnit();
   }
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     if (!this._config || !this.hass) {
       return html``;
     }
@@ -102,6 +104,7 @@ class HuiGaugeCard extends LitElement implements LovelaceCard {
     return html`
       <ha-card
         @click="${this._handleClick}"
+        tabindex="0"
         style=${styleMap({
           "--base-unit": this._baseUnit,
         })}
@@ -225,6 +228,10 @@ class HuiGaugeCard extends LitElement implements LovelaceCard {
         height: calc(var(--base-unit) * 3);
         position: relative;
         cursor: pointer;
+      }
+      ha-card:focus {
+        outline: none;
+        background: var(--divider-color);
       }
       .container {
         width: calc(var(--base-unit) * 4);

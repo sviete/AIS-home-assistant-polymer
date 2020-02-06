@@ -42,7 +42,7 @@ class HaCameraStream extends LitElement {
     this._attached = false;
   }
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     if (!this.stateObj || !this._attached) {
       return html``;
     }
@@ -122,8 +122,9 @@ class HaCameraStream extends LitElement {
 
   private async _startHls(): Promise<void> {
     // tslint:disable-next-line
-    const Hls = ((await import(/* webpackChunkName: "hls.js" */ "hls.js")) as any)
-      .default as HLSModule;
+    const Hls = ((await import(
+      /* webpackChunkName: "hls.js" */ "hls.js"
+    )) as any).default as HLSModule;
     let hlsSupported = Hls.isSupported();
     const videoEl = this._videoEl;
 

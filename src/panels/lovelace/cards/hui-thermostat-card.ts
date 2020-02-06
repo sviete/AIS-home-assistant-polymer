@@ -33,6 +33,7 @@ import {
   CLIMATE_PRESET_NONE,
 } from "../../../data/climate";
 import { HassEntity } from "home-assistant-js-websocket";
+import { actionHandler } from "../common/directives/action-handler-directive";
 
 const modeIcons: { [mode in HvacMode]: string } = {
   auto: "hass:calendar-repeat",
@@ -47,7 +48,9 @@ const modeIcons: { [mode in HvacMode]: string } = {
 @customElement("hui-thermostat-card")
 export class HuiThermostatCard extends LitElement implements LovelaceCard {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    await import(/* webpackChunkName: "hui-thermostat-card-editor" */ "../editor/config-elements/hui-thermostat-card-editor");
+    await import(
+      /* webpackChunkName: "hui-thermostat-card-editor" */ "../editor/config-elements/hui-thermostat-card-editor"
+    );
     return document.createElement("hui-thermostat-card-editor");
   }
 
@@ -80,7 +83,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
     this.rescale_svg();
   }
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     if (!this.hass || !this._config) {
       return html``;
     }
@@ -126,7 +129,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
             ></round-slider>
           `;
 
-    const currentTemperature = stateObj.attributes.current_temperature
+    const currentTemperature = !isNaN(stateObj.attributes.current_temperature)
       ? svg`
           <svg viewBox="0 0 40 20">
             <text
@@ -150,7 +153,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
         <g>
           <text text-anchor="middle" class="set-value">
             ${
-              !this._setTemp
+              this._setTemp === undefined || this._setTemp === null
                 ? ""
                 : Array.isArray(this._setTemp)
                 ? this._stepSize === 1
@@ -179,9 +182,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
             ${
               stateObj.attributes.hvac_action
                 ? this.hass!.localize(
-                    `state_attributes.climate.hvac_action.${
-                      stateObj.attributes.hvac_action
-                    }`
+                    `state_attributes.climate.hvac_action.${stateObj.attributes.hvac_action}`
                   )
                 : this.hass!.localize(`state.climate.${stateObj.state}`)
             }
@@ -191,9 +192,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
                 ? html`
                     -
                     ${this.hass!.localize(
-                      `state_attributes.climate.preset_mode.${
-                        stateObj.attributes.preset_mode
-                      }`
+                      `state_attributes.climate.preset_mode.${stateObj.attributes.preset_mode}`
                     ) || stateObj.attributes.preset_mode}
                   `
                 : ""
@@ -220,6 +219,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
           icon="hass:dots-vertical"
           class="more-info"
           @click=${this._handleMoreInfo}
+          tabindex="0"
         ></paper-icon-button>
 
         <div id="controls">
@@ -366,9 +366,10 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
         class="${classMap({ "selected-icon": currentMode === mode })}"
         .mode="${mode}"
         .icon="${modeIcons[mode]}"
-        @click="${this._handleModeClick}"
+        @action=${this._handleAction}
+        .actionHandler=${actionHandler()}
         tabindex="0"
-      ></paper-icon-button>
+      ></ha-icon>
     `;
   }
 
@@ -378,7 +379,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
     });
   }
 
-  private _handleModeClick(e: MouseEvent): void {
+  private _handleAction(e: MouseEvent): void {
     this.hass!.callService("climate", "set_hvac_mode", {
       entity_id: this._config!.entity,
       hvac_mode: (e.currentTarget as any).mode,

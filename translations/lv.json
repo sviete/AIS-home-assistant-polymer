@@ -635,7 +635,11 @@
         },
         "panel": {
             "config": {
-                "area_registry": {
+                "advanced_mode": {
+                    "hint_enable": "Trūkst konfigurācijas opciju? Iespējot uzlaboto režīmu",
+                    "link_profile_page": "Jūsu profila lapa"
+                },
+                "areas": {
                     "caption": "Apgabali",
                     "create_area": "IZVEIDOT APGABALU",
                     "description": "Pārskats par visām vietām jūsu mājās.",
@@ -944,7 +948,7 @@
                     "unknown_error": "Nezināma kļūda",
                     "unnamed_device": "Nenosaukta ierīce"
                 },
-                "entity_registry": {
+                "entities": {
                     "caption": "Vienības",
                     "description": "Pārskats par visām zināmajām vienībām.",
                     "editor": {
@@ -1534,10 +1538,6 @@
                 }
             },
             "profile": {
-                "advanced_mode": {
-                    "hint_enable": "Trūkst konfigurācijas opciju? Iespējot uzlaboto režīmu",
-                    "link_profile_page": "Jūsu profila lapa"
-                },
                 "change_password": {
                     "confirm_new_password": "Apstipriniet jauno paroli",
                     "current_password": "Pašreizējā parole",

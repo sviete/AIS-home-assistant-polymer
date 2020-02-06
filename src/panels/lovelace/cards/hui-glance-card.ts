@@ -9,6 +9,7 @@ import {
   CSSResult,
 } from "lit-element";
 import { classMap } from "lit-html/directives/class-map";
+import { ifDefined } from "lit-html/directives/if-defined";
 
 import { computeStateName } from "../../../common/entity/compute_state_name";
 import { applyThemesOnElement } from "../../../common/dom/apply_themes_on_element";
@@ -32,7 +33,9 @@ import { handleAction } from "../common/handle-action";
 @customElement("hui-glance-card")
 export class HuiGlanceCard extends LitElement implements LovelaceCard {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    await import(/* webpackChunkName: "hui-glance-card-editor" */ "../editor/config-elements/hui-glance-card-editor");
+    await import(
+      /* webpackChunkName: "hui-glance-card-editor" */ "../editor/config-elements/hui-glance-card-editor"
+    );
     return document.createElement("hui-glance-card-editor");
   }
 
@@ -107,7 +110,7 @@ export class HuiGlanceCard extends LitElement implements LovelaceCard {
     return false;
   }
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     if (!this._config || !this.hass) {
       return html``;
     }
@@ -165,6 +168,13 @@ export class HuiGlanceCard extends LitElement implements LovelaceCard {
         margin-bottom: 12px;
         width: var(--glance-column-width, 20%);
       }
+      .entity:focus {
+        outline: none;
+        background: var(--divider-color);
+        border-radius: 14px;
+        padding: 4px;
+        margin: -4px 0;
+      }
       .entity div {
         width: 100%;
         text-align: center;
@@ -205,6 +215,9 @@ export class HuiGlanceCard extends LitElement implements LovelaceCard {
           hasHold: hasAction(entityConf.hold_action),
           hasDoubleClick: hasAction(entityConf.double_tap_action),
         })}
+        tabindex=${ifDefined(
+          hasAction(entityConf.tap_action) ? "0" : undefined
+        )}
       >
         ${this._config!.show_name !== false
           ? html`
@@ -222,6 +235,7 @@ export class HuiGlanceCard extends LitElement implements LovelaceCard {
                 .stateObj=${stateObj}
                 .overrideIcon=${entityConf.icon}
                 .overrideImage=${entityConf.image}
+                stateColor
               ></state-badge>
             `
           : ""}

@@ -21,6 +21,7 @@ import { fireEvent } from "../../../common/dom/fire_event";
 import { hasConfigOrEntityChanged } from "../common/has-changed";
 import { PlantStatusCardConfig, PlantAttributeTarget } from "./types";
 import { applyThemesOnElement } from "../../../common/dom/apply_themes_on_element";
+import { actionHandler } from "../common/directives/action-handler-directive";
 
 const SENSORS = {
   moisture: "hass:water",
@@ -33,7 +34,9 @@ const SENSORS = {
 @customElement("hui-plant-status-card")
 class HuiPlantStatusCard extends LitElement implements LovelaceCard {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    await import(/* webpackChunkName: "hui-plant-status-card-editor" */ "../editor/config-elements/hui-plant-status-card-editor");
+    await import(
+      /* webpackChunkName: "hui-plant-status-card-editor" */ "../editor/config-elements/hui-plant-status-card-editor"
+    );
     return document.createElement("hui-plant-status-card-editor");
   }
 
@@ -81,7 +84,7 @@ class HuiPlantStatusCard extends LitElement implements LovelaceCard {
     }
   }
 
-  protected render(): TemplateResult | void {
+  protected render(): TemplateResult {
     if (!this.hass || !this._config) {
       return html``;
     }
@@ -117,7 +120,9 @@ class HuiPlantStatusCard extends LitElement implements LovelaceCard {
             (item) => html`
               <div
                 class="attributes"
-                @click="${this._handleMoreInfo}"
+                @action=${this._handleMoreInfo}
+                .actionHandler=${actionHandler()}
+                tabindex="0"
                 .value="${item}"
               >
                 <div>
@@ -202,6 +207,12 @@ class HuiPlantStatusCard extends LitElement implements LovelaceCard {
 
       .attributes {
         cursor: pointer;
+      }
+
+      .attributes:focus {
+        outline: none;
+        background: var(--divider-color);
+        border-radius: 100%;
       }
 
       .attributes div {
