@@ -133,6 +133,25 @@ export const configSections: { [name: string]: PageNavigation[] } = {
   ],
 };
 
+export const aisConfigSections: { [name: string]: PageNavigation[] } = {
+  integrations: [
+    {
+      component: "ais_dom",
+      path: "/config/ais_dom",
+      translationKey: "ui.panel.config.integrations.caption",
+      icon: "mdi:monitor-speaker",
+      core: true,
+    },
+    {
+      component: "ais_dom_devices",
+      path: "/config/ais_dom_devices",
+      translationKey: "ui.panel.config.devices.caption",
+      icon: "hass:devices",
+      core: true,
+    },
+  ],
+};
+
 @customElement("ha-panel-config")
 class HaPanelConfig extends HassRouterPage {
   @property() public hass!: HomeAssistant;

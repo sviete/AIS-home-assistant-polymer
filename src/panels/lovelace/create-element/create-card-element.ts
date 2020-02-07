@@ -22,6 +22,17 @@ import "../cards/hui-shopping-list-card";
 import "../cards/hui-thermostat-card";
 import "../cards/hui-weather-forecast-card";
 import "../cards/hui-gauge-card";
+import "../cards/hui-ais-files-list-card";
+import "../cards/hui-ais-easy-picker-card";
+import "../cards/hui-ais-list-card";
+import "../cards/hui-ais-button-card";
+import "../cards/hui-ais-mini-media-player-card";
+import "../cards/hui-ais-auto-entities-card";
+import "../cards/hui-ais-monster-card";
+import "../cards/hui-ais-fold-entity-row-card";
+import "../cards/hui-ais-zigbee2mqtt-card";
+import "../cards/hui-ais-now-playing-poster-card";
+import "../cards/hui-ais-light-card";
 import { LovelaceCardConfig } from "../../../data/lovelace";
 import { createLovelaceElement } from "./create-element-base";
 
@@ -51,6 +62,18 @@ const CARD_TYPES = new Set([
   "thermostat",
   "vertical-stack",
   "weather-forecast",
+  "weather-forecast",
+  "ais-files-list",
+  "ais-easy-picker",
+  "ais-list",
+  "ais-button",
+  "ais-mini-media-player",
+  "ais-auto-entities",
+  "ais-monster",
+  "ais-fold-entity-row",
+  "ais-zigbee2mqtt",
+  "ais-now-playing-poster",
+  "ais-light",
 ]);
 
 export const createCardElement = (config: LovelaceCardConfig) =>

@@ -25,7 +25,7 @@ import { computeDomain } from "../../../../common/entity/compute_domain";
 import { domainIcon } from "../../../../common/entity/domain_icon";
 // tslint:disable-next-line
 import { EntityRegistryStateEntry } from "../ha-config-ais-dom-device-page";
-import { showConfirmationDialog } from "../../../../dialogs/confirmation/show-dialog-confirmation";
+import { showConfirmationDialog } from "../../../../dialogs/generic/show-dialog-box";
 
 @customElement("ha-ais-dom-device-entities-card")
 export class HaDeviceEntitiesCard extends LitElement {

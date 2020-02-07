@@ -23,7 +23,7 @@ import "../../../components/ha-icon-next";
 
 import "../ha-config-section";
 import "./ha-config-navigation";
-import { configSections } from "../ha-panel-config";
+import { configSections, aisConfigSections } from "../ha-panel-config";
 
 @customElement("ha-config-dashboard")
 class HaConfigDashboard extends LitElement {
@@ -54,6 +54,17 @@ class HaConfigDashboard extends LitElement {
             ${this.hass.localize("ui.panel.config.introduction")}
           </div>
 
+          ${Object.values(aisConfigSections).map(
+            (section) => html`
+              <ha-card>
+                <ha-config-navigation
+                  .hass=${this.hass}
+                  .showAdvanced=${this.showAdvanced}
+                  .pages=${section}
+                ></ha-config-navigation>
+              </ha-card>
+            `
+          )}
           ${this.cloudStatus && isComponentLoaded(this.hass, "cloud")
             ? html`
                 <ha-card>
