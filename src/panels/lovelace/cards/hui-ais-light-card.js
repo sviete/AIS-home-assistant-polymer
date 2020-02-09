@@ -46,7 +46,7 @@ class ColorLite extends HTMLElement {
   }
 
   _onClick(hass) {
-    const onTap = this.config.tap_action || "togle";
+    const onTap = this.config.tap_action || "toggle";
     hass.callService("light", onTap, {
       entity_id: this.config.entity,
     });
