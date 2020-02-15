@@ -36,14 +36,24 @@ class HuiViewsList extends LitElement {
       <paper-listbox attr-for-selected="data-index" .selected=${this.selected}>
         ${this.lovelaceConfig.views.map(
           (view, index) => html`
-            <paper-icon-item @click=${this._handlePickView} data-index=${index}>
-              ${view.icon
-                ? html`
-                    <ha-icon .icon=${view.icon} slot="item-icon"></ha-icon>
-                  `
-                : ""}
-              ${view.title || view.path}
-            </paper-icon-item>
+            ${view.visible === true || view.visible === undefined
+              ? html`
+                  <paper-icon-item
+                    @click=${this._handlePickView}
+                    data-index=${index}
+                  >
+                    ${view.icon
+                      ? html`
+                          <ha-icon
+                            .icon=${view.icon}
+                            slot="item-icon"
+                          ></ha-icon>
+                        `
+                      : ""}
+                    ${view.title || view.path}
+                  </paper-icon-item>
+                `
+              : ""}
           `
         )}
       </paper-listbox>
