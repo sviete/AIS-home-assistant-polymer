@@ -1,3 +1,5 @@
+import { fireEvent } from "../../../common/dom/fire_event";
+
 class ColorLite extends HTMLElement {
   set hass(hass) {
     if (!this.content) {
@@ -9,6 +11,9 @@ class ColorLite extends HTMLElement {
       this.appendChild(card);
       this.addEventListener("click", function() {
         this._onClick(hass);
+      });
+      this.addEventListener("dblclick", function() {
+        this._onDbClick();
       });
     }
 
@@ -24,7 +29,6 @@ class ColorLite extends HTMLElement {
     //  if the light is on
     if (state) {
       if (state.state === "on") {
-        var ImURL = imageOn;
         var rgbval = state.attributes.rgb_color;
         var hsval = state.attributes.hs_color;
         var hsar = "";
@@ -36,7 +40,8 @@ class ColorLite extends HTMLElement {
         var bbritef = state.attributes.brightness;
         var bbrite = bbritef / 205;
 
-        this.content.innerHTML = `<img src="${ImURL}" style="position: absolute; filter: opacity(${bbrite})${hsar}!important;>`;
+        this.content.innerHTML = `<img src="${imageOn}" style="position: absolute; filter: opacity(${bbrite}) ${hsar}!important;">`;
+        // this.content.innerHTML = `<img src="${imageOn}"  class="${entityClass}" style="position: absolute;">`;
       } else {
         this.content.innerHTML = `<img src="${imageOff}" class="${entityClass}"  style="position: absolute;">`;
       }
@@ -49,6 +54,12 @@ class ColorLite extends HTMLElement {
     const onTap = this.config.tap_action || "toggle";
     hass.callService("light", onTap, {
       entity_id: this.config.entity,
+    });
+  }
+
+  _onDbClick() {
+    fireEvent(this, "hass-more-info", {
+      entityId: this.config.entity,
     });
   }
 

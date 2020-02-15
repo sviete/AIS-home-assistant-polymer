@@ -1,3 +1,5 @@
+import { fireEvent } from "../../../common/dom/fire_event";
+
 class NowPlayingPoster extends HTMLElement {
   set hass(hass) {
     if (!this.content) {
@@ -9,6 +11,9 @@ class NowPlayingPoster extends HTMLElement {
       card.appendChild(this.content);
       card.style = "background: none;";
       this.appendChild(card);
+      this.addEventListener("click", function() {
+        this._onClick();
+      });
     }
 
     const offposter = this.config.off_image;
@@ -40,6 +45,12 @@ class NowPlayingPoster extends HTMLElement {
     } else {
       this.content.innerHTML = `<img src="/static/icons/tile-win-310x150.png" width=100% align="center" style="">`;
     }
+  }
+
+  _onClick() {
+    fireEvent(this, "hass-more-info", {
+      entityId: this.config.entity,
+    });
   }
 
   setConfig(config) {
