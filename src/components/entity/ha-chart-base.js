@@ -6,7 +6,7 @@ import { Debouncer } from "@polymer/polymer/lib/utils/debounce";
 import { timeOut } from "@polymer/polymer/lib/utils/async";
 import { mixinBehaviors } from "@polymer/polymer/lib/legacy/class";
 
-import formatTime from "../../common/datetime/format_time";
+import { formatTime } from "../../common/datetime/format_time";
 // eslint-disable-next-line no-unused-vars
 /* global Chart moment Color */
 
@@ -215,7 +215,9 @@ class HaChartBase extends mixinBehaviors(
     }
 
     if (scriptsLoaded === null) {
-      scriptsLoaded = import(/* webpackChunkName: "load_chart" */ "../../resources/ha-chart-scripts.js");
+      scriptsLoaded = import(
+        /* webpackChunkName: "load_chart" */ "../../resources/ha-chart-scripts.js"
+      );
     }
     scriptsLoaded.then((ChartModule) => {
       this.ChartClass = ChartModule.default;
