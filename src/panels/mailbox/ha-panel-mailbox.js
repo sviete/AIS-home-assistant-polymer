@@ -14,7 +14,7 @@ import "../../components/ha-menu-button";
 import "../../components/ha-card";
 import "../../resources/ha-style";
 
-import formatDateTime from "../../common/datetime/format_date_time";
+import { formatDateTime } from "../../common/datetime/format_date_time";
 import LocalizeMixin from "../../mixins/localize-mixin";
 import { EventsMixin } from "../../mixins/events-mixin";
 
@@ -157,7 +157,9 @@ class HaPanelMailbox extends EventsMixin(LocalizeMixin(PolymerElement)) {
         dialogShowEvent: "show-audio-message-dialog",
         dialogTag: "ha-dialog-show-audio-message",
         dialogImport: () =>
-          import(/* webpackChunkName: "ha-dialog-show-audio-message" */ "./ha-dialog-show-audio-message"),
+          import(
+            /* webpackChunkName: "ha-dialog-show-audio-message" */ "./ha-dialog-show-audio-message"
+          ),
       });
     }
     this.hassChanged = this.hassChanged.bind(this);
