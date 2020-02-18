@@ -99,9 +99,7 @@ class FilesCard extends HTMLElement {
             `<tr class="fileRow ` +
             classStatus +
             `" data-path="${feed[i].path}">`;
-          cardContent += `<td><ha-icon icon="mdi:${
-            feed[i].icon
-          }"></ha-icon></td>`;
+          cardContent += `<td><ha-icon icon="mdi:${feed[i].icon}"></ha-icon></td>`;
           cardContent += `<td>${feed[i].name}</td>`;
           cardContent += `<td>` + iconStatus + `</td>`;
           cardContent += `</tr>`;
@@ -109,7 +107,7 @@ class FilesCard extends HTMLElement {
         }
 
         // add new remote
-        if (path === "dyski-zdalne:") {
+        if (path === "/dyski-zdalne") {
           cardContent += `<tr style="height:1em">`;
           cardContent += `<td colspan="3" style="text-align:right;"><mwc-button id="addNewDrive" style="float:right">+ DYSK ZDALNY</mwc-button></td>`;
           cardContent += `</tr>`;

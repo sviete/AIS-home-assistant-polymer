@@ -2,8 +2,7 @@
 // @ts-ignore
 export const SpeechRecognition =
   // @ts-ignore
-  (window.SpeechRecognition || window.webkitSpeechRecognition) &&
-  location.protocol === "https:";
+  window.SpeechRecognition || window.webkitSpeechRecognition;
 // @ts-ignore
 export const SpeechGrammarList =
   // @ts-ignore
