@@ -59,7 +59,7 @@ export class HaVoiceCommandDialog extends LitElement {
 
   public async showDialog(): Promise<void> {
     this._opened = true;
-    if (SpeechRecognition) {
+    if (SpeechRecognition && location.protocol === "https:") {
       this._startListening();
     }
     this._agentInfo = await getAgentInfo(this.hass);
@@ -153,12 +153,14 @@ export class HaVoiceCommandDialog extends LitElement {
             @keyup=${this._handleKeyUp}
             label="${this.hass!.localize(
               `ui.dialogs.voice_command.${
-                SpeechRecognition ? "label_voice" : "label"
+                SpeechRecognition && location.protocol === "https:"
+                  ? "label_voice"
+                  : "label"
               }`
             )}"
             autofocus
           >
-            ${SpeechRecognition
+            ${SpeechRecognition && location.protocol === "https:"
               ? html`
                   <span suffix="" slot="suffix">
                     ${this.results
