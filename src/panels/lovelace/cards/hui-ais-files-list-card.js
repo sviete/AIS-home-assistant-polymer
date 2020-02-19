@@ -128,10 +128,10 @@ class FilesCard extends HTMLElement {
     // const container = root.querySelector('#container');
     files.forEach((file) => {
       file.addEventListener("click", () => {
+        file.classList.add("fileSelected");
         hass.callService("ais_drives_service", "browse_path", {
           path: file.getAttribute("data-path"),
         });
-        file.classList.add("fileSelected");
       });
     });
 

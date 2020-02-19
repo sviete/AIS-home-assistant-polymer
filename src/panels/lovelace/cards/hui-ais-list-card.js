@@ -19,11 +19,9 @@ class ListCard extends HTMLElement {
     const iconColor = cardConfig.icon_color || "white";
     const delIconHide =
       cardConfig.show_delete_icon === true ? "" : "display:none;";
-    const border = "#252525";
     const flagColor = "var(--primary-color)";
     const accent = "var(--paper-card-background-color)";
     const accentSelected = "var(--primary-color)";
-    const boxshdw = "3px 2px 25px";
     style.textContent = `
         .fanart_view {
           width:100%;
@@ -152,9 +150,7 @@ class ListCard extends HTMLElement {
                   <div class="delete" data-id="${rows}" data-media-source="${mediaSource}" style="cursor: pointer; "><ha-icon class="delete" icon="mdi:close"></ha-icon></div>
                   <svg class="fanart_svg_view" viewBox="0 -20 200 100">
                     <foreignObject width="200" height="80" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <span xmlns="http://www.w3.org/1999/xhtml">${
-                          feed[entry].title
-                        }</span>
+                        <span xmlns="http://www.w3.org/1999/xhtml">${feed[entry].title}</span>
                     </foreignObject>
                     <foreignObject width="200" height="80" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
                         <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:smaller; bottom: 5px; position: absolute;">
