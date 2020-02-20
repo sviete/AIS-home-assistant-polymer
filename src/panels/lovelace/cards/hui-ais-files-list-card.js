@@ -28,7 +28,7 @@ class FilesCard extends HTMLElement {
               border-spacing: 0px;
             }
             tr.fileRow:hover td{
-              background-color:#ffc94761;
+              background-color:#ffc9471f;
               cursor: pointer;
             }
             tbody tr.fileRow:nth-child(odd) {
@@ -46,7 +46,11 @@ class FilesCard extends HTMLElement {
               width: auto;
             }
             tr.fileSelected td{
-              background-color:#ffc94773;
+              background-color:#ffc94773 !important;
+            }
+            tr.fileClicked td{
+              background-color:#ff9800eb !important;
+              cursor: wait !important;
             }
           `;
 
@@ -126,9 +130,12 @@ class FilesCard extends HTMLElement {
     //
     const files = root.querySelectorAll("tr.fileRow");
     // const container = root.querySelector('#container');
+    const waitIcon = document.createElement("ha-icon");
+    waitIcon.setAttribute("icon", "mdi:progress-download");
     files.forEach((file) => {
       file.addEventListener("click", () => {
-        file.classList.add("fileSelected");
+        file.classList.add("fileSelected", "fileClicked");
+        file.querySelector("td:last-child").appendChild(waitIcon);
         hass.callService("ais_drives_service", "browse_path", {
           path: file.getAttribute("data-path"),
         });

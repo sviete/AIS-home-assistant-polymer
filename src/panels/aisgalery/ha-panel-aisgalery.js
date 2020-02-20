@@ -63,6 +63,9 @@ class HaPanelAisgalery extends PolymerElement {
         figure.selected {
           opacity: 0.5;
         }
+        figure:hover {
+          cursor: pointer;
+        }
         .duration {
           font-style: italic;
         }
