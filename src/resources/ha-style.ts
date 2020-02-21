@@ -26,9 +26,9 @@ documentContainer.innerHTML = `<custom-style>
 
       /* main interface colors */
       --primary-color: #FF9800;
-      --dark-primary-color: #0288d1;
-      --light-primary-color: #b3e5fC;
-      --accent-color: #c54203;
+      --dark-primary-color: #c66900;
+      --light-primary-color: #ffc947;
+      --accent-color: #c66900;
       --divider-color: rgba(0, 0, 0, .12);
 
       --scrollbar-thumb-color: rgb(194, 194, 194);
@@ -36,7 +36,7 @@ documentContainer.innerHTML = `<custom-style>
       --error-color: #db4437;
 
       /* states and badges */
-      --state-icon-color: #44739e;
+      --state-icon-color: #f69562;
       --state-icon-active-color: #FDD835;
 
       /* background and sidebar */
@@ -45,7 +45,7 @@ documentContainer.innerHTML = `<custom-style>
       --secondary-background-color: #e5e5e5; /* behind the cards on state */
 
       /* for label-badge */
-      --label-badge-red: #DF4C1E;
+      --label-badge-red: #c66900;
       --label-badge-blue: #039be5;
       --label-badge-green: #0DA035;
       --label-badge-yellow: #f4b400;

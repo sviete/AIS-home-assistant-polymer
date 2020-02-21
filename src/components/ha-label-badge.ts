@@ -130,6 +130,7 @@ class HaLabelBadge extends LitElement {
           overflow: hidden;
           text-overflow: ellipsis;
           line-height: normal;
+          color: #4c4b4a;
         }
       `,
     ];

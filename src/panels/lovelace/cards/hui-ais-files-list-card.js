@@ -26,16 +26,12 @@ class FilesCard extends HTMLElement {
               width: 100%;
               padding: 0 16px 16px 16px;
               border-spacing: 0px;
+              table-layout: fixed;
+              overflow-wrap: break-word;
             }
             tr.fileRow:hover td{
               background-color:#ffc9471f;
               cursor: pointer;
-            }
-            tbody tr.fileRow:nth-child(odd) {
-              background-color: var(--paper-card-background-color);
-            }
-            tbody tr.fileRow:nth-child(even) {
-              background-color: var(--secondary-background-color);
             }
             tr th{
               text-align: left;
