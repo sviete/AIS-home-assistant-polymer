@@ -581,6 +581,7 @@
                 "entity": "相關物件",
                 "group": "以下群組部分",
                 "integration": "整合",
+                "no_related_found": "找不到相關物件。",
                 "scene": "以下場景部分",
                 "script": "以下腳本部分"
             },
@@ -604,7 +605,8 @@
             "config_entry_system_options": {
                 "enable_new_entities_description": "關閉後，{integration} 新發現的物件將不會自動新增至 Home Assistant。",
                 "enable_new_entities_label": "啟用新增物件",
-                "title": "{integration} 系統選項"
+                "title": "{integration} 系統選項",
+                "update": "更新"
             },
             "confirmation": {
                 "cancel": "取消",
@@ -629,6 +631,7 @@
                     "unavailable": "該物件目前不可用。",
                     "update": "更新"
                 },
+                "no_unique_id": "此物件不包含唯一 ID、因此無法由 UI 進行管理設定。",
                 "related": "相關",
                 "settings": "設定"
             },
@@ -640,6 +643,9 @@
             "more_info_control": {
                 "dismiss": "忽略對話",
                 "edit": "編輯物件",
+                "person": {
+                    "create_zone": "使用目前位置新增區域"
+                },
                 "restored": {
                     "confirm_remove_text": "確定要移除此物件？",
                     "confirm_remove_title": "移除物件？",
@@ -659,6 +665,18 @@
                 },
                 "updater": {
                     "title": "更新說明"
+                },
+                "vacuum": {
+                    "clean_spot": "區部清掃",
+                    "commands": "吸塵器清掃指令：",
+                    "fan_speed": "風速",
+                    "locate": "尋找",
+                    "pause": "暫停",
+                    "return_home": "回充",
+                    "start": "開始清掃",
+                    "start_pause": "開始/暫停",
+                    "status": "狀態",
+                    "stop": "停止清掃"
                 }
             },
             "more_info_settings": {
@@ -879,6 +897,7 @@
                         },
                         "edit_ui": "以 UI 編輯",
                         "edit_yaml": "以 YAML 編輯",
+                        "enable_disable": "開啟/關閉自動化",
                         "introduction": "使用自動化來讓你的智能家居更有魅力吧。",
                         "load_error_not_editable": "僅有 automations.yaml 內的自動化方能編輯。",
                         "load_error_unknown": "載入自動化錯誤（{err_no}）。",
@@ -1306,6 +1325,7 @@
                         "filter": {
                             "filter": "過濾器",
                             "show_disabled": "顯示關閉物件",
+                            "show_readonly": "顯示唯讀物件",
                             "show_unavailable": "顯示無法使用物件"
                         },
                         "header": "物件",
@@ -1329,6 +1349,7 @@
                         "status": {
                             "disabled": "已關閉",
                             "ok": "確定",
+                            "readonly": "唯讀",
                             "unavailable": "不可用"
                         },
                         "unavailable": "（不可用）"
@@ -1496,8 +1517,8 @@
                             "automation": "重新載入自動化",
                             "core": "重新載入座標與自訂化",
                             "group": "重新載入群組",
-                            "heading": "正在重新載入設定",
-                            "introduction": "Home Assistant 中部分設定無須重啟即可重新載入生效。點選重新載入按鈕，即可重新載入最新設定。",
+                            "heading": "YAML 設定新載入中",
+                            "introduction": "Home Assistant 中部分設定無須重啟即可重新載入生效。點選重新載入按鈕，即可解除目前 YAML 設定，並重新載入最新設定。",
                             "person": "重新載入人員",
                             "scene": "重新載入場景",
                             "script": "重新載入腳本",
@@ -1684,7 +1705,10 @@
                         "required_error_msg": "必填欄位",
                         "update": "更新"
                     },
-                    "edit_home_zone": "家庭的所在位置可透過一般設定進行變更。",
+                    "edit_home_zone": "住家的半徑尚無法由前端進行設定、於地圖上拖拉標示以移動住家位置。",
+                    "edit_home_zone_narrow": "住家的半徑尚無法由前端進行設定、但可以於一般設定中變更其位置。",
+                    "go_to_core_config": "切換至一般設定？",
+                    "home_zone_core_config": "住家的位置可以於一般設定頁面中進行編輯、但半徑尚無法編輯。是否要切換至一般設定？",
                     "introduction": "區域允許您指定地球上的特定區域，當人員進入到此區域時、狀態會顯示為該區域名字。區域同時也能夠作為自動化的觸發器或條件設定。",
                     "no_zones_created_yet": "看起來您還沒有新增任何區域。"
                 },
@@ -1764,7 +1788,7 @@
                         "listening_to": "監聽：",
                         "notification_event_fired": "事件 {type} 已成功觸發！",
                         "start_listening": "開始監聽",
-                        "stop_listening": "調整監聽",
+                        "stop_listening": "停止監聽",
                         "subscribe_to": "訂閱事件",
                         "title": "事件",
                         "type": "事件類別"
@@ -1808,7 +1832,7 @@
                         "payload": "負載（允取模版）",
                         "publish": "發佈",
                         "start_listening": "開始監聽",
-                        "stop_listening": "調整監聽",
+                        "stop_listening": "停止監聽",
                         "subscribe_to": "訂閱主題",
                         "title": "MQTT",
                         "topic": "主題"
@@ -1892,6 +1916,11 @@
                         "toggle": "切換 {name}",
                         "url": "開啟視窗至 {url_path}"
                     },
+                    "safe-mode": {
+                        "description": "Home Assistant 於載入設定時發生問題、正以安全模式執行中。請參閱錯誤紀錄、以找出問題。",
+                        "header": "安全模式已開啟",
+                        "show_errors": "顯示錯誤"
+                    },
                     "shopping-list": {
                         "add_item": "新增項目",
                         "checked_items": "已選取項目",
@@ -1910,6 +1939,9 @@
                         "alarm-panel": {
                             "available_states": "可用狀態",
                             "name": "警報器面板"
+                        },
+                        "button": {
+                            "name": "按鈕"
                         },
                         "conditional": {
                             "name": "條件式面板"
