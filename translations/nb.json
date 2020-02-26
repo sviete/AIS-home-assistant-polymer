@@ -581,6 +581,7 @@
                 "entity": "Beslektede entiteter",
                 "group": "Del av følgende grupper",
                 "integration": "Integrering",
+                "no_related_found": "Finner ingen relaterte elementer.",
                 "scene": "Del av følgende scener",
                 "script": "Del av følgende skript"
             },
@@ -604,7 +605,8 @@
             "config_entry_system_options": {
                 "enable_new_entities_description": "Hvis den er deaktivert, blir ikke nyoppdagede entiteter for {integration} automatisk lagt til i Home Assistant.",
                 "enable_new_entities_label": "Aktiver enheter som nylig er lagt til.",
-                "title": "Systemalternativer for {integration}"
+                "title": "Systemalternativer for {integration}",
+                "update": "Oppdater"
             },
             "confirmation": {
                 "cancel": "Avbryt",
@@ -629,6 +631,7 @@
                     "unavailable": "Denne entiteten er ikke tilgjengelig for øyeblikket.",
                     "update": "OPPDATÉR"
                 },
+                "no_unique_id": "Denne enheten har ikke en unik ID, derfor kan innstillingene ikke administreres fra brukergrensesnittet.",
                 "related": "Relaterte",
                 "settings": "Innstillinger"
             },
@@ -640,6 +643,9 @@
             "more_info_control": {
                 "dismiss": "Avvis dialogboksen",
                 "edit": "Redigér entitet",
+                "person": {
+                    "create_zone": "Opprett sone fra gjeldende plassering"
+                },
                 "restored": {
                     "confirm_remove_text": "Er du sikker på at du vil fjerne denne entiteten?",
                     "confirm_remove_title": "Vil du fjerne entiteten?",
@@ -659,6 +665,18 @@
                 },
                 "updater": {
                     "title": "Oppdateringsanvisning"
+                },
+                "vacuum": {
+                    "clean_spot": "Rent sted",
+                    "commands": "Støvsugerkommandoer:",
+                    "fan_speed": "Viftehastighet",
+                    "locate": "Lokaliser",
+                    "pause": "Pause",
+                    "return_home": "Vende hjem",
+                    "start": "Start",
+                    "start_pause": "Start / Pause",
+                    "status": "Status",
+                    "stop": "Stopp"
                 }
             },
             "more_info_settings": {
@@ -879,6 +897,7 @@
                         },
                         "edit_ui": "Rediger med UI",
                         "edit_yaml": "Rediger som YAML",
+                        "enable_disable": "Aktivere/deaktivere automatisering",
                         "introduction": "Bruk automasjon for å få liv i hjemmet ditt",
                         "load_error_not_editable": "Kun automasjoner i automations.yaml kan redigeres.",
                         "load_error_unknown": "Feil ved lasting av automasjon ({err_no}).",
@@ -993,7 +1012,7 @@
                 "cloud": {
                     "account": {
                         "alexa": {
-                            "config_documentation": "Konfigurer dokumentasjon",
+                            "config_documentation": "Konfigurasjonsdokumentasjon",
                             "disable": "deaktiver",
                             "enable": "aktiver",
                             "enable_ha_skill": "Aktivere Home Assistant-ferdigheten for Alexa",
@@ -1010,7 +1029,7 @@
                         "connection_status": "Status for skytilkobling",
                         "fetching_subscription": "Henter abonnement...",
                         "google": {
-                            "config_documentation": "Konfigurer dokumentasjon",
+                            "config_documentation": "Konfigurasjonsdokumentasjon",
                             "devices_pin": "PIN-kode for sikkerhetsenheter",
                             "enable_ha_skill": "Aktivere Home Assistant-ferdigheten for Google Assistant",
                             "enable_state_reporting": "Aktiver tilstandsrapportering",
@@ -1306,6 +1325,7 @@
                         "filter": {
                             "filter": "Filter",
                             "show_disabled": "Vis deaktiverte entiteter",
+                            "show_readonly": "Vis skrivebeskyttede enheter",
                             "show_unavailable": "Vis utilgjengelige enheter"
                         },
                         "header": "Entiteter",
@@ -1329,6 +1349,7 @@
                         "status": {
                             "disabled": "Deaktivert",
                             "ok": "Ok",
+                            "readonly": "Skrivebeskyttet",
                             "unavailable": "Utilgjengelig"
                         },
                         "unavailable": "(utilgjengelig)"
@@ -1359,7 +1380,7 @@
                         "add_area": "Legg til område",
                         "area_picker_label": "Område",
                         "close": "Lukk",
-                        "created_config": "Opprettet konfigurasjon for {name}.",
+                        "created_config": "Opprettet konfigurasjon for {name} .",
                         "dismiss": "Avvis dialog",
                         "error_saving_area": "Feil ved lagring av område: {error}",
                         "external_step": {
@@ -1496,7 +1517,7 @@
                             "automation": "Last inn automasjoner på nytt",
                             "core": "Last inn lokasjon og spesialtilpassinger på nytt",
                             "group": "Last inn grupper på nytt",
-                            "heading": "Konfigurasjon lastes på nytt",
+                            "heading": "YAML -Konfigurasjon lastes på nytt",
                             "introduction": "Noen deler av Home Assistant kan laste inn uten å kreve omstart. Hvis du trykker last på nytt, vil du bytte den nåværende konfigurasjonen med den nye.",
                             "person": "Last inn personer på nytt",
                             "scene": "Last inn scener på nytt",
@@ -1684,7 +1705,10 @@
                         "required_error_msg": "Dette feltet er påkrevd",
                         "update": "Oppdater"
                     },
-                    "edit_home_zone": "Plasseringen av hjemmet ditt kan endres i general-konfigurasjonen.",
+                    "edit_home_zone": "Radien til Hjemmesonen kan ikke redigeres fra frontend ennå. Dra markøren på kartet for å flytte hjemmesonen.",
+                    "edit_home_zone_narrow": "Radiusen til hjemsonen kan ikke redigeres fra frontend ennå. Plasseringen kan endres fra den generelle konfigurasjonen.",
+                    "go_to_core_config": "Gå til generell konfigurasjon?",
+                    "home_zone_core_config": "Plasseringen av hjemmesonen kan redigeres fra den generelle konfigurasjonssiden. Radiusen til hjemsonen kan ikke redigeres fra frontend ennå. Vil du gå til den generelle konfigurasjonen?",
                     "introduction": "Med soner kan du angi bestemte områder på jorden. Når en person er innenfor en sone, vil staten ta navnet fra sonen. Soner kan også brukes som en utløser eller tilstand i automatiserings oppsett.",
                     "no_zones_created_yet": "Det ser ut til at du ikke har opprettet noen soner enda."
                 },
@@ -1712,12 +1736,12 @@
                         "network_stopped": "Z-Wave nettverket stoppet"
                     },
                     "node_config": {
-                        "config_parameter": "Konfigurasjon parameter",
-                        "config_value": "Konfigurasjon verdi",
+                        "config_parameter": "Konfigurasjonsparameter",
+                        "config_value": "Konfigurasjonsverdi",
                         "false": "Usant",
                         "header": "Alternativer for nodekonfigurasjon",
                         "seconds": "sekunder",
-                        "set_config_parameter": "Angi konfigurasjons parameter",
+                        "set_config_parameter": "Angi konfigurasjonsparameter",
                         "set_wakeup": "Angi vekkeintervall",
                         "true": "Sant"
                     },
@@ -1892,6 +1916,11 @@
                         "toggle": "Veksle {name}",
                         "url": "Åpne vindu til {url_path}"
                     },
+                    "safe-mode": {
+                        "description": "Home Assistant fikk problemer under lasting av konfigurasjonen og kjører nå i sikkermodus. Ta en titt på feilloggen for å se hva som gikk galt.",
+                        "header": "Sikkermodus aktivert",
+                        "show_errors": "Vis feil"
+                    },
                     "shopping-list": {
                         "add_item": "Legg til",
                         "checked_items": "Merkede elementer",
@@ -1910,6 +1939,9 @@
                         "alarm-panel": {
                             "available_states": "Tilgjengelige tilstander",
                             "name": "Alarmpanel"
+                        },
+                        "button": {
+                            "name": "Knapp"
                         },
                         "conditional": {
                             "name": "Betinget"
@@ -2057,20 +2089,20 @@
                     "header": "Rediger brukergrensesnitt",
                     "menu": {
                         "open": "Åpne Lovelace UI-menyen",
-                        "raw_editor": "Tekstbasert konfigurasjonsredigering"
+                        "raw_editor": "Redigeringsprogram for raw-konfigurasjon"
                     },
                     "migrate": {
                         "header": "Inkompatibel Konfigurasjon",
-                        "migrate": "Overfør konfigurasjon",
-                        "para_migrate": "Home Assistant kan legge til ID-er på alle dine kort og visninger automatisk for deg ved å trykke på 'Overfør konfigurasjon' knappen.",
+                        "migrate": "Migrer konfigurasjon",
+                        "para_migrate": "Hjemmeassistent kan legge til ID-er på alle kortene og visningene automatisk for deg ved å trykke på 'Migrer konfigurasjon' -knappen.",
                         "para_no_id": "Dette elementet har ingen ID. Vennligst legg til en ID på dette elementet i 'ui-lovelace.yaml'."
                     },
                     "raw_editor": {
                         "confirm_remove_config_text": "Vi vil automatisk generere Lovelace-visningene dine med områdene og enhetene dine hvis du fjerner Lovelace-konfigurasjonen.",
                         "confirm_remove_config_title": "Er du sikker på at du vil fjerne Lovelace-konfigurasjonen? Vi vil automatisk generere Lovelace-visningene dine med områdene og enhetene dine.",
                         "confirm_unsaved_changes": "Du har ulagrede endringer, er du sikker på at du vil avslutte?",
-                        "confirm_unsaved_comments": "Konfigurasjonen din inneholder kommentar(er), disse vil ikke bli lagret. Vil du fortsette?",
-                        "error_invalid_config": "Konfigurasjonen er ikke gyldig: {error}",
+                        "confirm_unsaved_comments": "Konfigurasjonen din inneholder kommentarer, disse vil ikke bli lagret. Vil du fortsette?",
+                        "error_invalid_config": "Konfigurasjonen din er ikke gyldig: {error}",
                         "error_parse_yaml": "Kan ikke analysere YAML: {error}",
                         "error_remove": "Kan ikke fjerne konfigurasjonen: {error}",
                         "error_save_yaml": "Kan ikke lagre YAML: {error}",
@@ -2196,7 +2228,7 @@
                                     "data": {
                                         "password": "API-passord"
                                     },
-                                    "description": "Vennligst skriv inn API-passordet i http-konfigurasjonen din:"
+                                    "description": "Skriv inn API-passordet i HTTP-konfigurasjonen:"
                                 },
                                 "mfa": {
                                     "data": {

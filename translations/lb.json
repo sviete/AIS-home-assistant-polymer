@@ -602,9 +602,10 @@
         },
         "dialogs": {
             "config_entry_system_options": {
-                "enable_new_entities_description": "Falls desaktivéiert, ginn nei entdeckten Entitéiten net automatesch zu Home Assistant dobäigesat.",
+                "enable_new_entities_description": "Falls desaktivéiert, ginn nei entdeckten Entitéiten fir {integration} net automatesch zu Home Assistant dobäigesat.",
                 "enable_new_entities_label": "Aktivéiert nei dobäigesate Entitéiten.",
-                "title": "System Optiounen"
+                "title": "System Optiounen fir {integration}",
+                "update": "Aktualiséieren"
             },
             "confirmation": {
                 "cancel": "Ofbriechen",
@@ -640,6 +641,9 @@
             "more_info_control": {
                 "dismiss": "Dialog ofbriechen",
                 "edit": "Entitéit änneren",
+                "person": {
+                    "create_zone": "Zone erstellen vun der aktueller Positioun"
+                },
                 "restored": {
                     "confirm_remove_text": "Sécher fir dës Entitéit ze läsche?",
                     "confirm_remove_title": "Entitéit läschen?",
@@ -659,6 +663,18 @@
                 },
                 "updater": {
                     "title": "Instruktioune fir d'Mise à jour"
+                },
+                "vacuum": {
+                    "clean_spot": "Plaz botzen",
+                    "commands": "Staubsauger Kommandoen:",
+                    "fan_speed": "Vitesse vum Ventilator",
+                    "locate": "Lokaliséieren",
+                    "pause": "Pause",
+                    "return_home": "Zeréck zur Statioun",
+                    "start": "Start",
+                    "start_pause": "Start/Pause",
+                    "status": "Status",
+                    "stop": "Stop"
                 }
             },
             "more_info_settings": {
@@ -879,6 +895,7 @@
                         },
                         "edit_ui": "Mam Benotzer Inteface änneren",
                         "edit_yaml": "Als YAML änneren",
+                        "enable_disable": "Automatismen aktivéieren/deaktivieren",
                         "introduction": "Benotzt Automatismen fir däin Haus zum Liewen ze bréngen",
                         "load_error_not_editable": "Nëmmen Automatiounen am automations.yaml kënnen editéiert ginn.",
                         "load_error_unknown": "Feeler beim luede vun der Automatioun ({err_no}).",
@@ -1253,7 +1270,7 @@
                     "details": "Hei sinn all Detailer vun ärem Apparat.",
                     "device_not_found": "Apparat net fonnt.",
                     "entities": {
-                        "add_entities_lovelace": "All Entitéiten zu Lovelace bäisetzen",
+                        "add_entities_lovelace": "Zu Lovelace bäisetzen",
                         "entities": "Entitéiten",
                         "none": "Dësen Appart huet keng Entitéiten."
                     },
@@ -1494,7 +1511,7 @@
                     "section": {
                         "reloading": {
                             "automation": "Automatisme nei lueden",
-                            "core": "Kär néi lueden",
+                            "core": "Standuert and Personnalisatioun néi lueden",
                             "group": "Gruppe nei lueden",
                             "heading": "Konfiguratioun gëtt frësch gelueden",
                             "introduction": "E puer Deeler vum Home Assistant kënne frësch geluede ginn ouni datt een Neistart néideg ass. Klick op nei luede fir di aktuell Konfiguratioun z'entlueden an di nei Konfiguratioun ze lueden.",
@@ -1679,7 +1696,7 @@
                         "name": "Numm",
                         "new_zone": "Nei Zon",
                         "passive": "Passiv",
-                        "passive_note": "Passiv Zonë sinn am Frontend verstoppt a ginn net als Standuert fir Apparaten Tracker benotzt. Dëst ass nëtzlech wann Dir et just fir Automatisme wëllt benotzen.",
+                        "passive_note": "Passiv Zone sinn am Frontend verstoppt a ginn net als Standuert fir Apparaten Tracker benotzt. Dëst ass nëtzlech wann Dir et just fir Automatisme wëllt benotzen.",
                         "radius": "Radius",
                         "required_error_msg": "Dëst Feld ass erfuerderlech",
                         "update": "Aktualiséieren"
@@ -1911,6 +1928,9 @@
                             "available_states": "Verfügbar Zoustänn",
                             "name": "Alarm Zentral"
                         },
+                        "button": {
+                            "name": "Knäppchen"
+                        },
                         "conditional": {
                             "name": "Bedingungen"
                         },
@@ -2088,7 +2108,7 @@
                     },
                     "suggest_card": {
                         "add": "Zu Lovelace bäisetzen",
-                        "create_own": "Erstellt är eegen",
+                        "create_own": "Aner Kaart auswielen",
                         "header": "Mir hun eng Suggestioun fir iech erstallt"
                     },
                     "view": {

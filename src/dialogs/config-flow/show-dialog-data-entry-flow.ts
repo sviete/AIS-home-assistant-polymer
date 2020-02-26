@@ -7,8 +7,8 @@ import {
   DataEntryFlowStepForm,
   DataEntryFlowStep,
   DataEntryFlowStepAbort,
-  FieldSchema,
 } from "../../data/data_entry_flow";
+import { HaFormSchema } from "../../components/ha-form/ha-form";
 
 export interface FlowConfig {
   loadDevicesAndAreas: boolean;
@@ -45,7 +45,7 @@ export interface FlowConfig {
   renderShowFormStepFieldLabel(
     hass: HomeAssistant,
     step: DataEntryFlowStepForm,
-    field: FieldSchema
+    field: HaFormSchema
   ): string;
 
   renderShowFormStepFieldError(
@@ -79,7 +79,9 @@ export interface DataEntryFlowDialogParams {
 }
 
 export const loadDataEntryFlowDialog = () =>
-  import(/* webpackChunkName: "dialog-config-flow" */ "./dialog-data-entry-flow");
+  import(
+    /* webpackChunkName: "dialog-config-flow" */ "./dialog-data-entry-flow"
+  );
 
 export const showFlowDialog = (
   element: HTMLElement,

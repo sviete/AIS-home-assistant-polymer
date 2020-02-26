@@ -27,6 +27,8 @@ import { SensorCardConfig } from "./types";
 import { hasConfigOrEntityChanged } from "../common/has-changed";
 import { actionHandler } from "../common/directives/action-handler-directive";
 
+const strokeWidth = 5;
+
 const average = (items): number => {
   return (
     items.reduce((sum, entry) => sum + parseFloat(entry.state), 0) /
@@ -90,7 +92,7 @@ const calcPoints = (
   let last = [average(first), lastValue(first)];
 
   const getCoords = (item, i, offset = 0, depth = 1) => {
-    if (depth > 1) {
+    if (depth > 1 && item) {
       return item.forEach((subItem, index) =>
         getCoords(subItem, i, index, depth - 1)
       );
@@ -101,7 +103,8 @@ const calcPoints = (
     if (item) {
       last = [average(item), lastValue(item)];
     }
-    const y = height - ((item ? last[0] : last[1]) - min) / yRatio;
+    const y =
+      height + strokeWidth / 2 - ((item ? last[0] : last[1]) - min) / yRatio;
     return coords.push([x, y]);
   };
 
@@ -255,11 +258,11 @@ class HuiSensorCard extends LitElement implements LovelaceCard {
               <rect height="100%" width="100%" id="fill-rect" fill="var(--accent-color)" mask="url(#fill)"></rect>
               <mask id="line">
                 <path
-                  fill="none" 
+                  fill="none"
                   stroke="var(--accent-color)"
-                  stroke-width="5"
+                  stroke-width="${strokeWidth}"
                   stroke-linecap="round"
-                  stroke-linejoin="round" 
+                  stroke-linejoin="round"
                   d=${this._history}
                 ></path>
               </mask>
@@ -398,7 +401,7 @@ class HuiSensorCard extends LitElement implements LovelaceCard {
       }
 
       .header {
-        margin: 16px 16px 0;
+        margin: 8px 16px 0;
         justify-content: space-between;
       }
 
@@ -428,17 +431,12 @@ class HuiSensorCard extends LitElement implements LovelaceCard {
 
       .icon {
         color: var(--paper-item-icon-color, #44739e);
-        display: inline-block;
-        flex: 0 0 40px;
         line-height: 40px;
-        position: relative;
-        text-align: center;
-        width: 40px;
       }
 
       .info {
         flex-wrap: wrap;
-        margin: 16px;
+        margin: 0 16px 16px;
       }
 
       #value {
