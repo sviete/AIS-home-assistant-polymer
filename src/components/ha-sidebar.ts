@@ -44,10 +44,12 @@ const SHOW_AFTER_SPACER = [
 const SUPPORT_SCROLL_IF_NEEDED = "scrollIntoViewIfNeeded" in document.body;
 
 const SORT_VALUE_URL_PATHS = {
-  map: 1,
-  logbook: 2,
-  history: 3,
-  aisgalery: 4,
+  "lovelace/ais_audio": 1,
+  aisgalery: 2,
+  "lovelace/ais_zigbee": 3,
+  map: 4,
+  logbook: 5,
+  history: 6,
   "developer-tools": 9,
   hassio: 10,
   config: 11,
@@ -58,7 +60,9 @@ const SORT_VALUE_URL_PATHS = {
 const panelSorter = (a, b) => {
   const aBuiltIn = a.url_path in SORT_VALUE_URL_PATHS;
   const bBuiltIn = b.url_path in SORT_VALUE_URL_PATHS;
-
+  console.log("xxx");
+  console.log(a.url_path);
+  console.log(b.url_path);
   if (aBuiltIn && bBuiltIn) {
     return SORT_VALUE_URL_PATHS[a.url_path] - SORT_VALUE_URL_PATHS[b.url_path];
   }

@@ -36,11 +36,11 @@ documentContainer.innerHTML = `<custom-style>
       --error-color: #db4437;
 
       /* states and badges */
-      --state-icon-color: #f69562;
-      --state-icon-active-color: #FDD835;
+      --state-icon-color: #727272;
+      --state-icon-active-color: #ff9800;
 
       /* background and sidebar */
-      --card-background-color: #ffffff;
+      --card-background-color: #ffffffcf;
       --primary-background-color: #fafafa;
       --secondary-background-color: #e5e5e5; /* behind the cards on state */
 
