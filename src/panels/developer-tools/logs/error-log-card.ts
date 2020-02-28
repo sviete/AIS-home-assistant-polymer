@@ -18,22 +18,6 @@ class ErrorLogCard extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <p class="error-log-intro">
-        ${this._errorLog
-          ? html`
-              <paper-icon-button
-                icon="hass:refresh"
-                @click=${this._refreshErrorLog}
-              ></paper-icon-button>
-            `
-          : html`
-              <mwc-button raised @click=${this._refreshErrorLog}>
-                ${this.hass.localize(
-                  "ui.panel.developer-tools.tabs.logs.load_full_log"
-                )}
-              </mwc-button>
-            `}
-      </p>
       <div class="error-log">${this._errorLog}</div>
     `;
   }
