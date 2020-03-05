@@ -4,6 +4,9 @@ hass.connection.subscribeEvents((event) => {
     event.data.domain === "ais_ai_service" &&
     event.data.service === "say_in_browser"
   ) {
+    if (window.location.hostname === "127.0.0.1") {
+      return;
+    }
     if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
       var speech = new SpeechSynthesisUtterance(event.data.service_data.text);
@@ -13,6 +16,7 @@ hass.connection.subscribeEvents((event) => {
     // say in frame
     try {
       window.JavascriptHandler.sayInFrame(event.data.service_data.text);
+      // eslint-disable-next-line no-empty
     } catch (err) {}
   }
 }, "call_service");
