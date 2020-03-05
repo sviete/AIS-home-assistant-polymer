@@ -43,6 +43,7 @@ import "../cards/hui-ais-fold-entity-row-card";
 import "../cards/hui-ais-zigbee2mqtt-card";
 import "../cards/hui-ais-now-playing-poster-card";
 import "../cards/hui-ais-light-card";
+import "../cards/hui-ais-theme-maker-card";
 
 const ALWAYS_LOADED_TYPES = new Set([
   "entities",
@@ -86,6 +87,7 @@ const ALWAYS_LOADED_TYPES = new Set([
   "ais-zigbee2mqtt",
   "ais-now-playing-poster",
   "ais-light",
+  "ais-theme-maker",
 ]);
 
 const LAZY_LOAD_TYPES = {

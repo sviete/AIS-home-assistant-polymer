@@ -17,10 +17,11 @@ documentContainer.innerHTML = `<custom-style>
     html {
       font-size: 14px;
       height: 100vh;
+      label-badge-red: #FF9800;
 
       /* text */
-      --primary-text-color: #212121;
-      --secondary-text-color: #727272;
+      --primary-text-color: #ffffff;
+      --secondary-text-color: #FF9800;
       --text-primary-color: #ffffff;
       --disabled-text-color: #bdbdbd;
 
@@ -40,15 +41,18 @@ documentContainer.innerHTML = `<custom-style>
       --state-icon-active-color: #ff9800;
 
       /* background and sidebar */
-      --card-background-color: #ffffffcf;
-      --primary-background-color: #fafafa;
-      --secondary-background-color: #e5e5e5; /* behind the cards on state */
+      --card-background-color: #323232cc;
+      --primary-background-color: #4c4c4c;
+      --secondary-background-color: #4c4c4c;
+      --paper-listbox-background-color: "#727272"
 
       /* for label-badge */
-      --label-badge-red: #c66900;
-      --label-badge-blue: #039be5;
-      --label-badge-green: #0DA035;
-      --label-badge-yellow: #f4b400;
+      --label-badge-red: #FF9800;
+      --label-badge-blue: #ffc947;
+      --label-badge-green: #c66900;
+      --label-badge-yellow: #ffffff;
+      --label-badge-text-color: #ffffff;
+      --label-badge-color: #FF9800;
 
       /*
         Paper-styles color.html dependency is stripped on build.
@@ -56,8 +60,8 @@ documentContainer.innerHTML = `<custom-style>
         from paper-styles/color.html to here.
       */
 
-      --paper-grey-50: #fafafa; /* default for: --mwc-switch-unchecked-button-color */
-      --paper-grey-200: #eeeeee;  /* for ha-date-picker-style */
+      --paper-grey-50: #727272; /* default for: --mwc-switch-unchecked-button-color */
+      --paper-grey-200: #4c4c4c;  /* for ha-date-picker-style */
       --paper-grey-500: #9e9e9e;  /* --label-badge-grey */
 
       /* for paper-spinner */
@@ -89,7 +93,7 @@ documentContainer.innerHTML = `<custom-style>
       /* rgb */
       --rgb-primary-color: 3, 169, 244;
       --rgb-accent-color: 255, 152, 0;
-      --rgb-primary-text-color: 33, 33, 33;
+      --rgb-primary-text-color: 255, 255, 255;
       --rgb-secondary-text-color: 114, 114, 114;
       --rgb-text-primary-color: 255, 255, 255;
 

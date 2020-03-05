@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
     <link rel="icon" href="/static/icons/favicon.ico" />
-    <link rel="mask-icon" href="/static/icons/mask-icon.svg" color="#03a9f4" />
+    <link rel="mask-icon" href="/static/icons/mask-icon.svg" color="#FF9800" />
     <link
       rel="preload"
       href="/static/fonts/roboto/Roboto-Regular.woff2"
@@ -46,7 +46,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <meta name="theme-color" content="#03a9f4" />
+    <meta name="theme-color" content="#FF9800" />
     <meta property="fb:app_id" content="338291289691179" />
     <meta property="og:title" content="Home Assistant Demo" />
     <meta property="og:site_name" content="Home Assistant" />
@@ -88,7 +88,7 @@
         display: block;
         content: "";
         height: 64px;
-        background-color: #03a9f4;
+        background-color: #FF9800;
       }
     </style>
   </head>
