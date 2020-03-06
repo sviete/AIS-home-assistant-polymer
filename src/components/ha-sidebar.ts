@@ -60,9 +60,6 @@ const SORT_VALUE_URL_PATHS = {
 const panelSorter = (a, b) => {
   const aBuiltIn = a.url_path in SORT_VALUE_URL_PATHS;
   const bBuiltIn = b.url_path in SORT_VALUE_URL_PATHS;
-  console.log("xxx");
-  console.log(a.url_path);
-  console.log(b.url_path);
   if (aBuiltIn && bBuiltIn) {
     return SORT_VALUE_URL_PATHS[a.url_path] - SORT_VALUE_URL_PATHS[b.url_path];
   }

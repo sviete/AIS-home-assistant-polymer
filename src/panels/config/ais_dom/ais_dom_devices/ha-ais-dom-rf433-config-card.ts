@@ -277,7 +277,6 @@ export class HaDeviceEntitiesCard extends LitElement {
       const idx = ev.currentTarget["data-idx"];
       const entityTtt = ev.currentTarget["data-ttt"];
       const entityName = this.shadowRoot!.getElementById("name_" + idx);
-      console.log("xxx");
       console.log("entityTyp " + entityTtt);
       console.log("ev.currentTarget:" + ev.currentTarget);
       this.hass.callService("ais_dom_device", "add_ais_dom_entity", {

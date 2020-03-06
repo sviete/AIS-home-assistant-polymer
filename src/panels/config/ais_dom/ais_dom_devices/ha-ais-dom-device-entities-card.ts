@@ -44,6 +44,7 @@ export class HaDeviceEntitiesCard extends LitElement {
                 return "";
               }
               const stateObj = this.hass.states[entry.entity_id];
+              const platform = entry.platform;
               return html`
                 <paper-icon-item
                   .entry=${entry}
@@ -76,10 +77,14 @@ export class HaDeviceEntitiesCard extends LitElement {
                           ></paper-icon-button>
                         `
                       : ""}
-                    <paper-icon-button
-                      @click=${this._confirmDeleteEntry}
-                      icon="hass:delete"
-                    ></paper-icon-button>
+                    ${platform !== "ais_drives_service"
+                      ? html`
+                          <paper-icon-button
+                            @click=${this._confirmDeleteEntry}
+                            icon="hass:delete"
+                          ></paper-icon-button>
+                        `
+                      : ""}
                   </div>
                 </paper-icon-item>
               `;

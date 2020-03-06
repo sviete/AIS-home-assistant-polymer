@@ -128,7 +128,6 @@ export class HaConfigDevicePage extends LitElement {
         <hass-error-screen error="AIS Device not found."></hass-error-screen>
       `;
     }
-
     const entities = this._entities(this.deviceId, this.entities);
     // ${device.model === "Sonoff Bridge"
     return html`
@@ -176,7 +175,8 @@ export class HaConfigDevicePage extends LitElement {
                 </ha-ais-dom-device-entities-card>
               `
             : html``}
-          ${window.location.protocol === "http:"
+          ${window.location.protocol === "http:" &&
+          device?.sw_version !== "Rclone"
             ? html`
                 <div class="header">Strona urządzenia</div>
                 <ais-dom-iframe-view

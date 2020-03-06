@@ -506,7 +506,7 @@ const O = (t) =>
  * Code distributed by Google as part of the polymer project is also
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
- */ const T = new class {
+ */ const T = new (class {
   handleAttributeExpressions(t, e, n, i) {
     const r = e[0];
     return "." === r
@@ -520,7 +520,7 @@ const O = (t) =>
   handleTextExpression(t) {
     return new M(t);
   }
-}();
+})();
 /**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -1807,7 +1807,7 @@ var jt =
           pointerEvents: "none",
         }),
           this.appendChild(this.ripple),
-          (this.ripple.style.color = "#03a9f4"),
+          (this.ripple.style.color = "#ff9800"),
           (this.ripple.style.color = "var(--primary-color)"),
           [
             "touchcancel",
@@ -1929,1391 +1929,1408 @@ customElements.get("long-press-custom-card-helpers") ||
   : "undefined" != typeof self && self;
 var Ht,
   Dt,
-  It = ((function(t, e) {
-    t.exports = (function(t) {
-      var e = {};
-      function n(i) {
-        if (e[i]) return e[i].exports;
-        var r = (e[i] = { i: i, l: !1, exports: {} });
-        return t[i].call(r.exports, r, r.exports, n), (r.l = !0), r.exports;
-      }
-      return (
-        (n.m = t),
-        (n.c = e),
-        (n.d = function(t, e, i) {
-          n.o(t, e) || Object.defineProperty(t, e, { enumerable: !0, get: i });
-        }),
-        (n.r = function(t) {
-          "undefined" != typeof Symbol &&
-            Symbol.toStringTag &&
-            Object.defineProperty(t, Symbol.toStringTag, { value: "Module" }),
-            Object.defineProperty(t, "__esModule", { value: !0 });
-        }),
-        (n.t = function(t, e) {
-          if ((1 & e && (t = n(t)), 8 & e)) return t;
-          if (4 & e && "object" == typeof t && t && t.__esModule) return t;
-          var i = Object.create(null);
-          if (
-            (n.r(i),
-            Object.defineProperty(i, "default", { enumerable: !0, value: t }),
-            2 & e && "string" != typeof t)
-          )
-            for (var r in t)
-              n.d(
-                i,
-                r,
-                function(e) {
-                  return t[e];
-                }.bind(null, r)
+  It =
+    ((function(t, e) {
+      t.exports = (function(t) {
+        var e = {};
+        function n(i) {
+          if (e[i]) return e[i].exports;
+          var r = (e[i] = { i: i, l: !1, exports: {} });
+          return t[i].call(r.exports, r, r.exports, n), (r.l = !0), r.exports;
+        }
+        return (
+          (n.m = t),
+          (n.c = e),
+          (n.d = function(t, e, i) {
+            n.o(t, e) ||
+              Object.defineProperty(t, e, { enumerable: !0, get: i });
+          }),
+          (n.r = function(t) {
+            "undefined" != typeof Symbol &&
+              Symbol.toStringTag &&
+              Object.defineProperty(t, Symbol.toStringTag, { value: "Module" }),
+              Object.defineProperty(t, "__esModule", { value: !0 });
+          }),
+          (n.t = function(t, e) {
+            if ((1 & e && (t = n(t)), 8 & e)) return t;
+            if (4 & e && "object" == typeof t && t && t.__esModule) return t;
+            var i = Object.create(null);
+            if (
+              (n.r(i),
+              Object.defineProperty(i, "default", { enumerable: !0, value: t }),
+              2 & e && "string" != typeof t)
+            )
+              for (var r in t)
+                n.d(
+                  i,
+                  r,
+                  function(e) {
+                    return t[e];
+                  }.bind(null, r)
+                );
+            return i;
+          }),
+          (n.n = function(t) {
+            var e =
+              t && t.__esModule
+                ? function() {
+                    return t.default;
+                  }
+                : function() {
+                    return t;
+                  };
+            return n.d(e, "a", e), e;
+          }),
+          (n.o = function(t, e) {
+            return Object.prototype.hasOwnProperty.call(t, e);
+          }),
+          (n.p = ""),
+          n((n.s = 90))
+        );
+      })({
+        17: function(t, e, n) {
+          (e.__esModule = !0), (e.default = void 0);
+          var i = n(18),
+            r = (function() {
+              function t() {}
+              return (
+                (t.getFirstMatch = function(t, e) {
+                  var n = e.match(t);
+                  return (n && n.length > 0 && n[1]) || "";
+                }),
+                (t.getSecondMatch = function(t, e) {
+                  var n = e.match(t);
+                  return (n && n.length > 1 && n[2]) || "";
+                }),
+                (t.matchAndReturnConst = function(t, e, n) {
+                  if (t.test(e)) return n;
+                }),
+                (t.getWindowsVersionName = function(t) {
+                  switch (t) {
+                    case "NT":
+                      return "NT";
+                    case "XP":
+                      return "XP";
+                    case "NT 5.0":
+                      return "2000";
+                    case "NT 5.1":
+                      return "XP";
+                    case "NT 5.2":
+                      return "2003";
+                    case "NT 6.0":
+                      return "Vista";
+                    case "NT 6.1":
+                      return "7";
+                    case "NT 6.2":
+                      return "8";
+                    case "NT 6.3":
+                      return "8.1";
+                    case "NT 10.0":
+                      return "10";
+                    default:
+                      return;
+                  }
+                }),
+                (t.getAndroidVersionName = function(t) {
+                  var e = t
+                    .split(".")
+                    .splice(0, 2)
+                    .map(function(t) {
+                      return parseInt(t, 10) || 0;
+                    });
+                  if ((e.push(0), !(1 === e[0] && e[1] < 5)))
+                    return 1 === e[0] && e[1] < 6
+                      ? "Cupcake"
+                      : 1 === e[0] && e[1] >= 6
+                      ? "Donut"
+                      : 2 === e[0] && e[1] < 2
+                      ? "Eclair"
+                      : 2 === e[0] && 2 === e[1]
+                      ? "Froyo"
+                      : 2 === e[0] && e[1] > 2
+                      ? "Gingerbread"
+                      : 3 === e[0]
+                      ? "Honeycomb"
+                      : 4 === e[0] && e[1] < 1
+                      ? "Ice Cream Sandwich"
+                      : 4 === e[0] && e[1] < 4
+                      ? "Jelly Bean"
+                      : 4 === e[0] && e[1] >= 4
+                      ? "KitKat"
+                      : 5 === e[0]
+                      ? "Lollipop"
+                      : 6 === e[0]
+                      ? "Marshmallow"
+                      : 7 === e[0]
+                      ? "Nougat"
+                      : 8 === e[0]
+                      ? "Oreo"
+                      : void 0;
+                }),
+                (t.getVersionPrecision = function(t) {
+                  return t.split(".").length;
+                }),
+                (t.compareVersions = function(e, n, i) {
+                  void 0 === i && (i = !1);
+                  var r = t.getVersionPrecision(e),
+                    s = t.getVersionPrecision(n),
+                    a = Math.max(r, s),
+                    o = 0,
+                    c = t.map([e, n], function(e) {
+                      var n = a - t.getVersionPrecision(e),
+                        i = e + new Array(n + 1).join(".0");
+                      return t
+                        .map(i.split("."), function(t) {
+                          return new Array(20 - t.length).join("0") + t;
+                        })
+                        .reverse();
+                    });
+                  for (i && (o = a - Math.min(r, s)), a -= 1; a >= o; ) {
+                    if (c[0][a] > c[1][a]) return 1;
+                    if (c[0][a] === c[1][a]) {
+                      if (a === o) return 0;
+                      a -= 1;
+                    } else if (c[0][a] < c[1][a]) return -1;
+                  }
+                }),
+                (t.map = function(t, e) {
+                  var n,
+                    i = [];
+                  if (Array.prototype.map)
+                    return Array.prototype.map.call(t, e);
+                  for (n = 0; n < t.length; n += 1) i.push(e(t[n]));
+                  return i;
+                }),
+                (t.getBrowserAlias = function(t) {
+                  return i.BROWSER_ALIASES_MAP[t];
+                }),
+                (t.getBrowserTypeByAlias = function(t) {
+                  return i.BROWSER_MAP[t] || "";
+                }),
+                t
               );
-          return i;
-        }),
-        (n.n = function(t) {
-          var e =
-            t && t.__esModule
-              ? function() {
-                  return t.default;
-                }
-              : function() {
-                  return t;
-                };
-          return n.d(e, "a", e), e;
-        }),
-        (n.o = function(t, e) {
-          return Object.prototype.hasOwnProperty.call(t, e);
-        }),
-        (n.p = ""),
-        n((n.s = 90))
-      );
-    })({
-      17: function(t, e, n) {
-        (e.__esModule = !0), (e.default = void 0);
-        var i = n(18),
-          r = (function() {
+            })();
+          (e.default = r), (t.exports = e.default);
+        },
+        18: function(t, e, n) {
+          (e.__esModule = !0),
+            (e.ENGINE_MAP = e.OS_MAP = e.PLATFORMS_MAP = e.BROWSER_MAP = e.BROWSER_ALIASES_MAP = void 0),
+            (e.BROWSER_ALIASES_MAP = {
+              "Amazon Silk": "amazon_silk",
+              "Android Browser": "android",
+              Bada: "bada",
+              BlackBerry: "blackberry",
+              Chrome: "chrome",
+              Chromium: "chromium",
+              Epiphany: "epiphany",
+              Firefox: "firefox",
+              Focus: "focus",
+              Generic: "generic",
+              Googlebot: "googlebot",
+              "Internet Explorer": "ie",
+              "K-Meleon": "k_meleon",
+              Maxthon: "maxthon",
+              "Microsoft Edge": "edge",
+              "MZ Browser": "mz",
+              "NAVER Whale Browser": "naver",
+              Opera: "opera",
+              "Opera Coast": "opera_coast",
+              PhantomJS: "phantomjs",
+              Puffin: "puffin",
+              QupZilla: "qupzilla",
+              Safari: "safari",
+              Sailfish: "sailfish",
+              "Samsung Internet for Android": "samsung_internet",
+              SeaMonkey: "seamonkey",
+              Sleipnir: "sleipnir",
+              Swing: "swing",
+              Tizen: "tizen",
+              "UC Browser": "uc",
+              Vivaldi: "vivaldi",
+              "WebOS Browser": "webos",
+              WeChat: "wechat",
+              "Yandex Browser": "yandex",
+              Roku: "roku",
+            }),
+            (e.BROWSER_MAP = {
+              amazon_silk: "Amazon Silk",
+              android: "Android Browser",
+              bada: "Bada",
+              blackberry: "BlackBerry",
+              chrome: "Chrome",
+              chromium: "Chromium",
+              epiphany: "Epiphany",
+              firefox: "Firefox",
+              focus: "Focus",
+              generic: "Generic",
+              googlebot: "Googlebot",
+              ie: "Internet Explorer",
+              k_meleon: "K-Meleon",
+              maxthon: "Maxthon",
+              edge: "Microsoft Edge",
+              mz: "MZ Browser",
+              naver: "NAVER Whale Browser",
+              opera: "Opera",
+              opera_coast: "Opera Coast",
+              phantomjs: "PhantomJS",
+              puffin: "Puffin",
+              qupzilla: "QupZilla",
+              safari: "Safari",
+              sailfish: "Sailfish",
+              samsung_internet: "Samsung Internet for Android",
+              seamonkey: "SeaMonkey",
+              sleipnir: "Sleipnir",
+              swing: "Swing",
+              tizen: "Tizen",
+              uc: "UC Browser",
+              vivaldi: "Vivaldi",
+              webos: "WebOS Browser",
+              wechat: "WeChat",
+              yandex: "Yandex Browser",
+            }),
+            (e.PLATFORMS_MAP = {
+              tablet: "tablet",
+              mobile: "mobile",
+              desktop: "desktop",
+              tv: "tv",
+            }),
+            (e.OS_MAP = {
+              WindowsPhone: "Windows Phone",
+              Windows: "Windows",
+              MacOS: "macOS",
+              iOS: "iOS",
+              Android: "Android",
+              WebOS: "WebOS",
+              BlackBerry: "BlackBerry",
+              Bada: "Bada",
+              Tizen: "Tizen",
+              Linux: "Linux",
+              ChromeOS: "Chrome OS",
+              PlayStation4: "PlayStation 4",
+              Roku: "Roku",
+            }),
+            (e.ENGINE_MAP = {
+              EdgeHTML: "EdgeHTML",
+              Blink: "Blink",
+              Trident: "Trident",
+              Presto: "Presto",
+              Gecko: "Gecko",
+              WebKit: "WebKit",
+            });
+        },
+        90: function(t, e, n) {
+          (e.__esModule = !0), (e.default = void 0);
+          var i,
+            r = (i = n(91)) && i.__esModule ? i : { default: i },
+            s = n(18);
+          function a(t, e) {
+            for (var n = 0; n < e.length; n++) {
+              var i = e[n];
+              (i.enumerable = i.enumerable || !1),
+                (i.configurable = !0),
+                "value" in i && (i.writable = !0),
+                Object.defineProperty(t, i.key, i);
+            }
+          }
+          var o = (function() {
             function t() {}
+            var e, n;
             return (
-              (t.getFirstMatch = function(t, e) {
-                var n = e.match(t);
-                return (n && n.length > 0 && n[1]) || "";
+              (t.getParser = function(t, e) {
+                if ((void 0 === e && (e = !1), "string" != typeof t))
+                  throw new Error("UserAgent should be a string");
+                return new r.default(t, e);
               }),
-              (t.getSecondMatch = function(t, e) {
-                var n = e.match(t);
-                return (n && n.length > 1 && n[2]) || "";
+              (t.parse = function(t) {
+                return new r.default(t).getResult();
               }),
-              (t.matchAndReturnConst = function(t, e, n) {
-                if (t.test(e)) return n;
+              (e = t),
+              (n = [
+                {
+                  key: "BROWSER_MAP",
+                  get: function() {
+                    return s.BROWSER_MAP;
+                  },
+                },
+                {
+                  key: "ENGINE_MAP",
+                  get: function() {
+                    return s.ENGINE_MAP;
+                  },
+                },
+                {
+                  key: "OS_MAP",
+                  get: function() {
+                    return s.OS_MAP;
+                  },
+                },
+                {
+                  key: "PLATFORMS_MAP",
+                  get: function() {
+                    return s.PLATFORMS_MAP;
+                  },
+                },
+              ]) && a(e, n),
+              t
+            );
+          })();
+          (e.default = o), (t.exports = e.default);
+        },
+        91: function(t, e, n) {
+          (e.__esModule = !0), (e.default = void 0);
+          var i = c(n(92)),
+            r = c(n(93)),
+            s = c(n(94)),
+            a = c(n(95)),
+            o = c(n(17));
+          function c(t) {
+            return t && t.__esModule ? t : { default: t };
+          }
+          var l = (function() {
+            function t(t, e) {
+              if ((void 0 === e && (e = !1), null == t || "" === t))
+                throw new Error("UserAgent parameter can't be empty");
+              (this._ua = t),
+                (this.parsedResult = {}),
+                !0 !== e && this.parse();
+            }
+            var e = t.prototype;
+            return (
+              (e.getUA = function() {
+                return this._ua;
               }),
-              (t.getWindowsVersionName = function(t) {
-                switch (t) {
-                  case "NT":
-                    return "NT";
-                  case "XP":
-                    return "XP";
-                  case "NT 5.0":
-                    return "2000";
-                  case "NT 5.1":
-                    return "XP";
-                  case "NT 5.2":
-                    return "2003";
-                  case "NT 6.0":
-                    return "Vista";
-                  case "NT 6.1":
-                    return "7";
-                  case "NT 6.2":
-                    return "8";
-                  case "NT 6.3":
-                    return "8.1";
-                  case "NT 10.0":
-                    return "10";
-                  default:
-                    return;
+              (e.test = function(t) {
+                return t.test(this._ua);
+              }),
+              (e.parseBrowser = function() {
+                var t = this;
+                this.parsedResult.browser = {};
+                var e = i.default.find(function(e) {
+                  if ("function" == typeof e.test) return e.test(t);
+                  if (e.test instanceof Array)
+                    return e.test.some(function(e) {
+                      return t.test(e);
+                    });
+                  throw new Error("Browser's test function is not valid");
+                });
+                return (
+                  e && (this.parsedResult.browser = e.describe(this.getUA())),
+                  this.parsedResult.browser
+                );
+              }),
+              (e.getBrowser = function() {
+                return this.parsedResult.browser
+                  ? this.parsedResult.browser
+                  : this.parseBrowser();
+              }),
+              (e.getBrowserName = function(t) {
+                return t
+                  ? String(this.getBrowser().name).toLowerCase() || ""
+                  : this.getBrowser().name || "";
+              }),
+              (e.getBrowserVersion = function() {
+                return this.getBrowser().version;
+              }),
+              (e.getOS = function() {
+                return this.parsedResult.os
+                  ? this.parsedResult.os
+                  : this.parseOS();
+              }),
+              (e.parseOS = function() {
+                var t = this;
+                this.parsedResult.os = {};
+                var e = r.default.find(function(e) {
+                  if ("function" == typeof e.test) return e.test(t);
+                  if (e.test instanceof Array)
+                    return e.test.some(function(e) {
+                      return t.test(e);
+                    });
+                  throw new Error("Browser's test function is not valid");
+                });
+                return (
+                  e && (this.parsedResult.os = e.describe(this.getUA())),
+                  this.parsedResult.os
+                );
+              }),
+              (e.getOSName = function(t) {
+                var e = this.getOS().name;
+                return t ? String(e).toLowerCase() || "" : e || "";
+              }),
+              (e.getOSVersion = function() {
+                return this.getOS().version;
+              }),
+              (e.getPlatform = function() {
+                return this.parsedResult.platform
+                  ? this.parsedResult.platform
+                  : this.parsePlatform();
+              }),
+              (e.getPlatformType = function(t) {
+                void 0 === t && (t = !1);
+                var e = this.getPlatform().type;
+                return t ? String(e).toLowerCase() || "" : e || "";
+              }),
+              (e.parsePlatform = function() {
+                var t = this;
+                this.parsedResult.platform = {};
+                var e = s.default.find(function(e) {
+                  if ("function" == typeof e.test) return e.test(t);
+                  if (e.test instanceof Array)
+                    return e.test.some(function(e) {
+                      return t.test(e);
+                    });
+                  throw new Error("Browser's test function is not valid");
+                });
+                return (
+                  e && (this.parsedResult.platform = e.describe(this.getUA())),
+                  this.parsedResult.platform
+                );
+              }),
+              (e.getEngine = function() {
+                return this.parsedResult.engine
+                  ? this.parsedResult.engine
+                  : this.parseEngine();
+              }),
+              (e.getEngineName = function(t) {
+                return t
+                  ? String(this.getEngine().name).toLowerCase() || ""
+                  : this.getEngine().name || "";
+              }),
+              (e.parseEngine = function() {
+                var t = this;
+                this.parsedResult.engine = {};
+                var e = a.default.find(function(e) {
+                  if ("function" == typeof e.test) return e.test(t);
+                  if (e.test instanceof Array)
+                    return e.test.some(function(e) {
+                      return t.test(e);
+                    });
+                  throw new Error("Browser's test function is not valid");
+                });
+                return (
+                  e && (this.parsedResult.engine = e.describe(this.getUA())),
+                  this.parsedResult.engine
+                );
+              }),
+              (e.parse = function() {
+                return (
+                  this.parseBrowser(),
+                  this.parseOS(),
+                  this.parsePlatform(),
+                  this.parseEngine(),
+                  this
+                );
+              }),
+              (e.getResult = function() {
+                return Object.assign({}, this.parsedResult);
+              }),
+              (e.satisfies = function(t) {
+                var e = this,
+                  n = {},
+                  i = 0,
+                  r = {},
+                  s = 0;
+                if (
+                  (Object.keys(t).forEach(function(e) {
+                    var a = t[e];
+                    "string" == typeof a
+                      ? ((r[e] = a), (s += 1))
+                      : "object" == typeof a && ((n[e] = a), (i += 1));
+                  }),
+                  i > 0)
+                ) {
+                  var a = Object.keys(n),
+                    o = a.find(function(t) {
+                      return e.isOS(t);
+                    });
+                  if (o) {
+                    var c = this.satisfies(n[o]);
+                    if (void 0 !== c) return c;
+                  }
+                  var l = a.find(function(t) {
+                    return e.isPlatform(t);
+                  });
+                  if (l) {
+                    var u = this.satisfies(n[l]);
+                    if (void 0 !== u) return u;
+                  }
+                }
+                if (s > 0) {
+                  var d = Object.keys(r).find(function(t) {
+                    return e.isBrowser(t, !0);
+                  });
+                  if (void 0 !== d) return this.compareVersion(r[d]);
                 }
               }),
-              (t.getAndroidVersionName = function(t) {
-                var e = t
-                  .split(".")
-                  .splice(0, 2)
-                  .map(function(t) {
-                    return parseInt(t, 10) || 0;
-                  });
-                if ((e.push(0), !(1 === e[0] && e[1] < 5)))
-                  return 1 === e[0] && e[1] < 6
-                    ? "Cupcake"
-                    : 1 === e[0] && e[1] >= 6
-                    ? "Donut"
-                    : 2 === e[0] && e[1] < 2
-                    ? "Eclair"
-                    : 2 === e[0] && 2 === e[1]
-                    ? "Froyo"
-                    : 2 === e[0] && e[1] > 2
-                    ? "Gingerbread"
-                    : 3 === e[0]
-                    ? "Honeycomb"
-                    : 4 === e[0] && e[1] < 1
-                    ? "Ice Cream Sandwich"
-                    : 4 === e[0] && e[1] < 4
-                    ? "Jelly Bean"
-                    : 4 === e[0] && e[1] >= 4
-                    ? "KitKat"
-                    : 5 === e[0]
-                    ? "Lollipop"
-                    : 6 === e[0]
-                    ? "Marshmallow"
-                    : 7 === e[0]
-                    ? "Nougat"
-                    : 8 === e[0]
-                    ? "Oreo"
-                    : void 0;
+              (e.isBrowser = function(t, e) {
+                void 0 === e && (e = !1);
+                var n = this.getBrowserName().toLowerCase(),
+                  i = t.toLowerCase(),
+                  r = o.default.getBrowserTypeByAlias(i);
+                return e && r && (i = r.toLowerCase()), i === n;
               }),
-              (t.getVersionPrecision = function(t) {
-                return t.split(".").length;
+              (e.compareVersion = function(t) {
+                var e = [0],
+                  n = t,
+                  i = !1,
+                  r = this.getBrowserVersion();
+                if ("string" == typeof r)
+                  return (
+                    ">" === t[0] || "<" === t[0]
+                      ? ((n = t.substr(1)),
+                        "=" === t[1] ? ((i = !0), (n = t.substr(2))) : (e = []),
+                        ">" === t[0] ? e.push(1) : e.push(-1))
+                      : "=" === t[0]
+                      ? (n = t.substr(1))
+                      : "~" === t[0] && ((i = !0), (n = t.substr(1))),
+                    e.indexOf(o.default.compareVersions(r, n, i)) > -1
+                  );
               }),
-              (t.compareVersions = function(e, n, i) {
-                void 0 === i && (i = !1);
-                var r = t.getVersionPrecision(e),
-                  s = t.getVersionPrecision(n),
-                  a = Math.max(r, s),
-                  o = 0,
-                  c = t.map([e, n], function(e) {
-                    var n = a - t.getVersionPrecision(e),
-                      i = e + new Array(n + 1).join(".0");
-                    return t
-                      .map(i.split("."), function(t) {
-                        return new Array(20 - t.length).join("0") + t;
-                      })
-                      .reverse();
-                  });
-                for (i && (o = a - Math.min(r, s)), a -= 1; a >= o; ) {
-                  if (c[0][a] > c[1][a]) return 1;
-                  if (c[0][a] === c[1][a]) {
-                    if (a === o) return 0;
-                    a -= 1;
-                  } else if (c[0][a] < c[1][a]) return -1;
-                }
+              (e.isOS = function(t) {
+                return this.getOSName(!0) === String(t).toLowerCase();
               }),
-              (t.map = function(t, e) {
-                var n,
-                  i = [];
-                if (Array.prototype.map) return Array.prototype.map.call(t, e);
-                for (n = 0; n < t.length; n += 1) i.push(e(t[n]));
-                return i;
+              (e.isPlatform = function(t) {
+                return this.getPlatformType(!0) === String(t).toLowerCase();
               }),
-              (t.getBrowserAlias = function(t) {
-                return i.BROWSER_ALIASES_MAP[t];
+              (e.isEngine = function(t) {
+                return this.getEngineName(!0) === String(t).toLowerCase();
               }),
-              (t.getBrowserTypeByAlias = function(t) {
-                return i.BROWSER_MAP[t] || "";
+              (e.is = function(t) {
+                return this.isBrowser(t) || this.isOS(t) || this.isPlatform(t);
+              }),
+              (e.some = function(t) {
+                var e = this;
+                return (
+                  void 0 === t && (t = []),
+                  t.some(function(t) {
+                    return e.is(t);
+                  })
+                );
               }),
               t
             );
           })();
-        (e.default = r), (t.exports = e.default);
-      },
-      18: function(t, e, n) {
-        (e.__esModule = !0),
-          (e.ENGINE_MAP = e.OS_MAP = e.PLATFORMS_MAP = e.BROWSER_MAP = e.BROWSER_ALIASES_MAP = void 0),
-          (e.BROWSER_ALIASES_MAP = {
-            "Amazon Silk": "amazon_silk",
-            "Android Browser": "android",
-            Bada: "bada",
-            BlackBerry: "blackberry",
-            Chrome: "chrome",
-            Chromium: "chromium",
-            Epiphany: "epiphany",
-            Firefox: "firefox",
-            Focus: "focus",
-            Generic: "generic",
-            Googlebot: "googlebot",
-            "Internet Explorer": "ie",
-            "K-Meleon": "k_meleon",
-            Maxthon: "maxthon",
-            "Microsoft Edge": "edge",
-            "MZ Browser": "mz",
-            "NAVER Whale Browser": "naver",
-            Opera: "opera",
-            "Opera Coast": "opera_coast",
-            PhantomJS: "phantomjs",
-            Puffin: "puffin",
-            QupZilla: "qupzilla",
-            Safari: "safari",
-            Sailfish: "sailfish",
-            "Samsung Internet for Android": "samsung_internet",
-            SeaMonkey: "seamonkey",
-            Sleipnir: "sleipnir",
-            Swing: "swing",
-            Tizen: "tizen",
-            "UC Browser": "uc",
-            Vivaldi: "vivaldi",
-            "WebOS Browser": "webos",
-            WeChat: "wechat",
-            "Yandex Browser": "yandex",
-            Roku: "roku",
-          }),
-          (e.BROWSER_MAP = {
-            amazon_silk: "Amazon Silk",
-            android: "Android Browser",
-            bada: "Bada",
-            blackberry: "BlackBerry",
-            chrome: "Chrome",
-            chromium: "Chromium",
-            epiphany: "Epiphany",
-            firefox: "Firefox",
-            focus: "Focus",
-            generic: "Generic",
-            googlebot: "Googlebot",
-            ie: "Internet Explorer",
-            k_meleon: "K-Meleon",
-            maxthon: "Maxthon",
-            edge: "Microsoft Edge",
-            mz: "MZ Browser",
-            naver: "NAVER Whale Browser",
-            opera: "Opera",
-            opera_coast: "Opera Coast",
-            phantomjs: "PhantomJS",
-            puffin: "Puffin",
-            qupzilla: "QupZilla",
-            safari: "Safari",
-            sailfish: "Sailfish",
-            samsung_internet: "Samsung Internet for Android",
-            seamonkey: "SeaMonkey",
-            sleipnir: "Sleipnir",
-            swing: "Swing",
-            tizen: "Tizen",
-            uc: "UC Browser",
-            vivaldi: "Vivaldi",
-            webos: "WebOS Browser",
-            wechat: "WeChat",
-            yandex: "Yandex Browser",
-          }),
-          (e.PLATFORMS_MAP = {
-            tablet: "tablet",
-            mobile: "mobile",
-            desktop: "desktop",
-            tv: "tv",
-          }),
-          (e.OS_MAP = {
-            WindowsPhone: "Windows Phone",
-            Windows: "Windows",
-            MacOS: "macOS",
-            iOS: "iOS",
-            Android: "Android",
-            WebOS: "WebOS",
-            BlackBerry: "BlackBerry",
-            Bada: "Bada",
-            Tizen: "Tizen",
-            Linux: "Linux",
-            ChromeOS: "Chrome OS",
-            PlayStation4: "PlayStation 4",
-            Roku: "Roku",
-          }),
-          (e.ENGINE_MAP = {
-            EdgeHTML: "EdgeHTML",
-            Blink: "Blink",
-            Trident: "Trident",
-            Presto: "Presto",
-            Gecko: "Gecko",
-            WebKit: "WebKit",
-          });
-      },
-      90: function(t, e, n) {
-        (e.__esModule = !0), (e.default = void 0);
-        var i,
-          r = (i = n(91)) && i.__esModule ? i : { default: i },
-          s = n(18);
-        function a(t, e) {
-          for (var n = 0; n < e.length; n++) {
-            var i = e[n];
-            (i.enumerable = i.enumerable || !1),
-              (i.configurable = !0),
-              "value" in i && (i.writable = !0),
-              Object.defineProperty(t, i.key, i);
-          }
-        }
-        var o = (function() {
-          function t() {}
-          var e, n;
-          return (
-            (t.getParser = function(t, e) {
-              if ((void 0 === e && (e = !1), "string" != typeof t))
-                throw new Error("UserAgent should be a string");
-              return new r.default(t, e);
-            }),
-            (t.parse = function(t) {
-              return new r.default(t).getResult();
-            }),
-            (e = t),
-            (n = [
+          (e.default = l), (t.exports = e.default);
+        },
+        92: function(t, e, n) {
+          (e.__esModule = !0), (e.default = void 0);
+          var i,
+            r = (i = n(17)) && i.__esModule ? i : { default: i },
+            s = /version\/(\d+(\.?_?\d+)+)/i,
+            a = [
               {
-                key: "BROWSER_MAP",
-                get: function() {
-                  return s.BROWSER_MAP;
+                test: [/googlebot/i],
+                describe: function(t) {
+                  var e = { name: "Googlebot" },
+                    n =
+                      r.default.getFirstMatch(/googlebot\/(\d+(\.\d+))/i, t) ||
+                      r.default.getFirstMatch(s, t);
+                  return n && (e.version = n), e;
                 },
               },
               {
-                key: "ENGINE_MAP",
-                get: function() {
-                  return s.ENGINE_MAP;
+                test: [/opera/i],
+                describe: function(t) {
+                  var e = { name: "Opera" },
+                    n =
+                      r.default.getFirstMatch(s, t) ||
+                      r.default.getFirstMatch(
+                        /(?:opera)[\s\/](\d+(\.?_?\d+)+)/i,
+                        t
+                      );
+                  return n && (e.version = n), e;
                 },
               },
               {
-                key: "OS_MAP",
-                get: function() {
-                  return s.OS_MAP;
+                test: [/opr\/|opios/i],
+                describe: function(t) {
+                  var e = { name: "Opera" },
+                    n =
+                      r.default.getFirstMatch(/(?:opr|opios)[\s\/](\S+)/i, t) ||
+                      r.default.getFirstMatch(s, t);
+                  return n && (e.version = n), e;
                 },
               },
               {
-                key: "PLATFORMS_MAP",
-                get: function() {
-                  return s.PLATFORMS_MAP;
+                test: [/SamsungBrowser/i],
+                describe: function(t) {
+                  var e = { name: "Samsung Internet for Android" },
+                    n =
+                      r.default.getFirstMatch(s, t) ||
+                      r.default.getFirstMatch(
+                        /(?:SamsungBrowser)[\s\/](\d+(\.?_?\d+)+)/i,
+                        t
+                      );
+                  return n && (e.version = n), e;
                 },
               },
-            ]) && a(e, n),
-            t
-          );
-        })();
-        (e.default = o), (t.exports = e.default);
-      },
-      91: function(t, e, n) {
-        (e.__esModule = !0), (e.default = void 0);
-        var i = c(n(92)),
-          r = c(n(93)),
-          s = c(n(94)),
-          a = c(n(95)),
-          o = c(n(17));
-        function c(t) {
-          return t && t.__esModule ? t : { default: t };
-        }
-        var l = (function() {
-          function t(t, e) {
-            if ((void 0 === e && (e = !1), null == t || "" === t))
-              throw new Error("UserAgent parameter can't be empty");
-            (this._ua = t), (this.parsedResult = {}), !0 !== e && this.parse();
-          }
-          var e = t.prototype;
-          return (
-            (e.getUA = function() {
-              return this._ua;
-            }),
-            (e.test = function(t) {
-              return t.test(this._ua);
-            }),
-            (e.parseBrowser = function() {
-              var t = this;
-              this.parsedResult.browser = {};
-              var e = i.default.find(function(e) {
-                if ("function" == typeof e.test) return e.test(t);
-                if (e.test instanceof Array)
-                  return e.test.some(function(e) {
-                    return t.test(e);
-                  });
-                throw new Error("Browser's test function is not valid");
-              });
-              return (
-                e && (this.parsedResult.browser = e.describe(this.getUA())),
-                this.parsedResult.browser
-              );
-            }),
-            (e.getBrowser = function() {
-              return this.parsedResult.browser
-                ? this.parsedResult.browser
-                : this.parseBrowser();
-            }),
-            (e.getBrowserName = function(t) {
-              return t
-                ? String(this.getBrowser().name).toLowerCase() || ""
-                : this.getBrowser().name || "";
-            }),
-            (e.getBrowserVersion = function() {
-              return this.getBrowser().version;
-            }),
-            (e.getOS = function() {
-              return this.parsedResult.os
-                ? this.parsedResult.os
-                : this.parseOS();
-            }),
-            (e.parseOS = function() {
-              var t = this;
-              this.parsedResult.os = {};
-              var e = r.default.find(function(e) {
-                if ("function" == typeof e.test) return e.test(t);
-                if (e.test instanceof Array)
-                  return e.test.some(function(e) {
-                    return t.test(e);
-                  });
-                throw new Error("Browser's test function is not valid");
-              });
-              return (
-                e && (this.parsedResult.os = e.describe(this.getUA())),
-                this.parsedResult.os
-              );
-            }),
-            (e.getOSName = function(t) {
-              var e = this.getOS().name;
-              return t ? String(e).toLowerCase() || "" : e || "";
-            }),
-            (e.getOSVersion = function() {
-              return this.getOS().version;
-            }),
-            (e.getPlatform = function() {
-              return this.parsedResult.platform
-                ? this.parsedResult.platform
-                : this.parsePlatform();
-            }),
-            (e.getPlatformType = function(t) {
-              void 0 === t && (t = !1);
-              var e = this.getPlatform().type;
-              return t ? String(e).toLowerCase() || "" : e || "";
-            }),
-            (e.parsePlatform = function() {
-              var t = this;
-              this.parsedResult.platform = {};
-              var e = s.default.find(function(e) {
-                if ("function" == typeof e.test) return e.test(t);
-                if (e.test instanceof Array)
-                  return e.test.some(function(e) {
-                    return t.test(e);
-                  });
-                throw new Error("Browser's test function is not valid");
-              });
-              return (
-                e && (this.parsedResult.platform = e.describe(this.getUA())),
-                this.parsedResult.platform
-              );
-            }),
-            (e.getEngine = function() {
-              return this.parsedResult.engine
-                ? this.parsedResult.engine
-                : this.parseEngine();
-            }),
-            (e.getEngineName = function(t) {
-              return t
-                ? String(this.getEngine().name).toLowerCase() || ""
-                : this.getEngine().name || "";
-            }),
-            (e.parseEngine = function() {
-              var t = this;
-              this.parsedResult.engine = {};
-              var e = a.default.find(function(e) {
-                if ("function" == typeof e.test) return e.test(t);
-                if (e.test instanceof Array)
-                  return e.test.some(function(e) {
-                    return t.test(e);
-                  });
-                throw new Error("Browser's test function is not valid");
-              });
-              return (
-                e && (this.parsedResult.engine = e.describe(this.getUA())),
-                this.parsedResult.engine
-              );
-            }),
-            (e.parse = function() {
-              return (
-                this.parseBrowser(),
-                this.parseOS(),
-                this.parsePlatform(),
-                this.parseEngine(),
-                this
-              );
-            }),
-            (e.getResult = function() {
-              return Object.assign({}, this.parsedResult);
-            }),
-            (e.satisfies = function(t) {
-              var e = this,
-                n = {},
-                i = 0,
-                r = {},
-                s = 0;
-              if (
-                (Object.keys(t).forEach(function(e) {
-                  var a = t[e];
-                  "string" == typeof a
-                    ? ((r[e] = a), (s += 1))
-                    : "object" == typeof a && ((n[e] = a), (i += 1));
-                }),
-                i > 0)
-              ) {
-                var a = Object.keys(n),
-                  o = a.find(function(t) {
-                    return e.isOS(t);
-                  });
-                if (o) {
-                  var c = this.satisfies(n[o]);
-                  if (void 0 !== c) return c;
-                }
-                var l = a.find(function(t) {
-                  return e.isPlatform(t);
-                });
-                if (l) {
-                  var u = this.satisfies(n[l]);
-                  if (void 0 !== u) return u;
-                }
-              }
-              if (s > 0) {
-                var d = Object.keys(r).find(function(t) {
-                  return e.isBrowser(t, !0);
-                });
-                if (void 0 !== d) return this.compareVersion(r[d]);
-              }
-            }),
-            (e.isBrowser = function(t, e) {
-              void 0 === e && (e = !1);
-              var n = this.getBrowserName().toLowerCase(),
-                i = t.toLowerCase(),
-                r = o.default.getBrowserTypeByAlias(i);
-              return e && r && (i = r.toLowerCase()), i === n;
-            }),
-            (e.compareVersion = function(t) {
-              var e = [0],
-                n = t,
-                i = !1,
-                r = this.getBrowserVersion();
-              if ("string" == typeof r)
-                return (
-                  ">" === t[0] || "<" === t[0]
-                    ? ((n = t.substr(1)),
-                      "=" === t[1] ? ((i = !0), (n = t.substr(2))) : (e = []),
-                      ">" === t[0] ? e.push(1) : e.push(-1))
-                    : "=" === t[0]
-                    ? (n = t.substr(1))
-                    : "~" === t[0] && ((i = !0), (n = t.substr(1))),
-                  e.indexOf(o.default.compareVersions(r, n, i)) > -1
-                );
-            }),
-            (e.isOS = function(t) {
-              return this.getOSName(!0) === String(t).toLowerCase();
-            }),
-            (e.isPlatform = function(t) {
-              return this.getPlatformType(!0) === String(t).toLowerCase();
-            }),
-            (e.isEngine = function(t) {
-              return this.getEngineName(!0) === String(t).toLowerCase();
-            }),
-            (e.is = function(t) {
-              return this.isBrowser(t) || this.isOS(t) || this.isPlatform(t);
-            }),
-            (e.some = function(t) {
-              var e = this;
-              return (
-                void 0 === t && (t = []),
-                t.some(function(t) {
-                  return e.is(t);
-                })
-              );
-            }),
-            t
-          );
-        })();
-        (e.default = l), (t.exports = e.default);
-      },
-      92: function(t, e, n) {
-        (e.__esModule = !0), (e.default = void 0);
-        var i,
-          r = (i = n(17)) && i.__esModule ? i : { default: i },
-          s = /version\/(\d+(\.?_?\d+)+)/i,
-          a = [
-            {
-              test: [/googlebot/i],
-              describe: function(t) {
-                var e = { name: "Googlebot" },
-                  n =
-                    r.default.getFirstMatch(/googlebot\/(\d+(\.\d+))/i, t) ||
-                    r.default.getFirstMatch(s, t);
-                return n && (e.version = n), e;
+              {
+                test: [/Whale/i],
+                describe: function(t) {
+                  var e = { name: "NAVER Whale Browser" },
+                    n =
+                      r.default.getFirstMatch(s, t) ||
+                      r.default.getFirstMatch(
+                        /(?:whale)[\s\/](\d+(?:\.\d+)+)/i,
+                        t
+                      );
+                  return n && (e.version = n), e;
+                },
               },
-            },
-            {
-              test: [/opera/i],
-              describe: function(t) {
-                var e = { name: "Opera" },
-                  n =
-                    r.default.getFirstMatch(s, t) ||
-                    r.default.getFirstMatch(
-                      /(?:opera)[\s\/](\d+(\.?_?\d+)+)/i,
+              {
+                test: [/MZBrowser/i],
+                describe: function(t) {
+                  var e = { name: "MZ Browser" },
+                    n =
+                      r.default.getFirstMatch(
+                        /(?:MZBrowser)[\s\/](\d+(?:\.\d+)+)/i,
+                        t
+                      ) || r.default.getFirstMatch(s, t);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/focus/i],
+                describe: function(t) {
+                  var e = { name: "Focus" },
+                    n =
+                      r.default.getFirstMatch(
+                        /(?:focus)[\s\/](\d+(?:\.\d+)+)/i,
+                        t
+                      ) || r.default.getFirstMatch(s, t);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/swing/i],
+                describe: function(t) {
+                  var e = { name: "Swing" },
+                    n =
+                      r.default.getFirstMatch(
+                        /(?:swing)[\s\/](\d+(?:\.\d+)+)/i,
+                        t
+                      ) || r.default.getFirstMatch(s, t);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/coast/i],
+                describe: function(t) {
+                  var e = { name: "Opera Coast" },
+                    n =
+                      r.default.getFirstMatch(s, t) ||
+                      r.default.getFirstMatch(
+                        /(?:coast)[\s\/](\d+(\.?_?\d+)+)/i,
+                        t
+                      );
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/yabrowser/i],
+                describe: function(t) {
+                  var e = { name: "Yandex Browser" },
+                    n =
+                      r.default.getFirstMatch(
+                        /(?:yabrowser)[\s\/](\d+(\.?_?\d+)+)/i,
+                        t
+                      ) || r.default.getFirstMatch(s, t);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/ucbrowser/i],
+                describe: function(t) {
+                  var e = { name: "UC Browser" },
+                    n =
+                      r.default.getFirstMatch(s, t) ||
+                      r.default.getFirstMatch(
+                        /(?:ucbrowser)[\s\/](\d+(\.?_?\d+)+)/i,
+                        t
+                      );
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/Maxthon|mxios/i],
+                describe: function(t) {
+                  var e = { name: "Maxthon" },
+                    n =
+                      r.default.getFirstMatch(s, t) ||
+                      r.default.getFirstMatch(
+                        /(?:Maxthon|mxios)[\s\/](\d+(\.?_?\d+)+)/i,
+                        t
+                      );
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/epiphany/i],
+                describe: function(t) {
+                  var e = { name: "Epiphany" },
+                    n =
+                      r.default.getFirstMatch(s, t) ||
+                      r.default.getFirstMatch(
+                        /(?:epiphany)[\s\/](\d+(\.?_?\d+)+)/i,
+                        t
+                      );
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/puffin/i],
+                describe: function(t) {
+                  var e = { name: "Puffin" },
+                    n =
+                      r.default.getFirstMatch(s, t) ||
+                      r.default.getFirstMatch(
+                        /(?:puffin)[\s\/](\d+(\.?_?\d+)+)/i,
+                        t
+                      );
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/sleipnir/i],
+                describe: function(t) {
+                  var e = { name: "Sleipnir" },
+                    n =
+                      r.default.getFirstMatch(s, t) ||
+                      r.default.getFirstMatch(
+                        /(?:sleipnir)[\s\/](\d+(\.?_?\d+)+)/i,
+                        t
+                      );
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/k-meleon/i],
+                describe: function(t) {
+                  var e = { name: "K-Meleon" },
+                    n =
+                      r.default.getFirstMatch(s, t) ||
+                      r.default.getFirstMatch(
+                        /(?:k-meleon)[\s\/](\d+(\.?_?\d+)+)/i,
+                        t
+                      );
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/micromessenger/i],
+                describe: function(t) {
+                  var e = { name: "WeChat" },
+                    n =
+                      r.default.getFirstMatch(
+                        /(?:micromessenger)[\s\/](\d+(\.?_?\d+)+)/i,
+                        t
+                      ) || r.default.getFirstMatch(s, t);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/msie|trident/i],
+                describe: function(t) {
+                  var e = { name: "Internet Explorer" },
+                    n = r.default.getFirstMatch(
+                      /(?:msie |rv:)(\d+(\.?_?\d+)+)/i,
                       t
                     );
-                return n && (e.version = n), e;
+                  return n && (e.version = n), e;
+                },
               },
-            },
-            {
-              test: [/opr\/|opios/i],
-              describe: function(t) {
-                var e = { name: "Opera" },
-                  n =
-                    r.default.getFirstMatch(/(?:opr|opios)[\s\/](\S+)/i, t) ||
-                    r.default.getFirstMatch(s, t);
-                return n && (e.version = n), e;
+              {
+                test: [/\sedg\//i],
+                describe: function(t) {
+                  var e = { name: "Microsoft Edge" },
+                    n = r.default.getFirstMatch(/\sedg\/(\d+(\.?_?\d+)+)/i, t);
+                  return n && (e.version = n), e;
+                },
               },
-            },
-            {
-              test: [/SamsungBrowser/i],
-              describe: function(t) {
-                var e = { name: "Samsung Internet for Android" },
-                  n =
-                    r.default.getFirstMatch(s, t) ||
-                    r.default.getFirstMatch(
-                      /(?:SamsungBrowser)[\s\/](\d+(\.?_?\d+)+)/i,
+              {
+                test: [/edg([ea]|ios)/i],
+                describe: function(t) {
+                  var e = { name: "Microsoft Edge" },
+                    n = r.default.getSecondMatch(
+                      /edg([ea]|ios)\/(\d+(\.?_?\d+)+)/i,
                       t
                     );
-                return n && (e.version = n), e;
+                  return n && (e.version = n), e;
+                },
               },
-            },
-            {
-              test: [/Whale/i],
-              describe: function(t) {
-                var e = { name: "NAVER Whale Browser" },
-                  n =
-                    r.default.getFirstMatch(s, t) ||
-                    r.default.getFirstMatch(
-                      /(?:whale)[\s\/](\d+(?:\.\d+)+)/i,
+              {
+                test: [/vivaldi/i],
+                describe: function(t) {
+                  var e = { name: "Vivaldi" },
+                    n = r.default.getFirstMatch(
+                      /vivaldi\/(\d+(\.?_?\d+)+)/i,
                       t
                     );
-                return n && (e.version = n), e;
+                  return n && (e.version = n), e;
+                },
               },
-            },
-            {
-              test: [/MZBrowser/i],
-              describe: function(t) {
-                var e = { name: "MZ Browser" },
-                  n =
-                    r.default.getFirstMatch(
-                      /(?:MZBrowser)[\s\/](\d+(?:\.\d+)+)/i,
-                      t
-                    ) || r.default.getFirstMatch(s, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/focus/i],
-              describe: function(t) {
-                var e = { name: "Focus" },
-                  n =
-                    r.default.getFirstMatch(
-                      /(?:focus)[\s\/](\d+(?:\.\d+)+)/i,
-                      t
-                    ) || r.default.getFirstMatch(s, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/swing/i],
-              describe: function(t) {
-                var e = { name: "Swing" },
-                  n =
-                    r.default.getFirstMatch(
-                      /(?:swing)[\s\/](\d+(?:\.\d+)+)/i,
-                      t
-                    ) || r.default.getFirstMatch(s, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/coast/i],
-              describe: function(t) {
-                var e = { name: "Opera Coast" },
-                  n =
-                    r.default.getFirstMatch(s, t) ||
-                    r.default.getFirstMatch(
-                      /(?:coast)[\s\/](\d+(\.?_?\d+)+)/i,
+              {
+                test: [/seamonkey/i],
+                describe: function(t) {
+                  var e = { name: "SeaMonkey" },
+                    n = r.default.getFirstMatch(
+                      /seamonkey\/(\d+(\.?_?\d+)+)/i,
                       t
                     );
-                return n && (e.version = n), e;
+                  return n && (e.version = n), e;
+                },
               },
-            },
-            {
-              test: [/yabrowser/i],
-              describe: function(t) {
-                var e = { name: "Yandex Browser" },
-                  n =
-                    r.default.getFirstMatch(
-                      /(?:yabrowser)[\s\/](\d+(\.?_?\d+)+)/i,
-                      t
-                    ) || r.default.getFirstMatch(s, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/ucbrowser/i],
-              describe: function(t) {
-                var e = { name: "UC Browser" },
-                  n =
-                    r.default.getFirstMatch(s, t) ||
-                    r.default.getFirstMatch(
-                      /(?:ucbrowser)[\s\/](\d+(\.?_?\d+)+)/i,
+              {
+                test: [/sailfish/i],
+                describe: function(t) {
+                  var e = { name: "Sailfish" },
+                    n = r.default.getFirstMatch(
+                      /sailfish\s?browser\/(\d+(\.\d+)?)/i,
                       t
                     );
-                return n && (e.version = n), e;
+                  return n && (e.version = n), e;
+                },
               },
-            },
-            {
-              test: [/Maxthon|mxios/i],
-              describe: function(t) {
-                var e = { name: "Maxthon" },
-                  n =
-                    r.default.getFirstMatch(s, t) ||
-                    r.default.getFirstMatch(
-                      /(?:Maxthon|mxios)[\s\/](\d+(\.?_?\d+)+)/i,
+              {
+                test: [/silk/i],
+                describe: function(t) {
+                  var e = { name: "Amazon Silk" },
+                    n = r.default.getFirstMatch(/silk\/(\d+(\.?_?\d+)+)/i, t);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/phantom/i],
+                describe: function(t) {
+                  var e = { name: "PhantomJS" },
+                    n = r.default.getFirstMatch(
+                      /phantomjs\/(\d+(\.?_?\d+)+)/i,
                       t
                     );
-                return n && (e.version = n), e;
+                  return n && (e.version = n), e;
+                },
               },
-            },
-            {
-              test: [/epiphany/i],
-              describe: function(t) {
-                var e = { name: "Epiphany" },
-                  n =
-                    r.default.getFirstMatch(s, t) ||
-                    r.default.getFirstMatch(
-                      /(?:epiphany)[\s\/](\d+(\.?_?\d+)+)/i,
+              {
+                test: [/slimerjs/i],
+                describe: function(t) {
+                  var e = { name: "SlimerJS" },
+                    n = r.default.getFirstMatch(
+                      /slimerjs\/(\d+(\.?_?\d+)+)/i,
                       t
                     );
-                return n && (e.version = n), e;
+                  return n && (e.version = n), e;
+                },
               },
-            },
-            {
-              test: [/puffin/i],
-              describe: function(t) {
-                var e = { name: "Puffin" },
-                  n =
-                    r.default.getFirstMatch(s, t) ||
-                    r.default.getFirstMatch(
-                      /(?:puffin)[\s\/](\d+(\.?_?\d+)+)/i,
+              {
+                test: [/blackberry|\bbb\d+/i, /rim\stablet/i],
+                describe: function(t) {
+                  var e = { name: "BlackBerry" },
+                    n =
+                      r.default.getFirstMatch(s, t) ||
+                      r.default.getFirstMatch(
+                        /blackberry[\d]+\/(\d+(\.?_?\d+)+)/i,
+                        t
+                      );
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/(web|hpw)[o0]s/i],
+                describe: function(t) {
+                  var e = { name: "WebOS Browser" },
+                    n =
+                      r.default.getFirstMatch(s, t) ||
+                      r.default.getFirstMatch(
+                        /w(?:eb)?[o0]sbrowser\/(\d+(\.?_?\d+)+)/i,
+                        t
+                      );
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/bada/i],
+                describe: function(t) {
+                  var e = { name: "Bada" },
+                    n = r.default.getFirstMatch(/dolfin\/(\d+(\.?_?\d+)+)/i, t);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/tizen/i],
+                describe: function(t) {
+                  var e = { name: "Tizen" },
+                    n =
+                      r.default.getFirstMatch(
+                        /(?:tizen\s?)?browser\/(\d+(\.?_?\d+)+)/i,
+                        t
+                      ) || r.default.getFirstMatch(s, t);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/qupzilla/i],
+                describe: function(t) {
+                  var e = { name: "QupZilla" },
+                    n =
+                      r.default.getFirstMatch(
+                        /(?:qupzilla)[\s\/](\d+(\.?_?\d+)+)/i,
+                        t
+                      ) || r.default.getFirstMatch(s, t);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/firefox|iceweasel|fxios/i],
+                describe: function(t) {
+                  var e = { name: "Firefox" },
+                    n = r.default.getFirstMatch(
+                      /(?:firefox|iceweasel|fxios)[\s\/](\d+(\.?_?\d+)+)/i,
                       t
                     );
-                return n && (e.version = n), e;
+                  return n && (e.version = n), e;
+                },
               },
-            },
-            {
-              test: [/sleipnir/i],
-              describe: function(t) {
-                var e = { name: "Sleipnir" },
-                  n =
-                    r.default.getFirstMatch(s, t) ||
-                    r.default.getFirstMatch(
-                      /(?:sleipnir)[\s\/](\d+(\.?_?\d+)+)/i,
+              {
+                test: [/chromium/i],
+                describe: function(t) {
+                  var e = { name: "Chromium" },
+                    n =
+                      r.default.getFirstMatch(
+                        /(?:chromium)[\s\/](\d+(\.?_?\d+)+)/i,
+                        t
+                      ) || r.default.getFirstMatch(s, t);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/chrome|crios|crmo/i],
+                describe: function(t) {
+                  var e = { name: "Chrome" },
+                    n = r.default.getFirstMatch(
+                      /(?:chrome|crios|crmo)\/(\d+(\.?_?\d+)+)/i,
                       t
                     );
-                return n && (e.version = n), e;
+                  return n && (e.version = n), e;
+                },
               },
-            },
-            {
-              test: [/k-meleon/i],
-              describe: function(t) {
-                var e = { name: "K-Meleon" },
-                  n =
-                    r.default.getFirstMatch(s, t) ||
-                    r.default.getFirstMatch(
-                      /(?:k-meleon)[\s\/](\d+(\.?_?\d+)+)/i,
-                      t
-                    );
-                return n && (e.version = n), e;
+              {
+                test: function(t) {
+                  var e = !t.test(/like android/i),
+                    n = t.test(/android/i);
+                  return e && n;
+                },
+                describe: function(t) {
+                  var e = { name: "Android Browser" },
+                    n = r.default.getFirstMatch(s, t);
+                  return n && (e.version = n), e;
+                },
               },
-            },
-            {
-              test: [/micromessenger/i],
-              describe: function(t) {
-                var e = { name: "WeChat" },
-                  n =
-                    r.default.getFirstMatch(
-                      /(?:micromessenger)[\s\/](\d+(\.?_?\d+)+)/i,
-                      t
-                    ) || r.default.getFirstMatch(s, t);
-                return n && (e.version = n), e;
+              {
+                test: [/playstation 4/i],
+                describe: function(t) {
+                  var e = { name: "PlayStation 4" },
+                    n = r.default.getFirstMatch(s, t);
+                  return n && (e.version = n), e;
+                },
               },
-            },
-            {
-              test: [/msie|trident/i],
-              describe: function(t) {
-                var e = { name: "Internet Explorer" },
-                  n = r.default.getFirstMatch(
-                    /(?:msie |rv:)(\d+(\.?_?\d+)+)/i,
+              {
+                test: [/safari|applewebkit/i],
+                describe: function(t) {
+                  var e = { name: "Safari" },
+                    n = r.default.getFirstMatch(s, t);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/.*/i],
+                describe: function(t) {
+                  var e =
+                    -1 !== t.search("\\(")
+                      ? /^(.*)\/(.*)[ \t]\((.*)/
+                      : /^(.*)\/(.*) /;
+                  return {
+                    name: r.default.getFirstMatch(e, t),
+                    version: r.default.getSecondMatch(e, t),
+                  };
+                },
+              },
+            ];
+          (e.default = a), (t.exports = e.default);
+        },
+        93: function(t, e, n) {
+          (e.__esModule = !0), (e.default = void 0);
+          var i,
+            r = (i = n(17)) && i.__esModule ? i : { default: i },
+            s = n(18),
+            a = [
+              {
+                test: [/Roku\/DVP/],
+                describe: function(t) {
+                  var e = r.default.getFirstMatch(/Roku\/DVP-(\d+\.\d+)/i, t);
+                  return { name: s.OS_MAP.Roku, version: e };
+                },
+              },
+              {
+                test: [/windows phone/i],
+                describe: function(t) {
+                  var e = r.default.getFirstMatch(
+                    /windows phone (?:os)?\s?(\d+(\.\d+)*)/i,
                     t
                   );
-                return n && (e.version = n), e;
+                  return { name: s.OS_MAP.WindowsPhone, version: e };
+                },
               },
-            },
-            {
-              test: [/\sedg\//i],
-              describe: function(t) {
-                var e = { name: "Microsoft Edge" },
-                  n = r.default.getFirstMatch(/\sedg\/(\d+(\.?_?\d+)+)/i, t);
-                return n && (e.version = n), e;
+              {
+                test: [/windows/i],
+                describe: function(t) {
+                  var e = r.default.getFirstMatch(
+                      /Windows ((NT|XP)( \d\d?.\d)?)/i,
+                      t
+                    ),
+                    n = r.default.getWindowsVersionName(e);
+                  return { name: s.OS_MAP.Windows, version: e, versionName: n };
+                },
               },
-            },
-            {
-              test: [/edg([ea]|ios)/i],
-              describe: function(t) {
-                var e = { name: "Microsoft Edge" },
-                  n = r.default.getSecondMatch(
-                    /edg([ea]|ios)\/(\d+(\.?_?\d+)+)/i,
-                    t
-                  );
-                return n && (e.version = n), e;
+              {
+                test: [/macintosh/i],
+                describe: function(t) {
+                  var e = r.default
+                    .getFirstMatch(/mac os x (\d+(\.?_?\d+)+)/i, t)
+                    .replace(/[_\s]/g, ".");
+                  return { name: s.OS_MAP.MacOS, version: e };
+                },
               },
-            },
-            {
-              test: [/vivaldi/i],
-              describe: function(t) {
-                var e = { name: "Vivaldi" },
-                  n = r.default.getFirstMatch(/vivaldi\/(\d+(\.?_?\d+)+)/i, t);
-                return n && (e.version = n), e;
+              {
+                test: [/(ipod|iphone|ipad)/i],
+                describe: function(t) {
+                  var e = r.default
+                    .getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i, t)
+                    .replace(/[_\s]/g, ".");
+                  return { name: s.OS_MAP.iOS, version: e };
+                },
               },
-            },
-            {
-              test: [/seamonkey/i],
-              describe: function(t) {
-                var e = { name: "SeaMonkey" },
-                  n = r.default.getFirstMatch(
-                    /seamonkey\/(\d+(\.?_?\d+)+)/i,
-                    t
-                  );
-                return n && (e.version = n), e;
+              {
+                test: function(t) {
+                  var e = !t.test(/like android/i),
+                    n = t.test(/android/i);
+                  return e && n;
+                },
+                describe: function(t) {
+                  var e = r.default.getFirstMatch(
+                      /android[\s\/-](\d+(\.\d+)*)/i,
+                      t
+                    ),
+                    n = r.default.getAndroidVersionName(e),
+                    i = { name: s.OS_MAP.Android, version: e };
+                  return n && (i.versionName = n), i;
+                },
               },
-            },
-            {
-              test: [/sailfish/i],
-              describe: function(t) {
-                var e = { name: "Sailfish" },
-                  n = r.default.getFirstMatch(
-                    /sailfish\s?browser\/(\d+(\.\d+)?)/i,
-                    t
-                  );
-                return n && (e.version = n), e;
+              {
+                test: [/(web|hpw)[o0]s/i],
+                describe: function(t) {
+                  var e = r.default.getFirstMatch(
+                      /(?:web|hpw)[o0]s\/(\d+(\.\d+)*)/i,
+                      t
+                    ),
+                    n = { name: s.OS_MAP.WebOS };
+                  return e && e.length && (n.version = e), n;
+                },
               },
-            },
-            {
-              test: [/silk/i],
-              describe: function(t) {
-                var e = { name: "Amazon Silk" },
-                  n = r.default.getFirstMatch(/silk\/(\d+(\.?_?\d+)+)/i, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/phantom/i],
-              describe: function(t) {
-                var e = { name: "PhantomJS" },
-                  n = r.default.getFirstMatch(
-                    /phantomjs\/(\d+(\.?_?\d+)+)/i,
-                    t
-                  );
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/slimerjs/i],
-              describe: function(t) {
-                var e = { name: "SlimerJS" },
-                  n = r.default.getFirstMatch(/slimerjs\/(\d+(\.?_?\d+)+)/i, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/blackberry|\bbb\d+/i, /rim\stablet/i],
-              describe: function(t) {
-                var e = { name: "BlackBerry" },
-                  n =
-                    r.default.getFirstMatch(s, t) ||
+              {
+                test: [/blackberry|\bbb\d+/i, /rim\stablet/i],
+                describe: function(t) {
+                  var e =
                     r.default.getFirstMatch(
-                      /blackberry[\d]+\/(\d+(\.?_?\d+)+)/i,
+                      /rim\stablet\sos\s(\d+(\.\d+)*)/i,
+                      t
+                    ) ||
+                    r.default.getFirstMatch(
+                      /blackberry\d+\/(\d+([_\s]\d+)*)/i,
+                      t
+                    ) ||
+                    r.default.getFirstMatch(/\bbb(\d+)/i, t);
+                  return { name: s.OS_MAP.BlackBerry, version: e };
+                },
+              },
+              {
+                test: [/bada/i],
+                describe: function(t) {
+                  var e = r.default.getFirstMatch(/bada\/(\d+(\.\d+)*)/i, t);
+                  return { name: s.OS_MAP.Bada, version: e };
+                },
+              },
+              {
+                test: [/tizen/i],
+                describe: function(t) {
+                  var e = r.default.getFirstMatch(
+                    /tizen[\/\s](\d+(\.\d+)*)/i,
+                    t
+                  );
+                  return { name: s.OS_MAP.Tizen, version: e };
+                },
+              },
+              {
+                test: [/linux/i],
+                describe: function() {
+                  return { name: s.OS_MAP.Linux };
+                },
+              },
+              {
+                test: [/CrOS/],
+                describe: function() {
+                  return { name: s.OS_MAP.ChromeOS };
+                },
+              },
+              {
+                test: [/PlayStation 4/],
+                describe: function(t) {
+                  var e = r.default.getFirstMatch(
+                    /PlayStation 4[\/\s](\d+(\.\d+)*)/i,
+                    t
+                  );
+                  return { name: s.OS_MAP.PlayStation4, version: e };
+                },
+              },
+            ];
+          (e.default = a), (t.exports = e.default);
+        },
+        94: function(t, e, n) {
+          (e.__esModule = !0), (e.default = void 0);
+          var i,
+            r = (i = n(17)) && i.__esModule ? i : { default: i },
+            s = n(18),
+            a = [
+              {
+                test: [/googlebot/i],
+                describe: function() {
+                  return { type: "bot", vendor: "Google" };
+                },
+              },
+              {
+                test: [/huawei/i],
+                describe: function(t) {
+                  var e = r.default.getFirstMatch(/(can-l01)/i, t) && "Nova",
+                    n = { type: s.PLATFORMS_MAP.mobile, vendor: "Huawei" };
+                  return e && (n.model = e), n;
+                },
+              },
+              {
+                test: [/nexus\s*(?:7|8|9|10).*/i],
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.tablet, vendor: "Nexus" };
+                },
+              },
+              {
+                test: [/ipad/i],
+                describe: function() {
+                  return {
+                    type: s.PLATFORMS_MAP.tablet,
+                    vendor: "Apple",
+                    model: "iPad",
+                  };
+                },
+              },
+              {
+                test: [/kftt build/i],
+                describe: function() {
+                  return {
+                    type: s.PLATFORMS_MAP.tablet,
+                    vendor: "Amazon",
+                    model: "Kindle Fire HD 7",
+                  };
+                },
+              },
+              {
+                test: [/silk/i],
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.tablet, vendor: "Amazon" };
+                },
+              },
+              {
+                test: [/tablet/i],
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.tablet };
+                },
+              },
+              {
+                test: function(t) {
+                  var e = t.test(/ipod|iphone/i),
+                    n = t.test(/like (ipod|iphone)/i);
+                  return e && !n;
+                },
+                describe: function(t) {
+                  var e = r.default.getFirstMatch(/(ipod|iphone)/i, t);
+                  return {
+                    type: s.PLATFORMS_MAP.mobile,
+                    vendor: "Apple",
+                    model: e,
+                  };
+                },
+              },
+              {
+                test: [/nexus\s*[0-6].*/i, /galaxy nexus/i],
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.mobile, vendor: "Nexus" };
+                },
+              },
+              {
+                test: [/[^-]mobi/i],
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.mobile };
+                },
+              },
+              {
+                test: function(t) {
+                  return "blackberry" === t.getBrowserName(!0);
+                },
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.mobile, vendor: "BlackBerry" };
+                },
+              },
+              {
+                test: function(t) {
+                  return "bada" === t.getBrowserName(!0);
+                },
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.mobile };
+                },
+              },
+              {
+                test: function(t) {
+                  return "windows phone" === t.getBrowserName();
+                },
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.mobile, vendor: "Microsoft" };
+                },
+              },
+              {
+                test: function(t) {
+                  var e = Number(String(t.getOSVersion()).split(".")[0]);
+                  return "android" === t.getOSName(!0) && e >= 3;
+                },
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.tablet };
+                },
+              },
+              {
+                test: function(t) {
+                  return "android" === t.getOSName(!0);
+                },
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.mobile };
+                },
+              },
+              {
+                test: function(t) {
+                  return "macos" === t.getOSName(!0);
+                },
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.desktop, vendor: "Apple" };
+                },
+              },
+              {
+                test: function(t) {
+                  return "windows" === t.getOSName(!0);
+                },
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.desktop };
+                },
+              },
+              {
+                test: function(t) {
+                  return "linux" === t.getOSName(!0);
+                },
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.desktop };
+                },
+              },
+              {
+                test: function(t) {
+                  return "playstation 4" === t.getOSName(!0);
+                },
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.tv };
+                },
+              },
+              {
+                test: function(t) {
+                  return "roku" === t.getOSName(!0);
+                },
+                describe: function() {
+                  return { type: s.PLATFORMS_MAP.tv };
+                },
+              },
+            ];
+          (e.default = a), (t.exports = e.default);
+        },
+        95: function(t, e, n) {
+          (e.__esModule = !0), (e.default = void 0);
+          var i,
+            r = (i = n(17)) && i.__esModule ? i : { default: i },
+            s = n(18),
+            a = [
+              {
+                test: function(t) {
+                  return "microsoft edge" === t.getBrowserName(!0);
+                },
+                describe: function(t) {
+                  if (/\sedg\//i.test(t)) return { name: s.ENGINE_MAP.Blink };
+                  var e = r.default.getFirstMatch(/edge\/(\d+(\.?_?\d+)+)/i, t);
+                  return { name: s.ENGINE_MAP.EdgeHTML, version: e };
+                },
+              },
+              {
+                test: [/trident/i],
+                describe: function(t) {
+                  var e = { name: s.ENGINE_MAP.Trident },
+                    n = r.default.getFirstMatch(
+                      /trident\/(\d+(\.?_?\d+)+)/i,
                       t
                     );
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/(web|hpw)[o0]s/i],
-              describe: function(t) {
-                var e = { name: "WebOS Browser" },
-                  n =
-                    r.default.getFirstMatch(s, t) ||
-                    r.default.getFirstMatch(
-                      /w(?:eb)?[o0]sbrowser\/(\d+(\.?_?\d+)+)/i,
-                      t
-                    );
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/bada/i],
-              describe: function(t) {
-                var e = { name: "Bada" },
-                  n = r.default.getFirstMatch(/dolfin\/(\d+(\.?_?\d+)+)/i, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/tizen/i],
-              describe: function(t) {
-                var e = { name: "Tizen" },
-                  n =
-                    r.default.getFirstMatch(
-                      /(?:tizen\s?)?browser\/(\d+(\.?_?\d+)+)/i,
-                      t
-                    ) || r.default.getFirstMatch(s, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/qupzilla/i],
-              describe: function(t) {
-                var e = { name: "QupZilla" },
-                  n =
-                    r.default.getFirstMatch(
-                      /(?:qupzilla)[\s\/](\d+(\.?_?\d+)+)/i,
-                      t
-                    ) || r.default.getFirstMatch(s, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/firefox|iceweasel|fxios/i],
-              describe: function(t) {
-                var e = { name: "Firefox" },
-                  n = r.default.getFirstMatch(
-                    /(?:firefox|iceweasel|fxios)[\s\/](\d+(\.?_?\d+)+)/i,
-                    t
-                  );
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/chromium/i],
-              describe: function(t) {
-                var e = { name: "Chromium" },
-                  n =
-                    r.default.getFirstMatch(
-                      /(?:chromium)[\s\/](\d+(\.?_?\d+)+)/i,
-                      t
-                    ) || r.default.getFirstMatch(s, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/chrome|crios|crmo/i],
-              describe: function(t) {
-                var e = { name: "Chrome" },
-                  n = r.default.getFirstMatch(
-                    /(?:chrome|crios|crmo)\/(\d+(\.?_?\d+)+)/i,
-                    t
-                  );
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: function(t) {
-                var e = !t.test(/like android/i),
-                  n = t.test(/android/i);
-                return e && n;
-              },
-              describe: function(t) {
-                var e = { name: "Android Browser" },
-                  n = r.default.getFirstMatch(s, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/playstation 4/i],
-              describe: function(t) {
-                var e = { name: "PlayStation 4" },
-                  n = r.default.getFirstMatch(s, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/safari|applewebkit/i],
-              describe: function(t) {
-                var e = { name: "Safari" },
-                  n = r.default.getFirstMatch(s, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/.*/i],
-              describe: function(t) {
-                var e =
-                  -1 !== t.search("\\(")
-                    ? /^(.*)\/(.*)[ \t]\((.*)/
-                    : /^(.*)\/(.*) /;
-                return {
-                  name: r.default.getFirstMatch(e, t),
-                  version: r.default.getSecondMatch(e, t),
-                };
-              },
-            },
-          ];
-        (e.default = a), (t.exports = e.default);
-      },
-      93: function(t, e, n) {
-        (e.__esModule = !0), (e.default = void 0);
-        var i,
-          r = (i = n(17)) && i.__esModule ? i : { default: i },
-          s = n(18),
-          a = [
-            {
-              test: [/Roku\/DVP/],
-              describe: function(t) {
-                var e = r.default.getFirstMatch(/Roku\/DVP-(\d+\.\d+)/i, t);
-                return { name: s.OS_MAP.Roku, version: e };
-              },
-            },
-            {
-              test: [/windows phone/i],
-              describe: function(t) {
-                var e = r.default.getFirstMatch(
-                  /windows phone (?:os)?\s?(\d+(\.\d+)*)/i,
-                  t
-                );
-                return { name: s.OS_MAP.WindowsPhone, version: e };
-              },
-            },
-            {
-              test: [/windows/i],
-              describe: function(t) {
-                var e = r.default.getFirstMatch(
-                    /Windows ((NT|XP)( \d\d?.\d)?)/i,
-                    t
-                  ),
-                  n = r.default.getWindowsVersionName(e);
-                return { name: s.OS_MAP.Windows, version: e, versionName: n };
-              },
-            },
-            {
-              test: [/macintosh/i],
-              describe: function(t) {
-                var e = r.default
-                  .getFirstMatch(/mac os x (\d+(\.?_?\d+)+)/i, t)
-                  .replace(/[_\s]/g, ".");
-                return { name: s.OS_MAP.MacOS, version: e };
-              },
-            },
-            {
-              test: [/(ipod|iphone|ipad)/i],
-              describe: function(t) {
-                var e = r.default
-                  .getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i, t)
-                  .replace(/[_\s]/g, ".");
-                return { name: s.OS_MAP.iOS, version: e };
-              },
-            },
-            {
-              test: function(t) {
-                var e = !t.test(/like android/i),
-                  n = t.test(/android/i);
-                return e && n;
-              },
-              describe: function(t) {
-                var e = r.default.getFirstMatch(
-                    /android[\s\/-](\d+(\.\d+)*)/i,
-                    t
-                  ),
-                  n = r.default.getAndroidVersionName(e),
-                  i = { name: s.OS_MAP.Android, version: e };
-                return n && (i.versionName = n), i;
-              },
-            },
-            {
-              test: [/(web|hpw)[o0]s/i],
-              describe: function(t) {
-                var e = r.default.getFirstMatch(
-                    /(?:web|hpw)[o0]s\/(\d+(\.\d+)*)/i,
-                    t
-                  ),
-                  n = { name: s.OS_MAP.WebOS };
-                return e && e.length && (n.version = e), n;
-              },
-            },
-            {
-              test: [/blackberry|\bbb\d+/i, /rim\stablet/i],
-              describe: function(t) {
-                var e =
-                  r.default.getFirstMatch(
-                    /rim\stablet\sos\s(\d+(\.\d+)*)/i,
-                    t
-                  ) ||
-                  r.default.getFirstMatch(
-                    /blackberry\d+\/(\d+([_\s]\d+)*)/i,
-                    t
-                  ) ||
-                  r.default.getFirstMatch(/\bbb(\d+)/i, t);
-                return { name: s.OS_MAP.BlackBerry, version: e };
-              },
-            },
-            {
-              test: [/bada/i],
-              describe: function(t) {
-                var e = r.default.getFirstMatch(/bada\/(\d+(\.\d+)*)/i, t);
-                return { name: s.OS_MAP.Bada, version: e };
-              },
-            },
-            {
-              test: [/tizen/i],
-              describe: function(t) {
-                var e = r.default.getFirstMatch(/tizen[\/\s](\d+(\.\d+)*)/i, t);
-                return { name: s.OS_MAP.Tizen, version: e };
-              },
-            },
-            {
-              test: [/linux/i],
-              describe: function() {
-                return { name: s.OS_MAP.Linux };
-              },
-            },
-            {
-              test: [/CrOS/],
-              describe: function() {
-                return { name: s.OS_MAP.ChromeOS };
-              },
-            },
-            {
-              test: [/PlayStation 4/],
-              describe: function(t) {
-                var e = r.default.getFirstMatch(
-                  /PlayStation 4[\/\s](\d+(\.\d+)*)/i,
-                  t
-                );
-                return { name: s.OS_MAP.PlayStation4, version: e };
-              },
-            },
-          ];
-        (e.default = a), (t.exports = e.default);
-      },
-      94: function(t, e, n) {
-        (e.__esModule = !0), (e.default = void 0);
-        var i,
-          r = (i = n(17)) && i.__esModule ? i : { default: i },
-          s = n(18),
-          a = [
-            {
-              test: [/googlebot/i],
-              describe: function() {
-                return { type: "bot", vendor: "Google" };
-              },
-            },
-            {
-              test: [/huawei/i],
-              describe: function(t) {
-                var e = r.default.getFirstMatch(/(can-l01)/i, t) && "Nova",
-                  n = { type: s.PLATFORMS_MAP.mobile, vendor: "Huawei" };
-                return e && (n.model = e), n;
-              },
-            },
-            {
-              test: [/nexus\s*(?:7|8|9|10).*/i],
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.tablet, vendor: "Nexus" };
-              },
-            },
-            {
-              test: [/ipad/i],
-              describe: function() {
-                return {
-                  type: s.PLATFORMS_MAP.tablet,
-                  vendor: "Apple",
-                  model: "iPad",
-                };
-              },
-            },
-            {
-              test: [/kftt build/i],
-              describe: function() {
-                return {
-                  type: s.PLATFORMS_MAP.tablet,
-                  vendor: "Amazon",
-                  model: "Kindle Fire HD 7",
-                };
-              },
-            },
-            {
-              test: [/silk/i],
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.tablet, vendor: "Amazon" };
-              },
-            },
-            {
-              test: [/tablet/i],
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.tablet };
-              },
-            },
-            {
-              test: function(t) {
-                var e = t.test(/ipod|iphone/i),
-                  n = t.test(/like (ipod|iphone)/i);
-                return e && !n;
-              },
-              describe: function(t) {
-                var e = r.default.getFirstMatch(/(ipod|iphone)/i, t);
-                return {
-                  type: s.PLATFORMS_MAP.mobile,
-                  vendor: "Apple",
-                  model: e,
-                };
-              },
-            },
-            {
-              test: [/nexus\s*[0-6].*/i, /galaxy nexus/i],
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.mobile, vendor: "Nexus" };
-              },
-            },
-            {
-              test: [/[^-]mobi/i],
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.mobile };
-              },
-            },
-            {
-              test: function(t) {
-                return "blackberry" === t.getBrowserName(!0);
-              },
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.mobile, vendor: "BlackBerry" };
-              },
-            },
-            {
-              test: function(t) {
-                return "bada" === t.getBrowserName(!0);
-              },
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.mobile };
-              },
-            },
-            {
-              test: function(t) {
-                return "windows phone" === t.getBrowserName();
-              },
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.mobile, vendor: "Microsoft" };
-              },
-            },
-            {
-              test: function(t) {
-                var e = Number(String(t.getOSVersion()).split(".")[0]);
-                return "android" === t.getOSName(!0) && e >= 3;
-              },
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.tablet };
-              },
-            },
-            {
-              test: function(t) {
-                return "android" === t.getOSName(!0);
-              },
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.mobile };
-              },
-            },
-            {
-              test: function(t) {
-                return "macos" === t.getOSName(!0);
-              },
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.desktop, vendor: "Apple" };
-              },
-            },
-            {
-              test: function(t) {
-                return "windows" === t.getOSName(!0);
-              },
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.desktop };
-              },
-            },
-            {
-              test: function(t) {
-                return "linux" === t.getOSName(!0);
-              },
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.desktop };
-              },
-            },
-            {
-              test: function(t) {
-                return "playstation 4" === t.getOSName(!0);
-              },
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.tv };
-              },
-            },
-            {
-              test: function(t) {
-                return "roku" === t.getOSName(!0);
-              },
-              describe: function() {
-                return { type: s.PLATFORMS_MAP.tv };
-              },
-            },
-          ];
-        (e.default = a), (t.exports = e.default);
-      },
-      95: function(t, e, n) {
-        (e.__esModule = !0), (e.default = void 0);
-        var i,
-          r = (i = n(17)) && i.__esModule ? i : { default: i },
-          s = n(18),
-          a = [
-            {
-              test: function(t) {
-                return "microsoft edge" === t.getBrowserName(!0);
-              },
-              describe: function(t) {
-                if (/\sedg\//i.test(t)) return { name: s.ENGINE_MAP.Blink };
-                var e = r.default.getFirstMatch(/edge\/(\d+(\.?_?\d+)+)/i, t);
-                return { name: s.ENGINE_MAP.EdgeHTML, version: e };
-              },
-            },
-            {
-              test: [/trident/i],
-              describe: function(t) {
-                var e = { name: s.ENGINE_MAP.Trident },
-                  n = r.default.getFirstMatch(/trident\/(\d+(\.?_?\d+)+)/i, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: function(t) {
-                return t.test(/presto/i);
-              },
-              describe: function(t) {
-                var e = { name: s.ENGINE_MAP.Presto },
-                  n = r.default.getFirstMatch(/presto\/(\d+(\.?_?\d+)+)/i, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: function(t) {
-                var e = t.test(/gecko/i),
-                  n = t.test(/like gecko/i);
-                return e && !n;
-              },
-              describe: function(t) {
-                var e = { name: s.ENGINE_MAP.Gecko },
-                  n = r.default.getFirstMatch(/gecko\/(\d+(\.?_?\d+)+)/i, t);
-                return n && (e.version = n), e;
-              },
-            },
-            {
-              test: [/(apple)?webkit\/537\.36/i],
-              describe: function() {
-                return { name: s.ENGINE_MAP.Blink };
-              },
-            },
-            {
-              test: [/(apple)?webkit/i],
-              describe: function(t) {
-                var e = { name: s.ENGINE_MAP.WebKit },
-                  n = r.default.getFirstMatch(/webkit\/(\d+(\.?_?\d+)+)/i, t);
-                return n && (e.version = n), e;
-              },
-            },
-          ];
-        (e.default = a), (t.exports = e.default);
-      },
-    });
-  })((Ht = { exports: {} }), Ht.exports),
-  Ht.exports);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: function(t) {
+                  return t.test(/presto/i);
+                },
+                describe: function(t) {
+                  var e = { name: s.ENGINE_MAP.Presto },
+                    n = r.default.getFirstMatch(/presto\/(\d+(\.?_?\d+)+)/i, t);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: function(t) {
+                  var e = t.test(/gecko/i),
+                    n = t.test(/like gecko/i);
+                  return e && !n;
+                },
+                describe: function(t) {
+                  var e = { name: s.ENGINE_MAP.Gecko },
+                    n = r.default.getFirstMatch(/gecko\/(\d+(\.?_?\d+)+)/i, t);
+                  return n && (e.version = n), e;
+                },
+              },
+              {
+                test: [/(apple)?webkit\/537\.36/i],
+                describe: function() {
+                  return { name: s.ENGINE_MAP.Blink };
+                },
+              },
+              {
+                test: [/(apple)?webkit/i],
+                describe: function(t) {
+                  var e = { name: s.ENGINE_MAP.WebKit },
+                    n = r.default.getFirstMatch(/webkit\/(\d+(\.?_?\d+)+)/i, t);
+                  return n && (e.version = n), e;
+                },
+              },
+            ];
+          (e.default = a), (t.exports = e.default);
+        },
+      });
+    })((Ht = { exports: {} }), Ht.exports),
+    Ht.exports);
 (Dt = It) &&
   Dt.__esModule &&
   Object.prototype.hasOwnProperty.call(Dt, "default") &&
@@ -3347,7 +3364,7 @@ customElements.define(
         pointerEvents: "none",
       }),
         this.appendChild(this.ripple),
-        (this.ripple.style.color = "#03a9f4"),
+        (this.ripple.style.color = "#ff9800"),
         (this.ripple.style.color = "var(--primary-color)"),
         [
           "touchcancel",
@@ -4654,13 +4671,14 @@ let ve = class extends ct {
     const e = this.config.entity
         ? this.hass.states[this.config.entity]
         : void 0,
-      n = (this._getMatchingConfigState(e),
-      !!(
-        this._hasTemplate ||
-        (this.config.state &&
-          this.config.state.find((t) => "template" === t.operator)) ||
-        t.has("_timeRemaining")
-      ));
+      n =
+        (this._getMatchingConfigState(e),
+        !!(
+          this._hasTemplate ||
+          (this.config.state &&
+            this.config.state.find((t) => "template" === t.operator)) ||
+          t.has("_timeRemaining")
+        ));
     return (function(t, e, n) {
       if (e.has("config") || n) return !0;
       if (t.config.entity) {

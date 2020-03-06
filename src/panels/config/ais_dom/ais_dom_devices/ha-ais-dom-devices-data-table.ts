@@ -181,6 +181,13 @@ export class HaDevicesDataTable extends LitElement {
               sortable: true,
               filterable: true,
             },
+            integration: {
+              title: this.hass.localize(
+                "ui.panel.config.devices.data_table.integration"
+              ),
+              sortable: true,
+              filterable: true,
+            },
           }
   );
 

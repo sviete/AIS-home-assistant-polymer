@@ -21,7 +21,7 @@
       sizes="180x180"
       href="/static/icons/favicon-apple-180x180.png"
     />
-    <link rel="mask-icon" href="/static/icons/mask-icon.svg" color="#03a9f4" />
+    <link rel="mask-icon" href="/static/icons/mask-icon.svg" color="#ff9800" />
     <meta name="apple-itunes-app" content="app-id=1099568401" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta
@@ -40,7 +40,7 @@
       name="msapplication-square310x310logo"
       content="/static/icons/tile-win-310x310.png"
     />
-    <meta name="msapplication-TileColor" content="#03a9f4ff" />
+    <meta name="msapplication-TileColor" content="#ff9800ff" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="referrer" content="same-origin" />
     <meta name="theme-color" content="#THEMEC" />
