@@ -185,9 +185,10 @@ export class HaConfigDevicePage extends LitElement {
                 ></ais-dom-iframe-view>
               `
             : html``}
-          ${this._triggers.length ||
-          this._conditions.length ||
-          this._actions.length
+          ${(this._triggers.length ||
+            this._conditions.length ||
+            this._actions.length) &&
+          device?.sw_version !== "Rclone"
             ? html`
                 <div class="header">Automatyzacje</div>
                 ${this._triggers.length
