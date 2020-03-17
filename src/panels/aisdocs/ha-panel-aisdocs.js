@@ -14,7 +14,7 @@ class HaPanelAisdocs extends PolymerElement {
         }
       </style>
       <iframe
-        src="//sviete.github.io/AIS-docs/"
+        src="//www.ai-speaker.com/"
         sandbox="allow-forms allow-popups allow-pointer-lock allow-same-origin allow-scripts"
         allowfullscreen="true"
         webkitallowfullscreen="true"
