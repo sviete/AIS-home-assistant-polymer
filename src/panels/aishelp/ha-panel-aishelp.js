@@ -114,7 +114,7 @@ class HaPanelAishelp extends PolymerElement {
               <a href="/local/id_rsa_ais?v=1" target="_blank"
                 >autoryzowany klucz ssh</a
               > i połącz się ze swojej konsoli poleceniem: <br>ssh [[aisLocalIP]] -i <ścieżka do pobranego klucza ssh>
-              <br><br>Możesz też łączyć się za pomocą hasła:<br><a>ssh [[aisLocalIP]]</a><br>szczegóły w <a href="https://sviete.github.io/AIS-docs/docs/en/ais_bramka_remote_ssh.html#dost%C4%99p-do-konsoli-z-klienta-ssh)" target="_blank">dokumentacji</a>
+              <br><br>Możesz też łączyć się za pomocą hasła:<br><a>ssh [[aisLocalIP]]</a><br>szczegóły w <a href="https://www.ai-speaker.com/docs/ais_bramka_remote_ssh#dost%C4%99p-do-konsoli-z-klienta-ssh)" target="_blank">dokumentacji</a>
             </div>
           </ha-card>
           <ha-card header="Tunel">

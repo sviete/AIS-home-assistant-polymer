@@ -277,7 +277,7 @@ class HaPanelAisgalery extends PolymerElement {
 
   async _showHelp() {
     var win = window.open(
-      "https://sviete.github.io/AIS-docs/docs/en/next/ais_app_integration_gallery.html",
+      "https://www.ai-speaker.com/docs/ais_app_integration_gallery/",
       "_blank"
     );
     win.focus();

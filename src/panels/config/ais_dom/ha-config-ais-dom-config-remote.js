@@ -107,7 +107,7 @@ class HaConfigAisDomControl extends PolymerElement {
               </div>
               <div class="card-actions">
                 <a
-                  href="https://sviete.github.io/AIS-docs/docs/en/ais_bramka_remote_www_index.html"
+                  href="https://www.ai-speaker.com/docs/ais_bramka_remote_www_index"
                   target="_blank"
                 >
                   <mwc-button>Dowiedz się jak to działa</mwc-button>

@@ -41,7 +41,7 @@ export class AisWebhooks extends LitElement {
           dowolnego miejsca. ${this._renderBody()}
 
           <div class="footer">
-            <a href="https://sviete.github.io/AIS-docs" target="_blank">
+            <a href="https://www.ai-speaker.com/" target="_blank">
               Dowiedz się więcej o zwrotnym wywołaniu HTTP.
             </a>
           </div>

@@ -2,7 +2,7 @@ import { LocalizeFunc } from "../common/translations/localize";
 
 function getIntegrationDocsUrl(domain: string) {
   if (domain.startsWith("ais_")) {
-    return `https://sviete.github.io/AIS-docs/`;
+    return `https://www.ai-speaker.com/`;
   }
   return `https://www.home-assistant.io/integrations/${domain}`;
 }

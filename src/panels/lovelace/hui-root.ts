@@ -620,10 +620,7 @@ class HUIRoot extends LitElement {
   }
 
   private _handleHelp(): void {
-    window.open(
-      "https://sviete.github.io/AIS-docs/docs/en/ais_app_index.html",
-      "_blank"
-    );
+    window.open("https://www.ai-speaker.com/docs/ais_app_index", "_blank");
   }
 
   private _editModeEnable(): void {
