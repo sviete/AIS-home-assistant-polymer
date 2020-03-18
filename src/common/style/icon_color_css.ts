@@ -11,6 +11,7 @@ export const iconColorCSS = css`
   ha-icon[data-domain="light"][data-state="on"],
   ha-icon[data-domain="input_boolean"][data-state="on"],
   ha-icon[data-domain="lock"][data-state="unlocked"],
+  ha-icon[data-domain="media_player"][data-state="on"],
   ha-icon[data-domain="media_player"][data-state="paused"],
   ha-icon[data-domain="media_player"][data-state="playing"],
   ha-icon[data-domain="script"][data-state="running"],
@@ -27,6 +28,10 @@ export const iconColorCSS = css`
 
   ha-icon[data-domain="climate"][data-state="heating"] {
     color: var(--heat-color, #ff8100);
+  }
+
+  ha-icon[data-domain="climate"][data-state="drying"] {
+    color: var(--dry-color, #efbd07);
   }
 
   ha-icon[data-domain="alarm_control_panel"] {

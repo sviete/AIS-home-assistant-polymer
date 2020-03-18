@@ -76,6 +76,22 @@ export const haStyle = css`
     @apply --paper-font-title;
   }
 
+  .secondary {
+    color: var(--secondary-text-color);
+  }
+
+  .error {
+    color: var(--google-red-500);
+  }
+
+  .warning {
+    color: var(--google-red-500);
+  }
+
+  mwc-button.warning {
+    --mdc-theme-primary: var(--google-red-500);
+  }
+
   button.link {
     background: none;
     color: inherit;
@@ -118,6 +134,9 @@ export const haStyle = css`
   .layout.center-center {
     align-items: center;
   }
+  .layout.bottom {
+    align-items: flex-end;
+  }
   .layout.center-justified,
   .layout.center-center {
     justify-content: center;
@@ -157,8 +176,10 @@ export const haStyleDialog = css`
     padding: 8px;
   }
 
-  .paper-dialog-buttons .warning {
-    --mdc-theme-primary: var(--google-red-500);
+  @media all and (min-width: 450px) {
+    ha-paper-dialog {
+      min-width: 400px;
+    }
   }
 
   @media all and (max-width: 450px), all and (max-height: 500px) {
@@ -176,5 +197,35 @@ export const haStyleDialog = css`
       border-bottom-left-radius: 0px;
       border-bottom-right-radius: 0px;
     }
+  }
+
+  /* mwc-dialog (ha-dialog) styles */
+  ha-dialog {
+    --mdc-dialog-min-width: 400px;
+    --mdc-dialog-max-width: 600px;
+    --mdc-dialog-heading-ink-color: var(--primary-text-color);
+    --mdc-dialog-content-ink-color: var(--primary-text-color);
+    --justify-action-buttons: space-between;
+  }
+
+  ha-dialog .form {
+    padding-bottom: 24px;
+    color: var(--primary-text-color);
+  }
+
+  /* make dialog fullscreen on small screens */
+  @media all and (max-width: 450px), all and (max-height: 500px) {
+    ha-dialog {
+      --mdc-dialog-min-width: 100vw;
+      --mdc-dialog-max-height: 100vh;
+      --mdc-dialog-shape-radius: 0px;
+      --vertial-align-dialog: flex-end;
+    }
+  }
+  mwc-button.warning {
+    --mdc-theme-primary: var(--google-red-500);
+  }
+  .error {
+    color: var(--google-red-500);
   }
 `;

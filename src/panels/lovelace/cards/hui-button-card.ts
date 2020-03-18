@@ -30,9 +30,10 @@ import { ButtonCardConfig } from "./types";
 import { actionHandler } from "../common/directives/action-handler-directive";
 import { hasAction } from "../common/has-action";
 import { handleAction } from "../common/handle-action";
-import { ActionHandlerEvent } from "../../../data/lovelace";
+import { ActionHandlerEvent, LovelaceConfig } from "../../../data/lovelace";
 import { computeActiveState } from "../../../common/entity/compute_active_state";
 import { iconColorCSS } from "../../../common/style/icon_color_css";
+import { findEntities } from "../common/find-entites";
 
 @customElement("hui-button-card")
 export class HuiButtonCard extends LitElement implements LovelaceCard {
@@ -43,13 +44,29 @@ export class HuiButtonCard extends LitElement implements LovelaceCard {
     return document.createElement("hui-button-card-editor");
   }
 
-  public static getStubConfig(): object {
+  public static getStubConfig(
+    hass: HomeAssistant,
+    lovelaceConfig: LovelaceConfig,
+    entities?: string[],
+    entitiesFill?: string[]
+  ): object {
+    const maxEntities = 1;
+    const foundEntities = findEntities(
+      hass,
+      lovelaceConfig,
+      maxEntities,
+      entities,
+      entitiesFill,
+      ["light", "switch"]
+    );
+
     return {
       tap_action: { action: "toggle" },
       hold_action: { action: "more-info" },
       show_icon: true,
       show_name: true,
       state_color: true,
+      entity: foundEntities[0] || "",
     };
   }
 
@@ -72,6 +89,7 @@ export class HuiButtonCard extends LitElement implements LovelaceCard {
       double_tap_action: { action: "none" },
       show_icon: true,
       show_name: true,
+      state_color: true,
       ...config,
     };
 
@@ -148,6 +166,7 @@ export class HuiButtonCard extends LitElement implements LovelaceCard {
         ${this._config.show_icon
           ? html`
               <ha-icon
+                tabindex="-1"
                 data-domain=${ifDefined(
                   this._config.state_color && stateObj
                     ? computeStateDomain(stateObj)
@@ -170,7 +189,7 @@ export class HuiButtonCard extends LitElement implements LovelaceCard {
           : ""}
         ${this._config.show_name
           ? html`
-              <span>
+              <span tabindex="-1">
                 ${this._config.name ||
                   (stateObj ? computeStateName(stateObj) : "")}
               </span>
@@ -222,6 +241,11 @@ export class HuiButtonCard extends LitElement implements LovelaceCard {
         width: 40%;
         height: auto;
         color: var(--paper-item-icon-color, #44739e);
+      }
+
+      ha-icon,
+      span {
+        outline: none;
       }
 
       ${iconColorCSS}

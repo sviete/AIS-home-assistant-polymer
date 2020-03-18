@@ -6,8 +6,6 @@ import {
   TemplateResult,
   property,
   customElement,
-  CSSResult,
-  css,
 } from "lit-element";
 import { HomeAssistant, Route } from "../../../types";
 import {
@@ -28,6 +26,7 @@ import {
   RowClickedEvent,
 } from "../../../components/data-table/ha-data-table";
 import { navigate } from "../../../common/navigate";
+import { HASSDomEvent } from "../../../common/dom/fire_event";
 
 @customElement("ha-config-devices-dashboard")
 export class HaConfigDeviceDashboard extends LitElement {
@@ -129,6 +128,7 @@ export class HaConfigDeviceDashboard extends LitElement {
               sortable: true,
               filterable: true,
               direction: "asc",
+              grows: true,
               template: (name, device: DataTableRowData) => {
                 const battery = device.battery_entity
                   ? this.hass.states[device.battery_entity]
@@ -157,6 +157,7 @@ export class HaConfigDeviceDashboard extends LitElement {
               ),
               sortable: true,
               filterable: true,
+              grows: true,
               direction: "asc",
             },
             manufacturer: {
@@ -165,6 +166,7 @@ export class HaConfigDeviceDashboard extends LitElement {
               ),
               sortable: true,
               filterable: true,
+              width: "15%",
             },
             model: {
               title: this.hass.localize(
@@ -172,6 +174,7 @@ export class HaConfigDeviceDashboard extends LitElement {
               ),
               sortable: true,
               filterable: true,
+              width: "15%",
             },
             area: {
               title: this.hass.localize(
@@ -179,6 +182,7 @@ export class HaConfigDeviceDashboard extends LitElement {
               ),
               sortable: true,
               filterable: true,
+              width: "15%",
             },
             integration: {
               title: this.hass.localize(
@@ -186,6 +190,7 @@ export class HaConfigDeviceDashboard extends LitElement {
               ),
               sortable: true,
               filterable: true,
+              width: "15%",
             },
             battery_entity: {
               title: this.hass.localize(
@@ -193,6 +198,7 @@ export class HaConfigDeviceDashboard extends LitElement {
               ),
               sortable: true,
               type: "numeric",
+              width: "60px",
               template: (batteryEntity: string) => {
                 const battery = batteryEntity
                   ? this.hass.states[batteryEntity]
@@ -249,20 +255,9 @@ export class HaConfigDeviceDashboard extends LitElement {
     return batteryEntity ? batteryEntity.entity_id : undefined;
   }
 
-  private _handleRowClicked(ev: CustomEvent) {
-    const deviceId = (ev.detail as RowClickedEvent).id;
+  private _handleRowClicked(ev: HASSDomEvent<RowClickedEvent>) {
+    const deviceId = ev.detail.id;
     navigate(this, `/config/devices/device/${deviceId}`);
-  }
-
-  static get styles(): CSSResult {
-    return css`
-      .content {
-        padding: 4px;
-      }
-      ha-devices-data-table {
-        width: 100%;
-      }
-    `;
   }
 }
 

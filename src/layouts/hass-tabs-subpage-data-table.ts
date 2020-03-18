@@ -61,6 +61,11 @@ export class HaTabsSubpageDataTable extends LitElement {
    * @type {() => void}
    */
   @property() public backCallback?: () => void;
+  /**
+   * String to show when there are no records in the data table.
+   * @type {String}
+   */
+  @property({ type: String }) public noDataText?: string;
   @property() public route!: Route;
   /**
    * Array of tabs to show on the page.
@@ -104,6 +109,7 @@ export class HaTabsSubpageDataTable extends LitElement {
           .filter=${this.filter}
           .selectable=${this.selectable}
           .id=${this.id}
+          .noDataText=${this.noDataText}
         >
           ${!this.narrow
             ? html`
@@ -135,6 +141,7 @@ export class HaTabsSubpageDataTable extends LitElement {
     return css`
       ha-data-table {
         width: 100%;
+        height: 100%;
         --data-table-border-width: 0;
       }
       :host(:not([narrow])) ha-data-table {

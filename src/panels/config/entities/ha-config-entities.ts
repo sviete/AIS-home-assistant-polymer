@@ -3,7 +3,7 @@ import "@polymer/paper-dropdown-menu/paper-dropdown-menu";
 import "@polymer/paper-item/paper-icon-item";
 import "@polymer/paper-listbox/paper-listbox";
 import "@polymer/paper-tooltip/paper-tooltip";
-import { UnsubscribeFunc, HassEntities } from "home-assistant-js-websocket";
+import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import {
   css,
   CSSResult,
@@ -39,16 +39,17 @@ import "../../../layouts/hass-loading-screen";
 import "../../../layouts/hass-tabs-subpage-data-table";
 import { SubscribeMixin } from "../../../mixins/subscribe-mixin";
 import { HomeAssistant, Route } from "../../../types";
-import { DialogEntityRegistryDetail } from "./dialog-entity-registry-detail";
+import { DialogEntityEditor } from "./dialog-entity-editor";
 import {
-  loadEntityRegistryDetailDialog,
-  showEntityRegistryDetailDialog,
-} from "./show-dialog-entity-registry-detail";
+  loadEntityEditorDialog,
+  showEntityEditorDialog,
+} from "./show-dialog-entity-editor";
 import { configSections } from "../ha-panel-config";
 import { classMap } from "lit-html/directives/class-map";
 import { computeStateName } from "../../../common/entity/compute_state_name";
 // tslint:disable-next-line: no-duplicate-imports
 import { HaTabsSubpageDataTable } from "../../../layouts/hass-tabs-subpage-data-table";
+import { HASSDomEvent } from "../../../common/dom/fire_event";
 
 export interface StateEntity extends EntityRegistryEntry {
   readonly?: boolean;
@@ -58,6 +59,7 @@ export interface StateEntity extends EntityRegistryEntry {
 export interface EntityRow extends StateEntity {
   icon: string;
   unavailable: boolean;
+  restored: boolean;
   status: string;
 }
 
@@ -68,6 +70,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
   @property() public narrow!: boolean;
   @property() public route!: Route;
   @property() private _entities?: EntityRegistryEntry[];
+  @property() private _stateEntities: StateEntity[] = [];
   @property() private _showDisabled = false;
   @property() private _showUnavailable = true;
   @property() private _showReadOnly = true;
@@ -75,7 +78,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
   @property() private _selectedEntities: string[] = [];
   @query("hass-tabs-subpage-data-table")
   private _dataTable!: HaTabsSubpageDataTable;
-  private getDialog?: () => DialogEntityRegistryDetail | undefined;
+  private getDialog?: () => DialogEntityEditor | undefined;
 
   private _columns = memoize(
     (narrow, _language): DataTableColumnContainer => {
@@ -94,6 +97,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
           sortable: true,
           filterable: true,
           direction: "asc",
+          grows: true,
         },
       };
 
@@ -104,6 +108,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         type: "icon",
         sortable: true,
         filterable: true,
+        width: "55px",
         template: (_status, entity: any) =>
           entity.unavailable || entity.disabled_by || entity.readonly
             ? html`
@@ -115,14 +120,20 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
                     style=${styleMap({
                       color: entity.unavailable ? "var(--google-red-500)" : "",
                     })}
-                    .icon=${entity.unavailable
+                    .icon=${entity.restored
+                      ? "hass:restore-alert"
+                      : entity.unavailable
                       ? "hass:alert-circle"
                       : entity.disabled_by
                       ? "hass:cancel"
                       : "hass:pencil-off"}
                   ></ha-icon>
                   <paper-tooltip position="left">
-                    ${entity.unavailable
+                    ${entity.restored
+                      ? this.hass.localize(
+                          "ui.panel.config.entities.picker.status.restored"
+                        )
+                      : entity.unavailable
                       ? this.hass.localize(
                           "ui.panel.config.entities.picker.status.unavailable"
                         )
@@ -158,6 +169,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         ),
         sortable: true,
         filterable: true,
+        width: "20%",
       };
       columns.platform = {
         title: this.hass.localize(
@@ -165,6 +177,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         ),
         sortable: true,
         filterable: true,
+        width: "20%",
         template: (platform) =>
           this.hass.localize(`component.${platform}.config.title`) || platform,
       };
@@ -177,40 +190,23 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
   private _filteredEntities = memoize(
     (
       entities: EntityRegistryEntry[],
-      states: HassEntities,
+      stateEntities: StateEntity[],
       showDisabled: boolean,
       showUnavailable: boolean,
       showReadOnly: boolean
     ): EntityRow[] => {
-      const stateEntities: StateEntity[] = [];
-      if (showReadOnly) {
-        const regEntityIds = new Set(
-          entities.map((entity) => entity.entity_id)
-        );
-        for (const entityId of Object.keys(states)) {
-          if (regEntityIds.has(entityId)) {
-            continue;
-          }
-          stateEntities.push({
-            name: computeStateName(states[entityId]),
-            entity_id: entityId,
-            platform: computeDomain(entityId),
-            disabled_by: null,
-            readonly: true,
-            selectable: false,
-          });
-        }
-      }
-
       if (!showDisabled) {
         entities = entities.filter((entity) => !Boolean(entity.disabled_by));
       }
 
       const result: EntityRow[] = [];
 
-      for (const entry of entities.concat(stateEntities)) {
-        const state = states[entry.entity_id];
-        const unavailable = state?.state === "unavailable";
+      for (const entry of showReadOnly
+        ? entities.concat(stateEntities)
+        : entities) {
+        const entity = this.hass.states[entry.entity_id];
+        const unavailable = entity?.state === "unavailable";
+        const restored = entity?.attributes.restored;
 
         if (!showUnavailable && unavailable) {
           continue;
@@ -218,14 +214,19 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
 
         result.push({
           ...entry,
-          icon: state
-            ? stateIcon(state)
+          icon: entity
+            ? stateIcon(entity)
             : domainIcon(computeDomain(entry.entity_id)),
           name:
             computeEntityRegistryName(this.hass!, entry) ||
             this.hass.localize("state.default.unavailable"),
           unavailable,
-          status: unavailable
+          restored,
+          status: restored
+            ? this.hass.localize(
+                "ui.panel.config.entities.picker.status.restored"
+              )
+            : unavailable
             ? this.hass.localize(
                 "ui.panel.config.entities.picker.status.unavailable"
               )
@@ -387,33 +388,72 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         .route=${this.route}
         .tabs=${configSections.integrations}
         .columns=${this._columns(this.narrow, this.hass.language)}
-          .data=${this._filteredEntities(
-            this._entities,
-            this.hass.states,
-            this._showDisabled,
-            this._showUnavailable,
-            this._showReadOnly
-          )}
-          .filter=${this._filter}
-          selectable
-          @selection-changed=${this._handleSelectionChanged}
-          @row-click=${this._openEditEntry}
-          id="entity_id"
+        .data=${this._filteredEntities(
+          this._entities,
+          this._stateEntities,
+          this._showDisabled,
+          this._showUnavailable,
+          this._showReadOnly
+        )}
+        .filter=${this._filter}
+        selectable
+        @selection-changed=${this._handleSelectionChanged}
+        @row-click=${this._openEditEntry}
+        id="entity_id"
       >
-                <div class=${classMap({
-                  "search-toolbar": this.narrow,
-                  "table-header": !this.narrow,
-                })} slot="header">
-                  ${headerToolbar}
-                </div>
-        </ha-data-table>
+        <div
+          class=${classMap({
+            "search-toolbar": this.narrow,
+            "table-header": !this.narrow,
+          })}
+          slot="header"
+        >
+          ${headerToolbar}
+        </div>
       </hass-tabs-subpage-data-table>
     `;
   }
 
   protected firstUpdated(changedProps): void {
     super.firstUpdated(changedProps);
-    loadEntityRegistryDetailDialog();
+    loadEntityEditorDialog();
+  }
+
+  protected updated(changedProps): void {
+    super.updated(changedProps);
+    const oldHass = changedProps.get("hass");
+    let changed = false;
+    if (!this.hass || !this._entities) {
+      return;
+    }
+    if (changedProps.has("hass") || changedProps.has("_entities")) {
+      const stateEntities: StateEntity[] = [];
+      const regEntityIds = new Set(
+        this._entities.map((entity) => entity.entity_id)
+      );
+      for (const entityId of Object.keys(this.hass.states)) {
+        if (regEntityIds.has(entityId)) {
+          continue;
+        }
+        if (
+          !oldHass ||
+          this.hass.states[entityId] !== oldHass.states[entityId]
+        ) {
+          changed = true;
+        }
+        stateEntities.push({
+          name: computeStateName(this.hass.states[entityId]),
+          entity_id: entityId,
+          platform: computeDomain(entityId),
+          disabled_by: null,
+          readonly: true,
+          selectable: false,
+        });
+      }
+      if (changed) {
+        this._stateEntities = stateEntities;
+      }
+    }
   }
 
   private _showDisabledChanged() {
@@ -432,16 +472,10 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
     this._filter = ev.detail.value;
   }
 
-  private _handleSelectionChanged(ev: CustomEvent): void {
-    const changedSelection = ev.detail as SelectionChangedEvent;
-    const entity = changedSelection.id;
-    if (changedSelection.selected) {
-      this._selectedEntities = [...this._selectedEntities, entity];
-    } else {
-      this._selectedEntities = this._selectedEntities.filter(
-        (entityId) => entityId !== entity
-      );
-    }
+  private _handleSelectionChanged(
+    ev: HASSDomEvent<SelectionChangedEvent>
+  ): void {
+    this._selectedEntities = ev.detail.value;
   }
 
   private _enableSelected() {
@@ -497,13 +531,26 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
     });
     showConfirmationDialog(this, {
       title: this.hass.localize(
-        "ui.panel.config.entities.picker.remove_selected.confirm_title",
+        `ui.panel.config.entities.picker.remove_selected.confirm_${
+          removeableEntities.length !== this._selectedEntities.length
+            ? "partly_"
+            : ""
+        }title`,
         "number",
         removeableEntities.length
       ),
-      text: this.hass.localize(
-        "ui.panel.config.entities.picker.remove_selected.confirm_text"
-      ),
+      text:
+        removeableEntities.length === this._selectedEntities.length
+          ? this.hass.localize(
+              "ui.panel.config.entities.picker.remove_selected.confirm_text"
+            )
+          : this.hass.localize(
+              "ui.panel.config.entities.picker.remove_selected.confirm_partly_text",
+              "removable",
+              removeableEntities.length,
+              "selected",
+              this._selectedEntities.length
+            ),
       confirmText: this.hass.localize("ui.common.yes"),
       dismissText: this.hass.localize("ui.common.no"),
       confirm: () => {
@@ -524,7 +571,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
     const entry = this._entities!.find(
       (entity) => entity.entity_id === entityId
     );
-    this.getDialog = showEntityRegistryDetailDialog(this, {
+    this.getDialog = showEntityEditorDialog(this, {
       entry,
       entity_id: entityId,
     });
