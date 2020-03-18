@@ -42,6 +42,7 @@ import {
 } from "../../../data/entity_registry";
 import { processEditorEntities } from "../editor/process-editor-entities";
 import { SENSOR_DEVICE_CLASS_BATTERY } from "../../../data/sensor";
+import { compare } from "../../../common/string/compare";
 
 const DEFAULT_VIEW_ENTITY_ID = "group.default_view";
 const DOMAINS_BADGES = [
@@ -273,7 +274,6 @@ export const generateDefaultViewConfig = (
         areaEntities.map((entity) => [entity.entity_id, entity]),
         {
           title: area.name,
-          show_header_toggle: true,
         }
       )
     );
@@ -345,10 +345,17 @@ const generateViewConfig = (
     .forEach((domain) => {
       cards = cards.concat(
         computeCards(
-          ungroupedEntitites[domain].map((entityId): [string, HassEntity] => [
-            entityId,
-            entities[entityId],
-          ]),
+          ungroupedEntitites[domain]
+            .sort((a, b) =>
+              compare(
+                computeStateName(entities[a]),
+                computeStateName(entities[b])
+              )
+            )
+            .map((entityId): [string, HassEntity] => [
+              entityId,
+              entities[entityId],
+            ]),
           {
             title: localize(`domain.${domain}`),
           }

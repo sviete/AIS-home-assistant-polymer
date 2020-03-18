@@ -19,9 +19,7 @@ export interface Stream {
 }
 
 export const computeMJPEGStreamUrl = (entity: CameraEntity) =>
-  `/api/camera_proxy_stream/${entity.entity_id}?token=${
-    entity.attributes.access_token
-  }`;
+  `/api/camera_proxy_stream/${entity.entity_id}?token=${entity.attributes.access_token}`;
 
 export const fetchThumbnailUrlWithCache = (
   hass: HomeAssistant,
@@ -41,15 +39,6 @@ export const fetchThumbnailUrl = async (
 ) => {
   const path = await getSignedPath(hass, `/api/camera_proxy/${entityId}`);
   return hass.hassUrl(path.path);
-};
-
-export const fetchThumbnail = (hass: HomeAssistant, entityId: string) => {
-  // tslint:disable-next-line: no-console
-  console.warn("This method has been deprecated.");
-  return hass.callWS<CameraThumbnail>({
-    type: "camera_thumbnail",
-    entity_id: entityId,
-  });
 };
 
 export const fetchStreamUrl = async (

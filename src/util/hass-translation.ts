@@ -105,9 +105,7 @@ async function fetchTranslation(fingerprint) {
   });
   if (!response.ok) {
     throw new Error(
-      `Fail to fetch translation ${fingerprint}: HTTP response status is ${
-        response.status
-      }`
+      `Fail to fetch translation ${fingerprint}: HTTP response status is ${response.status}`
     );
   }
   return response.json();
@@ -124,8 +122,11 @@ export async function getTranslation(
     }
     throw new Error("Language en is not found in metadata");
   }
-  const fingerprint =
-    metadata.fingerprints[fragment ? `${fragment}/${language}` : language];
+
+  // nl-abcd.jon or logbook/nl-abcd.json
+  const fingerprint = `${fragment ? fragment + "/" : ""}${language}-${
+    metadata.hash
+  }.json`;
 
   // Fetch translation from the server
   if (!translations[fingerprint]) {

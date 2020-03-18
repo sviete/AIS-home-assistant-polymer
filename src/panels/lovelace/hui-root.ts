@@ -29,7 +29,7 @@ import "../../components/ha-paper-icon-button-arrow-prev";
 import "../../components/ha-icon";
 import { debounce } from "../../common/util/debounce";
 import { HomeAssistant } from "../../types";
-import { LovelaceConfig } from "../../data/lovelace";
+import { LovelaceConfig, LovelacePanelConfig } from "../../data/lovelace";
 import { navigate } from "../../common/navigate";
 import { fireEvent } from "../../common/dom/fire_event";
 import { swapView } from "./editor/config-util";
@@ -47,10 +47,12 @@ import { Lovelace } from "./types";
 import { afterNextRender } from "../../common/util/render-status";
 import { haStyle } from "../../resources/styles";
 import { computeRTLDirection } from "../../common/util/compute_rtl";
-import { loadLovelaceResources } from "./common/load-resources";
 import { showVoiceCommandDialog } from "../../dialogs/voice-command-dialog/show-ha-voice-command-dialog";
 import { isComponentLoaded } from "../../common/config/is_component_loaded";
-import { showAlertDialog } from "../../dialogs/generic/show-dialog-box";
+import {
+  showAlertDialog,
+  showConfirmationDialog,
+} from "../../dialogs/generic/show-dialog-box";
 import memoizeOne from "memoize-one";
 
 class HUIRoot extends LitElement {
@@ -267,6 +269,21 @@ class HUIRoot extends LitElement {
                             </paper-item>
                           `
                         : ""}
+                      ${(this.hass.panels.lovelace
+                        ?.config as LovelacePanelConfig)?.mode === "yaml"
+                        ? html`
+                            <paper-item
+                              aria-label=${this.hass!.localize(
+                                "ui.panel.lovelace.menu.reload_resources"
+                              )}
+                              @tap="${this._handleReloadResources}"
+                            >
+                              ${this.hass!.localize(
+                                "ui.panel.lovelace.menu.reload_resources"
+                              )}
+                            </paper-item>
+                          `
+                        : ""}
                       ${this.hass!.user!.is_admin &&
                       !this.hass!.config.safe_mode
                         ? html`
@@ -388,7 +405,8 @@ class HUIRoot extends LitElement {
         }
       </app-header>
       <div id='view' class="${classMap({
-        "tabs-hidden": this.lovelace!.config.views.length < 2,
+        "tabs-hidden":
+          !this._editMode && this.lovelace!.config.views.length < 2,
       })}" @ll-rebuild='${this._debouncedConfigChanged}'></div>
     </app-header-layout>
     `;
@@ -511,19 +529,15 @@ class HUIRoot extends LitElement {
     let force = false;
 
     if (changedProperties.has("route")) {
-      const views = this.config && this.config.views;
-      if (
-        this.route!.path === "" &&
-        this.route!.prefix === "/lovelace" &&
-        views
-      ) {
-        navigate(this, `/lovelace/${views[0].path || 0}`, true);
+      const views = this.config.views;
+      if (this.route!.path === "" && views.length) {
+        navigate(this, `${this.route!.prefix}/${views[0].path || 0}`, true);
         newSelectView = 0;
       } else if (this._routeData!.view === "hass-unused-entities") {
         newSelectView = "hass-unused-entities";
       } else if (this._routeData!.view) {
         const selectedView = this._routeData!.view;
-        const selectedViewInt = parseInt(selectedView, 10);
+        const selectedViewInt = Number(selectedView);
         let index = 0;
         for (let i = 0; i < views.length; i++) {
           if (views[i].path === selectedView || i === selectedViewInt) {
@@ -541,16 +555,8 @@ class HUIRoot extends LitElement {
         | undefined;
 
       if (!oldLovelace || oldLovelace.config !== this.lovelace!.config) {
-        if (this.lovelace!.config.resources) {
-          loadLovelaceResources(
-            this.lovelace!.config.resources,
-            this.hass!.auth.data.hassUrl
-          );
-        }
         // On config change, recreate the current view from scratch.
         force = true;
-        // Recalculate to see if we need to adjust content area for tab bar
-        fireEvent(this, "iron-resize");
       }
 
       if (!oldLovelace || oldLovelace.editMode !== this.lovelace!.editMode) {
@@ -560,13 +566,11 @@ class HUIRoot extends LitElement {
           this._routeData!.view === "hass-unused-entities"
         ) {
           const views = this.config && this.config.views;
-          navigate(this, `/lovelace/${views[0].path || 0}`);
+          navigate(this, `${this.route?.prefix}/${views[0]?.path || 0}`);
           newSelectView = 0;
         }
         // On edit mode change, recreate the current view from scratch
         force = true;
-        // Recalculate to see if we need to adjust content area for tab bar
-        fireEvent(this, "iron-resize");
       }
     }
 
@@ -607,8 +611,21 @@ class HUIRoot extends LitElement {
     fireEvent(this, "config-refresh");
   }
 
+  private _handleReloadResources(): void {
+    this.hass.callService("lovelace", "reload_resources");
+    showConfirmationDialog(this, {
+      title: this.hass!.localize(
+        "ui.panel.lovelace.reload_resources.refresh_header"
+      ),
+      text: this.hass!.localize(
+        "ui.panel.lovelace.reload_resources.refresh_body"
+      ),
+      confirm: () => location.reload(),
+    });
+  }
+
   private _handleUnusedEntities(): void {
-    navigate(this, `/lovelace/hass-unused-entities`);
+    navigate(this, `${this.route?.prefix}/hass-unused-entities`);
   }
 
   private _deselect(ev): void {
@@ -631,16 +648,10 @@ class HUIRoot extends LitElement {
       return;
     }
     this.lovelace!.setEditMode(true);
-    if (this.config.views.length < 2) {
-      fireEvent(this, "iron-resize");
-    }
   }
 
   private _editModeDisable(): void {
     this.lovelace!.setEditMode(false);
-    if (this.config.views.length < 2) {
-      fireEvent(this, "iron-resize");
-    }
   }
 
   private _editLovelace() {
@@ -681,7 +692,7 @@ class HUIRoot extends LitElement {
 
     if (viewIndex !== this._curView) {
       const path = this.config.views[viewIndex].path || viewIndex;
-      navigate(this, `/lovelace/${path}`);
+      navigate(this, `${this.route?.prefix}/${path}`);
     }
     scrollToTarget(this, this._layout.header.scrollTarget);
   }
@@ -758,6 +769,8 @@ class HUIRoot extends LitElement {
     }
 
     root.appendChild(view);
+    // Recalculate to see if we need to adjust content area for tab bar
+    fireEvent(this, "iron-resize");
   }
 }
 

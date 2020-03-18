@@ -8,54 +8,80 @@ import {
   RouteOptions,
 } from "./hass-router-page";
 import { removeInitSkeleton } from "../util/init-skeleton";
+import { deepEqual } from "../common/util/deep-equal";
 
-const CACHE_COMPONENTS = ["lovelace", "states", "developer-tools"];
+const CACHE_URL_PATHS = ["lovelace", "developer-tools"];
 const COMPONENTS = {
   calendar: () =>
-    import(/* webpackChunkName: "panel-calendar" */ "../panels/calendar/ha-panel-calendar"),
+    import(
+      /* webpackChunkName: "panel-calendar" */ "../panels/calendar/ha-panel-calendar"
+    ),
   config: () =>
-    import(/* webpackChunkName: "panel-config" */ "../panels/config/ha-panel-config"),
+    import(
+      /* webpackChunkName: "panel-config" */ "../panels/config/ha-panel-config"
+    ),
   custom: () =>
-    import(/* webpackChunkName: "panel-custom" */ "../panels/custom/ha-panel-custom"),
+    import(
+      /* webpackChunkName: "panel-custom" */ "../panels/custom/ha-panel-custom"
+    ),
   "developer-tools": () =>
-    import(/* webpackChunkName: "panel-developer-tools" */ "../panels/developer-tools/ha-panel-developer-tools"),
+    import(
+      /* webpackChunkName: "panel-developer-tools" */ "../panels/developer-tools/ha-panel-developer-tools"
+    ),
   lovelace: () =>
-    import(/* webpackChunkName: "panel-lovelace" */ "../panels/lovelace/ha-panel-lovelace"),
-  states: () =>
-    import(/* webpackChunkName: "panel-states" */ "../panels/states/ha-panel-states"),
+    import(
+      /* webpackChunkName: "panel-lovelace" */ "../panels/lovelace/ha-panel-lovelace"
+    ),
   history: () =>
-    import(/* webpackChunkName: "panel-history" */ "../panels/history/ha-panel-history"),
+    import(
+      /* webpackChunkName: "panel-history" */ "../panels/history/ha-panel-history"
+    ),
   iframe: () =>
-    import(/* webpackChunkName: "panel-iframe" */ "../panels/iframe/ha-panel-iframe"),
-  kiosk: () =>
-    import(/* webpackChunkName: "panel-kiosk" */ "../panels/kiosk/ha-panel-kiosk"),
+    import(
+      /* webpackChunkName: "panel-iframe" */ "../panels/iframe/ha-panel-iframe"
+    ),
   logbook: () =>
-    import(/* webpackChunkName: "panel-logbook" */ "../panels/logbook/ha-panel-logbook"),
+    import(
+      /* webpackChunkName: "panel-logbook" */ "../panels/logbook/ha-panel-logbook"
+    ),
   mailbox: () =>
-    import(/* webpackChunkName: "panel-mailbox" */ "../panels/mailbox/ha-panel-mailbox"),
+    import(
+      /* webpackChunkName: "panel-mailbox" */ "../panels/mailbox/ha-panel-mailbox"
+    ),
   map: () =>
     import(/* webpackChunkName: "panel-map" */ "../panels/map/ha-panel-map"),
   profile: () =>
-    import(/* webpackChunkName: "panel-profile" */ "../panels/profile/ha-panel-profile"),
+    import(
+      /* webpackChunkName: "panel-profile" */ "../panels/profile/ha-panel-profile"
+    ),
   "shopping-list": () =>
-    import(/* webpackChunkName: "panel-shopping-list" */ "../panels/shopping-list/ha-panel-shopping-list"),
+    import(
+      /* webpackChunkName: "panel-shopping-list" */ "../panels/shopping-list/ha-panel-shopping-list"
+    ),
   aishelp: () =>
-    import(/* webpackChunkName: "panel-aishelp" */ "../panels/aishelp/ha-panel-aishelp"),
+    import(
+      /* webpackChunkName: "panel-aishelp" */ "../panels/aishelp/ha-panel-aishelp"
+    ),
   aisdocs: () =>
-    import(/* webpackChunkName: "panel-aisdocs" */ "../panels/aisdocs/ha-panel-aisdocs"),
+    import(
+      /* webpackChunkName: "panel-aisdocs" */ "../panels/aisdocs/ha-panel-aisdocs"
+    ),
   aisgalery: () =>
-    import(/* webpackChunkName: "panel-aisgalery" */ "../panels/aisgalery/ha-panel-aisgalery"),
+    import(
+      /* webpackChunkName: "panel-aisgalery" */ "../panels/aisgalery/ha-panel-aisgalery"
+    ),
   aisvideo: () =>
-    import(/* webpackChunkName: "panel-aisvideo" */ "../panels/aisvideo/ha-panel-aisvideo"),
+    import(
+      /* webpackChunkName: "panel-aisvideo" */ "../panels/aisvideo/ha-panel-aisvideo"
+    ),
 };
 
 const getRoutes = (panels: Panels): RouterOptions => {
   const routes: RouterOptions["routes"] = {};
-
   Object.values(panels).forEach((panel) => {
     const data: RouteOptions = {
       tag: `ha-panel-${panel.component_name}`,
-      cache: CACHE_COMPONENTS.includes(panel.component_name),
+      cache: CACHE_URL_PATHS.includes(panel.url_path),
     };
     if (panel.component_name in COMPONENTS) {
       data.load = COMPONENTS[panel.component_name];
@@ -71,7 +97,7 @@ const getRoutes = (panels: Panels): RouterOptions => {
 
 @customElement("partial-panel-resolver")
 class PartialPanelResolver extends HassRouterPage {
-  @property() public hass?: HomeAssistant;
+  @property() public hass!: HomeAssistant;
   @property() public narrow?: boolean;
 
   protected updated(changedProps: PropertyValues) {
@@ -83,11 +109,8 @@ class PartialPanelResolver extends HassRouterPage {
 
     const oldHass = changedProps.get("hass") as this["hass"];
 
-    if (
-      this.hass!.panels &&
-      (!oldHass || oldHass.panels !== this.hass!.panels)
-    ) {
-      this._updateRoutes();
+    if (this.hass.panels && (!oldHass || oldHass.panels !== this.hass.panels)) {
+      this._updateRoutes(oldHass?.panels);
     }
   }
 
@@ -100,7 +123,7 @@ class PartialPanelResolver extends HassRouterPage {
   }
 
   protected updatePageEl(el) {
-    const hass = this.hass!;
+    const hass = this.hass;
 
     if ("setProperties" in el) {
       // As long as we have Polymer panels
@@ -118,11 +141,20 @@ class PartialPanelResolver extends HassRouterPage {
     }
   }
 
-  private async _updateRoutes() {
-    this.routerOptions = getRoutes(this.hass!.panels);
-    await this.rebuild();
-    await this.pageRendered;
-    removeInitSkeleton();
+  private async _updateRoutes(oldPanels?: HomeAssistant["panels"]) {
+    this.routerOptions = getRoutes(this.hass.panels);
+
+    if (
+      !oldPanels ||
+      !deepEqual(
+        oldPanels[this._currentPage],
+        this.hass.panels[this._currentPage]
+      )
+    ) {
+      await this.rebuild();
+      await this.pageRendered;
+      removeInitSkeleton();
+    }
   }
 }
 

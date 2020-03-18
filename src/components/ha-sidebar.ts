@@ -32,6 +32,7 @@ import { classMap } from "lit-html/directives/class-map";
 // tslint:disable-next-line: no-duplicate-imports
 import { PaperIconItemElement } from "@polymer/paper-item/paper-icon-item";
 import { computeRTL } from "../common/util/compute_rtl";
+import { compare } from "../common/string/compare";
 
 const SHOW_AFTER_SPACER = [
   "config",
@@ -57,7 +58,21 @@ const SORT_VALUE_URL_PATHS = {
   aisdocs: 13,
 };
 
-const panelSorter = (a, b) => {
+const panelSorter = (a: PanelInfo, b: PanelInfo) => {
+  // Put all the Lovelace at the top.
+  const aLovelace = a.component_name === "lovelace";
+  const bLovelace = b.component_name === "lovelace";
+
+  if (aLovelace && bLovelace) {
+    return compare(a.title!, b.title!);
+  }
+  if (aLovelace && !bLovelace) {
+    return -1;
+  }
+  if (bLovelace) {
+    return 1;
+  }
+
   const aBuiltIn = a.url_path in SORT_VALUE_URL_PATHS;
   const bBuiltIn = b.url_path in SORT_VALUE_URL_PATHS;
   if (aBuiltIn && bBuiltIn) {
@@ -70,14 +85,9 @@ const panelSorter = (a, b) => {
     return 1;
   }
   // both not built in, sort by title
-  if (a.title! < b.title!) {
-    return -1;
-  }
-  if (a.title! > b.title!) {
-    return 1;
-  }
-  return 0;
+  return compare(a.title!, b.title!);
 };
+const DEFAULT_PAGE = localStorage.defaultPage || DEFAULT_PANEL;
 
 const computePanels = (hass: HomeAssistant): [PanelInfo[], PanelInfo[]] => {
   const panels = hass.panels;
@@ -89,7 +99,7 @@ const computePanels = (hass: HomeAssistant): [PanelInfo[], PanelInfo[]] => {
   const afterSpacer: PanelInfo[] = [];
 
   Object.values(panels).forEach((panel) => {
-    if (!panel.title) {
+    if (!panel.title || panel.url_path === DEFAULT_PAGE) {
       return;
     }
     (SHOW_AFTER_SPACER.includes(panel.url_path)
@@ -113,8 +123,7 @@ class HaSidebar extends LitElement {
 
   @property({ type: Boolean }) public alwaysExpand = false;
   @property({ type: Boolean, reflect: true }) public expanded = false;
-  @property() public _defaultPage?: string =
-    localStorage.defaultPage || DEFAULT_PANEL;
+
   @property() private _externalConfig?: ExternalConfig;
   @property() private _notifications?: PersistentNotification[];
   // property used only in css
@@ -143,6 +152,9 @@ class HaSidebar extends LitElement {
       }
     }
 
+    const defaultPanel =
+      this.hass.panels[DEFAULT_PAGE] || this.hass.panels[DEFAULT_PANEL];
+
     return html`
       <div class="menu">
         ${!this.narrow
@@ -167,9 +179,9 @@ class HaSidebar extends LitElement {
         @keydown=${this._listboxKeydown}
       >
         ${this._renderPanel(
-          this._defaultPage,
-          "hass:apps",
-          hass.localize("panel.states")
+          defaultPanel.url_path,
+          defaultPanel.icon || "hass:view-dashboard",
+          defaultPanel.title || hass.localize("panel.states")
         )}
         ${beforeSpacer.map((panel) =>
           this._renderPanel(
