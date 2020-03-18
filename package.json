@@ -98,6 +98,7 @@
     "mdn-polyfills": "^5.16.0",
     "memoize-one": "^5.0.2",
     "moment": "^2.24.0",
+    "mp-video": "^2.0.0",
     "node-vibrant": "^3.1.5",
     "preact": "^8.4.2",
     "preact-compat": "^3.18.4",
