@@ -7,7 +7,7 @@ class AisEasyPicker extends HTMLElement {
   setConfig(config) {
     const root = this.shadowRoot;
     if (root.lastChild) root.removeChild(root.lastChild);
-    const cardConfig = Object.assign({}, config);
+    const cardConfig = config;
     const card = document.createElement("ha-card");
     card.header = config.title;
     const content = document.createElement("div");

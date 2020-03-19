@@ -1,3 +1,5 @@
+import "../cards/hui-ais-easy-picker-card";
+import "../cards/hui-ais-button-card";
 import "../cards/hui-entities-card";
 import "../cards/hui-button-card";
 import "../cards/hui-entity-button-card";
@@ -16,6 +18,8 @@ import {
 } from "./create-element-base";
 
 const ALWAYS_LOADED_TYPES = new Set([
+  "ais-easy-picker",
+  "ais-button",
   "entities",
   "button",
   "entity-button",
@@ -28,18 +32,6 @@ const ALWAYS_LOADED_TYPES = new Set([
   "thermostat",
   "vertical-stack",
   "weather-forecast",
-  "ais-files-list",
-  "ais-easy-picker",
-  "ais-list",
-  "ais-button",
-  "ais-mini-media-player",
-  "ais-auto-entities",
-  "ais-monster",
-  "ais-fold-entity-row",
-  "ais-zigbee2mqtt",
-  "ais-now-playing-poster",
-  "ais-light",
-  "ais-theme-maker",
 ]);
 
 const LAZY_LOAD_TYPES = {
@@ -60,9 +52,9 @@ const LAZY_LOAD_TYPES = {
   markdown: () => import("../cards/hui-markdown-card"),
   picture: () => import("../cards/hui-picture-card"),
   "ais-files-list": () => import("../cards/hui-ais-files-list-card"),
-  "ais-easy-picker": () => import("../cards/hui-ais-easy-picker-card"),
+  //"ais-easy-picker": () => import("../cards/hui-ais-easy-picker-card"),
   "ais-list": () => import("../cards/hui-ais-list-card"),
-  "ais-button": () => import("../cards/hui-ais-button-card"),
+  //"ais-button": () => import("../cards/hui-ais-button-card"),
   "ais-mini-media-player": () =>
     import("../cards/hui-ais-mini-media-player-card"),
   "ais-auto-entities": () => import("../cards/hui-ais-auto-entities-card"),
@@ -72,7 +64,6 @@ const LAZY_LOAD_TYPES = {
   "ais-now-playing-poster": () =>
     import("../cards/hui-ais-now-playing-poster-card"),
   "ais-light": () => import("../cards/hui-ais-light-card"),
-  "ais-theme-maker": () => import("../cards/hui-ais-theme-maker-card"),
 };
 
 export const createCardElement = (config: LovelaceCardConfig) =>

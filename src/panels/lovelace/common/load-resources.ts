@@ -46,7 +46,7 @@ export const loadLovelaceResources = (
   // tslint:disable-next-line
   console.log("Loading AIS Lovelace Resources");
   const aisJs = [
-    // "/static/ais_dom/cards/card-tools.js",
+    "/static/ais_dom/cards/card-tools.js",
     "/static/ais_dom/cards/ais-tts.js",
     // "/static/ais_dom/cards/lovelace-swipe-navigation.js",
   ];
