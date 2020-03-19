@@ -52,9 +52,7 @@ const LAZY_LOAD_TYPES = {
   markdown: () => import("../cards/hui-markdown-card"),
   picture: () => import("../cards/hui-picture-card"),
   "ais-files-list": () => import("../cards/hui-ais-files-list-card"),
-  //"ais-easy-picker": () => import("../cards/hui-ais-easy-picker-card"),
   "ais-list": () => import("../cards/hui-ais-list-card"),
-  //"ais-button": () => import("../cards/hui-ais-button-card"),
   "ais-mini-media-player": () =>
     import("../cards/hui-ais-mini-media-player-card"),
   "ais-auto-entities": () => import("../cards/hui-ais-auto-entities-card"),
