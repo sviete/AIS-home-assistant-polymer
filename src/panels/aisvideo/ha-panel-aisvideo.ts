@@ -2,8 +2,6 @@ import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 import "mp-video/mp-video.html";
 
-import "../states/ha-panel-states";
-
 class HaPanelAisvideo extends PolymerElement {
   static get template() {
     return html`
@@ -18,7 +16,7 @@ class HaPanelAisvideo extends PolymerElement {
         <mp-video youtube video-id="..."></mp-video>
         <mp-video vimeo video-id="..."></mp-video>
         <mp-video html-video html-video-mp4="..."></mp-video>
-    </div>
+      </div>
     `;
   }
 

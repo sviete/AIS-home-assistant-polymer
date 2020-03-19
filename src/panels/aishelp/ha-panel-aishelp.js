@@ -5,7 +5,6 @@ import { PolymerElement } from "@polymer/polymer/polymer-element";
 
 import "../../components/ha-card";
 import "../../resources/ha-style";
-import "../states/ha-panel-states";
 import "../config/ha-config-section";
 
 class HaPanelAishelp extends PolymerElement {
