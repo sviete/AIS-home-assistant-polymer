@@ -69,6 +69,7 @@
   const isDirective = (o) => {
     return typeof o === "function" && directives.has(o);
   };
+  //# sourceMappingURL=directive.js.map
 
   /**
    * @license
@@ -100,6 +101,7 @@
       start = n;
     }
   };
+  //# sourceMappingURL=dom.js.map
 
   /**
    * @license
@@ -123,6 +125,7 @@
    * A sentinel value that signals a NodePart to fully clear its content.
    */
   const nothing = {};
+  //# sourceMappingURL=part.js.map
 
   /**
    * @license
@@ -350,6 +353,7 @@
    *    * (') then any non-(')
    */
   const lastAttributeNameRegex = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
+  //# sourceMappingURL=template.js.map
 
   /**
    * @license
@@ -493,6 +497,7 @@
       return fragment;
     }
   }
+  //# sourceMappingURL=template-instance.js.map
 
   /**
    * @license
@@ -585,6 +590,7 @@
       return template;
     }
   }
+  //# sourceMappingURL=template-result.js.map
 
   /**
    * @license
@@ -1039,6 +1045,7 @@
     (eventOptionsSupported
       ? { capture: o.capture, passive: o.passive, once: o.once }
       : o.capture);
+  //# sourceMappingURL=parts.js.map
 
   /**
    * @license
@@ -1094,6 +1101,7 @@
     }
   }
   const defaultTemplateProcessor = new DefaultTemplateProcessor();
+  //# sourceMappingURL=default-template-processor.js.map
 
   /**
    * @license
@@ -1141,6 +1149,7 @@
     return template;
   }
   const templateCaches = new Map();
+  //# sourceMappingURL=template-factory.js.map
 
   /**
    * @license
@@ -1184,6 +1193,7 @@
     part.setValue(result);
     part.commit();
   };
+  //# sourceMappingURL=render.js.map
 
   /**
    * @license
@@ -1208,6 +1218,7 @@
    */
   const html = (strings, ...values) =>
     new TemplateResult(strings, values, "html", defaultTemplateProcessor);
+  //# sourceMappingURL=lit-html.js.map
 
   /**
    * @license
@@ -1354,6 +1365,7 @@
       }
     }
   }
+  //# sourceMappingURL=modify-template.js.map
 
   /**
    * @license
@@ -1639,6 +1651,7 @@
       window.ShadyCSS.styleElement(container.host);
     }
   };
+  //# sourceMappingURL=shady-render.js.map
 
   /**
    * @license
@@ -2271,6 +2284,7 @@
    * Marks class as having finished creating properties.
    */
   UpdatingElement[_a] = true;
+  //# sourceMappingURL=updating-element.js.map
 
   /**
    * @license
@@ -2285,17 +2299,18 @@
    * subject to an additional IP rights grant found at
    * http://polymer.github.io/PATENTS.txt
    */
+  //# sourceMappingURL=decorators.js.map
 
   /**
-  @license
-  Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
-  This code may only be used under the BSD style license found at
-  http://polymer.github.io/LICENSE.txt The complete set of authors may be found at
-  http://polymer.github.io/AUTHORS.txt The complete set of contributors may be
-  found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
-  part of the polymer project is also subject to an additional IP rights grant
-  found at http://polymer.github.io/PATENTS.txt
-  */
+    @license
+    Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at
+    http://polymer.github.io/LICENSE.txt The complete set of authors may be found at
+    http://polymer.github.io/AUTHORS.txt The complete set of contributors may be
+    found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
+    part of the polymer project is also subject to an additional IP rights grant
+    found at http://polymer.github.io/PATENTS.txt
+    */
   const supportsAdoptingStyleSheets =
     "adoptedStyleSheets" in Document.prototype &&
     "replace" in CSSStyleSheet.prototype;
@@ -2335,7 +2350,7 @@
       return value;
     } else {
       throw new Error(`Value passed to 'css' function must be a 'css' function result: ${value}. Use 'unsafeCSS' to pass non-literal values, but
-          take care to ensure page security.`);
+            take care to ensure page security.`);
     }
   };
   /**
@@ -2351,6 +2366,7 @@
     );
     return new CSSResult(cssText, constructionToken);
   };
+  //# sourceMappingURL=css-tag.js.map
 
   /**
    * @license
@@ -2549,6 +2565,7 @@
    * @nocollapse
    */
   LitElement.render = render$1;
+  //# sourceMappingURL=lit-element.js.map
 
   /**
    * @license
@@ -2616,6 +2633,7 @@
     }
     classMapCache.set(part, classInfo);
   });
+  //# sourceMappingURL=class-map.js.map
 
   /**
    * @license
@@ -2693,6 +2711,7 @@
     }
     styleMapCache.set(part, styleInfo);
   });
+  //# sourceMappingURL=style-map.js.map
 
   /**
    * A collection of shims that provide minimal functionality of the ES6 collections.
@@ -4073,6 +4092,7 @@
       display: block;
       --mmp-scale: var(--mini-media-player-scale, 1);
       --mmp-unit: calc(var(--mmp-scale) * 40px);
+      --mmp-name-font-weight: var(--mini-media-player-name-font-weight, 400);
       --mmp-accent-color: var(
         --mini-media-player-accent-color,
         var(--accent-color, #f39c12)
@@ -4107,6 +4127,10 @@
       );
       --mmp-text-color-inverted: var(--disabled-text-color);
       --mmp-active-color: var(--mmp-accent-color);
+      --mmp-button-color: var(
+        --mini-media-player-button-color,
+        rgba(255, 255, 255, 0.25)
+      );
       --mmp-icon-color: var(
         --mini-media-player-icon-color,
         var(
@@ -4358,6 +4382,7 @@
     .entity__info__name {
       line-height: calc(var(--mmp-unit) / 2);
       color: var(--mmp-text-color);
+      font-weight: var(--mmp-name-font-weight);
     }
     .entity__info__media {
       color: var(--secondary-text-color);
@@ -4672,9 +4697,11 @@
           min-width: 0;
           overflow: hidden;
           transition: background 0.5s;
+          border-radius: 4px;
+          font-weight: 500;
         }
         :host([raised]) {
-          background: rgba(255, 255, 255, 0.25);
+          background: var(--mmp-button-color);
           min-height: calc(var(--mmp-unit) * 0.8);
           box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
             0px 2px 2px 0px rgba(0, 0, 0, 0.14),
@@ -4687,6 +4714,10 @@
         }
         :host([faded]) {
           opacity: 0.75;
+        }
+        :host([disabled]) {
+          opacity: 0.25;
+          pointer-events: none;
         }
         .container {
           height: 100%;
@@ -4733,88 +4764,81 @@
       return this.player.isMaster;
     }
 
+    get isGrouped() {
+      return this.player.isGrouped;
+    }
+
     handleGroupChange(ev) {
       const { entity, checked } = ev.detail;
       this.player.handleGroupChange(ev, entity, checked);
     }
 
-    render({ group, master, isMaster } = this) {
-      return this.visible
-        ? html`
-            <div class="mmp-group-list" ?visible=${this.visible}>
-              <span class="mmp-group-list__title">GRUPA ODTWARZACZY</span>
-              ${this.entities.map(
-                (item) => html`
-                  <mmp-group-item
-                    @change=${this.handleGroupChange}
-                    .item=${item}
-                    .checked=${item.entity_id === this.player.id ||
-                      group.includes(item.entity_id)}
-                    .disabled=${item.entity_id === this.player.id ||
-                      master !== this.player.id}
-                    .master=${item.entity_id === master}
-                  />
+    render() {
+      if (!this.visible) return html``;
+      const { group, isMaster, isGrouped } = this;
+      const { id } = this.player;
+      return html`
+        <div class="mmp-group-list">
+          <span class="mmp-group-list__title">GRUPA ODTWARZACZY</span>
+          ${this.entities.map((item) => this.renderItem(item, id))}
+          <div class="mmp-group-list__buttons">
+            <mmp-button
+              raised
+              ?disabled=${!isGrouped}
+              @click=${(e) => this.player.handleGroupChange(e, id, false)}
+            >
+              <span>Opuść</span>
+            </mmp-button>
+            ${isGrouped && isMaster
+              ? html`
+                  <mmp-button
+                    raised
+                    @click=${(e) =>
+                      this.player.handleGroupChange(e, group, false)}
+                  >
+                    <span>Rozgrupuj</span>
+                  </mmp-button>
                 `
-              )}
-              <div class="mmp-group-list__buttons">
-                <mmp-button
-                  class="mmp-group-list__button"
-                  raised
-                  ?disabled=${group.length < 2}
-                  @click=${(e) =>
-                    this.player.handleGroupChange(
-                      e,
-                      isMaster ? group : this.player.entity_id,
-                      false
-                    )}
+              : html``}
+            <mmp-button
+              raised
+              ?disabled=${!isMaster}
+              @click=${(e) =>
+                this.player.handleGroupChange(
+                  e,
+                  this.entities.map((item) => item.entity_id),
+                  true
+                )}
+            >
+              <span
+                ><svg
+                  style="width:24px;height:24px; vertical-align:middle;"
+                  viewBox="0 0 24 24"
                 >
-                  <span
-                    >${isMaster
-                      ? html`
-                          <svg
-                            style="width:24px;height:24px; vertical-align:middle;"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              fill="#fff"
-                              d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"
-                            />
-                          </svg>
-                          Wszystkie
-                        `
-                      : html`
-                          Opuść
-                        `}</span
-                  >
-                </mmp-button>
-                <mmp-button
-                  class="mmp-group-list__button"
-                  raised
-                  ?disabled=${!isMaster}
-                  @click=${(e) =>
-                    this.player.handleGroupChange(
-                      e,
-                      this.entities.map((item) => item.entity_id),
-                      true
-                    )}
-                >
-                  <span
-                    ><svg
-                      style="width:24px;height:24px; vertical-align:middle;"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="#fff"
-                        d="M19,19H5V5H15V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
-                      />
-                    </svg>
-                    Wszystkie</span
-                  >
-                </mmp-button>
-              </div>
-            </div>
-          `
-        : html``;
+                  <path
+                    fill="#fff"
+                    d="M19,19H5V5H15V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+                  />
+                </svg>
+                Wszystkie</span
+              >
+            </mmp-button>
+          </div>
+        </div>
+      `;
+    }
+
+    renderItem(item, id) {
+      const itemId = item.entity_id;
+      return html`
+        <mmp-group-item
+          @change=${this.handleGroupChange}
+          .item=${item}
+          .checked=${itemId === id || this.group.includes(itemId)}
+          .disabled=${itemId === id || !this.isMaster}
+          .master=${itemId === this.master}
+        />
+      `;
     }
 
     static get styles() {
@@ -4834,7 +4858,7 @@
         .mmp-group-list__buttons {
           display: flex;
         }
-        .mmp-group-list__button {
+        mmp-button {
           margin: 8px 8px 0 0;
           min-width: 0;
           text-transform: uppercase;
