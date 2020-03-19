@@ -6,7 +6,6 @@ import { PolymerElement } from "@polymer/polymer/polymer-element";
 import { showAisgaleryDialog } from "./show-ha-aisgalery-dialog";
 import "../../components/ha-card";
 import "../../resources/ha-style";
-import "../states/ha-panel-states";
 import "../config/ha-config-section";
 import "../../components/ha-fab";
 

@@ -1,8 +1,6 @@
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 
-import "../states/ha-panel-states";
-
 class HaPanelAisdocs extends PolymerElement {
   static get template() {
     return html`
