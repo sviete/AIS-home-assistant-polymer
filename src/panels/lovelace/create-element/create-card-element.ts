@@ -1,5 +1,6 @@
 import "../cards/hui-ais-easy-picker-card";
 import "../cards/hui-ais-button-card";
+import "../cards/hui-ais-files-list-card";
 import "../cards/hui-entities-card";
 import "../cards/hui-button-card";
 import "../cards/hui-entity-button-card";
@@ -20,6 +21,7 @@ import {
 const ALWAYS_LOADED_TYPES = new Set([
   "ais-easy-picker",
   "ais-button",
+  "ais-files-list",
   "entities",
   "button",
   "entity-button",
@@ -51,7 +53,7 @@ const LAZY_LOAD_TYPES = {
   map: () => import("../cards/hui-map-card"),
   markdown: () => import("../cards/hui-markdown-card"),
   picture: () => import("../cards/hui-picture-card"),
-  "ais-files-list": () => import("../cards/hui-ais-files-list-card"),
+
   "ais-list": () => import("../cards/hui-ais-list-card"),
   "ais-mini-media-player": () =>
     import("../cards/hui-ais-mini-media-player-card"),
