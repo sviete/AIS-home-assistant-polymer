@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="ais-dom-frontend",
-    version="20200318.1",
+    version="20200318.2",
     description="AIS dom frontend",
     url="https://github.com/sviete/home-assistant/home-assistant-polymer",
     author="The Authors of the AI-Speaker.com project.",
