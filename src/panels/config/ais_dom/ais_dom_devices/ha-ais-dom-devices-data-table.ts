@@ -18,23 +18,22 @@ import {
   DataTableRowData,
 } from "../../../../components/data-table/ha-data-table";
 // tslint:disable-next-line
-import { DeviceRegistryEntry } from "../../../../data/device_registry";
+import {
+  DeviceRegistryEntry,
+  computeDeviceName,
+  DeviceEntityLookup,
+} from "../../../../data/device_registry";
 import { EntityRegistryEntry } from "../../../../data/entity_registry";
 import { ConfigEntry } from "../../../../data/config_entries";
 import { AreaRegistryEntry } from "../../../../data/area_registry";
 import { navigate } from "../../../../common/navigate";
 import { LocalizeFunc } from "../../../../common/translations/localize";
-import { computeStateName } from "../../../../common/entity/compute_state_name";
 
 export interface DeviceRowData extends DeviceRegistryEntry {
   device?: DeviceRowData;
   area?: string;
   integration?: string;
   battery_entity?: string;
-}
-
-export interface DeviceEntityLookup {
-  [deviceId: string]: EntityRegistryEntry[];
 }
 
 @customElement("ha-ais-dom-devices-data-table")
@@ -99,11 +98,11 @@ export class HaDevicesDataTable extends LitElement {
       outputDevices = outputDevices.map((device) => {
         return {
           ...device,
-          name:
-            device.name_by_user ||
-            device.name ||
-            this._fallbackDeviceName(device.id, deviceEntityLookup) ||
-            "No name",
+          name: computeDeviceName(
+            device,
+            this.hass,
+            deviceEntityLookup[device.id]
+          ),
           model: device.model || "<unknown>",
           manufacturer: device.manufacturer || "<unknown>",
           area: device.area_id
@@ -135,9 +134,9 @@ export class HaDevicesDataTable extends LitElement {
             name: {
               title: "Device",
               sortable: true,
-              filterKey: "name",
               filterable: true,
               direction: "asc",
+              grows: true,
               template: (name, device: DataTableRowData) => {
                 const battery = device.battery_entity
                   ? this.hass.states[device.battery_entity]
@@ -146,7 +145,7 @@ export class HaDevicesDataTable extends LitElement {
                 return html`
                   ${name}<br />
                   ${device.area} | ${device.integration}<br />
-                  ${battery
+                  ${battery && !isNaN(battery.state as any)
                     ? html`
                         ${battery.state}%
                         <ha-state-icon
@@ -165,21 +164,25 @@ export class HaDevicesDataTable extends LitElement {
               sortable: true,
               filterable: true,
               direction: "asc",
+              grows: true,
             },
             manufacturer: {
               title: "Producent",
               sortable: true,
               filterable: true,
+              width: "15%",
             },
             model: {
               title: "Model",
               sortable: true,
               filterable: true,
+              width: "15%",
             },
             area: {
               title: "Obszar",
               sortable: true,
               filterable: true,
+              width: "15%",
             },
             integration: {
               title: this.hass.localize(
@@ -187,6 +190,31 @@ export class HaDevicesDataTable extends LitElement {
               ),
               sortable: true,
               filterable: true,
+              width: "15%",
+            },
+            battery_entity: {
+              title: this.hass.localize(
+                "ui.panel.config.devices.data_table.battery"
+              ),
+              sortable: true,
+              type: "numeric",
+              width: "60px",
+              template: (batteryEntity: string) => {
+                const battery = batteryEntity
+                  ? this.hass.states[batteryEntity]
+                  : undefined;
+                return battery && !isNaN(battery.state as any)
+                  ? html`
+                      ${battery.state}%
+                      <ha-state-icon
+                        .hass=${this.hass!}
+                        .stateObj=${battery}
+                      ></ha-state-icon>
+                    `
+                  : html`
+                      -
+                    `;
+              },
             },
           }
   );
@@ -203,7 +231,11 @@ export class HaDevicesDataTable extends LitElement {
           this.domain,
           this.hass.localize
         )}
+        .noDataText=${this.hass.localize(
+          "ui.panel.config.devices.data_table.no_devices"
+        )}
         @row-click=${this._handleRowClicked}
+        auto-height
       ></ha-data-table>
     `;
   }
@@ -219,20 +251,6 @@ export class HaDevicesDataTable extends LitElement {
     );
 
     return batteryEntity ? batteryEntity.entity_id : undefined;
-  }
-
-  private _fallbackDeviceName(
-    deviceId: string,
-    deviceEntityLookup: DeviceEntityLookup
-  ): string | undefined {
-    for (const entity of deviceEntityLookup[deviceId] || []) {
-      const stateObj = this.hass.states[entity.entity_id];
-      if (stateObj) {
-        return computeStateName(stateObj);
-      }
-    }
-
-    return undefined;
   }
 
   private _handleRowClicked(ev: CustomEvent) {
