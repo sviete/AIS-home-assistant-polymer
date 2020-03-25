@@ -853,6 +853,38 @@
             }
           }
         },
+        "ais_dom_config_update": {
+          "caption": "Gateway software",
+          "description": "System update, backup and synchronization with the Integrator Portal"
+        },
+        "ais_dom_config_wifi": {
+          "caption": "WiFi network",
+          "description": "WiFi connection settings"
+        },
+        "ais_dom_config_display": {
+          "caption": "Screen",
+          "description": "Screen Settings"
+        },
+        "ais_dom_config_tts": {
+          "caption": "The assistant voice",
+          "description": "Voice assistant settings"
+        },
+        "ais_dom_config_night": {
+          "caption": "Night mode",
+          "description": "Set the hours when the assistant should be quieter"
+        },
+        "ais_dom_config_logs": {
+          "caption": "Logs and recorder",
+          "description": "Configuration of logs and DB recorder"
+        },
+        "ais_dom_config_remote": {
+          "caption": "Remote control",
+          "description": "Configuration of remote access to the gateway"
+        },
+        "ais_dom_config_power": {
+          "caption": "Stop the Gate",
+          "description": "Restart or turn off the gate"
+        },
         "lovelace": {
           "caption": "Lovelace Dashboards",
           "description": "Configure your Lovelace Dashboards",

@@ -251,6 +251,13 @@ class HaPanelConfig extends HassRouterPage {
             /* webpackChunkName: "panel-config-ais-dom-remote" */ "./ais_dom/ha-config-ais-dom-config-remote"
           ),
       },
+      ais_dom_config_logs: {
+        tag: "ha-config-ais-dom-config-logs",
+        load: () =>
+          import(
+            /* webpackChunkName: "panel-config-ais-dom-remote" */ "./ais_dom/ha-config-ais-dom-config-logs"
+          ),
+      },
       ais_dom_config_power: {
         tag: "ha-config-ais-dom-config-power",
         load: () =>

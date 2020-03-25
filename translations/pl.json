@@ -1410,7 +1410,7 @@
                         "unavailable": "(niedostępne)"
                     }
                 },
-                "header": "Konfiguruj Home Assistant'a",
+                "header": "Konfiguruj Asystenta domowego",
                 "helpers": {
                     "caption": "Pomocnicy",
                     "description": "Elementy, które mogą pomóc w tworzeniu automatyzacji",
@@ -1505,6 +1505,38 @@
                     "description": "Zarządzaj swoimi urządzeniami z oprogramowaniem AIS dom"
                 },
                 "introduction": "Tutaj możesz skonfigurować Asystenta domowego i jego komponenty. Nie wszystkie opcje można konfigurować z interfejsu użytkownika, ale pracujemy nad tym.",
+                "ais_dom_config_update": {
+                    "caption": "Oprogramowanie bramki",
+                    "description": "Aktualizacja systemu, kopia zapasowa i synchronizacja bramki z Portalem Integratora"
+                },
+                "ais_dom_config_wifi": {
+                    "caption": "Sieć WiFi",
+                    "description": "Ustawienia połączenia z siecią WiFi"
+                  },
+                  "ais_dom_config_display": {
+                    "caption": "Ekran",
+                    "description": "Ustawienia ekranu"
+                  },
+                  "ais_dom_config_tts": {
+                    "caption": "Głos asystenta",
+                    "description": "Ustawienia głosu asystenta"
+                  },
+                  "ais_dom_config_night": {
+                    "caption": "Tryb nocny",
+                    "description": "Ustawienie godzin, w których asystent ma działać ciszej"
+                  },
+                  "ais_dom_config_remote": {
+                    "caption": "Zdalny dostęp",
+                    "description": "Konfiguracja zdalnego dostępu do bramki"
+                  },
+                  "ais_dom_config_logs": {
+                    "caption": "Logi i baza danych",
+                    "description": "Konfiguracja logów i rejestratora DB"
+                  },
+                  "ais_dom_config_power": {
+                    "caption": "Zatrzymanie bramki",
+                    "description": "Restart lub wyłączenie bramki"
+                  },
                 "lovelace": {
                     "caption": "Dashboardy Lovelace",
                     "dashboards": {

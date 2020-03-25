@@ -4,6 +4,7 @@ import "@polymer/paper-item/paper-item";
 
 import "../../../components/ha-card";
 import "../../../components/ha-icon-next";
+import { PageNavigation } from "../../../layouts/hass-tabs-subpage";
 import {
   LitElement,
   html,
@@ -15,48 +16,66 @@ import {
 } from "lit-element";
 import { HomeAssistant } from "../../../types";
 
-const PAGES: Array<{
-  page: string;
-  caption: string;
-  description: string;
-}> = [
-  {
-    page: "ais_dom_config_update",
-    caption: "Oprogramowanie bramki",
-    description:
-      "Aktualizacja systemu i synchronizacja bramki z Portalem Integratora",
-  },
-  {
-    page: "ais_dom_config_wifi",
-    caption: "Sieć WiFi",
-    description: "Ustawienia połączenia z siecią WiFi",
-  },
-  {
-    page: "ais_dom_config_display",
-    caption: "Ekran",
-    description: "Ustawienia ekranu",
-  },
-  {
-    page: "ais_dom_config_tts",
-    caption: "Głos asystenta",
-    description: "Ustawienia głosu asystenta",
-  },
-  {
-    page: "ais_dom_config_night",
-    caption: "Tryb nocny",
-    description: "Ustawienie godzin, w których asystent ma działać ciszej",
-  },
-  {
-    page: "ais_dom_config_remote",
-    caption: "Zdalny dostęp",
-    description: "Konfiguracja zdalnego dostępu do bramki",
-  },
-  {
-    page: "ais_dom_config_power",
-    caption: "Zatrzymanie bramki",
-    description: "Restart lub wyłączenie bramki",
-  },
-];
+const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
+  integrations: [
+    {
+      component: "ais_dom_config_update",
+      path: "/config/ais_dom_config_update",
+      translationKey: "ui.panel.config.ais_dom_config_update.caption",
+      icon: "mdi:cloud-sync-outline",
+      core: true,
+    },
+    {
+      component: "ais_dom_config_wifi",
+      path: "/config/ais_dom_config_wifi",
+      translationKey: "ui.panel.config.ais_dom_config_wifi.caption",
+      icon: "mdi:wifi",
+      core: true,
+    },
+    {
+      component: "ais_dom_config_display",
+      path: "/config/ais_dom_config_display",
+      translationKey: "ui.panel.config.ais_dom_config_display.caption",
+      icon: "mdi:monitor-edit",
+      core: true,
+    },
+    {
+      component: "ais_dom_config_tts",
+      path: "/config/ais_dom_config_tts",
+      translationKey: "ui.panel.config.ais_dom_config_tts.caption",
+      icon: "mdi:account-tie-voice",
+      core: true,
+    },
+    {
+      component: "ais_dom_config_night",
+      path: "/config/ais_dom_config_night",
+      translationKey: "ui.panel.config.ais_dom_config_night.caption",
+      icon: "mdi:weather-night",
+      core: true,
+    },
+    {
+      component: "ais_dom_config_remote",
+      path: "/config/ais_dom_config_remote",
+      translationKey: "ui.panel.config.ais_dom_config_remote.caption",
+      icon: "mdi:web",
+      core: true,
+    },
+    {
+      component: "ais_dom_config_logs",
+      path: "/config/ais_dom_config_logs",
+      translationKey: "ui.panel.config.ais_dom_config_logs.caption",
+      icon: "mdi:database-settings",
+      core: true,
+    },
+    {
+      component: "ais_dom_config_power",
+      path: "/config/ais_dom_config_power",
+      translationKey: "ui.panel.config.ais_dom_config_power.caption",
+      icon: "mdi:restart",
+      core: true,
+    },
+  ],
+};
 
 @customElement("ha-config-ais-dom-navigation")
 class HaConfigNavigation extends LitElement {
@@ -65,22 +84,17 @@ class HaConfigNavigation extends LitElement {
 
   protected render(): TemplateResult | void {
     return html`
-      <ha-card>
-        ${PAGES.map(
-          ({ page, caption, description }) =>
-            html`
-              <a href=${`/config/${page}`}>
-                <paper-item>
-                  <paper-item-body two-line=""
-                    >${`${caption}`}
-                    <div secondary>${`${description}`}</div>
-                  </paper-item-body>
-                  <ha-icon-next></ha-icon-next>
-                </paper-item>
-              </a>
-            `
-        )}
-      </ha-card>
+      ${Object.values(aisGateConfigSections).map(
+        (section) => html`
+          <ha-card>
+            <ha-config-navigation
+              .hass=${this.hass}
+              .showAdvanced=${this.showAdvanced}
+              .pages=${section}
+            ></ha-config-navigation>
+          </ha-card>
+        `
+      )}
     `;
   }
 
