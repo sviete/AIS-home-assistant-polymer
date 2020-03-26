@@ -33,7 +33,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
         .card-actions {
           display: flex;
         }
-        ha-card > div#ha-switch-id {
+        ha-card > div#card-icon {
           margin: -4px 0;
           position: absolute;
           top: 32px;
@@ -59,20 +59,22 @@ class HaConfigAisDomControlLogs extends PolymerElement {
       <hass-subpage header="Konfiguracja bramki AIS dom">
         <div class$="[[computeClasses(isWide)]]">
           <ha-config-section is-wide="[[isWide]]">
-            <span slot="header">Ustawienie zapisu do plików</span>
+            <span slot="header">Ustawienie zapisu logów systemu</span>
             <span slot="introduction"
-              >Tu możesz ustalić czy loigi i baza danych ma być zapisywana na
-              wymiennym dysku</span
+              >Tu możesz skonfigurować zapis logów do pliku na wymiennym
+              dysku</span
             >
-            <ha-card header="Zapis do plików">
-              <div id="ha-switch-id">
-                <ha-switch
-                  checked="{{recMode}}"
-                  on-change="changeRecMode"
-                ></ha-switch>
+            <ha-card header="Zapisu logów systemu do pliku">
+              <div id="card-icon">
+                <paper-icon-button
+                  icon="mdi:file-document-edit-outline"
+                ></paper-icon-button>
               </div>
               <div class="card-content">
-                Wybór dysku do zapisu: <br />
+                Wybór dysku do zapisu logów systemu: <br />
+                <paper-icon-button
+                  icon="mdi:usb-flash-drive"
+                ></paper-icon-button>
                 <ha-paper-dropdown-menu
                   label-float="Wybrany dysk"
                   dynamic-align=""
@@ -80,13 +82,36 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 >
                   <paper-listbox
                     slot="dropdown-content"
-                    selected="[[recDrive.state]]"
-                    on-selected-changed="recDriveChanged"
+                    selected="[[recLogDrive]]"
+                    on-selected-changed="recLogDriveChanged"
                     attr-for-selected="item-name"
                   >
                     <template
                       is="dom-repeat"
-                      items="[[recDrive.attributes.options]]"
+                      items="[[recDrives.attributes.options]]"
+                    >
+                      <paper-item item-name$="[[item]]">[[item]]</paper-item>
+                    </template>
+                  </paper-listbox>
+                </ha-paper-dropdown-menu>
+              </div>
+              <div class="card-content">
+                Wybór poziomu logowania: <br />
+                <paper-icon-button icon="mdi:bug-check"></paper-icon-button>
+                <ha-paper-dropdown-menu
+                  label-float="Poziom logowania"
+                  dynamic-align=""
+                  label="Poziomy logowania"
+                >
+                  <paper-listbox
+                    slot="dropdown-content"
+                    selected="[[logsLevels.state]]"
+                    on-selected-changed="recLogLevelChanged"
+                    attr-for-selected="item-name"
+                  >
+                    <template
+                      is="dom-repeat"
+                      items="[[logsLevels.attributes.options]]"
                     >
                       <paper-item item-name$="[[item]]">[[item]]</paper-item>
                     </template>
@@ -95,64 +120,47 @@ class HaConfigAisDomControlLogs extends PolymerElement {
               </div>
               <div class="card-content">
                 [[recLogModeInfo]]
-                <ul>
-                  <li>[[recDbModeFileLog]]</li>
-                  <li>[[quietModeFileDB]]</li>
-                </ul>
               </div>
             </ha-card>
           </ha-config-section>
 
           <ha-config-section is-wide="[[isWide]]">
-            <span slot="header">Ustawienia poziomu logowania</span>
+            <span slot="header">Ustawienia zapisu zdażeń systemu</span>
             <span slot="introduction">
-              Możesz zmienić poziom logowania z domyślnego "warning" na inny.
-              Naprzykład na "debug" żeby sparwdzić działanie nowego komponentu.
+              Tu możesz skonfigurować zapis zdażeń do bazy danych na dysku
+              wymiennym
             </span>
-            <ha-card header="Wybór poziomu logowania">
+            <ha-card header="Zapis do bazy danych">
+              <div id="card-icon">
+                <paper-icon-button icon="mdi:database"></paper-icon-button>
+              </div>
               <div class="card-content">
-                <div class="log_level">
-                  <paper-icon-button
-                    class="user-button"
-                    icon="mdi:bug-check"
-                  ></paper-icon-button
-                  ><mwc-button>debug</mwc-button>
-                </div>
-                <div class="log_level">
-                  <paper-icon-button
-                    class="user-button"
-                    icon="mdi:information-outline"
-                  ></paper-icon-button
-                  ><mwc-button>info</mwc-button>
-                </div>
-                <div class="log_level">
-                  <paper-icon-button
-                    class="user-button"
-                    icon="hass:alert"
-                  ></paper-icon-button
-                  ><mwc-button>warning</mwc-button>
-                </div>
-                <div class="log_level">
-                  <paper-icon-button
-                    class="user-button"
-                    icon="mdi:alert-box"
-                  ></paper-icon-button
-                  ><mwc-button>error</mwc-button>
-                </div>
-                <div class="log_level">
-                  <paper-icon-button
-                    class="user-button"
-                    icon="mdi:alert-octagon"
-                  ></paper-icon-button
-                  ><mwc-button>fatal</mwc-button>
-                </div>
-                <div class="log_level">
-                  <paper-icon-button
-                    class="user-button"
-                    icon="mdi:alert-octagram"
-                  ></paper-icon-button
-                  ><mwc-button>critical</mwc-button>
-                </div>
+                Wybór dysku do zapisu bazy danych: <br />
+                <paper-icon-button
+                  icon="mdi:usb-flash-drive"
+                ></paper-icon-button>
+                <ha-paper-dropdown-menu
+                  label-float="Wybrany dysk"
+                  dynamic-align=""
+                  label="Dyski wymienne"
+                >
+                  <paper-listbox
+                    slot="dropdown-content"
+                    selected="[[recDbDrive]]"
+                    on-selected-changed="recDBDriveChanged"
+                    attr-for-selected="item-name"
+                  >
+                    <template
+                      is="dom-repeat"
+                      items="[[recDrives.attributes.options]]"
+                    >
+                      <paper-item item-name$="[[item]]">[[item]]</paper-item>
+                    </template>
+                  </paper-listbox>
+                </ha-paper-dropdown-menu>
+                <br />
+                <br />
+                Funkcjonalność w przygotowaniu...
               </div>
             </ha-card>
           </ha-config-section>
@@ -166,67 +174,93 @@ class HaConfigAisDomControlLogs extends PolymerElement {
       hass: Object,
       isWide: Boolean,
       showAdvanced: Boolean,
-      recMode: {
-        type: Boolean,
-        computed: "_computeRecMode(hass)",
-      },
-      recDrive: {
+      recDrives: {
         type: Object,
-        computed: "_computeRecDrive(hass)",
+        computed: "_computeRecDrives(hass)",
+      },
+      recLogDrive: {
+        type: String,
+        computed: "_computeRecLogDrive(hass)",
+      },
+      logsLevels: {
+        type: Object,
+        computed: "_computeLogsLevels(hass)",
+      },
+      recDbDrive: {
+        type: String,
+        computed: "_computeRecDbDrive(hass)",
       },
       recLogModeInfo: String,
       recDbModeInfo: String,
-      recDbModeFileLog: String,
-      quietModeFileDB: String,
     };
+  }
+
+  ready() {
+    super.ready();
+    this.hass.callService("ais_files", "get_ext_drivers_info");
+    // this._computeRecDrives(this.hass);
+    // this._computeRecLogDrive(this.hass);
+    // this._computeLogsLevels(this.hass);
+    // this._computeRecDbDrive(this.hass);
   }
 
   computeClasses(isWide) {
     return isWide ? "content" : "content narrow";
   }
 
-  _computeRecDrive(hass) {
+  _computeRecDrives(hass) {
     return hass.states["input_select.ais_usb_flash_drives"];
   }
 
-  _computeRecMode(hass) {
-    const drive = hass.states["input_select.ais_usb_flash_drives"].state;
-    let ret = false;
-    if (hass.states["input_boolean.ais_logs_rec_mode"].state === "off") {
-      this.recLogModeInfo = "Jeśli włączysz zapis, to utworzymy pliki: ";
-      ret = false;
-    } else {
-      this.recLogModeInfo = "Rejestrowanie do plików: ";
-      ret = true;
-    }
-
-    if (drive !== "-") {
-      this.recDbModeFileLog = drive + "/xxxx.log";
-      this.quietModeFileDB = drive + "/ddddd.db";
-    } else {
-      this.recDbModeFileLog = "";
-      this.quietModeFileDB = "";
-    }
-
-    return ret;
+  _computeLogsLevels(hass) {
+    return hass.states["input_select.ais_system_logs_level"];
   }
 
-  recDriveChanged(ev) {
-    var oldVal = this.hass.states["input_select.ais_usb_flash_drives"].state;
+  _computeRecLogDrive(hass) {
+    return hass.states["input_text.ais_logs_path"].state;
+  }
+
+  _computeRecDbDrive(hass) {
+    return hass.states["input_text.ais_db_path"].state;
+  }
+
+  recLogDriveChanged(ev) {
+    var oldVal = this.hass.states["input_text.ais_logs_path"].state;
     var newVal = ev.detail.value;
 
     if (!newVal || oldVal === newVal) return;
 
-    this.hass.callService("input_select", "select_option", {
-      entity_id: "input_select.ais_usb_flash_drives",
-      option: newVal,
+    if (newVal !== "-") {
+      this.recLogModeInfo =
+        "Logowanie do pliku /dyski-wymienne/" + newVal + "/ais.log";
+    } else {
+      this.recLogModeInfo = "Logowanie wyłączone ";
+    }
+
+    this.hass.callService("ais_files", "change_logger_settings", {
+      value: newVal,
     });
-    this._computeRecMode(this.hass);
   }
 
-  changeRecMode() {
-    this.hass.callService("input_boolean", "toggle", {
-      entity_id: "input_boolean.ais_logs_rec_mode",
+  recLogLevelChanged(ev) {
+    var oldVal = this.hass.states["input_select.ais_system_logs_level"].state;
+    var newVal = ev.detail.value;
+
+    if (!newVal || oldVal === newVal) return;
+
+    this.hass.callService("logger", "set_default_level", {
+      level: newVal,
+    });
+  }
+
+  recDBDriveChanged(ev) {
+    var oldVal = this.hass.states["input_text.ais_db_path"].state;
+    var newVal = ev.detail.value;
+
+    if (!newVal || oldVal === newVal) return;
+
+    this.hass.callService("ais_files", "change_db_settings", {
+      value: newVal,
     });
   }
 }
