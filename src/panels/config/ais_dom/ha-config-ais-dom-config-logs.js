@@ -251,6 +251,11 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     this.hass.callService("logger", "set_default_level", {
       level: newVal,
     });
+
+    this.hass.callService("input_select", "select_option", {
+      entity_id: "input_select.ais_system_logs_level",
+      option: newVal,
+    });
   }
 
   recDBDriveChanged(ev) {
