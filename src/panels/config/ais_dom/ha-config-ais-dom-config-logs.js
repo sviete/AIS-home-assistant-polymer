@@ -64,7 +64,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
               >Tu możesz skonfigurować zapis logów do pliku na wymiennym
               dysku</span
             >
-            <ha-card header="Zapisu logów systemu do pliku">
+            <ha-card header="Zapis logów systemu do pliku">
               <div id="card-icon">
                 <paper-icon-button
                   icon="mdi:file-document-edit-outline"
@@ -139,10 +139,10 @@ class HaConfigAisDomControlLogs extends PolymerElement {
               </div>
               <div class="card-content">
                 Wybierz silnik bazodanowy, który chcesz użyć do rejestracji
-                zdarzeń.<br /><br />Domyślnie jest to SQLite, który nie wymaga
-                konfiguracji, a jedynie podania lokalizacji na dysku zewnętrznym
-                gdzie zostanie utworzony plik bazodanowy ais.db.
-                <br /><br />Wybór silnika bazy danych:
+                zdarzeń.<br /><br />Domyślna baza to SQLite, która nie wymaga
+                konfiguracji i może rejestrować dane w pamięci lub na
+                zewnętrznym dysku w pliku ais.db. <br /><br />
+                Wybór silnika bazy danych:
                 <br />
                 <paper-icon-button icon="mdi:database"></paper-icon-button>
                 <ha-paper-dropdown-menu
@@ -199,7 +199,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   placeholder="Użytkownik"
                   type="text"
                   id="db_user"
-                  on-change="_recDbModeInfo"
+                  on-change="_recDbUrlInfo"
                 >
                   <iron-icon icon="mdi:account" slot="suffix"></iron-icon>
                 </paper-input>
@@ -208,7 +208,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   no-label-float=""
                   type="password"
                   id="db_password"
-                  on-change="_recDbModeInfo"
+                  on-change="_recDbUrlInfo"
                   ><iron-icon icon="mdi:lastpass" slot="suffix"></iron-icon
                 ></paper-input>
                 <paper-input
@@ -216,7 +216,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   no-label-float=""
                   type="text"
                   id="db_server_ip"
-                  on-change="_recDbModeInfo"
+                  on-change="_recDbUrlInfo"
                   ><iron-icon icon="mdi:ip-network" slot="suffix"></iron-icon
                 ></paper-input>
                 <paper-input
@@ -224,7 +224,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   no-label-float=""
                   type="text"
                   id="db_server_name"
-                  on-change="_recDbModeInfo"
+                  on-change="_recDbUrlInfo"
                   ><iron-icon
                     icon="mdi:database-check"
                     slot="suffix"
@@ -232,17 +232,32 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 ></paper-input>
               </div>
               <div class="card-content">
-                DB URL: [[recDbModeInfo]]
+                [[recDbModeInfo]]
                 <br />
                 <div class="center-container">
-                  <template is="dom-if" if="[[!dbConnectionValid]]">
+                  <template
+                    is="dom-if"
+                    if="[[_isEqualTo(dbConnectionStep, 'valid')]]"
+                  >
                     <mwc-button raised="" on-click="doCheckDbConnection">
-                      Sprawdz połączenie
+                      <iron-icon icon="mdi:check"></iron-icon>Sprawdz połączenie
                     </mwc-button>
                   </template>
-                  <template is="dom-if" if="[[dbConnectionValid]]">
+                  <template
+                    is="dom-if"
+                    if="[[_isEqualTo(dbConnectionStep, 'save')]]"
+                  >
                     <mwc-button raised="" on-click="doSaveDbConnection">
-                      Zastosuj połączenie do zapisu zdarzeń
+                      <iron-icon icon="mdi:apply"></iron-icon>Zastosuj
+                      połączenie do zapisu zdarzeń
+                    </mwc-button>
+                  </template>
+                  <template
+                    is="dom-if"
+                    if="[[_isEqualTo(dbConnectionStep, 'delete')]]"
+                  >
+                    <mwc-button raised="" on-click="doDeleteDbConnection">
+                      <iron-icon icon="mdi:delete"></iron-icon>Usuń konfigurację
                     </mwc-button>
                   </template>
                   <template is="dom-if" if="[[validating]]">
@@ -295,7 +310,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
         type: Object,
         computed: "getDbConnectionInfo()",
       },
-      dbConnectionValid: Boolean,
+      dbConnectionStep: String,
       recLogModeInfo: String,
       recDbModeInfo: String,
       recDbConectionDisplay: String,
@@ -306,8 +321,12 @@ class HaConfigAisDomControlLogs extends PolymerElement {
   ready() {
     super.ready();
     this.hass.callService("ais_files", "get_ext_drivers_info");
-    this._recDbModeInfo(this.hass);
-    this.dbConnectionValid = false;
+    this._recDbUrlInfo();
+    this.dbConnectionStep = "";
+  }
+
+  _isEqualTo(currentStep, buttonToShow) {
+    return currentStep === buttonToShow;
   }
 
   doCheckDbConnection() {
@@ -316,18 +335,17 @@ class HaConfigAisDomControlLogs extends PolymerElement {
       dburl: this.recDbModeInfo,
     });
 
-    this.dbConnectionValid = true;
+    this.dbConnectionStep = "save";
     this.getDbConnectionInfo();
   }
 
   getDbConnectionInfo() {
     var connectionInfo = this.hass.states["sensor.ais_db_connection_info"];
     if (connectionInfo.state === "0") {
-      console.log("--------------");
+      this.validating = false;
+    } else {
       this.validating = false;
     }
-    console.log(connectionInfo.state);
-    console.log(this.validating);
     return connectionInfo;
   }
 
@@ -336,7 +354,23 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     this.hass.callService("ais_files", "change_db_connection", {
       value: dbUrl,
     });
-    // this.dbConnectionValid = false;
+
+    this.dbConnectionStep = "delete";
+  }
+
+  doDeleteDbConnection() {
+    this.hass.callService("ais_files", "change_db_connection", {
+      value: "",
+    });
+
+    this.hass.callService("input_select", "select_option", {
+      entity_id: "input_select.ais_db_engines",
+      option: "-",
+    });
+
+    this.recDbEngine = "-";
+    this.dbConnectionStep = "";
+    this._recDbUrlInfo();
   }
 
   computeClasses(isWide) {
@@ -397,15 +431,23 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     });
   }
 
-  _recDbModeInfo() {
+  _recDbUrlInfo() {
     let dbUrl = "";
-    if (this.recDbEngine === "SQLite") {
+    if (this.recDbEngine === "-") {
+      this.recDbConectionDisplay = "none";
+      this.recDbFileDisplay = "none";
+      dbUrl = "";
+    } else if (this.recDbEngine === "SQLite (file)") {
       this.recDbConectionDisplay = "none";
       this.recDbFileDisplay = "";
       dbUrl =
         "sqlite://///data/data/pl.sviete.dom/files/home/dom/dyski-wymienne/" +
         this.recDbDrive +
         "/ais.db";
+    } else if (this.recDbEngine === "SQLite (memory)") {
+      this.recDbConectionDisplay = "none";
+      this.recDbFileDisplay = "none";
+      dbUrl = "sqlite:///:memory:";
     } else {
       this.recDbFileDisplay = "none";
       this.recDbConectionDisplay = "";
@@ -452,7 +494,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     });
 
     this.recDbDrive = newVal;
-    this._recDbModeInfo();
+    this.dbConnectionStep = "valid";
+    this._recDbUrlInfo();
   }
 
   recDbEngineChanged(ev) {
@@ -467,7 +510,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     });
 
     this.recDbEngine = newVal;
-    this._recDbModeInfo();
+    this.dbConnectionStep = "valid";
+    this._recDbUrlInfo();
   }
 }
 
