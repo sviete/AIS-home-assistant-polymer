@@ -65,7 +65,7 @@ class HaConfigAisDomControl extends PolymerElement {
           <ha-config-section is-wide="[[isWide]]">
             <span slot="header">Ustawienia głosu Asystenta</span>
             <span slot="introduction"
-              >Możesz zmienić głos asystenta i dostosować szybkość i ton mowy
+              >Możesz zmienić głos asystenta i dostosować szybkość i ton mowy
               oraz godziny, w których asystent powinien być ściszony</span
             >
             <ha-card header="Wybór głosu Asystenta">
