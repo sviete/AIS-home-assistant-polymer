@@ -60,6 +60,14 @@ class HaConfigAisDomControlLogs extends PolymerElement {
             background-color: var(--primary-color);
           }
         }
+        @keyframes pulseRed {
+          0% {
+            background-color: var(--card-background-color);
+          }
+          100% {
+            background-color: var(--material-error-color);
+          }
+        }
       </style>
 
       <hass-subpage header="Konfiguracja bramki AIS dom">
@@ -146,14 +154,18 @@ class HaConfigAisDomControlLogs extends PolymerElement {
               wymiennym lub do zdalnego serwera bazodanowego
             </span>
             <ha-card header="Zapis zdarzeń do bazy danych">
-              <div id="card-icon">
+              <div id="card-icon" style$="[[dbIconAnimationStyle]]">
                 <paper-icon-button icon="mdi:database"></paper-icon-button>
               </div>
               <div class="card-content">
                 Wybierz silnik bazodanowy, który chcesz użyć do rejestracji
                 zdarzeń.<br /><br />Najprostszy wybór to baza SQLite, która nie
-                wymaga konfiguracji i może rejestrować dane w pamięci lub na
-                zewnętrznym dysku w pliku ais.db. <br /><br />
+                wymaga konfiguracji i może rejestrować dane w pamięci - taka
+                baza jest automatycznie używana, gdy rejestracja zdarzeń
+                włączana jest przez integrację (np. Historia lub Dziennik).
+                <br /><br />Gdy system generuje więcej zdarzeń lub gdy chcesz
+                mieć dostęp do historii, to zalecamy zapisywać zdarzenia na
+                zewnętrznym dysku lub w zdalnej bazie danych. <br /><br />
                 Wybór silnika bazy danych:
                 <br />
                 <paper-icon-button icon="mdi:database"></paper-icon-button>
@@ -168,6 +180,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                     on-selected-changed="dbEngineChanged"
                     attr-for-selected="item-name"
                   >
+                    <paper-item item-name="-">-</paper-item>
                     <paper-item item-name="SQLite (memory)"
                       >SQLite (memory)</paper-item
                     >
@@ -299,6 +312,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
         computed: "_computeLogsSettings(hass)",
       },
       logIconAnimationStyle: String,
+      dbIconAnimationStyle: String,
       usbDrives: {
         type: Object,
         computed: "_computeUsbDrives(hass)",
@@ -350,14 +364,36 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     this.logDrive = connInfoAttr.logDrive;
     this.logLevel = connInfoAttr.logLevel;
     if (connectionInfo.state > 0) {
-      this.logIconAnimationStyle = "animation: pulse 5s infinite;";
+      if (this.logLevel === "debug") {
+        this.logIconAnimationStyle = "animation: pulseRed 2s infinite;";
+      } else if (this.logLevel === "info") {
+        this.logIconAnimationStyle = "animation: pulseRed 4s infinite;";
+      } else if (this.logLevel === "info") {
+        this.logIconAnimationStyle = "animation: pulse 5s infinite;";
+      } else if (this.logLevel === "warn") {
+        this.logIconAnimationStyle = "animation: pulse 6s infinite;";
+      } else if (this.logLevel === "warning") {
+        this.logIconAnimationStyle = "animation: pulse 7s infinite;";
+      } else if (this.logLevel === "error") {
+        this.logIconAnimationStyle = "animation: pulse 8s infinite;";
+      } else if (this.logLevel === "fatal") {
+        this.logIconAnimationStyle = "animation: pulse 9s infinite;";
+      } else if (this.logLevel === "critical") {
+        this.logIconAnimationStyle = "animation: pulse 10s infinite;";
+      }
     } else {
       this.logIconAnimationStyle = "";
     }
+    var logError = "";
     if (connInfoAttr.logError) {
-      return connInfoAttr.logError;
+      logError = connInfoAttr.logError;
     }
-    return "";
+    if (this.logLevel === "debug" && connectionInfo.state) {
+      logError +=
+        " Logowanie w trybie debug generuje duże ilości logów i obciąża system. Używaj go tylko na czas diagnozowania problemu. ";
+    }
+
+    return logError;
   }
 
   logDriveChanged(ev) {
@@ -377,9 +413,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
 
   logLevelChanged(ev) {
     this.logLevel = ev.detail.value;
-
     this.logModeInfo = "Poziom logów: " + this.logLevel;
-
     this.hass.callService("ais_files", "change_logger_settings", {
       log_drive: this.logDrive,
       log_level: this.logLevel,
@@ -391,9 +425,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     var connectionInfo = hass.states["sensor.ais_db_connection_info"];
     var connInfoAttr = connectionInfo.attributes;
     this.validationError = connInfoAttr.errorInfo;
-    if (!this.dbEngine) {
-      this.dbEngine = connInfoAttr.dbEngine;
-    }
+    this.dbEngine = connInfoAttr.dbEngine;
     if (!this.dbEngine) {
       this.dbEngine = "-";
     }
@@ -409,13 +441,18 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     var buttonName = "";
     if (connectionInfo.state === "no_db_url_saved") {
       buttonName = "Sprawdź połączenie";
+      this.dbIconAnimationStyle = "";
     } else if (connectionInfo.state === "db_url_saved") {
       buttonName = "Usuń polączenie";
+      this.dbIconAnimationStyle = "animation: pulse 6s infinite;";
     } else if (connectionInfo.state === "db_url_not_valid") {
       buttonName = "Sprawdź połączenie";
+      this.dbIconAnimationStyle = "animation: pulseRed 3s infinite;";
     } else if (connectionInfo.state === "db_url_valid") {
       buttonName = "Zapisz połączenie";
+      this.dbIconAnimationStyle = "animation: pulse 4s infinite;";
     }
+
     this.dbConnectionValidating = false;
     this._doComputeDbUrl(false);
     return buttonName;
