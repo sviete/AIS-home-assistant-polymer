@@ -65,9 +65,10 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 ></paper-icon-button>
               </div>
               <div class="card-content">
-                W tym miejscu możesz określić poziom rejestrowania działań w
-                Asystencie domowym oraz wybrać lokalizację do pliku loga na
-                dysku zewnętrznym.<br /><br />
+                Żeby włączyć logowanie w systemie Asystent domowy, wystarczy
+                wybrać lokalizację na dysku wymiennym, w której będzie
+                zapisywany plik z rejestrem działań w systemie. Dodatkowo można
+                też określić poziom szczegółowości logowania. <br /><br />
                 Wybór dysku do zapisu logów systemu: <br />
                 <paper-icon-button
                   icon="mdi:usb-flash-drive"
@@ -146,20 +147,20 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 >
                   <paper-listbox
                     slot="dropdown-content"
-                    selected="[[recDbEngine]]"
-                    on-selected-changed="recDbEngineChanged"
+                    selected="[[dbEngine]]"
+                    on-selected-changed="dbEngineChanged"
                     attr-for-selected="item-name"
                   >
                     <template
                       is="dom-repeat"
-                      items="[[recDbEngines.attributes.options]]"
+                      items="[[dbEngines.attributes.options]]"
                     >
                       <paper-item item-name$="[[item]]">[[item]]</paper-item>
                     </template>
                   </paper-listbox>
                 </ha-paper-dropdown-menu>
               </div>
-              <div class="card-content" style="display: [[recDbFileDisplay]]">
+              <div class="card-content" style="display: [[dbFileDisplayStyle]]">
                 Wybór dysku do zapisu bazy danych: <br />
                 <paper-icon-button
                   icon="mdi:usb-flash-drive"
@@ -171,8 +172,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 >
                   <paper-listbox
                     slot="dropdown-content"
-                    selected="[[recDbDrive]]"
-                    on-selected-changed="recDbDriveChanged"
+                    selected="[[dbDrive]]"
+                    on-selected-changed="dbDriveChanged"
                     attr-for-selected="item-name"
                   >
                     <template
@@ -186,14 +187,15 @@ class HaConfigAisDomControlLogs extends PolymerElement {
               </div>
               <div
                 class="card-content"
-                style="display: [[recDbConectionDisplay]]"
+                style="display: [[dbConectionDisplayStyle]]"
               >
                 Parametry połączenia z bazą danych: <br />
                 <paper-input
                   placeholder="Użytkownik"
                   type="text"
                   id="db_user"
-                  on-change="_computeDbUrlInfo"
+                  value="[[dbUser]]"
+                  on-change="_computeDbUrl"
                 >
                   <iron-icon icon="mdi:account" slot="suffix"></iron-icon>
                 </paper-input>
@@ -202,7 +204,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   no-label-float=""
                   type="password"
                   id="db_password"
-                  on-change="_computeDbUrlInfo"
+                  value="[[dbPassword]]"
+                  on-change="_computeDbUrl"
                   ><iron-icon icon="mdi:lastpass" slot="suffix"></iron-icon
                 ></paper-input>
                 <paper-input
@@ -210,7 +213,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   no-label-float=""
                   type="text"
                   id="db_server_ip"
-                  on-change="_computeDbUrlInfo"
+                  value="[[dbServerIp]]"
+                  on-change="_computeDbUrl"
                   ><iron-icon icon="mdi:ip-network" slot="suffix"></iron-icon
                 ></paper-input>
                 <paper-input
@@ -218,7 +222,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   no-label-float=""
                   type="text"
                   id="db_server_name"
-                  on-change="_computeDbUrlInfo"
+                  value="[[dbServerName]]"
+                  on-change="_computeDbUrl"
                   ><iron-icon
                     icon="mdi:database-check"
                     slot="suffix"
@@ -226,7 +231,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 ></paper-input>
               </div>
               <div class="card-content">
-                [[dbUrlInfo]]
+                [[dbUrl]]
                 <br /><br />
                 <div class="center-container">
                   <template is="dom-if" if="[[dbConnectionValidating]]">
@@ -272,11 +277,11 @@ class HaConfigAisDomControlLogs extends PolymerElement {
         type: Object,
         computed: "_computeLogsLevels(hass)",
       },
-      recDbDrives: {
+      dbDrives: {
         type: Object,
-        computed: "_computeRecDbDrives(hass)",
+        computed: "_computeDbDrives(hass)",
       },
-      recDbEngines: {
+      dbEngines: {
         type: Object,
         computed: "_computeDbEngines(hass)",
       },
@@ -290,15 +295,15 @@ class HaConfigAisDomControlLogs extends PolymerElement {
       },
       validationError: String,
       recLogModeInfo: String,
-      dbUrlInfo: String,
-      recDbConectionDisplay: String,
-      recDbFileDisplay: String,
-      recDbDrive: String,
-      recDbEngine: String,
-      recDbUser: String,
-      recDbPass: String,
-      recDbServerIp: String,
-      recDbServerName: String,
+      dbUrl: String,
+      dbConectionDisplayStyle: String,
+      dbFileDisplayStyle: String,
+      dbDrive: String,
+      dbEngine: String,
+      dbUser: String,
+      dbPassword: String,
+      dbServerIp: String,
+      dbServerName: String,
     };
   }
 
@@ -359,14 +364,14 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     var connectionInfo = hass.states["sensor.ais_db_connection_info"];
     var connInfoAttr = connectionInfo.attributes;
     this.validationError = connInfoAttr.errorInfo;
-    if (!this.recDbEngine) {
-      this.recDbEngine = connInfoAttr.recDbEngine;
+    if (!this.dbEngine) {
+      this.dbEngine = connInfoAttr.dbEngine;
     }
-    if (!this.recDbEngine) {
-      this.recDbEngine = "-";
+    if (!this.dbEngine) {
+      this.dbEngine = "-";
     }
-    if (!this.recDbDrive) {
-      this.recDbDrive = connInfoAttr.recDbDrive;
+    if (!this.dbDrive) {
+      this.dbDrive = connInfoAttr.dbDrive;
     }
     this.dbUrl = connInfoAttr.dbUrl;
     this.dbPassword = connInfoAttr.dbPassword;
@@ -385,7 +390,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
       buttonName = "Zapisz połączenie";
     }
     this.dbConnectionValidating = false;
-    this._doComputeDbUrlInfo();
+    this._doComputeDbUrl(false);
     return buttonName;
   }
 
@@ -400,59 +405,60 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     return engines;
   }
 
-  _computeRecDbDrives(hass) {
+  _computeDbDrives(hass) {
     const drives = hass.states["input_select.ais_usb_flash_drives"];
     return drives;
   }
 
-  _doComputeDbUrlInfo() {
+  _doComputeDbUrl(getFromPage) {
     let dbUrl = "";
-    console.log("_computeDbUrlInfo");
-    if (this.recDbEngine === "-") {
-      this.recDbConectionDisplay = "none";
-      this.recDbFileDisplay = "none";
+    if (this.dbEngine === "-") {
+      this.dbConectionDisplayStyle = "none";
+      this.dbFileDisplayStyle = "none";
       dbUrl = "";
-    } else if (this.recDbEngine === "SQLite (file)") {
-      this.recDbConectionDisplay = "none";
-      this.recDbFileDisplay = "";
+    } else if (this.dbEngine === "SQLite (file)") {
+      this.dbConectionDisplayStyle = "none";
+      this.dbFileDisplayStyle = "";
       dbUrl =
         "sqlite://///data/data/pl.sviete.dom/files/home/dom/dyski-wymienne/" +
-        this.recDbDrive +
+        this.dbDrive +
         "/ais.db";
-    } else if (this.recDbEngine === "SQLite (memory)") {
-      this.recDbConectionDisplay = "none";
-      this.recDbFileDisplay = "none";
+    } else if (this.dbEngine === "SQLite (memory)") {
+      this.dbConectionDisplayStyle = "none";
+      this.dbFileDisplayStyle = "none";
       dbUrl = "sqlite:///:memory:";
     } else {
-      this.recDbFileDisplay = "none";
-      this.recDbConectionDisplay = "";
-      this.dbPassword = this.shadowRoot.getElementById("db_password").value;
-      this.dbUser = this.shadowRoot.getElementById("db_user").value;
-      this.dbServerIp = this.shadowRoot.getElementById("db_server_ip").value;
-      this.dbServerName = this.shadowRoot.getElementById(
-        "db_server_name"
-      ).value;
+      this.dbFileDisplayStyle = "none";
+      this.dbConectionDisplayStyle = "";
+      if (getFromPage) {
+        this.dbPassword = this.shadowRoot.getElementById("db_password").value;
+        this.dbUser = this.shadowRoot.getElementById("db_user").value;
+        this.dbServerIp = this.shadowRoot.getElementById("db_server_ip").value;
+        this.dbServerName = this.shadowRoot.getElementById(
+          "db_server_name"
+        ).value;
+      }
       var dbUserPass = "";
       if (this.dbUser || this.dbPassword) {
         dbUserPass = this.dbUser + ":" + this.dbPassword + "@";
       }
-      if (this.recDbEngine === "MariaDB") {
+      if (this.dbEngine === "MariaDB") {
         dbUrl =
           "mysql+pymysql://" +
           dbUserPass +
           this.dbServerIp +
           "/" +
           this.dbServerName +
-          "?charset=utf8";
-      } else if (this.recDbEngine === "MySQL") {
+          "?charset=utf8mb4";
+      } else if (this.dbEngine === "MySQL") {
         dbUrl =
           "mysql://" +
           dbUserPass +
           this.dbServerIp +
           "/" +
           this.dbServerName +
-          "?charset=utf8";
-      } else if (this.recDbEngine === "PostgreSQL") {
+          "?charset=utf8mb4";
+      } else if (this.dbEngine === "PostgreSQL") {
         dbUrl =
           "postgresql://" +
           dbUserPass +
@@ -462,17 +468,17 @@ class HaConfigAisDomControlLogs extends PolymerElement {
       }
     }
 
-    this.dbUrlInfo = dbUrl;
+    this.dbUrl = dbUrl;
   }
 
-  _computeDbUrlInfo() {
-    this._doComputeDbUrlInfo();
+  _computeDbUrl() {
+    this._doComputeDbUrl(true);
     // set backend state
     this.hass.callService("ais_files", "check_db_connection", {
       buttonClick: false,
-      dbEngine: this.recDbEngine,
-      dbDrive: this.recDbDrive,
-      dbUrl: this.dbUrlInfo,
+      dbEngine: this.dbEngine,
+      dbDrive: this.dbDrive,
+      dbUrl: this.dbUrl,
       dbPassword: this.dbPassword,
       dbUser: this.dbUser,
       dbServerIp: this.dbServerIp,
@@ -481,16 +487,16 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     });
   }
 
-  recDbDriveChanged(ev) {
+  dbDriveChanged(ev) {
     var newVal = ev.detail.value;
-    this.recDbDrive = newVal;
-    this._computeDbUrlInfo();
+    this.dbDrive = newVal;
+    this._computeDbUrl();
   }
 
-  recDbEngineChanged(ev) {
+  dbEngineChanged(ev) {
     var newVal = ev.detail.value;
-    this.recDbEngine = newVal;
-    this._computeDbUrlInfo();
+    this.dbEngine = newVal;
+    this._computeDbUrl();
   }
 }
 
