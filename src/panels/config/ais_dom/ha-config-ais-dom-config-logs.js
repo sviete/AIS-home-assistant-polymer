@@ -217,6 +217,19 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                     </template>
                   </paper-listbox>
                 </ha-paper-dropdown-menu>
+                <paper-input
+                  id="db_keep_days"
+                  type="number"
+                  value="[[dbKeepDays]]"
+                  on-change="_computeDbUrl"
+                  maxlength="4"
+                  max="9999"
+                  min="1"
+                  label-float="Liczba dni przechowywanych w historii"
+                  label="Liczba dni przechowywanych w historii"
+                >
+                  <iron-icon icon="mdi:calendar" slot="suffix"></iron-icon>
+                </paper-input>
               </div>
               <div class="card-content" style$="[[dbConectionDisplayStyle]]">
                 Parametry połączenia z bazą danych: <br />
@@ -259,6 +272,19 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                     slot="suffix"
                   ></iron-icon
                 ></paper-input>
+                <paper-input
+                  id="db_keep_days"
+                  type="number"
+                  value="[[dbKeepDays]]"
+                  on-change="_computeDbUrl"
+                  maxlength="4"
+                  max="9999"
+                  min="1"
+                  label-float="Liczba dni przechowywanych w historii"
+                  label="Liczba dni przechowywanych w historii"
+                >
+                  <iron-icon icon="mdi:calendar" slot="suffix"></iron-icon>
+                </paper-input>
               </div>
               <div class="card-content">
                 [[dbUrl]]
@@ -340,6 +366,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
       dbPassword: String,
       dbServerIp: String,
       dbServerName: String,
+      dbKeepDays: Number,
     };
   }
 
@@ -347,6 +374,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     super.ready();
     this.hass.callService("ais_files", "get_db_log_settings_info");
     this._computeLogsSettings(this.hass);
+    this.dbKeepDays = 10;
   }
 
   // LOGS
@@ -437,6 +465,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     this.dbUser = connInfoAttr.dbUser;
     this.dbServerIp = connInfoAttr.dbServerIp;
     this.dbServerName = connInfoAttr.dbServerName;
+    this.dbKeepDays = connInfoAttr.dbKeepDays;
 
     var buttonName = "";
     if (connectionInfo.state === "no_db_url_saved") {
@@ -496,6 +525,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
         this.dbServerName = this.shadowRoot.getElementById(
           "db_server_name"
         ).value;
+        this.dbKeepDays = this.shadowRoot.getElementById("db_keep_days").value;
       }
       var dbUserPass = "";
       if (this.dbUser || this.dbPassword) {
@@ -542,6 +572,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
       dbUser: this.dbUser,
       dbServerIp: this.dbServerIp,
       dbServerName: this.dbServerName,
+      dbKeepDays: this.dbKeepDays,
       errorInfo: "",
     });
   }
