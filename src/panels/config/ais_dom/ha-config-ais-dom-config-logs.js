@@ -217,6 +217,14 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                     </template>
                   </paper-listbox>
                 </ha-paper-dropdown-menu>
+                <br /><br />
+                Żeby utrzymać system w dobrej kondycji, codziennie dokładnie o
+                godzinie 4:12 rano Asystent usuwa z bazy zdarzenia i stany
+                starsze niż <b>określona liczba dni</b> (2 dni dla bazy w
+                pamięci urządzenia i domyślnie 10 dla innych lokalizacji).
+                <br />
+                W tym miejscu możesz określić liczbę dni, których historia ma
+                być przechowywana na zewnętrznym dysku.
                 <paper-input
                   id="db_keep_days"
                   type="number"
@@ -272,6 +280,14 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                     slot="suffix"
                   ></iron-icon
                 ></paper-input>
+                <br /><br />
+                Żeby utrzymać system w dobrej kondycji, codziennie dokładnie o
+                godzinie 4:12 rano Asystent usuwa z bazy zdarzenia i stany
+                starsze niż <b>określona liczba dni</b> (2 dni dla bazy w
+                pamięci urządzenia i domyślnie 10 dla innych lokalizacji).
+                <br />
+                W tym miejscu możesz określić liczbę dni, których historia ma
+                być przechowywana w zdalnej bazie danych.
                 <paper-input
                   id="db_keep_days"
                   type="number"
