@@ -71,6 +71,8 @@ class HUIRoot extends LitElement {
     isComponentLoaded(this.hass, "conversation")
   );
 
+  @property() private aisPath!: string | "";
+
   constructor() {
     super();
     // The view can trigger a re-render when it knows that certain
@@ -84,10 +86,8 @@ class HUIRoot extends LitElement {
 
   protected render(): TemplateResult {
     // ais dom audio fix
-    if (
-      this.route!.path === "/ais_audio" ||
-      this.route!.path === "/ais_zigbee"
-    ) {
+    this.aisPath = this.route!.path;
+    if (this.aisPath === "/ais_audio" || this.aisPath === "/ais_zigbee") {
       if (this._editMode) {
         // disable edit mode
         this._editModeDisable();
@@ -103,7 +103,7 @@ class HUIRoot extends LitElement {
       })}" fixed condenses>
         ${
           // ais dom audio fix
-          this.route!.path in ["/ais_audio", "/ais_zigbee"]
+          this.aisPath === "/ais_audio" || this.aisPath === "/ais_zigbee"
             ? html`
                 <app-toolbar>
                   <ha-menu-button
@@ -111,9 +111,7 @@ class HUIRoot extends LitElement {
                     .narrow=${this.narrow}
                   ></ha-menu-button>
                   <div main-title>
-                    ${this.route!.path === "/ais_audio"
-                      ? "Audio"
-                      : "Zigbee2Mqtt"}
+                    ${this.aisPath === "/ais_audio" ? "Audio" : "Zigbee"}
                   </div>
                   ${this._conversation(this.hass.config.components)
                     ? html`
@@ -314,7 +312,10 @@ class HUIRoot extends LitElement {
         }
 
         ${
-          this.lovelace!.config.views.length > 1 || this._editMode
+          // ais dom fix for audio
+          this.aisPath !== "/ais_audio" &&
+          this.aisPath !== "/ais_zigbee" &&
+          (this.lovelace!.config.views.length > 1 || this._editMode)
             ? html`
                 <div sticky>
                   <paper-tabs
@@ -329,15 +330,12 @@ class HUIRoot extends LitElement {
                           aria-label="${view.title}"
                           class="${classMap({
                             "hide-tab": Boolean(
-                              // ais dom fix for audio
-                              this.route!.path in
-                                ["/ais_audio", "/ais_zigbee"] ||
-                                (view.visible !== undefined &&
-                                  ((Array.isArray(view.visible) &&
-                                    !view.visible.some(
-                                      (e) => e.user === this.hass!.user!.id
-                                    )) ||
-                                    view.visible === false))
+                              view.visible !== undefined &&
+                                ((Array.isArray(view.visible) &&
+                                  !view.visible.some(
+                                    (e) => e.user === this.hass!.user!.id
+                                  )) ||
+                                  view.visible === false)
                             ),
                           })}"
                         >

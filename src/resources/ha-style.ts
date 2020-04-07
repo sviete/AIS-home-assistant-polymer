@@ -41,7 +41,7 @@ documentContainer.innerHTML = `<custom-style>
       --state-icon-active-color: #ff9800;
 
       /* background and sidebar */
-      --card-background-color: #323232cc;
+      --card-background-color: #323232;
       --primary-background-color: #4c4c4c;
       --secondary-background-color: #4c4c4c;
       --paper-listbox-background-color: "#727272"

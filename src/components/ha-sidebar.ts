@@ -172,7 +172,7 @@ class HaSidebar extends LitElement {
       </div>
       <paper-listbox
         attr-for-selected="data-panel"
-        .selected=${hass.panelUrl}
+        .selected=${this._selected(hass)}
         @focusin=${this._listboxFocusIn}
         @focusout=${this._listboxFocusOut}
         @scroll=${this._listboxScroll}
@@ -387,6 +387,17 @@ class HaSidebar extends LitElement {
 
   private _listboxFocusOut() {
     this._hideTooltip();
+  }
+
+  // ais dom fix
+  private _selected(hass) {
+    const pathName = window.location.pathname;
+    if (pathName === "/lovelace/ais_audio") {
+      return "lovelace/ais_audio";
+    } else if (pathName === "/lovelace/ais_zigbee") {
+      return "lovelace/ais_zigbee";
+    }
+    return hass.panelUrl;
   }
 
   @eventOptions({
