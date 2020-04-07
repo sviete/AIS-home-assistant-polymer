@@ -86,7 +86,9 @@ class HUIRoot extends LitElement {
 
   protected render(): TemplateResult {
     // ais dom audio fix
-    this.aisPath = this.route!.path;
+    if (this.route!.path !== "/") {
+      this.aisPath = this.route!.path;
+    }
     if (this.aisPath === "/ais_audio" || this.aisPath === "/ais_zigbee") {
       if (this._editMode) {
         // disable edit mode
