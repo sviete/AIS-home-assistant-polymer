@@ -13,7 +13,7 @@ import "../../../layouts/hass-subpage";
 import "../../../layouts/hass-error-screen";
 import "../ha-config-section";
 import { navigate } from "../../../../src/common/navigate";
-import "../devices/device-detail/ha-device-card";
+import "../devices/device-detail/ha-device-info-card";
 import "../devices/device-detail/ha-device-triggers-card";
 import "../devices/device-detail/ha-device-conditions-card";
 import "../devices/device-detail/ha-device-actions-card";
@@ -75,6 +75,13 @@ export class HaConfigDevicePage extends LitElement {
       devices ? devices.find((device) => device.id === deviceId) : undefined
   );
 
+  private _integrations = memoizeOne(
+    (device: DeviceRegistryEntry, entries: ConfigEntry[]): string[] =>
+      entries
+        .filter((entry) => device.config_entries.includes(entry.entry_id))
+        .map((entry) => entry.domain)
+  );
+
   private _entities = memoizeOne(
     (
       deviceId: string,
@@ -128,6 +135,7 @@ export class HaConfigDevicePage extends LitElement {
         <hass-error-screen error="AIS Device not found."></hass-error-screen>
       `;
     }
+    const integrations = this._integrations(device, this.entries);
     const entities = this._entities(this.deviceId, this.entities);
     // ${device.model === "Sonoff Bridge"
     return html`
@@ -148,12 +156,22 @@ export class HaConfigDevicePage extends LitElement {
           <span slot="introduction">
             Na tej stronie możesz konfigurować swoje urządzenia AIS dom.
           </span>
-          <ha-device-card
+          <ha-device-info-card
             .hass=${this.hass}
             .areas=${this.areas}
             .devices=${this.devices}
             .device=${device}
-          ></ha-device-card>
+          >
+            ${integrations.includes("mqtt")
+              ? html`
+                  <ha-device-card-mqtt
+                    .hass=${this.hass}
+                    .device=${device}
+                  ></ha-device-card-mqtt>
+                `
+              : html``}
+          </ha-device-info-card>
+
           ${device.model === "Sonoff Bridge"
             ? html`
                 <div class="header">Konfiguracja Bramki RF 433</div>

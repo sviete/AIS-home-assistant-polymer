@@ -189,7 +189,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                     >
                     <paper-item item-name="MariaDB">MariaDB</paper-item>
                     <paper-item item-name="MySQL">MySQL</paper-item>
-                    <paper-item item-name="PostgreSQL)">PostgreSQL</paper-item>
+                    <paper-item item-name="PostgreSQL">PostgreSQL</paper-item>
                   </paper-listbox>
                 </ha-paper-dropdown-menu>
               </div>
