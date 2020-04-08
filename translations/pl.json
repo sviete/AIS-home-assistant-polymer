@@ -509,6 +509,7 @@
                 "attributes": {
                     "air_pressure": "Ciśnienie",
                     "humidity": "Wilgotność",
+                    "precipitation": "Opady",
                     "temperature": "Temperatura",
                     "visibility": "Widoczność",
                     "wind_speed": "Prędkość wiatru"
@@ -531,16 +532,21 @@
                     "wnw": "zach. płn.-zach.",
                     "wsw": "zach. płd.-zach."
                 },
-                "forecast": "Prognoza"
+                "forecast": "Prognoza",
+                "high": "wysoka",
+                "low": "niska"
             }
         },
         "common": {
             "cancel": "Anuluj",
             "close": "Zamknij",
+            "delete": "Usuń",
             "loading": "Ładowanie",
             "no": "Nie",
             "save": "Zapisz",
+            "successfully_deleted": "Pomyślnie usunięto",
             "successfully_saved": "Pomyślnie zapisano",
+            "undo": "Cofnij",
             "yes": "Tak"
         },
         "components": {
@@ -623,7 +629,7 @@
                     "confirm_delete": "Na pewno chcesz usunąć ten wpis?",
                     "delete": "USUŃ",
                     "enabled_cause": "Wyłączone przez {cause}.",
-                    "enabled_description": "Wyłączone encje nie zostaną dodane do Home Assistant'a.",
+                    "enabled_description": "Wyłączone encje nie zostaną dodane do Asystenta domowego.",
                     "enabled_label": "Włącz encję",
                     "entity_id": "Identyfikator encji",
                     "icon": "Nadpisanie ikony",
@@ -647,7 +653,7 @@
                 "generic": {
                     "icon": "Ikona",
                     "initial_value": "Wartość początkowa",
-                    "initial_value_explain": "Wartość, jaką będzie miał element po uruchomieniu Home Assistant'a. Niewypełnienie spowoduje przywrócenie poprzedniej wartości.",
+                    "initial_value_explain": "Wartość, jaką będzie miał element po uruchomieniu Asystenta domowego. Niewypełnienie spowoduje przywrócenie poprzedniej wartości.",
                     "name": "Nazwa"
                 },
                 "input_datetime": {
@@ -810,6 +816,10 @@
                 "areas": {
                     "caption": "Rejestr obszarów",
                     "create_area": "UTWÓRZ OBSZAR",
+                    "data_table": {
+                        "area": "Obszar",
+                        "devices": "Urządzenia"
+                    },
                     "delete": {
                         "confirmation_text": "Wszystkie urządzenia z tego obszaru pozostaną bez przypisanego obszaru.",
                         "confirmation_title": "Czy na pewno chcesz usunąć ten obszar?"
@@ -1052,6 +1062,9 @@
                         "delete_confirm": "Na pewno chcesz usunąć tę automatyzację?",
                         "edit_automation": "Edytuj automatyzację",
                         "header": "Edytor automatyzacji",
+                        "headers": {
+                            "name": "Nazwa"
+                        },
                         "introduction": "Edytor automatyzacji pozwala tworzyć i edytować automatyzacje Kliknij poniższy link, aby przeczytać instrukcję, jak poprawnie konfigurować automatyzacje w Asystencie domowym.",
                         "learn_more": "Dowiedz się więcej o automatyzacjach",
                         "no_automations": "Nie znaleziono żadnych edytowalnych automatyzacji",
@@ -1310,6 +1323,7 @@
                     "automations": "Automatyzacje",
                     "cant_edit": "Możesz edytować tylko elementy utworzone w interfejsie użytkownika.",
                     "caption": "Urządzenia",
+                    "confirm_delete": "Na pewno chcesz usunąć to urządzenie?",
                     "confirm_rename_entity_ids": "Czy chcesz także zmienić identyfikatory encji?",
                     "data_table": {
                         "area": "Obszar",
@@ -1320,6 +1334,7 @@
                         "model": "Model",
                         "no_devices": "Brak urządzeń"
                     },
+                    "delete": "Usuń",
                     "description": "Zarządzaj podłączonymi urządzeniami",
                     "details": "Oto wszystkie szczegóły dotyczące twojego urządzenia.",
                     "device_not_found": "Urządzenie nie zostało znalezione.",
@@ -1330,6 +1345,7 @@
                     },
                     "info": "Informacje o urządzeniu",
                     "name": "Nazwa",
+                    "no_devices": "Brak urządzeń",
                     "scene": {
                         "create": "Utwórz scenę z urządzeniem",
                         "no_scenes": "Brak scen",
@@ -1366,12 +1382,12 @@
                     "picker": {
                         "disable_selected": {
                             "button": "Wyłącz wybrane",
-                            "confirm_text": "Wyłączone encje nie zostaną dodane do Home Assistant'a.",
+                            "confirm_text": "Wyłączone encje nie zostaną dodane do Asystenta domowego.",
                             "confirm_title": "Czy chcesz wyłączyć {number} encj(ę/e/i)?"
                         },
                         "enable_selected": {
                             "button": "Włącz wybrane",
-                            "confirm_text": "Dzięki temu będą ponownie dostępne w Home Assistant, jeśli są teraz wyłączone.",
+                            "confirm_text": "Dzięki temu będą ponownie dostępne w Asystencie domowym, jeśli są teraz wyłączone.",
                             "confirm_title": "Czy chcesz włączyć {number} encj(ę/e/i)?"
                         },
                         "filter": {
@@ -1390,7 +1406,7 @@
                         },
                         "integrations_page": "Strona integracji",
                         "introduction": "Asystent domowy prowadzi rejestr każdej encji, jaką kiedykolwiek widział i którą można jednoznacznie zidentyfikować. Każda z tych encji będzie miała przypisany unikalny identyfikator, który będzie zarezerwowany tylko dla niej.",
-                        "introduction2": "Użyj rejestru encji, aby nadpisać jej nazwę, zmienić jej identyfikator lub usunąć ją z Home Assistant'a. Uwaga: usunięcie wpisu rejestru encji nie spowoduje usunięcia encji. Aby to zrobić, kliknij poniższy link i usuń integracje encji.",
+                        "introduction2": "Użyj rejestru encji, aby nadpisać jej nazwę, zmienić jej identyfikator lub usunąć ją z Asystenta domowego. Uwaga: usunięcie wpisu rejestru encji nie spowoduje usunięcia encji. Aby to zrobić, kliknij poniższy link i usuń integracje encji.",
                         "remove_selected": {
                             "button": "Usuń zaznaczone",
                             "confirm_partly_text": "Można usunąć tylko {removable} z wybranych {selected} encji. Encje można usunąć tylko wtedy, gdy integracja wspiera taka możliwość. Czasami trzeba ponownie uruchomić Home Assistant'a, zanim będzie można usunąć encje usuniętej integracji. Czy na pewno chcesz usunąć usuwalne encje?",
@@ -1469,6 +1485,7 @@
                         },
                         "failed_create_area": "Nie udało się utworzyć obszaru.",
                         "finish": "Zakończ",
+                        "loading_first_time": "Proszę czekać, trwa instalowanie integracji...",
                         "name_new_area": "Nazwa nowego obszaru?",
                         "not_all_required_fields": "Nie wszystkie wymagane pola są wypełnione.",
                         "submit": "Zatwierdź"
@@ -1673,7 +1690,10 @@
                         "delete_scene": "Usuń scenę",
                         "edit_scene": "Edytuj scenę",
                         "header": "Edytor scen",
-                        "introduction": "Edytor scen pozwala tworzyć i edytować sceny. Kliknij poniższy link, aby przeczytać instrukcję, jak poprawnie konfigurować sceny w Asystent domowy.",
+                        "headers": {
+                            "name": "Nazwa"
+                        },
+                        "introduction": "Edytor scen pozwala tworzyć i edytować sceny. Kliknij poniższy link, aby przeczytać instrukcję, jak poprawnie konfigurować sceny w Asystencie domowym.",
                         "learn_more": "Dowiedz się więcej o scenach",
                         "no_scenes": "Nie znaleziono żadnych edytowalnych scen",
                         "only_editable": "Tylko sceny zdefiniowane w pliku scenes.yaml są edytowalne.",
@@ -1700,9 +1720,13 @@
                         "add_script": "Dodaj skrypt",
                         "edit_script": "Edytuj skrypt",
                         "header": "Edytor skryptów",
-                        "introduction": "Edytor skryptów pozwala tworzyć i edytować skrypty. Kliknij poniższy link, aby przeczytać instrukcję, jak poprawnie konfigurować skrypty w Asystent domowy.",
+                        "headers": {
+                            "name": "Nazwa"
+                        },
+                        "introduction": "Edytor skryptów pozwala tworzyć i edytować skrypty. Kliknij poniższy link, aby przeczytać instrukcję, jak poprawnie konfigurować skrypty w Asystencie domowym.",
                         "learn_more": "Dowiedz się więcej o skryptach",
                         "no_scripts": "Nie znaleziono żadnych edytowalnych skryptów",
+                        "show_info": "Pokaż informacje o skrypcie",
                         "trigger_script": "Uruchom skrypt"
                     }
                 },
@@ -1751,6 +1775,7 @@
                     "editor": {
                         "activate_user": "Aktywuj użytkownika",
                         "active": "Aktywny",
+                        "admin": "Administrator",
                         "caption": "Wyświetl użytkownika",
                         "change_password": "Zmień hasło",
                         "confirm_user_deletion": "Na pewno chcesz usunąć {name}?",
@@ -1760,14 +1785,22 @@
                         "group": "Grupa",
                         "group_update_failed": "Nie powiodła się aktualizacja grupy:",
                         "id": "Identyfikator",
+                        "name": "Nazwa",
                         "owner": "Właściciel",
                         "rename_user": "Zmień nazwę użytkownika",
                         "system_generated": "Wygenerowany przez system",
+                        "system_generated_users_not_editable": "Nie można zaktualizować użytkowników generowanych przez system.",
                         "system_generated_users_not_removable": "Nie można usunąć użytkowników wygenerowanych przez system.",
                         "unnamed_user": "Nienazwany użytkownik",
+                        "update_user": "Aktualizuj",
                         "user_rename_failed": "Nie powiodła się zmiana nazwy użytkownika:"
                     },
                     "picker": {
+                        "headers": {
+                            "group": "Grupa",
+                            "name": "Nazwa",
+                            "system": "System"
+                        },
                         "system_generated": "Wygenerowany przez system",
                         "title": "Użytkownicy"
                     }
@@ -2114,7 +2147,7 @@
                         "url": "Otwórz okno do {url_path}"
                     },
                     "safe-mode": {
-                        "description": "Podczas ładowania konfiguracji Home Assistant napotkał problemy i działa teraz w trybie awaryjnym. Zajrzyj do loga, aby sprawdzić, co poszło nie tak.",
+                        "description": "Podczas ładowania konfiguracji Asystent domowy napotkał problemy i działa teraz w trybie awaryjnym. Zajrzyj do konsoli, aby sprawdzić, co poszło nie tak.",
                         "header": "Tryb awaryjny aktywny",
                         "show_errors": "Pokaż błędy"
                     },
@@ -2170,6 +2203,9 @@
                             "description": "Karta filtr encji umożliwia zdefiniowanie listy encji, które mają być śledzone tylko w określonym stanie.",
                             "name": "Filtr encji"
                         },
+                        "entity": {
+                            "name": "Encja"
+                        },
                         "gauge": {
                             "description": "Karta wskaźnika to podstawowa karta, która umożliwia wizualne przedstawienie danych liczbowych sensora.",
                             "name": "Wskaźnik",
@@ -2182,8 +2218,10 @@
                         },
                         "generic": {
                             "aspect_ratio": "Proporcje obrazu",
+                            "attribute": "Atrybut",
                             "camera_image": "Encja kamery",
                             "camera_view": "Widok kamery",
+                            "double_tap_action": "Akcja podwójnego dotknięcia",
                             "entities": "Encje",
                             "entity": "Encja",
                             "hold_action": "Akcja przytrzymania",
@@ -2196,6 +2234,7 @@
                             "maximum": "Maksimum",
                             "minimum": "Minimum",
                             "name": "Nazwa",
+                            "no_theme": "Bez motywu",
                             "refresh_interval": "Częstotliwość odświeżania",
                             "show_icon": "Wyświetlanie ikony",
                             "show_name": "Wyświetlanie nazwy",
@@ -2221,7 +2260,7 @@
                             "name": "Poziomy stos"
                         },
                         "iframe": {
-                            "description": "Karta strona web pozwala osadzić ulubioną stronę bezpośrednio w Home Assistant.",
+                            "description": "Karta strona web pozwala osadzić ulubioną stronę bezpośrednio w Asystencie domowym.",
                             "name": "Strona web"
                         },
                         "light": {
@@ -2233,6 +2272,7 @@
                             "default_zoom": "Domyślne powiększenie",
                             "description": "Karta mapy, która pozwala wyświetlać encje na mapie.",
                             "geo_location_sources": "Źródła geolokalizacji",
+                            "hours_to_show": "Godziny do wyświetlenia",
                             "name": "Mapa",
                             "source": "Źródło"
                         },
@@ -2289,9 +2329,14 @@
                             "name": "Prognoza pogody"
                         }
                     },
+                    "cardpicker": {
+                        "custom_card": "Niestandardowa",
+                        "no_description": "Brak dostępnego opisu."
+                    },
                     "edit_card": {
                         "add": "Dodaj kartę",
                         "delete": "Usuń",
+                        "duplicate": "Duplikuj kartę",
                         "edit": "Edytuj",
                         "header": "Konfiguracja karty",
                         "move": "Przenieś",
@@ -2354,8 +2399,9 @@
                     "save_config": {
                         "cancel": "Nieważne",
                         "close": "Zamknij",
+                        "empty_config": "Zacznij od pustego dashboardu",
                         "header": "Przejmij kontrolę nad interfejsem użytkownika Lovelace",
-                        "para": "Domyślnie Home Assistant będzie zarządzać interfejsem użytkownika, aktualizując go, gdy pojawią się nowe encje lub komponenty Lovelace. Jeśli przejmiesz kontrolę, Home Assistant nie będzie już automatycznie wprowadzać dla ciebie zmian.",
+                        "para": "Domyślnie Asystent domowy będzie zarządzać interfejsem użytkownika, aktualizując go, gdy pojawią się nowe encje lub komponenty Lovelace. Jeśli przejmiesz kontrolę, Asystent domowy nie będzie już automatycznie wprowadzać dla ciebie zmian.",
                         "para_sure": "Na pewno chcesz przejąć kontrolę nad interfejsem użytkownika?",
                         "save": "Przejmuję kontrolę",
                         "yaml_config": "Aby rozpocząć, zapoznaj się z aktualną konfiguracją tego dashboardu:",
@@ -2370,7 +2416,8 @@
                     "view": {
                         "panel_mode": {
                             "description": "Pierwsza karta renderowana jest w pełnej szerokości; inne karty w tym widoku nie będą renderowane.",
-                            "title": "Tryb panelu?"
+                            "title": "Tryb panelu?",
+                            "warning_multiple_cards": "Ten widok zawiera więcej niż jedną kartę, a widok panelu może wyświetlać tylko jedną kartę."
                         }
                     }
                 },
@@ -2602,6 +2649,11 @@
                     "submit": "Zatwierdź"
                 },
                 "current_user": "Jesteś obecnie zalogowany jako {fullName}.",
+                "dashboard": {
+                    "description": "Wybierz domyślny dashboard dla tego urządzenia.",
+                    "dropdown_label": "Dashboard",
+                    "header": "Dashboard"
+                },
                 "force_narrow": {
                     "description": "Spowoduje to domyślne ukrycie paska bocznego, podobnie jak w przypadku urządzeń przenośnych.",
                     "header": "Zawsze ukrywaj pasek boczny"

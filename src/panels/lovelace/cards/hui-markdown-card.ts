@@ -29,8 +29,9 @@ export class HuiMarkdownCard extends LitElement implements LovelaceCard {
     return document.createElement("hui-markdown-card-editor");
   }
 
-  public static getStubConfig(): object {
+  public static getStubConfig(): MarkdownCardConfig {
     return {
+      type: "markdown",
       content:
         "The **Markdown** card allows you to write any text. You can style it **bold**, *italicized*, ~strikethrough~ etc. You can do images, links, and more.\n\nFor more information see the [Markdown Cheatsheet](https://commonmark.org/help).",
     };
@@ -118,7 +119,10 @@ export class HuiMarkdownCard extends LitElement implements LovelaceCard {
         {
           template: this._config.content,
           entity_ids: this._config.entity_id,
-          variables: { config: this._config },
+          variables: {
+            config: this._config,
+            user: this._hass.user!.name,
+          },
         }
       );
       this._unsubRenderTemplate.catch(() => {

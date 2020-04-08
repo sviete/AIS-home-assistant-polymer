@@ -28,6 +28,9 @@ class HaMfaModuleSetupFlow extends LocalizeMixin(EventsMixin(PolymerElement)) {
         ha-paper-dialog {
           max-width: 500px;
         }
+        h2 {
+          white-space: normal;
+        }
         ha-markdown img:first-child:last-child,
         ha-markdown svg:first-child:last-child {
           background-color: white;
@@ -288,9 +291,7 @@ class HaMfaModuleSetupFlow extends LocalizeMixin(EventsMixin(PolymerElement)) {
 
   _computeStepDescription(localize, step) {
     const args = [
-      `component.auth.mfa_setup.${step.handler}.step.${
-        step.step_id
-      }.description`,
+      `component.auth.mfa_setup.${step.handler}.step.${step.step_id}.description`,
     ];
     const placeholders = step.description_placeholders || {};
     Object.keys(placeholders).forEach((key) => {
@@ -304,9 +305,7 @@ class HaMfaModuleSetupFlow extends LocalizeMixin(EventsMixin(PolymerElement)) {
     // Returns a callback for ha-form to calculate labels per schema object
     return (schema) =>
       localize(
-        `component.auth.mfa_setup.${step.handler}.step.${step.step_id}.data.${
-          schema.name
-        }`
+        `component.auth.mfa_setup.${step.handler}.step.${step.step_id}.data.${schema.name}`
       ) || schema.name;
   }
 

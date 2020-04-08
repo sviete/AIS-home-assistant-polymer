@@ -117,7 +117,11 @@ export class HUIView extends LitElement {
           padding: 4px 4px 0;
           transform: translateZ(0);
           position: relative;
-          background: var(--lovelace-background);
+          color: var(--primary-text-color);
+          background: var(
+            --lovelace-background,
+            var(--primary-background-color)
+          );
         }
 
         #badges {
@@ -298,6 +302,7 @@ export class HUIView extends LitElement {
       wrapper.hass = this.hass;
       wrapper.lovelace = this.lovelace;
       wrapper.path = [this.index!, cardIndex];
+      element.editMode = true;
       wrapper.appendChild(element);
       elementsToAppend.push(wrapper);
     });

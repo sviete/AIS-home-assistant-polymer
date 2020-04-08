@@ -5,6 +5,7 @@ import { createCardElement } from "../create-element/create-card-element";
 import { LovelaceCard, LovelaceCardEditor } from "../types";
 import { computeCardSize } from "../common/compute-card-size";
 import { ConditionalCardConfig } from "./types";
+import { LovelaceCardConfig } from "../../../data/lovelace";
 
 @customElement("hui-conditional-card")
 class HuiConditionalCard extends HuiConditionalBase implements LovelaceCard {
@@ -15,9 +16,11 @@ class HuiConditionalCard extends HuiConditionalBase implements LovelaceCard {
     return document.createElement("hui-conditional-card-editor");
   }
 
-  public static getStubConfig(): object {
+  public static getStubConfig(): ConditionalCardConfig {
     return {
+      type: "conditional",
       conditions: [],
+      // @ts-ignore
       card: {},
     };
   }
@@ -29,11 +32,34 @@ class HuiConditionalCard extends HuiConditionalBase implements LovelaceCard {
       throw new Error("No card configured.");
     }
 
-    this._element = createCardElement(config.card) as LovelaceCard;
+    this._element = this._createCardElement(config.card);
   }
 
   public getCardSize(): number {
     return computeCardSize(this._element as LovelaceCard);
+  }
+
+  private _createCardElement(cardConfig: LovelaceCardConfig) {
+    const element = createCardElement(cardConfig) as LovelaceCard;
+    if (this.hass) {
+      element.hass = this.hass;
+    }
+    element.addEventListener(
+      "ll-rebuild",
+      (ev) => {
+        ev.stopPropagation();
+        this._rebuildCard(cardConfig);
+      },
+      { once: true }
+    );
+    return element;
+  }
+
+  private _rebuildCard(config: LovelaceCardConfig): void {
+    this._element = this._createCardElement(config);
+    if (this.lastChild) {
+      this.replaceChild(this._element, this.lastChild);
+    }
   }
 }
 

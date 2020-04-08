@@ -2,6 +2,7 @@ import "../cards/hui-ais-easy-picker-card";
 import "../cards/hui-ais-button-card";
 import "../cards/hui-ais-files-list-card";
 import "../cards/hui-entities-card";
+import "../cards/hui-entity-card";
 import "../cards/hui-button-card";
 import "../cards/hui-entity-button-card";
 import "../cards/hui-glance-card";
@@ -22,6 +23,7 @@ const ALWAYS_LOADED_TYPES = new Set([
   "ais-easy-picker",
   "ais-button",
   "ais-files-list",
+  "entity",
   "entities",
   "button",
   "entity-button",

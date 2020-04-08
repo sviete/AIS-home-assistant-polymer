@@ -1,10 +1,9 @@
 import { Lovelace } from "../types";
-import { deleteCard } from "./config-util";
-import {
-  showAlertDialog,
-  showConfirmationDialog,
-} from "../../../dialogs/generic/show-dialog-box";
+import { deleteCard, insertCard } from "./config-util";
+import { showAlertDialog } from "../../../dialogs/generic/show-dialog-box";
 import { HomeAssistant } from "../../../types";
+import { showDeleteCardDialog } from "./card-editor/show-delete-card-dialog";
+import { showDeleteSuccessToast } from "../../../util/toast-deleted-success";
 
 export async function confDeleteCard(
   element: HTMLElement,
@@ -12,11 +11,17 @@ export async function confDeleteCard(
   lovelace: Lovelace,
   path: [number, number]
 ): Promise<void> {
-  showConfirmationDialog(element, {
-    text: hass.localize("ui.panel.lovelace.cards.confirm_delete"),
-    confirm: async () => {
+  const cardConfig = lovelace.config.views[path[0]].cards![path[1]];
+  showDeleteCardDialog(element, {
+    cardConfig,
+    deleteCard: async () => {
       try {
-        await lovelace.saveConfig(deleteCard(lovelace.config, path));
+        const newLovelace = deleteCard(lovelace.config, path);
+        await lovelace.saveConfig(newLovelace);
+        const action = async () => {
+          await lovelace.saveConfig(insertCard(newLovelace, path, cardConfig));
+        };
+        showDeleteSuccessToast(element, hass!, action);
       } catch (err) {
         showAlertDialog(element, {
           text: `Deleting failed: ${err.message}`,

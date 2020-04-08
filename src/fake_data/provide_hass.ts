@@ -1,4 +1,7 @@
-import { applyThemesOnElement } from "../common/dom/apply_themes_on_element";
+import {
+  applyThemesOnElement,
+  invalidateThemeCache,
+} from "../common/dom/apply_themes_on_element";
 
 import { demoConfig } from "./demo_config";
 import { demoServices } from "./demo_services";
@@ -8,6 +11,7 @@ import { HomeAssistant } from "../types";
 import { HassEntities } from "home-assistant-js-websocket";
 import { getLocalLanguage } from "../util/hass-translation";
 import { translationMetadata } from "../resources/translations-metadata";
+import { DEFAULT_PANEL } from "../data/panel";
 
 const ensureArray = <T>(val: T | T[]): T[] =>
   Array.isArray(val) ? val : [val];
@@ -74,20 +78,23 @@ export const provideHass = (
     restResponses.push([path, callback]);
   }
 
-  mockAPI(new RegExp("states/.+"), (
-    // @ts-ignore
-    method,
-    path,
-    parameters
-  ) => {
-    const [domain, objectId] = path.substr(7).split(".", 2);
-    if (!domain || !objectId) {
-      return;
+  mockAPI(
+    new RegExp("states/.+"),
+    (
+      // @ts-ignore
+      method,
+      path,
+      parameters
+    ) => {
+      const [domain, objectId] = path.substr(7).split(".", 2);
+      if (!domain || !objectId) {
+        return;
+      }
+      addEntities(
+        getEntity(domain, objectId, parameters.state, parameters.attributes)
+      );
     }
-    addEntities(
-      getEntity(domain, objectId, parameters.state, parameters.attributes)
-    );
-  });
+  );
 
   const localLanguage = getLocalLanguage();
 
@@ -117,9 +124,7 @@ export const provideHass = (
           ? callback(msg)
           : Promise.reject({
               code: "command_not_mocked",
-              message: `WS Command ${
-                msg.type
-              } is not implemented in provide_hass.`,
+              message: `WS Command ${msg.type} is not implemented in provide_hass.`,
             });
       },
       subscribeMessage: async (onChange, msg) => {
@@ -128,9 +133,7 @@ export const provideHass = (
           ? callback(msg, onChange)
           : Promise.reject({
               code: "command_not_mocked",
-              message: `WS Command ${
-                msg.type
-              } is not implemented in provide_hass.`,
+              message: `WS Command ${msg.type} is not implemented in provide_hass.`,
             });
       },
       subscribeEvents: async (
@@ -170,6 +173,7 @@ export const provideHass = (
       name: "Demo User",
     },
     panelUrl: "lovelace",
+    defaultPanel: DEFAULT_PANEL,
 
     language: localLanguage,
     selectedLanguage: localLanguage,
@@ -225,6 +229,7 @@ export const provideHass = (
       (eventListeners[event] || []).forEach((fn) => fn(event));
     },
     mockTheme(theme) {
+      invalidateThemeCache();
       hass().updateHass({
         selectedTheme: theme ? "mock" : "default",
         themes: {
@@ -238,8 +243,7 @@ export const provideHass = (
       applyThemesOnElement(
         document.documentElement,
         themes,
-        selectedTheme,
-        true
+        selectedTheme as string
       );
     },
 

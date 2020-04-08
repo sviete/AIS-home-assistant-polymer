@@ -19,14 +19,21 @@ import { fireEvent } from "../../../../common/dom/fire_event";
 import { createCardElement } from "../../create-element/create-card-element";
 import { getCardStubConfig } from "../get-card-stub-config";
 import {
-  computeUnusedEntities,
   computeUsedEntities,
+  calcUnusedEntities,
 } from "../../common/compute-unused-entities";
+import { UNKNOWN, UNAVAILABLE } from "../../../../data/entity";
+import {
+  customCards,
+  getCustomCardEntry,
+  CUSTOM_TYPE_PREFIX,
+} from "../../../../data/lovelace_custom_cards";
 
 const previewCards: string[] = [
   "alarm-panel",
-  "entities",
   "button",
+  "entities",
+  "entity",
   "gauge",
   "glance",
   "history-graph",
@@ -98,6 +105,24 @@ export class HuiCardPicker extends LitElement {
           `;
         })}
       </div>
+      ${customCards.length
+        ? html`
+            <div class="cards-container">
+              ${customCards.map((card) => {
+                return html`
+                  ${until(
+                    this._renderCardElement(card.type, true, true),
+                    html`
+                      <div class="card spinner">
+                        <paper-spinner active alt="Loading"></paper-spinner>
+                      </div>
+                    `
+                  )}
+                `;
+              })}
+            </div>
+          `
+        : ""}
       <div class="cards-container">
         <div
           class="card"
@@ -137,8 +162,22 @@ export class HuiCardPicker extends LitElement {
       return;
     }
 
-    this._unusedEntities = computeUnusedEntities(this.hass, this.lovelace);
-    this._usedEntities = [...computeUsedEntities(this.lovelace)];
+    const usedEntities = computeUsedEntities(this.lovelace);
+    const unusedEntities = calcUnusedEntities(this.hass, usedEntities);
+
+    this._usedEntities = [...usedEntities].filter(
+      (eid) =>
+        this.hass!.states[eid] &&
+        this.hass!.states[eid].state !== UNKNOWN &&
+        this.hass!.states[eid].state !== UNAVAILABLE
+    );
+    this._unusedEntities = [...unusedEntities].filter(
+      (eid) =>
+        this.hass!.states[eid] &&
+        this.hass!.states[eid].state !== UNKNOWN &&
+        this.hass!.states[eid].state !== UNAVAILABLE
+    );
+
     this.requestUpdate();
   }
 
@@ -161,6 +200,7 @@ export class HuiCardPicker extends LitElement {
           background: var(--primary-background-color, #fafafa);
           cursor: pointer;
           box-sizing: border-box;
+          position: relative;
         }
 
         .card-header {
@@ -203,6 +243,13 @@ export class HuiCardPicker extends LitElement {
           align-items: center;
           justify-content: center;
         }
+
+        .overlay {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+        }
       `,
     ];
   }
@@ -233,46 +280,61 @@ export class HuiCardPicker extends LitElement {
 
   private async _renderCardElement(
     type: string,
-    noElement: boolean = false
+    noElement: boolean = false,
+    isCustom: boolean = false
   ): Promise<TemplateResult> {
+    const customCard = isCustom ? getCustomCardEntry(type) : undefined;
+    if (isCustom) {
+      type = `${CUSTOM_TYPE_PREFIX}${type}`;
+    }
+
     let element: LovelaceCard | undefined;
     let cardConfig: LovelaceCardConfig = { type };
 
     if (this.hass && this.lovelace) {
       cardConfig = await getCardStubConfig(
         this.hass,
-        this.lovelace,
         type,
-        this._unusedEntities,
-        this._usedEntities
+        this._unusedEntities!,
+        this._usedEntities!
       );
 
-      if (!noElement) {
+      if (!noElement || customCard?.preview) {
         element = this._createCardElement(cardConfig);
       }
     }
 
     return html`
-      <div class="card" @click="${this._cardPicked}" .config="${cardConfig}">
+      <div class="card">
+        <div
+          class="overlay"
+          @click=${this._cardPicked}
+          .config=${cardConfig}
+        ></div>
         <div
           class="preview ${classMap({
             description: !element || element.tagName === "HUI-ERROR-CARD",
           })}"
         >
-          ${!element || element.tagName === "HUI-ERROR-CARD"
-            ? html`
-                ${this.hass!.localize(
-                  `ui.panel.lovelace.editor.card.${cardConfig.type}.description`
-                )}
-              `
-            : html`
-                ${element}
-              `}
+          ${element && element.tagName !== "HUI-ERROR-CARD"
+            ? element
+            : customCard
+            ? customCard.description ||
+              this.hass!.localize(
+                `ui.panel.lovelace.editor.cardpicker.no_description`
+              )
+            : this.hass!.localize(
+                `ui.panel.lovelace.editor.card.${cardConfig.type}.description`
+              )}
         </div>
         <div class="card-header">
-          ${this.hass!.localize(
-            `ui.panel.lovelace.editor.card.${cardConfig.type}.name`
-          )}
+          ${customCard
+            ? `${this.hass!.localize(
+                "ui.panel.lovelace.editor.cardpicker.custom_card"
+              )}: ${customCard.name || customCard.type}`
+            : this.hass!.localize(
+                `ui.panel.lovelace.editor.card.${cardConfig.type}.name`
+              )}
         </div>
       </div>
     `;
