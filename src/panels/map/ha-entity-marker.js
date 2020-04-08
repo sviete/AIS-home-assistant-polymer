@@ -33,10 +33,8 @@ class HaEntityMarker extends EventsMixin(PolymerElement) {
         }
       </style>
 
-      <div class="marker">
-        <template is="dom-if" if="[[entityName]]"
-          >[[entityName]]</template
-        >
+      <div class="marker" style$="border-color:{{entityColor}}">
+        <template is="dom-if" if="[[entityName]]">[[entityName]]</template>
         <template is="dom-if" if="[[entityPicture]]">
           <iron-image
             sizing="cover"
@@ -65,6 +63,11 @@ class HaEntityMarker extends EventsMixin(PolymerElement) {
       },
 
       entityPicture: {
+        type: String,
+        value: null,
+      },
+
+      entityColor: {
         type: String,
         value: null,
       },

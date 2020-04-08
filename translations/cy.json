@@ -395,6 +395,7 @@
                 "attributes": {
                     "air_pressure": "Pwysedd aer",
                     "humidity": "Lleithder",
+                    "precipitation": "Dyodiad",
                     "temperature": "Tymheredd",
                     "visibility": "Gwelededd",
                     "wind_speed": "Cyflymder gwynt"
@@ -417,13 +418,18 @@
                     "wnw": "GGO",
                     "wsw": "GDO"
                 },
-                "forecast": "Rhagolwg"
+                "forecast": "Rhagolwg",
+                "high": "Uchel",
+                "low": "Isel"
             }
         },
         "common": {
             "cancel": "Canslo",
+            "delete": "Dileu",
             "loading": "Llwytho",
-            "save": "Arbed"
+            "save": "Arbed",
+            "successfully_deleted": "Dileuwyd yn llwyddiannus",
+            "undo": "Dad-wneud"
         },
         "components": {
             "device-picker": {
@@ -439,6 +445,30 @@
             }
         },
         "dialogs": {
+            "entity_registry": {
+                "editor": {
+                    "delete": "Dileu",
+                    "update": "Diweddariad"
+                },
+                "no_unique_id": "Nid oes gan yr endid hwn ID unigryw, felly ni ellir rheoli ei osodiadau o'r UI."
+            },
+            "helper_settings": {
+                "input_datetime": {
+                    "date": "Dyddiad",
+                    "datetime": "Dyddiad ac amser",
+                    "mode": "Beth ydych chi eisiau roid fel mewnbwn",
+                    "time": "Amser"
+                },
+                "input_number": {
+                    "step": "Maint y cam"
+                },
+                "input_text": {
+                    "max": "Hyd mwyaf",
+                    "min": "Hyd lleiaf"
+                },
+                "platform_not_loaded": "Nid yw'r integreiddiad {platform} wedi'i lwytho. Ychwanegwch eich cyfluniad ato naill ai trwy ychwanegu 'default_config:' neu '{platform}:'.",
+                "yaml_not_editable": "Ni ellir olygu gosodiadau'r endid hwn o'r UI. Dim ond endidau a sefydlwyd o'r UI y gellir eu ffurfweddu o'r UI."
+            },
             "more_info_control": {
                 "dismiss": "Gwrthod deialog",
                 "script": {
@@ -483,16 +513,24 @@
                 "areas": {
                     "caption": "Gofrestrfa ardal",
                     "create_area": "CREU ARDAL",
+                    "data_table": {
+                        "area": "Ardal",
+                        "devices": "Dyfeisiau"
+                    },
+                    "delete": {
+                        "confirmation_text": "Bydd pob dyfais yn yr ardal hon yn cael ei ddadneilltuo.",
+                        "confirmation_title": "Ydych chi'n siŵr bod chi eisiau dileu'r ardal hon?"
+                    },
                     "description": "Trosolwg o bob ardal yn eich cartref.",
                     "editor": {
-                        "create": "CREU",
+                        "create": "Creu",
                         "default_name": "Ardal Newydd",
-                        "delete": "DILEU",
-                        "update": "DIWEDDARIAD"
+                        "delete": "Dileu",
+                        "update": "Diweddaru"
                     },
                     "no_areas": "Edrych fel nad oes gennych ardaloedd eto!",
                     "picker": {
-                        "create_area": "CREU ARDAL",
+                        "create_area": "Creu Ardal",
                         "header": "Gofrestrfa ardal",
                         "integrations_page": "Tudalen rhyngwynebu",
                         "introduction": "Defnyddir ardaloedd i drefnu lle mae dyfeisiau. Defnyddir y wybodaeth hon drwy gydol Home Assistant i helpu chi i drefnu eich rhyngwyneb, caniatadau ac integreiddio â systemau eraill.",
@@ -597,7 +635,7 @@
                         "triggers": {
                             "add": "Ychwanegu sbardun",
                             "delete": "Dileu",
-                            "delete_confirm": "Sicr bod chi eisiau dileu?",
+                            "delete_confirm": "Ydych chi'n siŵr bod chi eisiau dileu hwn?",
                             "duplicate": "Dyblyg",
                             "header": "Sbardunau",
                             "introduction": "Sbarduno yw'r hyn sy'n dechrau proses rheol awtomeiddio.  Mae'n bosib dewis nifer o sbardunau i'run rheol. Unwaith mae sbardun yn cychwyn, bydd Home Assistant yn dilysu'r amodau, os o gwbl, a galw'r gweithred. \n\n[dysgwch mwy am sbardunau.] (https://home-assistant.io/docs/automation/trigger/)",
@@ -681,6 +719,9 @@
                     "picker": {
                         "add_automation": "Ychwanegu awtomeiddiad",
                         "header": "Golygydd awtomeiddio",
+                        "headers": {
+                            "name": "Enw"
+                        },
                         "introduction": "Mae'r olygydd awtomeiddio yn caniatáu ichi greu a golygu awtomeiddiau. Darllenwch [y cyfarwyddiadau] (https://home-assistant.io/docs/automation/editor/) i sicrhau bod chi wedi ffurfweddu'r Home Assistant yn gywir.",
                         "learn_more": "Dysgu mwy am awtomeiddio",
                         "no_automations": "Doeddem ddim yn gallu darganfod unrhyw awtomeiddiau",
@@ -752,6 +793,7 @@
                 "devices": {
                     "area_picker_label": "Ardal",
                     "automations": "Awtomeiddiadau",
+                    "confirm_delete": "Ydych chi'n siŵr eich bod eisiau dileu y ddyfais hon?",
                     "confirm_rename_entity_ids": "A ydych chi hefyd eisiau ailenwi enwau eich endidau?",
                     "data_table": {
                         "area": "Ardal",
@@ -759,11 +801,14 @@
                         "device": "Dyfais",
                         "integration": "Integreiddio",
                         "manufacturer": "Gwneuthurwr",
-                        "model": "Model"
+                        "model": "Model",
+                        "no_devices": "Dim dyfeisiau"
                     },
+                    "delete": "Dileu",
                     "details": "Dyma holl fanylion eich dyfais.",
                     "device_not_found": "Heb ganfod y ddyfais.",
                     "info": "Gwybodaeth am ddyfais",
+                    "no_devices": "Dim dyfeisiau",
                     "unknown_error": "Gwall anhysbys",
                     "unnamed_device": "Dyfais ddienw"
                 },
@@ -814,6 +859,7 @@
                         },
                         "failed_create_area": "Wedi methu creu ardal.",
                         "finish": "Gorffen",
+                        "loading_first_time": "Arhoswch tra bo'r integreiddiad yn cael ei osod",
                         "name_new_area": "Enw'r ardal newydd?",
                         "not_all_required_fields": "Nid yw pob maes gofynnol wedi'i lenwi.",
                         "submit": "Cyflwyno"
@@ -823,11 +869,32 @@
                     "description": "Rheoli dyfeisiau a gwasanaethau cysylltiedig",
                     "details": "Manylion integreiddio",
                     "discovered": "Darganfuwyd",
+                    "ignore": {
+                        "confirm_ignore": "Ydych chi'n siŵr nad ydych am sefydlu'r integreiddiad hwn? Gallwch ddad-wneud hyn drwy glicio ar y 'dangos integreiddiadau a anwybyddwyd' yn y ddewislen gorlif ar y dde uchaf."
+                    },
                     "integration_not_found": "Heb ganfod integreiddiad",
                     "new": "Sefydlu integreiddiad newydd",
                     "none": "Dim byd wedi'i ffurfweddu eto."
                 },
                 "introduction": "Yma mae'n bosib ffurfweddu'ch cydrannau ac Home Assistant. Nid yw popeth yn bosib i'w ffurfweddu o'r UI eto, ond rydym yn gweithio arno.",
+                "lovelace": {
+                    "dashboards": {
+                        "cant_edit_default": "Ni ellir golygu dangosfwrdd safonol Lovelace o'r UI. Gallwch ei guddio trwy osod dangosfwrdd arall yn ddiofyn.",
+                        "cant_edit_yaml": "Ni ellir golygu dangosfyrddau a ddiffinnir yn YAML o'r UI. Newidiwch nhw yn configuration.yaml.",
+                        "default_dashboard": "Dyma'r dangosfwrdd diofyn",
+                        "detail": {
+                            "icon": "Eicon",
+                            "title": "Teitl",
+                            "url_error_msg": "Dylai'r URL gynnwys a - ac ni all gynnwys mannau na chymeriadau arbennig, heblaw am _ ac -"
+                        }
+                    },
+                    "resources": {
+                        "cant_edit_yaml": "Rydych chi'n defnyddio Lovelace yn y modd YAML, felly ni allwch reoli'ch adnoddau trwy'r UI. Rheolwch nhw yn configuration.yaml.",
+                        "picker": {
+                            "no_resources": "Dim adnoddau"
+                        }
+                    }
+                },
                 "person": {
                     "caption": "Pobl",
                     "description": "Rheoli'r pobl mae Home Assistant yn tracio.",
@@ -861,11 +928,22 @@
                         "name": "Enw",
                         "save": "Arbed",
                         "unsaved_confirm": "Mae gennych newidiadau heb eu cadw. Ydych chi'n siŵr bod chi eisiau gadael?"
+                    },
+                    "picker": {
+                        "headers": {
+                            "name": "Enw"
+                        }
                     }
                 },
                 "script": {
                     "caption": "Sgript",
-                    "description": "Creu a golygu sgriptiau"
+                    "description": "Creu a golygu sgriptiau",
+                    "picker": {
+                        "headers": {
+                            "name": "Enw"
+                        },
+                        "show_info": "Dangos gwybodaeth am y sgript"
+                    }
                 },
                 "server_control": {
                     "caption": "Rheoli gweinydd",
@@ -901,7 +979,18 @@
                         "username": "Enw Defnyddiwr"
                     },
                     "editor": {
-                        "caption": "Gweld defnyddiwr"
+                        "admin": "Gweinyddwr",
+                        "caption": "Gweld defnyddiwr",
+                        "name": "Enw",
+                        "system_generated_users_not_editable": "Methu diweddaru defnyddwyr a gynhyrchir gan system.",
+                        "update_user": "Diweddaru"
+                    },
+                    "picker": {
+                        "headers": {
+                            "group": "Grŵp",
+                            "name": "Enw",
+                            "system": "System"
+                        }
                     }
                 },
                 "zha": {
@@ -999,6 +1088,9 @@
                 "showing_entries": "Dangos endidau i"
             },
             "lovelace": {
+                "add_entities": {
+                    "yaml_unsupported": "Cewch chi ddim defnyddio'r swyddogaeth hon wrth ddefnyddio UI Lovelace yn modd YAML."
+                },
                 "cards": {
                     "empty_state": {
                         "go_to_integrations_page": "Ewch i'r dudalen integreiddio.",
@@ -1041,8 +1133,16 @@
                         "entity-filter": {
                             "name": "Hidlo Endid"
                         },
+                        "entity": {
+                            "name": "Endid"
+                        },
                         "gauge": {
                             "name": "Medrydd"
+                        },
+                        "generic": {
+                            "attribute": "Priodoledd",
+                            "double_tap_action": "Gweithred tab dwbl",
+                            "no_theme": "Dim thema"
                         },
                         "glance": {
                             "name": "Cipolwg"
@@ -1060,6 +1160,7 @@
                             "name": "Golau"
                         },
                         "map": {
+                            "hours_to_show": "Oriau i'w Dangos",
                             "name": "Map"
                         },
                         "markdown": {
@@ -1072,36 +1173,49 @@
                             "name": "Elfennau'r Llun"
                         },
                         "picture-entity": {
+                            "description": "Mae'r cerdyn Endid Lluniau yn arddangos endid ar ffurf delwedd. Yn lle delweddau o URL, gall hefyd ddangos y llun o endidau camera.",
                             "name": "Endid Llun"
                         },
                         "picture-glance": {
+                            "description": "Mae'r cerdyn Cipolwg Llun yn dangos delwedd a chyflyrau endidau cyfatebol fel eicon. Mae'r endidau ar yr ochr dde yn caniatáu toglo gweithredoedd, mae eraill yn dangos y dialog mwy o wybodaeth.",
                             "name": "Cipolwg ar lun"
                         },
                         "picture": {
                             "name": "Llun"
                         },
                         "plant-status": {
+                            "description": "Mae'r cerdyn Statws Planhigion ar gyfer yr holl fotanegwyr hyfryd allan yna.",
                             "name": "Statws planhigyn"
                         },
                         "sensor": {
+                            "description": "Mae'r cerdyn Synhwyrydd yn rhoi trosolwg cyflym o gyflwr eich synwyryddion gyda graff dewisol i ddelweddu newid dros amser.",
                             "name": "Synhwyrydd"
                         },
                         "shopping-list": {
+                            "description": "Mae'r cerdyn Rhestr Siopa yn caniatáu ichi ychwanegu, golygu, gwirio a chlirio eitemau o'ch rhestr siopa.",
                             "name": "Rhestr siopa"
                         },
                         "thermostat": {
+                            "description": "Mae'r cerdyn Thermostat yn rhoi rheolaeth ar eich endid hinsawdd. Yn caniatáu ichi newid tymheredd a modd yr endid.",
                             "name": "Thermostat"
                         },
                         "vertical-stack": {
+                            "description": "Mae'r cerdyn 'Vertical Stack' yn caniatáu ichi grwpio cardiau lluosog fel bod nhw bob tro yn eistedd yn yr un golofn.",
                             "name": "Stac Fertigol"
                         },
                         "weather-forecast": {
+                            "description": "Mae'r cerdyn rhagolygon tywydd yn dangos y tywydd. Defnyddiol iawn i'w cynnwys ar ryngwynebau y mae pobl yn eu harddangos ar y wal.",
                             "name": "Rhagolwg tywydd"
                         }
+                    },
+                    "cardpicker": {
+                        "custom_card": "Custom",
+                        "no_description": "Dim disgrifiad ar gael."
                     },
                     "edit_card": {
                         "add": "Ychwanegu Cerdyn",
                         "delete": "Dileu",
+                        "duplicate": "Cerdyn dyblyg",
                         "edit": "Golygu",
                         "header": "Ffurfweddu Cerdyn",
                         "move": "Symud",
@@ -1120,7 +1234,10 @@
                         "edit": "Golygu golwg",
                         "header": "Gweld Ffurfweddiad",
                         "move_left": "Symud y wedd i'r chwith",
-                        "move_right": "Symud y wedd i'r dde"
+                        "move_right": "Symud y wedd i'r dde",
+                        "visibility": {
+                            "select_users": "Dewiswch pa ddefnyddwyr ddylai weld yr olygfa hon yn y llywio"
+                        }
                     },
                     "header": "Golygu rhyngwyneb defnyddiwr",
                     "menu": {
@@ -1145,10 +1262,17 @@
                     },
                     "save_config": {
                         "cancel": "Dim ots",
+                        "empty_config": "Dechreuwch gyda dangosfwrdd gwag",
                         "header": "Cymerwch reolaeth ar eich rhyngwyneb defnyddiwr Lovelace",
                         "para": "Gwneith Home Assistant gynnal eich rhyngwyneb defnyddiwr yn ddiofyn, a'i diweddaru pan fydd endidau neu gydrannau Lovelace newydd yn dod ar gael. Os ydych yn cymryd rheolaeth nawn ddim gwneud newidiadau awtomatig pellach i chi.",
                         "para_sure": "A ydych yn siŵr bod chi eisiau rheoli eich rhyngwyneb defnyddiwr?",
-                        "save": "Cymerwch reolaeth"
+                        "save": "Cymerwch reolaeth",
+                        "yaml_mode": "Ydych yn defnyddio YAML modd, sy'n golygu nad ydych yn gallu newid eich Lovelace config o'r UI. Os ydych am newid Lovelace o UI, dileu 'modd: yaml' o eich cyfluniad Lovelace yn 'configuration.yaml.'"
+                    },
+                    "view": {
+                        "panel_mode": {
+                            "warning_multiple_cards": "Mae'r golwg yn cynnwys mwy nag un cerdyn, ond dim ond un cerdyn gall y golwg panel ei ddangos."
+                        }
                     }
                 },
                 "menu": {
@@ -1157,9 +1281,14 @@
                     "exit_edit_mode": "Gadael modd golygu UI",
                     "help": "Help",
                     "refresh": "Adnewyddu",
+                    "reload_resources": "Ail-lwytho adnoddau",
                     "unused_entities": "Endidau heb ei ddefnyddio"
                 },
                 "reload_lovelace": "Ail-lwytho Lovelace",
+                "reload_resources": {
+                    "refresh_body": "Rhaid i chi adnewyddu'r dudalen i gwblhau'r ail-lwytho, ydych chi eisiau adnewyddu rŵan?",
+                    "refresh_header": "Ydych chi eisiau adnewyddu?"
+                },
                 "unused_entities": {
                     "available_entities": "Rhain yw'r endidau sydd gennych ar gael, ond dim ar eich Lovelace UI eto",
                     "domain": "Parth",
@@ -1170,6 +1299,7 @@
                     "title": "Endidau heb ei ddefnyddio"
                 },
                 "warning": {
+                    "attribute_not_found": "Priodoledd {attribute} ddim ar gael yn: {entity}",
                     "entity_non_numeric": "Endid di-rhifol: {entity}",
                     "entity_not_found": "Endid ddim ar gael: {entity}"
                 }
@@ -1278,6 +1408,11 @@
                 "advanced_mode": {
                     "description": "Mae Home Assistant yn cuddio nodweddion uwch ac opsiynau yn ddiofyn. Gallwch wneud y nodweddion hyn yn hygyrch trwy ticio'r toggle hwn. Mae hwn yn leoliad penodol i ddefnyddwyr ac nid yw'n effeithio ar ddefnyddwyr eraill sy'n defnyddio Home Assistant.",
                     "title": "Modd Uwch"
+                },
+                "dashboard": {
+                    "description": "Dewiswch ddangosfwrdd diofyn ar gyfer y ddyfais hon.",
+                    "dropdown_label": "Dangosfwrdd",
+                    "header": "Dangosfwrdd"
                 }
             },
             "shopping-list": {

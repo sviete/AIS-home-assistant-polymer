@@ -15,6 +15,7 @@ import {
   RowClickedEvent,
 } from "../../../../components/data-table/ha-data-table";
 import "../../../../components/ha-icon";
+import "../../../../components/ha-fab";
 import "../../../../layouts/hass-loading-screen";
 import "../../../../layouts/hass-tabs-subpage-data-table";
 import { HomeAssistant, Route } from "../../../../types";
@@ -104,7 +105,7 @@ export class HaConfigLovelaceDashboards extends LitElement {
           ),
           sortable: true,
           filterable: true,
-          width: "15%",
+          width: "20%",
           template: (mode) =>
             html`
               ${this.hass.localize(
@@ -143,7 +144,7 @@ export class HaConfigLovelaceDashboards extends LitElement {
             "ui.panel.config.lovelace.dashboards.picker.headers.sidebar"
           ),
           type: "icon",
-          width: "100px",
+          width: "121px",
           template: (sidebar) =>
             sidebar
               ? html`
@@ -184,8 +185,8 @@ export class HaConfigLovelaceDashboards extends LitElement {
   private _getItems = memoize((dashboards: LovelaceDashboard[]) => {
     const defaultMode = (this.hass.panels?.lovelace
       ?.config as LovelacePanelConfig).mode;
-    const isDefault =
-      !localStorage.defaultPage || localStorage.defaultPage === "lovelace";
+    const defaultUrlPath = this.hass.defaultPanel;
+    const isDefault = defaultUrlPath === "lovelace";
     return [
       {
         icon: "hass:view-dashboard",
@@ -201,7 +202,7 @@ export class HaConfigLovelaceDashboards extends LitElement {
         return {
           filename: "",
           ...dashboard,
-          default: localStorage.defaultPage === dashboard.url_path,
+          default: defaultUrlPath === dashboard.url_path,
         };
       }),
     ];
@@ -229,6 +230,7 @@ export class HaConfigLovelaceDashboards extends LitElement {
         .data=${this._getItems(this._dashboards)}
         @row-click=${this._editDashboard}
         id="url_path"
+        hasFab
       >
       </hass-tabs-subpage-data-table>
       <ha-fab

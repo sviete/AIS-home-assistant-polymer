@@ -34,7 +34,6 @@ import {
 } from "../../../data/climate";
 import { HassEntity } from "home-assistant-js-websocket";
 import { actionHandler } from "../common/directives/action-handler-directive";
-import { LovelaceConfig } from "../../../data/lovelace";
 import { findEntities } from "../common/find-entites";
 import { UNAVAILABLE } from "../../../data/entity";
 
@@ -59,22 +58,20 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
 
   public static getStubConfig(
     hass: HomeAssistant,
-    lovelaceConfig: LovelaceConfig,
-    entities?: string[],
-    entitiesFill?: string[]
-  ): object {
+    entities: string[],
+    entitiesFallback: string[]
+  ): ThermostatCardConfig {
     const includeDomains = ["climate"];
     const maxEntities = 1;
     const foundEntities = findEntities(
       hass,
-      lovelaceConfig,
       maxEntities,
       entities,
-      entitiesFill,
+      entitiesFallback,
       includeDomains
     );
 
-    return { entity: foundEntities[0] || "" };
+    return { type: "thermostat", entity: foundEntities[0] || "" };
   }
 
   @property() public hass?: HomeAssistant;
@@ -90,7 +87,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
       throw new Error("Specify an entity from within the climate domain.");
     }
 
-    this._config = { theme: "default", ...config };
+    this._config = config;
   }
 
   public connectedCallback(): void {
@@ -242,24 +239,26 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
           tabindex="0"
         ></paper-icon-button>
 
-        <div id="controls">
-          <div id="slider">
-            ${slider}
-            <div id="slider-center">
-              <div id="temperature">
-                ${currentTemperature} ${setValues}
+        <div class="content">
+          <div id="controls">
+            <div id="slider">
+              ${slider}
+              <div id="slider-center">
+                <div id="temperature">
+                  ${currentTemperature} ${setValues}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div id="info">
-          <div id="modes">
-            ${(stateObj.attributes.hvac_modes || [])
-              .concat()
-              .sort(compareClimateHvacModes)
-              .map((modeItem) => this._renderIcon(modeItem, mode))}
+          <div id="info">
+            <div id="modes">
+              ${(stateObj.attributes.hvac_modes || [])
+                .concat()
+                .sort(compareClimateHvacModes)
+                .map((modeItem) => this._renderIcon(modeItem, mode))}
+            </div>
+            ${name}
           </div>
-          ${name}
         </div>
       </ha-card>
     `;
@@ -426,6 +425,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
       }
 
       ha-card {
+        height: 100%;
         position: relative;
         overflow: hidden;
         --name-font-size: 1.2rem;
@@ -482,6 +482,13 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
         border-radius: 100%;
         color: var(--secondary-text-color);
         z-index: 25;
+      }
+
+      .content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
 
       #controls {

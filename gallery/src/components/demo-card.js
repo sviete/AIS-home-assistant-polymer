@@ -16,7 +16,8 @@ class DemoCard extends PolymerElement {
           color: var(--primary-color);
         }
         #card {
-          width: 400px;
+          max-width: 400px;
+          width: 100vw;
         }
         pre {
           width: 400px;
@@ -54,6 +55,13 @@ class DemoCard extends PolymerElement {
       },
       showConfig: Boolean,
     };
+  }
+
+  ready() {
+    super.ready();
+    this.addEventListener("ll-rebuild", () => {
+      this._configChanged(this.config);
+    });
   }
 
   _configChanged(config) {
