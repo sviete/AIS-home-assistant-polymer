@@ -149,14 +149,14 @@ export const aisConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom",
       path: "/config/ais_dom",
-      translationKey: "ui.panel.config.integrations.caption",
+      translationKey: "ui.panel.config.ais_dom.caption",
       icon: "mdi:monitor-speaker",
       core: true,
     },
     {
       component: "ais_dom_devices",
       path: "/config/ais_dom_devices",
-      translationKey: "ui.panel.config.devices.caption",
+      translationKey: "ui.panel.config.ais_dom_devices.caption",
       icon: "hass:devices",
       core: true,
     },
@@ -201,10 +201,10 @@ class HaPanelConfig extends HassRouterPage {
           ),
       },
       ais_dom: {
-        tag: "ha-config-ais-dom-control",
+        tag: "ha-config-ais-dom-dashboard",
         load: () =>
           import(
-            /* webpackChunkName: "panel-config-ais-dom-control" */ "./ais_dom/ha-config-ais-dom-control"
+            /* webpackChunkName: "panel-config-ais-dom-dashboard" */ "./ais_dom/ha-config-ais-dom-dashboard"
           ),
       },
       ais_dom_config_update: {

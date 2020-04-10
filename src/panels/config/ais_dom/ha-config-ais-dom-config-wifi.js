@@ -7,7 +7,7 @@ import { PolymerElement } from "@polymer/polymer/polymer-element";
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
-import "./ha-config-ais-dom-navigation";
+import "./ha-config-ais-dom-dashboard";
 import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
 import { fireEvent } from "../../../common/dom/fire_event";
 

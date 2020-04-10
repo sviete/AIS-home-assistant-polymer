@@ -15,6 +15,7 @@ import {
   css,
 } from "lit-element";
 import { HomeAssistant } from "../../../types";
+import "../dashboard/ha-config-navigation";
 
 const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
   integrations: [
@@ -78,7 +79,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
 };
 
 @customElement("ha-config-ais-dom-navigation")
-class HaConfigNavigation extends LitElement {
+class HaConfigAisDomNavigation extends LitElement {
   @property() public hass!: HomeAssistant;
   @property() public showAdvanced!: boolean;
 
@@ -110,6 +111,6 @@ class HaConfigNavigation extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "ha-config-ais-dom-navigation": HaConfigNavigation;
+    "ha-config-ais-dom-navigation": HaConfigAisDomNavigation;
   }
 }

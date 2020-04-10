@@ -1513,6 +1513,10 @@
                     "note_about_integrations": "Not all integrations can be configured via the UI yet.",
                     "note_about_website_reference": "More are available on the "
                 },
+                "ais_dom_config": {
+                    "header": "Configure AIS Home Gateway",
+                    "introduction": "Here it is possible to configure your AIS Home Gateway. Not everything is possible to configure from the UI yet, but we're working on it."
+                  },
                 "ais_dom": {
                     "caption": " AIS Home Gateway Settings",
                     "description": "Manage your IoT and Audio gateway"
@@ -1521,7 +1525,6 @@
                     "caption": "Configuration of AIS home Devices",
                     "description": "Manage your devices with AIS dom software"
                 },
-                "introduction": "Here it is possible to configure your components and Home Assistant. Not everything is possible to configure from the UI yet, but we're working on it.",
                 "ais_dom_config_update": {
                     "caption": "Gateway software",
                     "description": "System update, backup and synchronization with the Integrator Portal"
@@ -1554,6 +1557,7 @@
                     "caption": "Stop the Gate",
                     "description": "Restart or turn off the gate"
                   },
+                "introduction": "Here it is possible to configure your components and Home Assistant. Not everything is possible to configure from the UI yet, but we're working on it.",
                 "lovelace": {
                     "caption": "Lovelace Dashboards",
                     "dashboards": {

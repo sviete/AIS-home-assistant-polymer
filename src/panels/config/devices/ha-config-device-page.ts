@@ -200,14 +200,16 @@ export class HaConfigDevicePage extends LitElement {
                       : ""
                   }
                   <img
-                    src="https://brands.home-assistant.io/${
-                      integrations[0]
-                    }/logo.png"
-                    srcset="
-                      https://brands.home-assistant.io/${
-                        integrations[0]
-                      }/logo@2x.png 2x
-                    "
+                    src=${
+                      integrations[0].startsWith("ais_")
+                        ? `https://ai-speaker.com/images/brands/${integrations[0]}/logo.png`
+                        : `https://brands.home-assistant.io/${integrations[0]}/logo.png`
+                    }
+                    srcset=${
+                      integrations[0].startsWith("ais_")
+                        ? `https://ai-speaker.com/images/brands/${integrations[0]}/logo@2x.png 2x`
+                        : `https://brands.home-assistant.io/${integrations[0]}/logo@2x.png 2x`
+                    }
                     referrerpolicy="no-referrer"
                     @load=${this._onImageLoad}
                     @error=${this._onImageError}

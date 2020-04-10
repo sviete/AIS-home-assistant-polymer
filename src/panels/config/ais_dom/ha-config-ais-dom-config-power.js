@@ -7,7 +7,7 @@ import { PolymerElement } from "@polymer/polymer/polymer-element";
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
-import "./ha-config-ais-dom-navigation";
+import "./ha-config-ais-dom-dashboard";
 
 /*
  *

@@ -1513,6 +1513,10 @@
                     "note_about_integrations": "Jeszcze nie wszystkie integracje można skonfigurować za pomocą interfejsu użytkownika.",
                     "note_about_website_reference": "Więcej jest dostępnych na stronie integracji "
                 },
+                "ais_dom_config": {
+                    "header": "Konfiguracja bramki AIS dom",
+                    "introduction": "Tutaj możesz skonfigurować parametry bramki AIS dom. Pracujemy nad tym, żeby wszystkie opcje bramki można było łatwo konfigurować z interfejsu użytkownika."
+                  },
                 "ais_dom": {
                     "caption": "Ustawienia Bramki AIS dom",
                     "description": "Zarządzaj swoją bramką IoT i Audio"

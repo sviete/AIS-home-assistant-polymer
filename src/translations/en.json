@@ -862,38 +862,6 @@
             }
           }
         },
-        "ais_dom_config_update": {
-          "caption": "Gateway software",
-          "description": "System update, backup and synchronization with the Integrator Portal"
-        },
-        "ais_dom_config_wifi": {
-          "caption": "WiFi network",
-          "description": "WiFi connection settings"
-        },
-        "ais_dom_config_display": {
-          "caption": "Screen",
-          "description": "Screen Settings"
-        },
-        "ais_dom_config_tts": {
-          "caption": "The assistant voice",
-          "description": "Voice assistant settings"
-        },
-        "ais_dom_config_night": {
-          "caption": "Night mode",
-          "description": "Set the hours when the assistant should be quieter"
-        },
-        "ais_dom_config_logs": {
-          "caption": "Logs and recorder",
-          "description": "Configuration of logs and DB recorder"
-        },
-        "ais_dom_config_remote": {
-          "caption": "Remote control",
-          "description": "Configuration of remote access to the gateway"
-        },
-        "ais_dom_config_power": {
-          "caption": "Stop the Gate",
-          "description": "Restart or turn off the gate"
-        },
         "lovelace": {
           "caption": "Lovelace Dashboards",
           "description": "Configure your Lovelace Dashboards",
@@ -1880,6 +1848,10 @@
             "cancel_command": "Cancel Command"
           }
         },
+        "ais_dom_config": {
+          "header": "Configure AIS Home Gateway",
+          "introduction": "Here it is possible to configure your AIS Home Gateway. Not everything is possible to configure from the UI yet, but we're working on it."
+        },
         "ais_dom": {
           "caption": " AIS Home Gateway Settings",
           "description": "Manage your IoT and Audio gateway"
@@ -1887,6 +1859,38 @@
         "ais_dom_devices": {
           "caption": "Configuration of AIS home Devices",
           "description": "Manage your devices with AIS dom software"
+        },
+        "ais_dom_config_update": {
+          "caption": "Gateway software",
+          "description": "System update, backup and synchronization with the Integrator Portal"
+        },
+        "ais_dom_config_wifi": {
+          "caption": "WiFi network",
+          "description": "WiFi connection settings"
+        },
+        "ais_dom_config_display": {
+          "caption": "Screen",
+          "description": "Screen Settings"
+        },
+        "ais_dom_config_tts": {
+          "caption": "The assistant voice",
+          "description": "Voice assistant settings"
+        },
+        "ais_dom_config_night": {
+          "caption": "Night mode",
+          "description": "Set the hours when the assistant should be quieter"
+        },
+        "ais_dom_config_logs": {
+          "caption": "Logs and recorder",
+          "description": "Configuration of logs and DB recorder"
+        },
+        "ais_dom_config_remote": {
+          "caption": "Remote control",
+          "description": "Configuration of remote access to the gateway"
+        },
+        "ais_dom_config_power": {
+          "caption": "Stop the Gate",
+          "description": "Restart or turn off the gate"
         }
       },
       "history": {
