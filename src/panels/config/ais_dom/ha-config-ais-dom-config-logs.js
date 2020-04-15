@@ -11,6 +11,7 @@ import "../../../components/ha-switch";
 import "@polymer/paper-dropdown-menu/paper-dropdown-menu";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-listbox/paper-listbox";
+import "../../../components/buttons/ha-call-service-button";
 /*
  *
  */
@@ -134,7 +135,25 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                     <paper-item item-name="debug">debug</paper-item>
                   </paper-listbox>
                 </ha-paper-dropdown-menu>
+                <br /><br />
+                Żeby utrzymać system w dobrej kondycji, codziennie dokładnie o
+                północy Asystent sprawdza i (jeżeli trzeba) zmienia plik, do
+                którego są zapisywane logi systemu.
                 <br />
+                W tym miejscu możesz określić rotację plików dziennika - liczbę
+                dni przechowywanych w jednym pliku loga.
+                <paper-input
+                  type="number"
+                  value="[[logRotating]]"
+                  on-change="logRotatingDaysChanged"
+                  maxlength="4"
+                  max="9999"
+                  min="1"
+                  label-float="Liczba dni loga przechowywanych w jednym pliku"
+                  label="Liczba dni loga przechowywanych w jednym pliku"
+                >
+                  <iron-icon icon="mdi:calendar" slot="suffix"></iron-icon>
+                </paper-input>
                 <div class="config-invalid">
                   <span class="text">
                     [[logError]]
@@ -143,6 +162,10 @@ class HaConfigAisDomControlLogs extends PolymerElement {
               </div>
               <div class="card-content">
                 [[logModeInfo]]
+              </div>
+              <div class="card-content">
+                * po zmianie dysku do zapisu logów systemu wymagany jest restart
+                systemu.
               </div>
             </ha-card>
           </ha-config-section>
@@ -326,8 +349,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   </template>
                 </div>
                 <div>
-                  * po zmianie połączenia z bazą wymagany jest restart serwera
-                  Home Assistant.
+                  * po zmianie połączenia z bazą wymagany jest restart systemu.
                 </div>
               </div>
             </ha-card>
@@ -353,6 +375,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
         type: String,
         computed: "_computeLogsSettings(hass)",
       },
+      logRotating: Number,
       logIconAnimationStyle: String,
       dbIconAnimationStyle: String,
       usbDrives: {
@@ -391,6 +414,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     this.hass.callService("ais_files", "get_db_log_settings_info");
     this._computeLogsSettings(this.hass);
     this.dbKeepDays = 10;
+    this.logRotating = 10;
   }
 
   // LOGS
@@ -407,6 +431,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     var connInfoAttr = connectionInfo.attributes;
     this.logDrive = connInfoAttr.logDrive;
     this.logLevel = connInfoAttr.logLevel;
+    this.logRotating = connInfoAttr.logRotating;
     if (connectionInfo.state > 0) {
       if (this.logLevel === "debug") {
         this.logIconAnimationStyle = "animation: pulseRed 2s infinite;";
@@ -444,14 +469,15 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     this.logDrive = ev.detail.value;
     if (this.logDrive !== "-") {
       this.logModeInfo =
-        "Logowanie do pliku /dyski-wymienne/" + this.logDrive + "/ais.log";
+        "Zapis logów do pliku /dyski-wymienne/" + this.logDrive + "/ais.log";
     } else {
-      this.logModeInfo = "Logowanie wyłączone ";
+      this.logModeInfo = "Zapis logów do pliku wyłączony ";
     }
 
     this.hass.callService("ais_files", "change_logger_settings", {
       log_drive: this.logDrive,
       log_level: this.logLevel,
+      log_rotating: String(this.logRotating),
     });
   }
 
@@ -461,6 +487,22 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     this.hass.callService("ais_files", "change_logger_settings", {
       log_drive: this.logDrive,
       log_level: this.logLevel,
+      log_rotating: String(this.logRotating),
+    });
+  }
+
+  logRotatingDaysChanged(ev) {
+    this.logRotating = Number(ev.target.value);
+    if (this.logRotating === 1) {
+      this.logModeInfo = "Rotacja logów codziennie.";
+    } else {
+      this.logModeInfo = "Rotacja logów co " + this.logRotating + " dni.";
+    }
+
+    this.hass.callService("ais_files", "change_logger_settings", {
+      log_drive: this.logDrive,
+      log_level: this.logLevel,
+      log_rotating: String(this.logRotating),
     });
   }
 
@@ -516,6 +558,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
 
   _doComputeDbUrl(getFromPage) {
     let dbUrl = "";
+    console.log("_doComputeDbUrl");
     if (this.dbEngine === "-") {
       this.dbConectionDisplayStyle = "display: none";
       this.dbFileDisplayStyle = "display: none";
@@ -527,6 +570,9 @@ class HaConfigAisDomControlLogs extends PolymerElement {
         "sqlite://///data/data/pl.sviete.dom/files/home/dom/dyski-wymienne/" +
         this.dbDrive +
         "/ais.db";
+      if (getFromPage) {
+        this.dbKeepDays = this.shadowRoot.getElementById("db_keep_days").value;
+      }
     } else if (this.dbEngine === "SQLite (memory)") {
       this.dbConectionDisplayStyle = "display: none";
       this.dbFileDisplayStyle = "display: none";

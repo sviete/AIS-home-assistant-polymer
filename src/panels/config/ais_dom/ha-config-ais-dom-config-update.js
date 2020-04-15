@@ -8,6 +8,7 @@ import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-dashboard";
 import "../../../components/ha-switch";
+import "../../../components/buttons/ha-call-service-button";
 
 /*
  *
