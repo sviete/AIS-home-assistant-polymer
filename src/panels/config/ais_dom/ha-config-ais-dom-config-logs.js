@@ -136,12 +136,11 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   </paper-listbox>
                 </ha-paper-dropdown-menu>
                 <br /><br />
-                Żeby utrzymać system w dobrej kondycji, codziennie dokładnie o
-                północy Asystent sprawdza i (jeżeli trzeba) zmienia plik, do
-                którego są zapisywane logi systemu.
-                <br />
                 W tym miejscu możesz określić rotację plików dziennika - liczbę
                 dni przechowywanych w jednym pliku loga.
+                <br />
+                Codziennie, dokładnie o północy Asystent sprawdza i (jeżeli
+                trzeba) zmienia plik, do którego są zapisywane logi systemu.
                 <paper-input
                   type="number"
                   value="[[logRotating]]"
@@ -149,8 +148,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   maxlength="4"
                   max="9999"
                   min="1"
-                  label-float="Liczba dni loga przechowywanych w jednym pliku"
-                  label="Liczba dni loga przechowywanych w jednym pliku"
+                  label-float="Liczba dni przechowywanych w jednym pliku loga"
+                  label="Liczba dni przechowywanych w jednym pliku loga"
                 >
                   <iron-icon icon="mdi:calendar" slot="suffix"></iron-icon>
                 </paper-input>
@@ -256,8 +255,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   maxlength="4"
                   max="9999"
                   min="1"
-                  label-float="Liczba dni przechowywanych w historii"
-                  label="Liczba dni przechowywanych w historii"
+                  label-float="Liczba dni przechowywanych w bazie"
+                  label="Liczba dni przechowywanych w bazie"
                 >
                   <iron-icon icon="mdi:calendar" slot="suffix"></iron-icon>
                 </paper-input>
@@ -413,8 +412,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     super.ready();
     this.hass.callService("ais_files", "get_db_log_settings_info");
     this._computeLogsSettings(this.hass);
-    this.dbKeepDays = 10;
-    this.logRotating = 10;
+    // this.dbKeepDays = 10;
+    // this.logRotating = 10;
   }
 
   // LOGS
@@ -558,7 +557,6 @@ class HaConfigAisDomControlLogs extends PolymerElement {
 
   _doComputeDbUrl(getFromPage) {
     let dbUrl = "";
-    console.log("_doComputeDbUrl");
     if (this.dbEngine === "-") {
       this.dbConectionDisplayStyle = "display: none";
       this.dbFileDisplayStyle = "display: none";
