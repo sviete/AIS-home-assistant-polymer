@@ -86,8 +86,9 @@ class HaConfigAisDomControlLogs extends PolymerElement {
               <div class="card-content">
                 Żeby włączyć logowanie w systemie Asystent domowy, wystarczy
                 wybrać lokalizację na dysku wymiennym, w której będzie
-                zapisywany plik z rejestrem działań w systemie. Dodatkowo można
-                też określić poziom szczegółowości logowania. <br /><br />
+                zapisywany plik z rejestrem działań w systemie. <br />
+                Dodatkowo można też określić poziom szczegółowości logowania i
+                liczbę dni przechowywanych w jednym pliku loga. <br /><br />
                 Wybór dysku do zapisu logów systemu: <br />
                 <paper-icon-button
                   icon="mdi:usb-flash-drive"
@@ -136,11 +137,9 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   </paper-listbox>
                 </ha-paper-dropdown-menu>
                 <br /><br />
-                W tym miejscu możesz określić rotację plików dziennika - liczbę
-                dni przechowywanych w jednym pliku loga.
-                <br />
-                Codziennie, dokładnie o północy Asystent sprawdza i (jeżeli
-                trzeba) zmienia plik, do którego są zapisywane logi systemu.
+                W tym miejscu możesz określić liczbę dni przechowywanych w
+                jednym pliku loga. Rotacja plików dziennika wykonywna jest o
+                północy.
                 <paper-input
                   type="number"
                   value="[[logRotating]]"
@@ -163,8 +162,10 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 [[logModeInfo]]
               </div>
               <div class="card-content">
-                * po zmianie dysku do zapisu logów systemu wymagany jest restart
-                systemu.
+                * Zmiana poziomu logowania wykonywana jest online - po tej
+                zmianie nie trzeba ponownie uruchomieć systemu. Zastosowanie
+                zmiany dysku do zapisu systemu lub zmiany liczby dni
+                przechowywanych w jednym pliku loga wymaga restartu systemu.
               </div>
             </ha-card>
           </ha-config-section>
