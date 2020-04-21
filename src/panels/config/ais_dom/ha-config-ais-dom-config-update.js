@@ -1,5 +1,7 @@
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
+import "@polymer/paper-radio-button/paper-radio-button";
+import "@polymer/paper-radio-group/paper-radio-group";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 
@@ -143,8 +145,20 @@ class HaConfigAisDomControl extends PolymerElement {
                   Nowa kopia ustawień
                   <iron-icon icon="mdi:cloud-upload-outline"></iron-icon>
                 </h2>
-                Przed wykonaniem nowej kopii ustawień sprawdź poprawność
-                konfiguracji
+                <br />
+                <div class="center-container">
+                  Kopia zapasowa ustawień:
+                  <br />
+                  <paper-radio-group selected="all" id="backup_type1">
+                      <paper-radio-button name="all">Wszystkich</paper-radio-button>
+                      <paper-radio-button name="ha">Home Assistant</paper-radio-button>
+                      <paper-radio-button name="zigbee">Zigbee</paper-radio-button>
+                  </paper-radio-group>
+                  <br />
+                  Przed wykonaniem nowej kopii ustawień sprawdź poprawność
+                  konfiguracji
+                </div>
+                <br />
                 <div style="border-bottom: 1px solid white;">
                   <template is="dom-if" if="[[!validateLog]]">
                     <div class="validate-container">
@@ -210,10 +224,9 @@ class HaConfigAisDomControl extends PolymerElement {
                     <table style="margin-top: 40px; margin-bottom: 10px;">
                       <template is="dom-repeat" items="[[aisBackupFullInfo]]">
                         <tr>
-                          <td>[[item.name]]</td>
+                          <td><iron-icon icon="[[item.icon]]"></iron-icon> [[item.name]]</td>
                           <td>[[item.value]]</td>
                           <td>[[item.new_value]]</td>
-                          <td><iron-icon icon="[[item.icon]]"></iron-icon></td>
                         </tr>
                       </template>
                     </table>
@@ -227,6 +240,14 @@ class HaConfigAisDomControl extends PolymerElement {
                             [[restoreError]]
                           </span>
                         </div>
+                        Przywracanie ustawień z kopii:
+                        <br />
+                        <paper-radio-group selected="all" id="backup_type2">
+                            <paper-radio-button name="all">Wszystkich</paper-radio-button>
+                            <paper-radio-button name="ha">Home Assistant</paper-radio-button>
+                            <paper-radio-button name="zigbee">Zigbee</paper-radio-button>
+                        </paper-radio-group>
+                        <br />
                         <paper-input
                           placeholder="hasło"
                           no-label-float=""
@@ -423,10 +444,19 @@ class HaConfigAisDomControl extends PolymerElement {
     if ("file_size" in backupInfoAttr) {
       this.isBackupValid = !!backupInfoAttr.file_name;
       this.aisBackupFullInfo.push({
-        name: "Kopia zapasowa",
+        name: "Home Assistant",
         value: backupInfoAttr.file_name,
         new_value: backupInfoAttr.file_size,
-        icon: "mdi:check",
+        icon: "mdi:home-assistant",
+      });
+    }
+    if ("file_zigbee_size" in backupInfoAttr) {
+      this.isBackupValid = !!backupInfoAttr.file_zigbee_name;
+      this.aisBackupFullInfo.push({
+        name: "Zigbee",
+        value: backupInfoAttr.file_zigbee_name,
+        new_value: backupInfoAttr.file_zigbee_size,
+        icon: "mdi:zigbee",
       });
     }
     return backupInfo.state;
@@ -541,8 +571,11 @@ class HaConfigAisDomControl extends PolymerElement {
       this.validating = true;
       this.validateLog = "";
       var password = this.shadowRoot.getElementById("password1").value;
+      var type = this.shadowRoot.getElementById("backup_type1").selected;
+      console.log(type);
       this.hass.callService("ais_cloud", "do_backup", {
         password: password,
+        type: type,
       });
     }
   }
@@ -551,8 +584,11 @@ class HaConfigAisDomControl extends PolymerElement {
     this.validating = true;
     this.validateLog = "";
     var password = this.shadowRoot.getElementById("password2").value;
+    var type = this.shadowRoot.getElementById("backup_type2").selected;
+    console.log(type);
     this.hass.callService("ais_cloud", "restore_backup", {
       password: password,
+      type: type,
     });
   }
 }
