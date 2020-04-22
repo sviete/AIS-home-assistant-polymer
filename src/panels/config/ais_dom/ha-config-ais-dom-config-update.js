@@ -420,6 +420,16 @@ class HaConfigAisDomControl extends PolymerElement {
         icon: versionInfoAttr.reinstall_linux_apt ? "hass:alert" : "hass:check",
       });
     }
+    if ("zigbee2mqtt_current_version" in versionInfoAttr) {
+      this.aisAutoUpdatFullInfo.push({
+        name: "Zigbee2MQTT",
+        value: versionInfoAttr.zigbee2mqtt_current_version,
+        new_value: versionInfoAttr.zigbee2mqtt_newest_version,
+        icon: versionInfoAttr.reinstall_zigbee2mqtt
+          ? "hass:alert"
+          : "hass:check",
+      });
+    }
 
     return versionInfo.state;
   }
@@ -507,7 +517,8 @@ class HaConfigAisDomControl extends PolymerElement {
     if (
       attr.reinstall_dom_app ||
       attr.reinstall_android_app ||
-      attr.reinstall_linux_apt
+      attr.reinstall_linux_apt ||
+      attr.reinstall_zigbee2mqtt
     ) {
       if (attr.update_status === "outdated") {
         return "Zainstaluj teraz aktualizację";
