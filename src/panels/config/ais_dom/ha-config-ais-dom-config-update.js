@@ -111,11 +111,17 @@ class HaConfigAisDomControl extends PolymerElement {
                         items="[[aisAutoUpdatFullInfo]]"
                       >
                         <tr>
-                          <td>[[item.name]]</td>
+                          <td><iron-icon icon="[[item.name_icon]]"></iron-icon> [[item.name]]</td>
                           <td>[[item.value]]</td>
                           <td>[[item.new_value]]</td>
                           <td><iron-icon icon="[[item.icon]]"></iron-icon></td>
                         </tr>
+                        <template
+                            is="dom-if"
+                            if="[[_isEqualTo(item.name, 'Status')]]"
+                          >
+                            <tr style="height: 1em;"></tr>
+                          </template>
                       </template>
                     </table>
                   </div>
@@ -381,6 +387,7 @@ class HaConfigAisDomControl extends PolymerElement {
     if ("update_check_time" in versionInfoAttr) {
       this.aisAutoUpdatFullInfo.push({
         name: "Sprawdzono o",
+        name_icon: "",
         value: versionInfoAttr.update_check_time,
         icon: "",
       });
@@ -389,14 +396,28 @@ class HaConfigAisDomControl extends PolymerElement {
     if ("update_status" in versionInfoAttr) {
       this.aisAutoUpdatFullInfo.push({
         name: "Status",
+        name_icon: "",
         value: this.getVersionName(versionInfoAttr.update_status),
         icon: this.getVersionIcon(versionInfoAttr.update_status),
       });
     }
 
+    if ("zigbee2mqtt_current_version" in versionInfoAttr) {
+      this.aisAutoUpdatFullInfo.push({
+        name: "Zigbee",
+        name_icon: "mdi:zigbee",
+        value: versionInfoAttr.zigbee2mqtt_current_version,
+        new_value: versionInfoAttr.zigbee2mqtt_newest_version,
+        icon: versionInfoAttr.reinstall_zigbee2mqtt
+          ? "hass:alert"
+          : "hass:check",
+      });
+    }
+
     if ("dom_app_current_version" in versionInfoAttr) {
       this.aisAutoUpdatFullInfo.push({
-        name: "Asystent domowy",
+        name: "Home Assistant",
+        name_icon: "mdi:home-assistant",
         value: versionInfoAttr.dom_app_current_version,
         new_value: versionInfoAttr.dom_app_newest_version,
         icon: versionInfoAttr.reinstall_dom_app ? "hass:alert" : "hass:check",
@@ -405,6 +426,7 @@ class HaConfigAisDomControl extends PolymerElement {
     if ("android_app_current_version" in versionInfoAttr) {
       this.aisAutoUpdatFullInfo.push({
         name: "Android",
+        name_icon: "mdi:android",
         value: versionInfoAttr.android_app_current_version,
         new_value: versionInfoAttr.android_app_newest_version,
         icon: versionInfoAttr.reinstall_android_app
@@ -415,19 +437,10 @@ class HaConfigAisDomControl extends PolymerElement {
     if ("linux_apt_current_version" in versionInfoAttr) {
       this.aisAutoUpdatFullInfo.push({
         name: "Linux",
+        name_icon: "mdi:linux",
         value: versionInfoAttr.linux_apt_current_version,
         new_value: versionInfoAttr.linux_apt_newest_version,
         icon: versionInfoAttr.reinstall_linux_apt ? "hass:alert" : "hass:check",
-      });
-    }
-    if ("zigbee2mqtt_current_version" in versionInfoAttr) {
-      this.aisAutoUpdatFullInfo.push({
-        name: "Zigbee2MQTT",
-        value: versionInfoAttr.zigbee2mqtt_current_version,
-        new_value: versionInfoAttr.zigbee2mqtt_newest_version,
-        icon: versionInfoAttr.reinstall_zigbee2mqtt
-          ? "hass:alert"
-          : "hass:check",
       });
     }
 
