@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html>
   <head>
     <title>Asystent domowy</title>
     <link rel="preload" href="<%= latestPageJS %>" as="script" crossorigin="use-credentials" />

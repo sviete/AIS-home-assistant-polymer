@@ -1,8 +1,8 @@
-import { clearState } from "../util/ha-pref-storage";
 import { askWrite } from "../common/auth/token_storage";
 import { subscribeUser, userCollection } from "../data/ws-user";
-import { HassBaseEl } from "./hass-base-mixin";
 import { Constructor } from "../types";
+import { clearState } from "../util/ha-pref-storage";
+import { HassBaseEl } from "./hass-base-mixin";
 
 declare global {
   // for fire event
@@ -30,7 +30,9 @@ export default <T extends Constructor<HassBaseEl>>(superClass: T) =>
       if (askWrite()) {
         this.updateComplete
           .then(() =>
-            import(/* webpackChunkName: "ha-store-auth-card" */ "../dialogs/ha-store-auth-card")
+            import(
+              /* webpackChunkName: "ha-store-auth-card" */ "../dialogs/ha-store-auth-card"
+            )
           )
           .then(() => {
             const el = document.createElement("ha-store-auth-card");
@@ -47,7 +49,7 @@ export default <T extends Constructor<HassBaseEl>>(superClass: T) =>
         clearState();
         document.location.href = "/";
       } catch (err) {
-        // tslint:disable-next-line
+        // eslint-disable-next-line
         console.error(err);
         alert("Log out failed");
       }

@@ -3,7 +3,7 @@ import { HomeAssistant } from "../types";
 interface ProcessResults {
   card: { [key: string]: { [key: string]: string } };
   speech: {
-    [SpeechType in "plain" | "ssml"]: { extra_data: any; speech: string }
+    [SpeechType in "plain" | "ssml"]: { extra_data: any; speech: string };
   };
 }
 
@@ -15,7 +15,7 @@ export interface AgentInfo {
 export const processText = (
   hass: HomeAssistant,
   text: string,
-  // tslint:disable-next-line: variable-name
+  // eslint-disable-next-line: variable-name
   conversation_id: string
 ): Promise<ProcessResults> =>
   hass.callWS({

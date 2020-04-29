@@ -1,6 +1,6 @@
 import { fireEvent } from "../../../../common/dom/fire_event";
-import { Webhook } from "../../../../data/webhook";
 import { CloudWebhook } from "../../../../data/cloud";
+import { Webhook } from "../../../../data/webhook";
 
 export interface WebhookDialogParams {
   webhook: Webhook;
@@ -15,7 +15,9 @@ export const showManageCloudhookDialog = (
   fireEvent(element, "show-dialog", {
     dialogTag: "dialog-manage-cloudhook",
     dialogImport: () =>
-      import(/* webpackChunkName: "cloud-webhook-manage-dialog" */ "./dialog-manage-cloudhook"),
+      import(
+        /* webpackChunkName: "cloud-webhook-manage-dialog" */ "./dialog-manage-cloudhook"
+      ),
     dialogParams: webhookDialogParams,
   });
 };
