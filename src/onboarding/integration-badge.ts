@@ -23,7 +23,9 @@ class IntegrationBadge extends LitElement {
     return html`
       <div class="icon">
         <img
-          src="https://brands.home-assistant.io/${this.domain}/icon.png"
+          src=${this.domain.startsWith("ais_")
+            ? `https://ai-speaker.com/images/brands/${this.domain}/icon.png`
+            : `https://brands.home-assistant.io/${this.domain}/icon.png`}
           referrerpolicy="no-referrer"
         />
         ${this.badgeIcon

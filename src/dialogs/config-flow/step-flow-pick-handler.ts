@@ -95,7 +95,9 @@ class StepFlowPickHandler extends LitElement {
                 <img
                   slot="item-icon"
                   loading="lazy"
-                  src="https://brands.home-assistant.io/_/${handler.slug}/icon.png"
+                  src=${handler.slug.startsWith("ais_")
+                    ? `https://ai-speaker.com/images/brands/${handler.slug}/icon.png`
+                    : `https://brands.home-assistant.io/_/${handler.slug}/icon.png`}
                   referrerpolicy="no-referrer"
                 />
 

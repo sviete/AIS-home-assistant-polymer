@@ -176,7 +176,9 @@ class HaConfigIntegrations extends SubscribeMixin(LitElement) {
                       <div class="card-content">
                         <div class="image">
                           <img
-                            src="https://brands.home-assistant.io/${item.domain}/logo.png"
+                            src=${item.domain.startsWith("ais_")
+                              ? `https://ai-speaker.com/images/brands/${item.domain}/icon.png`
+                              : `https://brands.home-assistant.io/${item.domain}/logo.png`}
                             referrerpolicy="no-referrer"
                             @error=${this._onImageError}
                             @load=${this._onImageLoad}
@@ -212,7 +214,9 @@ class HaConfigIntegrations extends SubscribeMixin(LitElement) {
                     <div class="card-content">
                       <div class="image">
                         <img
-                          src="https://brands.home-assistant.io/${flow.handler}/logo.png"
+                          src=${flow.handler.startsWith("ais_")
+                            ? `https://ai-speaker.com/images/brands/${flow.handler}/icon.png`
+                            : `https://brands.home-assistant.io/${flow.handler}/logo.png`}
                           referrerpolicy="no-referrer"
                           @error=${this._onImageError}
                           @load=${this._onImageLoad}
@@ -267,7 +271,9 @@ class HaConfigIntegrations extends SubscribeMixin(LitElement) {
                         <div class="card-content">
                           <div class="image">
                             <img
-                              src="https://brands.home-assistant.io/${item.domain}/logo.png"
+                              src=${item.domain.startsWith("ais_")
+                                ? `https://ai-speaker.com/images/brands/${item.domain}/icon.png`
+                                : `https://brands.home-assistant.io/${item.domain}/logo.png`}
                               referrerpolicy="no-referrer"
                               @error=${this._onImageError}
                               @load=${this._onImageLoad}

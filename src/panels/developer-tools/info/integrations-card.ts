@@ -45,7 +45,9 @@ class IntegrationsCard extends LitElement {
                     <td>
                       <img
                         loading="lazy"
-                        src="https://brands.home-assistant.io/_/${domain}/icon.png"
+                        src=${domain.startsWith("ais_")
+                          ? `https://ai-speaker.com/images/brands/${domain}/icon.png`
+                          : `https://brands.home-assistant.io/_/${domain}/icon.png`}
                         referrerpolicy="no-referrer"
                       />
                     </td>
