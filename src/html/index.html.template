@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html>
   <head>
     <link rel="preload" href="<%= latestCoreJS %>" as="script" crossorigin="use-credentials" />
     <link
@@ -68,7 +68,7 @@
     {% for extra_module in extra_modules -%}
     <script type="module" crossorigin="use-credentials" src="{{ extra_module }}"></script>
     {% endfor -%}
-    
+
 
     <script nomodule>
       (function() {

@@ -1,15 +1,15 @@
-import "./account/cloud-account";
-import "./login/cloud-login";
+import { PolymerElement } from "@polymer/polymer";
+import { customElement, property } from "lit-element";
+import { navigate } from "../../../common/navigate";
+import { CloudStatus } from "../../../data/cloud";
 import {
   HassRouterPage,
   RouterOptions,
 } from "../../../layouts/hass-router-page";
-import { property, customElement } from "lit-element";
-import { HomeAssistant, Route } from "../../../types";
-import { navigate } from "../../../common/navigate";
-import { CloudStatus } from "../../../data/cloud";
 import { PolymerChangedEvent } from "../../../polymer-types";
-import { PolymerElement } from "@polymer/polymer";
+import { HomeAssistant, Route } from "../../../types";
+import "./account/cloud-account";
+import "./login/cloud-login";
 
 const LOGGED_IN_URLS = ["account", "google-assistant", "alexa"];
 const NOT_LOGGED_IN_URLS = ["login", "register", "forgot-password"];
@@ -17,9 +17,13 @@ const NOT_LOGGED_IN_URLS = ["login", "register", "forgot-password"];
 @customElement("ha-config-cloud")
 class HaConfigCloud extends HassRouterPage {
   @property() public hass!: HomeAssistant;
+
   @property() public isWide!: boolean;
+
   @property() public narrow!: boolean;
+
   @property() public route!: Route;
+
   @property() public cloudStatus!: CloudStatus;
 
   protected routerOptions: RouterOptions = {
@@ -32,10 +36,8 @@ class HaConfigCloud extends HassRouterPage {
         if (!LOGGED_IN_URLS.includes(page)) {
           return "account";
         }
-      } else {
-        if (!NOT_LOGGED_IN_URLS.includes(page)) {
-          return "login";
-        }
+      } else if (!NOT_LOGGED_IN_URLS.includes(page)) {
+        return "login";
       }
       return undefined;
     },
@@ -46,12 +48,16 @@ class HaConfigCloud extends HassRouterPage {
       register: {
         tag: "cloud-register",
         load: () =>
-          import(/* webpackChunkName: "cloud-register" */ "./register/cloud-register"),
+          import(
+            /* webpackChunkName: "cloud-register" */ "./register/cloud-register"
+          ),
       },
       "forgot-password": {
         tag: "cloud-forgot-password",
         load: () =>
-          import(/* webpackChunkName: "cloud-forgot-password" */ "./forgot-password/cloud-forgot-password"),
+          import(
+            /* webpackChunkName: "cloud-forgot-password" */ "./forgot-password/cloud-forgot-password"
+          ),
       },
       account: {
         tag: "cloud-account",
@@ -59,7 +65,9 @@ class HaConfigCloud extends HassRouterPage {
       "google-assistant": {
         tag: "cloud-google-assistant",
         load: () =>
-          import(/* webpackChunkName: "cloud-google-assistant" */ "./google-assistant/cloud-google-assistant"),
+          import(
+            /* webpackChunkName: "cloud-google-assistant" */ "./google-assistant/cloud-google-assistant"
+          ),
       },
       alexa: {
         tag: "cloud-alexa",
@@ -70,8 +78,11 @@ class HaConfigCloud extends HassRouterPage {
   };
 
   @property() private _flashMessage = "";
+
   @property() private _loginEmail = "";
+
   private _resolveCloudStatusLoaded!: () => void;
+
   private _cloudStatusLoaded = new Promise((resolve) => {
     this._resolveCloudStatusLoaded = resolve;
   });

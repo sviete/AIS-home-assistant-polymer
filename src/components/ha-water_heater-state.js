@@ -1,6 +1,7 @@
 import { html } from "@polymer/polymer/lib/utils/html-tag";
+/* eslint-plugin-disable lit */
 import { PolymerElement } from "@polymer/polymer/polymer-element";
-
+import { computeStateDisplay } from "../common/entity/compute_state_display";
 import LocalizeMixin from "../mixins/localize-mixin";
 
 /*
@@ -32,7 +33,7 @@ class HaWaterHeaterState extends LocalizeMixin(PolymerElement) {
       </style>
 
       <div class="target">
-        <span class="state-label"> [[_localizeState(stateObj.state)]] </span>
+        <span class="state-label"> [[_localizeState(stateObj)]] </span>
         [[computeTarget(hass, stateObj)]]
       </div>
 
@@ -58,21 +59,17 @@ class HaWaterHeaterState extends LocalizeMixin(PolymerElement) {
       stateObj.attributes.target_temp_low != null &&
       stateObj.attributes.target_temp_high != null
     ) {
-      return `${stateObj.attributes.target_temp_low} - ${
-        stateObj.attributes.target_temp_high
-      } ${hass.config.unit_system.temperature}`;
+      return `${stateObj.attributes.target_temp_low} - ${stateObj.attributes.target_temp_high} ${hass.config.unit_system.temperature}`;
     }
     if (stateObj.attributes.temperature != null) {
-      return `${stateObj.attributes.temperature} ${
-        hass.config.unit_system.temperature
-      }`;
+      return `${stateObj.attributes.temperature} ${hass.config.unit_system.temperature}`;
     }
 
     return "";
   }
 
-  _localizeState(state) {
-    return this.localize(`state.water_heater.${state}`) || state;
+  _localizeState(stateObj) {
+    return computeStateDisplay(this.hass.localize, stateObj);
   }
 }
 customElements.define("ha-water_heater-state", HaWaterHeaterState);
