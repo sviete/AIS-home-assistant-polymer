@@ -38,7 +38,12 @@ class HaConfigScript extends HassRouterPage {
   private _computeScripts = memoizeOne((states: HassEntities) => {
     const scripts: HassEntity[] = [];
     Object.values(states).forEach((state) => {
-      if (computeStateDomain(state) === "script" && !state.attributes.hidden) {
+      if (
+        computeStateDomain(state) === "script" &&
+        !state.attributes.hidden &&
+        // hide internal ais dom scripts
+        !state.entity_id.startsWith("script.ais_")
+      ) {
         scripts.push(state);
       }
     });

@@ -8,6 +8,7 @@ import "../../components/ha-card";
 import "../../resources/ha-style";
 import "../config/ha-config-section";
 import "../../components/ha-fab";
+/* eslint-plugin-disable lit */
 
 class HaPanelAisgalery extends PolymerElement {
   static get template() {
@@ -176,7 +177,8 @@ class HaPanelAisgalery extends PolymerElement {
                       icon="hass:delete"
                       on-click="_deleteImage"
                     ></paper-icon-button>
-                    {{currentImage.path}}
+                    {{currentImage.path}}<br />
+                    http://{{currentImage.path}}
                     <span
                       class="duration"
                       hidden$="[[!isVideo(currentImage.extension)]]"
