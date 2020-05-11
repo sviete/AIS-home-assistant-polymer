@@ -185,6 +185,10 @@ export class HaConfigHelpers extends LitElement {
       if (!HELPER_DOMAINS.includes(computeStateDomain(entity))) {
         return false;
       }
+      // hide not editable - internal ais dom helpers
+      if (!entity.attributes.editable) {
+        return false;
+      }
       if (oldHass?.states[entity.entity_id] !== entity) {
         changed = true;
       }

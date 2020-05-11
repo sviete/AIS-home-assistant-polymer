@@ -50,7 +50,7 @@ class HaConfigAutomation extends HassRouterPage {
         (entity) =>
           computeStateDomain(entity) === "automation" &&
           !entity.attributes.hidden &&
-          // hide ais automations
+          // hide internal ais dom automations
           !entity.entity_id.startsWith("automation.ais_")
       ) as AutomationEntity[];
     }
