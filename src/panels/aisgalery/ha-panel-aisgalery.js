@@ -25,6 +25,9 @@ class HaPanelAisgalery extends PolymerElement {
           min-height: 80%;
           position: absolute;
         }
+        figcaption {
+          font-size: small;
+        }
         img,
         video {
           width: 100%;
