@@ -26,7 +26,6 @@ class HaPanelAisgalery extends PolymerElement {
           position: absolute;
         }
         figcaption {
-          text-align: center;
           white-space: nowrap;
         }
         img,
@@ -152,84 +151,97 @@ class HaPanelAisgalery extends PolymerElement {
             on-click="_showHelp"
           ></paper-icon-button>
         </app-toolbar>
-        <has-subpage>
-          <div class="galery_content" id="content">
-            <template is="dom-if" if="[[showImages]]">
-              <div class="image-viewer">
-                <figure>
-                  <img
-                    src="{{currentImage.path}}"
-                    hidden$="[[isVideo(currentImage.extension)]]"
-                  />
-                  <video
-                    controls
-                    src="{{currentImage.path}}#t=0.1"
-                    hidden$="[[!isVideo(currentImage.extension)]]"
-                    on-loadedmetadata="videoLoaded"
-                    on-canplay="startVideo"
-                  ></video>
-                  <figcaption>
+        <div class="galery_content" id="content">
+          <template is="dom-if" if="[[showImages]]">
+            <div class="image-viewer">
+              <figure>
+                <img
+                  src="{{currentImage.path}}"
+                  hidden$="[[isVideo(currentImage.extension)]]"
+                />
+                <video
+                  controls
+                  src="{{currentImage.path}}#t=0.1"
+                  hidden$="[[!isVideo(currentImage.extension)]]"
+                  on-loadedmetadata="videoLoaded"
+                  on-canplay="startVideo"
+                ></video>
+                <figcaption>
+                  <span style="display: block; text-align: right;">
                     <paper-icon-button
                       icon="mdi:image-edit-outline"
                       on-click="_editImage"
+                      title="Edycja"
                     ></paper-icon-button>
                     <paper-icon-button
                       icon="hass:delete"
                       on-click="_deleteImage"
-                    ></paper-icon-button>
-                    {{currentImage.path}}<br />
-                    http://{{currentImage.path}}
-                    <span
-                      class="duration"
-                      hidden$="[[!isVideo(currentImage.extension)]]"
-                    ></span>
-                  </figcaption>
-                </figure>
-                <button class="btn btn-left" on-click="previousImage">
-                  &lt;
-                </button>
-                <button class="btn btn-right" on-click="nextImage">
-                  &gt;
-                </button>
-              </div>
-            </template>
-            <div class="image-menu">
-              <template is="dom-repeat" items="{{images}}">
-                <figure
-                  id="image[[item.index]]"
-                  data-imageIndex="{{item.index}}"
-                  on-click="imageMenuClick"
-                  class$="[[getImageMenuClass(item, currentImgIdx)]]"
-                >
-                  <img
-                    src="{{item.path}}"
-                    hidden$="[[isVideo(item.extension)]]"
-                  />
-                  <video
-                    src="{{item.path}}#t=0.1"
-                    hidden$="[[!isVideo(item.extension)]]"
-                    on-loadedmetadata="videoLoaded"
-                  ></video>
-                  <figcaption>
-                    {{item.date}}
-                    <span
-                      class="duration"
-                      hidden$="[[!isVideo(item.extension)]]"
-                    ></span>
-                  </figcaption>
-                </figure>
-              </template>
+                    ></paper-icon-button
+                    ><br /> </span
+                  ><br />
+                  URLs:<br />
+                  <paper-icon-button
+                    icon="mdi:monitor-dashboard"
+                  ></paper-icon-button>
+                  {{currentImage.path}}<br />
+                  <paper-icon-button
+                    icon="mdi:home-import-outline"
+                  ></paper-icon-button>
+                  http://{{aisLocalIP}}{{currentImage.path}}<br />
+                  <paper-icon-button
+                    icon="mdi:weather-cloudy-arrow-right"
+                  ></paper-icon-button>
+                  {{remoteDomain}}{{currentImage.path}}
+                  <span
+                    class="duration"
+                    hidden$="[[!isVideo(currentImage.extension)]]"
+                  ></span>
+                </figcaption>
+              </figure>
+              <button class="btn btn-left" on-click="previousImage">
+                &lt;
+              </button>
+              <button class="btn btn-right" on-click="nextImage">
+                &gt;
+              </button>
             </div>
+          </template>
+          <div class="image-menu">
+            <template is="dom-repeat" items="{{images}}">
+              <figure
+                id="image[[item.index]]"
+                data-imageIndex="{{item.index}}"
+                on-click="imageMenuClick"
+                class$="[[getImageMenuClass(item, currentImgIdx)]]"
+              >
+                <img
+                  src="{{item.path}}"
+                  hidden$="[[isVideo(item.extension)]]"
+                />
+                <video
+                  src="{{item.path}}#t=0.1"
+                  hidden$="[[!isVideo(item.extension)]]"
+                  on-loadedmetadata="videoLoaded"
+                ></video>
+                <figcaption>
+                  {{item.date}}
+                  <span
+                    class="duration"
+                    hidden$="[[!isVideo(item.extension)]]"
+                  ></span>
+                </figcaption>
+              </figure>
+            </template>
           </div>
-          <ha-fab
-            slot="fab"
-            is-wide$="[[isWide]]"
-            icon="hass:plus"
-            title="[[localize('ui.common.add')]]"
-            on-click="addImage"
-          >
-          </ha-fab>
-        </has-subpage>
+        </div>
+        <ha-fab
+          slot="fab"
+          is-wide$="[[isWide]]"
+          icon="hass:plus"
+          title="[[localize('ui.common.add')]]"
+          on-click="addImage"
+        >
+        </ha-fab>
       </div>
     `;
   }
@@ -241,6 +253,14 @@ class HaPanelAisgalery extends PolymerElement {
       showMenu: {
         type: Boolean,
         value: false,
+      },
+      aisLocalIP: {
+        type: String,
+        computed: "_computeAisLocalIP(hass)",
+      },
+      remoteDomain: {
+        type: String,
+        computed: "_computeRemoteDomain(hass)",
       },
       panel: Object,
       images: {
@@ -282,6 +302,16 @@ class HaPanelAisgalery extends PolymerElement {
       "_blank"
     );
     win.focus();
+  }
+
+  _computeAisLocalIP(hass) {
+    return hass.states["sensor.internal_ip_address"].state;
+  }
+
+  _computeRemoteDomain(hass) {
+    this.aisSecureAndroidId =
+      hass.states["sensor.ais_secure_android_id_dom"].state;
+    return "https://" + this.aisSecureAndroidId + ".paczka.pro";
   }
 
   addImage() {

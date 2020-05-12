@@ -35,12 +35,19 @@ export class HaConfigDeviceDashboard extends LitElement {
       }
     `;
   }
+
   @property() public hass!: HomeAssistant;
+
   @property() public narrow = false;
+
   @property() public devices!: DeviceRegistryEntry[];
+
   @property() public entries!: ConfigEntry[];
+
   @property() public entities!: EntityRegistryEntry[];
+
   @property() public areas!: AreaRegistryEntry[];
+
   @property() public domain!: string;
 
   protected render(): TemplateResult {

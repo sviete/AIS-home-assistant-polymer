@@ -21,12 +21,16 @@ import "../../../components/ha-icon-next";
 
 import "../ha-config-section";
 import "./ha-config-ais-dom-navigation";
+import "../../../layouts/hass-subpage";
 
 @customElement("ha-config-ais-dom-dashboard")
 class HaConfigAisDomDashboard extends LitElement {
   @property() public hass!: HomeAssistant;
+
   @property() public narrow!: boolean;
+
   @property() public isWide!: boolean;
+
   @property() public showAdvanced!: boolean;
 
   protected render(): TemplateResult {
