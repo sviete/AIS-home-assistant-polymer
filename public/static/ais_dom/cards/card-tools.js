@@ -1,67 +1,67 @@
-!(function(e) {
+!(function (e) {
   var t = {};
-  function r(n) {
-    if (t[n]) return t[n].exports;
-    var o = (t[n] = { i: n, l: !1, exports: {} });
-    return e[n].call(o.exports, o, o.exports, r), (o.l = !0), o.exports;
+  function r(o) {
+    if (t[o]) return t[o].exports;
+    var n = (t[o] = { i: o, l: !1, exports: {} });
+    return e[o].call(n.exports, n, n.exports, r), (n.l = !0), n.exports;
   }
   (r.m = e),
     (r.c = t),
-    (r.d = function(e, t, n) {
-      r.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: n });
+    (r.d = function (e, t, o) {
+      r.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: o });
     }),
-    (r.r = function(e) {
+    (r.r = function (e) {
       "undefined" != typeof Symbol &&
         Symbol.toStringTag &&
         Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }),
         Object.defineProperty(e, "__esModule", { value: !0 });
     }),
-    (r.t = function(e, t) {
+    (r.t = function (e, t) {
       if ((1 & t && (e = r(e)), 8 & t)) return e;
       if (4 & t && "object" == typeof e && e && e.__esModule) return e;
-      var n = Object.create(null);
+      var o = Object.create(null);
       if (
-        (r.r(n),
-        Object.defineProperty(n, "default", { enumerable: !0, value: e }),
+        (r.r(o),
+        Object.defineProperty(o, "default", { enumerable: !0, value: e }),
         2 & t && "string" != typeof e)
       )
-        for (var o in e)
+        for (var n in e)
           r.d(
-            n,
             o,
-            function(t) {
+            n,
+            function (t) {
               return e[t];
-            }.bind(null, o)
+            }.bind(null, n)
           );
-      return n;
+      return o;
     }),
-    (r.n = function(e) {
+    (r.n = function (e) {
       var t =
         e && e.__esModule
-          ? function() {
+          ? function () {
               return e.default;
             }
-          : function() {
+          : function () {
               return e;
             };
       return r.d(t, "a", t), t;
     }),
-    (r.o = function(e, t) {
+    (r.o = function (e, t) {
       return Object.prototype.hasOwnProperty.call(e, t);
     }),
     (r.p = ""),
     r((r.s = 4));
 })([
-  function(e, t, r) {
+  function (e, t, r) {
     "use strict";
-    function n() {
+    function o() {
       return document.querySelector("hc-main")
         ? document.querySelector("hc-main").hass
         : document.querySelector("home-assistant")
         ? document.querySelector("home-assistant").hass
         : void 0;
     }
-    function o(e) {
+    function n(e) {
       return document.querySelector("hc-main")
         ? document.querySelector("hc-main").provideHass(e)
         : document.querySelector("home-assistant")
@@ -123,25 +123,25 @@
               e.shadowRoot) && e.querySelector("ha-app-layout #view")) &&
           e.firstElementChild);
     }
-    r.d(t, "a", function() {
-      return n;
+    r.d(t, "a", function () {
+      return o;
     }),
-      r.d(t, "d", function() {
-        return o;
+      r.d(t, "d", function () {
+        return n;
       }),
-      r.d(t, "b", function() {
+      r.d(t, "b", function () {
         return s;
       }),
-      r.d(t, "c", function() {
+      r.d(t, "c", function () {
         return a;
       });
   },
-  function(e, t, r) {
+  function (e, t, r) {
     "use strict";
-    r.d(t, "a", function() {
-      return n;
+    r.d(t, "a", function () {
+      return o;
     });
-    let n = (function() {
+    let o = (function () {
       if (window.fully && "function" == typeof fully.getDeviceId)
         return fully.getDeviceId();
       if (!localStorage["lovelace-player-device-id"]) {
@@ -154,12 +154,12 @@
       return localStorage["lovelace-player-device-id"];
     })();
   },
-  function(module, __webpack_exports__, __webpack_require__) {
+  function (module, __webpack_exports__, __webpack_require__) {
     "use strict";
-    __webpack_require__.d(__webpack_exports__, "a", function() {
+    __webpack_require__.d(__webpack_exports__, "a", function () {
       return hasOldTemplate;
     }),
-      __webpack_require__.d(__webpack_exports__, "b", function() {
+      __webpack_require__.d(__webpack_exports__, "b", function () {
         return parseOldTemplate;
       });
     var _hass_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0),
@@ -186,22 +186,22 @@
           let t = [e.substr(0, e.indexOf("(")).trim()];
           for (e = e.substr(e.indexOf("(") + 1); e; ) {
             let r = 0,
-              n = 0,
-              o = !1;
+              o = 0,
+              n = !1;
             for (; e[r]; ) {
               let t = e[r++];
               if (
-                (t === o && r > 1 && "\\" !== e[r - 2]
-                  ? (o = !1)
-                  : "\"'".includes(t) && (o = t),
-                !o)
+                (t === n && r > 1 && "\\" !== e[r - 2]
+                  ? (n = !1)
+                  : "\"'".includes(t) && (n = t),
+                !n)
               ) {
-                if ("(" === t) n += 1;
+                if ("(" === t) o += 1;
                 else if (")" === t) {
-                  n -= 1;
+                  o -= 1;
                   continue;
                 }
-                if (!(n > 0) && ",)".includes(t)) break;
+                if (!(o > 0) && ",)".includes(t)) break;
               }
             }
             t.push(e.substr(0, r - 1).trim()), (e = e.substr(r));
@@ -265,24 +265,24 @@
     }
     function parseOldTemplate(e, t = {}) {
       if ("string" != typeof e) return e;
-      return (e = e.replace(/\[\[\s(.*?)\s\]\]/g, (e, r, n, o) =>
+      return (e = e.replace(/\[\[\s(.*?)\s\]\]/g, (e, r, o, n) =>
         parseTemplateString(r, t)
       ));
     }
   },
-  function(e) {
+  function (e) {
     e.exports = JSON.parse(
-      '{"name":"card-tools","private":true,"version":"2.1.1","description":"Lovelace Card Tools","scripts":{"build":"webpack","watch":"webpack --watch --mode=development"},"repository":{"type":"git","url":"github.com:thomasloven/card-tools"},"author":"Thomas Lovén","license":"MIT","devDependencies":{"webpack":"^4.41.2","webpack-cli":"^3.3.10"}}'
+      '{"name":"card-tools","private":true,"version":"2.1.2","description":"Lovelace Card Tools","scripts":{"build":"webpack","watch":"webpack --watch --mode=development"},"repository":{"type":"git","url":"github.com:thomasloven/card-tools"},"author":"Thomas Lovén","license":"MIT","devDependencies":{"webpack":"^4.42.0","webpack-cli":"^3.3.11"}}'
     );
   },
-  function(e, t, r) {
+  function (e, t, r) {
     "use strict";
     r.r(t);
-    const n = customElements.get("home-assistant-main")
+    const o = customElements.get("home-assistant-main")
         ? Object.getPrototypeOf(customElements.get("home-assistant-main"))
         : Object.getPrototypeOf(customElements.get("hui-view")),
-      o = n.prototype.html,
-      s = n.prototype.css;
+      n = o.prototype.html,
+      s = o.prototype.css;
     var a = r(0);
     function i(e, t, r = null) {
       if (
@@ -295,63 +295,70 @@
       )
         r.dispatchEvent(e);
       else {
-        var n = Object(a.c)();
-        n && n.dispatchEvent(e);
+        var o = Object(a.c)();
+        o && o.dispatchEvent(e);
       }
     }
-    const c = "custom:";
-    let l = window.cardHelpers;
-    const u = new Promise(async (e, t) => {
-      l && e(),
+    let c = window.cardHelpers;
+    const l = new Promise(async (e, t) => {
+      c && e(),
         window.loadCardHelpers &&
-          ((l = await window.loadCardHelpers()), (window.cardHelpers = l), e());
+          ((c = await window.loadCardHelpers()), (window.cardHelpers = c), e());
     });
-    function d(e, t) {
+    function u(e, t) {
       const r = document.createElement("hui-error-card");
-      return r.setConfig({ type: "error", error: e, origConfig: t }), r;
+      return (
+        r.setConfig({ type: "error", error: e, origConfig: t }),
+        l.then(() => {
+          i("ll-rebuild", {}, r);
+        }),
+        r
+      );
     }
-    function p(e, t) {
+    function d(e, t) {
       if (!t || "object" != typeof t || !t.type)
-        return d(`No ${e} type configured`, t);
+        return u(`No ${e} type configured`, t);
       let r = t.type;
       if (
-        ((r = r.startsWith(c) ? r.substr(c.length) : `hui-${r}-${e}`),
+        ((r = r.startsWith("custom:")
+          ? r.substr("custom:".length)
+          : `hui-${r}-${e}`),
         customElements.get(r))
       )
-        return (function(e, t) {
+        return (function (e, t) {
           let r = document.createElement(e);
           try {
             r.setConfig(JSON.parse(JSON.stringify(t)));
           } catch (e) {
-            r = d(e, t);
+            r = u(e, t);
           }
           return (
-            u.then(() => {
+            l.then(() => {
               i("ll-rebuild", {}, r);
             }),
             r
           );
         })(r, t);
-      const n = d(`Custom element doesn't exist: ${r}.`, t);
-      n.style.display = "None";
-      const o = setTimeout(() => {
-        n.style.display = "";
+      const o = u(`Custom element doesn't exist: ${r}.`, t);
+      o.style.display = "None";
+      const n = setTimeout(() => {
+        o.style.display = "";
       }, 2e3);
       return (
         customElements.whenDefined(r).then(() => {
-          clearTimeout(o), i("ll-rebuild", {}, n);
+          clearTimeout(n), i("ll-rebuild", {}, o);
         }),
-        n
+        o
       );
     }
+    function p(e) {
+      return c ? c.createCardElement(e) : d("card", e);
+    }
     function m(e) {
-      return l ? l.createCardElement(e) : p("card", e);
+      return c ? c.createHuiElement(e) : d("element", e);
     }
     function f(e) {
-      return l ? l.createHuiElement(e) : p("element", e);
-    }
-    function h(e) {
-      if (l) return l.createRowElement(e);
+      if (c) return c.createRowElement(e);
       const t = new Set([
         "call-service",
         "cast",
@@ -361,16 +368,16 @@
         "select",
         "weblink",
       ]);
-      if (!e) return d("Invalid configuration given.", e);
+      if (!e) return u("Invalid configuration given.", e);
       if (
         ("string" == typeof e && (e = { entity: e }),
         "object" != typeof e || (!e.entity && !e.type))
       )
-        return d("Invalid configuration given.", e);
+        return u("Invalid configuration given.", e);
       const r = e.type || "default";
-      return t.has(r) || r.startsWith(c)
-        ? p("row", e)
-        : p("entity-row", {
+      return t.has(r) || r.startsWith("custom:")
+        ? d("row", e)
+        : d("entity-row", {
             type:
               {
                 alert: "toggle",
@@ -399,10 +406,9 @@
             ...e,
           });
     }
-    const _ = 2;
-    class g extends n {
+    class h extends o {
       static get version() {
-        return _;
+        return 2;
       }
       static get properties() {
         return { noHass: { type: Boolean } };
@@ -425,31 +431,31 @@
         return this;
       }
       render() {
-        return o`${this.el}`;
+        return n`${this.el}`;
       }
     }
-    const y = function(e, t) {
+    const _ = function (e, t) {
         const r = Object.getOwnPropertyDescriptors(t.prototype);
-        for (const [t, n] of Object.entries(r))
-          "constructor" !== t && Object.defineProperty(e.prototype, t, n);
-        const n = Object.getOwnPropertyDescriptors(t);
-        for (const [t, r] of Object.entries(n))
+        for (const [t, o] of Object.entries(r))
+          "constructor" !== t && Object.defineProperty(e.prototype, t, o);
+        const o = Object.getOwnPropertyDescriptors(t);
+        for (const [t, r] of Object.entries(o))
           "prototype" !== t && Object.defineProperty(e, t, r);
-        const o = Object.getPrototypeOf(t),
-          s = Object.getOwnPropertyDescriptors(o.prototype);
+        const n = Object.getPrototypeOf(t),
+          s = Object.getOwnPropertyDescriptors(n.prototype);
         for (const [t, r] of Object.entries(s))
           "constructor" !== t &&
             Object.defineProperty(Object.getPrototypeOf(e).prototype, t, r);
-        const a = Object.getOwnPropertyDescriptors(o);
+        const a = Object.getOwnPropertyDescriptors(n);
         for (const [t, r] of Object.entries(a))
           "prototype" !== t &&
             Object.defineProperty(Object.getPrototypeOf(e), t, r);
       },
-      w = customElements.get("card-maker");
-    if (!w || !w.version || w.version < _) {
-      class e extends g {
+      g = customElements.get("card-maker");
+    if (!g || !g.version || g.version < 2) {
+      class e extends h {
         create(e) {
-          return m(e);
+          return p(e);
         }
         getCardSize() {
           return this.firstElementChild && this.firstElementChild.getCardSize
@@ -457,28 +463,28 @@
             : 1;
         }
       }
-      w ? y(w, e) : customElements.define("card-maker", e);
+      g ? _(g, e) : customElements.define("card-maker", e);
     }
-    const b = customElements.get("element-maker");
-    if (!b || !b.version || b.version < _) {
-      class e extends g {
+    const y = customElements.get("element-maker");
+    if (!y || !y.version || y.version < 2) {
+      class e extends h {
+        create(e) {
+          return m(e);
+        }
+      }
+      y ? _(y, e) : customElements.define("element-maker", e);
+    }
+    const w = customElements.get("entity-row-maker");
+    if (!w || !w.version || w.version < 2) {
+      class e extends h {
         create(e) {
           return f(e);
         }
       }
-      b ? y(b, e) : customElements.define("element-maker", e);
+      w ? _(w, e) : customElements.define("entity-row-maker", e);
     }
-    const v = customElements.get("entity-row-maker");
-    if (!v || !v.version || v.version < _) {
-      class e extends g {
-        create(e) {
-          return h(e);
-        }
-      }
-      v ? y(v, e) : customElements.define("entity-row-maker", e);
-    }
-    var O = r(1);
-    function S(e, t = {}) {
+    var b = r(1);
+    function v(e, t = {}) {
       return (
         customElements.whenDefined("long-press").then(() => {
           document.body.querySelector("long-press").bind(e);
@@ -489,22 +495,22 @@
         e
       );
     }
-    function E(e, t = !1) {
+    function O(e, t = !1) {
       const r =
         document.querySelector("hc-main") ||
         document.querySelector("home-assistant");
       i("hass-more-info", { entityId: e }, r);
-      const n = r._moreInfoEl;
-      return (n.large = t), n;
+      const o = r._moreInfoEl;
+      return (o.large = t), o;
     }
-    function C() {
+    function S() {
       const e =
           document.querySelector("hc-main") ||
           document.querySelector("home-assistant"),
         t = e && e._moreInfoEl;
       t && t.close();
     }
-    function j(e, t, r = !1, n = null, o = !1) {
+    function E(e, t, r = !1, o = null, n = !1) {
       const s =
         document.querySelector("hc-main") ||
         document.querySelector("home-assistant");
@@ -515,7 +521,7 @@
       c && (c.style.display = "none");
       const l = document.createElement("div");
       l.innerHTML = `\n  <style>\n    app-toolbar {\n      color: var(--more-info-header-color);\n      background-color: var(--more-info-header-background);\n    }\n    .scrollable {\n      overflow: auto;\n      max-width: 100% !important;\n    }\n  </style>\n  ${
-        o
+        n
           ? ""
           : `\n      <app-toolbar>\n        <paper-icon-button\n          icon="hass:close"\n          dialog-dismiss=""\n        ></paper-icon-button>\n        <div class="main-title" main-title="">\n          ${e}\n        </div>\n      </app-toolbar>\n      `
       }\n    <div class="scrollable">\n      <card-maker nohass>\n      </card-maker>\n    </div>\n  `;
@@ -526,11 +532,11 @@
         (a._page = "none"),
         a.shadowRoot.appendChild(l);
       let d = {};
-      if (n)
-        for (var p in (a.resetFit(), n))
-          (d[p] = a.style[p]), a.style.setProperty(p, n[p]);
+      if (o)
+        for (var p in (a.resetFit(), o))
+          (d[p] = a.style[p]), a.style.setProperty(p, o[p]);
       return (
-        (a._dialogOpenChanged = function(e) {
+        (a._dialogOpenChanged = function (e) {
           if (
             !e &&
             (this.stateObj && this.fire("hass-more-info", { entityId: null }),
@@ -538,7 +544,7 @@
           ) {
             (this._page = null), this.shadowRoot.removeChild(l);
             const e = this.shadowRoot.querySelector("more-info-controls");
-            if ((e && (e.style.display = "inline"), n))
+            if ((e && (e.style.display = "inline"), o))
               for (var t in (a.resetFit(), d))
                 d[t] ? a.style.setProperty(t, d[t]) : a.style.removeProperty(t);
           }
@@ -546,15 +552,15 @@
         a
       );
     }
-    function D(e, t, r) {
+    function C(e, t, r) {
       e || (e = Object(a.a)().connection);
-      let n = {
+      let o = {
           user: Object(a.a)().user.name,
-          browser: O.a,
+          browser: b.a,
           hash: location.hash.substr(1) || " ",
           ...r.variables,
         },
-        o = r.template,
+        n = r.template,
         s = r.entity_ids;
       return e.subscribeMessage(
         (e) => {
@@ -565,26 +571,39 @@
           )),
             t(r);
         },
-        { type: "render_template", template: o, variables: n, entity_ids: s }
+        { type: "render_template", template: n, variables: o, entity_ids: s }
       );
     }
-    var T = r(2);
-    const P = Object(a.a)().callWS({ type: "config/area_registry/list" }),
-      q = Object(a.a)().callWS({ type: "config/device_registry/list" }),
-      R = Object(a.a)().callWS({ type: "config/entity_registry/list" });
-    async function I() {
+    var j = r(2);
+    const D = Object(a.a)().callWS({ type: "config/area_registry/list" }),
+      T = Object(a.a)().callWS({ type: "config/device_registry/list" }),
+      P = Object(a.a)().callWS({ type: "config/entity_registry/list" });
+    async function q() {
       return (
         (window.cardToolsData = window.cardToolsData || {
-          areas: await P,
-          devices: await q,
-          entities: await R,
+          areas: await D,
+          devices: await T,
+          entities: await P,
         }),
         window.cardToolsData
       );
     }
-    function k(e) {
+    function R(e) {
       const t = window.cardToolsData;
       for (const r of t.areas)
+        if (r.name.toLowerCase() === e.toLowerCase()) return r;
+      return null;
+    }
+    function I(e) {
+      const t = window.cardToolsData;
+      let r = [];
+      if (!e) return r;
+      for (const o of t.devices) o.area_id === e.area_id && r.push(o);
+      return r;
+    }
+    function k(e) {
+      const t = window.cardToolsData;
+      for (const r of t.devices)
         if (r.name.toLowerCase() === e.toLowerCase()) return r;
       return null;
     }
@@ -592,53 +611,39 @@
       const t = window.cardToolsData;
       let r = [];
       if (!e) return r;
-      for (const n of t.devices) n.area_id === e.area_id && r.push(n);
+      for (const o of t.entities) o.device_id === e.id && r.push(o.entity_id);
       return r;
     }
-    function $(e) {
-      const t = window.cardToolsData;
-      for (const r of t.devices)
-        if (r.name.toLowerCase() === e.toLowerCase()) return r;
-      return null;
+    function $(e, t) {
+      window._registerCard ||
+        ((window._customCardButtons = []),
+        (window._registerCard = (e, t) => {
+          window._customCardButtons.push({ el: e, name: t });
+        }),
+        customElements.whenDefined("hui-card-picker").then(() => {
+          customElements.get(
+            "hui-card-picker"
+          ).prototype.firstUpdated = function () {
+            (this._customCardButtons = document.createElement("div")),
+              this._customCardButtons.classList.add("cards-container"),
+              (this._customCardButtons.id = "custom"),
+              (this._customCardButtons.style.borderTop =
+                "1px solid var(--primary-color)"),
+              window._customCardButtons.forEach,
+              this.shadowRoot.appendChild(this._customCardButtons),
+              window._customCardButtons.forEach((e) => {
+                const t = document.createElement("mwc-button");
+                (t.type = "custom:" + e.el),
+                  (t.innerHTML = e.name),
+                  t.addEventListener("click", this._cardPicked),
+                  this._customCardButtons.appendChild(t);
+              });
+          };
+        })),
+        window._registerCard(e, t);
     }
-    function L(e) {
-      const t = window.cardToolsData;
-      let r = [];
-      if (!e) return r;
-      for (const n of t.entities) n.device_id === e.id && r.push(n.entity_id);
-      return r;
-    }
-    function M(e, t) {
-      window._registerCard
-        ? window._registerCard(e, t)
-        : ((window._customCardButtons = []),
-          (window._registerCard = (e, t) => {
-            window._customCardButtons.push({ el: e, name: t });
-          }),
-          customElements.whenDefined("hui-card-picker").then(() => {
-            customElements.get(
-              "hui-card-picker"
-            ).prototype.firstUpdated = function() {
-              (this._customCardButtons = document.createElement("div")),
-                this._customCardButtons.classList.add("cards-container"),
-                (this._customCardButtons.id = "custom"),
-                (this._customCardButtons.style.borderTop =
-                  "1px solid var(--primary-color)"),
-                window._customCardButtons.forEach,
-                this.shadowRoot.appendChild(this._customCardButtons),
-                window._customCardButtons.forEach((e) => {
-                  const t = document.createElement("mwc-button");
-                  (t.type = "custom:" + e.el),
-                    (t.innerHTML = e.name),
-                    t.addEventListener("click", this._cardPicked),
-                    this._customCardButtons.appendChild(t);
-                });
-            };
-          }),
-          window._registerCard(e, t));
-    }
-    I();
-    const B = new Promise((e) => {
+    q();
+    const L = new Promise((e) => {
       document.querySelector("home-assistant").addEventListener(
         "show-dialog",
         async (t) => {
@@ -655,12 +660,12 @@
       ),
         Object(a.c)()._addCard();
     });
-    async function N(e) {
-      await B;
+    async function M(e) {
+      await L;
       const t = document.createElement("hui-card-editor");
       return (t.yaml = e), t.value;
     }
-    class A {
+    class B {
       static checkVersion(e) {}
       static args() {}
       static logger() {}
@@ -668,7 +673,7 @@
         return Object(a.a)().localize;
       }
       static get deviceID() {
-        return O.a;
+        return b.a;
       }
       static get fireEvent() {
         return i;
@@ -686,94 +691,98 @@
         return a.d;
       }
       static get LitElement() {
-        return n;
+        return o;
       }
       static get LitHtml() {
-        return o;
+        return n;
       }
       static get LitCSS() {
         return s;
       }
       static get longpress() {
-        return S;
+        return v;
       }
       static get createCard() {
-        return m;
+        return p;
       }
       static get createElement() {
-        return f;
+        return m;
       }
       static get createEntityRow() {
-        return h;
+        return f;
       }
       static get moreInfo() {
-        return E;
+        return O;
       }
       static get popUp() {
-        return j;
+        return E;
       }
       static get closePopUp() {
-        return C;
+        return S;
       }
       static get hasTemplate() {
-        return (e) =>
-          (function(e) {
-            return (
-              !!String(e).includes("{%") || !!String(e).includes("{{") || void 0
-            );
-          })(e) || Object(T.a)(e);
+        return (e) => {
+          return (
+            (t = e),
+            !!String(t).includes("{%") ||
+              !!String(t).includes("{{") ||
+              void 0 ||
+              Object(j.a)(e)
+          );
+          var t;
+        };
       }
       static parseTemplate(e, t, r = {}) {
         return "string" == typeof e
-          ? Object(T.b)(e, t)
-          : (async function(e, t, r = {}) {
-              for (var n in (e || (e = e()),
+          ? Object(j.b)(e, t)
+          : (async function (e, t, r = {}) {
+              for (var o in (e || (e = e()),
               (r = {}),
               (r = Object.assign(
                 {
                   user: e.user.name,
-                  browser: O.a,
+                  browser: b.a,
                   hash: location.hash.substr(1) || " ",
                 },
                 r
               )))) {
-                var o = new RegExp(`\\{${n}\\}`, "g");
-                t = t.replace(o, r[n]);
+                var n = new RegExp(`\\{${o}\\}`, "g");
+                t = t.replace(n, r[o]);
               }
               return e.callApi("POST", "template", { template: t });
             })(e, t, r);
       }
       static get subscribeRenderTemplate() {
-        return D;
+        return C;
       }
       static get getData() {
-        return I;
+        return q;
       }
       static get areaByName() {
-        return k;
+        return R;
       }
       static get areaDevices() {
-        return x;
+        return I;
       }
       static get deviceByName() {
-        return $;
+        return k;
       }
       static get deviceEntities() {
-        return L;
+        return x;
       }
       static get registerCard() {
-        return M;
+        return $;
       }
       static get yaml2json() {
-        return N;
+        return M;
       }
     }
-    const H = r(3);
+    const N = r(3);
     customElements.get("card-tools") ||
-      (customElements.define("card-tools", A),
+      (customElements.define("card-tools", B),
       (window.cardTools = customElements.get("card-tools")),
       console.info(
-        `%cCARD-TOOLS ${H.version} IS INSTALLED\n  %cDeviceID: ${
+        `%cCARD-TOOLS ${N.version} IS INSTALLED\n  %cDeviceID: ${
           customElements.get("card-tools").deviceID
         }`,
         "color: green; font-weight: bold",

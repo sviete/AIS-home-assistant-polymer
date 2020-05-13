@@ -1,4 +1,4 @@
-!(function(e) {
+!(function (e) {
   var t = {};
   function n(o) {
     if (t[o]) return t[o].exports;
@@ -7,16 +7,16 @@
   }
   (n.m = e),
     (n.c = t),
-    (n.d = function(e, t, o) {
+    (n.d = function (e, t, o) {
       n.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: o });
     }),
-    (n.r = function(e) {
+    (n.r = function (e) {
       "undefined" != typeof Symbol &&
         Symbol.toStringTag &&
         Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }),
         Object.defineProperty(e, "__esModule", { value: !0 });
     }),
-    (n.t = function(e, t) {
+    (n.t = function (e, t) {
       if ((1 & t && (e = n(e)), 8 & t)) return e;
       if (4 & t && "object" == typeof e && e && e.__esModule) return e;
       var o = Object.create(null);
@@ -29,36 +29,45 @@
           n.d(
             o,
             i,
-            function(t) {
+            function (t) {
               return e[t];
             }.bind(null, i)
           );
       return o;
     }),
-    (n.n = function(e) {
+    (n.n = function (e) {
       var t =
         e && e.__esModule
-          ? function() {
+          ? function () {
               return e.default;
             }
-          : function() {
+          : function () {
               return e;
             };
       return n.d(t, "a", t), t;
     }),
-    (n.o = function(e, t) {
+    (n.o = function (e, t) {
       return Object.prototype.hasOwnProperty.call(e, t);
     }),
     (n.p = ""),
-    n((n.s = 0));
+    n((n.s = 1));
 })([
-  function(e, t, n) {
+  function (e) {
+    e.exports = JSON.parse(
+      '{"name":"card-mod","private":true,"version":"1.1.0","description":"","scripts":{"build":"webpack","watch":"webpack --watch --mode=development","update-card-tools":"npm uninstall card-tools && npm install thomasloven/lovelace-card-tools"},"keywords":[],"author":"Thomas Lovén","license":"MIT","devDependencies":{"webpack":"^4.43.0","webpack-cli":"^3.3.11"},"dependencies":{"card-tools":"github:thomasloven/lovelace-card-tools"}}'
+    );
+  },
+  function (e, t, n) {
     "use strict";
     function o() {
-      return document.querySelector("home-assistant").hass;
+      return document.querySelector("hc-main")
+        ? document.querySelector("hc-main").hass
+        : document.querySelector("home-assistant")
+        ? document.querySelector("home-assistant").hass
+        : void 0;
     }
     n.r(t);
-    let i = (function() {
+    let i = (function () {
       if (window.fully && "function" == typeof fully.getDeviceId)
         return fully.getDeviceId();
       if (!localStorage["lovelace-player-device-id"]) {
@@ -81,7 +90,7 @@
         return !!e.template.includes("{%") || !!e.template.includes("{{");
       }
       set template(e) {
-        (this._data = e),
+        (this._data = JSON.parse(JSON.stringify(e))),
           this._has_template(e) &&
             !this._data.entity_ids &&
             this._data.template.includes("config.entity") &&
@@ -97,7 +106,7 @@
           (this._has_template(this._data) ||
             (this.innerHTML = `<style>${this._data.template}</style>`),
           this._unsubRenderTemplate ||
-            ((this._unsubRenderTemplate = (function(e, t, n) {
+            ((this._unsubRenderTemplate = (function (e, t, n) {
               e || (e = o().connection);
               let s = {
                   user: o().user.name,
@@ -107,12 +116,22 @@
                 },
                 r = n.template,
                 a = n.entity_ids;
-              return e.subscribeMessage((e) => t(e.result), {
-                type: "render_template",
-                template: r,
-                variables: s,
-                entity_ids: a,
-              });
+              return e.subscribeMessage(
+                (e) => {
+                  let n = e.result;
+                  (n = n.replace(
+                    /_\([^)]*\)/g,
+                    (e) => o().localize(e.substring(2, e.length - 1)) || e
+                  )),
+                    t(n);
+                },
+                {
+                  type: "render_template",
+                  template: r,
+                  variables: s,
+                  entity_ids: a,
+                }
+              );
             })(
               null,
               (e) => (this.innerHTML = `<style>${e}</style>`),
@@ -133,6 +152,15 @@
           }
       }
     }
+    if (!customElements.get("card-mod")) {
+      customElements.define("card-mod", s);
+      const e = n(0);
+      console.info(
+        `%cCARD-MOD ${e.version} IS INSTALLED`,
+        "color: green; font-weight: bold",
+        ""
+      );
+    }
     function r(e, t, n = null) {
       if (
         (((e = new Event(e, {
@@ -144,33 +172,44 @@
       )
         n.dispatchEvent(e);
       else {
-        var o = document.querySelector("home-assistant");
-        (o =
-          (o =
-            (o =
-              (o =
-                (o =
-                  (o =
-                    (o =
-                      ((o =
-                        (o =
-                          (o =
-                            (o = o && o.shadowRoot) &&
-                            o.querySelector("home-assistant-main")) &&
-                          o.shadowRoot) &&
-                        o.querySelector(
-                          "app-drawer-layout partial-panel-resolver"
-                        )) &&
-                        o.shadowRoot) ||
-                      o) && o.querySelector("ha-panel-lovelace")) &&
-                  o.shadowRoot) && o.querySelector("hui-root")) &&
-              o.shadowRoot) && o.querySelector("ha-app-layout #view")) &&
-          o.firstElementChild) && o.dispatchEvent(e);
+        var o = (function () {
+          var e = document.querySelector("hc-main");
+          return (e = e
+            ? ((e =
+                (e =
+                  (e = e && e.shadowRoot) && e.querySelector("hc-lovelace")) &&
+                e.shadowRoot) &&
+                e.querySelector("hui-view")) ||
+              e.querySelector("hui-panel-view")
+            : (e =
+                (e =
+                  (e =
+                    (e =
+                      (e =
+                        (e =
+                          ((e =
+                            (e =
+                              (e =
+                                (e =
+                                  (e = document.querySelector(
+                                    "home-assistant"
+                                  )) && e.shadowRoot) &&
+                                e.querySelector("home-assistant-main")) &&
+                              e.shadowRoot) &&
+                            e.querySelector(
+                              "app-drawer-layout partial-panel-resolver"
+                            )) &&
+                            e.shadowRoot) ||
+                          e) && e.querySelector("ha-panel-lovelace")) &&
+                      e.shadowRoot) && e.querySelector("hui-root")) &&
+                  e.shadowRoot) && e.querySelector("ha-app-layout #view")) &&
+              e.firstElementChild);
+        })();
+        o && o.dispatchEvent(e);
       }
     }
-    customElements.define("card-mod", s);
-    const a = async function(e, t, n, o) {
-      const i = function(e) {
+    const a = async function (e, t, n, o) {
+      const i = function (e) {
         o &&
           ("string" == typeof e
             ? console.log(" ".repeat(2 * (o - 1)) + e)
@@ -194,24 +233,24 @@
         } else
           Object.keys(t).forEach((s) =>
             "." === s
-              ? (i(`Stepping into root of ${e.tagName}`),
+              ? (i("Stepping into root of " + e.tagName),
                 a(e, t[s], n, o ? o + 1 : 0))
               : "$" === s
-              ? (i(`Stepping into ShadowRoot of ${e.tagName}`),
+              ? (i("Stepping into ShadowRoot of " + e.tagName),
                 a(e.shadowRoot, t[s], n, o ? o + 1 : 0))
               : (i(
                   `Searching for: "${s}". ${
                     e.querySelectorAll(s).length
                   } matches.`
                 ),
-                void e.querySelectorAll(`${s}`).forEach((e) => {
-                  i(`Stepping into ${e.tagName}`), a(e, t[s], n, o ? o + 1 : 0);
+                void e.querySelectorAll("" + s).forEach((e) => {
+                  i("Stepping into " + e.tagName), a(e, t[s], n, o ? o + 1 : 0);
                 }))
           );
     };
     customElements.whenDefined("ha-card").then(() => {
       const e = customElements.get("ha-card"),
-        t = function(e) {
+        t = function (e) {
           return e.config
             ? e.config
             : e._config
@@ -224,7 +263,7 @@
             ? t(e.parentNode)
             : null;
         };
-      (e.prototype.firstUpdated = function() {
+      (e.prototype.firstUpdated = function () {
         const e = this.shadowRoot.querySelector(".card-header");
         e && this.insertBefore(e, this.children[0]);
         const n = t(this);
@@ -245,7 +284,7 @@
       customElements.whenDefined("hui-entities-card").then(() => {
         const e = customElements.get("hui-entities-card"),
           t = e.prototype.renderEntity;
-        (e.prototype.renderEntity = function(e) {
+        (e.prototype.renderEntity = function (e) {
           const n = t.bind(this)(e);
           if (!e || !e.style) return n;
           if (!n || !n.values) return n;
@@ -272,7 +311,7 @@
       customElements.whenDefined("hui-glance-card").then(() => {
         (customElements.get(
           "hui-glance-card"
-        ).prototype.firstUpdated = function() {
+        ).prototype.firstUpdated = function () {
           this.shadowRoot
             .querySelectorAll("ha-card div.entity")
             .forEach((e) => {
@@ -301,7 +340,7 @@
       customElements.whenDefined("hui-state-label-badge").then(() => {
         (customElements.get(
           "hui-state-label-badge"
-        ).prototype.firstUpdated = function() {
+        ).prototype.firstUpdated = function () {
           const e = this._config;
           if (!e || !e.style) return;
           let t = e.entity_ids;
@@ -322,13 +361,44 @@
         : Object.getPrototypeOf(customElements.get("hui-view")),
       c = l.prototype.html;
     l.prototype.css;
-    function d(e, t) {
+    let d = window.cardHelpers;
+    const u = new Promise(async (e, t) => {
+      d && e();
+      const n = async () => {
+        (d = await window.loadCardHelpers()), (window.cardHelpers = d), e();
+      };
+      window.loadCardHelpers
+        ? n()
+        : window.addEventListener("load", async () => {
+            !(function () {
+              if (customElements.get("hui-view")) return !0;
+              const e = document.createElement("partial-panel-resolver");
+              if (((e.hass = o()), !e.hass || !e.hass.panels)) return !1;
+              (e.route = { path: "/lovelace/" }), e._updateRoutes();
+              try {
+                document.querySelector("home-assistant").appendChild(e);
+              } catch (e) {
+              } finally {
+                document.querySelector("home-assistant").removeChild(e);
+              }
+              customElements.get("hui-view");
+            })(),
+              window.loadCardHelpers && n();
+          });
+    });
+    function h(e, t) {
       const n = document.createElement("hui-error-card");
-      return n.setConfig({ type: "error", error: e, origConfig: t }), n;
+      return (
+        n.setConfig({ type: "error", error: e, origConfig: t }),
+        u.then(() => {
+          r("ll-rebuild", {}, n);
+        }),
+        n
+      );
     }
-    function u(e, t) {
+    function p(e, t) {
       if (!t || "object" != typeof t || !t.type)
-        return d(`No ${e} type configured`, t);
+        return h(`No ${e} type configured`, t);
       let n = t.type;
       if (
         ((n = n.startsWith("custom:")
@@ -336,16 +406,21 @@
           : `hui-${n}-${e}`),
         customElements.get(n))
       )
-        return (function(e, t) {
-          const n = document.createElement(e);
+        return (function (e, t) {
+          let n = document.createElement(e);
           try {
-            n.setConfig(t);
+            n.setConfig(JSON.parse(JSON.stringify(t)));
           } catch (e) {
-            return d(e, t);
+            n = h(e, t);
           }
-          return n;
+          return (
+            u.then(() => {
+              r("ll-rebuild", {}, n);
+            }),
+            n
+          );
         })(n, t);
-      const o = d(`Custom element doesn't exist: ${n}.`, t);
+      const o = h(`Custom element doesn't exist: ${n}.`, t);
       o.style.display = "None";
       const i = setTimeout(() => {
         o.style.display = "";
@@ -357,7 +432,7 @@
         o
       );
     }
-    const h = "\nha-card {\n  background: none;\n  box-shadow: none;\n}";
+    const m = "\nha-card {\n  background: none;\n  box-shadow: none;\n}";
     customElements.define(
       "mod-card",
       class extends l {
@@ -365,16 +440,16 @@
           return { hass: {} };
         }
         setConfig(e) {
-          (this._config = e),
+          (this._config = JSON.parse(JSON.stringify(e))),
             void 0 === e.style
-              ? (this._config.style = h)
+              ? (this._config.style = m)
               : "string" == typeof e.style
-              ? (this._config.style = h + e.style)
+              ? (this._config.style = m + e.style)
               : e.style["."]
-              ? (this._config.style["."] = h + e.style["."])
-              : (this._config.style["."] = h),
-            (this.card = (function(e) {
-              return u("card", e);
+              ? (this._config.style["."] = m + e.style["."])
+              : (this._config.style["."] = m),
+            (this.card = (function (e) {
+              return d ? d.createCardElement(e) : p("card", e);
             })(this._config.card)),
             (this.card.hass = o());
         }

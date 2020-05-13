@@ -55,11 +55,7 @@ export const loadLovelaceResources = (
       JS_CACHE[normalizedUrl] = loadJS(normalizedUrl);
     }
   });
-  const aisModules = [
-    "/static/ais_dom/cards/compact-custom-header.js",
-    "/static/ais_dom/cards/markdown-mod.js",
-    "/static/ais_dom/cards/card-mod.js",
-  ];
+  const aisModules = ["/static/ais_dom/cards/card-mod.js"];
   aisModules.forEach((resource) => {
     loadModule(new URL(resource, hassUrl).toString());
   });
