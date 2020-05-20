@@ -4,8 +4,9 @@ import {
   property,
   PropertyValues,
   TemplateResult,
+  CSSResult,
+  css,
 } from "lit-element";
-// This one is for types
 import { classMap } from "lit-html/directives/class-map";
 import { applyThemesOnElement } from "../../../common/dom/apply_themes_on_element";
 import { computeRTL } from "../../../common/util/compute_rtl";
@@ -23,6 +24,9 @@ import { createBadgeElement } from "../create-element/create-badge-element";
 import { createCardElement } from "../create-element/create-card-element";
 import { showEditCardDialog } from "../editor/card-editor/show-edit-card-dialog";
 import { Lovelace, LovelaceBadge, LovelaceCard } from "../types";
+import "../../../components/ha-svg-icon";
+import { mdiPlus } from "@mdi/js";
+import { nextRender } from "../../../common/util/render-status";
 
 let editCodeLoaded = false;
 
@@ -57,6 +61,13 @@ export class HUIView extends LitElement {
 
   @property() private _badges: LovelaceBadge[] = [];
 
+  private _createColumnsIteration = 0;
+
+  public constructor() {
+    super();
+    this.addEventListener("iron-resize", (ev) => ev.stopPropagation());
+  }
+
   // Public to make demo happy
   public createCardElement(cardConfig: LovelaceCardConfig) {
     const element = createCardElement(cardConfig) as LovelaceCard;
@@ -90,13 +101,11 @@ export class HUIView extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      ${this.renderStyles()}
       <div id="badges"></div>
       <div id="columns"></div>
       ${this.lovelace!.editMode
         ? html`
-            <ha-fab
-              icon="hass:plus"
+            <mwc-fab
               title="${this.hass!.localize(
                 "ui.panel.lovelace.editor.edit_card.add"
               )}"
@@ -104,85 +113,11 @@ export class HUIView extends LitElement {
               class="${classMap({
                 rtl: computeRTL(this.hass!),
               })}"
-            ></ha-fab>
+            >
+              <ha-svg-icon slot="icon" path=${mdiPlus}></ha-svg-icon>
+            </mwc-fab>
           `
         : ""}
-    `;
-  }
-
-  protected renderStyles(): TemplateResult {
-    return html`
-      <style>
-        :host {
-          display: block;
-          box-sizing: border-box;
-          padding: 4px 4px 0;
-          transform: translateZ(0);
-          position: relative;
-          color: var(--primary-text-color);
-          background: var(
-            --lovelace-background,
-            var(--primary-background-color)
-          );
-        }
-
-        #badges {
-          margin: 8px 16px;
-          font-size: 85%;
-          text-align: center;
-        }
-
-        #columns {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-        }
-
-        .column {
-          flex: 1 0 0;
-          max-width: 500px;
-          min-width: 0;
-          /* on iOS devices the column can become wider when toggling a switch */
-          overflow-x: hidden;
-        }
-
-        .column > * {
-          display: block;
-          margin: 4px 4px 8px;
-        }
-
-        ha-fab {
-          position: sticky;
-          float: right;
-          bottom: 16px;
-          right: 16px;
-          z-index: 1;
-        }
-
-        ha-fab.rtl {
-          float: left;
-          right: auto;
-          left: 16px;
-        }
-
-        @media (max-width: 500px) {
-          :host {
-            padding-left: 0;
-            padding-right: 0;
-          }
-
-          .column > * {
-            margin-left: 0;
-            margin-right: 0;
-          }
-        }
-
-        @media (max-width: 599px) {
-          .column {
-            max-width: 600px;
-          }
-        }
-      </style>
     `;
   }
 
@@ -198,6 +133,7 @@ export class HUIView extends LitElement {
     }
 
     const hassChanged = changedProperties.has("hass");
+
     let editModeChanged = false;
     let configChanged = false;
 
@@ -206,7 +142,7 @@ export class HUIView extends LitElement {
     } else if (changedProperties.has("lovelace")) {
       const oldLovelace = changedProperties.get("lovelace") as Lovelace;
       editModeChanged =
-        !oldLovelace || lovelace.editMode !== oldLovelace.editMode;
+        oldLovelace && lovelace.editMode !== oldLovelace.editMode;
       configChanged = !oldLovelace || lovelace.config !== oldLovelace.config;
     }
 
@@ -218,9 +154,13 @@ export class HUIView extends LitElement {
       });
     }
 
-    if (configChanged || editModeChanged || changedProperties.has("columns")) {
+    if (configChanged) {
       this._createCards(lovelace.config.views[this.index!]);
-    } else if (hassChanged) {
+    } else if (editModeChanged || changedProperties.has("columns")) {
+      this._createColumns();
+    }
+
+    if (hassChanged && !configChanged) {
       this._cards.forEach((element) => {
         element.hass = this.hass;
       });
@@ -277,64 +217,86 @@ export class HUIView extends LitElement {
     root.style.display = elements.length > 0 ? "block" : "none";
   }
 
-  private _createCards(config: LovelaceViewConfig): void {
+  private _createColumns() {
+    this._createColumnsIteration++;
+    const iteration = this._createColumnsIteration;
     const root = this.shadowRoot!.getElementById("columns")!;
 
     while (root.lastChild) {
       root.removeChild(root.lastChild);
     }
 
-    if (!config || !config.cards || !Array.isArray(config.cards)) {
-      this._cards = [];
-      return;
-    }
-
-    const elements: LovelaceCard[] = [];
-    const elementsToAppend: HTMLElement[] = [];
-    config.cards.forEach((cardConfig, cardIndex) => {
-      const element = this.createCardElement(cardConfig);
-      elements.push(element);
-
-      if (!this.lovelace!.editMode) {
-        elementsToAppend.push(element);
-        return;
-      }
-
-      const wrapper = document.createElement("hui-card-options");
-      wrapper.hass = this.hass;
-      wrapper.lovelace = this.lovelace;
-      wrapper.path = [this.index!, cardIndex];
-      element.editMode = true;
-      wrapper.appendChild(element);
-      elementsToAppend.push(wrapper);
-    });
-
-    let columns: HTMLElement[][] = [];
+    let columns: [number, number][][] = [];
     const columnEntityCount: number[] = [];
     for (let i = 0; i < this.columns!; i++) {
       columns.push([]);
       columnEntityCount.push(0);
     }
 
-    elements.forEach((el, index) => {
-      const cardSize = computeCardSize(el);
-      // Element to append might be the wrapped card when we're editing.
-      columns[getColumnIndex(columnEntityCount, cardSize)].push(
-        elementsToAppend[index]
+    this._cards.forEach((el, index) => {
+      const cardSize = computeCardSize(
+        (el.tagName === "HUI-CARD-OPTIONS" ? el.firstChild : el) as LovelaceCard
       );
+      columns[getColumnIndex(columnEntityCount, cardSize)].push([
+        index,
+        cardSize,
+      ]);
     });
 
     // Remove empty columns
     columns = columns.filter((val) => val.length > 0);
 
-    columns.forEach((column) => {
+    columns.forEach((indexes) => {
       const columnEl = document.createElement("div");
       columnEl.classList.add("column");
-      column.forEach((el) => columnEl.appendChild(el));
+      this._addToColumn(columnEl, indexes, this.lovelace!.editMode, iteration);
       root.appendChild(columnEl);
+    });
+  }
+
+  private async _addToColumn(columnEl, indexes, editMode, iteration) {
+    let i = 0;
+    for (const [index, cardSize] of indexes) {
+      const card: LovelaceCard = this._cards[index];
+      if (!editMode) {
+        card.editMode = false;
+        columnEl.appendChild(card);
+      } else {
+        const wrapper = document.createElement("hui-card-options");
+        wrapper.hass = this.hass;
+        wrapper.lovelace = this.lovelace;
+        wrapper.path = [this.index!, index];
+        card.editMode = true;
+        wrapper.appendChild(card);
+        columnEl.appendChild(wrapper);
+      }
+      i += cardSize;
+      if (i > 5) {
+        // eslint-disable-next-line no-await-in-loop
+        await nextRender();
+        if (iteration !== this._createColumnsIteration) {
+          return;
+        }
+        i = 0;
+      }
+    }
+  }
+
+  private _createCards(config: LovelaceViewConfig): void {
+    if (!config || !config.cards || !Array.isArray(config.cards)) {
+      this._cards = [];
+      return;
+    }
+
+    const elements: LovelaceCard[] = [];
+    config.cards.forEach((cardConfig) => {
+      const element = this.createCardElement(cardConfig);
+      elements.push(element);
     });
 
     this._cards = elements;
+
+    this._createColumns();
   }
 
   private _rebuildCard(
@@ -342,7 +304,9 @@ export class HUIView extends LitElement {
     config: LovelaceCardConfig
   ): void {
     const newCardEl = this.createCardElement(config);
-    cardElToReplace.parentElement!.replaceChild(newCardEl, cardElToReplace);
+    if (cardElToReplace.parentElement) {
+      cardElToReplace.parentElement!.replaceChild(newCardEl, cardElToReplace);
+    }
     this._cards = this._cards!.map((curCardEl) =>
       curCardEl === cardElToReplace ? newCardEl : curCardEl
     );
@@ -357,6 +321,77 @@ export class HUIView extends LitElement {
     this._badges = this._cards!.map((curBadgeEl) =>
       curBadgeEl === badgeElToReplace ? newBadgeEl : curBadgeEl
     );
+  }
+
+  static get styles(): CSSResult {
+    return css`
+      :host {
+        display: block;
+        box-sizing: border-box;
+        padding: 4px 4px 0;
+        transform: translateZ(0);
+        position: relative;
+        color: var(--primary-text-color);
+        background: var(--lovelace-background, var(--primary-background-color));
+      }
+
+      #badges {
+        margin: 8px 16px;
+        font-size: 85%;
+        text-align: center;
+      }
+
+      #columns {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      .column {
+        flex: 1 0 0;
+        max-width: 500px;
+        min-width: 0;
+        /* on iOS devices the column can become wider when toggling a switch */
+        overflow-x: hidden;
+      }
+
+      .column > * {
+        display: block;
+        margin: 4px 4px 8px;
+      }
+
+      mwc-fab {
+        position: sticky;
+        float: right;
+        bottom: 16px;
+        right: 16px;
+        z-index: 1;
+      }
+
+      mwc-fab.rtl {
+        float: left;
+        right: auto;
+        left: 16px;
+      }
+
+      @media (max-width: 500px) {
+        :host {
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        .column > * {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+
+      @media (max-width: 599px) {
+        .column {
+          max-width: 600px;
+        }
+      }
+    `;
   }
 }
 

@@ -1,19 +1,11 @@
 const webpack = require("webpack");
-const fs = require("fs");
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
-const WorkboxPlugin = require("workbox-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
+const WorkerPlugin = require("worker-plugin");
 const paths = require("./paths.js");
+const env = require("./env.js");
 const { babelLoaderConfig } = require("./babel.js");
-
-let version = fs
-  .readFileSync(path.resolve(paths.polymer_dir, "setup.py"), "utf8")
-  .match(/\d{8}\.\d+/);
-if (!version) {
-  throw Error("Version not found");
-}
-version = version[0];
 
 const createWebpackConfig = ({
   entry,
@@ -29,7 +21,9 @@ const createWebpackConfig = ({
   }
   return {
     mode: isProdBuild ? "production" : "development",
-    devtool: isProdBuild ? "source-map" : "inline-cheap-module-source-map",
+    devtool: isProdBuild
+      ? "cheap-module-source-map"
+      : "eval-cheap-module-source-map",
     entry,
     module: {
       rules: [
@@ -38,16 +32,10 @@ const createWebpackConfig = ({
           test: /\.css$/,
           use: "raw-loader",
         },
-        {
-          test: /\.(html)$/,
-          use: {
-            loader: "html-loader",
-            options: {
-              exportAsEs6Default: true,
-            },
-          },
-        },
       ],
+    },
+    externals: {
+      esprima: "esprima",
     },
     optimization: {
       minimizer: [
@@ -64,11 +52,12 @@ const createWebpackConfig = ({
       ],
     },
     plugins: [
+      new WorkerPlugin(),
       new ManifestPlugin(),
       new webpack.DefinePlugin({
         __DEV__: !isProdBuild,
         __BUILD__: JSON.stringify(latestBuild ? "latest" : "es5"),
-        __VERSION__: JSON.stringify(version),
+        __VERSION__: JSON.stringify(env.version()),
         __DEMO__: false,
         __BACKWARDS_COMPAT__: false,
         __STATIC_PATH__: "/static/",
@@ -89,6 +78,10 @@ const createWebpackConfig = ({
         /@polymer\/font-roboto\/roboto\.js$/,
         path.resolve(paths.polymer_dir, "src/util/empty.js")
       ),
+      new webpack.NormalModuleReplacementPlugin(
+        /@vaadin\/vaadin-material-styles\/font-roboto\.js$/,
+        path.resolve(paths.polymer_dir, "src/util/empty.js")
+      ),
       // Ignore mwc icons pointing at CDN.
       new webpack.NormalModuleReplacementPlugin(
         /@material\/mwc-icon\/mwc-icon-font\.js$/,
@@ -97,14 +90,6 @@ const createWebpackConfig = ({
     ].filter(Boolean),
     resolve: {
       extensions: [".ts", ".js", ".json"],
-      alias: {
-        react: "preact-compat",
-        "react-dom": "preact-compat",
-        // Not necessary unless you consume a module using `createClass`
-        "create-react-class": "preact-compat/lib/create-react-class",
-        // Not necessary unless you consume a module requiring `react-dom-factories`
-        "react-dom-factories": "preact-compat/lib/react-dom-factories",
-      },
     },
     output: {
       filename: ({ chunk }) => {
@@ -122,70 +107,28 @@ const createWebpackConfig = ({
         latestBuild ? "frontend_latest" : "frontend_es5"
       ),
       publicPath: latestBuild ? "/frontend_latest/" : "/frontend_es5/",
-      // For workerize loader
+      // To silence warning in worker plugin
       globalObject: "self",
     },
   };
 };
 
 const createAppConfig = ({ isProdBuild, latestBuild, isStatsBuild }) => {
-  const config = createWebpackConfig({
+  return createWebpackConfig({
     entry: {
+      service_worker: "./src/entrypoints/service_worker.ts",
       app: "./src/entrypoints/app.ts",
       authorize: "./src/entrypoints/authorize.ts",
       onboarding: "./src/entrypoints/onboarding.ts",
       core: "./src/entrypoints/core.ts",
       compatibility: "./src/entrypoints/compatibility.ts",
       "custom-panel": "./src/entrypoints/custom-panel.ts",
-      "hass-icons": "./src/entrypoints/hass-icons.ts",
     },
     outputRoot: paths.root,
     isProdBuild,
     latestBuild,
     isStatsBuild,
   });
-
-  if (latestBuild) {
-    // Create an object mapping browser urls to their paths during build
-    const translationMetadata = require("../build-translations/translationMetadata.json");
-    const workBoxTranslationsTemplatedURLs = {};
-    const englishFilename = `en-${translationMetadata.translations.en.hash}.json`;
-
-    // core
-    workBoxTranslationsTemplatedURLs[
-      `/static/translations/${englishFilename}`
-    ] = `build-translations/output/${englishFilename}`;
-
-    translationMetadata.fragments.forEach((fragment) => {
-      workBoxTranslationsTemplatedURLs[
-        `/static/translations/${fragment}/${englishFilename}`
-      ] = `build-translations/output/${fragment}/${englishFilename}`;
-    });
-
-    config.plugins.push(
-      new WorkboxPlugin.InjectManifest({
-        swSrc: "./src/entrypoints/service-worker-hass.js",
-        swDest: "service_worker.js",
-        importWorkboxFrom: "local",
-        include: [/\.js$/],
-        templatedURLs: {
-          ...workBoxTranslationsTemplatedURLs,
-          "/static/icons/favicon-192x192.png":
-            "public/icons/favicon-192x192.png",
-          "/static/fonts/roboto/Roboto-Light.woff2":
-            "node_modules/roboto-fontface/fonts/roboto/Roboto-Light.woff2",
-          "/static/fonts/roboto/Roboto-Medium.woff2":
-            "node_modules/roboto-fontface/fonts/roboto/Roboto-Medium.woff2",
-          "/static/fonts/roboto/Roboto-Regular.woff2":
-            "node_modules/roboto-fontface/fonts/roboto/Roboto-Regular.woff2",
-          "/static/fonts/roboto/Roboto-Bold.woff2":
-            "node_modules/roboto-fontface/fonts/roboto/Roboto-Bold.woff2",
-        },
-      })
-    );
-  }
-
-  return config;
 };
 
 const createDemoConfig = ({ isProdBuild, latestBuild, isStatsBuild }) => {
@@ -199,7 +142,7 @@ const createDemoConfig = ({ isProdBuild, latestBuild, isStatsBuild }) => {
     },
     outputRoot: paths.demo_root,
     defineOverlay: {
-      __VERSION__: JSON.stringify(`DEMO-${version}`),
+      __VERSION__: JSON.stringify(`DEMO-${env.version()}`),
       __DEMO__: true,
     },
     isProdBuild,

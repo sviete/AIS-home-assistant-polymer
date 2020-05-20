@@ -86,9 +86,6 @@ class HassioIngressView extends LitElement {
         height: 100%;
         border: 0;
       }
-      paper-icon-button {
-        color: var(--text-primary-color);
-      }
     `;
   }
 }

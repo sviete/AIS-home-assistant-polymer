@@ -96,6 +96,40 @@ export interface Panels {
   [name: string]: PanelInfo;
 }
 
+export interface Calendar {
+  entity_id: string;
+  name: string;
+  backgroundColor: string;
+}
+
+export interface SelectedCalendar {
+  selected: boolean;
+  calendar: Calendar;
+}
+
+export interface CalendarEvent {
+  summary: string;
+  title: string;
+  start: string;
+  end?: string;
+  backgroundColor?: string;
+  borderColor?: string;
+  calendar: string;
+  [key: string]: any;
+}
+
+export interface CalendarViewChanged {
+  end: Date;
+  start: Date;
+  view: string;
+}
+
+export interface ToggleButton {
+  label?: string;
+  icon: string;
+  value: string;
+}
+
 export interface Translation {
   nativeName: string;
   isRTL: boolean;
@@ -107,6 +141,16 @@ export interface TranslationMetadata {
   translations: {
     [lang: string]: Translation;
   };
+}
+
+export interface IconMetaFile {
+  version: string;
+  parts: IconMeta[];
+}
+
+export interface IconMeta {
+  start: string;
+  file: string;
 }
 
 export interface Notification {
@@ -180,7 +224,7 @@ export interface HomeAssistant {
     category: Parameters<typeof getHassTranslations>[2],
     integration?: Parameters<typeof getHassTranslations>[3],
     configFlow?: Parameters<typeof getHassTranslations>[4]
-  ): Promise<void>;
+  ): Promise<LocalizeFunc>;
 }
 
 export type LightEntity = HassEntityBase & {

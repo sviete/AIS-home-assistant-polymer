@@ -206,6 +206,8 @@
             "stopped": "Gestoppt"
         },
         "default": {
+            "off": "Aus",
+            "on": "Un",
             "unavailable": "Net erreechbar",
             "unknown": "Onbekannt"
         },
@@ -471,11 +473,15 @@
             }
         },
         "common": {
+            "and": "an",
             "cancel": "Ofbriechen",
             "close": "Zoumaachen",
             "delete": "Läschen",
             "loading": "Lued",
+            "next": "Nächst",
             "no": "Nee",
+            "previous": "Virdrun",
+            "refresh": "Aktualiséieren",
             "save": "Späicheren",
             "successfully_deleted": "Erfollegräich geläscht.",
             "successfully_saved": "Erfollegräich gespäichert.",
@@ -611,7 +617,7 @@
                     "pattern": "Regex Muster fir Client-Säiteg Validatioun",
                     "text": "Text"
                 },
-                "platform_not_loaded": "{platform} Integratioun ass net gelueden. Setz et an deng Konfiguration dobäi mat  'default_config:' oder '{platform}:'.",
+                "platform_not_loaded": "{platform} Integratioun ass net gelueden. Setz et an deng Konfiguration dobäi mat  'default_config:' oder ''{platform}:''.",
                 "required_error_msg": "Dëst Feld ass erfuerderlech",
                 "yaml_not_editable": "D'Astellunge vun dëser Entitéit kënnen net vun vum Benotzer Interface as  geännert ginn. Nëmmen Entitéiten déi iwwer den Benotzer Interface aus konfiguréiert sinn kënnen vun do aus geännert ginn."
             },
@@ -735,6 +741,10 @@
             "triggered": "{name} ausgeléist"
         },
         "panel": {
+            "calendar": {
+                "my_calendars": "Meng Kalenner",
+                "today": "Haut"
+            },
             "config": {
                 "advanced_mode": {
                     "hint_enable": "Feelen Konfiguratioun's Optiounen? Avancéierte Modus aschalten op",
@@ -836,6 +846,9 @@
                                         "for": "Dauer"
                                     },
                                     "label": "Apparat"
+                                },
+                                "not": {
+                                    "label": "Net"
                                 },
                                 "numeric_state": {
                                     "above": "Iwwert",
@@ -1168,7 +1181,9 @@
                                 "edit_requires_storage": "Editeur ass desaktivéiert well d'Konfiguratioun an der configuration.yaml gespäichert ass.",
                                 "elevation": "Héicht",
                                 "elevation_meters": "Meter",
+                                "external_url": "Externe URL",
                                 "imperial_example": "Fahrenheit, Pënner",
+                                "internal_url": "Interne URL",
                                 "latitude": "Breedegrad",
                                 "location_name": "Numm vun der Home Assistant Installatioun",
                                 "longitude": "Längegrad",
@@ -1235,6 +1250,7 @@
                     },
                     "delete": "Läschen",
                     "description": "Verwalt verbonnen Apparater",
+                    "device_info": "Informatioune vum Apparat",
                     "device_not_found": "Apparat net fonnt.",
                     "entities": {
                         "add_entities_lovelace": "Zu Lovelace bäisetzen",
@@ -1358,7 +1374,8 @@
                         "restart_confirm": "Start Home Assistant nei fir dës Integratioun ze läschen",
                         "settings_button": "Astellungen ännere fir {integration}",
                         "system_options": "System Optiounen",
-                        "system_options_button": "System Optioune fir {integration}"
+                        "system_options_button": "System Optioune fir {integration}",
+                        "unnamed_entry": "Entrée ouni Numm"
                     },
                     "config_flow": {
                         "aborted": "Ofgebrach",
@@ -1395,8 +1412,10 @@
                     "integration": "Integratioun",
                     "integration_not_found": "Integratioun net fonnt.",
                     "new": "Eng nei Integratioun ariichten",
-                    "no_integrations": "Et gesäit suu ass wéi wann nach keng Integratioun ageriicht ass. Klick de Knäppchen hei ënnen fir déi éischt Integratioun anzeriichten.",
+                    "no_integrations": "Et gesäit sou ass wéi wann nach keng Integratioun ageriicht ass. Klick de Knäppchen hei ënnen fir déi éischt Integratioun anzeriichten.",
                     "none": "Nach näischt konfiguréiert",
+                    "none_found": "Keng Integratioune fonnt",
+                    "none_found_detail": "Siich Kriterien upassen.",
                     "note_about_integrations": "Net all Integratioune könne nach via den Benotzer Interface konfiguréiert ginn.",
                     "note_about_website_reference": "Méi sin der disponibel op der ",
                     "rename_dialog": "Numm vun dësem Objet läschen",
@@ -1587,7 +1606,7 @@
                             "automation": "Automatisme nei lueden",
                             "core": "Standuert and Personnalisatioun néi lueden",
                             "group": "Gruppe nei lueden",
-                            "heading": "YAML Konfiguratioun gëtt frësch gelueden",
+                            "heading": "YAML Konfiguratioun frësch lueden",
                             "introduction": "E puer Deeler vum Home Assistant kënne frësch geluede ginn ouni datt een Neistart néideg ass. Klick op nei luede fir di aktuell Konfiguratioun z'entlueden an di nei Konfiguratioun ze lueden.",
                             "person": "Persoune frësch lueden",
                             "scene": "Szeene néi lueden",
@@ -1860,10 +1879,13 @@
                         "built_using": "Gebaut mat",
                         "custom_uis": "Personaliséierte Benotzer Interface:",
                         "developed_by": "Entwéckelt vun enger ganzer Rei fantastesche Leit.",
+                        "documentation": "Dokumentatioun",
                         "frontend": "frontend-ui",
                         "frontend_version": "Frontend Versioun: {version} - {type}",
                         "home_assistant_logo": "Home Assistant logo",
                         "icons_by": "Ikonen vun",
+                        "integrations": "Integratioune",
+                        "issues": "Problemer",
                         "license": "Verëffentlecht ënnert der Apache 2.0 Lizenz",
                         "path_configuration": "Pad zur configuration.yaml: {path}",
                         "server": "server",
@@ -2054,6 +2076,7 @@
                             "name": "Numm",
                             "no_theme": "Kee Thema",
                             "refresh_interval": "Aktualiséierungs Intervall",
+                            "secondary_info_attribute": "Sekundär Informatiouns Attribut",
                             "show_icon": "Ikon uweisen?",
                             "show_name": "Numm uweisen?",
                             "show_state": "Zoustand uweisen?",
@@ -2144,7 +2167,8 @@
                         },
                         "weather-forecast": {
                             "description": "Wieder Previsoune Kaart weist d'Météo un. Immens nëtzlech fir Interfacen déi Benotzer un d'Mauer hänken.",
-                            "name": "Wiederprevisioune"
+                            "name": "Wiederprevisioune",
+                            "show_forecast": "Prévisioun uweisen"
                         }
                     },
                     "cardpicker": {
@@ -2261,8 +2285,8 @@
                 "views": {
                     "confirm_delete": "Usiicht läschen?",
                     "confirm_delete_existing_cards": "D'Läschen vun dëser Usiicht läscht och d'Kaarten",
-                    "confirm_delete_existing_cards_text": "Sécher fir d'Usiicht '{name}' ze läsche? Dës Usiicht enthält {number} Kaart(en) déi och geläscht ginn. Dës Aktioun kann net réckgängeg gemaach ginn.",
-                    "confirm_delete_text": "Sécher fir d'Usiicht '{name}' ze läsche?"
+                    "confirm_delete_existing_cards_text": "Sécher fir d'Usiicht ''{name}'' ze läsche? Dës Usiicht enthält {number} Kaart(en) déi och geläscht ginn. Dës Aktioun kann net réckgängeg gemaach ginn.",
+                    "confirm_delete_text": "Sécher fir d'Usiicht ''{name}'' ze läsche?"
                 },
                 "warning": {
                     "attribute_not_found": "Attribut {attribute} net disponibel an: {entity}",

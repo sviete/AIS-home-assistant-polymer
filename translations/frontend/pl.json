@@ -203,9 +203,11 @@
             "closing": "zamykanie",
             "open": "otwarta",
             "opening": "otwieranie",
-            "stopped": "zatrzymany"
+            "stopped": "zatrzymanie"
         },
         "default": {
+            "off": "wyłączony",
+            "on": "włączony",
             "unavailable": "niedostępny",
             "unknown": "nieznany"
         },
@@ -418,7 +420,7 @@
                 "actions": {
                     "cancel": "anuluj",
                     "finish": "koniec",
-                    "pause": "pauza",
+                    "pause": "wstrzymaj",
                     "start": "start"
                 }
             },
@@ -471,11 +473,15 @@
             }
         },
         "common": {
+            "and": "i",
             "cancel": "Anuluj",
             "close": "Zamknij",
             "delete": "Usuń",
             "loading": "Ładowanie",
+            "next": "Dalej",
             "no": "Nie",
+            "previous": "Poprzedni",
+            "refresh": "Odśwież",
             "save": "Zapisz",
             "successfully_deleted": "Pomyślnie usunięto",
             "successfully_saved": "Pomyślnie zapisano",
@@ -527,10 +533,10 @@
             "relative_time": {
                 "duration": {
                     "day": "{count} {count, plural,\n  one {dzień}\n  other {dni}\n}",
-                    "hour": "{count} {count, plural,\n  one {godzina}\n  other {godzin(y)}\n}",
-                    "minute": "{count} {count, plural,\n  one {minuta}\n  other {minut(y)}\n}",
-                    "second": "{count} {count, plural,\n  one {sekunda}\n  other {sekund(y)}\n}",
-                    "week": "{count} {count, plural,\n  one {tydzień}\n  other {tygodni(e)}\n}"
+                    "hour": "{count} {count, plural,\n  one {godzina}\n  few {godziny}\n  many {godzin}\n  other {godzin}\n}",
+                    "minute": "{count} {count, plural,\n  one {minuta}\n  few {minuty}\n  many {minut}\n  other {minut}\n}",
+                    "second": "{count} {count, plural,\n  one {sekunda}\n  few {sekundy}\n  many {sekund}\n  other {sekund}\n}",
+                    "week": "{count} {count, plural,\n  one {tydzień}\n  few {tygodnie}\n  many {tygodni}\n  other {tygodni}\n}"
                 },
                 "future": "Za {time}",
                 "never": "Nigdy",
@@ -548,13 +554,13 @@
                 "update": "Aktualizuj"
             },
             "domain_toggler": {
-                "title": "Przełączanie domen"
+                "title": "Włączanie domen"
             },
             "entity_registry": {
                 "control": "Kontrola",
                 "dismiss": "Odrzuć",
                 "editor": {
-                    "confirm_delete": "Na pewno chcesz usunąć ten wpis?",
+                    "confirm_delete": "Czy na pewno chcesz usunąć ten wpis?",
                     "delete": "USUŃ",
                     "enabled_cause": "Wyłączone przez {cause}.",
                     "enabled_description": "Wyłączone encje nie zostaną dodane do Asystenta domowego.",
@@ -611,7 +617,7 @@
                     "pattern": "Wyrażenie regularne do sprawdzania poprawności po stronie klienta",
                     "text": "Pole tekstowe"
                 },
-                "platform_not_loaded": "Komponent {platform} nie jest załadowany, dodaj go do swojej konfiguracji dodając 'default_config:' lub '{platform}:'.",
+                "platform_not_loaded": "Komponent {platform} nie jest załadowany, dodaj go do swojej konfiguracji dodając 'default_config:' lub ''{platform}:''.",
                 "required_error_msg": "To pole jest wymagane",
                 "yaml_not_editable": "Ustawienia tej encji nie mogą być edytowane z interfejsu użytkownika. Tylko encje dodane z interfejsu użytkownika można konfigurować z poziomu interfejsu użytkownika."
             },
@@ -646,10 +652,10 @@
                     "commands": "Polecenia odkurzacza:",
                     "fan_speed": "Prędkość wentylatora",
                     "locate": "Zlokalizuj",
-                    "pause": "Pauza",
+                    "pause": "Wstrzymaj",
                     "return_home": "Powrót do domu",
                     "start": "Start",
-                    "start_pause": "Start/Pauza",
+                    "start_pause": "Start/Wstrzymaj",
                     "status": "Status",
                     "stop": "Zatrzymaj"
                 }
@@ -713,10 +719,10 @@
         },
         "duration": {
             "day": "{count} {count, plural,\n  one {dzień}\n  other {dni}\n}",
-            "hour": "{count} {count, plural,\none {godzina}\nother {godzin(y)}\n}",
-            "minute": "{count} {count, plural,\none {minuta}\nother {minut(y)}\n}",
-            "second": "{count} {count, plural,\n  one {sekunda}\n  other {sekund(y)}\n}",
-            "week": "{count} {count, plural,\n  one {tydzień}\n  other {tygodni(e)}\n}"
+            "hour": "{count} {count, plural,\n  one {godzina}\n  few {godziny}\n  many {godzin}\n  other {godzin}\n}",
+            "minute": "{count} {count, plural,\n  one {minuta}\n  few {minuty}\n  many {minut}\n  other {minut}\n}",
+            "second": "{count} {count, plural,\n  one {sekunda}\n  few {sekundy}\n  many {sekund}\n  other {sekund}\n}",
+            "week": "{count} {count, plural,\n  one {tydzień}\n  few {tygodnie}\n  many {tygodni}\n  other {tygodni}\n}"
         },
         "login-form": {
             "log_in": "Zaloguj",
@@ -735,6 +741,10 @@
             "triggered": "Wyzwolenie {name}"
         },
         "panel": {
+            "calendar": {
+                "my_calendars": "Moje kalendarze",
+                "today": "Dzisiaj"
+            },
             "config": {
                 "advanced_mode": {
                     "hint_enable": "Brakuje opcji konfiguracji? Włącz tryb zaawansowany",
@@ -773,7 +783,7 @@
                         "actions": {
                             "add": "Dodaj akcję",
                             "delete": "Usuń",
-                            "delete_confirm": "Jesteś pewien, że chcesz usunąć?",
+                            "delete_confirm": "Czy na pewno chcesz to usunąć?",
                             "duplicate": "Duplikuj",
                             "header": "Akcje",
                             "introduction": "Akcje są wykonywane przez Asystent domowy'a po uruchomieniu automatyzacji.",
@@ -837,6 +847,9 @@
                                     },
                                     "label": "Urządzenie"
                                 },
+                                "not": {
+                                    "label": "Nie"
+                                },
                                 "numeric_state": {
                                     "above": "Powyżej",
                                     "below": "Poniżej",
@@ -891,7 +904,7 @@
                         "triggers": {
                             "add": "Dodaj wyzwalacz",
                             "delete": "Usuń",
-                            "delete_confirm": "Jesteś pewien, że chcesz usunąć?",
+                            "delete_confirm": "Czy na pewno chcesz to usunąć?",
                             "duplicate": "Duplikuj",
                             "header": "Wyzwalacze",
                             "introduction": "Wyzwalacze uruchamiają przetwarzanie automatyzacji. Możliwe jest stworzenie wielu wyzwalaczy dla tej samej automatyzacji. Po uruchomieniu wyzwalacza Asystent domowy sprawdzi ewentualne warunki i wywoła akcje.",
@@ -984,7 +997,7 @@
                     "picker": {
                         "add_automation": "Dodaj automatyzację",
                         "delete_automation": "Usuń automatyzację",
-                        "delete_confirm": "Na pewno chcesz usunąć tę automatyzację?",
+                        "delete_confirm": "Czy na pewno chcesz usunąć tę automatyzację?",
                         "edit_automation": "Edytuj automatyzację",
                         "header": "Edytor automatyzacji",
                         "headers": {
@@ -1085,7 +1098,7 @@
                     "dialog_cloudhook": {
                         "available_at": "Webhook jest dostępny pod następującym adresem URL:",
                         "close": "Zamknij",
-                        "confirm_disable": "Na pewno chcesz wyłączyć ten webhook?",
+                        "confirm_disable": "Czy na pewno chcesz wyłączyć ten webhook?",
                         "copied_to_clipboard": "Skopiowano do schowka",
                         "info_disable_webhook": "Jeśli nie chcesz już używać tego webhook'a, możesz",
                         "link_disable_webhook": "wyłączyć go",
@@ -1168,7 +1181,9 @@
                                 "edit_requires_storage": "Edytor wyłączony, ponieważ konfiguracja jest przechowywana w pliku configuration.yaml.",
                                 "elevation": "Wysokość",
                                 "elevation_meters": "metry/-ów",
+                                "external_url": "Publiczny adres URL",
                                 "imperial_example": "stopnie Fahrenheita, funty",
+                                "internal_url": "Lokalny adres URL",
                                 "latitude": "Szerokość geograficzna",
                                 "location_name": "Nazwa instalacji Asystent domowy",
                                 "longitude": "Długość geograficzna",
@@ -1222,7 +1237,7 @@
                     },
                     "cant_edit": "Możesz edytować tylko elementy utworzone w interfejsie użytkownika.",
                     "caption": "Urządzenia",
-                    "confirm_delete": "Na pewno chcesz usunąć to urządzenie?",
+                    "confirm_delete": "Czy na pewno chcesz usunąć to urządzenie?",
                     "confirm_rename_entity_ids": "Czy chcesz także zmienić identyfikatory encji?",
                     "data_table": {
                         "area": "Obszar",
@@ -1235,6 +1250,7 @@
                     },
                     "delete": "Usuń",
                     "description": "Zarządzaj podłączonymi urządzeniami",
+                    "device_info": "Informacje o urządzeniu",
                     "device_not_found": "Urządzenie nie zostało znalezione.",
                     "entities": {
                         "add_entities_lovelace": "Dodaj do interfejsu użytkownika Lovelace",
@@ -1251,7 +1267,7 @@
                     "scenes": "Sceny",
                     "script": {
                         "create": "Utwórz skrypt z urządzeniem",
-                        "no_scripts": "Bez skryptów",
+                        "no_scripts": "Brak skryptów",
                         "scripts": "Skrypty"
                     },
                     "scripts": "Skrypty",
@@ -1342,10 +1358,10 @@
                         "area": "obszar: {area}",
                         "delete": "Usuń",
                         "delete_button": "Usuń {integration}",
-                        "delete_confirm": "Na pewno chcesz usunąć tę integrację?",
+                        "delete_confirm": "Czy na pewno chcesz usunąć tę integrację?",
                         "device_unavailable": "urządzenie niedostępne",
-                        "devices": "{count} {count, plural,\n  one {urządzenie}\n  other {urządze(nia/ń)}\n}",
-                        "entities": "{count} {count, plural,\n  one {encja}\n  other {encj(e/i)}\n}",
+                        "devices": "{count} {count, plural,\n  one {urządzenie}\n  few {urządzenia}\n  many {urządzeń}\n  other {urządzeń}\n}",
+                        "entities": "{count} {count, plural,\n  one {encja}\n  few {encje}\n  many {encji}\n  other {encji}\n}",
                         "entity_unavailable": "encja niedostępna",
                         "firmware": "oprogramowanie: {version}",
                         "hub": "połączony poprzez:",
@@ -1358,7 +1374,8 @@
                         "restart_confirm": "Zrestartuj Asystenta domowego, aby zakończyć usuwanie tej integracji",
                         "settings_button": "Edytuj ustawienia dla {integration}",
                         "system_options": "Opcje systemowe",
-                        "system_options_button": "Opcje systemowe dla {integration}"
+                        "system_options_button": "Opcje systemowe dla {integration}",
+                        "unnamed_entry": "Nienazwany wpis"
                     },
                     "config_flow": {
                         "aborted": "Przerwano",
@@ -1383,20 +1400,22 @@
                     "home_assistant_website": "Asystenta domowego",
                     "ignore": {
                         "confirm_delete_ignore": "Spowoduje to, że integracja pojawi się ponownie w wykrytych integracjach. Może to wymagać ponownego uruchomienia lub czasu.",
-                        "confirm_delete_ignore_title": "Przestać ignorować {name}?",
-                        "confirm_ignore": "Na pewno chcesz ignorować tę integrację? Możesz to cofnąć, klikając „Pokaż ignorowane integracje” w menu w prawym górnym rogu.",
-                        "confirm_ignore_title": "Ignorować wykrywanie {name}?",
-                        "hide_ignored": "Ukryj ignorowane integracje",
+                        "confirm_delete_ignore_title": "Wyłączenie ignorowania {name}",
+                        "confirm_ignore": "Czy na pewno chcesz ignorować tę integrację? Możesz cofnąć ignorowanie, wybierając 'Wyświetlaj ignorowane integracje' w menu w prawym górnym rogu.",
+                        "confirm_ignore_title": "Ignorowanie {name}",
+                        "hide_ignored": "Ukrywaj ignorowane integracje",
                         "ignore": "Ignoruj",
                         "ignored": "Ignorowana",
-                        "show_ignored": "Pokaż ignorowane integracje",
-                        "stop_ignore": "Wyłączenie ignorowania"
+                        "show_ignored": "Wyświetlaj ignorowane integracje",
+                        "stop_ignore": "Wyłącz ignorowanie"
                     },
                     "integration": "integracja",
                     "integration_not_found": "Nie znaleziono integracji.",
                     "new": "Konfiguruj nową integrację",
                     "no_integrations": "Wygląda na to, że nie masz jeszcze skonfigurowanych żadnych integracji. Kliknij przycisk poniżej, aby dodać pierwszą integrację!",
                     "none": "Nic jeszcze nie zostało skonfigurowane",
+                    "none_found": "Nie znaleziono integracji",
+                    "none_found_detail": "Dostosuj kryteria wyszukiwania.",
                     "note_about_integrations": "Jeszcze nie wszystkie integracje można skonfigurować za pomocą interfejsu użytkownika.",
                     "note_about_website_reference": "Więcej jest dostępnych na stronie integracji ",
                     "rename_dialog": "Edytuj nazwę tego wpisu konfiguracji",
@@ -1451,13 +1470,13 @@
                     "caption": "Dashboardy",
                     "dashboards": {
                         "cant_edit_default": "Standardowego dashboardu Lovelace nie można edytować za pomocą interfejsu użytkownika. Możesz go ukryć, ustawiając jako domyślny inny dashboard.",
-                        "cant_edit_yaml": "Dasboard'y zdefiniowane w plikach YAML nie mogą być edytowane z poziomu interfejsu użytkownika. Zmień je w pliku configuration.yaml.",
+                        "cant_edit_yaml": "Dashboard'y zdefiniowane w plikach YAML nie mogą być edytowane z poziomu interfejsu użytkownika. Zmień je w pliku configuration.yaml.",
                         "caption": "Dashboardy",
                         "conf_mode": {
                             "storage": "Konfigurowalny z interfejsu użytkownika",
                             "yaml": "Plik YAML"
                         },
-                        "confirm_delete": "Na pewno chcesz usunąć ten dashboard?",
+                        "confirm_delete": "Czy na pewno chcesz usunąć ten dashboard?",
                         "default_dashboard": "To jest domyślny dashboard",
                         "detail": {
                             "create": "Utwórz",
@@ -1493,7 +1512,7 @@
                     "resources": {
                         "cant_edit_yaml": "Korzystasz z interfejsu użytkownika Lovelace w trybie YAML, dlatego nie możesz zarządzać zasobami za pomocą interfejsu użytkownika. Zarządzaj nimi w pliku configuration.yaml.",
                         "caption": "Zasoby",
-                        "confirm_delete": "Na pewno chcesz usunąć ten zasób?",
+                        "confirm_delete": "Czy na pewno chcesz usunąć ten zasób?",
                         "detail": {
                             "create": "Utwórz",
                             "delete": "Usuń",
@@ -1527,7 +1546,7 @@
                 "person": {
                     "add_person": "Dodaj osobę",
                     "caption": "Osoby",
-                    "confirm_delete": "Na pewno chcesz usunąć tę osobę?",
+                    "confirm_delete": "Czy na pewno chcesz usunąć tę osobę?",
                     "confirm_delete2": "Wszystkie urządzenia należące do tej osoby zostaną nieprzypisane.",
                     "create_person": "Utwórz osobę",
                     "description": "Zarządzaj osobami, które śledzi Asystent domowy",
@@ -1579,7 +1598,7 @@
                     },
                     "picker": {
                         "add_scene": "Dodaj scenę",
-                        "delete_confirm": "Na pewno chcesz usunąć tę scenę?",
+                        "delete_confirm": "Czy na pewno chcesz usunąć tę scenę?",
                         "delete_scene": "Usuń scenę",
                         "edit_scene": "Edytuj scenę",
                         "header": "Edytor scen",
@@ -1600,7 +1619,7 @@
                     "editor": {
                         "alias": "Nazwa",
                         "default_name": "Nowy skrypt",
-                        "delete_confirm": "Na pewno chcesz usunąć ten skrypt?",
+                        "delete_confirm": "Czy na pewno chcesz usunąć ten skrypt?",
                         "delete_script": "Usuń skrypt",
                         "header": "Skrypt: {name}",
                         "introduction": "Użyj skryptów, aby wykonać sekwencję akcji.",
@@ -1632,15 +1651,15 @@
                             "core": "Lokalizacja i dostosowywanie",
                             "group": "Grupy",
                             "heading": "Ponowne wczytanie konfiguracji",
-                            "introduction": "Niektóre części konfiguracji można wczytać od nowa bez konieczności ponownego uruchamiania Asystenta domowego.. Naciśnięcie poniższych przycisków wczyta ponownie daną część konfiguracji.",
+                            "introduction": "Niektóre fragmenty konfiguracji można przeładować bez ponownego uruchamiania. Poniższe przyciski pozwalają na ponowne wczytanie konfiguracji.",
                             "person": "Osoby",
                             "scene": "Sceny",
                             "script": "Skrypty",
                             "zone": "Strefy"
                         },
                         "server_management": {
-                            "confirm_restart": "Na pewno chcesz ponownie uruchomić Asystenta domowego?",
-                            "confirm_stop": "Na pewno chcesz zatrzymać Asystenta domowego?",
+                            "confirm_restart": "Czy na pewno chcesz ponownie uruchomić Asystenta domowego?",
+                            "confirm_stop": "Czy na pewno chcesz zatrzymać Asystenta domowego?",
                             "heading": "Zarządzanie serwerem",
                             "introduction": "Kontroluj serwer Asystenta domowego.",
                             "restart": "Uruchom ponownie",
@@ -1671,7 +1690,7 @@
                         "admin": "Administrator",
                         "caption": "Wyświetl użytkownika",
                         "change_password": "Zmień hasło",
-                        "confirm_user_deletion": "Na pewno chcesz usunąć {name}?",
+                        "confirm_user_deletion": "Czy na pewno chcesz usunąć {name}?",
                         "deactivate_user": "Dezaktywuj użytkownika",
                         "delete_user": "Usuń użytkownika",
                         "group": "Grupa",
@@ -1794,7 +1813,7 @@
                     "add_zone": "Dodaj strefę",
                     "caption": "Strefy",
                     "configured_in_yaml": "Stref skonfigurowanych za pomocą pliku configuration.yaml nie można edytować za pomocą interfejsu użytkownika.",
-                    "confirm_delete": "Na pewno chcesz usunąć tę strefę?",
+                    "confirm_delete": "Czy na pewno chcesz usunąć tę strefę?",
                     "create_zone": "Utwórz strefę",
                     "description": "Zarządzaj strefami, w których chcesz śledzić osoby",
                     "detail": {
@@ -1807,7 +1826,7 @@
                         "name": "Nazwa",
                         "new_zone": "Nowa strefa",
                         "passive": "Pasywna",
-                        "passive_note": "Strefy pasywne są ukryte w interfejsie użytkownika i nie są używane jako lokalizacje dla śledzonych urządzeń. Są one przydatne, jeśli chcesz w automatyzacjach.",
+                        "passive_note": "Strefy pasywne są ukryte w interfejsie użytkownika i nie są używane jako lokalizacje dla trackerów urządzeń. Są przydatne, jeśli chcesz chcesz z nich skorzystać w automatyzacjach.",
                         "radius": "Promień",
                         "required_error_msg": "To pole jest wymagane",
                         "update": "Aktualizuj"
@@ -1848,7 +1867,7 @@
                         "false": "Fałsz",
                         "header": "Opcje konfiguracji węzła",
                         "seconds": "sekundy",
-                        "set_config_parameter": "Ustaw parametr konfiguracji",
+                        "set_config_parameter": "Ustaw parametr",
                         "set_wakeup": "Ustaw częstotliwość wybudzenia",
                         "true": "Prawda"
                     },
@@ -1904,10 +1923,13 @@
                         "built_using": "Zbudowany przy użyciu",
                         "custom_uis": "Niestandardowe interfejsy użytkownika:",
                         "developed_by": "Opracowany przez grono wspaniałych ludzi.",
+                        "documentation": "Dokumentacja",
                         "frontend": "frontend-ui",
                         "frontend_version": "Wersja interfejsu użytkownika: {version} - {type}",
                         "home_assistant_logo": "Logo Asystent domowy",
                         "icons_by": "ikon",
+                        "integrations": "Integracje",
+                        "issues": "Problemy",
                         "license": "Opublikowany na licencji Apache 2.0",
                         "path_configuration": "Ścieżka do pliku configuration.yaml: {path}",
                         "server": "serwer",
@@ -1996,7 +2018,7 @@
                     "yaml_unsupported": "Nie możesz używać tej funkcji, gdy używasz interfejsu użytkownika Lovelace w trybie YAML."
                 },
                 "cards": {
-                    "confirm_delete": "Na pewno chcesz usunąć tę kartę?",
+                    "confirm_delete": "Czy na pewno chcesz usunąć tę kartę?",
                     "empty_state": {
                         "go_to_integrations_page": "Przejdź do strony integracji.",
                         "no_devices": "Ta strona pozwala kontrolować urządzenia, ale wygląda na to, że nie masz jeszcze żadnych skonfigurowanych. Przejdź na stronę integracji, aby rozpocząć.",
@@ -2025,7 +2047,7 @@
                     }
                 },
                 "changed_toast": {
-                    "message": "Zaktualizowano konfigurację interfejsu użytkownika Lovelace, czy chcesz ją wczytać ponownie?",
+                    "message": "Zaktualizowano konfigurację interfejsu Lovelace, czy  wczytać ją ponownie?",
                     "refresh": "Wczytaj ponownie"
                 },
                 "editor": {
@@ -2098,6 +2120,7 @@
                             "name": "Nazwa",
                             "no_theme": "Bez motywu",
                             "refresh_interval": "Częstotliwość odświeżania",
+                            "secondary_info_attribute": "Dodatkowy atrybut informacyjny",
                             "show_icon": "Wyświetlanie ikony",
                             "show_name": "Wyświetlanie nazwy",
                             "show_state": "Wyświetlanie stanu",
@@ -2188,7 +2211,8 @@
                         },
                         "weather-forecast": {
                             "description": "Karta prognozy pogody wyświetla pogodę. Bardzo przydatna w przypadku interfejsów wyświetlanych na urządzeniach zawieszonych na ścianie.",
-                            "name": "Prognoza pogody"
+                            "name": "Prognoza pogody",
+                            "show_forecast": "Wyświetlanie prognozy"
                         }
                     },
                     "cardpicker": {
@@ -2262,8 +2286,8 @@
                         "close": "Zamknij",
                         "empty_config": "Zacznij od pustego dashboardu",
                         "header": "Przejmij kontrolę nad interfejsem użytkownika Lovelace",
-                        "para": "Domyślnie Asystent domowy będzie zarządzać interfejsem użytkownika, aktualizując go, gdy pojawią się nowe encje lub komponenty Lovelace. Jeśli przejmiesz kontrolę, Asystent domowy nie będzie już automatycznie wprowadzać dla ciebie zmian.",
-                        "para_sure": "Na pewno chcesz przejąć kontrolę nad interfejsem użytkownika?",
+                        "para": "Domyślnie Asystent domowy będzie zarządzać interfejsem użytkownika, aktualizując go, gdy pojawią się nowe encje lub komponenty Lovelace. Jeśli przejmiesz kontrolę, Home Assistant nie będzie już automatycznie wprowadzać dla ciebie zmian.",
+                        "para_sure": "Czy na pewno chcesz przejąć kontrolę nad interfejsem użytkownika?",
                         "save": "Przejmuję kontrolę",
                         "yaml_config": "Aby rozpocząć, zapoznaj się z aktualną konfiguracją tego dashboardu:",
                         "yaml_control": "Aby zarządzać w trybie YAML, utwórz plik o nazwie podanej w konfiguracji dla tego dashboardu lub domyślny 'ui-lovelace.yaml'.",
@@ -2271,7 +2295,7 @@
                     },
                     "suggest_card": {
                         "add": "Dodaj do interfejsu użytkownika Lovelace",
-                        "create_own": "Stwórz swój własny",
+                        "create_own": "Wybierz inną kartę",
                         "header": "Stworzyliśmy dla Ciebie sugestię"
                     },
                     "view": {
@@ -2307,8 +2331,8 @@
                 "views": {
                     "confirm_delete": "Na pewno chcesz usunąć ten widok?",
                     "confirm_delete_existing_cards": "Usunięcie tego widoku spowoduje również usunięcie kart",
-                    "confirm_delete_existing_cards_text": "Czy na pewno chcesz usunąć widok '{name}'? Widok zawiera {number} kart(ę/y), które zostaną usunięte. Tej akcji nie można cofnąć.",
-                    "confirm_delete_text": "Czy na pewno chcesz usunąć widok '{name}'?"
+                    "confirm_delete_existing_cards_text": "Czy na pewno chcesz usunąć widok ''{name}''? Widok zawiera {number} kart(ę/y), które zostaną usunięte. Tej akcji nie można cofnąć.",
+                    "confirm_delete_text": "Czy na pewno chcesz usunąć widok ''{name}''?"
                 },
                 "warning": {
                     "attribute_not_found": "Atrybut {attribute} jest niedostępny dla: {entity}",
@@ -2325,7 +2349,7 @@
             },
             "page-authorize": {
                 "abort_intro": "Logowanie przerwane",
-                "authorizing_client": "Czy na pewno chcesz dać dostęp {clientId} do Twojej instancji Asystenta domowego.",
+                "authorizing_client": "Uzyskujesz dostęp do instancji Asystenta domowego w lokalizacji {clientId}.",
                 "form": {
                     "providers": {
                         "command_line": {
@@ -2333,8 +2357,8 @@
                                 "login_expired": "Sesja wygasła, zaloguj się ponownie."
                             },
                             "error": {
-                                "invalid_auth": "Nieprawidłowa nazwa użytkownika lub hasło",
-                                "invalid_code": "Nieprawidłowy kod uwierzytelniający"
+                                "invalid_auth": "Nieprawidłowa nazwa użytkownika lub hasło.",
+                                "invalid_code": "Nieprawidłowy kod uwierzytelniający."
                             },
                             "step": {
                                 "init": {
@@ -2356,8 +2380,8 @@
                                 "login_expired": "Sesja wygasła, zaloguj się ponownie."
                             },
                             "error": {
-                                "invalid_auth": "Nieprawidłowa nazwa użytkownika lub hasło",
-                                "invalid_code": "Nieprawidłowy kod uwierzytelniający"
+                                "invalid_auth": "Nieprawidłowa nazwa użytkownika lub hasło.",
+                                "invalid_code": "Nieprawidłowy kod uwierzytelniający."
                             },
                             "step": {
                                 "init": {
@@ -2381,14 +2405,14 @@
                             },
                             "error": {
                                 "invalid_auth": "Nieprawidłowe hasło API",
-                                "invalid_code": "Nieprawidłowy kod uwierzytelniający"
+                                "invalid_code": "Nieprawidłowy kod uwierzytelniający."
                             },
                             "step": {
                                 "init": {
                                     "data": {
                                         "password": "Hasło API"
                                     },
-                                    "description": "Proszę wprowadzić hasło API w Twoim configu http:"
+                                    "description": "Proszę wprowadzić hasło API w konfiguracji  HTTP:"
                                 },
                                 "mfa": {
                                     "data": {
@@ -2407,7 +2431,7 @@
                                     "data": {
                                         "user": "Użytkownik"
                                     },
-                                    "description": "Proszę wybrać użytkownika, na którego chcesz się zalogować:"
+                                    "description": "Proszę wybrać użytkownika, jako który chcesz się zalogować:"
                                 }
                             }
                         }
@@ -2528,7 +2552,7 @@
                 "logout_text": "Czy na pewno chcesz się wylogować?",
                 "logout_title": "Wylogować się?",
                 "long_lived_access_tokens": {
-                    "confirm_delete": "Na pewno chcesz usunąć token dla {name}?",
+                    "confirm_delete": "Czy na pewno chcesz usunąć token dla {name}?",
                     "create": "Utwórz token",
                     "create_failed": "Nie udało się utworzyć tokena.",
                     "created_at": "Utworzony {date}",
@@ -2550,7 +2574,7 @@
                     "title_success": "Powodzenie!"
                 },
                 "mfa": {
-                    "confirm_disable": "Na pewno chcesz wyłączyć {name}?",
+                    "confirm_disable": "Czy na pewno chcesz wyłączyć {name}?",
                     "disable": "Wyłącz",
                     "enable": "Włącz",
                     "header": "Moduły uwierzytelniania wieloskładnikowego"
@@ -2564,7 +2588,7 @@
                     "push_notifications": "Powiadomienia push"
                 },
                 "refresh_tokens": {
-                    "confirm_delete": "Na pewno chcesz usunąć token dla {name}?",
+                    "confirm_delete": "Czy na pewno chcesz usunąć token dla {name}?",
                     "created_at": "Utworzony {date}",
                     "current_token_tooltip": "Nie można usunąć bieżącego tokena",
                     "delete_failed": "Nie udało się usunąć tokena.",

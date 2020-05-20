@@ -1,4 +1,4 @@
-import "@polymer/paper-icon-button/paper-icon-button";
+import "../../../components/ha-icon-button";
 import "@thomasloven/round-slider";
 import { HassEntity } from "home-assistant-js-websocket";
 import {
@@ -88,15 +88,6 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
     this._config = config;
   }
 
-  public connectedCallback(): void {
-    super.connectedCallback();
-    this.rescale_svg();
-  }
-
-  protected firstUpdated(): void {
-    this.rescale_svg();
-  }
-
   protected render(): TemplateResult {
     if (!this.hass || !this._config) {
       return html``;
@@ -127,9 +118,7 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
 
     const slider =
       stateObj.state === UNAVAILABLE
-        ? html`
-            <round-slider disabled="true"></round-slider>
-          `
+        ? html` <round-slider disabled="true"></round-slider> `
         : html`
             <round-slider
               .value=${targetTemp}
@@ -167,7 +156,9 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
         <g>
           <text text-anchor="middle" class="set-value">
             ${
-              this._setTemp === undefined || this._setTemp === null
+              stateObj.state === UNAVAILABLE
+                ? this.hass.localize("state.default.unavailable")
+                : this._setTemp === undefined || this._setTemp === null
                 ? ""
                 : Array.isArray(this._setTemp)
                 ? this._stepSize === 1
@@ -224,12 +215,12 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
           [mode]: true,
         })}
       >
-        <paper-icon-button
+        <ha-icon-button
           icon="hass:dots-vertical"
           class="more-info"
           @click=${this._handleMoreInfo}
           tabindex="0"
-        ></paper-icon-button>
+        ></ha-icon-button>
 
         <div class="content">
           <div id="controls">
@@ -285,15 +276,18 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
       applyThemesOnElement(this, this.hass.themes, this._config.theme);
     }
 
-    const stateObj = this.hass!.states[this._config!.entity];
+    const stateObj = this.hass.states[this._config.entity];
     if (!stateObj) {
       return;
     }
-    this._setTemp = this._getSetTemp(stateObj);
-    this.rescale_svg();
+
+    if (!oldHass || oldHass.states[this._config.entity] !== stateObj) {
+      this._setTemp = this._getSetTemp(stateObj);
+      this._rescale_svg();
+    }
   }
 
-  private rescale_svg() {
+  private _rescale_svg() {
     // Set the viewbox of the SVG containing the set temperature to perfectly
     // fit the text
     // That way it will auto-scale correctly
@@ -324,9 +318,11 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
     return this.hass!.config.unit_system.temperature === UNIT_F ? 1 : 0.5;
   }
 
-  private _getSetTemp(stateObj: HassEntity) {
+  private _getSetTemp(
+    stateObj: HassEntity
+  ): undefined | number | [number, number] {
     if (stateObj.state === UNAVAILABLE) {
-      return this.hass!.localize("state.default.unavailable");
+      return undefined;
     }
 
     if (
@@ -382,14 +378,14 @@ export class HuiThermostatCard extends LitElement implements LovelaceCard {
       return html``;
     }
     return html`
-      <paper-icon-button
+      <ha-icon-button
         class="${classMap({ "selected-icon": currentMode === mode })}"
         .mode="${mode}"
         .icon="${modeIcons[mode]}"
         @action=${this._handleAction}
         .actionHandler=${actionHandler()}
         tabindex="0"
-      ></paper-icon-button>
+      ></ha-icon-button>
     `;
   }
 

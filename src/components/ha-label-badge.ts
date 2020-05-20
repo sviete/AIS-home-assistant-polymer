@@ -31,12 +31,14 @@ class HaLabelBadge extends LitElement {
               big: Boolean(this.value && this.value.length > 4),
             })}"
           >
-            ${this.icon && !this.value && !this.image
-              ? html` <ha-icon .icon="${this.icon}"></ha-icon> `
-              : ""}
-            ${this.value && !this.image
-              ? html` <span>${this.value}</span> `
-              : ""}
+            <slot>
+              ${this.icon && !this.value && !this.image
+                ? html` <ha-icon .icon=${this.icon}></ha-icon> `
+                : ""}
+              ${this.value && !this.image
+                ? html` <span>${this.value}</span> `
+                : ""}
+            </slot>
           </div>
           ${this.label
             ? html`
@@ -65,6 +67,7 @@ class HaLabelBadge extends LitElement {
           display: inline-block;
           text-align: center;
           vertical-align: top;
+          padding: var(--ha-label-badge-padding, 0 0 0 0);
         }
         .label-badge {
           position: relative;

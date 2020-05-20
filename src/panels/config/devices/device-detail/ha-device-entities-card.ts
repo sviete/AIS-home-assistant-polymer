@@ -28,24 +28,20 @@ import { EntityRegistryStateEntry } from "../ha-config-device-page";
 export class HaDeviceEntitiesCard extends LitElement {
   @property() public hass!: HomeAssistant;
 
-  @property() public deviceId!: string;
-
   @property() public entities!: EntityRegistryStateEntry[];
-
-  @property() public narrow!: boolean;
 
   @property() private _showDisabled = false;
 
   @queryAll("#entities > *") private _entityRows?: LovelaceRow[];
 
-  protected updated(changedProps: PropertyValues): void {
-    super.updated(changedProps);
-    if (!changedProps.has("hass")) {
-      return;
+  protected shouldUpdate(changedProps: PropertyValues) {
+    if (changedProps.has("hass")) {
+      this._entityRows?.forEach((element) => {
+        element.hass = this.hass;
+      });
+      return changedProps.size > 1;
     }
-    this._entityRows?.forEach((element) => {
-      element.hass = this.hass;
-    });
+    return true;
   }
 
   protected render(): TemplateResult {
@@ -76,7 +72,11 @@ export class HaDeviceEntitiesCard extends LitElement {
                         class="show-more"
                         @click=${this._toggleShowDisabled}
                       >
-                        +${disabledEntities.length} disabled entities
+                        ${this.hass.localize(
+                          "ui.panel.config.devices.entities.disabled_entities",
+                          "count",
+                          disabledEntities.length
+                        )}
                       </button>
                     `
                   : html`
@@ -87,7 +87,9 @@ export class HaDeviceEntitiesCard extends LitElement {
                         class="show-more"
                         @click=${this._toggleShowDisabled}
                       >
-                        Hide disabled
+                        ${this.hass.localize(
+                          "ui.panel.config.devices.entities.hide_disabled"
+                        )}
                       </button>
                     `
                 : ""}
@@ -159,7 +161,9 @@ export class HaDeviceEntitiesCard extends LitElement {
     addEntitiesToLovelaceView(
       this,
       this.hass,
-      this.entities.map((entity) => entity.entity_id)
+      this.entities
+        .filter((entity) => !entity.disabled_by)
+        .map((entity) => entity.entity_id)
     );
   }
 

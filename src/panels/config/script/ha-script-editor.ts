@@ -1,6 +1,6 @@
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import "@polymer/paper-icon-button/paper-icon-button";
+import "../../../components/ha-icon-button";
 import {
   css,
   CSSResult,
@@ -15,14 +15,12 @@ import { computeObjectId } from "../../../common/entity/compute_object_id";
 import { navigate } from "../../../common/navigate";
 import { computeRTL } from "../../../common/util/compute_rtl";
 import "../../../components/ha-card";
-import "../../../components/ha-fab";
-import "../../../components/ha-paper-icon-button-arrow-prev";
+import "@material/mwc-fab";
 import {
   Action,
   deleteScript,
   getScriptEditorInitData,
   ScriptConfig,
-  ScriptEntity,
 } from "../../../data/script";
 import { showConfirmationDialog } from "../../../dialogs/generic/show-dialog-box";
 import "../../../layouts/ha-app-layout";
@@ -32,19 +30,19 @@ import "../automation/action/ha-automation-action";
 import { HaDeviceAction } from "../automation/action/types/ha-automation-action-device_id";
 import "../ha-config-section";
 import { configSections } from "../ha-panel-config";
+import "../../../components/ha-svg-icon";
+import { mdiContentSave } from "@mdi/js";
 
 export class HaScriptEditor extends LitElement {
   @property() public hass!: HomeAssistant;
 
-  @property() public script!: ScriptEntity;
+  @property() public scriptEntityId!: string;
+
+  @property() public route!: Route;
 
   @property() public isWide?: boolean;
 
   @property() public narrow!: boolean;
-
-  @property() public route!: Route;
-
-  @property() public creatingNew?: boolean;
 
   @property() private _config?: ScriptConfig;
 
@@ -61,17 +59,17 @@ export class HaScriptEditor extends LitElement {
         .backCallback=${() => this._backTapped()}
         .tabs=${configSections.automation}
       >
-        ${this.creatingNew
+        ${!this.scriptEntityId
           ? ""
           : html`
-              <paper-icon-button
+              <ha-icon-button
                 slot="toolbar-icon"
                 title="${this.hass.localize(
                   "ui.panel.config.script.editor.delete_script"
                 )}"
                 icon="hass:delete"
                 @click=${this._deleteConfirm}
-              ></paper-icon-button>
+              ></ha-icon-button>
             `}
         ${this.narrow
           ? html` <span slot="header">${this._config?.alias}</span> `
@@ -143,17 +141,18 @@ export class HaScriptEditor extends LitElement {
               : ""}
           </div>
         </div>
-        <ha-fab
+        <mwc-fab
           ?is-wide=${this.isWide}
           ?narrow=${this.narrow}
           ?dirty=${this._dirty}
-          icon="hass:content-save"
           .title="${this.hass.localize("ui.common.save")}"
           @click=${this._saveScript}
           class="${classMap({
             rtl: computeRTL(this.hass),
           })}"
-        ></ha-fab>
+        >
+          <ha-svg-icon slot="icon" path=${mdiContentSave}></ha-svg-icon>
+        </mwc-fab>
       </hass-tabs-subpage>
     `;
   }
@@ -161,18 +160,18 @@ export class HaScriptEditor extends LitElement {
   protected updated(changedProps: PropertyValues): void {
     super.updated(changedProps);
 
-    const oldScript = changedProps.get("script") as ScriptEntity;
+    const oldScript = changedProps.get("scriptEntityId");
     if (
-      changedProps.has("script") &&
-      this.script &&
+      changedProps.has("scriptEntityId") &&
+      this.scriptEntityId &&
       this.hass &&
       // Only refresh config if we picked a new script. If same ID, don't fetch it.
-      (!oldScript || oldScript.entity_id !== this.script.entity_id)
+      (!oldScript || oldScript !== this.scriptEntityId)
     ) {
       this.hass
         .callApi<ScriptConfig>(
           "GET",
-          `config/script/config/${computeObjectId(this.script.entity_id)}`
+          `config/script/config/${computeObjectId(this.scriptEntityId)}`
         )
         .then(
           (config) => {
@@ -202,7 +201,11 @@ export class HaScriptEditor extends LitElement {
         );
     }
 
-    if (changedProps.has("creatingNew") && this.creatingNew && this.hass) {
+    if (
+      changedProps.has("scriptEntityId") &&
+      !this.scriptEntityId &&
+      this.hass
+    ) {
       const initData = getScriptEditorInitData();
       this._dirty = !!initData;
       this._config = {
@@ -259,19 +262,19 @@ export class HaScriptEditor extends LitElement {
   }
 
   private async _delete() {
-    await deleteScript(this.hass, computeObjectId(this.script.entity_id));
+    await deleteScript(this.hass, computeObjectId(this.scriptEntityId));
     history.back();
   }
 
   private _saveScript(): void {
-    const id = this.creatingNew
-      ? "" + Date.now()
-      : computeObjectId(this.script.entity_id);
+    const id = this.scriptEntityId
+      ? computeObjectId(this.scriptEntityId)
+      : Date.now();
     this.hass!.callApi("POST", "config/script/config/" + id, this._config).then(
       () => {
         this._dirty = false;
 
-        if (this.creatingNew) {
+        if (!this.scriptEntityId) {
           navigate(this, `/config/script/edit/${id}`, true);
         }
       },
@@ -300,7 +303,7 @@ export class HaScriptEditor extends LitElement {
         span[slot="introduction"] a {
           color: var(--primary-color);
         }
-        ha-fab {
+        mwc-fab {
           position: fixed;
           bottom: 16px;
           right: 16px;
@@ -309,24 +312,24 @@ export class HaScriptEditor extends LitElement {
           transition: margin-bottom 0.3s;
         }
 
-        ha-fab[is-wide] {
+        mwc-fab[is-wide] {
           bottom: 24px;
           right: 24px;
         }
-        ha-fab[narrow] {
+        mwc-fab[narrow] {
           bottom: 84px;
           margin-bottom: -140px;
         }
-        ha-fab[dirty] {
+        mwc-fab[dirty] {
           margin-bottom: 0;
         }
 
-        ha-fab.rtl {
+        mwc-fab.rtl {
           right: auto;
           left: 16px;
         }
 
-        ha-fab[is-wide].rtl {
+        mwc-fab[is-wide].rtl {
           bottom: 24px;
           right: auto;
           left: 24px;

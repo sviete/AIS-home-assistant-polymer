@@ -1,4 +1,4 @@
-import "@polymer/paper-icon-button/paper-icon-button";
+import "../../../components/ha-icon-button";
 import { HassEntity } from "home-assistant-js-websocket";
 import {
   css,
@@ -25,12 +25,15 @@ import {
   SUPPORT_VOLUME_BUTTONS,
   SUPPORT_VOLUME_MUTE,
   SUPPORT_VOLUME_SET,
+  computeMediaDescription,
 } from "../../../data/media-player";
-import { HomeAssistant } from "../../../types";
+import type { HomeAssistant } from "../../../types";
 import { hasConfigOrEntityChanged } from "../common/has-changed";
 import "../components/hui-generic-entity-row";
 import "../components/hui-warning";
-import { EntityConfig, LovelaceRow } from "./types";
+import type { EntityConfig, LovelaceRow } from "./types";
+import { installResizeObserver } from "../common/install-resize-observer";
+import { computeStateDisplay } from "../../../common/entity/compute_state_display";
 
 @customElement("hui-media-player-entity-row")
 class HuiMediaPlayerEntityRow extends LitElement implements LovelaceRow {
@@ -102,45 +105,48 @@ class HuiMediaPlayerEntityRow extends LitElement implements LovelaceRow {
     const buttons = html`
       ${!this._narrow && supportsFeature(stateObj, SUPPORT_PREVIOUS_TRACK)
         ? html`
-            <paper-icon-button
+            <ha-icon-button
               icon="hass:skip-previous"
               @click=${this._previousTrack}
-            ></paper-icon-button>
+            ></ha-icon-button>
           `
         : ""}
       ${stateObj.state !== "playing" &&
       !supportsFeature(stateObj, SUPPORTS_PLAY)
         ? ""
         : html`
-            <paper-icon-button
+            <ha-icon-button
               icon=${this._computeControlIcon(stateObj)}
               @click=${this._playPause}
-            ></paper-icon-button>
+            ></ha-icon-button>
           `}
       ${supportsFeature(stateObj, SUPPORT_NEXT_TRACK)
         ? html`
-            <paper-icon-button
+            <ha-icon-button
               icon="hass:skip-next"
               @click=${this._nextTrack}
-            ></paper-icon-button>
+            ></ha-icon-button>
           `
         : ""}
     `;
+
+    const mediaDescription = computeMediaDescription(stateObj);
 
     return html`
       <hui-generic-entity-row
         .hass=${this.hass}
         .config=${this._config}
-        .secondaryText=${this._computeMediaTitle(stateObj)}
+        .secondaryText=${mediaDescription ||
+        computeStateDisplay(this.hass.localize, stateObj, this.hass.language)}
       >
         <div class="controls">
           ${supportsFeature(stateObj, SUPPORT_TURN_ON) &&
           stateObj.state === "off"
             ? html`
-                <paper-icon-button
+                <ha-icon-button
                   icon="hass:power"
                   @click=${this._togglePower}
-                ></paper-icon-button>
+                ></ha-icon-button>
               `
             : !supportsFeature(stateObj, SUPPORT_VOLUME_SET) &&
               !supportsFeature(stateObj, SUPPORT_VOLUME_BUTTONS)
@@ -148,10 +154,10 @@ class HuiMediaPlayerEntityRow extends LitElement implements LovelaceRow {
             : supportsFeature(stateObj, SUPPORT_TURN_OFF) &&
               stateObj.state !== "off"
             ? html`
-                <paper-icon-button
+                <ha-icon-button
                   icon="hass:power"
                   @click=${this._togglePower}
-                ></paper-icon-button>
+                ></ha-icon-button>
               `
             : ""}
         </div>
@@ -164,12 +170,12 @@ class HuiMediaPlayerEntityRow extends LitElement implements LovelaceRow {
               <div class="volume">
                 ${supportsFeature(stateObj, SUPPORT_VOLUME_MUTE)
                   ? html`
-                      <paper-icon-button
+                      <ha-icon-button
                         .icon=${stateObj.attributes.is_volume_muted
                           ? "hass:volume-off"
                           : "hass:volume-high"}
                         @click=${this._toggleMute}
-                      ></paper-icon-button>
+                      ></ha-icon-button>
                     `
                   : ""}
                 ${!this._veryNarrow &&
@@ -187,14 +193,14 @@ class HuiMediaPlayerEntityRow extends LitElement implements LovelaceRow {
                   : !this._veryNarrow &&
                     supportsFeature(stateObj, SUPPORT_VOLUME_BUTTONS)
                   ? html`
-                      <paper-icon-button
+                      <ha-icon-button
                         icon="hass:volume-minus"
                         @click=${this._volumeDown}
-                      ></paper-icon-button>
-                      <paper-icon-button
+                      ></ha-icon-button>
+                      <ha-icon-button
                         icon="hass:volume-plus"
                         @click=${this._volumeUp}
-                      ></paper-icon-button>
+                      ></ha-icon-button>
                     `
                   : ""}
               </div>
@@ -209,19 +215,13 @@ class HuiMediaPlayerEntityRow extends LitElement implements LovelaceRow {
   }
 
   private _attachObserver(): void {
-    if (typeof ResizeObserver !== "function") {
-      import("resize-observer").then((modules) => {
-        modules.install();
-        this._attachObserver();
-      });
-      return;
-    }
+    installResizeObserver().then(() => {
+      this._resizeObserver = new ResizeObserver(() =>
+        this._debouncedResizeListener()
+      );
 
-    this._resizeObserver = new ResizeObserver(() =>
-      this._debouncedResizeListener()
-    );
-
-    this._resizeObserver.observe(this);
+      this._resizeObserver.observe(this);
+    });
   }
 
   private _computeControlIcon(stateObj: HassEntity): string {
@@ -233,30 +233,6 @@ class HuiMediaPlayerEntityRow extends LitElement implements LovelaceRow {
     return supportsFeature(stateObj, SUPPORT_PAUSE)
       ? "hass:pause"
       : "hass:stop";
-  }
-
-  private _computeMediaTitle(stateObj: HassEntity): string {
-    let prefix;
-    let suffix;
-
-    switch (stateObj.attributes.media_content_type) {
-      case "music":
-        prefix = stateObj.attributes.media_artist;
-        suffix = stateObj.attributes.media_title;
-        break;
-      case "tvshow":
-        prefix = stateObj.attributes.media_series_title;
-        suffix = stateObj.attributes.media_title;
-        break;
-      default:
-        prefix =
-          stateObj.attributes.media_title ||
-          stateObj.attributes.app_name ||
-          stateObj.state;
-        suffix = "";
-    }
-
-    return prefix && suffix ? `${prefix}: ${suffix}` : prefix || suffix || "";
   }
 
   private _togglePower(): void {

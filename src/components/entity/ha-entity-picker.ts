@@ -1,4 +1,4 @@
-import "@polymer/paper-icon-button/paper-icon-button";
+import "../ha-icon-button";
 import "@polymer/paper-input/paper-input";
 import "@polymer/paper-item/paper-icon-item";
 import "@polymer/paper-item/paper-item-body";
@@ -38,15 +38,14 @@ const rowRenderer = (
         }
       </style>
       <paper-icon-item>
-        <state-badge state-obj="[[item]]" slot="item-icon"></state-badge>
+        <state-badge slot="item-icon"></state-badge>
         <paper-item-body two-line="">
-          <div class='name'>[[_computeStateName(item)]]</div>
-          <div secondary>[[item.entity_id]]</div>
+          <div class='name'></div>
+          <div secondary></div>
         </paper-item-body>
       </paper-icon-item>
     `;
   }
-
   root.querySelector("state-badge")!.stateObj = model.item;
   root.querySelector(".name")!.textContent = computeStateName(model.item);
   root.querySelector("[secondary]")!.textContent = model.item.entity_id;
@@ -148,6 +147,10 @@ class HaEntityPicker extends LitElement {
     }
   );
 
+  protected shouldUpdate(changedProps: PropertyValues) {
+    return !(!changedProps.has("_opened") && this._opened);
+  }
+
   protected updated(changedProps: PropertyValues) {
     if (changedProps.has("_opened") && this._opened) {
       const states = this._getStates(
@@ -192,7 +195,7 @@ class HaEntityPicker extends LitElement {
         >
           ${this.value
             ? html`
-                <paper-icon-button
+                <ha-icon-button
                   aria-label=${this.hass.localize(
                     "ui.components.entity.entity-picker.clear"
                   )}
@@ -203,11 +206,11 @@ class HaEntityPicker extends LitElement {
                   no-ripple
                 >
                   Clear
-                </paper-icon-button>
+                </ha-icon-button>
               `
             : ""}
 
-          <paper-icon-button
+          <ha-icon-button
             aria-label=${this.hass.localize(
               "ui.components.entity.entity-picker.show_entities"
             )}
@@ -216,7 +219,7 @@ class HaEntityPicker extends LitElement {
             .icon=${this._opened ? "hass:menu-up" : "hass:menu-down"}
           >
             Toggle
-          </paper-icon-button>
+          </ha-icon-button>
         </paper-input>
       </vaadin-combo-box-light>
     `;
@@ -252,9 +255,8 @@ class HaEntityPicker extends LitElement {
 
   static get styles(): CSSResult {
     return css`
-      paper-input > paper-icon-button {
-        width: 24px;
-        height: 24px;
+      paper-input > ha-icon-button {
+        --mdc-icon-button-size: 24px;
         padding: 0px 2px;
         color: var(--secondary-text-color);
       }

@@ -27,7 +27,6 @@ const ALWAYS_LOADED_TYPES = new Set([
   "entities",
   "button",
   "entity-button",
-  "error",
   "glance",
   "history-graph",
   "horizontal-stack",
@@ -40,6 +39,7 @@ const ALWAYS_LOADED_TYPES = new Set([
 
 const LAZY_LOAD_TYPES = {
   "alarm-panel": () => import("../cards/hui-alarm-panel-card"),
+  error: () => import("../cards/hui-error-card"),
   "empty-state": () => import("../cards/hui-empty-state-card"),
   "entity-filter": () => import("../cards/hui-entity-filter-card"),
   "media-control": () => import("../cards/hui-media-control-card"),

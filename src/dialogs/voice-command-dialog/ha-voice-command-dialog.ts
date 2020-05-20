@@ -1,7 +1,6 @@
-import "@polymer/iron-icon/iron-icon";
 import "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
 import type { PaperDialogScrollableElement } from "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
-import "@polymer/paper-icon-button/paper-icon-button";
+import "../../components/ha-icon-button";
 import "@polymer/paper-input/paper-input";
 import type { PaperInputElement } from "@polymer/paper-input/paper-input";
 import {
@@ -178,12 +177,12 @@ export class HaVoiceCommandDialog extends LitElement {
                           </div>
                         `
                       : ""}
-                    <paper-icon-button
+                    <ha-icon-button
                       .active=${Boolean(this.results)}
                       icon="hass:microphone"
                       @click=${this._toggleListening}
                     >
-                    </paper-icon-button>
+                    </ha-icon-button>
                   </span>
                 `
               : ""}
@@ -371,11 +370,11 @@ export class HaVoiceCommandDialog extends LitElement {
           z-index: 103;
         }
 
-        paper-icon-button {
+        ha-icon-button {
           color: var(--secondary-text-color);
         }
 
-        paper-icon-button[active] {
+        ha-icon-button[active] {
           color: var(--primary-color);
         }
 
@@ -459,15 +458,15 @@ export class HaVoiceCommandDialog extends LitElement {
         }
 
         .bouncer {
-          width: 40px;
-          height: 40px;
+          width: 48px;
+          height: 48px;
           position: absolute;
           top: 0;
         }
         .double-bounce1,
         .double-bounce2 {
-          width: 40px;
-          height: 40px;
+          width: 48px;
+          height: 48px;
           border-radius: 50%;
           background-color: var(--primary-color);
           opacity: 0.2;

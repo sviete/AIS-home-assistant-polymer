@@ -3,7 +3,7 @@ const gulp = require("gulp");
 const envVars = require("../env");
 
 require("./clean.js");
-require("./gen-icons.js");
+require("./gen-icons-json.js");
 require("./webpack.js");
 require("./compress.js");
 
@@ -14,7 +14,7 @@ gulp.task(
       process.env.NODE_ENV = "development";
     },
     "clean-hassio",
-    gulp.parallel("gen-icons-hassio", "gen-icons-mdi"),
+    "gen-icons-json",
     "webpack-watch-hassio"
   )
 );
@@ -26,9 +26,9 @@ gulp.task(
       process.env.NODE_ENV = "production";
     },
     "clean-hassio",
-    gulp.parallel("gen-icons-hassio", "gen-icons-mdi"),
+    "gen-icons-json",
     "webpack-prod-hassio",
     ...// Don't compress running tests
-    (envVars.isTravis() ? [] : ["compress-hassio"])
+    (envVars.isTest() ? [] : ["compress-hassio"])
   )
 );
