@@ -122,6 +122,11 @@ class HuiGenericEntityRow extends LitElement {
                   ? `${this.hass.localize("ui.card.cover.tilt_position")}: ${
                       stateObj.attributes.current_tilt_position
                     }`
+                  : this.config.secondary_info === "brightness" &&
+                    stateObj.attributes.brightness
+                  ? html`${Math.round(
+                      (stateObj.attributes.brightness / 255) * 100
+                    )}%`
                   : "")}
               </div>
             `
@@ -178,11 +183,6 @@ class HuiGenericEntityRow extends LitElement {
       }
       state-badge {
         flex: 0 0 40px;
-      }
-      state-badge:focus {
-        outline: none;
-        background: var(--divider-color);
-        border-radius: 100%;
       }
       :host([rtl]) .flex {
         margin-left: 0;

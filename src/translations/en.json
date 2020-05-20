@@ -231,10 +231,14 @@
       }
     },
     "common": {
+      "and": "and",
+      "previous": "Previous",
       "loading": "Loading",
+      "refresh": "Refresh",
       "cancel": "Cancel",
       "delete": "Delete",
       "close": "Close",
+      "next": "Next",
       "undo": "Undo",
       "save": "Save",
       "yes": "Yes",
@@ -376,7 +380,7 @@
         }
       },
       "helper_settings": {
-        "platform_not_loaded": "The {platform} integration is not loaded. Please add it your configuration either by adding 'default_config:' or '{platform}:'.",
+        "platform_not_loaded": "The {platform} integration is not loaded. Please add it your configuration either by adding 'default_config:' or ''{platform}:''.",
         "yaml_not_editable": "The settings of this entity cannot be edited from the UI. Only entities set up from the UI are configurable from the UI.",
         "required_error_msg": "This field is required",
         "generic": {
@@ -499,6 +503,7 @@
       "sidebar_toggle": "Sidebar Toggle"
     },
     "panel": {
+      "calendar": { "my_calendars": "My Calendars", "today": "Today" },
       "config": {
         "header": "Configure Home Assistant",
         "introduction": "Here it is possible to configure your components and Home Assistant. Not everything is possible to configure from the UI yet, but we're working on it.",
@@ -586,7 +591,9 @@
                 "unit_system_metric": "Metric",
                 "imperial_example": "Fahrenheit, pounds",
                 "metric_example": "Celsius, kilograms",
-                "save_button": "Save"
+                "save_button": "Save",
+                "external_url": "External URL",
+                "internal_url": "Internal URL"
               }
             }
           }
@@ -867,6 +874,9 @@
                     "below": "Below",
                     "for": "Duration"
                   }
+                },
+                "not": {
+                  "label": "Not"
                 },
                 "numeric_state": {
                   "label": "[%key:ui::panel::config::automation::editor::triggers::type::numeric_state::label%]",
@@ -1184,6 +1194,7 @@
         "devices": {
           "caption": "Devices",
           "description": "Manage connected devices",
+          "device_info": "Device info",
           "unnamed_device": "Unnamed device",
           "unknown_error": "Unknown error",
           "name": "Name",
@@ -1219,7 +1230,9 @@
           "entities": {
             "entities": "Entities",
             "add_entities_lovelace": "Add to Lovelace",
-            "none": "This device has no entities"
+            "none": "This device has no entities",
+            "hide_disabled": "Hide disabled",
+            "disabled_entities": "+{count} {count, plural,\n  one {disabled entity}\n  other {disabled entities}\n}"
           },
           "scripts": "Scripts",
           "scenes": "Scenes",
@@ -1351,6 +1364,8 @@
           "home_assistant_website": "Home Assistant website",
           "configure": "Configure",
           "none": "Nothing configured yet",
+          "none_found": "No integrations found",
+          "none_found_detail": "Adjust your search criteria.",
           "integration_not_found": "Integration not found.",
           "details": "Integration details",
           "rename_dialog": "Edit the name of this config entry",
@@ -1378,6 +1393,7 @@
             "manuf": "by {manufacturer}",
             "hub": "Connected via",
             "firmware": "Firmware: {version}",
+            "unnamed_entry": "Unnamed entry",
             "device_unavailable": "device unavailable",
             "entity_unavailable": "entity unavailable",
             "area": "In {area}",
@@ -1680,9 +1696,9 @@
         },
         "views": {
           "confirm_delete": "Delete view?",
-          "confirm_delete_text": "Are you sure you want to delete your '{name}' view?",
+          "confirm_delete_text": "Are you sure you want to delete your ''{name}'' view?",
           "confirm_delete_existing_cards": "Deleting this view will also remove the cards",
-          "confirm_delete_existing_cards_text": "Are you sure you want to delete your '{name}' view? The view contains {number} cards that will be deleted. This action cannot be undone."
+          "confirm_delete_existing_cards_text": "Are you sure you want to delete your ''{name}'' view? The view contains {number} cards that will be deleted. This action cannot be undone."
         },
         "menu": {
           "configure_ui": "Configure UI",
@@ -1872,7 +1888,8 @@
               "no_theme": "No theme",
               "unit": "Unit",
               "url": "Url",
-              "state": "State"
+              "state": "State",
+              "secondary_info_attribute": "Secondary Info Attribute"
             },
             "map": {
               "name": "Map",
@@ -1933,7 +1950,8 @@
             },
             "weather-forecast": {
               "name": "Weather Forecast",
-              "description": "The Weather Forecast card displays the weather. Very useful to include on interfaces that people display on the wall."
+              "description": "The Weather Forecast card displays the weather. Very useful to include on interfaces that people display on the wall.",
+              "show_forecast": "Show Forecast"
             }
           },
           "view": {
@@ -2217,7 +2235,10 @@
             "icons_by": "Icons by",
             "frontend_version": "Frontend version: {version} - {type}",
             "custom_uis": "Custom UIs:",
-            "system_health_error": "System Health component is not loaded. Add 'system_health:' to configuration.yaml"
+            "system_health_error": "System Health component is not loaded. Add 'system_health:' to configuration.yaml",
+            "integrations": "Integrations",
+            "documentation": "Documentation",
+            "issues": "Issues"
           },
           "logs": {
             "title": "Logs",

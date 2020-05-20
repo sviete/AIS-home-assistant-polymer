@@ -1,4 +1,3 @@
-import "@material/mwc-ripple";
 import {
   css,
   CSSResult,
@@ -45,7 +44,9 @@ export class HuiButtonsBase extends LitElement {
       ${(this.configEntities || []).map((entityConf) => {
         const stateObj = this._hass!.states[entityConf.entity];
         if (!stateObj) {
-          return html`<div class='missing'><iron-icon icon="hass:alert"></div>`;
+          return html`<div class="missing">
+            <ha-icon icon="hass:alert"></ha-icon>
+          </div>`;
         }
 
         return html`
@@ -76,7 +77,6 @@ export class HuiButtonsBase extends LitElement {
                 ? entityConf.name || computeStateName(stateObj)
                 : ""}
             </span>
-            <mwc-ripple unbounded></mwc-ripple>
           </div>
         `;
       })}
@@ -106,6 +106,7 @@ export class HuiButtonsBase extends LitElement {
         cursor: pointer;
         align-items: center;
         display: inline-flex;
+        outline: none;
       }
     `;
   }

@@ -206,6 +206,8 @@
             "stopped": "Stopped"
         },
         "default": {
+            "off": "Off",
+            "on": "On",
             "unavailable": "Unavailable",
             "unknown": "Unknown"
         },
@@ -471,11 +473,15 @@
             }
         },
         "common": {
+            "and": "and",
             "cancel": "Cancel",
             "close": "Close",
             "delete": "Delete",
             "loading": "Loading",
+            "next": "Next",
             "no": "No",
+            "previous": "Previous",
+            "refresh": "Refresh",
             "save": "Save",
             "successfully_deleted": "Successfully deleted",
             "successfully_saved": "Successfully saved",
@@ -611,7 +617,7 @@
                     "pattern": "Regex pattern for client-side validation",
                     "text": "Text"
                 },
-                "platform_not_loaded": "The {platform} integration is not loaded. Please add it your configuration either by adding 'default_config:' or '{platform}:'.",
+                "platform_not_loaded": "The {platform} integration is not loaded. Please add it your configuration either by adding 'default_config:' or ''{platform}:''.",
                 "required_error_msg": "This field is required",
                 "yaml_not_editable": "The settings of this entity cannot be edited from the UI. Only entities set up from the UI are configurable from the UI."
             },
@@ -735,6 +741,10 @@
             "triggered": "Triggered {name}"
         },
         "panel": {
+            "calendar": {
+                "my_calendars": "My Calendars",
+                "today": "Today"
+            },
             "config": {
                 "advanced_mode": {
                     "hint_enable": "Missing config options? Enable advanced mode on",
@@ -836,6 +846,9 @@
                                         "for": "Duration"
                                     },
                                     "label": "Device"
+                                },
+                                "not": {
+                                    "label": "Not"
                                 },
                                 "numeric_state": {
                                     "above": "Above",
@@ -1168,7 +1181,9 @@
                                 "edit_requires_storage": "Editor disabled because config stored in configuration.yaml.",
                                 "elevation": "Elevation",
                                 "elevation_meters": "meters",
+                                "external_url": "External URL",
                                 "imperial_example": "Fahrenheit, pounds",
+                                "internal_url": "Internal URL",
                                 "latitude": "Latitude",
                                 "location_name": "Name of your Home Assistant installation",
                                 "longitude": "Longitude",
@@ -1235,10 +1250,13 @@
                     },
                     "delete": "Delete",
                     "description": "Manage connected devices",
+                    "device_info": "Device info",
                     "device_not_found": "Device not found.",
                     "entities": {
                         "add_entities_lovelace": "Add to Lovelace",
+                        "disabled_entities": "+{count} {count, plural,\n  one {disabled entity}\n  other {disabled entities}\n}",
                         "entities": "Entities",
+                        "hide_disabled": "Hide disabled",
                         "none": "This device has no entities"
                     },
                     "name": "Name",
@@ -1358,7 +1376,8 @@
                         "restart_confirm": "Restart Home Assistant to finish removing this integration",
                         "settings_button": "Edit settings for {integration}",
                         "system_options": "System options",
-                        "system_options_button": "System options for {integration}"
+                        "system_options_button": "System options for {integration}",
+                        "unnamed_entry": "Unnamed entry"
                     },
                     "config_flow": {
                         "aborted": "Aborted",
@@ -1397,6 +1416,8 @@
                     "new": "Set up a new integration",
                     "no_integrations": "Seems like you don't have any integations configured yet. Click on the button below to add your first integration!",
                     "none": "Nothing configured yet",
+                    "none_found": "No integrations found",
+                    "none_found_detail": "Adjust your search criteria.",
                     "note_about_integrations": "Not all integrations can be configured via the UI yet.",
                     "note_about_website_reference": "More are available on the ",
                     "rename_dialog": "Edit the name of this config entry",
@@ -1904,10 +1925,13 @@
                         "built_using": "Built using",
                         "custom_uis": "Custom UIs:",
                         "developed_by": "Developed by a bunch of awesome people.",
+                        "documentation": "Documentation",
                         "frontend": "frontend-ui",
                         "frontend_version": "Frontend version: {version} - {type}",
                         "home_assistant_logo": "Home Assistant logo",
                         "icons_by": "Icons by",
+                        "integrations": "Integrations",
+                        "issues": "Issues",
                         "license": "Published under the Apache 2.0 license",
                         "path_configuration": "Path to configuration.yaml: {path}",
                         "server": "server",
@@ -2098,6 +2122,7 @@
                             "name": "Name",
                             "no_theme": "No theme",
                             "refresh_interval": "Refresh Interval",
+                            "secondary_info_attribute": "Secondary Info Attribute",
                             "show_icon": "Show Icon?",
                             "show_name": "Show Name?",
                             "show_state": "Show State?",
@@ -2188,7 +2213,8 @@
                         },
                         "weather-forecast": {
                             "description": "The Weather Forecast card displays the weather. Very useful to include on interfaces that people display on the wall.",
-                            "name": "Weather Forecast"
+                            "name": "Weather Forecast",
+                            "show_forecast": "Show Forecast"
                         }
                     },
                     "cardpicker": {
@@ -2305,8 +2331,8 @@
                 "views": {
                     "confirm_delete": "Delete view?",
                     "confirm_delete_existing_cards": "Deleting this view will also remove the cards",
-                    "confirm_delete_existing_cards_text": "Are you sure you want to delete your '{name}' view? The view contains {number} cards that will be deleted. This action cannot be undone.",
-                    "confirm_delete_text": "Are you sure you want to delete your '{name}' view?"
+                    "confirm_delete_existing_cards_text": "Are you sure you want to delete your ''{name}'' view? The view contains {number} cards that will be deleted. This action cannot be undone.",
+                    "confirm_delete_text": "Are you sure you want to delete your ''{name}'' view?"
                 },
                 "warning": {
                     "attribute_not_found": "Attribute {attribute} not available in: {entity}",

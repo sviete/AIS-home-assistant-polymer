@@ -1,5 +1,4 @@
 import "@material/mwc-button";
-import "@polymer/paper-card/paper-card";
 import {
   css,
   CSSResult,
@@ -11,11 +10,13 @@ import {
 } from "lit-element";
 import { fireEvent } from "../../../src/common/dom/fire_event";
 import "../../../src/components/buttons/ha-call-api-button";
+import "../../../src/components/ha-card";
 import {
   HassioSupervisorInfo as HassioSupervisorInfoType,
   setSupervisorOption,
   SupervisorOptions,
 } from "../../../src/data/hassio/supervisor";
+import { showConfirmationDialog } from "../../../src/dialogs/generic/show-dialog-box";
 import { haStyle } from "../../../src/resources/styles";
 import { HomeAssistant } from "../../../src/types";
 import { hassioStyle } from "../resources/hassio-style";
@@ -30,7 +31,7 @@ class HassioSupervisorInfo extends LitElement {
 
   public render(): TemplateResult | void {
     return html`
-      <paper-card>
+      <ha-card>
         <div class="card-content">
           <h2>Supervisor</h2>
           <table class="info">
@@ -91,7 +92,7 @@ class HassioSupervisorInfo extends LitElement {
               `
             : ""}
         </div>
-      </paper-card>
+      </ha-card>
     `;
   }
 
@@ -100,7 +101,7 @@ class HassioSupervisorInfo extends LitElement {
       haStyle,
       hassioStyle,
       css`
-        paper-card {
+        ha-card {
           height: 100%;
           width: 100%;
         }
@@ -142,17 +143,30 @@ class HassioSupervisorInfo extends LitElement {
   }
 
   private async _joinBeta() {
-    if (
-      !confirm(`WARNING:
-Beta releases are for testers and early adopters and can contain unstable code changes. Make sure you have backups of your data before you activate this feature.
+    const confirmed = await showConfirmationDialog(this, {
+      title: "WARNING",
+      text: html` Beta releases are for testers and early adopters and can
+        contain unstable code changes.
+        <br />
+        <b>
+          Make sure you have backups of your data before you activate this
+          feature.
+        </b>
+        <br /><br />
+        This includes beta releases for:
+        <li>Home Assistant Core</li>
+        <li>Home Assistant Supervisor</li>
+        <li>Home Assistant Operating System</li>
+        <br />
+        Do you want to join the beta channel?`,
+      confirmText: "join beta",
+      dismissText: "no",
+    });
 
-This includes beta releases for:
-- Home Assistant (Release Candidates)
-- Hass.io supervisor
-- Host system`)
-    ) {
+    if (!confirmed) {
       return;
     }
+
     try {
       const data: SupervisorOptions = { channel: "beta" };
       await setSupervisorOption(this.hass, data);

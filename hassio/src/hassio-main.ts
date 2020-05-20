@@ -1,4 +1,3 @@
-import "@polymer/paper-icon-button";
 import { PolymerElement } from "@polymer/polymer";
 import { customElement, property, PropertyValues } from "lit-element";
 import { applyThemesOnElement } from "../../src/common/dom/apply_themes_on_element";
@@ -32,13 +31,7 @@ import { ProvideHassLitMixin } from "../../src/mixins/provide-hass-lit-mixin";
 import "../../src/resources/ha-style";
 import { HomeAssistant } from "../../src/types";
 // Don't codesplit it, that way the dashboard always loads fast.
-import "./hassio-pages-with-tabs";
-
-// The register callback of the IronA11yKeysBehavior inside paper-icon-button
-// is not called, causing _keyBindings to be uninitiliazed for paper-icon-button,
-// causing an exception when added to DOM. When transpiled to ES5, this will
-// break the build.
-customElements.get("paper-icon-button").prototype._keyBindings = {};
+import "./hassio-panel";
 
 @customElement("hassio-main")
 class HassioMain extends ProvideHassLitMixin(HassRouterPage) {
@@ -55,17 +48,17 @@ class HassioMain extends ProvideHassLitMixin(HassRouterPage) {
     showLoading: true,
     routes: {
       dashboard: {
-        tag: "hassio-pages-with-tabs",
+        tag: "hassio-panel",
         cache: true,
       },
       snapshots: "dashboard",
       store: "dashboard",
       system: "dashboard",
       addon: {
-        tag: "hassio-addon-view",
+        tag: "hassio-addon-dashboard",
         load: () =>
           import(
-            /* webpackChunkName: "hassio-addon-view" */ "./addon-view/hassio-addon-view"
+            /* webpackChunkName: "hassio-addon-dashboard" */ "./addon-view/hassio-addon-dashboard"
           ),
       },
       ingress: {
@@ -94,6 +87,20 @@ class HassioMain extends ProvideHassLitMixin(HassRouterPage) {
       this.hass.themes,
       this.hass.selectedTheme || this.hass.themes.default_theme
     );
+
+    this.style.setProperty(
+      "--app-header-background-color",
+      "var(--sidebar-background-color)"
+    );
+    this.style.setProperty(
+      "--app-header-text-color",
+      "var(--sidebar-text-color)"
+    );
+    this.style.setProperty(
+      "--app-header-border-bottom",
+      "1px solid var(--divider-color)"
+    );
+
     this.addEventListener("hass-api-called", (ev) => this._apiCalled(ev));
     // Paulus - March 17, 2019
     // We went to a single hass-toggle-menu event in HA 0.90. However, the
@@ -132,8 +139,7 @@ class HassioMain extends ProvideHassLitMixin(HassRouterPage) {
 
   protected updatePageEl(el) {
     // the tabs page does its own routing so needs full route.
-    const route =
-      el.nodeName === "HASSIO-PAGES-WITH-TABS" ? this.route : this.routeTail;
+    const route = el.nodeName === "HASSIO-PANEL" ? this.route : this.routeTail;
 
     if ("setProperties" in el) {
       // As long as we have Polymer pages
@@ -205,7 +211,7 @@ class HassioMain extends ProvideHassLitMixin(HassRouterPage) {
       await awaitAlert(
         {
           text: "Unable to fetch add-on info to start Ingress",
-          title: "Hass.io",
+          title: "Supervisor",
         },
         () => history.back()
       );
@@ -231,7 +237,7 @@ class HassioMain extends ProvideHassLitMixin(HassRouterPage) {
           text: "Add-on is not running. Please start it first",
           title: addon.name,
         },
-        () => navigate(this, `/hassio/addon/${addon.slug}`, true)
+        () => navigate(this, `/hassio/addon/${addon.slug}/info`, true)
       );
 
       return;

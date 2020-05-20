@@ -96,6 +96,7 @@ documentContainer.innerHTML = `<custom-style>
       --rgb-primary-text-color: 255, 255, 255;
       --rgb-secondary-text-color: 114, 114, 114;
       --rgb-text-primary-color: 255, 255, 255;
+      --rgb-card-background-color: 255, 255, 255;
 
       ${Object.entries(derivedStyles)
         .map(([key, value]) => `--${key}: ${value};`)

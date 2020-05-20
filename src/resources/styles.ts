@@ -42,11 +42,14 @@ export const derivedStyles = {
   "mdc-theme-on-primary": "var(--text-primary-color)",
   "mdc-theme-on-secondary": "var(--text-primary-color)",
   "mdc-theme-on-surface": "var(--primary-text-color)",
+  "mdc-theme-text-primary-on-background": "var(--primary-text-color)",
   "app-header-text-color": "var(--text-primary-color)",
   "app-header-background-color": "var(--primary-color)",
   "material-body-text-color": "var(--primary-text-color)",
   "material-background-color": "var(--card-background-color)",
   "material-secondary-background-color": "var(--secondary-background-color)",
+  "mdc-checkbox-unchecked-color": "rgba(var(--rgb-primary-text-color), 0.54)",
+  "mdc-checkbox-disabled-color": "var(--disabled-text-color)",
 };
 
 export const haStyle = css`
@@ -71,8 +74,8 @@ export const haStyle = css`
   }
 
   app-toolbar ha-menu-button + [main-title],
-  app-toolbar ha-paper-icon-button-arrow-prev + [main-title],
-  app-toolbar paper-icon-button + [main-title] {
+  app-toolbar ha-icon-button-arrow-prev + [main-title],
+  app-toolbar ha-icon-button + [main-title] {
     margin-left: 24px;
   }
 

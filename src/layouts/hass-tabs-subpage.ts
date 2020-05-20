@@ -14,9 +14,11 @@ import memoizeOne from "memoize-one";
 import { isComponentLoaded } from "../common/config/is_component_loaded";
 import { navigate } from "../common/navigate";
 import "../components/ha-menu-button";
-import "../components/ha-paper-icon-button-arrow-prev";
+import "../components/ha-icon-button-arrow-prev";
 import { HomeAssistant, Route } from "../types";
+import "../components/ha-svg-icon";
 import "../components/ha-icon";
+import "../components/ha-tab";
 
 export interface PageNavigation {
   path: string;
@@ -26,6 +28,7 @@ export interface PageNavigation {
   core?: boolean;
   advancedOnly?: boolean;
   icon?: string;
+  iconPath?: string;
   info?: any;
 }
 
@@ -33,11 +36,13 @@ export interface PageNavigation {
 class HassTabsSubpage extends LitElement {
   @property() public hass!: HomeAssistant;
 
+  @property({ type: Boolean }) public hassio = false;
+
   @property({ type: String, attribute: "back-path" }) public backPath?: string;
 
   @property() public backCallback?: () => void;
 
-  @property({ type: Boolean }) public hassio = false;
+  @property({ type: Boolean, attribute: "main-page" }) public mainPage = false;
 
   @property() public route!: Route;
 
@@ -67,27 +72,23 @@ class HassTabsSubpage extends LitElement {
       return shownTabs.map(
         (page) =>
           html`
-            <div
-              class="tab ${classMap({
-                active: page === activeTab,
-              })}"
+            <ha-tab
+              .hass=${this.hass}
               @click=${this._tabTapped}
               .path=${page.path}
+              .active=${page === activeTab}
+              .narrow=${this.narrow}
+              .name=${page.translationKey
+                ? this.hass.localize(page.translationKey)
+                : page.name}
             >
-              ${this.narrow
-                ? html` <ha-icon .icon=${page.icon}></ha-icon> `
-                : ""}
-              ${!this.narrow || page === activeTab
-                ? html`
-                    <span class="name"
-                      >${page.translationKey
-                        ? this.hass.localize(page.translationKey)
-                        : name}</span
-                    >
-                  `
-                : ""}
-              <mwc-ripple></mwc-ripple>
-            </div>
+              ${page.iconPath
+                ? html`<ha-svg-icon
+                    slot="icon"
+                    .path=${page.iconPath}
+                  ></ha-svg-icon>`
+                : html`<ha-icon slot="icon" .icon=${page.icon}></ha-icon>`}
+            </ha-tab>
           `
       );
     }
@@ -97,7 +98,7 @@ class HassTabsSubpage extends LitElement {
     super.updated(changedProperties);
     if (changedProperties.has("route")) {
       this._activeTab = this.tabs.find((tab) =>
-        this.route.prefix.includes(tab.path)
+        `${this.route.prefix}${this.route.path}`.includes(tab.path)
       );
     }
   }
@@ -114,11 +115,20 @@ class HassTabsSubpage extends LitElement {
 
     return html`
       <div class="toolbar">
-        <ha-paper-icon-button-arrow-prev
-          aria-label="Back"
-          .hassio=${this.hassio}
-          @click=${this._backTapped}
-        ></ha-paper-icon-button-arrow-prev>
+        ${this.mainPage
+          ? html`
+              <ha-menu-button
+                .hassio=${this.hassio}
+                .hass=${this.hass}
+                .narrow=${this.narrow}
+              ></ha-menu-button>
+            `
+          : html`
+              <ha-icon-button-arrow-prev
+                aria-label="Back"
+                @click=${this._backTapped}
+              ></ha-icon-button-arrow-prev>
+            `}
         ${this.narrow
           ? html` <div class="main-title"><slot name="header"></slot></div> `
           : ""}
@@ -139,7 +149,7 @@ class HassTabsSubpage extends LitElement {
     `;
   }
 
-  private _tabTapped(ev: MouseEvent): void {
+  private _tabTapped(ev: Event): void {
     navigate(this, (ev.currentTarget as any).path, true);
   }
 
@@ -161,6 +171,10 @@ class HassTabsSubpage extends LitElement {
         display: block;
         height: 100%;
         background-color: var(--primary-background-color);
+      }
+
+      ha-menu-button {
+        margin-right: 24px;
       }
 
       .toolbar {
@@ -200,41 +214,12 @@ class HassTabsSubpage extends LitElement {
         justify-content: center;
       }
 
-      .tab {
-        padding: 0 32px;
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-        height: 64px;
-        cursor: pointer;
-      }
-
-      .name {
-        white-space: nowrap;
-      }
-
-      .tab.active {
-        color: var(--primary-color);
-      }
-
-      #tabbar:not(.bottom-bar) .tab.active {
-        border-bottom: 2px solid var(--primary-color);
-      }
-
-      .bottom-bar .tab {
-        padding: 0 16px;
-        width: 20%;
-        min-width: 0;
-      }
-
       :host(:not([narrow])) #toolbar-icon {
         min-width: 40px;
       }
 
       ha-menu-button,
-      ha-paper-icon-button-arrow-prev,
+      ha-icon-button-arrow-prev,
       ::slotted([slot="toolbar-icon"]) {
         flex-shrink: 0;
         pointer-events: auto;

@@ -1,10 +1,6 @@
 import { customElement, property, UpdatingElement } from "lit-element";
-// @ts-ignore
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import markdownWorker from "workerize-loader!../resources/markdown_worker";
 import { fireEvent } from "../common/dom/fire_event";
-
-let worker: any | undefined;
+import { renderMarkdown } from "../resources/render-markdown";
 
 @customElement("ha-markdown")
 class HaMarkdown extends UpdatingElement {
@@ -12,21 +8,18 @@ class HaMarkdown extends UpdatingElement {
 
   @property({ type: Boolean }) public allowSvg = false;
 
+  @property({ type: Boolean }) public breaks = false;
+
   protected update(changedProps) {
     super.update(changedProps);
-
-    if (!worker) {
-      worker = markdownWorker();
-    }
-
     this._render();
   }
 
   private async _render() {
-    this.innerHTML = await worker.renderMarkdown(
+    this.innerHTML = await renderMarkdown(
       this.content,
       {
-        breaks: true,
+        breaks: this.breaks,
         gfm: true,
         tables: true,
       },
@@ -60,7 +53,7 @@ class HaMarkdown extends UpdatingElement {
         node.rel = "noreferrer noopener";
 
         // Fire a resize event when images loaded to notify content resized
-      } else if (node) {
+      } else if (node instanceof HTMLImageElement) {
         node.addEventListener("load", this._resize);
       }
     }

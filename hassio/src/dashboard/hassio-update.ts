@@ -1,6 +1,5 @@
 import "@material/mwc-button";
-import "@polymer/iron-icon/iron-icon";
-import "@polymer/paper-card/paper-card";
+import { mdiHomeAssistant } from "@mdi/js";
 import {
   css,
   CSSResult,
@@ -11,6 +10,8 @@ import {
   TemplateResult,
 } from "lit-element";
 import "../../../src/components/buttons/ha-call-api-button";
+import "../../../src/components/ha-card";
+import "../../../src/components/ha-svg-icon";
 import { HassioHassOSInfo } from "../../../src/data/hassio/host";
 import {
   HassioHomeAssistantInfo,
@@ -18,7 +19,6 @@ import {
 } from "../../../src/data/hassio/supervisor";
 import { haStyle } from "../../../src/resources/styles";
 import { HomeAssistant } from "../../../src/types";
-import "../components/hassio-card-content";
 import { hassioStyle } from "../resources/hassio-style";
 
 @customElement("hassio-update")
@@ -72,7 +72,7 @@ export class HassioUpdate extends LitElement {
             `https://${
               this.hassInfo.version_latest.includes("b") ? "rc" : "www"
             }.home-assistant.io/latest-release-notes/`,
-            "hassio:home-assistant"
+            mdiHomeAssistant
           )}
           ${this._renderUpdateCard(
             "Supervisor",
@@ -107,12 +107,12 @@ export class HassioUpdate extends LitElement {
       return html``;
     }
     return html`
-      <paper-card>
+      <ha-card>
         <div class="card-content">
           ${icon
             ? html`
                 <div class="icon">
-                  <iron-icon .icon=${icon}></iron-icon>
+                  <ha-svg-icon .path=${icon}></ha-svg-icon>
                 </div>
               `
             : ""}
@@ -133,7 +133,7 @@ export class HassioUpdate extends LitElement {
             Update
           </ha-call-api-button>
         </div>
-      </paper-card>
+      </ha-card>
     `;
   }
 
@@ -158,15 +158,16 @@ export class HassioUpdate extends LitElement {
       hassioStyle,
       css`
         .icon {
-          --iron-icon-height: 48px;
-          --iron-icon-width: 48px;
+          --mdc-icon-size: 48px;
           float: right;
           margin: 0 0 2px 10px;
+          color: var(--primary-text-color);
         }
         .update-heading {
           font-size: var(--paper-font-subhead_-_font-size);
           font-weight: 500;
           margin-bottom: 0.5em;
+          color: var(--primary-text-color);
         }
         .warning {
           color: var(--secondary-text-color);

@@ -1,4 +1,4 @@
-import "@polymer/paper-icon-button/paper-icon-button";
+import "../../../components/ha-icon-button";
 import "@polymer/paper-tooltip/paper-tooltip";
 import {
   css,
@@ -15,7 +15,7 @@ import { fireEvent } from "../../../common/dom/fire_event";
 import { computeStateName } from "../../../common/entity/compute_state_name";
 import { computeRTL } from "../../../common/util/compute_rtl";
 import { DataTableColumnContainer } from "../../../components/data-table/ha-data-table";
-import "../../../components/ha-fab";
+import "@material/mwc-fab";
 import { forwardHaptic } from "../../../data/haptics";
 import { activateScene, SceneEntity } from "../../../data/scene";
 import { showAlertDialog } from "../../../dialogs/generic/show-dialog-box";
@@ -24,6 +24,8 @@ import { haStyle } from "../../../resources/styles";
 import { HomeAssistant, Route } from "../../../types";
 import { showToast } from "../../../util/toast";
 import { configSections } from "../ha-panel-config";
+import "../../../components/ha-svg-icon";
+import { mdiPlus } from "@mdi/js";
 
 @customElement("ha-scene-dashboard")
 class HaSceneDashboard extends LitElement {
@@ -54,14 +56,14 @@ class HaSceneDashboard extends LitElement {
           type: "icon-button",
           template: (_toggle, scene) =>
             html`
-              <paper-icon-button
+              <ha-icon-button
                 .scene=${scene}
                 icon="hass:play"
                 title="${this.hass.localize(
                   "ui.panel.config.scene.picker.activate_scene"
                 )}"
                 @click=${(ev: Event) => this._activateScene(ev)}
-              ></paper-icon-button>
+              ></ha-icon-button>
             `,
         },
         name: {
@@ -77,14 +79,14 @@ class HaSceneDashboard extends LitElement {
           title: "",
           type: "icon-button",
           template: (_info, scene) => html`
-            <paper-icon-button
+            <ha-icon-button
               .scene=${scene}
               @click=${this._showInfo}
               icon="hass:information-outline"
               title="${this.hass.localize(
                 "ui.panel.config.scene.picker.show_info_scene"
               )}"
-            ></paper-icon-button>
+            ></ha-icon-button>
           `,
         },
         edit: {
@@ -98,13 +100,13 @@ class HaSceneDashboard extends LitElement {
                   : undefined
               )}
             >
-              <paper-icon-button
+              <ha-icon-button
                 .icon=${scene.attributes.id ? "hass:pencil" : "hass:pencil-off"}
                 .disabled=${!scene.attributes.id}
                 title="${this.hass.localize(
                   "ui.panel.config.scene.picker.edit_scene"
                 )}"
-              ></paper-icon-button>
+              ></ha-icon-button>
             </a>
             ${!scene.attributes.id
               ? html`
@@ -137,20 +139,21 @@ class HaSceneDashboard extends LitElement {
         )}
         hasFab
       >
-        <paper-icon-button
+        <ha-icon-button
           slot="toolbar-icon"
           icon="hass:help-circle"
           @click=${this._showHelp}
-        ></paper-icon-button>
+        ></ha-icon-button>
       </hass-tabs-subpage-data-table>
       <a href="/config/scene/edit/new">
-        <ha-fab
+        <mwc-fab
           ?is-wide=${this.isWide}
           ?narrow=${this.narrow}
-          icon="hass:plus"
           title=${this.hass.localize("ui.panel.config.scene.picker.add_scene")}
           ?rtl=${computeRTL(this.hass)}
-        ></ha-fab>
+        >
+          <ha-svg-icon slot="icon" path=${mdiPlus}></ha-svg-icon>
+        </mwc-fab>
       </a>
     `;
   }
@@ -197,26 +200,26 @@ class HaSceneDashboard extends LitElement {
     return [
       haStyle,
       css`
-        ha-fab {
+        mwc-fab {
           position: fixed;
           bottom: 16px;
           right: 16px;
           z-index: 1;
         }
 
-        ha-fab[is-wide] {
+        mwc-fab[is-wide] {
           bottom: 24px;
           right: 24px;
         }
-        ha-fab[narrow] {
+        mwc-fab[narrow] {
           bottom: 84px;
         }
-        ha-fab[rtl] {
+        mwc-fab[rtl] {
           right: auto;
           left: 16px;
         }
 
-        ha-fab[rtl][is-wide] {
+        mwc-fab[rtl][is-wide] {
           bottom: 24px;
           right: auto;
           left: 24px;
