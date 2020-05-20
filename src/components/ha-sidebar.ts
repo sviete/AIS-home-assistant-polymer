@@ -399,7 +399,8 @@ class HaSidebar extends LitElement {
     const pathName = window.location.pathname;
     if (pathName === "/lovelace/ais_audio") {
       return "lovelace/ais_audio";
-    } else if (pathName === "/lovelace/ais_zigbee") {
+    }
+    if (pathName === "/lovelace/ais_zigbee") {
       return "lovelace/ais_zigbee";
     }
     return hass.panelUrl;

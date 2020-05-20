@@ -78,7 +78,9 @@ export class HaIntegrationCard extends LitElement {
       <ha-card class="group">
         <div class="group-header">
           <img
-            src="https://brands.home-assistant.io/${this.domain}/icon.png"
+            src=${this.domain.startsWith("ais_")
+              ? `https://ai-speaker.com/images/brands/${this.domain}/icon.png`
+              : `https://brands.home-assistant.io/${this.domain}/icon.png`}
             referrerpolicy="no-referrer"
             @error=${this._onImageError}
             @load=${this._onImageLoad}
@@ -125,7 +127,9 @@ export class HaIntegrationCard extends LitElement {
         <div class="card-content">
           <div class="image">
             <img
-              src="https://brands.home-assistant.io/${item.domain}/logo.png"
+              src=${item.domain.startsWith("ais_")
+                ? `https://ai-speaker.com/images/brands/${item.domain}/logo.png`
+                : `https://brands.home-assistant.io/${item.domain}/logo.png`}
               referrerpolicy="no-referrer"
               @error=${this._onImageError}
               @load=${this._onImageLoad}

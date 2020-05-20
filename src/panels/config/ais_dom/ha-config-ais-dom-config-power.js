@@ -1,6 +1,5 @@
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import "@polymer/paper-icon-button/paper-icon-button";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 
@@ -52,10 +51,10 @@ class HaConfigAisDomControl extends PolymerElement {
               </div>
               <div class="card-actions warning">
                 <div>
-                  <paper-icon-button
+                  <ha-icon-button
                     class="user-button"
                     icon="hass:refresh"
-                  ></paper-icon-button>
+                  ></ha-icon-button>
                   <ha-call-service-button
                     class="warning"
                     hass="[[hass]]"
@@ -65,10 +64,10 @@ class HaConfigAisDomControl extends PolymerElement {
                   </ha-call-service-button>
                 </div>
                 <div>
-                  <paper-icon-button
+                  <ha-icon-button
                     class="user-button"
                     icon="hass:stop"
-                  ></paper-icon-button>
+                  ></ha-icon-button>
                   <ha-call-service-button
                     class="warning"
                     hass="[[hass]]"

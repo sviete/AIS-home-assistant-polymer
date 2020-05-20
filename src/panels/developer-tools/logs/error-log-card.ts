@@ -17,25 +17,7 @@ class ErrorLogCard extends LitElement {
   @property() private _errorLog?: string;
 
   protected render(): TemplateResult {
-    return html`
-      <p class="error-log-intro">
-        ${this._errorLog
-          ? html`
-              <ha-icon-button
-                icon="hass:refresh"
-                @click=${this._refreshErrorLog}
-              ></ha-icon-button>
-            `
-          : html`
-              <mwc-button raised @click=${this._refreshErrorLog}>
-                ${this.hass.localize(
-                  "ui.panel.developer-tools.tabs.logs.load_full_log"
-                )}
-              </mwc-button>
-            `}
-      </p>
-      <div class="error-log">${this._errorLog}</div>
-    `;
+    return html` <div class="error-log">${this._errorLog}</div> `;
   }
 
   protected firstUpdated(changedProps) {

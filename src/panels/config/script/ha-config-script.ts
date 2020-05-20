@@ -46,11 +46,7 @@ class HaConfigScript extends HassRouterPage {
 
   private _debouncedUpdateScripts = debounce((pageEl) => {
     const newScript = this._getScripts(this.hass.states);
-    if (
-      !equal(newScript, pageEl.scripts)
-      // TODO hide internal ais dom scripts
-      // !state.entity_id.startsWith("script.ais_")
-    ) {
+    if (!equal(newScript, pageEl.scripts)) {
       pageEl.scripts = newScript;
     }
   }, 10);
@@ -58,7 +54,10 @@ class HaConfigScript extends HassRouterPage {
   private _getScripts = memoizeOne((states: HassEntities): ScriptEntity[] => {
     return Object.values(states).filter(
       (entity) =>
-        computeStateDomain(entity) === "script" && !entity.attributes.hidden
+        computeStateDomain(entity) === "script" &&
+        !entity.attributes.hidden &&
+        // hide internal ais dom scripts
+        !entity.entity_id.startsWith("script.ais_")
     ) as ScriptEntity[];
   });
 

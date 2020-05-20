@@ -1,74 +1,11 @@
-(function(global, factory) {
+(function (global, factory) {
   typeof exports === "object" && typeof module !== "undefined"
     ? factory()
     : typeof define === "function" && define.amd
     ? define(factory)
     : factory();
-})(this, function() {
+})(this, function () {
   "use strict";
-
-  /**
-   * @license
-   * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
-   * This code may only be used under the BSD style license found at
-   * http://polymer.github.io/LICENSE.txt
-   * The complete set of authors may be found at
-   * http://polymer.github.io/AUTHORS.txt
-   * The complete set of contributors may be found at
-   * http://polymer.github.io/CONTRIBUTORS.txt
-   * Code distributed by Google as part of the polymer project is also
-   * subject to an additional IP rights grant found at
-   * http://polymer.github.io/PATENTS.txt
-   */
-  const directives = new WeakMap();
-  /**
-   * Brands a function as a directive factory function so that lit-html will call
-   * the function during template rendering, rather than passing as a value.
-   *
-   * A _directive_ is a function that takes a Part as an argument. It has the
-   * signature: `(part: Part) => void`.
-   *
-   * A directive _factory_ is a function that takes arguments for data and
-   * configuration and returns a directive. Users of directive usually refer to
-   * the directive factory as the directive. For example, "The repeat directive".
-   *
-   * Usually a template author will invoke a directive factory in their template
-   * with relevant arguments, which will then return a directive function.
-   *
-   * Here's an example of using the `repeat()` directive factory that takes an
-   * array and a function to render an item:
-   *
-   * ```js
-   * html`<ul><${repeat(items, (item) => html`<li>${item}</li>`)}</ul>`
-   * ```
-   *
-   * When `repeat` is invoked, it returns a directive function that closes over
-   * `items` and the template function. When the outer template is rendered, the
-   * return directive function is called with the Part for the expression.
-   * `repeat` then performs it's custom logic to render multiple items.
-   *
-   * @param f The directive factory function. Must be a function that returns a
-   * function of the signature `(part: Part) => void`. The returned function will
-   * be called with the part object.
-   *
-   * @example
-   *
-   * import {directive, html} from 'lit-html';
-   *
-   * const immutable = directive((v) => (part) => {
-   *   if (part.value !== v) {
-   *     part.setValue(v)
-   *   }
-   * });
-   */
-  const directive = (f) => (...args) => {
-    const d = f(...args);
-    directives.set(d, true);
-    return d;
-  };
-  const isDirective = (o) => {
-    return typeof o === "function" && directives.has(o);
-  };
 
   /**
    * @license
@@ -87,7 +24,8 @@
    * True if the custom elements polyfill is in use.
    */
   const isCEPolyfill =
-    window.customElements !== undefined &&
+    typeof window !== "undefined" &&
+    window.customElements != null &&
     window.customElements.polyfillWrapFlushCallback !== undefined;
   /**
    * Removes nodes, starting from `start` (inclusive) to `end` (exclusive), from
@@ -100,29 +38,6 @@
       start = n;
     }
   };
-
-  /**
-   * @license
-   * Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
-   * This code may only be used under the BSD style license found at
-   * http://polymer.github.io/LICENSE.txt
-   * The complete set of authors may be found at
-   * http://polymer.github.io/AUTHORS.txt
-   * The complete set of contributors may be found at
-   * http://polymer.github.io/CONTRIBUTORS.txt
-   * Code distributed by Google as part of the polymer project is also
-   * subject to an additional IP rights grant found at
-   * http://polymer.github.io/PATENTS.txt
-   */
-  /**
-   * A sentinel value that signals that a value was handled by a directive and
-   * should not be written to the DOM.
-   */
-  const noChange = {};
-  /**
-   * A sentinel value that signals a NodePart to fully clear its content.
-   */
-  const nothing = {};
 
   /**
    * @license
@@ -153,7 +68,7 @@
    */
   const boundAttributeSuffix = "$lit$";
   /**
-   * An updateable Template that tracks the location of dynamic parts.
+   * An updatable Template that tracks the location of dynamic parts.
    */
   class Template {
     constructor(result, element) {
@@ -349,7 +264,241 @@
    *    * (") then any non-("), or
    *    * (') then any non-(')
    */
-  const lastAttributeNameRegex = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
+  const lastAttributeNameRegex =
+    // eslint-disable-next-line no-control-regex
+    /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
+
+  /**
+   * @license
+   * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+   * This code may only be used under the BSD style license found at
+   * http://polymer.github.io/LICENSE.txt
+   * The complete set of authors may be found at
+   * http://polymer.github.io/AUTHORS.txt
+   * The complete set of contributors may be found at
+   * http://polymer.github.io/CONTRIBUTORS.txt
+   * Code distributed by Google as part of the polymer project is also
+   * subject to an additional IP rights grant found at
+   * http://polymer.github.io/PATENTS.txt
+   */
+  const walkerNodeFilter = 133; /* NodeFilter.SHOW_{ELEMENT|COMMENT|TEXT} */
+  /**
+   * Removes the list of nodes from a Template safely. In addition to removing
+   * nodes from the Template, the Template part indices are updated to match
+   * the mutated Template DOM.
+   *
+   * As the template is walked the removal state is tracked and
+   * part indices are adjusted as needed.
+   *
+   * div
+   *   div#1 (remove) <-- start removing (removing node is div#1)
+   *     div
+   *       div#2 (remove)  <-- continue removing (removing node is still div#1)
+   *         div
+   * div <-- stop removing since previous sibling is the removing node (div#1,
+   * removed 4 nodes)
+   */
+  function removeNodesFromTemplate(template, nodesToRemove) {
+    const {
+      element: { content },
+      parts,
+    } = template;
+    const walker = document.createTreeWalker(
+      content,
+      walkerNodeFilter,
+      null,
+      false
+    );
+    let partIndex = nextActiveIndexInTemplateParts(parts);
+    let part = parts[partIndex];
+    let nodeIndex = -1;
+    let removeCount = 0;
+    const nodesToRemoveInTemplate = [];
+    let currentRemovingNode = null;
+    while (walker.nextNode()) {
+      nodeIndex++;
+      const node = walker.currentNode;
+      // End removal if stepped past the removing node
+      if (node.previousSibling === currentRemovingNode) {
+        currentRemovingNode = null;
+      }
+      // A node to remove was found in the template
+      if (nodesToRemove.has(node)) {
+        nodesToRemoveInTemplate.push(node);
+        // Track node we're removing
+        if (currentRemovingNode === null) {
+          currentRemovingNode = node;
+        }
+      }
+      // When removing, increment count by which to adjust subsequent part indices
+      if (currentRemovingNode !== null) {
+        removeCount++;
+      }
+      while (part !== undefined && part.index === nodeIndex) {
+        // If part is in a removed node deactivate it by setting index to -1 or
+        // adjust the index as needed.
+        part.index =
+          currentRemovingNode !== null ? -1 : part.index - removeCount;
+        // go to the next active part.
+        partIndex = nextActiveIndexInTemplateParts(parts, partIndex);
+        part = parts[partIndex];
+      }
+    }
+    nodesToRemoveInTemplate.forEach((n) => n.parentNode.removeChild(n));
+  }
+  const countNodes = (node) => {
+    let count = node.nodeType === 11 /* Node.DOCUMENT_FRAGMENT_NODE */ ? 0 : 1;
+    const walker = document.createTreeWalker(
+      node,
+      walkerNodeFilter,
+      null,
+      false
+    );
+    while (walker.nextNode()) {
+      count++;
+    }
+    return count;
+  };
+  const nextActiveIndexInTemplateParts = (parts, startIndex = -1) => {
+    for (let i = startIndex + 1; i < parts.length; i++) {
+      const part = parts[i];
+      if (isTemplatePartActive(part)) {
+        return i;
+      }
+    }
+    return -1;
+  };
+  /**
+   * Inserts the given node into the Template, optionally before the given
+   * refNode. In addition to inserting the node into the Template, the Template
+   * part indices are updated to match the mutated Template DOM.
+   */
+  function insertNodeIntoTemplate(template, node, refNode = null) {
+    const {
+      element: { content },
+      parts,
+    } = template;
+    // If there's no refNode, then put node at end of template.
+    // No part indices need to be shifted in this case.
+    if (refNode === null || refNode === undefined) {
+      content.appendChild(node);
+      return;
+    }
+    const walker = document.createTreeWalker(
+      content,
+      walkerNodeFilter,
+      null,
+      false
+    );
+    let partIndex = nextActiveIndexInTemplateParts(parts);
+    let insertCount = 0;
+    let walkerIndex = -1;
+    while (walker.nextNode()) {
+      walkerIndex++;
+      const walkerNode = walker.currentNode;
+      if (walkerNode === refNode) {
+        insertCount = countNodes(node);
+        refNode.parentNode.insertBefore(node, refNode);
+      }
+      while (partIndex !== -1 && parts[partIndex].index === walkerIndex) {
+        // If we've inserted the node, simply adjust all subsequent parts
+        if (insertCount > 0) {
+          while (partIndex !== -1) {
+            parts[partIndex].index += insertCount;
+            partIndex = nextActiveIndexInTemplateParts(parts, partIndex);
+          }
+          return;
+        }
+        partIndex = nextActiveIndexInTemplateParts(parts, partIndex);
+      }
+    }
+  }
+
+  /**
+   * @license
+   * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+   * This code may only be used under the BSD style license found at
+   * http://polymer.github.io/LICENSE.txt
+   * The complete set of authors may be found at
+   * http://polymer.github.io/AUTHORS.txt
+   * The complete set of contributors may be found at
+   * http://polymer.github.io/CONTRIBUTORS.txt
+   * Code distributed by Google as part of the polymer project is also
+   * subject to an additional IP rights grant found at
+   * http://polymer.github.io/PATENTS.txt
+   */
+  const directives = new WeakMap();
+  /**
+   * Brands a function as a directive factory function so that lit-html will call
+   * the function during template rendering, rather than passing as a value.
+   *
+   * A _directive_ is a function that takes a Part as an argument. It has the
+   * signature: `(part: Part) => void`.
+   *
+   * A directive _factory_ is a function that takes arguments for data and
+   * configuration and returns a directive. Users of directive usually refer to
+   * the directive factory as the directive. For example, "The repeat directive".
+   *
+   * Usually a template author will invoke a directive factory in their template
+   * with relevant arguments, which will then return a directive function.
+   *
+   * Here's an example of using the `repeat()` directive factory that takes an
+   * array and a function to render an item:
+   *
+   * ```js
+   * html`<ul><${repeat(items, (item) => html`<li>${item}</li>`)}</ul>`
+   * ```
+   *
+   * When `repeat` is invoked, it returns a directive function that closes over
+   * `items` and the template function. When the outer template is rendered, the
+   * return directive function is called with the Part for the expression.
+   * `repeat` then performs it's custom logic to render multiple items.
+   *
+   * @param f The directive factory function. Must be a function that returns a
+   * function of the signature `(part: Part) => void`. The returned function will
+   * be called with the part object.
+   *
+   * @example
+   *
+   * import {directive, html} from 'lit-html';
+   *
+   * const immutable = directive((v) => (part) => {
+   *   if (part.value !== v) {
+   *     part.setValue(v)
+   *   }
+   * });
+   */
+  const directive = (f) => (...args) => {
+    const d = f(...args);
+    directives.set(d, true);
+    return d;
+  };
+  const isDirective = (o) => {
+    return typeof o === "function" && directives.has(o);
+  };
+
+  /**
+   * @license
+   * Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
+   * This code may only be used under the BSD style license found at
+   * http://polymer.github.io/LICENSE.txt
+   * The complete set of authors may be found at
+   * http://polymer.github.io/AUTHORS.txt
+   * The complete set of contributors may be found at
+   * http://polymer.github.io/CONTRIBUTORS.txt
+   * Code distributed by Google as part of the polymer project is also
+   * subject to an additional IP rights grant found at
+   * http://polymer.github.io/PATENTS.txt
+   */
+  /**
+   * A sentinel value that signals that a value was handled by a directive and
+   * should not be written to the DOM.
+   */
+  const noChange = {};
+  /**
+   * A sentinel value that signals a NodePart to fully clear its content.
+   */
+  const nothing = {};
 
   /**
    * @license
@@ -410,7 +559,7 @@
       // Given these constraints, with full custom elements support we would
       // prefer the order: Clone, Process, Adopt, Upgrade, Update, Connect
       //
-      // But Safari dooes not implement CustomElementRegistry#upgrade, so we
+      // But Safari does not implement CustomElementRegistry#upgrade, so we
       // can not implement that order and still have upgrade-before-update and
       // upgrade disconnected fragments. So we instead sacrifice the
       // process-before-upgrade constraint, since in Custom Elements v1 elements
@@ -531,7 +680,7 @@
         // For each binding we want to determine the kind of marker to insert
         // into the template source before it's parsed by the browser's HTML
         // parser. The marker type is based on whether the expression is in an
-        // attribute, text, or comment poisition.
+        // attribute, text, or comment position.
         //   * For node-position bindings we insert a comment with the marker
         //     sentinel as its text content, like <!--{{lit-guid}}-->.
         //   * For attribute bindings we insert just the marker sentinel for the
@@ -552,13 +701,13 @@
         isCommentBinding =
           (commentOpen > -1 || isCommentBinding) &&
           s.indexOf("-->", commentOpen + 1) === -1;
-        // Check to see if we have an attribute-like sequence preceeding the
+        // Check to see if we have an attribute-like sequence preceding the
         // expression. This can match "name=value" like structures in text,
         // comments, and attribute values, so there can be false-positives.
         const attributeMatch = lastAttributeNameRegex.exec(s);
         if (attributeMatch === null) {
           // We're only in this branch if we don't have a attribute-like
-          // preceeding sequence. For comments, this guards against unusual
+          // preceding sequence. For comments, this guards against unusual
           // attribute values like <div foo="<!--${'bar'}">. Cases like
           // <!-- foo=${'bar'}--> are handled correctly in the attribute branch
           // below.
@@ -608,13 +757,13 @@
   const isIterable = (value) => {
     return (
       Array.isArray(value) ||
-      // tslint:disable-next-line:no-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       !!(value && value[Symbol.iterator])
     );
   };
   /**
    * Writes attribute values to the DOM for a group of AttributeParts bound to a
-   * single attibute. The value is only set once even if there are multiple parts
+   * single attribute. The value is only set once even if there are multiple parts
    * for an attribute.
    */
   class AttributeCommitter {
@@ -750,6 +899,9 @@
       this.__pendingValue = value;
     }
     commit() {
+      if (this.startNode.parentNode === null) {
+        return;
+      }
       while (isDirective(this.__pendingValue)) {
         const directive$$1 = this.__pendingValue;
         this.__pendingValue = noChange;
@@ -951,29 +1103,35 @@
     commit() {
       if (this.dirty) {
         this.dirty = false;
-        // tslint:disable-next-line:no-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.element[this.name] = this._getValue();
       }
     }
   }
   class PropertyPart extends AttributePart {}
   // Detect event listener options support. If the `capture` property is read
-  // from the options object, then options are supported. If not, then the thrid
+  // from the options object, then options are supported. If not, then the third
   // argument to add/removeEventListener is interpreted as the boolean capture
   // value so we should only pass the `capture` property.
   let eventOptionsSupported = false;
-  try {
-    const options = {
-      get capture() {
-        eventOptionsSupported = true;
-        return false;
-      },
-    };
-    // tslint:disable-next-line:no-any
-    window.addEventListener("test", options, options);
-    // tslint:disable-next-line:no-any
-    window.removeEventListener("test", options, options);
-  } catch (_e) {}
+  // Wrap into an IIFE because MS Edge <= v41 does not support having try/catch
+  // blocks right into the body of a module
+  (() => {
+    try {
+      const options = {
+        get capture() {
+          eventOptionsSupported = true;
+          return false;
+        },
+      };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      window.addEventListener("test", options, options);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      window.removeEventListener("test", options, options);
+    } catch (_e) {
+      // event options not supported
+    }
+  })();
   class EventPart {
     constructor(element, eventName, eventContext) {
       this.value = undefined;
@@ -1039,61 +1197,6 @@
     (eventOptionsSupported
       ? { capture: o.capture, passive: o.passive, once: o.once }
       : o.capture);
-
-  /**
-   * @license
-   * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
-   * This code may only be used under the BSD style license found at
-   * http://polymer.github.io/LICENSE.txt
-   * The complete set of authors may be found at
-   * http://polymer.github.io/AUTHORS.txt
-   * The complete set of contributors may be found at
-   * http://polymer.github.io/CONTRIBUTORS.txt
-   * Code distributed by Google as part of the polymer project is also
-   * subject to an additional IP rights grant found at
-   * http://polymer.github.io/PATENTS.txt
-   */
-  /**
-   * Creates Parts when a template is instantiated.
-   */
-  class DefaultTemplateProcessor {
-    /**
-     * Create parts for an attribute-position binding, given the event, attribute
-     * name, and string literals.
-     *
-     * @param element The element containing the binding
-     * @param name  The attribute name
-     * @param strings The string literals. There are always at least two strings,
-     *   event for fully-controlled bindings with a single expression.
-     */
-    handleAttributeExpressions(element, name, strings, options) {
-      const prefix = name[0];
-      if (prefix === ".") {
-        const committer = new PropertyCommitter(
-          element,
-          name.slice(1),
-          strings
-        );
-        return committer.parts;
-      }
-      if (prefix === "@") {
-        return [new EventPart(element, name.slice(1), options.eventContext)];
-      }
-      if (prefix === "?") {
-        return [new BooleanAttributePart(element, name.slice(1), strings)];
-      }
-      const committer = new AttributeCommitter(element, name, strings);
-      return committer.parts;
-    }
-    /**
-     * Create parts for a text-position binding.
-     * @param templateFactory
-     */
-    handleTextExpression(options) {
-      return new NodePart(options);
-    }
-  }
-  const defaultTemplateProcessor = new DefaultTemplateProcessor();
 
   /**
    * @license
@@ -1198,16 +1301,47 @@
    * subject to an additional IP rights grant found at
    * http://polymer.github.io/PATENTS.txt
    */
-  // IMPORTANT: do not change the property name or the assignment expression.
-  // This line will be used in regexes to search for lit-html usage.
-  // TODO(justinfagnani): inject version number at build time
-  (window["litHtmlVersions"] || (window["litHtmlVersions"] = [])).push("1.1.2");
   /**
-   * Interprets a template literal as an HTML template that can efficiently
-   * render to and update a container.
+   * Creates Parts when a template is instantiated.
    */
-  const html = (strings, ...values) =>
-    new TemplateResult(strings, values, "html", defaultTemplateProcessor);
+  class DefaultTemplateProcessor {
+    /**
+     * Create parts for an attribute-position binding, given the event, attribute
+     * name, and string literals.
+     *
+     * @param element The element containing the binding
+     * @param name  The attribute name
+     * @param strings The string literals. There are always at least two strings,
+     *   event for fully-controlled bindings with a single expression.
+     */
+    handleAttributeExpressions(element, name, strings, options) {
+      const prefix = name[0];
+      if (prefix === ".") {
+        const committer = new PropertyCommitter(
+          element,
+          name.slice(1),
+          strings
+        );
+        return committer.parts;
+      }
+      if (prefix === "@") {
+        return [new EventPart(element, name.slice(1), options.eventContext)];
+      }
+      if (prefix === "?") {
+        return [new BooleanAttributePart(element, name.slice(1), strings)];
+      }
+      const committer = new AttributeCommitter(element, name, strings);
+      return committer.parts;
+    }
+    /**
+     * Create parts for a text-position binding.
+     * @param templateFactory
+     */
+    handleTextExpression(options) {
+      return new NodePart(options);
+    }
+  }
+  const defaultTemplateProcessor = new DefaultTemplateProcessor();
 
   /**
    * @license
@@ -1222,138 +1356,20 @@
    * subject to an additional IP rights grant found at
    * http://polymer.github.io/PATENTS.txt
    */
-  const walkerNodeFilter = 133; /* NodeFilter.SHOW_{ELEMENT|COMMENT|TEXT} */
-  /**
-   * Removes the list of nodes from a Template safely. In addition to removing
-   * nodes from the Template, the Template part indices are updated to match
-   * the mutated Template DOM.
-   *
-   * As the template is walked the removal state is tracked and
-   * part indices are adjusted as needed.
-   *
-   * div
-   *   div#1 (remove) <-- start removing (removing node is div#1)
-   *     div
-   *       div#2 (remove)  <-- continue removing (removing node is still div#1)
-   *         div
-   * div <-- stop removing since previous sibling is the removing node (div#1,
-   * removed 4 nodes)
-   */
-  function removeNodesFromTemplate(template, nodesToRemove) {
-    const {
-      element: { content },
-      parts,
-    } = template;
-    const walker = document.createTreeWalker(
-      content,
-      walkerNodeFilter,
-      null,
-      false
+  // IMPORTANT: do not change the property name or the assignment expression.
+  // This line will be used in regexes to search for lit-html usage.
+  // TODO(justinfagnani): inject version number at build time
+  if (typeof window !== "undefined") {
+    (window["litHtmlVersions"] || (window["litHtmlVersions"] = [])).push(
+      "1.2.1"
     );
-    let partIndex = nextActiveIndexInTemplateParts(parts);
-    let part = parts[partIndex];
-    let nodeIndex = -1;
-    let removeCount = 0;
-    const nodesToRemoveInTemplate = [];
-    let currentRemovingNode = null;
-    while (walker.nextNode()) {
-      nodeIndex++;
-      const node = walker.currentNode;
-      // End removal if stepped past the removing node
-      if (node.previousSibling === currentRemovingNode) {
-        currentRemovingNode = null;
-      }
-      // A node to remove was found in the template
-      if (nodesToRemove.has(node)) {
-        nodesToRemoveInTemplate.push(node);
-        // Track node we're removing
-        if (currentRemovingNode === null) {
-          currentRemovingNode = node;
-        }
-      }
-      // When removing, increment count by which to adjust subsequent part indices
-      if (currentRemovingNode !== null) {
-        removeCount++;
-      }
-      while (part !== undefined && part.index === nodeIndex) {
-        // If part is in a removed node deactivate it by setting index to -1 or
-        // adjust the index as needed.
-        part.index =
-          currentRemovingNode !== null ? -1 : part.index - removeCount;
-        // go to the next active part.
-        partIndex = nextActiveIndexInTemplateParts(parts, partIndex);
-        part = parts[partIndex];
-      }
-    }
-    nodesToRemoveInTemplate.forEach((n) => n.parentNode.removeChild(n));
   }
-  const countNodes = (node) => {
-    let count = node.nodeType === 11 /* Node.DOCUMENT_FRAGMENT_NODE */ ? 0 : 1;
-    const walker = document.createTreeWalker(
-      node,
-      walkerNodeFilter,
-      null,
-      false
-    );
-    while (walker.nextNode()) {
-      count++;
-    }
-    return count;
-  };
-  const nextActiveIndexInTemplateParts = (parts, startIndex = -1) => {
-    for (let i = startIndex + 1; i < parts.length; i++) {
-      const part = parts[i];
-      if (isTemplatePartActive(part)) {
-        return i;
-      }
-    }
-    return -1;
-  };
   /**
-   * Inserts the given node into the Template, optionally before the given
-   * refNode. In addition to inserting the node into the Template, the Template
-   * part indices are updated to match the mutated Template DOM.
+   * Interprets a template literal as an HTML template that can efficiently
+   * render to and update a container.
    */
-  function insertNodeIntoTemplate(template, node, refNode = null) {
-    const {
-      element: { content },
-      parts,
-    } = template;
-    // If there's no refNode, then put node at end of template.
-    // No part indices need to be shifted in this case.
-    if (refNode === null || refNode === undefined) {
-      content.appendChild(node);
-      return;
-    }
-    const walker = document.createTreeWalker(
-      content,
-      walkerNodeFilter,
-      null,
-      false
-    );
-    let partIndex = nextActiveIndexInTemplateParts(parts);
-    let insertCount = 0;
-    let walkerIndex = -1;
-    while (walker.nextNode()) {
-      walkerIndex++;
-      const walkerNode = walker.currentNode;
-      if (walkerNode === refNode) {
-        insertCount = countNodes(node);
-        refNode.parentNode.insertBefore(node, refNode);
-      }
-      while (partIndex !== -1 && parts[partIndex].index === walkerIndex) {
-        // If we've inserted the node, simply adjust all subsequent parts
-        if (insertCount > 0) {
-          while (partIndex !== -1) {
-            parts[partIndex].index += insertCount;
-            partIndex = nextActiveIndexInTemplateParts(parts, partIndex);
-          }
-          return;
-        }
-        partIndex = nextActiveIndexInTemplateParts(parts, partIndex);
-      }
-    }
-  }
+  const html = (strings, ...values) =>
+    new TemplateResult(strings, values, "html", defaultTemplateProcessor);
 
   /**
    * @license
@@ -1702,12 +1718,10 @@
     reflect: false,
     hasChanged: notEqual,
   };
-  const microtaskPromise = Promise.resolve(true);
   const STATE_HAS_UPDATED = 1;
   const STATE_UPDATE_REQUESTED = 1 << 2;
   const STATE_IS_REFLECTING_TO_ATTRIBUTE = 1 << 3;
   const STATE_IS_REFLECTING_TO_PROPERTY = 1 << 4;
-  const STATE_HAS_CONNECTED = 1 << 5;
   /**
    * The Closure JS Compiler doesn't currently have good support for static
    * property semantics where "this" is dynamic (e.g.
@@ -1725,8 +1739,11 @@
       super();
       this._updateState = 0;
       this._instanceProperties = undefined;
-      this._updatePromise = microtaskPromise;
-      this._hasConnectedResolver = undefined;
+      // Initialize to an unresolved Promise so we can make sure the element has
+      // connected before first update.
+      this._updatePromise = new Promise(
+        (res) => (this._enableUpdatingResolver = res)
+      );
       /**
        * Map with keys for any properties that have changed since the last
        * update cycle with previous values.
@@ -1779,10 +1796,25 @@
       }
     }
     /**
-     * Creates a property accessor on the element prototype if one does not exist.
+     * Creates a property accessor on the element prototype if one does not exist
+     * and stores a PropertyDeclaration for the property with the given options.
      * The property setter calls the property's `hasChanged` property option
      * or uses a strict identity check to determine whether or not to request
      * an update.
+     *
+     * This method may be overridden to customize properties; however,
+     * when doing so, it's important to call `super.createProperty` to ensure
+     * the property is setup correctly. This method calls
+     * `getPropertyDescriptor` internally to get a descriptor to install.
+     * To customize what properties do when they are get or set, override
+     * `getPropertyDescriptor`. To customize the options for a property,
+     * implement `createProperty` like this:
+     *
+     * static createProperty(name, options) {
+     *   options = Object.assign(options, {myOption: true});
+     *   super.createProperty(name, options);
+     * }
+     *
      * @nocollapse
      */
     static createProperty(name, options = defaultPropertyDeclaration) {
@@ -1800,7 +1832,37 @@
         return;
       }
       const key = typeof name === "symbol" ? Symbol() : `__${name}`;
-      Object.defineProperty(this.prototype, name, {
+      const descriptor = this.getPropertyDescriptor(name, key, options);
+      if (descriptor !== undefined) {
+        Object.defineProperty(this.prototype, name, descriptor);
+      }
+    }
+    /**
+     * Returns a property descriptor to be defined on the given named property.
+     * If no descriptor is returned, the property will not become an accessor.
+     * For example,
+     *
+     *   class MyElement extends LitElement {
+     *     static getPropertyDescriptor(name, key, options) {
+     *       const defaultDescriptor =
+     *           super.getPropertyDescriptor(name, key, options);
+     *       const setter = defaultDescriptor.set;
+     *       return {
+     *         get: defaultDescriptor.get,
+     *         set(value) {
+     *           setter.call(this, value);
+     *           // custom action.
+     *         },
+     *         configurable: true,
+     *         enumerable: true
+     *       }
+     *     }
+     *   }
+     *
+     * @nocollapse
+     */
+    static getPropertyDescriptor(name, key, _options) {
+      return {
         // tslint:disable-next-line:no-any no symbol in index
         get() {
           return this[key];
@@ -1812,7 +1874,25 @@
         },
         configurable: true,
         enumerable: true,
-      });
+      };
+    }
+    /**
+     * Returns the property options associated with the given property.
+     * These options are defined with a PropertyDeclaration via the `properties`
+     * object or the `@property` decorator and are registered in
+     * `createProperty(...)`.
+     *
+     * Note, this method should be considered "final" and not overridden. To
+     * customize the options for a given property, override `createProperty`.
+     *
+     * @nocollapse
+     * @final
+     */
+    static getPropertyOptions(name) {
+      return (
+        (this._classProperties && this._classProperties.get(name)) ||
+        defaultPropertyDeclaration
+      );
     }
     /**
      * Creates property accessors for registered properties and ensures
@@ -1952,14 +2032,14 @@
       this._instanceProperties = undefined;
     }
     connectedCallback() {
-      this._updateState = this._updateState | STATE_HAS_CONNECTED;
       // Ensure first connection completes an update. Updates cannot complete
-      // before connection and if one is pending connection the
-      // `_hasConnectionResolver` will exist. If so, resolve it to complete the
-      // update, otherwise requestUpdate.
-      if (this._hasConnectedResolver) {
-        this._hasConnectedResolver();
-        this._hasConnectedResolver = undefined;
+      // before connection.
+      this.enableUpdating();
+    }
+    enableUpdating() {
+      if (this._enableUpdatingResolver !== undefined) {
+        this._enableUpdatingResolver();
+        this._enableUpdatingResolver = undefined;
       }
     }
     /**
@@ -2012,10 +2092,12 @@
         return;
       }
       const ctor = this.constructor;
+      // Note, hint this as an `AttributeMap` so closure clearly understands
+      // the type; it has issues with tracking types through statics
+      // tslint:disable-next-line:no-unnecessary-type-assertion
       const propName = ctor._attributeToPropertyMap.get(name);
       if (propName !== undefined) {
-        const options =
-          ctor._classProperties.get(propName) || defaultPropertyDeclaration;
+        const options = ctor.getPropertyOptions(propName);
         // mark state reflecting
         this._updateState = this._updateState | STATE_IS_REFLECTING_TO_PROPERTY;
         this[propName] =
@@ -2036,8 +2118,7 @@
       // If we have a property key, perform property update steps.
       if (name !== undefined) {
         const ctor = this.constructor;
-        const options =
-          ctor._classProperties.get(name) || defaultPropertyDeclaration;
+        const options = ctor.getPropertyOptions(name);
         if (ctor._valueHasChanged(this[name], oldValue, options.hasChanged)) {
           if (!this._changedProperties.has(name)) {
             this._changedProperties.set(name, oldValue);
@@ -2061,7 +2142,7 @@
         }
       }
       if (!this._hasRequestedUpdate && shouldRequestUpdate) {
-        this._enqueueUpdate();
+        this._updatePromise = this._enqueueUpdate();
       }
     }
     /**
@@ -2085,42 +2166,23 @@
      * Sets up the element to asynchronously update.
      */
     async _enqueueUpdate() {
-      // Mark state updating...
       this._updateState = this._updateState | STATE_UPDATE_REQUESTED;
-      let resolve;
-      let reject;
-      const previousUpdatePromise = this._updatePromise;
-      this._updatePromise = new Promise((res, rej) => {
-        resolve = res;
-        reject = rej;
-      });
       try {
         // Ensure any previous update has resolved before updating.
         // This `await` also ensures that property changes are batched.
-        await previousUpdatePromise;
+        await this._updatePromise;
       } catch (e) {
         // Ignore any previous errors. We only care that the previous cycle is
         // done. Any error should have been handled in the previous update.
       }
-      // Make sure the element has connected before updating.
-      if (!this._hasConnected) {
-        await new Promise((res) => (this._hasConnectedResolver = res));
+      const result = this.performUpdate();
+      // If `performUpdate` returns a Promise, we await it. This is done to
+      // enable coordinating updates with a scheduler. Note, the result is
+      // checked to avoid delaying an additional microtask unless we need to.
+      if (result != null) {
+        await result;
       }
-      try {
-        const result = this.performUpdate();
-        // If `performUpdate` returns a Promise, we await it. This is done to
-        // enable coordinating updates with a scheduler. Note, the result is
-        // checked to avoid delaying an additional microtask unless we need to.
-        if (result != null) {
-          await result;
-        }
-      } catch (e) {
-        reject(e);
-      }
-      resolve(!this._hasRequestedUpdate);
-    }
-    get _hasConnected() {
-      return this._updateState & STATE_HAS_CONNECTED;
+      return !this._hasRequestedUpdate;
     }
     get _hasRequestedUpdate() {
       return this._updateState & STATE_UPDATE_REQUESTED;
@@ -2155,15 +2217,16 @@
         shouldUpdate = this.shouldUpdate(changedProperties);
         if (shouldUpdate) {
           this.update(changedProperties);
+        } else {
+          this._markUpdated();
         }
       } catch (e) {
         // Prevent `firstUpdated` and `updated` from running when there's an
         // update exception.
         shouldUpdate = false;
-        throw e;
-      } finally {
         // Ensure element can accept additional updates after an exception.
         this._markUpdated();
+        throw e;
       }
       if (shouldUpdate) {
         if (!(this._updateState & STATE_HAS_UPDATED)) {
@@ -2219,7 +2282,7 @@
      * an update. By default, this method always returns `true`, but this can be
      * customized to control when to update.
      *
-     * * @param _changedProperties Map of changed properties with old values
+     * @param _changedProperties Map of changed properties with old values
      */
     shouldUpdate(_changedProperties) {
       return true;
@@ -2230,7 +2293,7 @@
      * Setting properties inside this method will *not* trigger
      * another update.
      *
-     * * @param _changedProperties Map of changed properties with old values
+     * @param _changedProperties Map of changed properties with old values
      */
     update(_changedProperties) {
       if (
@@ -2244,6 +2307,7 @@
         );
         this._reflectingProperties = undefined;
       }
+      this._markUpdated();
     }
     /**
      * Invoked whenever the element is updated. Implement to perform
@@ -2252,7 +2316,7 @@
      * Setting properties inside this method will trigger the element to update
      * again after this update cycle completes.
      *
-     * * @param _changedProperties Map of changed properties with old values
+     * @param _changedProperties Map of changed properties with old values
      */
     updated(_changedProperties) {}
     /**
@@ -2262,7 +2326,7 @@
      * Setting properties inside this method will trigger the element to update
      * again after this update cycle completes.
      *
-     * * @param _changedProperties Map of changed properties with old values
+     * @param _changedProperties Map of changed properties with old values
      */
     firstUpdated(_changedProperties) {}
   }
@@ -2369,69 +2433,61 @@
   // This line will be used in regexes to search for LitElement usage.
   // TODO(justinfagnani): inject version number at build time
   (window["litElementVersions"] || (window["litElementVersions"] = [])).push(
-    "2.2.1"
+    "2.3.1"
   );
   /**
-   * Minimal implementation of Array.prototype.flat
-   * @param arr the array to flatten
-   * @param result the accumlated result
+   * Sentinal value used to avoid calling lit-html's render function when
+   * subclasses do not implement `render`
    */
-  function arrayFlat(styles, result = []) {
-    for (let i = 0, length = styles.length; i < length; i++) {
-      const value = styles[i];
-      if (Array.isArray(value)) {
-        arrayFlat(value, result);
-      } else {
-        result.push(value);
-      }
-    }
-    return result;
-  }
-  /** Deeply flattens styles array. Uses native flat if available. */
-  const flattenStyles = (styles) =>
-    styles.flat ? styles.flat(Infinity) : arrayFlat(styles);
+  const renderNotImplemented = {};
   class LitElement extends UpdatingElement {
-    /** @nocollapse */
-    static finalize() {
-      // The Closure JS Compiler does not always preserve the correct "this"
-      // when calling static super methods (b/137460243), so explicitly bind.
-      super.finalize.call(this);
-      // Prepare styling that is stamped at first render time. Styling
-      // is built from user provided `styles` or is inherited from the superclass.
-      this._styles = this.hasOwnProperty(
-        JSCompiler_renameProperty("styles", this)
-      )
-        ? this._getUniqueStyles()
-        : this._styles || [];
+    /**
+     * Return the array of styles to apply to the element.
+     * Override this method to integrate into a style management system.
+     *
+     * @nocollapse
+     */
+    static getStyles() {
+      return this.styles;
     }
     /** @nocollapse */
     static _getUniqueStyles() {
-      // Take care not to call `this.styles` multiple times since this generates
-      // new CSSResults each time.
+      // Only gather styles once per class
+      if (this.hasOwnProperty(JSCompiler_renameProperty("_styles", this))) {
+        return;
+      }
+      // Take care not to call `this.getStyles()` multiple times since this
+      // generates new CSSResults each time.
       // TODO(sorvell): Since we do not cache CSSResults by input, any
       // shared styles will generate new stylesheet objects, which is wasteful.
       // This should be addressed when a browser ships constructable
       // stylesheets.
-      const userStyles = this.styles;
-      const styles = [];
-      if (Array.isArray(userStyles)) {
-        const flatStyles = flattenStyles(userStyles);
-        // As a performance optimization to avoid duplicated styling that can
-        // occur especially when composing via subclassing, de-duplicate styles
-        // preserving the last item in the list. The last item is kept to
-        // try to preserve cascade order with the assumption that it's most
-        // important that last added styles override previous styles.
-        const styleSet = flatStyles.reduceRight((set, s) => {
-          set.add(s);
-          // on IE set.add does not return the set.
-          return set;
-        }, new Set());
-        // Array.from does not work on Set in IE
-        styleSet.forEach((v) => styles.unshift(v));
-      } else if (userStyles) {
-        styles.push(userStyles);
+      const userStyles = this.getStyles();
+      if (userStyles === undefined) {
+        this._styles = [];
+      } else if (Array.isArray(userStyles)) {
+        // De-duplicate styles preserving the _last_ instance in the set.
+        // This is a performance optimization to avoid duplicated styles that can
+        // occur especially when composing via subclassing.
+        // The last item is kept to try to preserve the cascade order with the
+        // assumption that it's most important that last added styles override
+        // previous styles.
+        const addStyles = (styles, set) =>
+          styles.reduceRight(
+            (set, s) =>
+              // Note: On IE set.add() does not return the set
+              Array.isArray(s) ? addStyles(s, set) : (set.add(s), set),
+            set
+          );
+        // Array.from does not work on Set in IE, otherwise return
+        // Array.from(addStyles(userStyles, new Set<CSSResult>())).reverse()
+        const set = addStyles(userStyles, new Set());
+        const styles = [];
+        set.forEach((v) => styles.unshift(v));
+        this._styles = styles;
+      } else {
+        this._styles = [userStyles];
       }
-      return styles;
     }
     /**
      * Performs element initialization. By default this calls `createRenderRoot`
@@ -2440,6 +2496,7 @@
      */
     initialize() {
       super.initialize();
+      this.constructor._getUniqueStyles();
       this.renderRoot = this.createRenderRoot();
       // Note, if renderRoot is not a shadowRoot, styles would/could apply to the
       // element's getRootNode(). While this could be done, we're choosing not to
@@ -2502,12 +2559,16 @@
      * Updates the element. This method reflects property values to attributes
      * and calls `render` to render DOM via lit-html. Setting properties inside
      * this method will *not* trigger another update.
-     * * @param _changedProperties Map of changed properties with old values
+     * @param _changedProperties Map of changed properties with old values
      */
     update(changedProperties) {
-      super.update(changedProperties);
+      // Setting properties in `render` should not trigger an update. Since
+      // updates are allowed after super.update, it's important to call `render`
+      // before that.
       const templateResult = this.render();
-      if (templateResult instanceof TemplateResult) {
+      super.update(changedProperties);
+      // If render is not implemented by the component, don't call lit-html render
+      if (templateResult !== renderNotImplemented) {
         this.constructor.render(templateResult, this.renderRoot, {
           scopeName: this.localName,
           eventContext: this,
@@ -2526,11 +2587,14 @@
       }
     }
     /**
-     * Invoked on each update to perform rendering tasks. This method must return
-     * a lit-html TemplateResult. Setting properties inside this method will *not*
-     * trigger the element to update.
+     * Invoked on each update to perform rendering tasks. This method may return
+     * any value renderable by lit-html's NodePart - typically a TemplateResult.
+     * Setting properties inside this method will *not* trigger the element to
+     * update.
      */
-    render() {}
+    render() {
+      return renderNotImplemented;
+    }
   }
   /**
    * Ensure this class is marked as `finalized` as an optimization ensuring
@@ -2541,11 +2605,10 @@
    */
   LitElement["finalized"] = true;
   /**
-   * Render method used to render the lit-html TemplateResult to the element's
-   * DOM.
-   * @param {TemplateResult} Template to render.
-   * @param {Element|DocumentFragment} Node into which to render.
-   * @param {String} Element name.
+   * Render method used to render the value to the element's DOM.
+   * @param result The value to render.
+   * @param container Node into which to render.
+   * @param options Element name.
    * @nocollapse
    */
   LitElement.render = render$1;
@@ -2563,18 +2626,44 @@
    * subject to an additional IP rights grant found at
    * http://polymer.github.io/PATENTS.txt
    */
+  // IE11 doesn't support classList on SVG elements, so we emulate it with a Set
+  class ClassList {
+    constructor(element) {
+      this.classes = new Set();
+      this.changed = false;
+      this.element = element;
+      const classList = (element.getAttribute("class") || "").split(/\s+/);
+      for (const cls of classList) {
+        this.classes.add(cls);
+      }
+    }
+    add(cls) {
+      this.classes.add(cls);
+      this.changed = true;
+    }
+    remove(cls) {
+      this.classes.delete(cls);
+      this.changed = true;
+    }
+    commit() {
+      if (this.changed) {
+        let classString = "";
+        this.classes.forEach((cls) => (classString += cls + " "));
+        this.element.setAttribute("class", classString);
+      }
+    }
+  }
   /**
    * Stores the ClassInfo object applied to a given AttributePart.
    * Used to unset existing values when a new ClassInfo object is applied.
    */
-  const classMapCache = new WeakMap();
+  const previousClassesCache = new WeakMap();
   /**
    * A directive that applies CSS classes. This must be used in the `class`
    * attribute and must be the only part used in the attribute. It takes each
    * property in the `classInfo` argument and adds the property name to the
-   * element's `classList` if the property value is truthy; if the property value
-   * is falsey, the property name is removed from the element's `classList`. For
-   * example
+   * element's `class` if the property value is truthy; if the property value is
+   * falsey, the property name is removed from the element's `class`. For example
    * `{foo: bar}` applies the class `foo` if the value of `bar` is truthy.
    * @param classInfo {ClassInfo}
    */
@@ -2592,29 +2681,41 @@
     }
     const { committer } = part;
     const { element } = committer;
-    // handle static classes
-    if (!classMapCache.has(part)) {
-      element.className = committer.strings.join(" ");
+    let previousClasses = previousClassesCache.get(part);
+    if (previousClasses === undefined) {
+      // Write static classes once
+      // Use setAttribute() because className isn't a string on SVG elements
+      element.setAttribute("class", committer.strings.join(" "));
+      previousClassesCache.set(part, (previousClasses = new Set()));
     }
-    const { classList } = element;
-    // remove old classes that no longer apply
-    const oldInfo = classMapCache.get(part);
-    for (const name in oldInfo) {
+    const classList = element.classList || new ClassList(element);
+    // Remove old classes that no longer apply
+    // We use forEach() instead of for-of so that re don't require down-level
+    // iteration.
+    previousClasses.forEach((name) => {
       if (!(name in classInfo)) {
         classList.remove(name);
+        previousClasses.delete(name);
       }
-    }
-    // add new classes
+    });
+    // Add or remove classes based on their classMap value
     for (const name in classInfo) {
       const value = classInfo[name];
-      if (!oldInfo || value !== oldInfo[name]) {
-        // We explicitly want a loose truthy check here because
-        // it seems more convenient that '' and 0 are skipped.
-        const method = value ? "add" : "remove";
-        classList[method](name);
+      if (value != previousClasses.has(name)) {
+        // We explicitly want a loose truthy check of `value` because it seems
+        // more convenient that '' and 0 are skipped.
+        if (value) {
+          classList.add(name);
+          previousClasses.add(name);
+        } else {
+          classList.remove(name);
+          previousClasses.delete(name);
+        }
       }
     }
-    classMapCache.set(part, classInfo);
+    if (typeof classList.commit === "function") {
+      classList.commit();
+    }
   });
 
   /**
@@ -2634,13 +2735,13 @@
    * Stores the StyleInfo object applied to a given AttributePart.
    * Used to unset existing values when a new StyleInfo object is applied.
    */
-  const styleMapCache = new WeakMap();
+  const previousStylePropertyCache = new WeakMap();
   /**
    * A directive that applies CSS properties to an element.
    *
    * `styleMap` can only be used in the `style` attribute and must be the only
    * expression in the attribute. It takes the property names in the `styleInfo`
-   * object and adds the property values as CSS propertes. Property names with
+   * object and adds the property values as CSS properties. Property names with
    * dashes (`-`) are assumed to be valid CSS property names and set on the
    * element's style object using `setProperty()`. Names without dashes are
    * assumed to be camelCased JavaScript property names and set on the element's
@@ -2666,32 +2767,39 @@
     }
     const { committer } = part;
     const { style } = committer.element;
-    // Handle static styles the first time we see a Part
-    if (!styleMapCache.has(part)) {
+    let previousStyleProperties = previousStylePropertyCache.get(part);
+    if (previousStyleProperties === undefined) {
+      // Write static styles once
       style.cssText = committer.strings.join(" ");
+      previousStylePropertyCache.set(
+        part,
+        (previousStyleProperties = new Set())
+      );
     }
     // Remove old properties that no longer exist in styleInfo
-    const oldInfo = styleMapCache.get(part);
-    for (const name in oldInfo) {
+    // We use forEach() instead of for-of so that re don't require down-level
+    // iteration.
+    previousStyleProperties.forEach((name) => {
       if (!(name in styleInfo)) {
+        previousStyleProperties.delete(name);
         if (name.indexOf("-") === -1) {
-          // tslint:disable-next-line:no-any
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           style[name] = null;
         } else {
           style.removeProperty(name);
         }
       }
-    }
+    });
     // Add or update properties
     for (const name in styleInfo) {
+      previousStyleProperties.add(name);
       if (name.indexOf("-") === -1) {
-        // tslint:disable-next-line:no-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         style[name] = styleInfo[name];
       } else {
         style.setProperty(name, styleInfo[name]);
       }
     }
-    styleMapCache.set(part, styleInfo);
   });
 
   /**
@@ -2701,7 +2809,7 @@
    * modules as they cover only a limited range of use cases.
    */
   /* eslint-disable require-jsdoc, valid-jsdoc */
-  var MapShim = (function() {
+  var MapShim = (function () {
     if (typeof Map !== "undefined") {
       return Map;
     }
@@ -2714,7 +2822,7 @@
      */
     function getIndex(arr, key) {
       var result = -1;
-      arr.some(function(entry, index) {
+      arr.some(function (entry, index) {
         if (entry[0] === key) {
           result = index;
           return true;
@@ -2723,7 +2831,7 @@
       });
       return result;
     }
-    return /** @class */ (function() {
+    return /** @class */ (function () {
       function class_1() {
         this.__entries__ = [];
       }
@@ -2731,7 +2839,7 @@
         /**
          * @returns {boolean}
          */
-        get: function() {
+        get: function () {
           return this.__entries__.length;
         },
         enumerable: true,
@@ -2741,7 +2849,7 @@
        * @param {*} key
        * @returns {*}
        */
-      class_1.prototype.get = function(key) {
+      class_1.prototype.get = function (key) {
         var index = getIndex(this.__entries__, key);
         var entry = this.__entries__[index];
         return entry && entry[1];
@@ -2751,7 +2859,7 @@
        * @param {*} value
        * @returns {void}
        */
-      class_1.prototype.set = function(key, value) {
+      class_1.prototype.set = function (key, value) {
         var index = getIndex(this.__entries__, key);
         if (~index) {
           this.__entries__[index][1] = value;
@@ -2763,7 +2871,7 @@
        * @param {*} key
        * @returns {void}
        */
-      class_1.prototype.delete = function(key) {
+      class_1.prototype.delete = function (key) {
         var entries = this.__entries__;
         var index = getIndex(entries, key);
         if (~index) {
@@ -2774,13 +2882,13 @@
        * @param {*} key
        * @returns {void}
        */
-      class_1.prototype.has = function(key) {
+      class_1.prototype.has = function (key) {
         return !!~getIndex(this.__entries__, key);
       };
       /**
        * @returns {void}
        */
-      class_1.prototype.clear = function() {
+      class_1.prototype.clear = function () {
         this.__entries__.splice(0);
       };
       /**
@@ -2788,7 +2896,7 @@
        * @param {*} [ctx=null]
        * @returns {void}
        */
-      class_1.prototype.forEach = function(callback, ctx) {
+      class_1.prototype.forEach = function (callback, ctx) {
         if (ctx === void 0) {
           ctx = null;
         }
@@ -2810,7 +2918,7 @@
     window.document === document;
 
   // Returns global object of a current environment.
-  var global$1 = (function() {
+  var global$1 = (function () {
     if (typeof global !== "undefined" && global.Math === Math) {
       return global;
     }
@@ -2830,15 +2938,15 @@
    *
    * @returns {number} Requests' identifier.
    */
-  var requestAnimationFrame$1 = (function() {
+  var requestAnimationFrame$1 = (function () {
     if (typeof requestAnimationFrame === "function") {
       // It's required to use a bounded function because IE sometimes throws
       // an "Invalid calling object" error if rAF is invoked without the global
       // object on the left hand side.
       return requestAnimationFrame.bind(global$1);
     }
-    return function(callback) {
-      return setTimeout(function() {
+    return function (callback) {
+      return setTimeout(function () {
         return callback(Date.now());
       }, 1000 / 60);
     };
@@ -2929,7 +3037,7 @@
   /**
    * Singleton controller class which handles updates of ResizeObserver instances.
    */
-  var ResizeObserverController = /** @class */ (function() {
+  var ResizeObserverController = /** @class */ (function () {
     /**
      * Creates a new instance of ResizeObserverController.
      *
@@ -2969,7 +3077,7 @@
      * @param {ResizeObserverSPI} observer - Observer to be added.
      * @returns {void}
      */
-    ResizeObserverController.prototype.addObserver = function(observer) {
+    ResizeObserverController.prototype.addObserver = function (observer) {
       if (!~this.observers_.indexOf(observer)) {
         this.observers_.push(observer);
       }
@@ -2984,7 +3092,7 @@
      * @param {ResizeObserverSPI} observer - Observer to be removed.
      * @returns {void}
      */
-    ResizeObserverController.prototype.removeObserver = function(observer) {
+    ResizeObserverController.prototype.removeObserver = function (observer) {
       var observers = this.observers_;
       var index = observers.indexOf(observer);
       // Remove observer if it's present in registry.
@@ -3002,7 +3110,7 @@
      *
      * @returns {void}
      */
-    ResizeObserverController.prototype.refresh = function() {
+    ResizeObserverController.prototype.refresh = function () {
       var changesDetected = this.updateObservers_();
       // Continue running updates if changes have been detected as there might
       // be future ones caused by CSS transitions.
@@ -3018,9 +3126,9 @@
      * @returns {boolean} Returns "true" if any observer has detected changes in
      *      dimensions of it's elements.
      */
-    ResizeObserverController.prototype.updateObservers_ = function() {
+    ResizeObserverController.prototype.updateObservers_ = function () {
       // Collect observers that have active observations.
-      var activeObservers = this.observers_.filter(function(observer) {
+      var activeObservers = this.observers_.filter(function (observer) {
         return observer.gatherActive(), observer.hasActive();
       });
       // Deliver notifications in a separate cycle in order to avoid any
@@ -3028,7 +3136,7 @@
       // ResizeObserver are tracking the same element and the callback of one
       // of them changes content dimensions of the observed target. Sometimes
       // this may result in notifications being blocked for the rest of observers.
-      activeObservers.forEach(function(observer) {
+      activeObservers.forEach(function (observer) {
         return observer.broadcastActive();
       });
       return activeObservers.length > 0;
@@ -3039,7 +3147,7 @@
      * @private
      * @returns {void}
      */
-    ResizeObserverController.prototype.connect_ = function() {
+    ResizeObserverController.prototype.connect_ = function () {
       // Do nothing if running in a non-browser environment or if listeners
       // have been already added.
       if (!isBrowser || this.connected_) {
@@ -3070,7 +3178,7 @@
      * @private
      * @returns {void}
      */
-    ResizeObserverController.prototype.disconnect_ = function() {
+    ResizeObserverController.prototype.disconnect_ = function () {
       // Do nothing if running in a non-browser environment or if listeners
       // have been already removed.
       if (!isBrowser || !this.connected_) {
@@ -3095,11 +3203,11 @@
      * @param {TransitionEvent} event
      * @returns {void}
      */
-    ResizeObserverController.prototype.onTransitionEnd_ = function(_a) {
+    ResizeObserverController.prototype.onTransitionEnd_ = function (_a) {
       var _b = _a.propertyName,
         propertyName = _b === void 0 ? "" : _b;
       // Detect whether transition may affect dimensions of an element.
-      var isReflowProperty = transitionKeys.some(function(key) {
+      var isReflowProperty = transitionKeys.some(function (key) {
         return !!~propertyName.indexOf(key);
       });
       if (isReflowProperty) {
@@ -3111,7 +3219,7 @@
      *
      * @returns {ResizeObserverController}
      */
-    ResizeObserverController.getInstance = function() {
+    ResizeObserverController.getInstance = function () {
       if (!this.instance_) {
         this.instance_ = new ResizeObserverController();
       }
@@ -3133,7 +3241,7 @@
    * @param {Object} props - Properties to be defined.
    * @returns {Object} Target object.
    */
-  var defineConfigurable = function(target, props) {
+  var defineConfigurable = function (target, props) {
     for (var _i = 0, _a = Object.keys(props); _i < _a.length; _i++) {
       var key = _a[_i];
       Object.defineProperty(target, key, {
@@ -3152,7 +3260,7 @@
    * @param {Object} target
    * @returns {Object}
    */
-  var getWindowOf = function(target) {
+  var getWindowOf = function (target) {
     // Assume that the element is an instance of Node, which means that it
     // has the "ownerDocument" property from which we can retrieve a
     // corresponding global object.
@@ -3186,7 +3294,7 @@
     for (var _i = 1; _i < arguments.length; _i++) {
       positions[_i - 1] = arguments[_i];
     }
-    return positions.reduce(function(size, position) {
+    return positions.reduce(function (size, position) {
       var value = styles["border-" + position + "-width"];
       return size + toFloat(value);
     }, 0);
@@ -3297,18 +3405,18 @@
    * @param {Element} target - Element to be checked.
    * @returns {boolean}
    */
-  var isSVGGraphicsElement = (function() {
+  var isSVGGraphicsElement = (function () {
     // Some browsers, namely IE and Edge, don't have the SVGGraphicsElement
     // interface.
     if (typeof SVGGraphicsElement !== "undefined") {
-      return function(target) {
+      return function (target) {
         return target instanceof getWindowOf(target).SVGGraphicsElement;
       };
     }
     // If it's so, then check that element is at least an instance of the
     // SVGElement and that it has the "getBBox" method.
     // eslint-disable-next-line no-extra-parens
-    return function(target) {
+    return function (target) {
       return (
         target instanceof getWindowOf(target).SVGElement &&
         typeof target.getBBox === "function"
@@ -3386,7 +3494,7 @@
    * Class that is responsible for computations of the content rectangle of
    * provided DOM element and for keeping track of it's changes.
    */
-  var ResizeObservation = /** @class */ (function() {
+  var ResizeObservation = /** @class */ (function () {
     /**
      * Creates an instance of ResizeObservation.
      *
@@ -3419,7 +3527,7 @@
      *
      * @returns {boolean}
      */
-    ResizeObservation.prototype.isActive = function() {
+    ResizeObservation.prototype.isActive = function () {
       var rect = getContentRect(this.target);
       this.contentRect_ = rect;
       return (
@@ -3433,7 +3541,7 @@
      *
      * @returns {DOMRectInit} Last observed content rectangle.
      */
-    ResizeObservation.prototype.broadcastRect = function() {
+    ResizeObservation.prototype.broadcastRect = function () {
       var rect = this.contentRect_;
       this.broadcastWidth = rect.width;
       this.broadcastHeight = rect.height;
@@ -3442,7 +3550,7 @@
     return ResizeObservation;
   })();
 
-  var ResizeObserverEntry = /** @class */ (function() {
+  var ResizeObserverEntry = /** @class */ (function () {
     /**
      * Creates an instance of ResizeObserverEntry.
      *
@@ -3462,7 +3570,7 @@
     return ResizeObserverEntry;
   })();
 
-  var ResizeObserverSPI = /** @class */ (function() {
+  var ResizeObserverSPI = /** @class */ (function () {
     /**
      * Creates a new instance of ResizeObserver.
      *
@@ -3502,7 +3610,7 @@
      * @param {Element} target - Element to be observed.
      * @returns {void}
      */
-    ResizeObserverSPI.prototype.observe = function(target) {
+    ResizeObserverSPI.prototype.observe = function (target) {
       if (!arguments.length) {
         throw new TypeError("1 argument required, but only 0 present.");
       }
@@ -3529,7 +3637,7 @@
      * @param {Element} target - Element to stop observing.
      * @returns {void}
      */
-    ResizeObserverSPI.prototype.unobserve = function(target) {
+    ResizeObserverSPI.prototype.unobserve = function (target) {
       if (!arguments.length) {
         throw new TypeError("1 argument required, but only 0 present.");
       }
@@ -3555,7 +3663,7 @@
      *
      * @returns {void}
      */
-    ResizeObserverSPI.prototype.disconnect = function() {
+    ResizeObserverSPI.prototype.disconnect = function () {
       this.clearActive();
       this.observations_.clear();
       this.controller_.removeObserver(this);
@@ -3566,10 +3674,10 @@
      *
      * @returns {void}
      */
-    ResizeObserverSPI.prototype.gatherActive = function() {
+    ResizeObserverSPI.prototype.gatherActive = function () {
       var _this = this;
       this.clearActive();
-      this.observations_.forEach(function(observation) {
+      this.observations_.forEach(function (observation) {
         if (observation.isActive()) {
           _this.activeObservations_.push(observation);
         }
@@ -3581,14 +3689,14 @@
      *
      * @returns {void}
      */
-    ResizeObserverSPI.prototype.broadcastActive = function() {
+    ResizeObserverSPI.prototype.broadcastActive = function () {
       // Do nothing if observer doesn't have active observations.
       if (!this.hasActive()) {
         return;
       }
       var ctx = this.callbackCtx_;
       // Create ResizeObserverEntry instance for every active observation.
-      var entries = this.activeObservations_.map(function(observation) {
+      var entries = this.activeObservations_.map(function (observation) {
         return new ResizeObserverEntry(
           observation.target,
           observation.broadcastRect()
@@ -3602,7 +3710,7 @@
      *
      * @returns {void}
      */
-    ResizeObserverSPI.prototype.clearActive = function() {
+    ResizeObserverSPI.prototype.clearActive = function () {
       this.activeObservations_.splice(0);
     };
     /**
@@ -3610,7 +3718,7 @@
      *
      * @returns {boolean}
      */
-    ResizeObserverSPI.prototype.hasActive = function() {
+    ResizeObserverSPI.prototype.hasActive = function () {
       return this.activeObservations_.length > 0;
     };
     return ResizeObserverSPI;
@@ -3625,7 +3733,7 @@
    * ResizeObserver API. Encapsulates the ResizeObserver SPI implementation
    * exposing only those methods and properties that are defined in the spec.
    */
-  var ResizeObserver = /** @class */ (function() {
+  var ResizeObserver = /** @class */ (function () {
     /**
      * Creates a new instance of ResizeObserver.
      *
@@ -3646,14 +3754,14 @@
     return ResizeObserver;
   })();
   // Expose public methods of ResizeObserver.
-  ["observe", "unobserve", "disconnect"].forEach(function(method) {
-    ResizeObserver.prototype[method] = function() {
+  ["observe", "unobserve", "disconnect"].forEach(function (method) {
+    ResizeObserver.prototype[method] = function () {
       var _a;
       return (_a = observers.get(this))[method].apply(_a, arguments);
     };
   });
 
-  var index = (function() {
+  var index = (function () {
     // Export existing implementation if available.
     if (typeof global$1.ResizeObserver !== "undefined") {
       return global$1.ResizeObserver;
@@ -3672,6 +3780,8 @@
     controls: false,
     play_pause: false,
     play_stop: true,
+    prev: false,
+    next: false,
   };
   const ICON = {
     DEFAULT: "mdi:cast",
@@ -3938,7 +4048,16 @@
     }
 
     toggleMute(e) {
-      this.callService(e, "volume_mute", { is_volume_muted: !this.muted });
+      if (this.config.speaker_group.sync_volume) {
+        this.group.forEach((entity) => {
+          this.callService(e, "volume_mute", {
+            entity_id: entity,
+            is_volume_muted: !this.muted,
+          });
+        });
+      } else {
+        this.callService(e, "volume_mute", { is_volume_muted: !this.muted });
+      }
     }
 
     toggleShuffle(e) {
@@ -4024,13 +4143,33 @@
         if (platform === "bluesound") {
           return this.callService(e, `${platform}_JOIN`, options);
         }
+        if (platform === "soundtouch") {
+          const service = this.isGrouped ? "ADD_ZONE_SLAVE" : "CREATE_ZONE";
+          return this.handleSoundtouch(e, service, entity);
+        }
         this.callService(e, "join", options, platform);
       } else {
         if (platform === "bluesound") {
           return this.callService(e, `${platform}_UNJOIN`, options);
         }
+        if (platform === "soundtouch") {
+          return this.handleSoundtouch(e, "REMOVE_ZONE_SLAVE", entity);
+        }
         this.callService(e, "unjoin", options, platform);
       }
+    }
+
+    handleSoundtouch(e, service, entity) {
+      return this.callService(
+        e,
+        service,
+        {
+          master: this.master,
+          slaves: entity,
+        },
+        "soundtouch",
+        true
+      );
     }
 
     toggleScript(e, id, data = {}) {
@@ -4052,10 +4191,10 @@
       });
     }
 
-    callService(e, service, inOptions, domain = "media_player") {
+    callService(e, service, inOptions, domain = "media_player", omit = false) {
       e.stopPropagation();
       this.hass.callService(domain, service, {
-        entity_id: this.config.entity,
+        ...(!omit && { entity_id: this.config.entity }),
         ...inOptions,
       });
     }
@@ -4067,6 +4206,7 @@
       display: block;
       --mmp-scale: var(--mini-media-player-scale, 1);
       --mmp-unit: calc(var(--mmp-scale) * 40px);
+      --mmp-name-font-weight: var(--mini-media-player-name-font-weight, 400);
       --mmp-accent-color: var(
         --mini-media-player-accent-color,
         var(--accent-color, #f39c12)
@@ -4101,6 +4241,10 @@
       );
       --mmp-text-color-inverted: var(--disabled-text-color);
       --mmp-active-color: var(--mmp-accent-color);
+      --mmp-button-color: var(
+        --mini-media-player-button-color,
+        rgba(255, 255, 255, 0.25)
+      );
       --mmp-icon-color: var(
         --mini-media-player-icon-color,
         var(
@@ -4352,6 +4496,7 @@
     .entity__info__name {
       line-height: calc(var(--mmp-unit) / 2);
       color: var(--mmp-text-color);
+      font-weight: var(--mmp-name-font-weight);
     }
     .entity__info__media {
       color: var(--secondary-text-color);
@@ -4535,17 +4680,17 @@
       width: calc(var(--mmp-unit) * 0.6);
       height: calc(var(--mmp-unit) * 0.6);
     }
-    paper-icon-button {
+    ha-icon-button {
       width: var(--mmp-unit);
       height: var(--mmp-unit);
       color: var(--mmp-text-color, var(--primary-text-color));
       transition: color 0.25s;
     }
-    paper-icon-button[color] {
+    ha-icon-button[color] {
       color: var(--mmp-accent-color, var(--accent-color)) !important;
       opacity: 1 !important;
     }
-    paper-icon-button[inactive] {
+    ha-icon-button[inactive] {
       opacity: 0.5;
     }
   `;
@@ -4602,12 +4747,7 @@
           @change="${(e) => e.stopPropagation()}"
           @click="${this.handleClick}"
         >
-          ${this.item.name}
-          ${this.master
-            ? html`
-                <span>(master)</span>
-              `
-            : ""}
+          ${this.item.name} ${this.master ? html`<span>(master)</span>` : ""}
         </paper-checkbox>
       `;
     }
@@ -4666,9 +4806,11 @@
           min-width: 0;
           overflow: hidden;
           transition: background 0.5s;
+          border-radius: 4px;
+          font-weight: 500;
         }
         :host([raised]) {
-          background: rgba(255, 255, 255, 0.25);
+          background: var(--mmp-button-color);
           min-height: calc(var(--mmp-unit) * 0.8);
           box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
             0px 2px 2px 0px rgba(0, 0, 0, 0.14),
@@ -4681,6 +4823,10 @@
         }
         :host([faded]) {
           opacity: 0.75;
+        }
+        :host([disabled]) {
+          opacity: 0.25;
+          pointer-events: none;
         }
         .container {
           height: 100%;
@@ -4727,88 +4873,79 @@
       return this.player.isMaster;
     }
 
+    get isGrouped() {
+      return this.player.isGrouped;
+    }
+
     handleGroupChange(ev) {
       const { entity, checked } = ev.detail;
       this.player.handleGroupChange(ev, entity, checked);
     }
 
-    render({ group, master, isMaster } = this) {
-      return this.visible
-        ? html`
-            <div class="mmp-group-list" ?visible=${this.visible}>
-              <span class="mmp-group-list__title">GRUPA ODTWARZACZY</span>
-              ${this.entities.map(
-                (item) => html`
-                  <mmp-group-item
-                    @change=${this.handleGroupChange}
-                    .item=${item}
-                    .checked=${item.entity_id === this.player.id ||
-                      group.includes(item.entity_id)}
-                    .disabled=${item.entity_id === this.player.id ||
-                      master !== this.player.id}
-                    .master=${item.entity_id === master}
-                  />
+    render() {
+      if (!this.visible) return html``;
+      const { group, isMaster, isGrouped } = this;
+      const { id } = this.player;
+      return html`
+        <div class="mmp-group-list">
+          <span class="mmp-group-list__title">GRUPA ODTWARZACZY</span>
+          ${this.entities.map((item) => this.renderItem(item, id))}
+          <div class="mmp-group-list__buttons">
+            <mmp-button
+              raised
+              ?disabled=${!isGrouped}
+              @click=${(e) => this.player.handleGroupChange(e, id, false)}
+            >
+              <span>Opuść</span>
+            </mmp-button>
+            ${isGrouped && isMaster
+              ? html`
+                  <mmp-button
+                    raised
+                    @click=${(e) =>
+                      this.player.handleGroupChange(e, group, false)}
+                  >
+                    <span>Rozgrupuj</span>
+                  </mmp-button>
                 `
-              )}
-              <div class="mmp-group-list__buttons">
-                <mmp-button
-                  class="mmp-group-list__button"
-                  raised
-                  ?disabled=${group.length < 2}
-                  @click=${(e) =>
-                    this.player.handleGroupChange(
-                      e,
-                      isMaster ? group : this.player.entity_id,
-                      false
-                    )}
+              : html``}
+            <mmp-button
+              raised
+              ?disabled=${!isMaster}
+              @click=${(e) =>
+                this.player.handleGroupChange(
+                  e,
+                  this.entities.map((item) => item.entity_id),
+                  true
+                )}
+            >
+              <span
+                ><svg
+                  style="width:24px;height:24px; vertical-align:middle;"
+                  viewBox="0 0 24 24"
                 >
-                  <span
-                    >${isMaster
-                      ? html`
-                          <svg
-                            style="width:24px;height:24px; vertical-align:middle;"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              fill="#fff"
-                              d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"
-                            />
-                          </svg>
-                          Wszystkie
-                        `
-                      : html`
-                          Opuść
-                        `}</span
-                  >
-                </mmp-button>
-                <mmp-button
-                  class="mmp-group-list__button"
-                  raised
-                  ?disabled=${!isMaster}
-                  @click=${(e) =>
-                    this.player.handleGroupChange(
-                      e,
-                      this.entities.map((item) => item.entity_id),
-                      true
-                    )}
-                >
-                  <span
-                    ><svg
-                      style="width:24px;height:24px; vertical-align:middle;"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="#fff"
-                        d="M19,19H5V5H15V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
-                      />
-                    </svg>
-                    Wszystkie</span
-                  >
-                </mmp-button>
-              </div>
-            </div>
-          `
-        : html``;
+                  <path
+                    fill="#fff"
+                    d="M19,19H5V5H15V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+                  />
+                </svg>
+                Wszystkie</span
+              >
+            </mmp-button>
+          </div>
+        </div>
+      `;
+    }
+
+    renderItem(item, id) {
+      const itemId = item.entity_id;
+      return html` <mmp-group-item
+        @change=${this.handleGroupChange}
+        .item=${item}
+        .checked=${itemId === id || this.group.includes(itemId)}
+        .disabled=${itemId === id || !this.isMaster}
+        .master=${itemId === this.master}
+      />`;
     }
 
     static get styles() {
@@ -4828,14 +4965,13 @@
         .mmp-group-list__buttons {
           display: flex;
         }
-        .mmp-group-list__button {
+        mmp-button {
           margin: 8px 8px 0 0;
           min-width: 0;
           text-transform: uppercase;
           text-align: center;
           width: 50%;
           --mdc-theme-primary: transparent;
-          background: rgba(255, 255, 255, 0.25);
         }`;
     }
   }
@@ -4881,12 +5017,12 @@
         >
           ${this.icon
             ? html`
-                <paper-icon-button
+                <ha-icon-button
                   class="mmp-dropdown__button icon"
                   slot="dropdown-trigger"
                   .icon=${ICON.DROPDOWN}
                 >
-                </paper-icon-button>
+                </ha-icon-button>
               `
             : html`
                 <mmp-button
@@ -4897,10 +5033,10 @@
                     <span class="mmp-dropdown__label ellipsis">
                       ${this.selected || this.label}
                     </span>
-                    <iron-icon
+                    <ha-icon
                       class="mmp-dropdown__icon"
                       .icon=${ICON.DROPDOWN}
-                    ></iron-icon>
+                    ></ha-icon>
                   </div>
                 </mmp-button>
               `}
@@ -4910,22 +5046,14 @@
             @iron-select=${this.onChange}
           >
             ${this.items.map(
-              (item) => html`
-                <paper-item value=${item.id || item.name}>
-                  ${item.icon
-                    ? html`
-                        <iron-icon .icon=${item.icon}></iron-icon>
-                      `
-                    : ""}
-                  ${item.name
-                    ? html`
-                        <span class="mmp-dropdown__item__label"
-                          >${item.name}</span
-                        >
-                      `
-                    : ""}
-                </paper-item>
-              `
+              (item) => html` <paper-item value=${item.id || item.name}>
+                ${item.icon ? html`<ha-icon .icon=${item.icon}></ha-icon>` : ""}
+                ${item.name
+                  ? html`<span class="mmp-dropdown__item__label"
+                      >${item.name}</span
+                    >`
+                  : ""}
+              </paper-item>`
             )}
           </paper-listbox>
         </paper-menu-button>
@@ -4988,15 +5116,15 @@
           paper-item > *:nth-child(2) {
             margin-left: 4px;
           }
-          paper-menu-button[focused] mmp-button iron-icon {
+          paper-menu-button[focused] mmp-button ha-icon {
             color: var(--mmp-accent-color);
             transform: rotate(180deg);
           }
-          paper-menu-button[focused] paper-icon-button {
+          paper-menu-button[focused] ha-icon-button {
             color: var(--mmp-accent-color);
             transform: rotate(180deg);
           }
-          paper-menu-button[focused] paper-icon-button[focused] {
+          paper-menu-button[focused] ha-icon-button[focused] {
             color: var(--mmp-text-color);
             transform: rotate(0deg);
           }
@@ -5081,42 +5209,30 @@
         ? html`
             <div class="mmp-shortcuts__buttons">
               ${this.buttons.map(
-                (item) => html`
-                  <mmp-button
-                    style=${`min-height: ${this.height}px;`}
-                    raised
-                    columns=${this.shortcuts.columns}
-                    ?color=${item.id === active}
-                    class="mmp-shortcuts__button"
-                    @click=${(e) => this.handleShortcut(e, item)}
-                  >
-                    <div align=${this.shortcuts.align_text}>
-                      ${item.icon
-                        ? html`
-                            <iron-icon .icon=${item.icon}></iron-icon>
-                          `
-                        : ""}
-                      ${item.image
-                        ? html`
-                            <img src=${item.image} />
-                          `
-                        : ""}
-                      ${item.name
-                        ? html`
-                            <span class="ellipsis">${item.name}</span>
-                          `
-                        : ""}
-                    </div>
-                  </mmp-button>
-                `
+                (item) => html` <mmp-button
+                  style=${`min-height: ${this.height}px;`}
+                  raised
+                  columns=${this.shortcuts.columns}
+                  ?color=${item.id === active}
+                  class="mmp-shortcuts__button"
+                  @click=${(e) => this.handleShortcut(e, item)}
+                >
+                  <div align=${this.shortcuts.align_text}>
+                    ${item.icon
+                      ? html`<ha-icon .icon=${item.icon}></ha-icon>`
+                      : ""}
+                    ${item.image ? html`<img src=${item.image} />` : ""}
+                    ${item.name
+                      ? html`<span class="ellipsis">${item.name}</span>`
+                      : ""}
+                  </div>
+                </mmp-button>`
               )}
             </div>
           `
         : "";
 
-      return html`
-        ${buttons} ${list}
-      `;
+      return html` ${buttons} ${list} `;
     }
 
     handleShortcut(ev, item) {
@@ -5178,7 +5294,7 @@
             line-height: calc(var(--mmp-unit) * 0.6);
             text-transform: initial;
           }
-          .mmp-shortcuts__button > div > iron-icon {
+          .mmp-shortcuts__button > div > ha-icon {
             width: calc(var(--mmp-unit) * 0.6);
             height: calc(var(--mmp-unit) * 0.6);
           }
@@ -5202,6 +5318,7 @@
       return {
         hass: {},
         config: {},
+        player: {},
       };
     }
 
@@ -5264,7 +5381,8 @@
       const { config, message } = this;
       const opts = {
         message,
-        entity_id: config.entity_id || this.entity,
+        entity_id: config.entity_id || this.player.id,
+        ...(config.entity_id === "group" && { entity_id: this.player.group }),
       };
       if (config.language) opts.language = config.language;
       if (config.platform === "alexa")
@@ -5327,6 +5445,7 @@
         paper-input {
           opacity: 0.75;
           --paper-input-container-color: var(--mmp-text-color);
+          --paper-input-container-input-color: var(--mmp-text-color);
           --paper-input-container-focus-color: var(--mmp-text-color);
           --paper-input-container: {
             padding: 0;
@@ -5337,11 +5456,9 @@
         }
 
         ha-card[artwork*="cover"][has-artwork] paper-input {
-          --paper-input-container-focus-color: #ffffff;
-        }
-        ha-card[artwork*="cover"][has-artwork] paper-input {
           --paper-input-container-color: #ffffff;
           --paper-input-container-input-color: #ffffff;
+          --paper-input-container-focus-color: #ffffff;
         }`;
     }
   }
@@ -5483,8 +5600,17 @@
     }
 
     disconnectedCallback() {
+      super.disconnectedCallback();
       this.resetSeek();
       clearInterval(this.tracker);
+      this.tracker = null;
+    }
+
+    connectedCallback() {
+      super.connectedCallback();
+      if (this.hasProgress) {
+        this.trackProgress();
+      }
     }
 
     calcProgress(x) {
@@ -5676,13 +5802,13 @@
         ${this.showShuffle
           ? html`
               <div class="flex mmp-media-controls__shuffle">
-                <paper-icon-button
+                <ha-icon-button
                   class="shuffle-button"
                   @click=${(e) => this.player.toggleShuffle(e)}
                   .icon=${ICON.SHUFFLE}
                   ?color=${this.player.shuffle}
                 >
-                </paper-icon-button>
+                </ha-icon-button>
               </div>
             `
           : html``}
@@ -5692,17 +5818,21 @@
                 class="flex mmp-media-controls__media"
                 ?flow=${this.config.flow || this.break}
               >
-                <paper-icon-button
-                  @click=${(e) => this.player.prev(e)}
-                  .icon=${ICON.PREV}
-                >
-                </paper-icon-button>
+                ${!hide.prev
+                  ? html` <ha-icon-button
+                      @click=${(e) => this.player.prev(e)}
+                      .icon=${ICON.PREV}
+                    >
+                    </ha-icon-button>`
+                  : ""}
                 ${this.renderPlayButtons()}
-                <paper-icon-button
-                  @click=${(e) => this.player.next(e)}
-                  .icon=${ICON.NEXT}
-                >
-                </paper-icon-button>
+                ${!hide.next
+                  ? html` <ha-icon-button
+                      @click=${(e) => this.player.next(e)}
+                      .icon=${ICON.NEXT}
+                    >
+                    </ha-icon-button>`
+                  : ""}
               </div>
             `
           : html``}
@@ -5715,41 +5845,37 @@
     }
 
     renderVolSlider(muted) {
-      return html`
-        <div class="mmp-media-controls__volume --slider flex">
-          ${this.renderMuteButton(muted)}
-          <ha-slider
-            @change=${this.handleVolumeChange}
-            @click=${(e) => e.stopPropagation()}
-            ?disabled=${muted}
-            min=${this.minVol}
-            max=${this.maxVol}
-            value=${this.player.vol * 100}
-            dir=${"ltr"}
-            ignore-bar-touch
-            pin
-          >
-          </ha-slider>
-        </div>
-      `;
+      return html` <div class="mmp-media-controls__volume --slider flex">
+        ${this.renderMuteButton(muted)}
+        <ha-slider
+          @change=${this.handleVolumeChange}
+          @click=${(e) => e.stopPropagation()}
+          ?disabled=${muted}
+          min=${this.minVol}
+          max=${this.maxVol}
+          value=${this.player.vol * 100}
+          dir=${"ltr"}
+          ignore-bar-touch
+          pin
+        >
+        </ha-slider>
+      </div>`;
     }
 
     renderVolButtons(muted) {
-      return html`
-        <div class="mmp-media-controls__volume --buttons flex">
-          ${this.renderMuteButton(muted)}
-          <paper-icon-button
-            @click=${(e) => this.player.volumeDown(e)}
-            .icon=${ICON.VOL_DOWN}
-          >
-          </paper-icon-button>
-          <paper-icon-button
-            @click=${(e) => this.player.volumeUp(e)}
-            .icon=${ICON.VOL_UP}
-          >
-          </paper-icon-button>
-        </div>
-      `;
+      return html` <div class="mmp-media-controls__volume --buttons flex">
+        ${this.renderMuteButton(muted)}
+        <ha-icon-button
+          @click=${(e) => this.player.volumeDown(e)}
+          .icon=${ICON.VOL_DOWN}
+        >
+        </ha-icon-button>
+        <ha-icon-button
+          @click=${(e) => this.player.volumeUp(e)}
+          .icon=${ICON.VOL_UP}
+        >
+        </ha-icon-button>
+      </div>`;
     }
 
     renderMuteButton(muted) {
@@ -5758,44 +5884,44 @@
         case "play":
         case "play_pause":
           return html`
-            <paper-icon-button
+            <ha-icon-button
               @click=${(e) => this.player.playPause(e)}
               .icon=${ICON.PLAY[this.player.isPlaying]}
             >
-            </paper-icon-button>
+            </ha-icon-button>
           `;
         case "stop":
           return html`
-            <paper-icon-button
+            <ha-icon-button
               @click=${(e) => this.player.stop(e)}
               .icon=${ICON.STOP.true}
             >
-            </paper-icon-button>
+            </ha-icon-button>
           `;
         case "play_stop":
           return html`
-            <paper-icon-button
+            <ha-icon-button
               @click=${(e) => this.player.playStop(e)}
               .icon=${ICON.STOP[this.player.isPlaying]}
             >
-            </paper-icon-button>
+            </ha-icon-button>
           `;
         case "next":
           return html`
-            <paper-icon-button
+            <ha-icon-button
               @click=${(e) => this.player.next(e)}
               .icon=${ICON.NEXT}
             >
-            </paper-icon-button>
+            </ha-icon-button>
           `;
         default:
           if (!this.player.supportsMute) return;
           return html`
-            <paper-icon-button
+            <ha-icon-button
               @click=${(e) => this.player.toggleMute(e)}
               .icon=${ICON.MUTE[muted]}
             >
-            </paper-icon-button>
+            </ha-icon-button>
           `;
       }
     }
@@ -5805,22 +5931,22 @@
       return html`
         ${!hide.play_pause
           ? html`
-              <paper-icon-button
+              <ha-icon-button
                 @click=${(e) => this.player.playPause(e)}
                 .icon=${ICON.PLAY[this.player.isPlaying]}
               >
-              </paper-icon-button>
+              </ha-icon-button>
             `
           : html``}
         ${!hide.play_stop
           ? html`
-              <paper-icon-button
+              <ha-icon-button
                 @click=${(e) => this.handleStop(e)}
                 .icon=${hide.play_pause
                   ? ICON.STOP[this.player.isPlaying]
                   : ICON.STOP.true}
               >
-              </paper-icon-button>
+              </ha-icon-button>
             `
           : html``}
       `;
@@ -5856,7 +5982,7 @@
             min-width: 100px;
             width: 100%;
           }
-          paper-icon-button {
+          ha-icon-button {
             min-width: var(--mmp-unit);
           }
           .mmp-media-controls__volume {
@@ -5880,7 +6006,7 @@
             flex-shrink: 200;
             justify-content: center;
           }
-          .mmp-media-controls__shuffle paper-icon-button {
+          .mmp-media-controls__shuffle ha-icon-button {
             height: 36px;
             width: 36px;
             min-width: 36px;
@@ -5966,47 +6092,39 @@
             `
           : ""}
         ${this.hasSource
-          ? html`
-              <mmp-source-menu
-                .player=${this.player}
-                .icon=${this.sourceSize}
-                ?full=${this.config.source === "full"}
-              >
-              </mmp-source-menu>
-            `
+          ? html` <mmp-source-menu
+              .player=${this.player}
+              .icon=${this.sourceSize}
+              ?full=${this.config.source === "full"}
+            >
+            </mmp-source-menu>`
           : ""}
         ${this.hasSoundMode
-          ? html`
-              <mmp-sound-menu
-                .player=${this.player}
-                .icon=${this.soundSize}
-                ?full=${this.config.sound_mode === "full"}
-              >
-              </mmp-sound-menu>
-            `
+          ? html` <mmp-sound-menu
+              .player=${this.player}
+              .icon=${this.soundSize}
+              ?full=${this.config.sound_mode === "full"}
+            >
+            </mmp-sound-menu>`
           : ""}
         ${this.showGroupButton
-          ? html`
-              <paper-icon-button
-                class="group-button"
-                .icon=${this.icon}
-                ?inactive=${!this.player.isGrouped}
-                ?color=${this.groupVisible}
-                @click=${this.handleGroupClick}
-              >
-              </paper-icon-button>
-            `
+          ? html` <ha-icon-button
+              class="group-button"
+              .icon=${this.icon}
+              ?inactive=${!this.player.isGrouped}
+              ?color=${this.groupVisible}
+              @click=${this.handleGroupClick}
+            >
+            </ha-icon-button>`
           : ""}
         ${this.showPowerButton
-          ? html`
-              <paper-icon-button
-                class="power-button"
-                .icon=${ICON.POWER}
-                @click=${(e) => this.player.toggle(e)}
-                ?color=${this.powerColor}
-              >
-              </paper-icon-button>
-            `
+          ? html` <ha-icon-button
+              class="power-button"
+              .icon=${ICON.POWER}
+              @click=${(e) => this.player.toggle(e)}
+              ?color=${this.powerColor}
+            >
+            </ha-icon-button>`
           : ""}
       `;
     }
@@ -6018,13 +6136,11 @@
 
     get renderIdleView() {
       if (this.player.isPaused)
-        return html`
-          <paper-icon-button
-            .icon=${ICON.PLAY[this.player.isPlaying]}
-            @click=${(e) => this.player.playPause(e)}
-          >
-          </paper-icon-button>
-        `;
+        return html` <ha-icon-button
+          .icon=${ICON.PLAY[this.player.isPlaying]}
+          @click=${(e) => this.player.playPause(e)}
+        >
+        </ha-icon-button>`;
       else
         return html`
           <span class="label ellipsis">
@@ -6056,7 +6172,7 @@
             min-width: calc(var(--mmp-unit) * 0.85);
             margin: 3px;
           }
-          paper-icon-button {
+          ha-icon-button {
             min-width: var(--mmp-unit);
           }
         `,
@@ -6070,6 +6186,20 @@
     customElements.define(
       "ha-slider",
       class extends customElements.get("paper-slider") {}
+    );
+  }
+
+  if (!customElements.get("ha-icon-button")) {
+    customElements.define(
+      "ha-icon-button",
+      class extends customElements.get("paper-icon-button") {}
+    );
+  }
+
+  if (!customElements.get("ha-icon")) {
+    customElements.define(
+      "ha-icon",
+      class extends customElements.get("iron-icon") {}
     );
   }
 
@@ -6274,7 +6404,7 @@
                     <mmp-tts
                       .config=${config.tts}
                       .hass=${this.hass}
-                      .entity=${this.player.id}
+                      .player=${this.player}
                     >
                     </mmp-tts>
                   `
@@ -6311,9 +6441,7 @@
           ? `url(${this.config.background})`
           : this.thumbnail;
 
-      return html`
-        <div class="cover" style="background-image: ${url};"></div>
-      `;
+      return html`<div class="cover" style="background-image: ${url};"></div>`;
     }
 
     handlePopup(e) {
@@ -6330,67 +6458,53 @@
     renderIcon(artwork) {
       if (this.config.hide.icon) return;
       if (this.player.active && artwork && this.config.artwork === "default")
-        return html`
-          <div
-            class="entity__artwork"
-            style="background-image: ${this.thumbnail};"
-            ?border=${!this.config.hide.artwork_border}
-            state=${this.player.state}
-          ></div>
-        `;
+        return html` <div
+          class="entity__artwork"
+          style="background-image: ${this.thumbnail};"
+          ?border=${!this.config.hide.artwork_border}
+          state=${this.player.state}
+        ></div>`;
 
       const state = !this.config.hide.icon_state && this.player.isActive;
-      return html`
-        <div class="entity__icon" ?color=${state}>
-          <ha-icon .icon=${this.computeIcon()}></ha-icon>
-        </div>
-      `;
+      return html` <div class="entity__icon" ?color=${state}>
+        <ha-icon .icon=${this.computeIcon()}></ha-icon>
+      </div>`;
     }
 
     renderEntityName() {
       if (this.config.hide.name) return;
-      return html`
-        <div class="entity__info__name">
-          ${this.name} ${this.speakerCount()}
-        </div>
-      `;
+      return html` <div class="entity__info__name">
+        ${this.name} ${this.speakerCount()}
+      </div>`;
     }
 
     renderMediaInfo() {
       if (this.config.hide.info) return;
       const items = this.player.mediaInfo;
-      return html`
-        <div
-          class="entity__info__media"
-          ?short=${this.config.info === "short" || !this.player.active}
-          ?short-scroll=${this.config.info === "scroll"}
-          ?scroll=${this.overflow}
-          style="animation-duration: ${this.overflow}s;"
-        >
-          ${this.config.info === "scroll"
-            ? html`
-                <div>
-                  <div class="marquee">
-                    ${items.map(
-                      (i) =>
-                        html`
-                          <span class=${`attr__${i.attr}`}
-                            >${i.prefix + i.text}</span
-                          >
-                        `
-                    )}
-                  </div>
-                </div>
-              `
-            : ""}
-          ${items.map(
-            (i) =>
-              html`
-                <span class=${`attr__${i.attr}`}>${i.prefix + i.text}</span>
-              `
-          )}
-        </div>
-      `;
+      return html` <div
+        class="entity__info__media"
+        ?short=${this.config.info === "short" || !this.player.active}
+        ?short-scroll=${this.config.info === "scroll"}
+        ?scroll=${this.overflow}
+        style="animation-duration: ${this.overflow}s;"
+      >
+        ${this.config.info === "scroll"
+          ? html` <div>
+              <div class="marquee">
+                ${items.map(
+                  (i) =>
+                    html`<span class=${`attr__${i.attr}`}
+                      >${i.prefix + i.text}</span
+                    >`
+                )}
+              </div>
+            </div>`
+          : ""}
+        ${items.map(
+          (i) =>
+            html`<span class=${`attr__${i.attr}`}>${i.prefix + i.text}</span>`
+        )}
+      </div>`;
     }
 
     speakerCount() {

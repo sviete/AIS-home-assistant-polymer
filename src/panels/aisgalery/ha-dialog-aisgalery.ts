@@ -1,5 +1,4 @@
 import "@polymer/iron-icon/iron-icon";
-import "@polymer/paper-icon-button/paper-icon-button";
 import "../../components/dialog/ha-paper-dialog";
 import "@vaadin/vaadin-upload";
 import { loadTokens } from "../../../src/common/auth/token_storage";
@@ -26,11 +25,11 @@ export class HaDialogAisgalery extends LitElement {
           z-index: 103;
         }
 
-        paper-icon-button {
+        ha-icon-button {
           color: var(--secondary-text-color);
         }
 
-        paper-icon-button[active] {
+        ha-icon-button[active] {
           color: var(--primary-color);
         }
 
@@ -130,10 +129,7 @@ export class HaDialogAisgalery extends LitElement {
         @opened-changed=${this._openedChanged}
       >
         <app-toolbar>
-          <paper-icon-button
-            icon="hass:close"
-            dialog-dismiss=""
-          ></paper-icon-button>
+          <ha-icon-button icon="hass:close" dialog-dismiss=""></ha-icon-button>
           <div main-title="">Dodawanie zdjęć</div>
         </app-toolbar>
         <vaadin-upload
@@ -166,7 +162,7 @@ export class HaDialogAisgalery extends LitElement {
         upload.set("headers", {
           authorization: "Bearer " + tokens.access_token,
         });
-        upload.addEventListener("file-reject", function(event) {
+        upload.addEventListener("file-reject", function (event) {
           console.log(event.detail.file.name + " error: " + event.detail.error);
         });
       }

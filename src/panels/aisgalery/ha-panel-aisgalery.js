@@ -1,13 +1,13 @@
 import "@material/mwc-button";
 import "@polymer/paper-input/paper-input";
-import "@polymer/paper-icon-button/paper-icon-button";
+import "@material/mwc-fab";
+import { mdiPlus } from "@mdi/js";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 import { showAisgaleryDialog } from "./show-ha-aisgalery-dialog";
 import "../../components/ha-card";
 import "../../resources/ha-style";
 import "../config/ha-config-section";
-import "../../components/ha-fab";
 /* eslint-plugin-disable lit */
 
 class HaPanelAisgalery extends PolymerElement {
@@ -129,14 +129,14 @@ class HaPanelAisgalery extends PolymerElement {
           }
         }
 
-        ha-fab {
+        mwc-fab {
           position: fixed;
           bottom: 16px;
           right: 16px;
           z-index: 1;
         }
 
-        ha-fab[is-wide] {
+        mwc-fab[is-wide] {
           bottom: 24px;
           right: 24px;
         }
@@ -145,11 +145,11 @@ class HaPanelAisgalery extends PolymerElement {
         <app-toolbar>
           <ha-menu-button hass="[[hass]]" narrow="[[narrow]]"></ha-menu-button>
           <div main-title>[[panel.title]]</div>
-          <paper-icon-button
+          <ha-icon-button
             aria-label="Instrukcja"
             icon="mdi:information-outline"
             on-click="_showHelp"
-          ></paper-icon-button>
+          ></ha-icon-button>
         </app-toolbar>
         <div class="galery_content" id="content">
           <template is="dom-if" if="[[showImages]]">
@@ -168,29 +168,27 @@ class HaPanelAisgalery extends PolymerElement {
                 ></video>
                 <figcaption>
                   <span style="display: block; text-align: right;">
-                    <paper-icon-button
+                    <ha-icon-button
                       icon="mdi:image-edit-outline"
                       on-click="_editImage"
                       title="Edycja"
-                    ></paper-icon-button>
-                    <paper-icon-button
+                    ></ha-icon-button>
+                    <ha-icon-button
                       icon="hass:delete"
                       on-click="_deleteImage"
-                    ></paper-icon-button
+                    ></ha-icon-button
                     ><br /> </span
                   ><br />
                   URLs:<br />
-                  <paper-icon-button
-                    icon="mdi:monitor-dashboard"
-                  ></paper-icon-button>
+                  <ha-icon-button icon="mdi:monitor-dashboard"></ha-icon-button>
                   {{currentImage.path}}<br />
-                  <paper-icon-button
+                  <ha-icon-button
                     icon="mdi:home-import-outline"
-                  ></paper-icon-button>
+                  ></ha-icon-button>
                   http://{{aisLocalIP}}{{currentImage.path}}<br />
-                  <paper-icon-button
+                  <ha-icon-button
                     icon="mdi:weather-cloudy-arrow-right"
-                  ></paper-icon-button>
+                  ></ha-icon-button>
                   {{remoteDomain}}{{currentImage.path}}
                   <span
                     class="duration"
@@ -234,14 +232,14 @@ class HaPanelAisgalery extends PolymerElement {
             </template>
           </div>
         </div>
-        <ha-fab
+        <mwc-fab
           slot="fab"
           is-wide$="[[isWide]]"
-          icon="hass:plus"
           title="[[localize('ui.common.add')]]"
           on-click="addImage"
         >
-        </ha-fab>
+          <ha-svg-icon slot="icon" path="[[mdiPlus]]"></ha-svg-icon>
+        </mwc-fab>
       </div>
     `;
   }

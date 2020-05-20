@@ -1,6 +1,5 @@
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import "@polymer/paper-icon-button/paper-icon-button";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 
@@ -153,24 +152,24 @@ class HaConfigAisDomControl extends PolymerElement {
               </div>
               <div class="card-actions person-actions">
                 <div on-click="tuneVoiceTone">
-                  <paper-icon-button
+                  <ha-icon-button
                     class="user-button"
                     icon="hass:tune"
-                  ></paper-icon-button
+                  ></ha-icon-button
                   ><mwc-button>Ton mowy</mwc-button>
                 </div>
                 <div on-click="tuneVoiceSpeed">
-                  <paper-icon-button
+                  <ha-icon-button
                     class="user-button"
                     icon="hass:play-speed"
-                  ></paper-icon-button
+                  ></ha-icon-button
                   ><mwc-button>Szybkość mowy</mwc-button>
                 </div>
                 <div>
-                  <paper-icon-button
+                  <ha-icon-button
                     class="user-button"
                     icon="hass:account"
-                  ></paper-icon-button
+                  ></ha-icon-button
                   ><mwc-button>[[selectedVoice]]</mwc-button>
                 </div>
               </div>

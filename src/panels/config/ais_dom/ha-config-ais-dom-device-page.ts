@@ -12,7 +12,7 @@ import memoizeOne from "memoize-one";
 import "../../../layouts/hass-subpage";
 import "../../../layouts/hass-error-screen";
 import "../ha-config-section";
-import { navigate } from "../../../../src/common/navigate";
+import { navigate } from "../../../common/navigate";
 import "../devices/device-detail/ha-device-info-card";
 import "../devices/device-detail/ha-device-triggers-card";
 import "../devices/device-detail/ha-device-conditions-card";
@@ -140,17 +140,17 @@ export class HaConfigDevicePage extends LitElement {
     // ${device.model === "Sonoff Bridge"
     return html`
       <hass-subpage .header=${device.name_by_user || device.name}>
-        <paper-icon-button
+        <ha-icon-button
           slot="toolbar-icon"
           icon="hass:settings"
           @click=${this._showSettings}
-        ></paper-icon-button>
-        <paper-icon-button
+        ></ha-icon-button>
+        <ha-icon-button
           slot="toolbar-icon"
           icon="hass:delete"
           title="Usuwanie"
           @click=${this._confirmRemoveDevice}
-        ></paper-icon-button>
+        ></ha-icon-button>
         <ha-config-section .isWide=${!this.narrow}>
           <span slot="header">Urządzenie AIS dom</span>
           <span slot="introduction">

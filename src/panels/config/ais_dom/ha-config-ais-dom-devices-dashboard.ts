@@ -1,6 +1,7 @@
 import "../../../layouts/hass-subpage";
 import "./ais_dom_devices/ha-ais-dom-devices-data-table";
-import "../../../components/ha-fab";
+import "@material/mwc-fab";
+import { mdiPlus } from "@mdi/js";
 import {
   LitElement,
   html,
@@ -27,7 +28,7 @@ export class HaConfigDeviceDashboard extends LitElement {
       ha-ais-dom-devices-data-table {
         width: 100%;
       }
-      ha-fab {
+      mwc-fab {
         position: fixed;
         bottom: 16px;
         right: 16px;
@@ -65,13 +66,15 @@ export class HaConfigDeviceDashboard extends LitElement {
           ></ha-ais-dom-devices-data-table>
         </div>
       </hass-subpage>
-      <ha-fab
+      <mwc-fab
         ?is-wide=${true}
         icon="hass:plus"
         title="Dodaj urządzenie"
         @click=${this._addDevice}
         class=""
-      ></ha-fab>
+      >
+        <ha-svg-icon slot="icon" path=${mdiPlus}></ha-svg-icon>
+      </mwc-fab>
     `;
   }
 

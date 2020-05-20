@@ -1,6 +1,5 @@
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import "@polymer/paper-icon-button/paper-icon-button";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 
@@ -57,11 +56,11 @@ class HaConfigAisDomControl extends PolymerElement {
                   <div class="aisInfoRow">
                     <mwc-button on-click="showLocalIpInfo"
                       >[[aisLocalHostName]]</mwc-button
-                    ><paper-icon-button
+                    ><ha-icon-button
                       class="user-button"
                       icon="hass:settings"
                       on-click="createFlowHostName"
-                    ></paper-icon-button>
+                    ></ha-icon-button>
                   </div>
                 </div>
                 <div on-click="showLocalIpInfo" style="text-align: center;">
@@ -79,11 +78,11 @@ class HaConfigAisDomControl extends PolymerElement {
               </div>
               <div class="card-actions">
                 <div>
-                  <paper-icon-button
+                  <ha-icon-button
                     class="user-button"
                     icon="hass:wifi"
                     on-click="showWiFiGroup"
-                  ></paper-icon-button
+                  ></ha-icon-button
                   ><mwc-button on-click="createFlowWifi"
                     >Konfigurator połączenia z siecą WiFi</mwc-button
                   >

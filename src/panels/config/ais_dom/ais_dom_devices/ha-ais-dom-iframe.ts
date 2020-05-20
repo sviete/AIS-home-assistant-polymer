@@ -7,9 +7,9 @@ import {
   CSSResult,
   css,
 } from "lit-element";
-import { HomeAssistant } from "../../../../../src/types";
-import "../../../../../src/layouts/hass-loading-screen";
-import "../../../../../src/layouts/hass-subpage";
+import { HomeAssistant } from "../../../../types";
+import "../../../../layouts/hass-loading-screen";
+import "../../../../layouts/hass-subpage";
 import { EntityRegistryStateEntry } from "../ha-config-ais-dom-device-page";
 
 @customElement("ais-dom-iframe-view")
@@ -31,9 +31,7 @@ class AisDomIframeView extends LitElement {
               }
               return html`
                 ${devUrl
-                  ? html`
-                      <iframe .src="http://${devUrl}"></iframe>
-                    `
+                  ? html` <iframe .src="http://${devUrl}"></iframe> `
                   : html``}
               `;
             })

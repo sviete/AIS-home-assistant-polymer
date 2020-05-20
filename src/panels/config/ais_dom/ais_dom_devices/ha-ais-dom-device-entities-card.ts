@@ -71,18 +71,18 @@ export class HaDeviceEntitiesCard extends LitElement {
                   <div class="buttons">
                     ${stateObj
                       ? html`
-                          <paper-icon-button
+                          <ha-icon-button
                             @click=${this._openMoreInfo}
                             icon="hass:information-outline"
-                          ></paper-icon-button>
+                          ></ha-icon-button>
                         `
                       : ""}
                     ${platform !== "ais_drives_service"
                       ? html`
-                          <paper-icon-button
+                          <ha-icon-button
                             @click=${this._confirmDeleteEntry}
                             icon="hass:delete"
-                          ></paper-icon-button>
+                          ></ha-icon-button>
                         `
                       : ""}
                   </div>

@@ -81,7 +81,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
             >
             <ha-card header="Zapis logów systemu do pliku">
               <div id="card-icon" style$="[[logIconAnimationStyle]]">
-                <paper-icon-button icon="mdi:record-rec"></paper-icon-button>
+                <ha-icon-button icon="mdi:record-rec"></ha-icon-button>
               </div>
               <div class="card-content">
                 Żeby włączyć logowanie w systemie Asystent domowy, wystarczy
@@ -90,9 +90,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 Dodatkowo można też określić poziom szczegółowości logowania i
                 liczbę dni przechowywanych w jednym pliku loga. <br /><br />
                 Wybór dysku do zapisu logów systemu: <br />
-                <paper-icon-button
-                  icon="mdi:usb-flash-drive"
-                ></paper-icon-button>
+                <ha-icon-button icon="mdi:usb-flash-drive"></ha-icon-button>
                 <ha-paper-dropdown-menu
                   label-float="Wybrany dysk"
                   dynamic-align=""
@@ -115,7 +113,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
               </div>
               <div class="card-content">
                 Wybór poziomu logowania: <br />
-                <paper-icon-button icon="mdi:bug-check"></paper-icon-button>
+                <ha-icon-button icon="mdi:bug-check"></ha-icon-button>
                 <ha-paper-dropdown-menu
                   label-float="Poziom logowania"
                   dynamic-align=""
@@ -178,7 +176,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
             </span>
             <ha-card header="Zapis zdarzeń do bazy danych">
               <div id="card-icon" style$="[[dbIconAnimationStyle]]">
-                <paper-icon-button icon="mdi:database"></paper-icon-button>
+                <ha-icon-button icon="mdi:database"></ha-icon-button>
               </div>
               <div class="card-content">
                 Wybierz silnik bazodanowy, który chcesz użyć do rejestracji
@@ -191,7 +189,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 zewnętrznym dysku lub w zdalnej bazie danych. <br /><br />
                 Wybór silnika bazy danych:
                 <br />
-                <paper-icon-button icon="mdi:database"></paper-icon-button>
+                <ha-icon-button icon="mdi:database"></ha-icon-button>
                 <ha-paper-dropdown-menu
                   label-float="Silnik bazy danych"
                   dynamic-align=""
@@ -218,9 +216,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
               </div>
               <div class="card-content" style$="[[dbFileDisplayStyle]]">
                 Wybór dysku do zapisu bazy danych: <br />
-                <paper-icon-button
-                  icon="mdi:usb-flash-drive"
-                ></paper-icon-button>
+                <ha-icon-button icon="mdi:usb-flash-drive"></ha-icon-button>
                 <ha-paper-dropdown-menu
                   label-float="Wybrany dysk"
                   dynamic-align=""

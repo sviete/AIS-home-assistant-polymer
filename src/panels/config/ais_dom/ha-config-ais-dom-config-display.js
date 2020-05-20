@@ -1,6 +1,5 @@
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import "@polymer/paper-icon-button/paper-icon-button";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 import "../../../layouts/hass-subpage";
@@ -217,11 +216,11 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
                 </div>
                 <div class="card-actions" style="margin-top: 30px;">
                   <div>
-                    <paper-icon-button
+                    <ha-icon-button
                       class="user-button"
                       icon="mdi:restore"
                       on-click="wmRestoreSettings"
-                    ></paper-icon-button
+                    ></ha-icon-button
                     ><mwc-button on-click="wmOverscan" data-value="reset"
                       >Reset ekranu do ustawień domyślnych</mwc-button
                     >
