@@ -33,17 +33,6 @@ class ListCard extends HTMLElement {
           background-size:auto 100%;
           position:relative;
         }
-        .fanart_view ha-icon.play {
-          top: 3px;
-          margin-right: -5%;
-          right:0;
-          z-index: 2;
-          width: 15%;
-          height: 15%;
-          position:absolute;
-          color:${iconColor};
-          cursor: pointer;
-        }
         .fanart_svg_view {
           overflow:visible;
           width:55%;
@@ -96,6 +85,9 @@ class ListCard extends HTMLElement {
         div.delete:hover ha-icon{
           color: red;
         }
+        ha-svg-icon {
+          width: 6px;
+        }
         div#container{
           background: var(--primary-background-color);
         }
@@ -141,10 +133,9 @@ class ListCard extends HTMLElement {
               <div class="fanart_fan_view` +
               selectedClass +
               `">
-                  <ha-icon icon="mdi:play" class="play" data-id="${rows}" data-media-source="${mediaSource}"></ha-icon>
                   <div class="fanart_flag_view">
                     <svg class="play" preserveAspectRatio="none" viewBox="0 0 100 100" data-id="${rows}" data-media-source="${mediaSource}">
-                        <polygon points="100 30,90 0,100 0"></polygon>
+                       
                     </svg>
                   </div>
                   <div class="delete" data-id="${rows}" data-media-source="${mediaSource}" style="cursor: pointer; "><ha-icon class="delete" icon="mdi:close"></ha-icon></div>

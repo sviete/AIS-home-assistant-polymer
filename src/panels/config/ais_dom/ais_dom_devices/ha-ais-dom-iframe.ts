@@ -15,7 +15,9 @@ import { EntityRegistryStateEntry } from "../ha-config-ais-dom-device-page";
 @customElement("ais-dom-iframe-view")
 class AisDomIframeView extends LitElement {
   @property() public hass!: HomeAssistant;
+
   @property() public url!: string;
+
   @property() public entities!: EntityRegistryStateEntry[];
 
   protected render(): TemplateResult {

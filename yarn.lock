@@ -10549,11 +10549,6 @@ move-concurrently@^1.0.1:
     rimraf "^2.5.4"
     run-queue "^1.0.3"
 
-mp-video@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/mp-video/-/mp-video-2.0.0.tgz#b2b7259c6a9311a910bff2ce172d14a3dbfcf27c"
-  integrity sha512-bkteaFj7EWTkJ82plSHYUqEgYN7EI0xHRApXwTJIM7Xd6928eBb9j1AsDpkDHwp04cVVPUv2g7SinUO82IWXGg==
-
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"

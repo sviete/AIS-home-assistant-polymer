@@ -36,8 +36,6 @@ class HaConfigAisDomControlLogs extends PolymerElement {
         }
         ha-card > div#card-icon {
           margin: -4px 0;
-          width: 3em;
-          height: 3em;
           position: absolute;
           top: 1em;
           right: 1em;

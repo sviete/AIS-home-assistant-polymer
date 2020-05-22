@@ -7,7 +7,7 @@ import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-dashboard";
-import "../../../components/paper-time-input.js";
+import "../../../components/paper-time-input";
 import "../../../components/ha-switch";
 /*
  *

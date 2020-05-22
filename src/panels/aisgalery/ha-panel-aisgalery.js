@@ -140,6 +140,9 @@ class HaPanelAisgalery extends PolymerElement {
           bottom: 24px;
           right: 24px;
         }
+        ha-icon-button {
+          vertical-align: middle;
+        }
       </style>
       <div class="content">
         <app-toolbar>
