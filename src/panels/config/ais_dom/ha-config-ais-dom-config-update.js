@@ -11,6 +11,7 @@ import "../../../resources/ha-style";
 import "./ha-config-ais-dom-dashboard";
 import "../../../components/ha-switch";
 import "../../../components/buttons/ha-call-service-button";
+import "../../../components/ha-icon";
 
 /*
  *
@@ -92,7 +93,7 @@ class HaConfigAisDomControl extends PolymerElement {
                     ><span
                       ><h3>
                         Autoaktualizacja
-                        <iron-icon icon="[[aisAutoUpdateIcon]]"></iron-icon></h3
+                        <ha-icon icon="[[aisAutoUpdateIcon]]"></ha-icon></h3
                     ></span>
                   </div>
                 </div>
@@ -111,10 +112,10 @@ class HaConfigAisDomControl extends PolymerElement {
                         items="[[aisAutoUpdatFullInfo]]"
                       >
                         <tr>
-                          <td><iron-icon icon="[[item.name_icon]]"></iron-icon> [[item.name]]</td>
+                          <td><ha-icon icon="[[item.name_icon]]"></ha-icon> [[item.name]]</td>
                           <td>[[item.value]]</td>
                           <td>[[item.new_value]]</td>
-                          <td><iron-icon icon="[[item.icon]]"></iron-icon></td>
+                          <td><ha-icon icon="[[item.icon]]"></ha-icon></td>
                         </tr>
                         <template
                             is="dom-if"
@@ -149,7 +150,7 @@ class HaConfigAisDomControl extends PolymerElement {
                 podaniu hasła.
                 <h2>
                   Nowa kopia ustawień
-                  <iron-icon icon="mdi:cloud-upload-outline"></iron-icon>
+                  <ha-icon icon="mdi:cloud-upload-outline"></ha-icon>
                 </h2>
                 <br />
                 <div class="center-container">
@@ -224,13 +225,13 @@ class HaConfigAisDomControl extends PolymerElement {
                 <template is="dom-if" if="[[isBackupValid]]">
                   <h2>
                     Przywracanie ustawień
-                    <iron-icon icon="mdi:backup-restore"></iron-icon>
+                    <ha-icon icon="mdi:backup-restore"></ha-icon>
                   </h2>
                   <div class="validate-container">
                     <table style="margin-top: 40px; margin-bottom: 10px;">
                       <template is="dom-repeat" items="[[aisBackupFullInfo]]">
                         <tr>
-                          <td><iron-icon icon="[[item.icon]]"></iron-icon> [[item.name]]</td>
+                          <td><ha-icon icon="[[item.icon]]"></ha-icon> [[item.name]]</td>
                           <td>[[item.value]]</td>
                           <td>[[item.new_value]]</td>
                         </tr>

@@ -12,6 +12,7 @@ import "@polymer/paper-dropdown-menu/paper-dropdown-menu";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-listbox/paper-listbox";
 import "../../../components/buttons/ha-call-service-button";
+import "../../../components/ha-icon";
 /*
  *
  */
@@ -146,7 +147,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   label-float="Liczba dni przechowywanych w jednym pliku loga"
                   label="Liczba dni przechowywanych w jednym pliku loga"
                 >
-                  <iron-icon icon="mdi:calendar" slot="suffix"></iron-icon>
+                  <ha-icon icon="mdi:calendar" slot="suffix"></ha-icon>
                 </paper-input>
                 <div class="config-invalid">
                   <span class="text">
@@ -253,7 +254,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   label-float="Liczba dni przechowywanych w bazie"
                   label="Liczba dni przechowywanych w bazie"
                 >
-                  <iron-icon icon="mdi:calendar" slot="suffix"></iron-icon>
+                  <ha-icon icon="mdi:calendar" slot="suffix"></ha-icon>
                 </paper-input>
               </div>
               <div class="card-content" style$="[[dbConectionDisplayStyle]]">
@@ -265,7 +266,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   value="[[dbUser]]"
                   on-change="_computeDbUrl"
                 >
-                  <iron-icon icon="mdi:account" slot="suffix"></iron-icon>
+                  <ha-icon icon="mdi:account" slot="suffix"></ha-icon>
                 </paper-input>
                 <paper-input
                   placeholder="Hasło"
@@ -274,7 +275,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   id="db_password"
                   value="[[dbPassword]]"
                   on-change="_computeDbUrl"
-                  ><iron-icon icon="mdi:lastpass" slot="suffix"></iron-icon
+                  ><ha-icon icon="mdi:lastpass" slot="suffix"></ha-icon
                 ></paper-input>
                 <paper-input
                   placeholder="IP Serwera DB"
@@ -283,7 +284,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   id="db_server_ip"
                   value="[[dbServerIp]]"
                   on-change="_computeDbUrl"
-                  ><iron-icon icon="mdi:ip-network" slot="suffix"></iron-icon
+                  ><ha-icon icon="mdi:ip-network" slot="suffix"></ha-icon
                 ></paper-input>
                 <paper-input
                   placeholder="Nazwa bazy"
@@ -292,10 +293,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   id="db_server_name"
                   value="[[dbServerName]]"
                   on-change="_computeDbUrl"
-                  ><iron-icon
-                    icon="mdi:database-check"
-                    slot="suffix"
-                  ></iron-icon
+                  ><ha-icon icon="mdi:database-check" slot="suffix"></ha-icon
                 ></paper-input>
                 <br /><br />
                 Żeby utrzymać system w dobrej kondycji, codziennie dokładnie o
@@ -316,7 +314,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   label-float="Liczba dni przechowywanych w historii"
                   label="Liczba dni przechowywanych w historii"
                 >
-                  <iron-icon icon="mdi:calendar" slot="suffix"></iron-icon>
+                  <ha-icon icon="mdi:calendar" slot="suffix"></ha-icon>
                 </paper-input>
               </div>
               <div class="card-content">

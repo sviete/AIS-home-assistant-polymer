@@ -77,16 +77,13 @@ class ListCard extends HTMLElement {
           padding-left: 4px;
           z-index: 99999;
         }
-        div.delete ha-icon {
+        div.delete {
           ${delIconHide};
           cursor: pointer;
           width: 12px;
         }
-        div.delete:hover ha-icon{
+        div.delete:hover svg{
           color: red;
-        }
-        ha-svg-icon {
-          width: 6px;
         }
         div#container{
           background: var(--primary-background-color);
@@ -135,10 +132,13 @@ class ListCard extends HTMLElement {
               `">
                   <div class="fanart_flag_view">
                     <svg class="play" preserveAspectRatio="none" viewBox="0 0 100 100" data-id="${rows}" data-media-source="${mediaSource}">
-                       
                     </svg>
                   </div>
-                  <div class="delete" data-id="${rows}" data-media-source="${mediaSource}" style="cursor: pointer; "><ha-icon class="delete" icon="mdi:close"></ha-icon></div>
+                  <div class="delete" data-id="${rows}" data-media-source="${mediaSource}" style="cursor: pointer; ">
+                    <svg style="width:12px;height:12px" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+                    </svg>                  
+                  </div>
                   <svg class="fanart_svg_view" viewBox="0 -20 200 100">
                     <foreignObject width="200" height="80" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
                         <span xmlns="http://www.w3.org/1999/xhtml">${feed[entry].title}</span>
