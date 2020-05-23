@@ -20,10 +20,14 @@ import { HomeAssistant } from "../../../../types";
 
 class DialogPersonDetail extends LitElement {
   @property() public hass!: HomeAssistant;
+
   @property() private _name!: string;
+
   @property() private _userId?: string;
+
   @property() private _deviceTrackers!: string[];
-  @property() private _submitting: boolean = false;
+
+  @property() private _submitting = false;
 
   private _deviceTrackersAvailable = memoizeOne((hass) => {
     return Object.keys(hass.states).some(
@@ -40,7 +44,6 @@ class DialogPersonDetail extends LitElement {
   }
 
   protected render(): TemplateResult | void {
-    console.log("render");
     const nameInvalid = this._name.trim() === "";
     return html`
       <ha-paper-dialog with-backdrop opened @opened-changed="true">

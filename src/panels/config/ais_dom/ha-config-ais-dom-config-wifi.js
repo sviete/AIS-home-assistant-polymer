@@ -39,6 +39,9 @@ class HaConfigAisDomControl extends PolymerElement {
           @apply --layout-center-center;
           height: 70px;
         }
+        ha-icon-button {
+          vertical-align: middle;
+        }
       </style>
 
       <hass-subpage header="Konfiguracja bramki AIS dom">

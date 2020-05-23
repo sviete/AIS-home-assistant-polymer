@@ -1,7 +1,6 @@
-import "@polymer/iron-icon/iron-icon";
 import "../../components/dialog/ha-paper-dialog";
 import "@vaadin/vaadin-upload";
-import { loadTokens } from "../../../src/common/auth/token_storage";
+import { loadTokens } from "../../common/auth/token_storage";
 import {
   LitElement,
   html,

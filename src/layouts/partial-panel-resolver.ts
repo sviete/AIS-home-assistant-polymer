@@ -69,10 +69,6 @@ const COMPONENTS = {
     import(
       /* webpackChunkName: "panel-aisgalery" */ "../panels/aisgalery/ha-panel-aisgalery"
     ),
-  aisvideo: () =>
-    import(
-      /* webpackChunkName: "panel-aisvideo" */ "../panels/aisvideo/ha-panel-aisvideo"
-    ),
 };
 
 const getRoutes = (panels: Panels): RouterOptions => {

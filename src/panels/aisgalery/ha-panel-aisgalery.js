@@ -140,6 +140,9 @@ class HaPanelAisgalery extends PolymerElement {
           bottom: 24px;
           right: 24px;
         }
+        ha-icon-button {
+          vertical-align: middle;
+        }
       </style>
       <div class="content">
         <app-toolbar>
@@ -238,7 +241,7 @@ class HaPanelAisgalery extends PolymerElement {
           title="[[localize('ui.common.add')]]"
           on-click="addImage"
         >
-          <ha-svg-icon slot="icon" path="[[mdiPlus]]"></ha-svg-icon>
+          <ha-svg-icon slot="icon" path="[[addIcon()]]"></ha-svg-icon>
         </mwc-fab>
       </div>
     `;
@@ -310,6 +313,10 @@ class HaPanelAisgalery extends PolymerElement {
     this.aisSecureAndroidId =
       hass.states["sensor.ais_secure_android_id_dom"].state;
     return "https://" + this.aisSecureAndroidId + ".paczka.pro";
+  }
+
+  addIcon() {
+    return mdiPlus;
   }
 
   addImage() {

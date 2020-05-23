@@ -8,7 +8,7 @@ import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-dashboard";
 import { fireEvent } from "../../../common/dom/fire_event";
-import "../../../components/paper-time-input.js";
+import "../../../components/paper-time-input";
 /*
  *
  */

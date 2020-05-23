@@ -30,9 +30,13 @@ import { showConfirmationDialog } from "../../../../dialogs/generic/show-dialog-
 @customElement("ha-ais-dom-device-entities-card")
 export class HaDeviceEntitiesCard extends LitElement {
   @property() public hass!: HomeAssistant;
+
   @property() public deviceId!: string;
+
   @property() public entities!: EntityRegistryStateEntry[];
+
   @property() public narrow!: boolean;
+
   @property() private _showDisabled = false;
 
   protected render(): TemplateResult {

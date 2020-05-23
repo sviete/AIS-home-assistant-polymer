@@ -11,6 +11,7 @@ import { showManageCloudhookDialog } from "./dialog-manage-ais-cloudhook/show-di
 
 export class AisWebhooks extends LitElement {
   @property() public hass?: HomeAssistant;
+
   @property() private _localHooks?: Webhook[];
 
   static get properties(): PropertyDeclarations {
@@ -18,10 +19,6 @@ export class AisWebhooks extends LitElement {
       hass: {},
       _localHooks: {},
     };
-  }
-
-  constructor() {
-    super();
   }
 
   public connectedCallback() {
@@ -52,9 +49,7 @@ export class AisWebhooks extends LitElement {
 
   private _renderBody() {
     if (!this._localHooks) {
-      return html`
-        <div class="body-text">Pobieranie…</div>
-      `;
+      return html` <div class="body-text">Pobieranie…</div> `;
     }
 
     if (this._localHooks.length === 1) {
@@ -74,9 +69,7 @@ export class AisWebhooks extends LitElement {
     return this._localHooks.map(
       (entry) => html`
         ${entry.webhook_id === "aisdomprocesscommandfromframe"
-          ? html`
-              <div></div>
-            `
+          ? html` <div></div> `
           : html`
               <div class="webhook" .entry="${entry}">
                 <paper-item-body two-line>

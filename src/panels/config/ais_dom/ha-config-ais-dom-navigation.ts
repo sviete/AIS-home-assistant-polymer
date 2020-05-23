@@ -1,10 +1,10 @@
-import "@polymer/iron-icon/iron-icon";
 import "@polymer/paper-item/paper-item-body";
 import "@polymer/paper-item/paper-item";
 
 import "../../../components/ha-card";
 import "../../../components/ha-icon-next";
 import { PageNavigation } from "../../../layouts/hass-tabs-subpage";
+import "../../../components/ha-icon";
 import {
   LitElement,
   html,

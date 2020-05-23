@@ -15,7 +15,6 @@ import "../../../../components/entity/state-badge";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-icon-item";
 import "@polymer/paper-item/paper-item-body";
-import "@polymer/iron-icon";
 
 import "../../../../components/ha-card";
 import "../../../../components/ha-icon";
@@ -99,20 +98,27 @@ export class HaDeviceEntitiesCard extends LitElement {
         font-weight: bold;
       }
 
-      div.right iron-icon {
+      div.right ha-icon {
         position: relative;
         top: -20px;
         color: var(--primary-color);
       }
     `;
   }
+
   @property() public hass!: HomeAssistant;
+
   @property() public deviceId!: string;
+
   @property() public entities!: EntityRegistryStateEntry[];
+
   @property() public narrow!: boolean;
-  @property() private _currentMode: number = 0;
-  @property() private _currentModeHeader: string = "Uczenie kodów RF";
-  @property() private _instructionInfo: string =
+
+  @property() private _currentMode = 0;
+
+  @property() private _currentModeHeader = "Uczenie kodów RF";
+
+  @property() private _instructionInfo =
     "Aby nauczyć Asystenta kodów pilota radiowego (lub innego urządzenia wysyłającego kody radiowe o częstotliwości 433), uruchom tryb uczenia kodów RF, naciskając przycisk poniżej.";
 
   protected render(): TemplateResult {
@@ -145,11 +151,11 @@ export class HaDeviceEntitiesCard extends LitElement {
                   html`
                     <div class="event" id="event_${idx}">
                       <div class="right">
-                        <iron-icon
+                        <ha-icon
                           icon="mdi:close"
                           @click=${this._handleCloseCode}
                           .data-idx=${idx}
-                        ></iron-icon>
+                        ></ha-icon>
                       </div>
                       <span class="idx">[${idx + 1}]</span> Rozpoznany kod RF:
                       <span
@@ -174,7 +180,7 @@ export class HaDeviceEntitiesCard extends LitElement {
                                   .data-idx=${idx}
                                   type="submit"
                                 >
-                                  <iron-icon icon="mdi:rocket"></iron-icon>
+                                  <ha-icon icon="mdi:rocket"></ha-icon>
                                   Testuj
                                 </mwc-button>
                                 <mwc-button
@@ -185,7 +191,7 @@ export class HaDeviceEntitiesCard extends LitElement {
                                   .data-ttt=${"switch"}
                                   type="submit"
                                 >
-                                  <iron-icon icon="mdi:flash"></iron-icon>
+                                  <ha-icon icon="mdi:flash"></ha-icon>
                                   Dodaj Przycisk
                                 </mwc-button>
                                 <mwc-button
@@ -196,9 +202,7 @@ export class HaDeviceEntitiesCard extends LitElement {
                                   .data-ttt=${"sensor"}
                                   type="submit"
                                 >
-                                  <iron-icon
-                                    icon="mdi:motion-sensor"
-                                  ></iron-icon>
+                                  <ha-icon icon="mdi:motion-sensor"></ha-icon>
                                   Dodaj Czujnik
                                 </mwc-button>
                               </div>

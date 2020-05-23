@@ -56,15 +56,25 @@ export interface EntityRegistryStateEntry extends EntityRegistryEntry {
 @customElement("ha-config-ais-dom-device-page")
 export class HaConfigDevicePage extends LitElement {
   @property() public hass!: HomeAssistant;
+
   @property() public devices!: DeviceRegistryEntry[];
+
   @property() public entries!: ConfigEntry[];
+
   @property() public entities!: EntityRegistryEntry[];
+
   @property() public areas!: AreaRegistryEntry[];
+
   @property() public deviceId!: string;
+
   @property() public narrow!: boolean;
+
   @property() public showAdvanced!: boolean;
+
   @property() private _triggers: DeviceTrigger[] = [];
+
   @property() private _conditions: DeviceCondition[] = [];
+
   @property() private _actions: DeviceAction[] = [];
 
   private _device = memoizeOne(
