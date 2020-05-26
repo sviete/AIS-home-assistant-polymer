@@ -198,7 +198,7 @@ class HUIRoot extends LitElement {
                   ${this._conversation(this.hass.config.components)
                     ? html`
                         <ha-icon-button
-                          aria-label="Rozpocznij rozmowę"
+                          label="Rozpocznij rozmowę"
                           icon="hass:forum-outline"
                           @click=${this._showVoiceCommandDialog}
                         ></ha-icon-button>
