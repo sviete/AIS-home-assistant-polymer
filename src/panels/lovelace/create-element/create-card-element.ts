@@ -14,6 +14,8 @@ import "../cards/hui-sensor-card";
 import "../cards/hui-thermostat-card";
 import "../cards/hui-vertical-stack-card";
 import "../cards/hui-weather-forecast-card";
+import "../cards/hui-ais-zigbee2mqtt-card";
+import "../cards/hui-ais-mini-media-player-card";
 import {
   createLovelaceElement,
   getLovelaceElementClass,
@@ -35,6 +37,8 @@ const ALWAYS_LOADED_TYPES = new Set([
   "thermostat",
   "vertical-stack",
   "weather-forecast",
+  "ais-zigbee2mqtt",
+  "ais-mini-media-player",
 ]);
 
 const LAZY_LOAD_TYPES = {
@@ -57,12 +61,9 @@ const LAZY_LOAD_TYPES = {
   picture: () => import("../cards/hui-picture-card"),
 
   "ais-list": () => import("../cards/hui-ais-list-card"),
-  "ais-mini-media-player": () =>
-    import("../cards/hui-ais-mini-media-player-card"),
   "ais-auto-entities": () => import("../cards/hui-ais-auto-entities-card"),
   "ais-monster": () => import("../cards/hui-ais-monster-card"),
   "ais-fold-entity-row": () => import("../cards/hui-ais-fold-entity-row-card"),
-  "ais-zigbee2mqtt": () => import("../cards/hui-ais-zigbee2mqtt-card"),
   "ais-now-playing-poster": () =>
     import("../cards/hui-ais-now-playing-poster-card"),
   "ais-light": () => import("../cards/hui-ais-light-card"),
