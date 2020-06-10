@@ -30,6 +30,7 @@ import "../components/hui-warning-element";
 import { LovelaceCard, LovelaceCardEditor } from "../types";
 import "../components/hui-timestamp-display";
 import { GlanceCardConfig, GlanceConfigEntity } from "./types";
+import { createEntityNotFoundWarning } from "../components/hui-warning";
 
 @customElement("hui-glance-card")
 export class HuiGlanceCard extends LitElement implements LovelaceCard {
@@ -65,14 +66,25 @@ export class HuiGlanceCard extends LitElement implements LovelaceCard {
   private _configEntities?: GlanceConfigEntity[];
 
   public getCardSize(): number {
-    return (
-      (this._config!.title ? 1 : 0) +
-      Math.ceil(this._configEntities!.length / 5)
+    const rowHeight =
+      (this._config!.show_icon ? 1 : 0) +
+        (this._config!.show_name && this._config!.show_state ? 1 : 0) || 1;
+
+    const numRows = Math.ceil(
+      this._configEntities!.length / (this._config!.columns || 5)
     );
+
+    return (this._config!.title ? 1 : 0) + rowHeight * numRows;
   }
 
   public setConfig(config: GlanceCardConfig): void {
-    this._config = { state_color: true, ...config };
+    this._config = {
+      show_name: true,
+      show_state: true,
+      show_icon: true,
+      state_color: true,
+      ...config,
+    };
     const entities = processConfigEntities<GlanceConfigEntity>(config.entities);
 
     for (const entity of entities) {
@@ -212,11 +224,7 @@ export class HuiGlanceCard extends LitElement implements LovelaceCard {
     if (!stateObj) {
       return html`
         <hui-warning-element
-          label=${this.hass!.localize(
-            "ui.panel.lovelace.warning.entity_not_found",
-            "entity",
-            entityConf.entity
-          )}
+          .label=${createEntityNotFoundWarning(this.hass!, entityConf.entity)}
         ></hui-warning-element>
       `;
     }
@@ -234,7 +242,7 @@ export class HuiGlanceCard extends LitElement implements LovelaceCard {
           hasAction(entityConf.tap_action) ? "0" : undefined
         )}
       >
-        ${this._config!.show_name !== false
+        ${this._config!.show_name
           ? html`
               <div class="name">
                 ${"name" in entityConf
@@ -243,7 +251,7 @@ export class HuiGlanceCard extends LitElement implements LovelaceCard {
               </div>
             `
           : ""}
-        ${this._config!.show_icon !== false
+        ${this._config!.show_icon
           ? html`
               <state-badge
                 .hass=${this.hass}
@@ -256,7 +264,7 @@ export class HuiGlanceCard extends LitElement implements LovelaceCard {
               ></state-badge>
             `
           : ""}
-        ${this._config!.show_state !== false && entityConf.show_state !== false
+        ${this._config!.show_state && entityConf.show_state !== false
           ? html`
               <div>
                 ${computeDomain(entityConf.entity) === "sensor" &&
