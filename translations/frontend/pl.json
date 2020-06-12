@@ -740,8 +740,8 @@
         "notification_toast": {
             "connection_lost": "Utracono połączenie. Łączę ponownie...",
             "service_call_failed": "Nie udało się wywołać usługi {service}.",
-            "started": "Home Assistant uruchomił się!",
-            "starting": "Home Assistant uruchamia się, nie wszystko będzie dostępne, dopóki uruchamianie się nie zakończy.",
+            "started": "Asystent domowy uruchomił się!",
+            "starting": "Asystent domowy uruchamia się, nie wszystko będzie dostępne, dopóki uruchamianie się nie zakończy.",
             "triggered": "Wyzwolenie {name}"
         },
         "panel": {
