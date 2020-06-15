@@ -27,6 +27,7 @@ import { HassElement } from "../state/hass-element";
 import { HomeAssistant } from "../types";
 import { registerServiceWorker } from "../util/register-service-worker";
 import "./onboarding-create-user";
+import "./onboarding-restore-backup";
 import "./onboarding-loading";
 
 interface OnboardingEvent<T extends ValidOnboardingStep> {
@@ -61,11 +62,17 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
       return html` <onboarding-loading></onboarding-loading> `;
     }
     if (step.step === "user") {
+      console.log("hass: " + this.hass);
       return html`
         <onboarding-create-user
           .localize=${this.localize}
           .language=${this.language}
         ></onboarding-create-user>
+        <onboarding-restore-backup
+          .hass=${this.hass}
+          .localize=${this.localize}
+          .language=${this.language}
+        ></onboarding-restore-backup>
       `;
     }
     if (step.step === "core_config") {

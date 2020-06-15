@@ -2379,6 +2379,11 @@
       },
       "page-onboarding": {
         "intro": "Are you ready to awaken your home, reclaim your privacy and join a worldwide community of tinkerers?",
+        "ais_restore_intro": "Do you want to restore your system from a backup?",
+        "ais_restore_intro_step1": "Log in to the AI-Speaker integrator portal.",
+        "ais_restore_intro_step2": "Select the gate from which you want to restore the configuration. If you have password protected backup, enter the password.",
+        "ais_login": "Log in to AI-Speaker",
+        "ais_logout": "Log out from AI-Speaker",
         "user": {
           "intro": "Let's get started by creating a user account.",
           "required_field": "Required",

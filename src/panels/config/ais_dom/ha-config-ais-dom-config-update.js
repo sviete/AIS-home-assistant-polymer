@@ -597,7 +597,6 @@ class HaConfigAisDomControl extends PolymerElement {
       this.validateLog = "";
       var password = this.shadowRoot.getElementById("password1").value;
       var type = this.shadowRoot.getElementById("backup_type1").selected;
-      console.log(type);
       this.hass.callService("ais_cloud", "do_backup", {
         password: password,
         type: type,
@@ -610,7 +609,6 @@ class HaConfigAisDomControl extends PolymerElement {
     this.validateLog = "";
     var password = this.shadowRoot.getElementById("password2").value;
     var type = this.shadowRoot.getElementById("backup_type2").selected;
-    console.log(type);
     this.hass.callService("ais_cloud", "restore_backup", {
       password: password,
       type: type,

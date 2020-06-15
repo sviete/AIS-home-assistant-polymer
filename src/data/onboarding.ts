@@ -8,6 +8,12 @@ export interface OnboardingUserStepResponse {
   auth_code: string;
 }
 
+export interface OnboardingAisGateInfoResponse {
+  result: string;
+  error: string;
+  gates: Array<{ gate_id: string; user_name: string; my_desc: string }>;
+}
+
 export interface OnboardingIntegrationStepResponse {
   auth_code: string;
 }
@@ -37,6 +43,20 @@ export const onboardUserStep = (params: {
 }) =>
   handleFetchPromise<OnboardingUserStepResponse>(
     fetch("/api/onboarding/users", {
+      method: "POST",
+      credentials: "same-origin",
+      body: JSON.stringify(params),
+    })
+  );
+
+export const onboardAisCloudLoginStep = (params: {
+  client_id: string;
+  username: string;
+  password: string;
+  language: string;
+}) =>
+  handleFetchPromise<OnboardingAisGateInfoResponse>(
+    fetch("/api/onboarding/ais_gates_info", {
       method: "POST",
       credentials: "same-origin",
       body: JSON.stringify(params),
