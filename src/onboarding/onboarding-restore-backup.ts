@@ -3,7 +3,6 @@ import "@polymer/paper-input/paper-input";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
 import "../components/ha-icon";
-import { genClientId } from "home-assistant-js-websocket";
 import {
   css,
   CSSResult,
@@ -15,14 +14,14 @@ import {
   TemplateResult,
 } from "lit-element";
 import { LocalizeFunc } from "../common/translations/localize";
-import { onboardAisCloudLoginStep } from "../data/onboarding";
+import {
+  onboardAisCloudLoginStep,
+  onboardAisRestoreBackupStep,
+} from "../data/onboarding";
 import { PolymerChangedEvent } from "../polymer-types";
-import type { HomeAssistant } from "../types";
 
 @customElement("onboarding-restore-backup")
 class OnboardingRestoreBackup extends LitElement {
-  @property() public hass?: HomeAssistant;
-
   @property() public localize!: LocalizeFunc;
 
   @property() public language!: string;
@@ -39,8 +38,10 @@ class OnboardingRestoreBackup extends LitElement {
 
   @property() private _aisGates: Array<{
     gate_id: string;
-    user_name: string;
-    my_desc: string;
+    gate_name: string;
+    gate_desc: string;
+    gate_backup_ha: string;
+    gate_backup_zigbee: string;
   }> = [];
 
   @property() private _aisLogged = false;
@@ -56,13 +57,7 @@ class OnboardingRestoreBackup extends LitElement {
       </p>
     ${
       this._aisLogged
-        ? html`
-            <p>
-              ${this.localize(
-                "ui.panel.page-onboarding.ais_restore_intro_step2"
-              )}
-            </p>
-          `
+        ? ""
         : html`
             <p>
               ${this.localize(
@@ -76,7 +71,7 @@ class OnboardingRestoreBackup extends LitElement {
       this._infoMsg
         ? html`
             <p class="info">
-              ${this._errorMsg}
+              ${this._infoMsg}
             </p>
           `
         : ""
@@ -97,15 +92,26 @@ class OnboardingRestoreBackup extends LitElement {
     <form>
     ${
       this._aisLogged
-        ? html`<paper-input
-            name="backup_password"
-            label="${this.localize(
-              "ui.panel.page-onboarding.user.data.password"
-            )}"
-            value=${this._backup_password}
-            @value-changed=${this._handleValueChanged}
-            type="password"
-          ></paper-input>`
+        ? html` <span>
+              ${this.localize(
+                "ui.panel.page-onboarding.ais_restore_intro_step2"
+              )}
+            </span>
+            <paper-input
+              name="backup_password"
+              label="${this.localize(
+                "ui.panel.page-onboarding.user.data.password"
+              )}"
+              value=${this._backup_password}
+              @value-changed=${this._handleValueChanged}
+              .disabled=${this._loading}
+              type="password"
+            ></paper-input>
+            <p>
+              ${this.localize(
+                "ui.panel.page-onboarding.ais_restore_intro_step3"
+              )}
+            </p>`
         : ""
     }
 
@@ -114,19 +120,31 @@ class OnboardingRestoreBackup extends LitElement {
         ? this._aisGates.map(
             (gate) => html`
               <paper-item class="option">
-                <paper-item-body three-line>
+                <paper-item-body four-line>
                   <div>${gate.gate_id}</div>
-                  <div secondary>${gate.user_name}</div>
-                  <div secondary>${gate.my_desc}</div>
+                  <div secondary>
+                    ${gate.gate_name} &nbsp; ${gate.gate_desc}
+                  </div>
+                  <div secondary>
+                    <ha-icon icon="mdi:home-assistant"></ha-icon>&nbsp;
+                    ${gate.gate_backup_ha}
+                  </div>
+                  <div secondary>
+                    <ha-icon icon="mdi:zigbee"></ha-icon>&nbsp;
+                    ${gate.gate_backup_zigbee}
+                  </div>
                 </paper-item-body>
                 <mwc-button
                   .slug=${gate.gate_id}
                   title="Restore"
                   @click=${this._restoreFromAis}
+                  .disabled=${this._loading}
                   data-gate_id=${gate.gate_id}
                   data-backup_password=${this._backup_password}
                 >
-                  Restore
+                  ${this.localize(
+                    "ui.panel.page-onboarding.ais_restore_button"
+                  )}
                 </mwc-button>
               </paper-item>
             `
@@ -218,12 +236,33 @@ class OnboardingRestoreBackup extends LitElement {
     ev.preventDefault();
     const gate_id = ev.target.dataset.gate_id;
     const backup_password = ev.target.dataset.backup_password;
-    console.log(gate_id);
-    console.log(backup_password);
-    this.hass.callService("ais_cloud", "restore_backup", {
-      password: backup_password,
-      type: "all",
-    });
+    this._loading = true;
+    this._infoMsg =
+      this.localize("ui.panel.page-onboarding.ais_restore_ok_info_step1") +
+      " " +
+      gate_id;
+
+    try {
+      const result = await onboardAisRestoreBackupStep({
+        gate_id: gate_id,
+        backup_password: backup_password,
+      });
+
+      if (result.result === "invalid") {
+        this._errorMsg = result.message;
+        this._infoMsg = "";
+        this._loading = false;
+      } else {
+        this._errorMsg = "";
+        this._infoMsg = result.message;
+        this._loading = false;
+      }
+    } catch (err) {
+      // eslint-disable-next-line
+      this._infoMsg = "";
+      this._loading = false;
+      this._errorMsg = err.body.message;
+    }
   }
 
   private async _submitForm(ev): Promise<void> {
@@ -237,10 +276,7 @@ class OnboardingRestoreBackup extends LitElement {
     this._errorMsg = "";
 
     try {
-      const clientId = genClientId();
-
       const result = await onboardAisCloudLoginStep({
-        client_id: clientId,
         username: this._username,
         password: this._password,
         language: this.language,
@@ -255,11 +291,6 @@ class OnboardingRestoreBackup extends LitElement {
         this._aisGates = result.gates;
         this._loading = false;
       }
-
-      // fireEvent(this, "onboarding-step", {
-      //   type: "user",
-      //   result,
-      // });
     } catch (err) {
       // eslint-disable-next-line
       console.error(err);

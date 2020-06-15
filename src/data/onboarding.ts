@@ -11,7 +11,18 @@ export interface OnboardingUserStepResponse {
 export interface OnboardingAisGateInfoResponse {
   result: string;
   error: string;
-  gates: Array<{ gate_id: string; user_name: string; my_desc: string }>;
+  gates: Array<{
+    gate_id: string;
+    gate_name: string;
+    gate_desc: string;
+    gate_backup_ha: string;
+    gate_backup_zigbee: string;
+  }>;
+}
+
+export interface OnboardingAisRestoreBackupResponse {
+  result: string;
+  message: string;
 }
 
 export interface OnboardingIntegrationStepResponse {
@@ -50,13 +61,24 @@ export const onboardUserStep = (params: {
   );
 
 export const onboardAisCloudLoginStep = (params: {
-  client_id: string;
   username: string;
   password: string;
   language: string;
 }) =>
   handleFetchPromise<OnboardingAisGateInfoResponse>(
     fetch("/api/onboarding/ais_gates_info", {
+      method: "POST",
+      credentials: "same-origin",
+      body: JSON.stringify(params),
+    })
+  );
+
+export const onboardAisRestoreBackupStep = (params: {
+  gate_id: string;
+  backup_password: string;
+}) =>
+  handleFetchPromise<OnboardingAisRestoreBackupResponse>(
+    fetch("/api/onboarding/ais_restore_backup", {
       method: "POST",
       credentials: "same-origin",
       body: JSON.stringify(params),

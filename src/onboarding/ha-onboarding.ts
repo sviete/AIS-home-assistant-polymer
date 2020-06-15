@@ -69,7 +69,6 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
           .language=${this.language}
         ></onboarding-create-user>
         <onboarding-restore-backup
-          .hass=${this.hass}
           .localize=${this.localize}
           .language=${this.language}
         ></onboarding-restore-backup>

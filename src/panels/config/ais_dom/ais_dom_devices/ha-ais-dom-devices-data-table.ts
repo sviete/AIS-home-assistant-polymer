@@ -1,4 +1,3 @@
-import "../../../../components/data-table/ha-data-table";
 import "../../../../components/entity/ha-state-icon";
 
 import memoizeOne from "memoize-one";
@@ -39,11 +38,17 @@ export interface DeviceRowData extends DeviceRegistryEntry {
 @customElement("ha-ais-dom-devices-data-table")
 export class HaDevicesDataTable extends LitElement {
   @property() public hass!: HomeAssistant;
+
   @property() public narrow = false;
+
   @property() public devices!: DeviceRegistryEntry[];
+
   @property() public entries!: ConfigEntry[];
+
   @property() public entities!: EntityRegistryEntry[];
+
   @property() public areas!: AreaRegistryEntry[];
+
   @property() public domain!: string;
 
   private _devices = memoizeOne(
@@ -211,9 +216,7 @@ export class HaDevicesDataTable extends LitElement {
                         .stateObj=${battery}
                       ></ha-state-icon>
                     `
-                  : html`
-                      -
-                    `;
+                  : html` - `;
               },
             },
           }
