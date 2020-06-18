@@ -88,6 +88,14 @@ class ListCard extends HTMLElement {
         div#container{
           background: var(--primary-background-color);
         }
+
+        .fanart_view ha-icon {
+          top: 5px;
+          right: 5px;
+          z-index: 2;
+          position:absolute;
+          filter: drop-shadow( 0px 0px 1px rgba(0,0,0,1));
+        }
       `;
 
     content.id = "container";
@@ -129,7 +137,7 @@ class ListCard extends HTMLElement {
               )">
               <div class="fanart_fan_view` +
               selectedClass +
-              `">
+              `"> <ha-icon icon="${feed[entry].icon}"></ha-icon> 
                   <div class="fanart_flag_view">
                     <svg class="play" preserveAspectRatio="none" viewBox="0 0 100 100" data-id="${rows}" data-media-source="${mediaSource}">
                     </svg>
@@ -138,14 +146,15 @@ class ListCard extends HTMLElement {
                     <svg style="width:12px;height:12px" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
                     </svg>                  
-                  </div>
+                  </div> 
+                  
                   <svg class="fanart_svg_view" viewBox="0 -20 200 100">
                     <foreignObject width="200" height="80" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <span xmlns="http://www.w3.org/1999/xhtml">${feed[entry].title}</span>
+                        <span xmlns="http://www.w3.org/1999/xhtml"> ${feed[entry].title}</span>
                     </foreignObject>
                     <foreignObject width="200" height="80" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
                         <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:smaller; bottom: 5px; position: absolute;">
-                        <span>${mediaSourceInfo}</span>
+                         <span>${mediaSourceInfo}</span>
                         </div>
                     </foreignObject>
                   </svg>
