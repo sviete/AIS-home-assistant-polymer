@@ -45,9 +45,9 @@ const SHOW_AFTER_SPACER = [
 const SUPPORT_SCROLL_IF_NEEDED = "scrollIntoViewIfNeeded" in document.body;
 
 const SORT_VALUE_URL_PATHS = {
-  "lovelace/ais_audio": 1,
+  aisaudio: 1,
   aisgalery: 2,
-  "lovelace/ais_zigbee": 3,
+  aiszigbee: 3,
   map: 4,
   logbook: 5,
   history: 6,
@@ -176,7 +176,7 @@ class HaSidebar extends LitElement {
       </div>
       <paper-listbox
         attr-for-selected="data-panel"
-        .selected=${this._selected(hass)}
+        .selected=${hass.panelUrl}
         @focusin=${this._listboxFocusIn}
         @focusout=${this._listboxFocusOut}
         @scroll=${this._listboxScroll}
@@ -392,18 +392,6 @@ class HaSidebar extends LitElement {
 
   private _listboxFocusOut() {
     this._hideTooltip();
-  }
-
-  // ais dom fix
-  private _selected(hass) {
-    const pathName = window.location.pathname;
-    if (pathName === "/lovelace/ais_audio") {
-      return "lovelace/ais_audio";
-    }
-    if (pathName === "/lovelace/ais_zigbee") {
-      return "lovelace/ais_zigbee";
-    }
-    return hass.panelUrl;
   }
 
   @eventOptions({

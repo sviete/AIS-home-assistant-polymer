@@ -74,6 +74,14 @@ const COMPONENTS = {
     import(
       /* webpackChunkName: "panel-aisgalery" */ "../panels/aisgalery/ha-panel-aisgalery"
     ),
+  aisaudio: () =>
+    import(
+      /* webpackChunkName: "panel-aisaudio" */ "../panels/aisaudio/ha-panel-aisaudio"
+    ),
+  aiszigbee: () =>
+    import(
+      /* webpackChunkName: "panel-aiszigbee" */ "../panels/aiszigbee/ha-panel-aiszigbee"
+    ),
 };
 
 const getRoutes = (panels: Panels): RouterOptions => {

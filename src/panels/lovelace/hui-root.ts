@@ -73,8 +73,6 @@ class HUIRoot extends LitElement {
     isComponentLoaded(this.hass, "conversation")
   );
 
-  @property() private aisPath!: string | "";
-
   constructor() {
     super();
     // The view can trigger a re-render when it knows that certain
@@ -87,16 +85,6 @@ class HUIRoot extends LitElement {
   }
 
   protected render(): TemplateResult {
-    // ais dom audio fix
-    if (this.route!.path !== "/") {
-      this.aisPath = this.route!.path;
-    }
-    if (this.aisPath === "/ais_audio" || this.aisPath === "/ais_zigbee") {
-      if (this._editMode) {
-        // disable edit mode
-        this._editModeDisable();
-      }
-    }
     return html`
       <ha-app-layout id="layout">
         <app-header
@@ -108,8 +96,7 @@ class HUIRoot extends LitElement {
           fixed
           condenses
         >
-          ${this._editMode && // ais dom audio fix
-          (this.aisPath !== "/ais_audio" || this.aisPath !== "/ais_zigbee")
+          ${this._editMode
             ? html`
                 <app-toolbar class="edit-mode">
                   <ha-icon-button
@@ -289,10 +276,7 @@ class HUIRoot extends LitElement {
                   </paper-menu-button>
                 </app-toolbar>
               `}
-          ${(this.lovelace!.config.views.length > 1 || this._editMode) &&
-          // ais dom fix for audio
-          this.aisPath !== "/ais_audio" &&
-          this.aisPath !== "/ais_zigbee"
+          ${this.lovelace!.config.views.length > 1 || this._editMode
             ? html`
                 <div sticky>
                   <paper-tabs
@@ -307,7 +291,8 @@ class HUIRoot extends LitElement {
                           aria-label="${view.title}"
                           class="${classMap({
                             "hide-tab": Boolean(
-                              view.visible !== undefined &&
+                              !this._editMode &&
+                                view.visible !== undefined &&
                                 ((Array.isArray(view.visible) &&
                                   !view.visible.some(
                                     (e) => e.user === this.hass!.user!.id
@@ -526,7 +511,7 @@ class HUIRoot extends LitElement {
   }
 
   private _handleHelp(): void {
-    window.open("https://www.ai-speaker.com/docs/ais_app_index", "_blank");
+    window.open("www.ai-speaker.com/docs/ais_app_index", "_blank");
   }
 
   private _editModeEnable(): void {
