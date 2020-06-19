@@ -119,7 +119,7 @@ class HaConfigDashboard extends LitElement {
       haStyle,
       css`
         app-header {
-          --app-header-background-color: var(--primary-background-color);
+          --app-header-background-color: var(--primary-color);
         }
         ha-card:last-child {
           margin-bottom: 24px;

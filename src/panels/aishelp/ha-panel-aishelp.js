@@ -11,6 +11,9 @@ class HaPanelAishelp extends PolymerElement {
   static get template() {
     return html`
       <style include="iron-flex ha-style">
+        app-toolbar {
+            background-color: var(--primary-color);
+          }
         .center-container {
           @apply --layout-vertical;
           @apply --layout-center-center;

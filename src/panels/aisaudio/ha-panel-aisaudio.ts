@@ -13,7 +13,7 @@ import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
 import "@material/mwc-checkbox";
 import "@material/mwc-formfield";
-
+import { showVoiceCommandDialog } from "../../dialogs/voice-command-dialog/show-ha-voice-command-dialog";
 import "../../components/ha-menu-button";
 import "../../components/ha-card";
 import { aisAudioLovelace } from "./ais_audio_lovelace";
@@ -86,6 +86,10 @@ class PanelAisAudio extends LitElement {
     this._updateColumns();
   }
 
+  private _showVoiceCommandDialog(): void {
+    showVoiceCommandDialog(this);
+  }
+
   protected render(): TemplateResult {
     return html`
       <app-header-layout has-scrolling-region>
@@ -97,8 +101,9 @@ class PanelAisAudio extends LitElement {
             ></ha-menu-button>
             <div main-title>Audio</div>
             <ha-icon-button
-              icon="hass:refresh"
-              @click=${this._handleRefresh}
+              label="Rozpocznij rozmowę"
+              icon="hass:forum-outline"
+              @click=${this._showVoiceCommandDialog}
             ></ha-icon-button>
           </app-toolbar>
         </app-header>
@@ -110,10 +115,6 @@ class PanelAisAudio extends LitElement {
         ></hui-view>
       </app-header-layout>
     `;
-  }
-
-  private async _handleRefresh(): Promise<void> {
-    console.log("refresh");
   }
 
   static get styles(): CSSResultArray {

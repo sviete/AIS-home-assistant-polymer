@@ -339,6 +339,55 @@ export const aisAudioLovelace: LovelaceConfig = {
                           title: "Wyszukiwanie Muzyki",
                           type: "entities",
                         },
+                        {
+                          cards: [
+                            {
+                              icon: "mdi:playlist-music",
+                              tap_action: {
+                                action: "call-service",
+                                service: "ais_spotify_service.get_favorites",
+                                service_data: {
+                                  type: "playlists",
+                                },
+                              },
+                              type: "button",
+                            },
+                            {
+                              icon: "mdi:account",
+                              tap_action: {
+                                action: "call-service",
+                                service: "ais_spotify_service.get_favorites",
+                                service_data: {
+                                  type: "artists",
+                                },
+                              },
+                              type: "button",
+                            },
+                            {
+                              icon: "mdi:album",
+                              tap_action: {
+                                action: "call-service",
+                                service: "ais_spotify_service.get_favorites",
+                                service_data: {
+                                  type: "albums",
+                                },
+                              },
+                              type: "button",
+                            },
+                            {
+                              icon: "mdi:music-note",
+                              tap_action: {
+                                action: "call-service",
+                                service: "ais_spotify_service.get_favorites",
+                                service_data: {
+                                  type: "tracks",
+                                },
+                              },
+                              type: "button",
+                            },
+                          ],
+                          type: "horizontal-stack",
+                        },
                       ],
                       type: "vertical-stack",
                     },

@@ -14,6 +14,9 @@ class HaPanelAisgalery extends PolymerElement {
   static get template() {
     return html`
       <style include="ha-style">
+        app-toolbar {
+          background-color: var(--primary-color);
+        }
         div.content {
           background-color: var(--primary-background-color);
           width: 100%;

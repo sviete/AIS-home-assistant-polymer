@@ -153,7 +153,7 @@ class ListCard extends HTMLElement {
                         <span xmlns="http://www.w3.org/1999/xhtml"> ${feed[entry].title}</span>
                     </foreignObject>
                     <foreignObject width="200" height="80" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                        <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:smaller; bottom: 5px; position: absolute;">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:xx-small; bottom: 5px; position: absolute;">
                          <span>${mediaSourceInfo}</span>
                         </div>
                     </foreignObject>
