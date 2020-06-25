@@ -342,6 +342,17 @@ export const aisAudioLovelace: LovelaceConfig = {
                         {
                           cards: [
                             {
+                              icon: "mdi:folder-music",
+                              tap_action: {
+                                action: "call-service",
+                                service: "ais_spotify_service.get_favorites",
+                                service_data: {
+                                  type: "featured-playlists",
+                                },
+                              },
+                              type: "button",
+                            },
+                            {
                               icon: "mdi:playlist-music",
                               tap_action: {
                                 action: "call-service",
