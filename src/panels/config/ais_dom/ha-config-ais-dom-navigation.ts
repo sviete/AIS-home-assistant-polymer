@@ -16,6 +16,16 @@ import {
 } from "lit-element";
 import { HomeAssistant } from "../../../types";
 import "../dashboard/ha-config-navigation";
+import {
+  mdiCloudSyncOutline,
+  mdiWifi,
+  mdiMonitorEdit,
+  mdiAccountTieVoice,
+  mdiWeatherNight,
+  mdiWeb,
+  mdiDatabaseSettings,
+  mdiRestart,
+} from "@mdi/js";
 
 const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
   integrations: [
@@ -23,56 +33,56 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
       component: "ais_dom_config_update",
       path: "/config/ais_dom_config_update",
       translationKey: "ui.panel.config.ais_dom_config_update.caption",
-      icon: "mdi:cloud-sync-outline",
+      iconPath: mdiCloudSyncOutline,
       core: true,
     },
     {
       component: "ais_dom_config_wifi",
       path: "/config/ais_dom_config_wifi",
       translationKey: "ui.panel.config.ais_dom_config_wifi.caption",
-      icon: "mdi:wifi",
+      iconPath: mdiWifi,
       core: true,
     },
     {
       component: "ais_dom_config_display",
       path: "/config/ais_dom_config_display",
       translationKey: "ui.panel.config.ais_dom_config_display.caption",
-      icon: "mdi:monitor-edit",
+      iconPath: mdiMonitorEdit,
       core: true,
     },
     {
       component: "ais_dom_config_tts",
       path: "/config/ais_dom_config_tts",
       translationKey: "ui.panel.config.ais_dom_config_tts.caption",
-      icon: "mdi:account-tie-voice",
+      iconPath: mdiAccountTieVoice,
       core: true,
     },
     {
       component: "ais_dom_config_night",
       path: "/config/ais_dom_config_night",
       translationKey: "ui.panel.config.ais_dom_config_night.caption",
-      icon: "mdi:weather-night",
+      iconPath: mdiWeatherNight,
       core: true,
     },
     {
       component: "ais_dom_config_remote",
       path: "/config/ais_dom_config_remote",
       translationKey: "ui.panel.config.ais_dom_config_remote.caption",
-      icon: "mdi:web",
+      iconPath: mdiWeb,
       core: true,
     },
     {
       component: "ais_dom_config_logs",
       path: "/config/ais_dom_config_logs",
       translationKey: "ui.panel.config.ais_dom_config_logs.caption",
-      icon: "mdi:database-settings",
+      iconPath: mdiDatabaseSettings,
       core: true,
     },
     {
       component: "ais_dom_config_power",
       path: "/config/ais_dom_config_power",
       translationKey: "ui.panel.config.ais_dom_config_power.caption",
-      icon: "mdi:restart",
+      iconPath: mdiRestart,
       core: true,
     },
   ],
