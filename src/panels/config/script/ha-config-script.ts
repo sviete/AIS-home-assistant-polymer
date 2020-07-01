@@ -55,7 +55,6 @@ class HaConfigScript extends HassRouterPage {
     return Object.values(states).filter(
       (entity) =>
         computeStateDomain(entity) === "script" &&
-        !entity.attributes.hidden &&
         // hide internal ais dom scripts
         !entity.entity_id.startsWith("script.ais_")
     ) as ScriptEntity[];

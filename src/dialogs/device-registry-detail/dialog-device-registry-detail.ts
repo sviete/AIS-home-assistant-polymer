@@ -66,7 +66,7 @@ class DialogDeviceRegistryDetail extends LitElement {
             <paper-input
               .value=${this._nameByUser}
               @value-changed=${this._nameChanged}
-              .label=${this.hass.localize("ui.dialogs.devices.name")}
+              .label=${this.hass.localize("ui.panel.config.devices.name")}
               .placeholder=${device.name || ""}
               .disabled=${this._submitting}
             ></paper-input>
@@ -132,7 +132,7 @@ class DialogDeviceRegistryDetail extends LitElement {
           margin-right: auto;
         }
         .error {
-          color: var(--google-red-500);
+          color: var(--error-color);
         }
       `,
     ];

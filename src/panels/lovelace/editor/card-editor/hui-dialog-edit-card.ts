@@ -1,4 +1,3 @@
-import "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
 import deepFreeze from "deep-freeze";
 import {
   css,
@@ -12,12 +11,13 @@ import {
   PropertyValues,
 } from "lit-element";
 import type { HASSDomEvent } from "../../../../common/dom/fire_event";
-import "../../../../components/dialog/ha-paper-dialog";
+import "../../../../components/ha-dialog";
 import type {
   LovelaceCardConfig,
   LovelaceViewConfig,
 } from "../../../../data/lovelace";
 import { haStyleDialog } from "../../../../resources/styles";
+import "../../../../components/ha-circular-progress";
 import type { HomeAssistant } from "../../../../types";
 import { showSaveSuccessToast } from "../../../../util/toast-saved-success";
 import { addCard, replaceCard } from "../config-util";
@@ -28,6 +28,7 @@ import "./hui-card-picker";
 import "./hui-card-preview";
 import type { EditCardDialogParams } from "./show-edit-card-dialog";
 import { getCardDocumentationURL } from "../get-card-documentation-url";
+import { mdiHelpCircle } from "@mdi/js";
 
 declare global {
   // for fire event
@@ -116,28 +117,30 @@ export class HuiDialogEditCard extends LitElement {
     }
 
     return html`
-      <ha-paper-dialog with-backdrop opened modal @keyup=${this._handleKeyUp}>
-        <div class="header">
-          <h2>
-            ${heading}
-          </h2>
-          ${this._documentationURL !== undefined
-            ? html`
-                <a
-                  class="help-icon"
-                  href=${this._documentationURL}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <ha-icon-button
-                    icon="hass:help-circle"
-                    .title=${this.hass!.localize("ui.panel.lovelace.menu.help")}
-                  ></ha-icon-button>
-                </a>
-              `
-            : ""}
-        </div>
-        <paper-dialog-scrollable>
+      <ha-dialog
+        open
+        scrimClickAction
+        @keydown=${this._ignoreKeydown}
+        @closed=${this._close}
+        @opened=${this._opened}
+        .heading=${html`${heading}
+        ${this._documentationURL !== undefined
+          ? html`
+              <a
+                class="header_button"
+                href=${this._documentationURL}
+                title=${this.hass!.localize("ui.panel.lovelace.menu.help")}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <mwc-icon-button>
+                  <ha-svg-icon path=${mdiHelpCircle}></ha-svg-icon>
+                </mwc-icon-button>
+              </a>
+            `
+          : ""}`}
+      >
+        <div>
           ${this._cardConfig === undefined
             ? html`
                 <hui-card-picker
@@ -155,6 +158,7 @@ export class HuiDialogEditCard extends LitElement {
                       .value=${this._cardConfig}
                       @config-changed=${this._handleConfigChanged}
                       @GUImode-changed=${this._handleGUIModeChanged}
+                      @editor-save=${this._save}
                     ></hui-card-editor>
                   </div>
                   <div class="element-preview">
@@ -165,32 +169,33 @@ export class HuiDialogEditCard extends LitElement {
                     ></hui-card-preview>
                     ${this._error
                       ? html`
-                          <paper-spinner
+                          <ha-circular-progress
                             active
                             alt="Can't update card"
-                          ></paper-spinner>
+                          ></ha-circular-progress>
                         `
                       : ``}
                   </div>
                 </div>
               `}
-        </paper-dialog-scrollable>
-        <div class="paper-dialog-buttons">
-          ${this._cardConfig !== undefined
-            ? html`
-                <mwc-button
-                  @click=${this._toggleMode}
-                  .disabled=${!this._guiModeAvailable}
-                  class="gui-mode-button"
-                >
-                  ${this.hass!.localize(
-                    !this._cardEditorEl || this._GUImode
-                      ? "ui.panel.lovelace.editor.edit_card.show_code_editor"
-                      : "ui.panel.lovelace.editor.edit_card.show_visual_editor"
-                  )}
-                </mwc-button>
-              `
-            : ""}
+        </div>
+        ${this._cardConfig !== undefined
+          ? html`
+              <mwc-button
+                slot="secondaryAction"
+                @click=${this._toggleMode}
+                .disabled=${!this._guiModeAvailable}
+                class="gui-mode-button"
+              >
+                ${this.hass!.localize(
+                  !this._cardEditorEl || this._GUImode
+                    ? "ui.panel.lovelace.editor.edit_card.show_code_editor"
+                    : "ui.panel.lovelace.editor.edit_card.show_visual_editor"
+                )}
+              </mwc-button>
+            `
+          : ""}
+        <div slot="primaryAction" @click=${this._save}>
           <mwc-button @click=${this._close}>
             ${this.hass!.localize("ui.common.cancel")}
           </mwc-button>
@@ -202,15 +207,23 @@ export class HuiDialogEditCard extends LitElement {
                 >
                   ${this._saving
                     ? html`
-                        <paper-spinner active alt="Saving"></paper-spinner>
+                        <ha-circular-progress
+                          active
+                          alt="Saving"
+                          size="small"
+                        ></ha-circular-progress>
                       `
                     : this.hass!.localize("ui.common.save")}
                 </mwc-button>
               `
             : ``}
         </div>
-      </ha-paper-dialog>
+      </ha-dialog>
     `;
+  }
+
+  private _ignoreKeydown(ev: KeyboardEvent) {
+    ev.stopPropagation();
   }
 
   static get styles(): CSSResultArray {
@@ -223,20 +236,20 @@ export class HuiDialogEditCard extends LitElement {
 
         @media all and (max-width: 450px), all and (max-height: 500px) {
           /* overrule the ha-style-dialog max-height on small screens */
-          ha-paper-dialog {
-            max-height: 100%;
+          ha-dialog {
+            --mdc-dialog-max-height: 100%;
             height: 100%;
           }
         }
 
         @media all and (min-width: 850px) {
-          ha-paper-dialog {
-            width: 845px;
+          ha-dialog {
+            --mdc-dialog-min-width: 845px;
           }
         }
 
-        ha-paper-dialog {
-          max-width: 845px;
+        ha-dialog {
+          --mdc-dialog-max-width: 845px;
         }
 
         .center {
@@ -258,9 +271,9 @@ export class HuiDialogEditCard extends LitElement {
         }
 
         @media (min-width: 1200px) {
-          ha-paper-dialog {
-            max-width: none;
-            width: 1000px;
+          ha-dialog {
+            --mdc-dialog-max-width: calc(100% - 32px);
+            --mdc-dialog-min-width: 1000px;
           }
 
           .content {
@@ -279,9 +292,7 @@ export class HuiDialogEditCard extends LitElement {
           }
         }
 
-        mwc-button paper-spinner {
-          width: 14px;
-          height: 14px;
+        mwc-button ha-circular-progress {
           margin-right: 20px;
         }
         .hidden {
@@ -296,7 +307,7 @@ export class HuiDialogEditCard extends LitElement {
         .element-preview {
           position: relative;
         }
-        .element-preview paper-spinner {
+        .element-preview ha-circular-progress {
           top: 50%;
           left: 50%;
           position: absolute;
@@ -316,10 +327,6 @@ export class HuiDialogEditCard extends LitElement {
           display: flex;
           align-items: center;
           justify-content: space-between;
-        }
-        .help-icon {
-          text-decoration: none;
-          color: inherit;
         }
       `,
     ];
@@ -344,12 +351,6 @@ export class HuiDialogEditCard extends LitElement {
     this._guiModeAvailable = ev.detail.guiModeAvailable;
   }
 
-  private _handleKeyUp(ev: KeyboardEvent) {
-    if (ev.keyCode === 27) {
-      this._close();
-    }
-  }
-
   private _handleGUIModeChanged(ev: HASSDomEvent<GUIModeChangedEvent>): void {
     ev.stopPropagation();
     this._GUImode = ev.detail.guiMode;
@@ -358,6 +359,10 @@ export class HuiDialogEditCard extends LitElement {
 
   private _toggleMode(): void {
     this._cardEditorEl?.toggleMode();
+  }
+
+  private _opened() {
+    this._cardEditorEl?.refreshYamlEditor();
   }
 
   private _close(): void {
@@ -381,6 +386,9 @@ export class HuiDialogEditCard extends LitElement {
   }
 
   private async _save(): Promise<void> {
+    if (!this._canSave || this._saving) {
+      return;
+    }
     this._saving = true;
     await this._params!.saveConfig(
       this._params!.path.length === 1

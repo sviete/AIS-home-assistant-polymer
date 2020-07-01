@@ -8,6 +8,7 @@ export const iconColorCSS = css`
   ha-icon[data-domain="camera"][data-state="streaming"],
   ha-icon[data-domain="cover"][data-state="open"],
   ha-icon[data-domain="fan"][data-state="on"],
+  ha-icon[data-domain="humidifier"][data-state="on"],
   ha-icon[data-domain="light"][data-state="on"],
   ha-icon[data-domain="input_boolean"][data-state="on"],
   ha-icon[data-domain="lock"][data-state="unlocked"],
@@ -57,8 +58,11 @@ export const iconColorCSS = css`
     0% {
       opacity: 1;
     }
-    100% {
+    50% {
       opacity: 0;
+    }
+    100% {
+      opacity: 1;
     }
   }
 

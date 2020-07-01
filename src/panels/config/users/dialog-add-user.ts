@@ -1,6 +1,6 @@
 import "@material/mwc-button";
 import "@polymer/paper-input/paper-input";
-import "@polymer/paper-spinner/paper-spinner";
+import "../../../components/ha-circular-progress";
 import {
   css,
   CSSResult,
@@ -13,6 +13,7 @@ import {
 } from "lit-element";
 import "../../../components/ha-dialog";
 import "../../../components/ha-switch";
+import "../../../components/ha-formfield";
 import { createAuthForUser } from "../../../data/auth";
 import {
   createUser,
@@ -112,9 +113,12 @@ export class DialogAddUser extends LitElement {
             @value-changed=${this._passwordChanged}
             .errorMessage=${this.hass.localize("ui.common.error_required")}
           ></paper-input>
-          <ha-switch .checked=${this._isAdmin} @change=${this._adminChanged}>
-            ${this.hass.localize("ui.panel.config.users.editor.admin")}
-          </ha-switch>
+          <ha-formfield
+            .label=${this.hass.localize("ui.panel.config.users.editor.admin")}
+          >
+            <ha-switch .checked=${this._isAdmin} @change=${this._adminChanged}>
+            </ha-switch>
+          </ha-formfield>
           ${!this._isAdmin
             ? html`
                 <br />
@@ -134,7 +138,7 @@ export class DialogAddUser extends LitElement {
         ${this._loading
           ? html`
               <div slot="primaryAction" class="submit-spinner">
-                <paper-spinner active></paper-spinner>
+                <ha-circular-progress active></ha-circular-progress>
               </div>
             `
           : html`

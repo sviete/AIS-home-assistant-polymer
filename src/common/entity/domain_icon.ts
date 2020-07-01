@@ -8,6 +8,7 @@ import { DEFAULT_DOMAIN_ICON } from "../const";
 const fixedIcons = {
   alert: "hass:alert",
   alexa: "hass:amazon-alexa",
+  air_quality: "hass:air-filter",
   automation: "hass:robot",
   calendar: "hass:calendar",
   camera: "hass:video",
@@ -22,6 +23,7 @@ const fixedIcons = {
   history_graph: "hass:chart-line",
   homeassistant: "hass:home-assistant",
   homekit: "hass:home-automation",
+  humidifier: "hass:air-humidifier",
   image_processing: "hass:image-filter-frames",
   input_boolean: "hass:toggle-switch-outline",
   input_datetime: "hass:calendar-clock",

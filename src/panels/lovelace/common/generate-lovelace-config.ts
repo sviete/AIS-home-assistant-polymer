@@ -37,6 +37,7 @@ import { GroupEntity, HomeAssistant } from "../../../types";
 import {
   AlarmPanelCardConfig,
   EntitiesCardConfig,
+  HumidifierCardConfig,
   LightCardConfig,
   PictureEntityCardConfig,
   ThermostatCardConfig,
@@ -59,6 +60,7 @@ const HIDE_DOMAIN = new Set([
   "device_tracker",
   "geo_location",
   "persistent_notification",
+  "zone",
 ]);
 
 let subscribedRegistries = false;
@@ -150,6 +152,12 @@ export const computeCards = (
         refresh_interval: stateObj.attributes.refresh,
       };
       cards.push(cardConfig);
+    } else if (domain === "humidifier") {
+      const cardConfig: HumidifierCardConfig = {
+        type: "humidifier",
+        entity: entityId,
+      };
+      cards.push(cardConfig);
     } else if (domain === "light" && single) {
       const cardConfig: LightCardConfig = {
         type: "light",
@@ -220,10 +228,7 @@ const computeDefaultViewStates = (entities: HassEntities): HassEntities => {
   const states = {};
   Object.keys(entities).forEach((entityId) => {
     const stateObj = entities[entityId];
-    if (
-      !stateObj.attributes.hidden &&
-      !HIDE_DOMAIN.has(computeStateDomain(stateObj))
-    ) {
+    if (!HIDE_DOMAIN.has(computeStateDomain(stateObj))) {
       states[entityId] = entities[entityId];
     }
   });

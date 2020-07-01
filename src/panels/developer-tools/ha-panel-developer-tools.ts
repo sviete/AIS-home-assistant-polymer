@@ -13,7 +13,6 @@ import {
   property,
   TemplateResult,
 } from "lit-element";
-import { isComponentLoaded } from "../../common/config/is_component_loaded";
 import scrollToTarget from "../../common/dom/scroll-to-target";
 import { navigate } from "../../common/navigate";
 import "../../components/ha-menu-button";
@@ -37,7 +36,7 @@ class PanelDeveloperTools extends LitElement {
   protected render(): TemplateResult {
     const page = this._page;
     return html`
-      <app-header-layout has-scrolling-region>
+      <app-header-layout>
         <app-header fixed slot="header">
           <app-toolbar>
             <ha-menu-button
@@ -62,9 +61,6 @@ class PanelDeveloperTools extends LitElement {
                 "ui.panel.developer-tools.tabs.services.title"
               )}
             </paper-tab>
-            <paper-tab page-name="logs">
-              ${this.hass.localize("ui.panel.developer-tools.tabs.logs.title")}
-            </paper-tab>
             <paper-tab page-name="template">
               ${this.hass.localize(
                 "ui.panel.developer-tools.tabs.templates.title"
@@ -74,18 +70,6 @@ class PanelDeveloperTools extends LitElement {
               ${this.hass.localize(
                 "ui.panel.developer-tools.tabs.events.title"
               )}
-            </paper-tab>
-            ${isComponentLoaded(this.hass, "mqtt")
-              ? html`
-                  <paper-tab page-name="mqtt">
-                    ${this.hass.localize(
-                      "ui.panel.developer-tools.tabs.mqtt.title"
-                    )}
-                  </paper-tab>
-                `
-              : ""}
-            <paper-tab page-name="info">
-              ${this.hass.localize("ui.panel.developer-tools.tabs.info.title")}
             </paper-tab>
             <paper-tab page-name="console">
               Konsola

@@ -478,7 +478,9 @@
             "cancel": "Abbrechen",
             "close": "Schließen",
             "delete": "Löschen",
+            "error_required": "Benötigt",
             "loading": "Laden",
+            "menu": "Menü",
             "next": "Weiter",
             "no": "Nein",
             "previous": "Vorher",
@@ -691,10 +693,10 @@
             },
             "zha_device_info": {
                 "buttons": {
-                    "add": "Geräte hinzufügen",
+                    "add": "Geräte über dieses Gerät hinzufügen",
                     "reconfigure": "Gerät neu konfigurieren",
                     "remove": "Gerät entfernen",
-                    "zigbee_information": "ZigBee-Informationen"
+                    "zigbee_information": "ZigBee-Gerätesignatur"
                 },
                 "confirmations": {
                     "remove": "Möchtest du das Gerät wirklich entfernen?"
@@ -714,7 +716,7 @@
                 "unknown": "Unbekannt",
                 "zha_device_card": {
                     "area_picker_label": "Bereich",
-                    "device_name_placeholder": "Benutzerdefinierter Name",
+                    "device_name_placeholder": "Gerätename ändern",
                     "update_name_button": "Aktualisierung Name"
                 }
             }
@@ -740,8 +742,8 @@
         "notification_toast": {
             "connection_lost": "Verbindung getrennt. Verbinde erneut...",
             "service_call_failed": "Fehler beim Aufrufen des Service {service}.",
-            "started": "Home Assistant ist gestartet!",
-            "starting": "Home Assistant startet, es wird nicht alles verfügbar sein, bis es fertig ist.",
+            "started": "Home Assistant wurde vollständig gestartet!",
+            "starting": "Home Assistant startet, währenddessen kann es sein das nicht alles verfügbar ist.",
             "triggered": "{name} ausgelöst"
         },
         "panel": {
@@ -910,6 +912,8 @@
                         "introduction": "Benutze Automatisierungen, um deinem Zuhause Leben einzuhauchen",
                         "load_error_not_editable": "Nur Automatisierungen in automations.yaml sind editierbar.",
                         "load_error_unknown": "Fehler beim Laden der Automatisierung ({err_no}).",
+                        "move_down": "Runterschieben",
+                        "move_up": "Hochschieben",
                         "save": "Speichern",
                         "triggers": {
                             "add": "Auslöser hinzufügen",
@@ -1221,6 +1225,7 @@
                     "different_include": "Möglich über eine Domain, einen Glob oder einen anderen Include.",
                     "pick_attribute": "Wähle ein Attribut zum Überschreiben aus.",
                     "picker": {
+                        "entity": "Entität",
                         "header": "Anpassungen",
                         "introduction": "Optimieren Sie die Entitätenattribute. Hinzugefügte/bearbeitete Anpassungen werden sofort wirksam. Entfernte Anpassungen werden wirksam, wenn die Entität aktualisiert wird."
                     },
@@ -1266,6 +1271,7 @@
                     "device_not_found": "Gerät nicht gefunden.",
                     "entities": {
                         "add_entities_lovelace": "Zu Lovelace hinzufügen",
+                        "disabled_entities": "+{count} {count, plural,\n  one {deaktivierte Entität}\n  other {deaktivierte Entitäten}\n}",
                         "entities": "Entitäten",
                         "hide_disabled": "Ausblenden deaktiviert",
                         "none": "Dieses Gerät hat keine Entitäten"
@@ -1364,6 +1370,26 @@
                         "input_text": "Text"
                     }
                 },
+                "info": {
+                    "built_using": "Gebaut mit",
+                    "caption": "Info",
+                    "custom_uis": "Benutzerdefinierte UIs:",
+                    "description": "Informationen über deine Home Assistant Installation",
+                    "developed_by": "Entwickelt von einem Haufen toller Leute.",
+                    "documentation": "Dokumentation",
+                    "frontend": "Frontend-UI",
+                    "frontend_version": "Frontend-Version: {version} - {type}",
+                    "home_assistant_logo": "Home Assistant-Logo",
+                    "icons_by": "Icons von",
+                    "integrations": "Integrationen",
+                    "issues": "Probleme",
+                    "license": "Veröffentlicht unter der Apache 2.0 Lizenz",
+                    "path_configuration": "Pfad zu configuration.yaml: {path}",
+                    "server": "Server",
+                    "source": "Quelle:",
+                    "system_health_error": "System Health-Komponente wird nicht geladen. Füge 'system_health:' zu configuration.yaml hinzu",
+                    "title": "Info"
+                },
                 "integrations": {
                     "add_integration": "Integration hinzufügen",
                     "caption": "Integrationen",
@@ -1435,6 +1461,19 @@
                     "rename_input_label": "Eintragsname"
                 },
                 "introduction": "Hier ist es möglich, deine Komponenten und Home Assistant zu konfigurieren. Noch ist nicht alles über die GUI einstellbar, aber wir arbeiten daran.",
+                "logs": {
+                    "caption": "Logs",
+                    "clear": "Leeren",
+                    "description": "Die Home Assistant Logs anschauen",
+                    "details": "Protokolldetails ( {level} )",
+                    "load_full_log": "Vollständiges Home Assistant-Protokoll laden",
+                    "loading_log": "Fehlerprotokoll wird geladen...",
+                    "multiple_messages": "Die Nachricht ist zum ersten Mal um {time} aufgetreten und erscheint {counter} mal",
+                    "no_errors": "Es wurden keine Fehler gemeldet.",
+                    "no_issues": "Es gibt keine neuen Probleme!",
+                    "refresh": "Aktualisieren",
+                    "title": "Logs"
+                },
                 "lovelace": {
                     "caption": "Lovelace Dashboards",
                     "dashboards": {
@@ -1511,6 +1550,19 @@
                             "module": "JavaScript-Modul"
                         }
                     }
+                },
+                "mqtt": {
+                    "description_listen": "Auf einen Topic hören",
+                    "description_publish": "Ein Paket veröffentlichen",
+                    "listening_to": "Anhören von",
+                    "message_received": "Nachricht {id} empfangen auf {topic} um {time}:",
+                    "payload": "Payload (Vorlage erlaubt)",
+                    "publish": "Veröffentlichen",
+                    "start_listening": "Anfangen zuzuhören",
+                    "stop_listening": "Aufhören zuzuhören",
+                    "subscribe_to": "Topic abonnieren",
+                    "title": "MQTT",
+                    "topic": "Topic"
                 },
                 "person": {
                     "add_person": "Person hinzufügen",
@@ -1678,12 +1730,16 @@
                             "name": "Name",
                             "system": "System"
                         }
-                    }
+                    },
+                    "users_privileges_note": "Benutzergruppen sind derzeit noch nicht fertig entwickelt. Der Benutzer wird nicht in der Lage sein Änderungen an der Instanz über das UI vorzunehmen. Derzeit überprüfen wir noch alle API Endpunkte um sicherzustellen dass diese nur von Administratoren genutzt werden können."
                 },
                 "zha": {
                     "add_device_page": {
+                        "discovered_text": "Geräte werden hier angezeigt sobald sie erkannt worden sind.",
                         "discovery_text": "Erkannte Geräte werden hier angezeigt. Befolgen Sie die Anweisungen für Ihr Gerät und versetzen Sie das Gerät in den Pairing-Modus.",
                         "header": "Zigbee Home Automation - Geräte hinzufügen",
+                        "no_devices_found": "Es wurden keine Geräte erkannt. Stelle sicher, dass sie sich im Pairing-Modus befinden und halte sie aktiv, solange die Erkennung läuft,",
+                        "pairing_mode": "Stelle sicher, dass sich deine Geräte im Pairing-Modus befinden. Überprüfe dazu die Anweisungen deines Geräts.",
                         "search_again": "Erneut suchen",
                         "spinner": "Suche nach ZHA Zigbee Geräten..."
                     },
@@ -1691,6 +1747,7 @@
                         "caption": "Geräte hinzufügen",
                         "description": "Gerät dem Zigbee-Netzwerk hinzufügen."
                     },
+                    "button": "Konfigurieren",
                     "caption": "ZHA",
                     "cluster_attributes": {
                         "attributes_of_cluster": "Attribute des ausgewählten Clusters",
@@ -1769,6 +1826,9 @@
                         "header": "Netzwerkverwaltung",
                         "introduction": "Befehle, die das gesamte Netzwerk betreffen"
                     },
+                    "network": {
+                        "caption": "Netzwerk"
+                    },
                     "node_management": {
                         "header": "Geräteverwaltung",
                         "help_node_dropdown": "Wähle ein Gerät aus, um die Geräteoptionen anzuzeigen.",
@@ -1808,6 +1868,7 @@
                     "no_zones_created_yet": "Es sieht so aus, als hättest Du noch keine Zonen erstellt."
                 },
                 "zwave": {
+                    "button": "Konfigurieren",
                     "caption": "Z-Wave",
                     "common": {
                         "index": "Index",
@@ -1864,7 +1925,9 @@
                     "ozw_log": {
                         "header": "OZW Log",
                         "introduction": "Schauen Sie das Protokoll an. 0 ist das Minimum (lädt das gesamte Protokoll) und 1000 ist das Maximum. Beim Laden wird ein statisches Protokoll angezeigt und das Ende wird automatisch mit der zuletzt angegebenen Anzahl von Zeilen des Protokolls aktualisiert.",
-                        "last_log_lines": "Anzahl der letzten Logzeilen"
+                        "last_log_lines": "Anzahl der letzten Logzeilen",
+                        "load": "Laden",
+                        "tail": "Ende"
                     },
                     "services": {
                         "add_node": "Knoten hinzufügen",
@@ -1917,48 +1980,6 @@
                         "subscribe_to": "Ereignis, welches abboniert werden soll",
                         "title": "Ereignisse",
                         "type": "Ereignistyp"
-                    },
-                    "info": {
-                        "built_using": "Gebaut mit",
-                        "custom_uis": "Benutzerdefinierte UIs:",
-                        "developed_by": "Entwickelt von einem Haufen toller Leute.",
-                        "documentation": "Dokumentation",
-                        "frontend": "Frontend-UI",
-                        "frontend_version": "Frontend-Version: {version} - {type}",
-                        "home_assistant_logo": "Home Assistant-Logo",
-                        "icons_by": "Icons von",
-                        "integrations": "Integrationen",
-                        "issues": "Probleme",
-                        "license": "Veröffentlicht unter der Apache 2.0 Lizenz",
-                        "path_configuration": "Pfad zu configuration.yaml: {path}",
-                        "server": "Server",
-                        "source": "Quelle:",
-                        "system_health_error": "System Health-Komponente wird nicht geladen. Füge 'system_health:' zu configuration.yaml hinzu",
-                        "title": "Info"
-                    },
-                    "logs": {
-                        "clear": "Leeren",
-                        "details": "Protokolldetails ( {level} )",
-                        "load_full_log": "Vollständiges Home Assistant-Protokoll laden",
-                        "loading_log": "Fehlerprotokoll wird geladen...",
-                        "multiple_messages": "Die Nachricht ist zum ersten Mal um {time} aufgetreten und erscheint {counter} mal",
-                        "no_errors": "Es wurden keine Fehler gemeldet.",
-                        "no_issues": "Es gibt keine neuen Probleme!",
-                        "refresh": "Aktualisieren",
-                        "title": "Logs"
-                    },
-                    "mqtt": {
-                        "description_listen": "Auf einen Topic hören",
-                        "description_publish": "Ein Paket veröffentlichen",
-                        "listening_to": "Anhören von",
-                        "message_received": "Nachricht {id} empfangen auf {topic} um {time}:",
-                        "payload": "Payload (Vorlage erlaubt)",
-                        "publish": "Veröffentlichen",
-                        "start_listening": "Anfangen zuzuhören",
-                        "stop_listening": "Aufhören zuzuhören",
-                        "subscribe_to": "Topic abonnieren",
-                        "title": "MQTT",
-                        "topic": "Topic"
                     },
                     "services": {
                         "alert_parsing_yaml": "Fehler beim Parsen von YAML: {data}",
@@ -2045,7 +2066,7 @@
                         "clear_items": "Markierte Elemente löschen"
                     },
                     "starting": {
-                        "description": "Home Assistant startet, bitte warten Sie.",
+                        "description": "Home Assistant startet, bitte warten Sie..",
                         "header": "Home Assistant startet ..."
                     }
                 },
@@ -2340,7 +2361,7 @@
                     "entity_non_numeric": "Die Entität ist nicht-numerisch: {entity}",
                     "entity_not_found": "Entität nicht verfügbar: {entity}",
                     "entity_unavailable": "{entity} ist derzeit nicht verfügbar",
-                    "starting": "Home Assistant beginnt, vielleicht ist noch nicht alles verfügbar"
+                    "starting": "Home Assistant startet gerade, eventuell ist noch nicht alles verfügbar"
                 }
             },
             "mailbox": {

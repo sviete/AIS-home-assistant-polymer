@@ -19,6 +19,7 @@ import "../cards/hui-ais-mini-media-player-card";
 import {
   createLovelaceElement,
   getLovelaceElementClass,
+  tryCreateLovelaceElement,
 } from "./create-element-base";
 
 const ALWAYS_LOADED_TYPES = new Set([
@@ -47,6 +48,7 @@ const LAZY_LOAD_TYPES = {
   "empty-state": () => import("../cards/hui-empty-state-card"),
   starting: () => import("../cards/hui-starting-card"),
   "entity-filter": () => import("../cards/hui-entity-filter-card"),
+  humidifier: () => import("../cards/hui-humidifier-card"),
   "media-control": () => import("../cards/hui-media-control-card"),
   "picture-elements": () => import("../cards/hui-picture-elements-card"),
   "picture-entity": () => import("../cards/hui-picture-entity-card"),
@@ -69,6 +71,17 @@ const LAZY_LOAD_TYPES = {
     import("../cards/hui-ais-now-playing-poster-card"),
   "ais-light": () => import("../cards/hui-ais-light-card"),
 };
+
+// This will not return an error card but will throw the error
+export const tryCreateCardElement = (config: LovelaceCardConfig) =>
+  tryCreateLovelaceElement(
+    "card",
+    config,
+    ALWAYS_LOADED_TYPES,
+    LAZY_LOAD_TYPES,
+    undefined,
+    undefined
+  );
 
 export const createCardElement = (config: LovelaceCardConfig) =>
   createLovelaceElement(
