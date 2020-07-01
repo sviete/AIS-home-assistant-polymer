@@ -1,7 +1,6 @@
 import { html, LitElement, PropertyDeclarations, property } from "lit-element";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
-import "@polymer/paper-spinner/paper-spinner";
 import "../../../components/ha-card";
 
 import { HomeAssistant } from "../../../types";

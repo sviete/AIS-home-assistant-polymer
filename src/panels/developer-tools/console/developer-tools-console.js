@@ -1,5 +1,4 @@
 import "@polymer/paper-input/paper-textarea";
-import "@polymer/paper-spinner/paper-spinner";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 
