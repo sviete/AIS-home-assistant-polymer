@@ -6,6 +6,7 @@ import {
   html,
   LitElement,
   property,
+  TemplateResult,
 } from "lit-element";
 import { ifDefined } from "lit-html/directives/if-defined";
 import memoizeOne from "memoize-one";
@@ -38,13 +39,12 @@ import "../../../layouts/hass-tabs-subpage";
 import { HomeAssistant, Route } from "../../../types";
 import "../ha-config-section";
 import { configSections } from "../ha-panel-config";
-import "./device-detail/ha-device-card-mqtt";
 import "./device-detail/ha-device-entities-card";
 import "./device-detail/ha-device-info-card";
 import { showDeviceAutomationDialog } from "./device-detail/show-dialog-device-automation";
 
 export interface EntityRegistryStateEntry extends EntityRegistryEntry {
-  stateName?: string;
+  stateName?: string | null;
 }
 
 @customElement("ha-config-device-page")
@@ -228,16 +228,7 @@ export class HaConfigDevicePage extends LitElement {
                 .devices=${this.devices}
                 .device=${device}
               >
-              ${
-                integrations.includes("mqtt")
-                  ? html`
-                      <ha-device-card-mqtt
-                        .hass=${this.hass}
-                        .device=${device}
-                      ></ha-device-card-mqtt>
-                    `
-                  : html``
-              }
+              ${this._renderIntegrationInfo(device, integrations)}
               </ha-device-info-card>
 
             ${
@@ -441,7 +432,7 @@ export class HaConfigDevicePage extends LitElement {
       </hass-tabs-subpage>    `;
   }
 
-  private _computeEntityName(entity) {
+  private _computeEntityName(entity: EntityRegistryEntry) {
     if (entity.name) {
       return entity.name;
     }
@@ -480,6 +471,43 @@ export class HaConfigDevicePage extends LitElement {
       deviceId: this.deviceId,
       script: false,
     });
+  }
+
+  private _renderIntegrationInfo(
+    device,
+    integrations: string[]
+  ): TemplateResult[] {
+    const templates: TemplateResult[] = [];
+    if (integrations.includes("mqtt")) {
+      import(
+        "./device-detail/integration-elements/mqtt/ha-device-actions-mqtt"
+      );
+      templates.push(html`
+        <div class="card-actions" slot="actions">
+          <ha-device-actions-mqtt
+            .hass=${this.hass}
+            .device=${device}
+          ></ha-device-actions-mqtt>
+        </div>
+      `);
+    }
+    if (integrations.includes("zha")) {
+      import("./device-detail/integration-elements/zha/ha-device-actions-zha");
+      import("./device-detail/integration-elements/zha/ha-device-info-zha");
+      templates.push(html`
+        <ha-device-info-zha
+          .hass=${this.hass}
+          .device=${device}
+        ></ha-device-info-zha>
+        <div class="card-actions" slot="actions">
+          <ha-device-actions-zha
+            .hass=${this.hass}
+            .device=${device}
+          ></ha-device-actions-zha>
+        </div>
+      `);
+    }
+    return templates;
   }
 
   private async _showSettings() {

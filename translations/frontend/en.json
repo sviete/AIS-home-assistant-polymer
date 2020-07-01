@@ -48,6 +48,19 @@
                 "none": "None",
                 "sleep": "Sleep"
             }
+        },
+        "humidifier": {
+            "mode": {
+                "auto": "Auto",
+                "away": "Away",
+                "baby": "Baby",
+                "boost": "Boost",
+                "comfort": "Comfort",
+                "eco": "Eco",
+                "home": "Home",
+                "normal": "Normal",
+                "sleep": "Sleep"
+            }
         }
     },
     "state_badge": {
@@ -388,6 +401,12 @@
                 "reverse": "Reverse",
                 "speed": "Speed"
             },
+            "humidifier": {
+                "humidity": "Target humidity",
+                "mode": "Mode",
+                "on_entity": "{name} on",
+                "target_humidity_entity": "{name} target humidity"
+            },
             "light": {
                 "brightness": "Brightness",
                 "color_temperature": "Color temperature",
@@ -480,8 +499,10 @@
             "delete": "Delete",
             "error_required": "Required",
             "loading": "Loading",
+            "menu": "Menu",
             "next": "Next",
             "no": "No",
+            "overflow_menu": "Overflow menu",
             "previous": "Previous",
             "refresh": "Refresh",
             "save": "Save",
@@ -503,6 +524,11 @@
                 "area": "Area",
                 "clear": "Clear",
                 "show_areas": "Show areas"
+            },
+            "date-range-picker": {
+                "end_date": "End date",
+                "select": "Select",
+                "start_date": "Start date"
             },
             "device-picker": {
                 "clear": "Clear",
@@ -620,7 +646,7 @@
                     "pattern": "Regex pattern for client-side validation",
                     "text": "Text"
                 },
-                "platform_not_loaded": "The {platform} integration is not loaded. Please add it your configuration either by adding 'default_config:' or ''{platform}:''.",
+                "platform_not_loaded": "The {platform} integration is not loaded. Please add it to your configuration either by adding 'default_config:' or ''{platform}:''.",
                 "required_error_msg": "This field is required",
                 "yaml_not_editable": "The settings of this entity cannot be edited from the UI. Only entities set up from the UI are configurable from the UI."
             },
@@ -692,10 +718,11 @@
             },
             "zha_device_info": {
                 "buttons": {
-                    "add": "Add Devices",
+                    "add": "Add Devices via this device",
+                    "clusters": "Manage Clusters",
                     "reconfigure": "Reconfigure Device",
                     "remove": "Remove Device",
-                    "zigbee_information": "Zigbee Information"
+                    "zigbee_information": "Zigbee device signature"
                 },
                 "confirmations": {
                     "remove": "Are you sure that you want to remove the device?"
@@ -715,7 +742,7 @@
                 "unknown": "Unknown",
                 "zha_device_card": {
                     "area_picker_label": "Area",
-                    "device_name_placeholder": "User given name",
+                    "device_name_placeholder": "Change device name",
                     "update_name_button": "Update Name"
                 }
             }
@@ -911,6 +938,8 @@
                         "introduction": "Use automations to bring your home alive.",
                         "load_error_not_editable": "Only automations in automations.yaml are editable.",
                         "load_error_unknown": "Error loading automation ({err_no}).",
+                        "move_down": "Move down",
+                        "move_up": "Move up",
                         "save": "Save",
                         "triggers": {
                             "add": "Add trigger",
@@ -1367,6 +1396,31 @@
                         "input_text": "Text"
                     }
                 },
+                "info": {
+                    "built_using": "Built using",
+                    "caption": "Info",
+                    "custom_uis": "Custom UIs:",
+                    "description": "Info about your Home Assistant installation",
+                    "developed_by": "Developed by a bunch of awesome people.",
+                    "documentation": "Documentation",
+                    "frontend": "frontend-ui",
+                    "frontend_version": "Frontend version: {version} - {type}",
+                    "home_assistant_logo": "Home Assistant logo",
+                    "icons_by": "Icons by",
+                    "integrations": "Integrations",
+                    "issues": "Issues",
+                    "license": "Published under the Apache 2.0 license",
+                    "path_configuration": "Path to configuration.yaml: {path}",
+                    "server": "server",
+                    "source": "Source:",
+                    "system_health_error": "System Health component is not loaded. Add 'system_health:' to configuration.yaml",
+                    "title": "Info"
+                },
+                "integration_panel_move": {
+                    "link_integration_page": "integrations page",
+                    "missing_zha": "Missing the ZHA config panel? It was moved to the ZHA entry on the {integrations_page}.",
+                    "missing_zwave": "Missing the Z-Wave config panel? It was moved to the Z-Wave entry on the {integrations_page}."
+                },
                 "integrations": {
                     "add_integration": "Add integration",
                     "caption": "Integrations",
@@ -1377,6 +1431,7 @@
                         "delete_confirm": "Are you sure you want to delete this integration?",
                         "device_unavailable": "device unavailable",
                         "devices": "{count} {count, plural,\n  one {device}\n  other {devices}\n}",
+                        "documentation": "Documentation",
                         "entities": "{count} {count, plural,\n  one {entity}\n  other {entities}\n}",
                         "entity_unavailable": "entity unavailable",
                         "firmware": "Firmware: {version}",
@@ -1482,6 +1537,19 @@
                     "description": "Restart or turn off the gate"
                   },
                 "introduction": "Here it is possible to configure your components and Home Assistant. Not everything is possible to configure from the UI yet, but we're working on it.",
+                "logs": {
+                    "caption": "Logs",
+                    "clear": "Clear",
+                    "description": "View the Home Assistant logs",
+                    "details": "Log Details ({level})",
+                    "load_full_log": "Load Full Home Assistant Log",
+                    "loading_log": "Loading error log…",
+                    "multiple_messages": "message first occurred at {time} and shows up {counter} times",
+                    "no_errors": "No errors have been reported.",
+                    "no_issues": "There are no new issues!",
+                    "refresh": "Refresh",
+                    "title": "Logs"
+                },
                 "lovelace": {
                     "caption": "Lovelace Dashboards",
                     "dashboards": {
@@ -1558,6 +1626,20 @@
                             "module": "JavaScript Module"
                         }
                     }
+                },
+                "mqtt": {
+                    "button": "Configure",
+                    "description_listen": "Listen to a topic",
+                    "description_publish": "Publish a packet",
+                    "listening_to": "Listening to",
+                    "message_received": "Message {id} received on {topic} at {time}:",
+                    "payload": "Payload (template allowed)",
+                    "publish": "Publish",
+                    "start_listening": "Start listening",
+                    "stop_listening": "Stop listening",
+                    "subscribe_to": "Topic to subscribe to",
+                    "title": "MQTT",
+                    "topic": "topic"
                 },
                 "person": {
                     "add_person": "Add Person",
@@ -1667,6 +1749,11 @@
                             "core": "Reload location & customizations",
                             "group": "Reload groups",
                             "heading": "YAML configuration reloading",
+                            "input_boolean": "Reload input booleans",
+                            "input_datetime": "Reload input date times",
+                            "input_number": "Reload input numbers",
+                            "input_select": "Reload input selects",
+                            "input_text": "Reload input texts",
                             "introduction": "Some parts of Home Assistant can reload without requiring a restart. Hitting reload will unload their current YAML configuration and load the new one.",
                             "person": "Reload persons",
                             "scene": "Reload scenes",
@@ -1730,8 +1817,11 @@
                 },
                 "zha": {
                     "add_device_page": {
+                        "discovered_text": "Devices will show up here once discovered.",
                         "discovery_text": "Discovered devices will show up here. Follow the instructions for your device(s) and place the device(s) in pairing mode.",
                         "header": "Zigbee Home Automation - Add Devices",
+                        "no_devices_found": "No devices where found, make sure they are in paring mode and keep them awake while discovering is running.",
+                        "pairing_mode": "Make sure your devices are in pairing mode. Check the instructions of your device on how to do this.",
                         "search_again": "Search Again",
                         "spinner": "Searching for ZHA Zigbee devices..."
                     },
@@ -1739,6 +1829,7 @@
                         "caption": "Add Devices",
                         "description": "Add devices to the Zigbee network"
                     },
+                    "button": "Configure",
                     "caption": "ZHA",
                     "cluster_attributes": {
                         "attributes_of_cluster": "Attributes of the selected cluster",
@@ -1817,6 +1908,9 @@
                         "header": "Network Management",
                         "introduction": "Commands that affect the entire network"
                     },
+                    "network": {
+                        "caption": "Network"
+                    },
                     "node_management": {
                         "header": "Device Management",
                         "help_node_dropdown": "Select a device to view per-device options.",
@@ -1856,6 +1950,7 @@
                     "no_zones_created_yet": "Looks like you have not created any zones yet."
                 },
                 "zwave": {
+                    "button": "Configure",
                     "caption": "Z-Wave",
                     "common": {
                         "index": "Index",
@@ -1968,48 +2063,6 @@
                         "title": "Events",
                         "type": "Event Type"
                     },
-                    "info": {
-                        "built_using": "Built using",
-                        "custom_uis": "Custom UIs:",
-                        "developed_by": "Developed by a bunch of awesome people.",
-                        "documentation": "Documentation",
-                        "frontend": "frontend-ui",
-                        "frontend_version": "Frontend version: {version} - {type}",
-                        "home_assistant_logo": "Home Assistant logo",
-                        "icons_by": "Icons by",
-                        "integrations": "Integrations",
-                        "issues": "Issues",
-                        "license": "Published under the Apache 2.0 license",
-                        "path_configuration": "Path to configuration.yaml: {path}",
-                        "server": "server",
-                        "source": "Source:",
-                        "system_health_error": "System Health component is not loaded. Add 'system_health:' to configuration.yaml",
-                        "title": "Info"
-                    },
-                    "logs": {
-                        "clear": "Clear",
-                        "details": "Log Details ({level})",
-                        "load_full_log": "Load Full Home Assistant Log",
-                        "loading_log": "Loading error log…",
-                        "multiple_messages": "message first occurred at {time} and shows up {counter} times",
-                        "no_errors": "No errors have been reported.",
-                        "no_issues": "There are no new issues!",
-                        "refresh": "Refresh",
-                        "title": "Logs"
-                    },
-                    "mqtt": {
-                        "description_listen": "Listen to a topic",
-                        "description_publish": "Publish a packet",
-                        "listening_to": "Listening to",
-                        "message_received": "Message {id} received on {topic} at {time}:",
-                        "payload": "Payload (template allowed)",
-                        "publish": "Publish",
-                        "start_listening": "Start listening",
-                        "stop_listening": "Stop listening",
-                        "subscribe_to": "Topic to subscribe to",
-                        "title": "MQTT",
-                        "topic": "topic"
-                    },
                     "services": {
                         "alert_parsing_yaml": "Error parsing YAML: {data}",
                         "call_service": "Call Service",
@@ -2053,11 +2106,23 @@
             },
             "history": {
                 "period": "Period",
+                "ranges": {
+                    "last_week": "Last week",
+                    "this_week": "This week",
+                    "today": "Today",
+                    "yesterday": "Yesterday"
+                },
                 "showing_entries": "Showing entries for"
             },
             "logbook": {
                 "entries_not_found": "No logbook entries found.",
                 "period": "Period",
+                "ranges": {
+                    "last_week": "Last week",
+                    "this_week": "This week",
+                    "today": "Today",
+                    "yesterday": "Yesterday"
+                },
                 "showing_entries": "Showing entries for"
             },
             "lovelace": {
@@ -2196,6 +2261,10 @@
                         "horizontal-stack": {
                             "description": "The Horizontal Stack card allows you to stack together multiple cards, so they always sit next to each other in the space of one column.",
                             "name": "Horizontal Stack"
+                        },
+                        "humidifier": {
+                            "description": "The Humidifier card gives control of your humidifier entity. Allowing you to change the humidity and mode of the entity.",
+                            "name": "Humidifier"
                         },
                         "iframe": {
                             "description": "The Webpage card allows you to embed your favorite webpage right into Home Assistant.",

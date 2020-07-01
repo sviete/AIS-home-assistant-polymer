@@ -10,7 +10,9 @@ import {
   TemplateResult,
 } from "lit-element";
 import "../../components/dialog/ha-paper-dialog";
+import "../../components/ha-circular-progress";
 import "../../components/ha-switch";
+import "../../components/ha-formfield";
 import type { HaSwitch } from "../../components/ha-switch";
 import {
   getConfigEntrySystemOptions,
@@ -74,7 +76,7 @@ class DialogConfigEntrySystemOptions extends LitElement {
           ${this._loading
             ? html`
                 <div class="init-spinner">
-                  <paper-spinner-lite active></paper-spinner-lite>
+                  <ha-circular-progress active></ha-circular-progress>
                 </div>
               `
             : html`
@@ -82,13 +84,8 @@ class DialogConfigEntrySystemOptions extends LitElement {
                   ? html` <div class="error">${this._error}</div> `
                   : ""}
                 <div class="form">
-                  <ha-switch
-                    .checked=${!this._disableNewEntities}
-                    @change=${this._disableNewEntitiesChanged}
-                    .disabled=${this._submitting}
-                  >
-                    <div>
-                      <p>
+                  <ha-formfield
+                    .label=${html`<p>
                         ${this.hass.localize(
                           "ui.dialogs.config_entry_system_options.enable_new_entities_label"
                         )}
@@ -101,9 +98,15 @@ class DialogConfigEntrySystemOptions extends LitElement {
                             `component.${this._params.entry.domain}.title`
                           ) || this._params.entry.domain
                         )}
-                      </p>
-                    </div>
-                  </ha-switch>
+                      </p>`}
+                  >
+                    <ha-switch
+                      .checked=${!this._disableNewEntities}
+                      @change=${this._disableNewEntitiesChanged}
+                      .disabled=${this._submitting}
+                    >
+                    </ha-switch>
+                  </ha-formfield>
                 </div>
               `}
         </paper-dialog-scrollable>
@@ -172,15 +175,12 @@ class DialogConfigEntrySystemOptions extends LitElement {
           padding-bottom: 24px;
           color: var(--primary-text-color);
         }
-        p {
-          margin: 0;
-        }
         .secondary {
           color: var(--secondary-text-color);
         }
 
         .error {
-          color: var(--google-red-500);
+          color: var(--error-color);
         }
       `,
     ];

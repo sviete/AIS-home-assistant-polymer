@@ -48,6 +48,19 @@
                 "none": "无",
                 "sleep": "睡眠"
             }
+        },
+        "humidifier": {
+            "mode": {
+                "auto": "自动",
+                "away": "离开",
+                "baby": "儿童",
+                "boost": "强力",
+                "comfort": "舒适",
+                "eco": "节能",
+                "home": "在家",
+                "normal": "标准",
+                "sleep": "睡眠"
+            }
         }
     },
     "state_badge": {
@@ -388,6 +401,12 @@
                 "reverse": "反向",
                 "speed": "风速"
             },
+            "humidifier": {
+                "humidity": "设定湿度",
+                "mode": "模式",
+                "on_entity": "{name} 已打开",
+                "target_humidity_entity": "{name} 的设定湿度"
+            },
             "light": {
                 "brightness": "亮度",
                 "color_temperature": "色温",
@@ -473,14 +492,17 @@
             }
         },
         "common": {
-            "and": "并且",
+            "and": "和",
             "back": "返回",
             "cancel": "取消",
             "close": "关闭",
             "delete": "删除",
+            "error_required": "必填",
             "loading": "加载中",
+            "menu": "菜单",
             "next": "下一步",
             "no": "否",
+            "overflow_menu": "Overflow 菜单",
             "previous": "上一步",
             "refresh": "刷新",
             "save": "保存",
@@ -502,6 +524,11 @@
                 "area": "区域",
                 "clear": "清除",
                 "show_areas": "显示区域"
+            },
+            "date-range-picker": {
+                "end_date": "结束日期",
+                "select": "选定",
+                "start_date": "开始日期"
             },
             "device-picker": {
                 "clear": "清除",
@@ -619,7 +646,7 @@
                     "pattern": "用于客户端验证的正则表达式模式",
                     "text": "文本"
                 },
-                "platform_not_loaded": "{platform} 组件尚未加载。请在 'default_config:' 或 ''{platform}:'' 中选择一种方式，将其写入配置中。",
+                "platform_not_loaded": "{platform} 组件尚未加载。请从 'default_config:' 或 ''{platform}:'' 中选择一种方式，将其写入配置中。",
                 "required_error_msg": "此字段为必填字段",
                 "yaml_not_editable": "无法从 UI 编辑此实体的设置。只有通过 UI 设置的实体可以从 UI 配置。"
             },
@@ -691,10 +718,11 @@
             },
             "zha_device_info": {
                 "buttons": {
-                    "add": "添加设备",
+                    "add": "通过此设备添加设备",
+                    "clusters": "管理集群",
                     "reconfigure": "重新配置设备",
                     "remove": "删除设备",
-                    "zigbee_information": "Zigbee 信息"
+                    "zigbee_information": "Zigbee 设备签名"
                 },
                 "confirmations": {
                     "remove": "您确定要删除此设备吗？"
@@ -714,7 +742,7 @@
                 "unknown": "未知",
                 "zha_device_card": {
                     "area_picker_label": "区域",
-                    "device_name_placeholder": "用户指定的名称",
+                    "device_name_placeholder": "更改设备名称",
                     "update_name_button": "更新名称"
                 }
             }
@@ -910,6 +938,8 @@
                         "introduction": "使用自动化让你的家聪明起来",
                         "load_error_not_editable": "只能编辑 automations.yaml 中的自动化。",
                         "load_error_unknown": "加载自动化错误 ({err_no})。",
+                        "move_down": "下移",
+                        "move_up": "上移",
                         "save": "保存",
                         "triggers": {
                             "add": "添加触发条件",
@@ -1221,6 +1251,7 @@
                     "different_include": "可能是通过域、全局或其他引用。",
                     "pick_attribute": "选择要覆盖的属性",
                     "picker": {
+                        "entity": "实体",
                         "header": "自定义",
                         "introduction": "调整每个实体的属性。添加/编辑的自定义设置将立即生效，删除的自定义设置将在实体更新时生效。"
                     },
@@ -1365,6 +1396,31 @@
                         "input_text": "文本"
                     }
                 },
+                "info": {
+                    "built_using": "建于",
+                    "caption": "信息",
+                    "custom_uis": "自定义用户界面：",
+                    "description": "关于您的 Home Assistant 安装的信息",
+                    "developed_by": "由一帮很 Awesome~~~ 的人开发。",
+                    "documentation": "文档",
+                    "frontend": "前端用户界面",
+                    "frontend_version": "前端版本： {version} - {type}",
+                    "home_assistant_logo": "Home Assistant logo",
+                    "icons_by": "图标来自",
+                    "integrations": "集成",
+                    "issues": "问题",
+                    "license": "根据 Apache 2.0 许可发布",
+                    "path_configuration": "configuration.yaml 路径：{path}",
+                    "server": "服务器",
+                    "source": "源：",
+                    "system_health_error": "未加载系统健康组件。请将 'system_health:' 添加到 configuration.yaml",
+                    "title": "信息"
+                },
+                "integration_panel_move": {
+                    "link_integration_page": "集成页面",
+                    "missing_zha": "找不到 ZHA 配置面板了吗？它已移动到{integrations_page}中的 ZHA 条目。",
+                    "missing_zwave": "找不到 Z-Wave 配置面板了吗？它已移动到{integrations_page}中的 Z-Wave 条目。"
+                },
                 "integrations": {
                     "add_integration": "添加集成",
                     "caption": "集成",
@@ -1436,6 +1492,19 @@
                     "rename_input_label": "条目名称"
                 },
                 "introduction": "您可以在此配置 Home Assistant 及组件。目前并非所有配置都能通过前端 UI 完成，但是我们在努力实现中。",
+                "logs": {
+                    "caption": "日志",
+                    "clear": "清除",
+                    "description": "查看 Home Assistant 日志",
+                    "details": "日志详细信息（ {level} ）",
+                    "load_full_log": "加载完整 Home Assistant 日志",
+                    "loading_log": "正在加载错误日志...",
+                    "multiple_messages": "消息首次出现在 {time}，显示了 {counter} 次",
+                    "no_errors": "未报告任何错误。",
+                    "no_issues": "没有新问题！",
+                    "refresh": "刷新",
+                    "title": "日志"
+                },
                 "lovelace": {
                     "caption": "Lovelace 仪表盘",
                     "dashboards": {
@@ -1512,6 +1581,20 @@
                             "module": "JavaScript 模块"
                         }
                     }
+                },
+                "mqtt": {
+                    "button": "配置",
+                    "description_listen": "监听一个主题(Topic)",
+                    "description_publish": "发送一个数据包",
+                    "listening_to": "监听",
+                    "message_received": "{time} 收到关于 {topic} 的消息[ {id} ]",
+                    "payload": "负载参数（可使用模板）",
+                    "publish": "发送",
+                    "start_listening": "开始监听",
+                    "stop_listening": "停止监听",
+                    "subscribe_to": "订阅主题(Topic)",
+                    "title": "MQTT",
+                    "topic": "主题(Topic)"
                 },
                 "person": {
                     "add_person": "添加人员",
@@ -1621,6 +1704,11 @@
                             "core": "重载位置和自定义",
                             "group": "重载分组",
                             "heading": "配置重载",
+                            "input_boolean": "重载二元选择器",
+                            "input_datetime": "重载日期选择器",
+                            "input_number": "重载数值选择器",
+                            "input_select": "重载多项选择器",
+                            "input_text": "重载文字输入",
                             "introduction": "Home Assistant 中的部分配置可以直接重载，而无需重启服务。点击重载按钮将重新载入新的配置。",
                             "person": "重载人员",
                             "scene": "重载场景",
@@ -1679,12 +1767,16 @@
                             "name": "名称",
                             "system": "系统"
                         }
-                    }
+                    },
+                    "users_privileges_note": "用户组功能正在开发中。该功能使普通用户无法通过 UI 进行管理操作。我们正在审计所有管理 API，确保其仅限管理员访问。"
                 },
                 "zha": {
                     "add_device_page": {
+                        "discovered_text": "发现的设备会立即显示在这里。",
                         "discovery_text": "发现的设备将显示在此处。按照设备的说明进行操作，并将设备置于配对模式。",
                         "header": "Zigbee 家庭自动化 - 添加设备",
+                        "no_devices_found": "未发现设备。请确保设备处于配对模式，并且在搜索设备时保持唤醒。",
+                        "pairing_mode": "请确保您的设备处于配对模式。有关如何进入配对模式，请查阅设备说明书。",
                         "search_again": "再次搜索",
                         "spinner": "正在寻找ZHA Zigbee设备......"
                     },
@@ -1692,6 +1784,7 @@
                         "caption": "添加设备",
                         "description": "将设备添加到Zigbee网络"
                     },
+                    "button": "配置",
                     "caption": "ZHA",
                     "cluster_attributes": {
                         "attributes_of_cluster": "所选集群的属性",
@@ -1770,6 +1863,9 @@
                         "header": "网络管理",
                         "introduction": "影响整个网络的命令"
                     },
+                    "network": {
+                        "caption": "网络"
+                    },
                     "node_management": {
                         "header": "设备管理",
                         "help_node_dropdown": "选择一个设备以查看每个设备的选项。",
@@ -1809,6 +1905,7 @@
                     "no_zones_created_yet": "您还没有建立地点。"
                 },
                 "zwave": {
+                    "button": "配置",
                     "caption": "Z-Wave",
                     "common": {
                         "index": "指数",
@@ -1908,8 +2005,8 @@
                         "available_events": "可用事件",
                         "count_listeners": " ({count} 个监听器)",
                         "data": "事件数据（格式为YAML，选填）",
-                        "description": "将事件发送到事件总线",
-                        "documentation": "事件文档。",
+                        "description": "将事件发送到事件总线。",
+                        "documentation": "事件文档",
                         "event_fired": "事件 {name} 已触发",
                         "fire_event": "触发事件",
                         "listen_to_events": "监听事件",
@@ -1920,48 +2017,6 @@
                         "subscribe_to": "订阅事件",
                         "title": "事件",
                         "type": "事件类型"
-                    },
-                    "info": {
-                        "built_using": "建于",
-                        "custom_uis": "自定义用户界面：",
-                        "developed_by": "由一帮很 Awesome~~~ 的人开发。",
-                        "documentation": "文档",
-                        "frontend": "前端用户界面",
-                        "frontend_version": "前端版本： {version} - {type}",
-                        "home_assistant_logo": "Home Assistant logo",
-                        "icons_by": "图标来自",
-                        "integrations": "集成",
-                        "issues": "问题",
-                        "license": "根据 Apache 2.0 许可发布",
-                        "path_configuration": "configuration.yaml 路径：{path}",
-                        "server": "服务器",
-                        "source": "源：",
-                        "system_health_error": "未加载系统健康组件。请将 'system_health:' 添加到 configuration.yaml",
-                        "title": "信息"
-                    },
-                    "logs": {
-                        "clear": "清除",
-                        "details": "日志详细信息（ {level} ）",
-                        "load_full_log": "加载完整 Home Assistant 日志",
-                        "loading_log": "正在加载错误日志...",
-                        "multiple_messages": "消息首次出现在 {time}，显示了 {counter} 次",
-                        "no_errors": "未报告任何错误。",
-                        "no_issues": "没有新问题！",
-                        "refresh": "刷新",
-                        "title": "日志"
-                    },
-                    "mqtt": {
-                        "description_listen": "监听一个主题(Topic)",
-                        "description_publish": "发送一个数据包",
-                        "listening_to": "监听",
-                        "message_received": "{time} 收到关于 {topic} 的消息[ {id} ]",
-                        "payload": "负载参数（可使用模板）",
-                        "publish": "发送",
-                        "start_listening": "开始监听",
-                        "stop_listening": "停止监听",
-                        "subscribe_to": "订阅主题(Topic)",
-                        "title": "MQTT",
-                        "topic": "主题(Topic)"
                     },
                     "services": {
                         "alert_parsing_yaml": "解析YAML时出错： {data}",
@@ -2006,11 +2061,23 @@
             },
             "history": {
                 "period": "日期范围",
+                "ranges": {
+                    "last_week": "上周",
+                    "this_week": "本周",
+                    "today": "今天",
+                    "yesterday": "昨天"
+                },
                 "showing_entries": "显示自以下日期的图表"
             },
             "logbook": {
                 "entries_not_found": "未找到日志条目。",
                 "period": "周期",
+                "ranges": {
+                    "last_week": "上周",
+                    "this_week": "本周",
+                    "today": "今天",
+                    "yesterday": "昨天"
+                },
                 "showing_entries": "显示以下日期的条目"
             },
             "lovelace": {
@@ -2149,6 +2216,10 @@
                         "horizontal-stack": {
                             "description": "“水平堆叠”卡片用于将多张卡片堆叠在一起，使它们始终彼此相邻放置成一行。",
                             "name": "水平堆叠"
+                        },
+                        "humidifier": {
+                            "description": "“加湿器”卡片用于控制加湿器实体，改变其设定湿度和模式。",
+                            "name": "加湿器"
                         },
                         "iframe": {
                             "description": "“网页”卡片供您将喜欢的网页直接嵌入 Home Assistant 中。",

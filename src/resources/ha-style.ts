@@ -35,6 +35,9 @@ documentContainer.innerHTML = `<custom-style>
       --scrollbar-thumb-color: rgb(194, 194, 194);
 
       --error-color: #db4437;
+      --warning-color: #f4b400;
+      --success-color: #0f9d58;
+      --info-color: #4285f4;
 
       /* states and badges */
       --state-icon-color: #727272;
@@ -64,12 +67,6 @@ documentContainer.innerHTML = `<custom-style>
       --paper-grey-200: #4c4c4c;  /* for ha-date-picker-style */
       --paper-grey-500: #9e9e9e;  /* --label-badge-grey */
 
-      /* for paper-spinner */
-      --google-red-500: #db4437;
-      --google-blue-500: #4285f4;
-      --google-green-500: #0f9d58;
-      --google-yellow-500: #f4b400;
-
       /* for paper-slider */
       --paper-green-400: #66bb6a;
       --paper-blue-400: #42a5f5;
@@ -89,6 +86,9 @@ documentContainer.innerHTML = `<custom-style>
 
       /* set our slider style */
       --ha-paper-slider-pin-font-size: 15px;
+
+      /* markdown styles */
+      --markdown-code-background-color: #f6f8fa;
 
       /* rgb */
       --rgb-primary-color: 3, 169, 244;

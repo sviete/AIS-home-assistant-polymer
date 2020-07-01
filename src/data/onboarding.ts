@@ -93,7 +93,7 @@ export const onboardCoreConfigStep = (hass: HomeAssistant) =>
 
 export const onboardIntegrationStep = (
   hass: HomeAssistant,
-  params: { client_id: string }
+  params: { client_id: string; redirect_uri: string }
 ) =>
   hass.callApi<OnboardingIntegrationStepResponse>(
     "POST",

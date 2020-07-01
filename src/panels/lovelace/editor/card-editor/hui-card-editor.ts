@@ -8,6 +8,7 @@ import {
   LitElement,
   property,
   TemplateResult,
+  query,
 } from "lit-element";
 import { fireEvent } from "../../../../common/dom/fire_event";
 import { computeRTL } from "../../../../common/util/compute_rtl";
@@ -22,6 +23,7 @@ import { getCardElementClass } from "../../create-element/create-card-element";
 import type { EntityConfig } from "../../entity-rows/types";
 import type { LovelaceCardEditor } from "../../types";
 import type { GUIModeChangedEvent } from "../types";
+import "../../../../components/ha-circular-progress";
 
 export interface ConfigChangedEvent {
   config: LovelaceCardConfig;
@@ -68,6 +70,8 @@ export class HuiCardEditor extends LitElement {
   @property() private _warning?: string;
 
   @property() private _loading = false;
+
+  @query("ha-code-editor") _yamlEditor?: HaCodeEditor;
 
   public get yaml(): string {
     return this._yaml || "";
@@ -119,17 +123,18 @@ export class HuiCardEditor extends LitElement {
     });
   }
 
-  private get _yamlEditor(): HaCodeEditor {
-    return this.shadowRoot!.querySelector("ha-code-editor")! as HaCodeEditor;
-  }
-
   public toggleMode() {
     this.GUImode = !this.GUImode;
   }
 
-  public connectedCallback() {
-    super.connectedCallback();
-    this._refreshYamlEditor();
+  public refreshYamlEditor(focus = false) {
+    if (!this._yamlEditor?.codemirror) {
+      return;
+    }
+    this._yamlEditor.codemirror.refresh();
+    if (focus) {
+      this._yamlEditor.codemirror.focus();
+    }
   }
 
   protected render(): TemplateResult {
@@ -140,11 +145,11 @@ export class HuiCardEditor extends LitElement {
               <div class="gui-editor">
                 ${this._loading
                   ? html`
-                      <paper-spinner
+                      <ha-circular-progress
                         active
                         alt="Loading"
                         class="center margin-bot"
-                      ></paper-spinner>
+                      ></ha-circular-progress>
                     `
                   : this._configElement}
               </div>
@@ -155,9 +160,10 @@ export class HuiCardEditor extends LitElement {
                   mode="yaml"
                   autofocus
                   .value=${this.yaml}
-                  .error=${this._error}
+                  .error=${Boolean(this._error)}
                   .rtl=${computeRTL(this.hass)}
                   @value-changed=${this._handleYAMLChanged}
+                  @keydown=${this._ignoreKeydown}
                 ></ha-code-editor>
               </div>
             `}
@@ -181,34 +187,12 @@ export class HuiCardEditor extends LitElement {
 
   protected updated(changedProperties) {
     super.updated(changedProperties);
-
-    if (changedProperties.has("_GUImode")) {
-      if (this.GUImode === false) {
-        // Refresh code editor when switching to yaml mode
-        this._refreshYamlEditor(true);
-      }
-      fireEvent(this as HTMLElement, "iron-resize");
-    }
-
     if (this._configElement && changedProperties.has("hass")) {
       this._configElement.hass = this.hass;
     }
     if (this._configElement && changedProperties.has("lovelace")) {
       this._configElement.lovelace = this.lovelace;
     }
-  }
-
-  private _refreshYamlEditor(focus = false) {
-    // wait on render
-    setTimeout(() => {
-      if (this._yamlEditor && this._yamlEditor.codemirror) {
-        this._yamlEditor.codemirror.refresh();
-        if (focus) {
-          this._yamlEditor.codemirror.focus();
-        }
-      }
-      fireEvent(this as HTMLElement, "iron-resize");
-    }, 1);
   }
 
   private _handleUIConfigChanged(ev: UIConfigChangedEvent) {
@@ -279,8 +263,11 @@ export class HuiCardEditor extends LitElement {
       this.GUImode = false;
     } finally {
       this._loading = false;
-      fireEvent(this, "iron-resize");
     }
+  }
+
+  private _ignoreKeydown(ev: KeyboardEvent) {
+    ev.stopPropagation();
   }
 
   static get styles(): CSSResult {
@@ -296,12 +283,12 @@ export class HuiCardEditor extends LitElement {
         padding: 8px 0px;
       }
       .error {
-        color: #ef5350;
+        color: var(--error-color);
       }
       .warning {
-        color: #ffa726;
+        color: var(--warning-color);
       }
-      paper-spinner {
+      ha-circular-progress {
         display: block;
         margin: auto;
       }

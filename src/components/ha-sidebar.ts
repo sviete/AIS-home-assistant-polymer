@@ -1,6 +1,11 @@
-import { mdiBell, mdiCellphoneSettingsVariant } from "@mdi/js";
-import "@polymer/app-layout/app-toolbar/app-toolbar";
-import "./ha-icon-button";
+import "@material/mwc-icon-button";
+import {
+  mdiBell,
+  mdiCellphoneSettingsVariant,
+  mdiMenuOpen,
+  mdiMenu,
+  mdiViewDashboard,
+} from "@mdi/js";
 import "@polymer/paper-item/paper-icon-item";
 import type { PaperIconItemElement } from "@polymer/paper-item/paper-icon-item";
 import "@polymer/paper-item/paper-item";
@@ -10,6 +15,7 @@ import {
   CSSResult,
   eventOptions,
   html,
+  customElement,
   LitElement,
   property,
   PropertyValues,
@@ -29,9 +35,9 @@ import {
   getExternalConfig,
 } from "../external_app/external_config";
 import type { HomeAssistant, PanelInfo } from "../types";
-import "./ha-svg-icon";
 import "./ha-icon";
 import "./ha-menu-button";
+import "./ha-svg-icon";
 import "./user/ha-user-badge";
 
 const SHOW_AFTER_SPACER = [
@@ -113,9 +119,7 @@ const computePanels = (hass: HomeAssistant): [PanelInfo[], PanelInfo[]] => {
   return [beforeSpacer, afterSpacer];
 };
 
-/*
- * @appliesMixin LocalizeMixin
- */
+@customElement("ha-sidebar")
 class HaSidebar extends LitElement {
   @property() public hass!: HomeAssistant;
 
@@ -163,13 +167,16 @@ class HaSidebar extends LitElement {
       <div class="menu">
         ${!this.narrow
           ? html`
-              <ha-icon-button
-                aria-label=${hass.localize("ui.sidebar.sidebar_toggle")}
-                .icon=${hass.dockedSidebar === "docked"
-                  ? "hass:menu-open"
-                  : "hass:menu"}
+              <mwc-icon-button
+                .label=${hass.localize("ui.sidebar.sidebar_toggle")}
                 @click=${this._toggleSidebar}
-              ></ha-icon-button>
+              >
+                <ha-svg-icon
+                  .path=${hass.dockedSidebar === "docked"
+                    ? mdiMenuOpen
+                    : mdiMenu}
+                ></ha-svg-icon>
+              </mwc-icon-button>
             `
           : ""}
         <span class="title">Asystent domowy</span>
@@ -184,14 +191,16 @@ class HaSidebar extends LitElement {
       >
         ${this._renderPanel(
           defaultPanel.url_path,
-          defaultPanel.icon || "hass:view-dashboard",
-          defaultPanel.title || hass.localize("panel.states")
+          defaultPanel.title || hass.localize("panel.states"),
+          defaultPanel.icon,
+          !defaultPanel.icon ? mdiViewDashboard : undefined
         )}
         ${beforeSpacer.map((panel) =>
           this._renderPanel(
             panel.url_path,
+            hass.localize(`panel.${panel.title}`) || panel.title,
             panel.icon,
-            hass.localize(`panel.${panel.title}`) || panel.title
+            undefined
           )
         )}
         <div class="spacer" disabled></div>
@@ -199,8 +208,9 @@ class HaSidebar extends LitElement {
         ${afterSpacer.map((panel) =>
           this._renderPanel(
             panel.url_path,
+            hass.localize(`panel.${panel.title}`) || panel.title,
             panel.icon,
-            hass.localize(`panel.${panel.title}`) || panel.title
+            undefined
           )
         )}
         ${this._externalConfig && this._externalConfig.hasSettingsScreen
@@ -453,7 +463,12 @@ class HaSidebar extends LitElement {
     fireEvent(this, "hass-toggle-menu");
   }
 
-  private _renderPanel(urlPath, icon, title) {
+  private _renderPanel(
+    urlPath: string,
+    title: string | null,
+    icon?: string | null,
+    iconPath?: string | null
+  ) {
     return html`
       <a
         aria-role="option"
@@ -464,7 +479,12 @@ class HaSidebar extends LitElement {
         @mouseleave=${this._itemMouseLeave}
       >
         <paper-icon-item>
-          <ha-icon slot="item-icon" .icon="${icon}"></ha-icon>
+          ${iconPath
+            ? html`<ha-svg-icon
+                slot="item-icon"
+                .path=${iconPath}
+              ></ha-svg-icon>`
+            : html`<ha-icon slot="item-icon" .icon=${icon}></ha-icon>`}
           <span class="item-text">${title}</span>
         </paper-icon-item>
       </a>
@@ -506,13 +526,13 @@ class HaSidebar extends LitElement {
         width: 256px;
       }
 
-      .menu ha-icon-button {
+      .menu mwc-icon-button {
         color: var(--sidebar-icon-color);
       }
-      :host([expanded]) .menu ha-icon-button {
+      :host([expanded]) .menu mwc-icon-button {
         margin-right: 23px;
       }
-      :host([expanded][_rtl]) .menu ha-icon-button {
+      :host([expanded][_rtl]) .menu mwc-icon-button {
         margin-right: 0px;
         margin-left: 23px;
       }
@@ -724,7 +744,7 @@ class HaSidebar extends LitElement {
         font-weight: 500;
       }
 
-      :host([_rtl]) .menu ha-icon-button {
+      :host([_rtl]) .menu mwc-icon-button {
         -webkit-transform: scaleX(-1);
         transform: scaleX(-1);
       }
@@ -737,5 +757,3 @@ declare global {
     "ha-sidebar": HaSidebar;
   }
 }
-
-customElements.define("ha-sidebar", HaSidebar);

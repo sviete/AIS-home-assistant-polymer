@@ -1,4 +1,3 @@
-import "@polymer/paper-menu-button/paper-menu-button";
 import {
   css,
   CSSResult,
@@ -12,11 +11,14 @@ import {
   HassioHassOSInfo,
   HassioHostInfo,
 } from "../../../src/data/hassio/host";
-import { HassioSupervisorInfo } from "../../../src/data/hassio/supervisor";
+import {
+  HassioSupervisorInfo,
+  HassioInfo,
+} from "../../../src/data/hassio/supervisor";
 import "../../../src/layouts/hass-tabs-subpage";
 import { haStyle } from "../../../src/resources/styles";
 import { HomeAssistant, Route } from "../../../src/types";
-import { supervisorTabs } from "../hassio-panel";
+import { supervisorTabs } from "../hassio-tabs";
 import { hassioStyle } from "../resources/hassio-style";
 import "./hassio-host-info";
 import "./hassio-supervisor-info";
@@ -32,9 +34,11 @@ class HassioSystem extends LitElement {
 
   @property() public supervisorInfo!: HassioSupervisorInfo;
 
+  @property({ attribute: false }) public hassioInfo!: HassioInfo;
+
   @property() public hostInfo!: HassioHostInfo;
 
-  @property() public hassOsInfo!: HassioHassOSInfo;
+  @property({ attribute: false }) public hassOsInfo!: HassioHassOSInfo;
 
   public render(): TemplateResult | void {
     return html`
@@ -56,6 +60,7 @@ class HassioSystem extends LitElement {
             ></hassio-supervisor-info>
             <hassio-host-info
               .hass=${this.hass}
+              .hassioInfo=${this.hassioInfo}
               .hostInfo=${this.hostInfo}
               .hassOsInfo=${this.hassOsInfo}
             ></hassio-host-info>

@@ -16,7 +16,7 @@
         "config": "Настройки",
         "developer_tools": "Панель разработчика",
         "history": "История",
-        "logbook": "Журнал",
+        "logbook": "Журнал событий",
         "mailbox": "Почта",
         "map": "Карта",
         "profile": "Профиль",
@@ -46,6 +46,19 @@
                 "eco": "Экономия",
                 "home": "Дома",
                 "none": "Не выбран",
+                "sleep": "Ночь"
+            }
+        },
+        "humidifier": {
+            "mode": {
+                "auto": "Авто",
+                "away": "Не дома",
+                "baby": "Ребенок",
+                "boost": "Турбо",
+                "comfort": "Комфорт",
+                "eco": "Эко",
+                "home": "Дома",
+                "normal": "Нормальный",
                 "sleep": "Ночь"
             }
         }
@@ -388,6 +401,12 @@
                 "reverse": "Задний ход",
                 "speed": "Скорость"
             },
+            "humidifier": {
+                "humidity": "Заданная влажность",
+                "mode": "Режим",
+                "on_entity": "{name} включено",
+                "target_humidity_entity": "{name} заданная влажность"
+            },
             "light": {
                 "brightness": "Яркость",
                 "color_temperature": "Цветовая температура",
@@ -478,9 +497,12 @@
             "cancel": "Отменить",
             "close": "Закрыть",
             "delete": "Удалить",
+            "error_required": "Обязательное поле",
             "loading": "Загрузка",
+            "menu": "Меню",
             "next": "Далее",
             "no": "Нет",
+            "overflow_menu": "Выпадающее меню",
             "previous": "Назад",
             "refresh": "Обновить",
             "save": "Сохранить",
@@ -502,6 +524,11 @@
                 "area": "Помещение",
                 "clear": "Очистить",
                 "show_areas": "Показать помещения"
+            },
+            "date-range-picker": {
+                "end_date": "До даты",
+                "select": "Выбрать",
+                "start_date": "С даты"
             },
             "device-picker": {
                 "clear": "Очистить",
@@ -593,7 +620,7 @@
                 "input_datetime": {
                     "date": "Дата",
                     "datetime": "Дата и время",
-                    "mode": "Что вы хотите ввести?",
+                    "mode": "Режим отображения",
                     "time": "Время"
                 },
                 "input_number": {
@@ -619,7 +646,7 @@
                     "pattern": "Шаблон регулярного выражения для проверки на стороне клиента",
                     "text": "Текст"
                 },
-                "platform_not_loaded": "Интеграция \"{platform}\" не загружена. Добавьте в YAML-конфигурацию 'default_config:' или ''{platform}:''.",
+                "platform_not_loaded": "Интеграция {platform} не загружена. Добавьте в YAML-конфигурацию 'default_config:' или ''{platform}:''.",
                 "required_error_msg": "Обязательное поле",
                 "yaml_not_editable": "Настройки этого объекта нельзя изменить из пользовательского интерфейса. Настраиваться из пользовательского интерфейса могут только те объекты, которые были созданы в нём."
             },
@@ -691,10 +718,11 @@
             },
             "zha_device_info": {
                 "buttons": {
-                    "add": "Добавить устройства",
+                    "add": "Добавить устройства через это устройство",
+                    "clusters": "Управление кластерами",
                     "reconfigure": "Перенастроить устройство",
                     "remove": "Удалить устройство",
-                    "zigbee_information": "Информация о Zigbee"
+                    "zigbee_information": "Подпись устройства Zigbee"
                 },
                 "confirmations": {
                     "remove": "Вы уверены, что хотите удалить это устройство?"
@@ -764,7 +792,7 @@
                         "confirmation_text": "Связанные устройства потеряют привязку к помещению.",
                         "confirmation_title": "Вы уверены, что хотите удалить это помещение?"
                     },
-                    "description": "Управляйте помещениями в Вашем доме",
+                    "description": "Управление помещениями в Вашем доме",
                     "editor": {
                         "area_id": "ID помещения",
                         "create": "Добавить",
@@ -786,7 +814,7 @@
                 },
                 "automation": {
                     "caption": "Автоматизация",
-                    "description": "Создавайте и редактируйте правила автоматизации",
+                    "description": "Создание и редактирование правил автоматизации",
                     "editor": {
                         "actions": {
                             "add": "Добавить действие",
@@ -906,10 +934,12 @@
                         },
                         "edit_ui": "Форма ввода",
                         "edit_yaml": "Текстовый редактор",
-                        "enable_disable": "Включить / выключить автоматизацию",
+                        "enable_disable": "Включить / выключить правило автоматизации",
                         "introduction": "Используйте автоматизацию, чтобы оживить Ваш дом.",
                         "load_error_not_editable": "Доступны для редактирования только автоматизации из automations.yaml.",
                         "load_error_unknown": "Ошибка загрузки автоматизации ({err_no}).",
+                        "move_down": "Переместить ниже",
+                        "move_up": "Переместить выше",
                         "save": "Сохранить",
                         "triggers": {
                             "add": "Добавить триггер",
@@ -1096,7 +1126,7 @@
                         "title": "Alexa"
                     },
                     "caption": "Home Assistant Cloud",
-                    "description_features": "Управление вдали от дома, интеграция с Alexa и Google Assistant",
+                    "description_features": "Управление сервером вдали от дома, интеграция с Alexa и Google Assistant",
                     "description_login": "{email}",
                     "description_not_login": "Вход не выполнен",
                     "dialog_certificate": {
@@ -1185,7 +1215,7 @@
                 },
                 "core": {
                     "caption": "Общие",
-                    "description": "Управляйте основными настройками Home Assistant",
+                    "description": "Основные настройки Home Assistant",
                     "section": {
                         "core": {
                             "core_config": {
@@ -1217,10 +1247,11 @@
                     "attributes_override": "Вы можете переназначить их.",
                     "attributes_set": "Следующие атрибуты были назначены программно.",
                     "caption": "Кастомизация",
-                    "description": "Настраивайте атрибуты объектов",
+                    "description": "Настройка атрибутов объектов",
                     "different_include": "Возможно через домен, glob или include.",
                     "pick_attribute": "Выберите атрибут",
                     "picker": {
+                        "entity": "Объект",
                         "header": "Кастомизация",
                         "introduction": "Настройка атрибутов объектов. Добавленные или изменённые настройки сразу же вступают в силу. Удалённые настройки вступят в силу после обновления объекта."
                     },
@@ -1261,7 +1292,7 @@
                         "no_devices": "Нет устройств"
                     },
                     "delete": "Удалить",
-                    "description": "Управляйте подключенными устройствами",
+                    "description": "Управление подключенными устройствами",
                     "device_info": "Устройство",
                     "device_not_found": "Устройство не найдено",
                     "entities": {
@@ -1291,7 +1322,7 @@
                 },
                 "entities": {
                     "caption": "Объекты",
-                    "description": "Управляйте доступными объектами",
+                    "description": "Управление доступными объектами",
                     "picker": {
                         "disable_selected": {
                             "button": "Скрыть выбранные",
@@ -1342,7 +1373,7 @@
                 "header": "Настройка Home Assistant",
                 "helpers": {
                     "caption": "Вспомогательное",
-                    "description": "Элементы, которые могут помочь в создании автоматизации.",
+                    "description": "Элементы, которые могут помочь в автоматизации",
                     "dialog": {
                         "add_helper": "Создание вспомогательного элемента",
                         "add_platform": "Добавить \"{platform}\"",
@@ -1364,6 +1395,31 @@
                         "input_select": "Выпадающий список",
                         "input_text": "Текст"
                     }
+                },
+                "info": {
+                    "built_using": "Создано с использованием",
+                    "caption": "О системе",
+                    "custom_uis": "Кастомные интерфейсы:",
+                    "description": "Информация об установленном Home Assistant",
+                    "developed_by": "Разработано множеством замечательных людей.",
+                    "documentation": "Документация",
+                    "frontend": "пользовательский интерфейс",
+                    "frontend_version": "Версия интерфейса: {version} - {type}",
+                    "home_assistant_logo": "Логотип Home Assistant",
+                    "icons_by": "Значки от",
+                    "integrations": "Интеграции",
+                    "issues": "Вопросы",
+                    "license": "Опубликовано под лицензией Apache 2.0",
+                    "path_configuration": "Путь к configuration.yaml: {path}",
+                    "server": "сервер",
+                    "source": "Исходный код:",
+                    "system_health_error": "Компонент System Health не загружен. Добавьте 'system_health:' в файл configuration.yaml.",
+                    "title": "О системе"
+                },
+                "integration_panel_move": {
+                    "link_integration_page": "странице интеграций",
+                    "missing_zha": "Отсутствует панель конфигурации ZHA? Настройки ZHA теперь находятся на {integrations_page} в карточке ZHA.",
+                    "missing_zwave": "Отсутствует панель конфигурации Z-Wave? Настройки Z-Wave теперь находятся на {integrations_page} в карточке Z-Wave."
                 },
                 "integrations": {
                     "add_integration": "Добавить интеграцию",
@@ -1408,7 +1464,7 @@
                     },
                     "configure": "Настроить",
                     "configured": "Настроено",
-                    "description": "Добавляйте и настраивайте интеграции",
+                    "description": "Добавление и настройка интеграций",
                     "details": "Детали интеграции",
                     "discovered": "Обнаружено",
                     "home_assistant_website": "сайте Home Assistant",
@@ -1436,6 +1492,19 @@
                     "rename_input_label": "Название"
                 },
                 "introduction": "Здесь можно настроить Home Assistant. Пока что не все настройки доступны из интерфейса, но мы работаем над этим.",
+                "logs": {
+                    "caption": "Журнал сервера",
+                    "clear": "Очистить",
+                    "description": "Просмотр журналов работы сервера Home Assistant",
+                    "details": "Уровень: {level}",
+                    "load_full_log": "Показать весь журнал",
+                    "loading_log": "Загрузка журнала…",
+                    "multiple_messages": "первое сообщение получено {time} и повторялось {counter} раз",
+                    "no_errors": "Нет сообщений об ошибках.",
+                    "no_issues": "Нет сообщений о проблемах.",
+                    "refresh": "Обновить",
+                    "title": "Лог"
+                },
                 "lovelace": {
                     "caption": "Панели Lovelace",
                     "dashboards": {
@@ -1478,7 +1547,7 @@
                             "open": "Открыть"
                         }
                     },
-                    "description": "Настройка панелей пользовательского интерфейса Lovelace.",
+                    "description": "Настройка панелей пользовательского интерфейса Lovelace",
                     "resources": {
                         "cant_edit_yaml": "Вы используете Lovelace в режиме YAML, поэтому невозможно управление ресурсами через пользовательский интерфейс. В данном режиме управление осуществляется через файл configuration.yaml.",
                         "caption": "Ресурсы",
@@ -1513,13 +1582,27 @@
                         }
                     }
                 },
+                "mqtt": {
+                    "button": "Настройка",
+                    "description_listen": "Подписаться на топик",
+                    "description_publish": "Опубликовать данные",
+                    "listening_to": "Подписано на",
+                    "message_received": "Сообщение {id} получено в {time} из {topic}:",
+                    "payload": "Значение (включая шаблоны)",
+                    "publish": "Опубликовать",
+                    "start_listening": "Подписаться",
+                    "stop_listening": "Отписаться",
+                    "subscribe_to": "Топик",
+                    "title": "MQTT",
+                    "topic": "Топик"
+                },
                 "person": {
                     "add_person": "Добавить персону",
                     "caption": "Люди",
                     "confirm_delete": "Вы уверены, что хотите удалить эту персону?",
                     "confirm_delete2": "Все устройства, связанные с этой персоной, станут не назначенными.",
                     "create_person": "Добавить персону",
-                    "description": "Определяйте людей, которых может отслеживать Home Assistant",
+                    "description": "Люди, которых может отслеживать Home Assistant",
                     "detail": {
                         "create": "Создать",
                         "delete": "Удалить",
@@ -1542,7 +1625,7 @@
                 "scene": {
                     "activated": "Активирована сцена {name}.",
                     "caption": "Сцены",
-                    "description": "Создавайте и редактируйте сцены",
+                    "description": "Создание и редактирование сцен",
                     "editor": {
                         "default_name": "Новая сцена",
                         "devices": {
@@ -1585,7 +1668,7 @@
                 },
                 "script": {
                     "caption": "Сценарии",
-                    "description": "Создавайте и редактируйте сценарии",
+                    "description": "Создание и редактирование сценариев",
                     "editor": {
                         "alias": "Название",
                         "default_name": "Новый сценарий",
@@ -1614,13 +1697,18 @@
                 },
                 "server_control": {
                     "caption": "Сервер",
-                    "description": "Управляйте сервером Home Assistant",
+                    "description": "Управление сервером Home Assistant",
                     "section": {
                         "reloading": {
                             "automation": "Перезагрузить автоматизации",
                             "core": "Обновить местоположение и кастомизацию",
                             "group": "Перезагрузить группы",
                             "heading": "Перезагрузка конфигурации YAML",
+                            "input_boolean": "Перезагрузить вспомогательные переключатели",
+                            "input_datetime": "Перезагрузить вспомогательные элементы ввода даты и времени",
+                            "input_number": "Перезагрузить вспомогательные элементы ввода чисел",
+                            "input_select": "Перезагрузить вспомогательные выпадающие списки",
+                            "input_text": "Перезагрузить вспомогательные элементы ввода текста",
                             "introduction": "Некоторые компоненты Home Assistant можно перезагрузить без необходимости перезапуска всей системы. Перезагрузка выгружает текущую конфигурацию YAML и загружает новую.",
                             "person": "Перезагрузить персоны",
                             "scene": "Перезагрузить сцены",
@@ -1653,7 +1741,7 @@
                         "username": "Логин"
                     },
                     "caption": "Пользователи",
-                    "description": "Управляйте учётными записями пользователей",
+                    "description": "Управление учётными записями пользователей",
                     "editor": {
                         "activate_user": "Активировать",
                         "active": "Активен",
@@ -1679,12 +1767,16 @@
                             "name": "Имя",
                             "system": "Системный"
                         }
-                    }
+                    },
+                    "users_privileges_note": "Группа пользователей находится в стадии разработки. В дальнейшем пользователи не смогут администрировать сервер через пользовательский интерфейс. Мы все еще проверяем все конечные точки API управления, чтобы убедиться, что они правильно ограничивают доступ."
                 },
                 "zha": {
                     "add_device_page": {
+                        "discovered_text": "Устройства появятся здесь, когда будут обнаружены.",
                         "discovery_text": "Здесь будут отображаться обнаруженные устройства. Следуйте инструкциям для Вашего устройства, чтобы включить режим сопряжения.",
                         "header": "Zigbee Home Automation",
+                        "no_devices_found": "Устройства не найдены, убедитесь, что они находятся в режиме сопряжения, и держите их активными во время обнаружения.",
+                        "pairing_mode": "Убедитесь, что подключаемые устройства находятся в режиме сопряжения. Чтобы узнать, как активировать режим сопряжения, ознакомьтесь с инструкциями для Вашего устройства.",
                         "search_again": "Повторный поиск",
                         "spinner": "Поиск Zigbee устройств..."
                     },
@@ -1692,6 +1784,7 @@
                         "caption": "Добавить устройства",
                         "description": "Добавить устройства в сеть Zigbee"
                     },
+                    "button": "Настроить",
                     "caption": "Zigbee Home Automation",
                     "cluster_attributes": {
                         "attributes_of_cluster": "Атрибуты выбранного кластера",
@@ -1722,7 +1815,7 @@
                         "manufacturer_code_override": "Переназначить код производителя",
                         "value": "Значение"
                     },
-                    "description": "Управляйте сетью Zigbee Home Automation",
+                    "description": "Управление сетью Zigbee Home Automation",
                     "devices": {
                         "header": "Zigbee Home Automation - Устройство"
                     },
@@ -1770,6 +1863,9 @@
                         "header": "Управление сетью",
                         "introduction": "Команды, которые влияют на всю сеть"
                     },
+                    "network": {
+                        "caption": "Сеть"
+                    },
                     "node_management": {
                         "header": "Управление устройством",
                         "help_node_dropdown": "Выберите устройство для просмотра индивидуальных параметров.",
@@ -1785,7 +1881,7 @@
                     "configured_in_yaml": "Зоны, настроенные с помощью configuration.yaml, нельзя редактировать с помощью пользовательского интерфейса.",
                     "confirm_delete": "Вы уверены, что хотите удалить эту зону?",
                     "create_zone": "Создать зону",
-                    "description": "Управляйте зонами, в которых Вы хотите отслеживать людей.",
+                    "description": "Управление зонами, в которых Вы хотите отслеживать людей",
                     "detail": {
                         "create": "Создать",
                         "delete": "Удалить",
@@ -1809,6 +1905,7 @@
                     "no_zones_created_yet": "У Вас еще нет добавленных зон."
                 },
                 "zwave": {
+                    "button": "Настроить",
                     "caption": "Z-Wave",
                     "common": {
                         "index": "Индекс",
@@ -1817,7 +1914,7 @@
                         "value": "Значение",
                         "wakeup_interval": "Интервал пробуждения"
                     },
-                    "description": "Управляйте Вашей сетью Z-Wave",
+                    "description": "Управление сетью Z-Wave",
                     "learn_more": "Узнайте больше о Z-Wave",
                     "network_management": {
                         "header": "Управление сетью Z-Wave",
@@ -1921,48 +2018,6 @@
                         "title": "События",
                         "type": "Событие"
                     },
-                    "info": {
-                        "built_using": "Создано с использованием",
-                        "custom_uis": "Кастомные интерфейсы:",
-                        "developed_by": "Разработано множеством замечательных людей.",
-                        "documentation": "Документация",
-                        "frontend": "пользовательский интерфейс",
-                        "frontend_version": "Версия интерфейса: {version} - {type}",
-                        "home_assistant_logo": "Логотип Home Assistant",
-                        "icons_by": "Значки от",
-                        "integrations": "Интеграции",
-                        "issues": "Вопросы",
-                        "license": "Опубликовано под лицензией Apache 2.0",
-                        "path_configuration": "Путь к configuration.yaml: {path}",
-                        "server": "сервер",
-                        "source": "Исходный код:",
-                        "system_health_error": "Компонент System Health не загружен. Добавьте 'system_health:' в файл configuration.yaml.",
-                        "title": "О системе"
-                    },
-                    "logs": {
-                        "clear": "Очистить",
-                        "details": "Уровень: {level}",
-                        "load_full_log": "Показать весь журнал",
-                        "loading_log": "Загрузка журнала…",
-                        "multiple_messages": "первое сообщение получено {time} и повторялось {counter} раз",
-                        "no_errors": "Нет сообщений об ошибках.",
-                        "no_issues": "Нет сообщений о проблемах.",
-                        "refresh": "Обновить",
-                        "title": "Лог"
-                    },
-                    "mqtt": {
-                        "description_listen": "Подписаться на топик",
-                        "description_publish": "Опубликовать данные",
-                        "listening_to": "Подписано на",
-                        "message_received": "Сообщение {id} получено в {time} из {topic}:",
-                        "payload": "Значение (включая шаблоны)",
-                        "publish": "Опубликовать",
-                        "start_listening": "Подписаться",
-                        "stop_listening": "Отписаться",
-                        "subscribe_to": "Топик",
-                        "title": "MQTT",
-                        "topic": "Топик"
-                    },
                     "services": {
                         "alert_parsing_yaml": "Ошибка при разборе синтаксиса YAML: {data}",
                         "call_service": "Вызвать службу",
@@ -1995,7 +2050,7 @@
                         "title": "Состояния"
                     },
                     "templates": {
-                        "description": "Здесь Вы можете протестировать поведение шаблонов. Шаблоны используют шаблонизатор Jinja2 с некоторыми специальными расширениями Home Assistant.",
+                        "description": "Здесь Вы можете протестировать поведение шаблонов. В Home Assistant используется шаблонизатор Jinja2 с некоторыми специальными расширениями.",
                         "editor": "Редактор шаблонов",
                         "jinja_documentation": "Узнайте больше о шаблонизаторе Jinja2",
                         "template_extensions": "Узнайте больше о шаблонах Home Assistant",
@@ -2006,11 +2061,23 @@
             },
             "history": {
                 "period": "Период",
+                "ranges": {
+                    "last_week": "Прошедшая неделя",
+                    "this_week": "Эта неделя",
+                    "today": "Сегодня",
+                    "yesterday": "Вчера"
+                },
                 "showing_entries": "Отображение записей за"
             },
             "logbook": {
                 "entries_not_found": "В журнале нет записей.",
                 "period": "Период",
+                "ranges": {
+                    "last_week": "Прошедшая неделя",
+                    "this_week": "Эта неделя",
+                    "today": "Сегодня",
+                    "yesterday": "Вчера"
+                },
                 "showing_entries": "Отображение записей за"
             },
             "lovelace": {
@@ -2039,7 +2106,7 @@
                         "url": "Открыть окно {url_path}"
                     },
                     "safe-mode": {
-                        "description": "Home Assistant столкнулся с проблемой при загрузке Вашей конфигурации и теперь работает в безопасном режиме. Ознакомьтесь с журналом ошибок, чтобы увидеть, что пошло не так.",
+                        "description": "Home Assistant столкнулся с проблемой при загрузке Вашей конфигурации и теперь работает в безопасном режиме. Ознакомьтесь с журналом работы сервера, чтобы увидеть что пошло не так.",
                         "header": "Безопасный режим"
                     },
                     "shopping-list": {
@@ -2048,7 +2115,7 @@
                         "clear_items": "Очистить отмеченные элементы"
                     },
                     "starting": {
-                        "description": "Home Assistant запускается, пожалуйста, подождите.",
+                        "description": "Home Assistant запускается, пожалуйста, подождите...",
                         "header": "Запуск Home Assistant..."
                     }
                 },
@@ -2149,6 +2216,10 @@
                         "horizontal-stack": {
                             "description": "Позволяет сгруппировать несколько карточек так, чтобы они всегда находились рядом друг с другом в пределах одного столбца.",
                             "name": "Горизонтальный массив"
+                        },
+                        "humidifier": {
+                            "description": "Позволяет контролировать увлажнитель воздуха, изменять влажность и режим работы.",
+                            "name": "Увлажнитель"
                         },
                         "iframe": {
                             "description": "Позволяет встроить веб-страницу в интерфейс Home Assistant.",

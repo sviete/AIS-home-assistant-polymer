@@ -48,6 +48,19 @@
                 "none": "Nessuna",
                 "sleep": "Dormire"
             }
+        },
+        "humidifier": {
+            "mode": {
+                "auto": "Automatico",
+                "away": "Fuori casa",
+                "baby": "Bambino",
+                "boost": "Boost",
+                "comfort": "Comfort",
+                "eco": "Eco",
+                "home": "In casa",
+                "normal": "Normale",
+                "sleep": "Sonno"
+            }
         }
     },
     "state_badge": {
@@ -388,6 +401,12 @@
                 "reverse": "Indietro",
                 "speed": "Velocità"
             },
+            "humidifier": {
+                "humidity": "Target umidità",
+                "mode": "Modalità",
+                "on_entity": "{name} acceso",
+                "target_humidity_entity": "{name} target umidità"
+            },
             "light": {
                 "brightness": "Luminosità",
                 "color_temperature": "Temperatura colore",
@@ -478,9 +497,12 @@
             "cancel": "Annulla",
             "close": "Chiudi",
             "delete": "Elimina",
+            "error_required": "Necessario",
             "loading": "Caricamento",
+            "menu": "Menù",
             "next": "Avanti",
             "no": "No",
+            "overflow_menu": "Menù di Overflow",
             "previous": "Indietro",
             "refresh": "Aggiorna",
             "save": "Salva",
@@ -502,6 +524,11 @@
                 "area": "Area",
                 "clear": "Cancella",
                 "show_areas": "Mostra le aree"
+            },
+            "date-range-picker": {
+                "end_date": "Data di fine",
+                "select": "Selezionare",
+                "start_date": "Data di inizio"
             },
             "device-picker": {
                 "clear": "Cancella",
@@ -691,10 +718,11 @@
             },
             "zha_device_info": {
                 "buttons": {
-                    "add": "Aggiungi dispositivi",
+                    "add": "Aggiungi dispositivi tramite questo dispositivo",
+                    "clusters": "Gestisci i cluster",
                     "reconfigure": "Riconfigura dispositivo",
                     "remove": "Rimuovi dispositivo",
-                    "zigbee_information": "Informazioni Zigbee"
+                    "zigbee_information": "Firma del dispositivo Zigbee"
                 },
                 "confirmations": {
                     "remove": "Sei sicuro di voler rimuovere il dispositivo?"
@@ -714,7 +742,7 @@
                 "unknown": "Sconosciuto",
                 "zha_device_card": {
                     "area_picker_label": "Area",
-                    "device_name_placeholder": "Nome assegnato dall'utente",
+                    "device_name_placeholder": "Cambia il nome del dispositivo",
                     "update_name_button": "Aggiorna nome"
                 }
             }
@@ -740,6 +768,8 @@
         "notification_toast": {
             "connection_lost": "Connessione persa. Riconnessione…",
             "service_call_failed": "Fallita chiamata a servizio {service} .",
+            "started": "Home Assistant si è avviato!",
+            "starting": "Home Assistant si sta avviando, non tutto sarà disponibile fino a quando non avrà completato l'avvio.",
             "triggered": "Attivato {name}"
         },
         "panel": {
@@ -908,6 +938,8 @@
                         "introduction": "Usa le automazioni per dare vita alla tua casa.",
                         "load_error_not_editable": "Solo le Automazioni in automations.yaml sono modificabili.",
                         "load_error_unknown": "Errore durante il caricamento dell'Automazione ({err_no}).",
+                        "move_down": "Sposta sotto",
+                        "move_up": "Sposta sopra",
                         "save": "Salva",
                         "triggers": {
                             "add": "Aggiungi Attivazione",
@@ -1140,7 +1172,7 @@
                         "email": "E-mail",
                         "email_error_msg": "E-mail non valida",
                         "forgot_password": "Hai dimenticato la password?",
-                        "introduction": "Home Assistant Cloud fornisce una connessione remota sicura alla tua istanza quando sei lontano da casa. Consente inoltre di connettersi con i servizi cloud: Amazon Alexa e Google Assistant.",
+                        "introduction": "Home Assistant Cloud fornisce una connessione remota sicura alla tua istanza quando sei lontano da casa. Consente inoltre di connettersi con i servizi solo su cloud: Amazon Alexa e Google Assistant.",
                         "introduction2": "Questo servizio è gestito dal nostro partner",
                         "introduction2a": ", una società fondata dai fondatori di Home Assistant e Hass.io.",
                         "introduction3": "Home Assistant Cloud è un servizio in abbonamento con un mese di prova gratuita. Non sono necessarie informazioni di pagamento.",
@@ -1219,8 +1251,9 @@
                     "different_include": "Possibilmente tramite un dominio, un glob o un'altra inclusione.",
                     "pick_attribute": "Scegli un attributo da sovrascrivere",
                     "picker": {
+                        "entity": "Entità",
                         "header": "Personalizzazioni",
-                        "introduction": "Modificare gli attributi per entità. Le personalizzazioni aggiunte / modificate avranno effetto immediato. Le personalizzazioni rimosse avranno effetto quando l'entità viene aggiornata."
+                        "introduction": "Modificare gli attributi per entità. \nLe personalizzazioni aggiunte/modificate avranno effetto immediato. \nLe personalizzazioni rimosse avranno effetto quando l'entità sarà aggiornata."
                     },
                     "warning": {
                         "include_link": "includere customize.yaml",
@@ -1342,12 +1375,12 @@
                     "caption": "Aiutanti",
                     "description": "Elementi che possono aiutare a costruire le automazioni.",
                     "dialog": {
-                        "add_helper": "Aggiungi aiuto",
+                        "add_helper": "Aggiungi aiutante",
                         "add_platform": "Aggiungi {platform}",
                         "create": "Crea"
                     },
                     "picker": {
-                        "add_helper": "Aggiungi aiuto",
+                        "add_helper": "Aggiungi aiutante",
                         "headers": {
                             "editable": "Modificabile",
                             "entity_id": "ID Entità",
@@ -1362,6 +1395,31 @@
                         "input_select": "A discesa",
                         "input_text": "Testo"
                     }
+                },
+                "info": {
+                    "built_using": "Costruito usando",
+                    "caption": "Informazioni",
+                    "custom_uis": "Interfacce Utente personalizzate:",
+                    "description": "Informazioni sulla tua installazione di Home Assistant",
+                    "developed_by": "Sviluppato da un gruppo di persone fantastiche.",
+                    "documentation": "Documentazione",
+                    "frontend": "frontend-ui",
+                    "frontend_version": "Versione Frontend: {version} - {type}",
+                    "home_assistant_logo": "Logo Home Assistant",
+                    "icons_by": "Icone di",
+                    "integrations": "Integrazioni",
+                    "issues": "Problemi",
+                    "license": "Pubblicato sotto la licenza Apache 2.0",
+                    "path_configuration": "Percorso del file configuration.yaml: {path}",
+                    "server": "server",
+                    "source": "Sorgenti:",
+                    "system_health_error": "Il componente System Health non è caricato. Aggiungere 'system_health:' a configuration.yaml",
+                    "title": "Informazioni"
+                },
+                "integration_panel_move": {
+                    "link_integration_page": "pagina integrazioni",
+                    "missing_zha": "Manca il pannello di configurazione ZHA? È stato spostato alla voce ZHA nella {integrations_page}.",
+                    "missing_zwave": "Manca il pannello di configurazione di Z-Wave? È stato spostato alla voce Z-Wave nella {integrations_page}."
                 },
                 "integrations": {
                     "add_integration": "Aggiungi integrazione",
@@ -1399,7 +1457,7 @@
                             "description": "Questo passaggio richiede di visitare un sito Web esterno per essere completato.",
                             "open_site": "Apri sito Web"
                         },
-                        "finish": "Finire",
+                        "finish": "Finito",
                         "loading_first_time": "Si prega di attendere durante l'installazione dell'integrazione",
                         "not_all_required_fields": "Non tutti i campi obbligatori sono compilati.",
                         "submit": "Invia"
@@ -1434,28 +1492,41 @@
                     "rename_input_label": "Nome della voce"
                 },
                 "introduction": "Qui è possibile configurare i componenti e Home Assistant. Non è ancora possibile configurare tutto dall'Interfaccia Utente, ma ci stiamo lavorando.",
+                "logs": {
+                    "caption": "Logs",
+                    "clear": "Pulisci",
+                    "description": "Vedi i logs di Home Assistant",
+                    "details": "Dettagli registro ({level})",
+                    "load_full_log": "Carica il registro completo di Home Assistant",
+                    "loading_log": "Caricamento del registro errori...",
+                    "multiple_messages": "il messaggio si è verificato per la prima volta alle {time} e compare {counter} volte",
+                    "no_errors": "Non sono stati segnalati errori.",
+                    "no_issues": "Non ci sono nuovi problemi!",
+                    "refresh": "Aggiorna",
+                    "title": "Registri"
+                },
                 "lovelace": {
-                    "caption": "Cruscotti Lovelace",
+                    "caption": "Plance di Lovelace",
                     "dashboards": {
-                        "cant_edit_default": "Il cruscotto standard Lovelace non può essere modificato dall'Interfaccia Utente. È possibile nasconderlo impostando un altro cruscotto come predefinito.",
-                        "cant_edit_yaml": "I cruscotti definiti in YAML non possono essere modificati dall'Interfaccia Utente. Modificarli in configuration.yaml.",
-                        "caption": "Cruscotti",
+                        "cant_edit_default": "La plancia standard Lovelace non può essere modificata dall'Interfaccia Utente. È possibile nasconderla impostando un'altra plancia come predefinita.",
+                        "cant_edit_yaml": "Le plance definite in YAML non possono essere modificate dall'Interfaccia Utente. Modificarle in configuration.yaml.",
+                        "caption": "Plance",
                         "conf_mode": {
-                            "storage": "IU controllata",
+                            "storage": "Controllata dell'Interfaccia Utente",
                             "yaml": "File YAML"
                         },
-                        "confirm_delete": "Sei sicuro di voler eliminare questo cruscotto?",
-                        "default_dashboard": "Questo è il cruscotto predefinito",
+                        "confirm_delete": "Sei sicuro di voler eliminare questa plancia?",
+                        "default_dashboard": "Questa è la plancia predefinita",
                         "detail": {
                             "create": "Crea",
                             "delete": "Elimina",
                             "dismiss": "Chiudi",
-                            "edit_dashboard": "Modifica cruscotto",
+                            "edit_dashboard": "Modifica plancia",
                             "icon": "Icona",
-                            "new_dashboard": "Aggiungi nuovo cruscotto",
-                            "remove_default": "Rimuovi come predefinito su questo dispositivo",
+                            "new_dashboard": "Aggiungi nuova plancia",
+                            "remove_default": "Rimuovi come predefinita su questo dispositivo",
                             "require_admin": "Solo per l'amministratore",
-                            "set_default": "Imposta come predefinito su questo dispositivo",
+                            "set_default": "Imposta come predefinita su questo dispositivo",
                             "show_sidebar": "Mostra nella barra laterale",
                             "title": "Titolo",
                             "title_required": "È richiesto il titolo.",
@@ -1464,10 +1535,10 @@
                             "url_error_msg": "L'URL dovrebbe contenere un - e non può contenere spazi o caratteri speciali, ad eccezione di _ e -"
                         },
                         "picker": {
-                            "add_dashboard": "Aggiungi cruscotto",
+                            "add_dashboard": "Aggiungi plancia",
                             "headers": {
                                 "conf_mode": "Metodo di configurazione",
-                                "default": "Predefinito",
+                                "default": "Predefinita",
                                 "filename": "Nome del file",
                                 "require_admin": "Solo per l'amministratore",
                                 "sidebar": "Mostra nella barra laterale",
@@ -1476,7 +1547,7 @@
                             "open": "Aprire"
                         }
                     },
-                    "description": "Configurare i cruscotti Lovelace",
+                    "description": "Configura le tue plance di Lovelace",
                     "resources": {
                         "cant_edit_yaml": "Si utilizza Lovelace in modalità YAML, pertanto non è possibile gestire le risorse tramite l'Interfaccia Utente. Gestirli in configuration.yaml.",
                         "caption": "Risorse",
@@ -1510,6 +1581,20 @@
                             "module": "Modulo JavaScript"
                         }
                     }
+                },
+                "mqtt": {
+                    "button": "Configura",
+                    "description_listen": "Ascoltare un argomento",
+                    "description_publish": "Pubblicare un pacchetto",
+                    "listening_to": "Ascolto di",
+                    "message_received": "Messaggio {id} ricevuto su {topic} alle {time}:",
+                    "payload": "Payload (modello consentito)",
+                    "publish": "Pubblicare",
+                    "start_listening": "Inizia ad ascoltare",
+                    "stop_listening": "Interrompere l'ascolto",
+                    "subscribe_to": "Argomento a cui iscriversi",
+                    "title": "MQTT",
+                    "topic": "argomento"
                 },
                 "person": {
                     "add_person": "Aggiungi persona",
@@ -1583,7 +1668,7 @@
                 },
                 "script": {
                     "caption": "Script",
-                    "description": "Crea e modifica Script",
+                    "description": "Crea e modifica script",
                     "editor": {
                         "alias": "Nome",
                         "default_name": "Nuovo script",
@@ -1619,11 +1704,16 @@
                             "core": "Ricarica la Posizione e le Personalizzazioni",
                             "group": "Ricarica i Gruppi",
                             "heading": "Ricarica Configurazione YAML",
+                            "input_boolean": "Ricarica input booleani",
+                            "input_datetime": "Ricarica input data e/o tempo",
+                            "input_number": "Ricarica input numerici",
+                            "input_select": "Ricarica input a discesa",
+                            "input_text": "Ricarica input testuali",
                             "introduction": "Alcune parti di Home Assistant possono essere ricaricate senza richiedere un riavvio. Premendo su Ricarica si rimuoverà la loro Configurazione YAML  attuale e si caricherà la versione aggiornata.",
-                            "person": "Ricarica persone",
+                            "person": "Ricarica le persone",
                             "scene": "Ricarica le Scene",
                             "script": "Ricarica gli Script",
-                            "zone": "Ricarica zone"
+                            "zone": "Ricarica le zone"
                         },
                         "server_management": {
                             "confirm_restart": "Sei sicuro di voler riavviare Home Assistant?",
@@ -1636,7 +1726,7 @@
                         "validation": {
                             "check_config": "Verifica Configurazione",
                             "heading": "Convalida della configurazione",
-                            "introduction": "Convalidare la configurazione se di recente sono state apportate alcune modifiche alla configurazione e si desidera assicurarsi che sia tutto valido",
+                            "introduction": "Convalidare la configurazione se di recente sono state apportate alcune modifiche alla configurazione e ci si vuole assicurare che sia tutto valido",
                             "invalid": "Configurazione non valida",
                             "valid": "Configurazione valida!"
                         }
@@ -1677,12 +1767,16 @@
                             "name": "Nome",
                             "system": "Sistema"
                         }
-                    }
+                    },
+                    "users_privileges_note": "Il gruppo di utenti è in fase di elaborazione. L'utente non sarà in grado di amministrare l'istanza tramite l'interfaccia utente. Stiamo ancora verificando tutti gli endpoint dell'API di gestione per garantire che limitino correttamente l'accesso agli amministratori."
                 },
                 "zha": {
                     "add_device_page": {
+                        "discovered_text": "I dispositivi verranno visualizzati qui una volta scoperti.",
                         "discovery_text": "I dispositivi rilevati verranno visualizzati qui. Seguire le istruzioni per il / i dispositivo / i e posizionare il / i dispositivo / i in modalità accoppiamento.",
                         "header": "Zigbee Home Automation - Aggiungi dispositivi",
+                        "no_devices_found": "Nessun dispositivo trovato, assicurati che siano in modalità di associazione e tienili svegli mentre la scansione è in esecuzione.",
+                        "pairing_mode": "Assicurati che i tuoi dispositivi siano in modalità di associazione. Controlla le istruzioni del tuo dispositivo su come eseguire questa operazione.",
                         "search_again": "Cerca di nuovo",
                         "spinner": "Ricerca di dispositivi ZHA Zigbee ..."
                     },
@@ -1690,6 +1784,7 @@
                         "caption": "Aggiungi dispositivi",
                         "description": "Aggiungi dispositivi alla rete Zigbee"
                     },
+                    "button": "Configura",
                     "caption": "ZHA",
                     "cluster_attributes": {
                         "attributes_of_cluster": "Attributi del cluster selezionato",
@@ -1768,6 +1863,9 @@
                         "header": "Gestione della rete",
                         "introduction": "Comandi che influiscono sull'intera rete"
                     },
+                    "network": {
+                        "caption": "Rete"
+                    },
                     "node_management": {
                         "header": "Gestione dei dispositivi",
                         "help_node_dropdown": "Selezionare un dispositivo per visualizzare le opzioni per dispositivo.",
@@ -1807,6 +1905,7 @@
                     "no_zones_created_yet": "Sembra che tu non abbia ancora creato nessuna zona."
                 },
                 "zwave": {
+                    "button": "Configura",
                     "caption": "Z-Wave",
                     "common": {
                         "index": "Indice",
@@ -1839,21 +1938,53 @@
                         "set_wakeup": "Imposta intervallo di riattivazione",
                         "true": "Vero"
                     },
+                    "node_management": {
+                        "add_to_group": "Aggiungi al Gruppo",
+                        "entities": "Entità di questo nodo",
+                        "entity_info": "Informazioni sull'Entità",
+                        "exclude_entity": "Escludere questa entità da Home Assistant",
+                        "group": "Gruppo",
+                        "header": "Gestione dei nodi Z-Wave",
+                        "introduction": "Esegui i comandi Z-Wave che riguardano un singolo nodo. Scegli un nodo per visualizzare un elenco di comandi disponibili.",
+                        "max_associations": "Numero massimo di Associazioni:",
+                        "node_group_associations": "Associazioni ai gruppi di nodi",
+                        "node_protection": "Protezione del Nodo",
+                        "node_to_control": "Nodo da controllare",
+                        "nodes": "Nodi",
+                        "nodes_hint": "Selezionare il nodo per visualizzare le opzioni per nodo",
+                        "nodes_in_group": "Altri Nodi di questo Gruppo:",
+                        "pooling_intensity": "Intensità di interrogazione ciclica",
+                        "protection": "Protezione",
+                        "remove_broadcast": "Rimuovi Trasmissione",
+                        "remove_from_group": "Rimuovi dal Gruppo",
+                        "set_protection": "Imposta Protezione"
+                    },
                     "ozw_log": {
                         "header": "Registro OZW",
-                        "introduction": "Guarda il registro. 0 è il minimo (carica l'intero log) e 1000 è il massimo. Load mostrerà un log statico e la coda si aggiornerà automaticamente con l'ultimo numero di righe specificato del log."
+                        "introduction": "Guarda il registro. 0 è il minimo (carica l'intero log) e 1000 è il massimo. Load mostrerà un log statico e la coda si aggiornerà automaticamente con l'ultimo numero di righe specificato del log.",
+                        "last_log_lines": "Numero delle ultime righe del registro",
+                        "load": "Carica",
+                        "tail": "Coda"
                     },
                     "services": {
                         "add_node": "Aggiungi Nodo",
                         "add_node_secure": "Aggiungi nodo sicuro",
                         "cancel_command": "Annulla Comando",
                         "heal_network": "Testa la rete",
+                        "heal_node": "Resuscita Nodo",
+                        "node_info": "Informazioni sul Nodo",
+                        "print_node": "Stampa Nodo",
+                        "refresh_entity": "Aggiorna Entità",
+                        "refresh_node": "Aggiorna Nodo",
+                        "remove_failed_node": "Rimuovi Nodo Difettoso",
                         "remove_node": "Rimuovi nodo",
+                        "replace_failed_node": "Sostituisci Nodo Difettoso",
                         "save_config": "Salva Configurazione",
                         "soft_reset": "Soft Reset",
                         "start_network": "Avvia la rete",
                         "stop_network": "Ferma la rete",
-                        "test_network": "Testa la rete"
+                        "test_network": "Testa la rete",
+                        "test_node": "Test Nodo"
                     },
                     "values": {
                         "header": "Valori del nodo"
@@ -1886,48 +2017,6 @@
                         "subscribe_to": "Evento a cui iscriversi",
                         "title": "Eventi",
                         "type": "Tipo di Evento"
-                    },
-                    "info": {
-                        "built_using": "Costruito usando",
-                        "custom_uis": "Interfacce Utente personalizzate:",
-                        "developed_by": "Sviluppato da un gruppo di persone fantastiche.",
-                        "documentation": "Documentazione",
-                        "frontend": "frontend-ui",
-                        "frontend_version": "Versione Frontend: {version} - {type}",
-                        "home_assistant_logo": "Logo Home Assistant",
-                        "icons_by": "Icone di",
-                        "integrations": "integrazioni",
-                        "issues": "Problemi",
-                        "license": "Pubblicato sotto la licenza Apache 2.0",
-                        "path_configuration": "Percorso del file configuration.yaml: {path}",
-                        "server": "server",
-                        "source": "Sorgenti:",
-                        "system_health_error": "Il componente System Health non è caricato. Aggiungere 'system_health:' a configuration.yaml",
-                        "title": "Informazioni"
-                    },
-                    "logs": {
-                        "clear": "Pulisci",
-                        "details": "Dettagli registro ({level})",
-                        "load_full_log": "Carica il registro completo di Home Assistant",
-                        "loading_log": "Caricamento del registro errori...",
-                        "multiple_messages": "il messaggio si è verificato per la prima volta alle {time} e compare {counter} volte",
-                        "no_errors": "Non sono stati segnalati errori.",
-                        "no_issues": "Non ci sono nuovi problemi!",
-                        "refresh": "Aggiorna",
-                        "title": "Registri"
-                    },
-                    "mqtt": {
-                        "description_listen": "Ascoltare un argomento",
-                        "description_publish": "Pubblicare un pacchetto",
-                        "listening_to": "Ascolto di",
-                        "message_received": "Messaggio {id} ricevuto su {topic} alle {time}:",
-                        "payload": "Payload (modello consentito)",
-                        "publish": "Pubblicare",
-                        "start_listening": "Inizia ad ascoltare",
-                        "stop_listening": "Interrompere l'ascolto",
-                        "subscribe_to": "Argomento a cui iscriversi",
-                        "title": "MQTT",
-                        "topic": "argomento"
                     },
                     "services": {
                         "alert_parsing_yaml": "Errore durante l'analisi di YAML: {data}",
@@ -1972,11 +2061,23 @@
             },
             "history": {
                 "period": "Periodo",
+                "ranges": {
+                    "last_week": "Settimana scorsa",
+                    "this_week": "Questa settimana",
+                    "today": "Oggi",
+                    "yesterday": "Ieri"
+                },
                 "showing_entries": "Visualizzazione delle voci per"
             },
             "logbook": {
                 "entries_not_found": "Non sono state trovate voci nel registro.",
                 "period": "Periodo",
+                "ranges": {
+                    "last_week": "Settimana scorsa",
+                    "this_week": "Questa settimana",
+                    "today": "Oggi",
+                    "yesterday": "Ieri"
+                },
                 "showing_entries": "Visualizzazione delle voci per"
             },
             "lovelace": {
@@ -2012,10 +2113,14 @@
                         "add_item": "Aggiungi elemento",
                         "checked_items": "Elementi selezionati",
                         "clear_items": "Cancella gli elementi selezionati"
+                    },
+                    "starting": {
+                        "description": "Home Assistant sta per avviarsi, attendere prego...",
+                        "header": "Home Assistant si sta avviando..."
                     }
                 },
                 "changed_toast": {
-                    "message": "La configurazione dell'Interfaccia Utente di Lovelace per questo cruscotto è stata aggiornata, ricaricare per vedere le modifiche?",
+                    "message": "La configurazione dell'Interfaccia Utente di Lovelace per questa plancia è stata aggiornata, ricaricare per vedere le modifiche?",
                     "refresh": "Aggiorna"
                 },
                 "editor": {
@@ -2111,6 +2216,10 @@
                         "horizontal-stack": {
                             "description": "La scheda Pila Orizzontale consente di raggruppare insieme più schede, in modo che siano sempre l'una accanto all'altra nello spazio di una colonna.",
                             "name": "Pila orizzontale"
+                        },
+                        "humidifier": {
+                            "description": "La scheda Umidificatore fornisce il controllo della tua entità umidificatore, consentendo di modificare l'umidità e la modalità dell'entità.",
+                            "name": "Umidificatore"
                         },
                         "iframe": {
                             "description": "La scheda Pagina Web consente di incorporare la pagina Web preferita direttamente in Home Assistant.",
@@ -2250,14 +2359,14 @@
                     "save_config": {
                         "cancel": "Rinuncia",
                         "close": "Chiudi",
-                        "empty_config": "Iniziare con un cruscotto vuoto",
+                        "empty_config": "Iniziare con una plancia vuota",
                         "header": "Prendi il controllo della tua interfaccia utente di Lovelace",
-                        "para": "Questo cruscotto è attualmente gestito da Home Assistant. E' aggiornato automaticamente quando nuove entità o componenti dell'Interfaccia Utente Lovelace diventano disponibili. Se si assume il controllo, questo cruscotto non verrà più aggiornato automaticamente. È sempre possibile creare un nuovo cruscotto in configurazione con cui esperimentare.",
+                        "para": "Questa plancia è attualmente gestita da Home Assistant. E' aggiornata automaticamente quando nuove entità o componenti dell'Interfaccia Utente Lovelace diventano disponibili. Se si assume il controllo, questa plancia non verrà più aggiornata automaticamente. È sempre possibile creare una nuova plancia in configurazione con cui esperimentare.",
                         "para_sure": "Sei sicuro di voler prendere il controllo della tua interfaccia utente?",
                         "save": "Prendere il controllo",
-                        "yaml_config": "Per aiutarti a iniziare qui c'è la configurazione corrente di questo cruscotto:",
-                        "yaml_control": "Per assumere il controllo in modalità YAML, creare un file YAML con il nome specificato nella configurazione per questo cruscotto, o il predefinito 'ui-lovelace.yaml'.",
-                        "yaml_mode": "Questo cruscotto sta utilizzando la modalità YAML, il che significa che non è possibile modificare la configurazione di Lovelace dall'Interfaccia Utente. Se volete gestire questo cruscotto dall'Interfaccia Utente, rimuovere 'mode: yaml' dalla configurazione di Lovelace in 'configuration.yaml'."
+                        "yaml_config": "Per aiutarti a iniziare qui c'è la configurazione attuale di questa plancia:",
+                        "yaml_control": "Per assumere il controllo in modalità YAML, creare un file YAML con il nome specificato nella tua configurazione per questa plancia, o il predefinito 'ui-lovelace.yaml'.",
+                        "yaml_mode": "Questa plancia sta utilizzando la modalità YAML, il che significa che non è possibile modificare la configurazione di Lovelace dall'Interfaccia Utente. Se volete gestire questa plancia dall'Interfaccia Utente, rimuovere 'mode: yaml' dalla configurazione di Lovelace in 'configuration.yaml'."
                     },
                     "suggest_card": {
                         "add": "Aggiungi all'interfaccia utente di Lovelace",
@@ -2304,7 +2413,8 @@
                     "attribute_not_found": "Attributo {attribute} non disponibile in: {entity}",
                     "entity_non_numeric": "L'entità non è numerica: {entity}",
                     "entity_not_found": "Entità non disponibile: {entity}",
-                    "entity_unavailable": "{entity} non è al momento disponibile"
+                    "entity_unavailable": "{entity} non è al momento disponibile",
+                    "starting": "Home Assistant si sta avviando, non tutto potrebbe essere subito disponibile"
                 }
             },
             "mailbox": {
@@ -2466,7 +2576,7 @@
                     "location_name_default": "Casa"
                 },
                 "integration": {
-                    "finish": "Finire",
+                    "finish": "Finito",
                     "intro": "Dispositivi e servizi sono rappresentati in Home Assistant come integrazioni. È possibile impostarli ora, o farlo in seguito dalla schermata di configurazione.",
                     "more_integrations": "Di Più"
                 },
@@ -2503,9 +2613,9 @@
                 },
                 "current_user": "Sei attualmente connesso come {fullName}.",
                 "dashboard": {
-                    "description": "Scegliere un cruscotto di default per questo dispositivo.",
-                    "dropdown_label": "Cruscotto",
-                    "header": "Cruscotto"
+                    "description": "Scegliere una plancia di default per questo dispositivo.",
+                    "dropdown_label": "Plancia",
+                    "header": "Plancia"
                 },
                 "force_narrow": {
                     "description": "Questo nasconderà la barra laterale per impostazione predefinita, in modo simile all'esperienza mobile",

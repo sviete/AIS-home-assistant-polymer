@@ -11,6 +11,7 @@ import {
 import { fireEvent } from "../../../../common/dom/fire_event";
 import { slugify } from "../../../../common/string/slugify";
 import "../../../../components/ha-switch";
+import "../../../../components/ha-formfield";
 import "../../../../components/ha-icon-input";
 import { LovelaceViewConfig } from "../../../../data/lovelace";
 import { HomeAssistant } from "../../../../types";
@@ -121,19 +122,22 @@ export class HuiViewEditor extends LitElement {
           .configValue=${"theme"}
           @value-changed=${this._valueChanged}
         ></hui-theme-select-editor>
-        <ha-switch
-          .checked=${this._panel !== false}
-          .configValue=${"panel"}
-          @change=${this._valueChanged}
-          >${this.hass.localize(
+        <ha-formfield
+          .label=${this.hass.localize(
             "ui.panel.lovelace.editor.view.panel_mode.title"
-          )}</ha-switch
+          )}
         >
-        <span class="panel"
-          >${this.hass.localize(
+          <ha-switch
+            .checked=${this._panel !== false}
+            .configValue=${"panel"}
+            @change=${this._valueChanged}
+          ></ha-switch
+        ></ha-formfield>
+        <span class="panel">
+          ${this.hass.localize(
             "ui.panel.lovelace.editor.view.panel_mode.description"
-          )}</span
-        >
+          )}
+        </span>
       </div>
     `;
   }
@@ -176,6 +180,9 @@ export class HuiViewEditor extends LitElement {
     return css`
       .panel {
         color: var(--secondary-text-color);
+      }
+      ha-formfield {
+        display: block;
       }
     `;
   }

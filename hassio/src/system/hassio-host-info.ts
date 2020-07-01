@@ -19,6 +19,7 @@ import {
   shutdownHost,
   updateOS,
 } from "../../../src/data/hassio/host";
+import { HassioInfo } from "../../../src/data/hassio/supervisor";
 import {
   showAlertDialog,
   showConfirmationDialog,
@@ -34,6 +35,8 @@ class HassioHostInfo extends LitElement {
   @property() public hass!: HomeAssistant;
 
   @property() public hostInfo!: HassioHostInfoType;
+
+  @property({ attribute: false }) public hassioInfo!: HassioInfo;
 
   @property() public hassOsInfo!: HassioHassOSInfo;
 
@@ -54,6 +57,12 @@ class HassioHostInfo extends LitElement {
                 <td>System</td>
                 <td>${this.hostInfo.operating_system}</td>
               </tr>
+              ${!this.hostInfo.features.includes("hassos")
+                ? html`<tr>
+                    <td>Docker version</td>
+                    <td>${this.hassioInfo.docker}</td>
+                  </tr>`
+                : ""}
               ${this.hostInfo.deployment
                 ? html`
                     <tr>
@@ -137,7 +146,7 @@ class HassioHostInfo extends LitElement {
           text-align: right;
         }
         .errors {
-          color: var(--google-red-500);
+          color: var(--error-color);
           margin-top: 16px;
         }
         mwc-button.info {
@@ -147,7 +156,7 @@ class HassioHostInfo extends LitElement {
           margin-bottom: 10px;
         }
         .warning {
-          --mdc-theme-primary: var(--google-red-500);
+          --mdc-theme-primary: var(--error-color);
         }
       `,
     ];

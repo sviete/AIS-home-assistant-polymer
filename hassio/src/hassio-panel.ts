@@ -1,4 +1,3 @@
-import { mdiBackupRestore, mdiCogs, mdiStore, mdiViewDashboard } from "@mdi/js";
 import {
   customElement,
   html,
@@ -10,33 +9,10 @@ import { HassioHassOSInfo, HassioHostInfo } from "../../src/data/hassio/host";
 import {
   HassioHomeAssistantInfo,
   HassioSupervisorInfo,
+  HassioInfo,
 } from "../../src/data/hassio/supervisor";
-import type { PageNavigation } from "../../src/layouts/hass-tabs-subpage";
 import { HomeAssistant, Route } from "../../src/types";
 import "./hassio-panel-router";
-
-export const supervisorTabs: PageNavigation[] = [
-  {
-    name: "Dashboard",
-    path: `/hassio/dashboard`,
-    iconPath: mdiViewDashboard,
-  },
-  {
-    name: "Add-on store",
-    path: `/hassio/store`,
-    iconPath: mdiStore,
-  },
-  {
-    name: "Snapshots",
-    path: `/hassio/snapshots`,
-    iconPath: mdiBackupRestore,
-  },
-  {
-    name: "System",
-    path: `/hassio/system`,
-    iconPath: mdiCogs,
-  },
-];
 
 @customElement("hassio-panel")
 class HassioPanel extends LitElement {
@@ -47,6 +23,8 @@ class HassioPanel extends LitElement {
   @property({ attribute: false }) public route!: Route;
 
   @property({ attribute: false }) public supervisorInfo!: HassioSupervisorInfo;
+
+  @property({ attribute: false }) public hassioInfo!: HassioInfo;
 
   @property({ attribute: false }) public hostInfo!: HassioHostInfo;
 
@@ -61,6 +39,7 @@ class HassioPanel extends LitElement {
         .hass=${this.hass}
         .narrow=${this.narrow}
         .supervisorInfo=${this.supervisorInfo}
+        .hassioInfo=${this.hassioInfo}
         .hostInfo=${this.hostInfo}
         .hassInfo=${this.hassInfo}
         .hassOsInfo=${this.hassOsInfo}
