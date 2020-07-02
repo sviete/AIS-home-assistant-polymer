@@ -142,17 +142,7 @@ class HaPanelAishelp extends PolymerElement {
               >
             </div>
           </ha-card>
-          <ha-card header="Logi aktualizacji">
-            <svg style="width:36px;height:36px" viewBox="0 0 24 24">
-                <path d="M5,3C3.89,3 3,3.89 3,5V19C3,20.11 3.89,21 5,21H19C20.11,21 21,20.11 21,19V5C21,3.89 20.11,3 19,3H5M5,5H19V19H5V5M7,7V9H17V7H7M7,11V13H17V11H7M7,15V17H14V15H7Z" />
-            </svg>
-            <div class="card-content">
-              Pobierz
-              <a href="/local/upgrade_log.txt" target="_blank"
-                >logi aktualizacji</a
-              >
-            </div>
-          </ha-card>
+          <br />
         </ha-config-section>
       </hss-subpage>
       </div>
