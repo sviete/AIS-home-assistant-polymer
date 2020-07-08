@@ -42,6 +42,10 @@ type OnboardingEvent =
     }
   | {
       type: "integration";
+    }
+  | {
+      type: "mob_integration";
+      result: OnboardingResponses["mob_integration"];
     };
 
 declare global {
@@ -66,12 +70,10 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
 
   protected render(): TemplateResult {
     const step = this._curStep()!;
-
     if (this._loading || !step) {
       return html` <onboarding-loading></onboarding-loading> `;
     }
     if (step.step === "user") {
-      console.log("hass: " + this.hass);
       return html`
         <onboarding-create-user
           .localize=${this.localize}
@@ -99,6 +101,14 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
         ></onboarding-integrations>
       `;
     }
+    if (step.step === "mob_integration") {
+      return html`
+        <onboarding-mob-integrations
+          .hass=${this.hass}
+          .onboardingLocalize=${this.localize}
+        ></onboarding-mob-integrations>
+      `;
+    }
     return html``;
   }
 
@@ -110,6 +120,9 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
     );
     import(
       /* webpackChunkName: "onboarding-core-config" */ "./onboarding-core-config"
+    );
+    import(
+      /* webpackChunkName: "onboarding-mob-integrations" */ "./onboarding-mob-integrations"
     );
     registerServiceWorker(this, false);
     this.addEventListener("onboarding-step", (ev) => this._handleStepDone(ev));
@@ -189,6 +202,9 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
     } else if (stepResult.type === "core_config") {
       // We do nothing
     } else if (stepResult.type === "integration") {
+      //
+      this._loading = false;
+    } else if (stepResult.type === "mob_integration") {
       this._loading = true;
 
       // Determine if oauth redirect has been provided

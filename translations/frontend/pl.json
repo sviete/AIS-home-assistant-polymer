@@ -2619,12 +2619,22 @@
                     "intro": "{name}, witamy w Asystent domowy. Jak chcesz nazwać swój dom?",
                     "intro_location": "Chcielibyśmy wiedzieć, gdzie mieszkasz. Te dane pomogą w wyświetlaniu informacji i konfigurowaniu automatyki opartej na położeniu słońca. Te dane nigdy nie będą udostępniane poza Twoją sieć lokalną.",
                     "intro_location_detect": "Możemy pomóc Ci wprowadzić te informacje, wysyłając jednorazowe zapytanie do usługi zewnętrznej.",
-                    "location_name_default": "Dom"
+                    "location_name_default": "Dom",
+                    "intro_ais_enable_wifi_1": "Do tego jest potrzebne połączenie z Internetem.",
+                    "intro_ais_enable_wifi_2": "POŁĄCZ Z WIFI",
+                    "intro_ais_enable_wifi_3": "Ustal swoją lokalizację po adresie IP wysyłając jednorazowe zapytanie do serwisu"
                 },
                 "integration": {
-                    "finish": "Koniec",
+                    "finish": "Dalej",
                     "intro": "Urządzenia i usługi są reprezentowane w Asystent domowy jako integracje. Możesz je teraz skonfigurować lub zrobić to później w konfiguracji.",
                     "more_integrations": "Więcej"
+                },
+                "mob-integration": {
+                    "h1": "Aplikacja mobilna!",
+                    "intro": "Zwiększ funkcjonalność Asystenta domowego, instalując naszą oficjalną aplikację mobilną na platformę Android.",
+                    "mob_benefits": "Dzięki aplikacji możesz sterować komendami głosowymi z telefonu, otrzymywać powiadomienia o zdażeniach w domu, kontrolować spoza domu, zgłaszaj swoją lokalizację bramce itp.. Zeskanuj kod lub go kliknij aby zainstalować aplikację AIS dom:",
+                    "other_mob_apps": "Możesz też zainstalować mobilną aplikację Home Assistant Companion:",
+                    "finish": "Zamknij"
                 },
                 "intro": "Czy jesteś gotowy, aby ożywić swój dom, odzyskać prywatność i dołączyć do społeczności fanów automatyki domowej?",
                 "ais_restore_intro": "Czy chcesz przywrócić konfigurację systemu z kopii zapasowej?",

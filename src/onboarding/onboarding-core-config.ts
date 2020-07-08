@@ -77,17 +77,22 @@ class OnboardingCoreConfig extends LitElement {
             ${this.onboardingLocalize(
               "ui.panel.page-onboarding.core-config.intro_location_detect"
             )}
-            Do tego jest potrzebne połączenie z Internetem.
+            ${this.onboardingLocalize(
+              "ui.panel.page-onboarding.core-config.intro_ais_enable_wifi_1"
+            )}
           </div>
           <mwc-button @click=${this._connectWifi}>
-            POŁĄCZ Z WIFI
+            ${this.onboardingLocalize(
+              "ui.panel.page-onboarding.core-config.intro_ais_enable_wifi_2"
+            )}
           </mwc-button>
         </div>
-
+        <br />
         <div class="row">
           <div>
-            Ustal swoją lokalizację po adresie IP wysyłając jednorazowe
-            zapytanie do serwisu
+            ${this.onboardingLocalize(
+              "ui.panel.page-onboarding.core-config.intro_ais_enable_wifi_3"
+            )}
             <span style="font-weight: bold;" @click=${this._detect}
               >ipapi.co</span
             >
@@ -106,7 +111,7 @@ class OnboardingCoreConfig extends LitElement {
           .location=${this._locationValue}
           .fitZoom=${14}
           @change=${this._locationChanged}
-          style="z-index:100"
+          style="z-index:1"
         ></ha-location-editor>
       </div>
 

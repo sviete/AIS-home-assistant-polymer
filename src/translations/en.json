@@ -2471,11 +2471,21 @@
           "intro_location_detect": "We can help you fill in this information by making a one-time request to an external service.",
           "location_name_default": "Home",
           "button_detect": "Detect",
-          "finish": "Next"
+          "finish": "Next",
+          "intro_ais_enable_wifi_1": "For this you need an internet connection.",
+          "intro_ais_enable_wifi_2": "CONNECT TO WIFI",
+          "intro_ais_enable_wifi_3": "Determine your location by IP address by sending a one-time inquiry to the site"
         },
         "integration": {
           "intro": "Devices and services are represented in Home Assistant as integrations. You can set them up now, or do it later from the configuration screen.",
           "more_integrations": "More",
+          "finish": "Next"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app.",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. Scan the code or click it to install the application AIS dom:",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
           "finish": "Finish"
         }
       },
