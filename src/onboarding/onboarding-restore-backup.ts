@@ -17,12 +17,17 @@ import { LocalizeFunc } from "../common/translations/localize";
 import {
   onboardAisCloudLoginStep,
   onboardAisRestoreBackupStep,
+  onboardRestoreBackupStep,
 } from "../data/onboarding";
 import { PolymerChangedEvent } from "../polymer-types";
+import type { HomeAssistant } from "../types";
+import { fireEvent } from "../common/dom/fire_event";
 
 @customElement("onboarding-restore-backup")
 class OnboardingRestoreBackup extends LitElement {
   @property() public localize!: LocalizeFunc;
+
+  @property() public hass!: HomeAssistant;
 
   @property() public language!: string;
 
@@ -50,10 +55,11 @@ class OnboardingRestoreBackup extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-    <hr>
     <br>
       <p>
-          <b>${this.localize("ui.panel.page-onboarding.ais_restore_intro")}</b>
+          <b>${this.localize(
+            "ui.panel.page-onboarding.ais-restore-backup.ais_restore_intro"
+          )}</b>
       </p>
     ${
       this._aisLogged
@@ -61,9 +67,13 @@ class OnboardingRestoreBackup extends LitElement {
         : html`
             <p>
               ${this.localize(
-                "ui.panel.page-onboarding.ais_restore_intro_step1"
+                "ui.panel.page-onboarding.ais-restore-backup.ais_restore_intro_step1"
               )}
             </p>
+            <onboarding-ais-wifi
+              .hass=${this.hass}
+              .localize=${this.localize}
+            ></onboarding-ais-wifi>
           `
     }
 
@@ -94,7 +104,7 @@ class OnboardingRestoreBackup extends LitElement {
       this._aisLogged
         ? html` <span>
               ${this.localize(
-                "ui.panel.page-onboarding.ais_restore_intro_step2"
+                "ui.panel.page-onboarding.ais-restore-backup.ais_restore_intro_step2"
               )}
             </span>
             <paper-input
@@ -109,7 +119,7 @@ class OnboardingRestoreBackup extends LitElement {
             ></paper-input>
             <p>
               ${this.localize(
-                "ui.panel.page-onboarding.ais_restore_intro_step3"
+                "ui.panel.page-onboarding.ais-restore-backup.ais_restore_intro_step3"
               )}
             </p>`
         : ""
@@ -143,7 +153,7 @@ class OnboardingRestoreBackup extends LitElement {
                   data-backup_password=${this._backup_password}
                 >
                   ${this.localize(
-                    "ui.panel.page-onboarding.ais_restore_button"
+                    "ui.panel.page-onboarding.ais-restore-backup.ais_restore_button"
                   )}
                 </mwc-button>
               </paper-item>
@@ -188,7 +198,9 @@ class OnboardingRestoreBackup extends LitElement {
                 @click=${this._logoutFromAis}
                 .disabled=${this._loading}
               >
-                ${this.localize("ui.panel.page-onboarding.ais_logout")}
+                ${this.localize(
+                  "ui.panel.page-onboarding.ais-restore-backup.ais_logout"
+                )}
               </mwc-button>
             </p>`
           : html` <p class="action">
@@ -197,13 +209,33 @@ class OnboardingRestoreBackup extends LitElement {
                 @click=${this._submitForm}
                 .disabled=${this._loading}
               >
-                ${this.localize("ui.panel.page-onboarding.ais_login")}
+                ${this.localize(
+                  "ui.panel.page-onboarding.ais-restore-backup.ais_login"
+                )}
               </mwc-button>
             </p>`
       }
     </div>
   </form>
+  <div class="footer">
+        <mwc-button @click=${this._finish}>
+          ${this.localize("ui.panel.page-onboarding.ais-restore-backup.finish")}
+        </mwc-button>
+  </div>
 `;
+  }
+
+  private async _finish(ev) {
+    ev.preventDefault();
+    try {
+      const result = await onboardRestoreBackupStep(this.hass);
+      fireEvent(this, "onboarding-step", {
+        type: "ais_restore_backup",
+        result,
+      });
+    } catch (err) {
+      alert(`Failed to save: ${err.message}`);
+    }
   }
 
   protected firstUpdated(changedProps: PropertyValues) {
@@ -238,7 +270,9 @@ class OnboardingRestoreBackup extends LitElement {
     const backup_password = ev.target.dataset.backup_password;
     this._loading = true;
     this._infoMsg =
-      this.localize("ui.panel.page-onboarding.ais_restore_ok_info_step1") +
+      this.localize(
+        "ui.panel.page-onboarding.ais-restore-backup.ais_restore_ok_info_step1"
+      ) +
       " " +
       gate_id;
 
@@ -307,10 +341,27 @@ class OnboardingRestoreBackup extends LitElement {
       .info {
         color: green;
       }
-
       .action {
         margin: 32px 0;
         text-align: center;
+      }
+      button {
+        cursor: pointer;
+        padding: 0;
+        border: 0;
+        background: 0;
+        font: inherit;
+      }
+      .footer {
+        margin-top: 2em;
+        text-align: right;
+      }
+      .column {
+        flex: 50%;
+        padding: 5px;
+      }
+      .row {
+        display: flex;
       }
     `;
   }

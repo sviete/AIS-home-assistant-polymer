@@ -32,11 +32,15 @@ export interface OnboardingIntegrationStepResponse {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface OnboardingMobIntegrationStepResponse {}
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface OnboardingAisRestoreBackupStepResponse {}
+
 export interface OnboardingResponses {
   user: OnboardingUserStepResponse;
   core_config: OnboardingCoreConfigStepResponse;
   integration: OnboardingIntegrationStepResponse;
   mob_integration: OnboardingMobIntegrationStepResponse;
+  ais_restore_backup: OnboardingAisRestoreBackupStepResponse;
 }
 
 export type ValidOnboardingStep = keyof OnboardingResponses;
@@ -87,6 +91,12 @@ export const onboardAisRestoreBackupStep = (params: {
       credentials: "same-origin",
       body: JSON.stringify(params),
     })
+  );
+
+export const onboardRestoreBackupStep = (hass: HomeAssistant) =>
+  hass.callApi<OnboardingAisRestoreBackupStepResponse>(
+    "POST",
+    "onboarding/ais_restore_backup"
   );
 
 export const onboardCoreConfigStep = (hass: HomeAssistant) =>

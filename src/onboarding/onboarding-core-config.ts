@@ -21,7 +21,6 @@ import {
   detectCoreConfig,
   saveCoreConfig,
 } from "../data/core";
-import { showConfigFlowDialog } from "../dialogs/config-flow/show-dialog-config-flow";
 import { onboardCoreConfigStep } from "../data/onboarding";
 import type { PolymerChangedEvent } from "../polymer-types";
 import type { HomeAssistant } from "../types";
@@ -72,30 +71,15 @@ class OnboardingCoreConfig extends LitElement {
             "ui.panel.page-onboarding.core-config.intro_location"
           )}
         </p>
+        <onboarding-ais-wifi
+          .hass=${this.hass}
+          .localize=${this.onboardingLocalize}
+        ></onboarding-ais-wifi>
         <div class="row">
           <div>
             ${this.onboardingLocalize(
               "ui.panel.page-onboarding.core-config.intro_location_detect"
             )}
-            ${this.onboardingLocalize(
-              "ui.panel.page-onboarding.core-config.intro_ais_enable_wifi_1"
-            )}
-          </div>
-          <mwc-button @click=${this._connectWifi}>
-            ${this.onboardingLocalize(
-              "ui.panel.page-onboarding.core-config.intro_ais_enable_wifi_2"
-            )}
-          </mwc-button>
-        </div>
-        <br />
-        <div class="row">
-          <div>
-            ${this.onboardingLocalize(
-              "ui.panel.page-onboarding.core-config.intro_ais_enable_wifi_3"
-            )}
-            <span style="font-weight: bold;" @click=${this._detect}
-              >ipapi.co</span
-            >
           </div>
           <mwc-button @click=${this._detect}>
             ${this.onboardingLocalize(
@@ -268,25 +252,6 @@ class OnboardingCoreConfig extends LitElement {
     } finally {
       this._working = false;
     }
-  }
-
-  private _connectWifi() {
-    this.hass
-      .callApi("POST", "config/config_entries/flow", {
-        handler: "ais_wifi_service",
-      })
-      .then((result: any) => {
-        this._continueFlow(result.flow_id);
-      });
-  }
-
-  private _continueFlow(flowId) {
-    showConfigFlowDialog(this, {
-      continueFlowId: flowId,
-      dialogClosedCallback: () => {
-        return;
-      },
-    });
   }
 
   private async _save(ev) {

@@ -2442,14 +2442,6 @@
       },
       "page-onboarding": {
         "intro": "Are you ready to awaken your home, reclaim your privacy and join a worldwide community of tinkerers?",
-        "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
-        "ais_restore_intro_step1": "Log in to the AI-Speaker integrator portal.",
-        "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
-        "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
-        "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
-        "ais_restore_button": "RESTORE",
-        "ais_login": "Log in to AI-Speaker",
-        "ais_logout": "Log out from AI-Speaker",
         "user": {
           "intro": "Let's get started by creating a user account.",
           "required_field": "Required",
@@ -2471,10 +2463,22 @@
           "intro_location_detect": "We can help you fill in this information by making a one-time request to an external service.",
           "location_name_default": "Home",
           "button_detect": "Detect",
-          "finish": "Next",
-          "intro_ais_enable_wifi_1": "For this you need an internet connection.",
-          "intro_ais_enable_wifi_2": "CONNECT TO WIFI",
-          "intro_ais_enable_wifi_3": "Determine your location by IP address by sending a one-time inquiry to the site"
+          "finish": "Next"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the AI-Speaker integrator portal.",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker",
+          "finish": "Skip"
+        },
+        "ais-wifi": {
+          "intro_ais_enable_wifi_1": "For this step you need an internet connection. If you haven't set up a WiFi connection yet, you can do it now.",
+          "intro_ais_enable_wifi_2": "CONNECT TO WIFI"
         },
         "integration": {
           "intro": "Devices and services are represented in Home Assistant as integrations. You can set them up now, or do it later from the configuration screen.",

@@ -27,7 +27,7 @@ import { HassElement } from "../state/hass-element";
 import { HomeAssistant } from "../types";
 import { registerServiceWorker } from "../util/register-service-worker";
 import "./onboarding-create-user";
-import "./onboarding-restore-backup";
+import "./onboarding-ais_wifi";
 import "./onboarding-loading";
 import { extractSearchParamsObject } from "../common/url/search-params";
 
@@ -46,6 +46,10 @@ type OnboardingEvent =
   | {
       type: "mob_integration";
       result: OnboardingResponses["mob_integration"];
+    }
+  | {
+      type: "ais_restore_backup";
+      result: OnboardingResponses["ais_restore_backup"];
     };
 
 declare global {
@@ -79,7 +83,12 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
           .localize=${this.localize}
           .language=${this.language}
         ></onboarding-create-user>
+      `;
+    }
+    if (step.step === "ais_restore_backup") {
+      return html`
         <onboarding-restore-backup
+          .hass=${this.hass}
           .localize=${this.localize}
           .language=${this.language}
         ></onboarding-restore-backup>
@@ -123,6 +132,9 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
     );
     import(
       /* webpackChunkName: "onboarding-mob-integrations" */ "./onboarding-mob-integrations"
+    );
+    import(
+      /* webpackChunkName: "onboarding-restore-backup" */ "./onboarding-restore-backup"
     );
     registerServiceWorker(this, false);
     this.addEventListener("onboarding-step", (ev) => this._handleStepDone(ev));
@@ -199,10 +211,12 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
       } finally {
         this._loading = false;
       }
+    } else if (stepResult.type === "ais_restore_backup") {
+      // We do nothing
     } else if (stepResult.type === "core_config") {
       // We do nothing
     } else if (stepResult.type === "integration") {
-      //
+      // We do nothing
       this._loading = false;
     } else if (stepResult.type === "mob_integration") {
       this._loading = true;
