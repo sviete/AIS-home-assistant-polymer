@@ -1,4 +1,7 @@
-# Home Assistant Frontend
+[![Netlify Status](https://api.netlify.com/api/v1/badges/78c3cc1a-7565-4d00-9f0c-45f0452d41ed/deploy-status)](https://app.netlify.com/sites/ai-speaker/deploys)
+
+
+# AI-Speaker Frontend
 
 This is the repository for the official [Home Assistant](https://home-assistant.io) frontend.
 
