@@ -29,9 +29,9 @@
       "purpose": "maskable any"
     }
   ],
-  "lang": "en-US",
-  "name": "Home Assistant Demo",
-  "short_name": "HA Demo",
+  "lang": "pl-PL",
+  "name": "AIS Demo",
+  "short_name": "AIS Demo",
   "start_url": "/?homescreen=1",
   "theme_color": "#ff9800"
 }
