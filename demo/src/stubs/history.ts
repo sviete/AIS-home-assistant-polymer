@@ -136,30 +136,8 @@ export const mockHistory = (mockHass: MockHomeAssistant) => {
             Array.from({ length: statesToGenerate }, genFunc)
           )
         );
-        const diff = Math.max(
-          1,
-          Math.floor((numberState - initial) / statesToGenerate)
-        );
-        genFunc = () => {
-          initial += diff;
-          return Math.min(numberState, initial);
-        };
-      } else {
-        const diff = Math.floor(numberState * (numberState > 80 ? 0.05 : 0.5));
-        genFunc = () =>
-          numberState - diff + Math.floor(Math.random() * 2 * diff);
       }
-
-      results.push(
-        generateHistory(
-          {
-            entity_id: state.entity_id,
-            attributes: state.attributes,
-          },
-          Array.from({ length: statesToGenerate }, genFunc)
-        )
-      );
+      return results;
     }
-    return results;
-  });
+  );
 };
