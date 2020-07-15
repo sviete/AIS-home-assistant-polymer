@@ -110,7 +110,10 @@ class HaPanelDevConsole extends PolymerElement {
     this.url =
       window.location.protocol + "//" + window.location.hostname + ":8888";
     this.localConection = true;
-    if (window.location.hostname.startsWith("dom-")) {
+    if (
+      window.location.hostname.startsWith("dom-") ||
+      window.location.hostname.startsWith("demo.")
+    ) {
       this.localConection = false;
     }
   }
