@@ -2558,6 +2558,52 @@
                                     "description": "Proszę wybrać użytkownika, jako który chcesz się zalogować:"
                                 }
                             }
+                        },
+                        "ais_demo": {
+                            "abort": {
+                                "login_expired": "Sesja wygasła, zaloguj się ponownie."
+                            },
+                            "error": {
+                                "invalid_auth": "Nieprawidłowa nazwa użytkownika lub hasło.",
+                                "invalid_code": "Nieprawidłowy kod uwierzytelniający."
+                            },
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "Hasło (demo)",
+                                        "username": "Nazwa użytkownika (demo)"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Kod uwierzytelniania dwuskładnikowego"
+                                    },
+                                    "description": "Otwórz **{mfa_module_name}** na urządzeniu, aby wyświetlić dwuskładnikowy kod uwierzytelniający i zweryfikować swoją tożsamość:"
+                                }
+                            }
+                        },
+                        "ais_cloud": {
+                            "abort": {
+                                "login_expired": "Sesja wygasła, zaloguj się ponownie."
+                            },
+                            "error": {
+                                "invalid_auth": "Nieprawidłowa nazwa użytkownika lub hasło.",
+                                "invalid_code": "Nieprawidłowy kod uwierzytelniający."
+                            },
+                            "step": {
+                                "init": {
+                                    "data": {
+                                        "password": "Hasło",
+                                        "username": "Nazwa użytkownika"
+                                    }
+                                },
+                                "mfa": {
+                                    "data": {
+                                        "code": "Kod uwierzytelniania dwuskładnikowego"
+                                    },
+                                    "description": "Otwórz **{mfa_module_name}** na urządzeniu, aby wyświetlić dwuskładnikowy kod uwierzytelniający i zweryfikować swoją tożsamość:"
+                                }
+                            }
                         }
                     },
                     "start_over": "Zacznij od nowa",
