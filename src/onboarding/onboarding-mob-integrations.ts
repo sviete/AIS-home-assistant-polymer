@@ -32,21 +32,21 @@ class OnboardingMobIntegrations extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <h1>
-        ${this.onboardingLocalize(
-          "ui.panel.page-onboarding.mob-integration.h1"
-        )}
-      </h1>
       <h2>
         ${this.onboardingLocalize(
-          "ui.panel.page-onboarding.mob-integration.intro"
+          "ui.panel.page-onboarding.mob-integration.h1"
         )}
       </h2>
       <h3>
         ${this.onboardingLocalize(
-          "ui.panel.page-onboarding.mob-integration.mob_benefits"
+          "ui.panel.page-onboarding.mob-integration.intro"
         )}
       </h3>
+      <p>
+        ${this.onboardingLocalize(
+          "ui.panel.page-onboarding.mob-integration.mob_benefits"
+        )}
+      </p>
       <a href="https://play.google.com/store/apps/details?id=pl.sviete.dom">
         <img src="/static/ais_dom/link-to-mob-app.png" style="width:80%" />
       </a>
