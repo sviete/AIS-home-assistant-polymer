@@ -2594,7 +2594,8 @@
                                 "init": {
                                     "data": {
                                         "password": "Hasło",
-                                        "username": "Nazwa użytkownika"
+                                        "username": "Nazwa użytkownika",
+                                        "gate_id": "Identyfikator bramki"
                                     }
                                 },
                                 "mfa": {

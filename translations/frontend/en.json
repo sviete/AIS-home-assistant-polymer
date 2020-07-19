@@ -2586,7 +2586,8 @@
                                 "init": {
                                   "data": {
                                     "username": "Username",
-                                    "password": "Password"
+                                    "password": "Password",
+                                    "gate_id": "Gate ID"
                                   }
                                 },
                                 "mfa": {
