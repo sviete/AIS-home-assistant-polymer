@@ -41,10 +41,7 @@ class HaConfigInfo extends LitElement {
         .tabs=${configSections.general}
       >
         <div class="about">
-          <a
-            href="https://www.home-assistant.io"
-            target="_blank"
-            rel="noreferrer"
+          <a href="https://www.ai-speaker.com" target="_blank" rel="noreferrer"
             ><img
               src="/static/icons/favicon-192x192.png"
               height="192"
@@ -53,7 +50,7 @@ class HaConfigInfo extends LitElement {
               )}"
           /></a>
           <br />
-          <h2>Home Assistant ${hass.connection.haVersion}</h2>
+          <h2>Asystent domowy ${hass.connection.haVersion}</h2>
           <p>
             ${this.hass.localize(
               "ui.panel.config.info.path_configuration",
@@ -74,14 +71,14 @@ class HaConfigInfo extends LitElement {
             ${this.hass.localize("ui.panel.config.info.license")}<br />
             ${this.hass.localize("ui.panel.config.info.source")}
             <a
-              href="https://github.com/home-assistant/core"
+              href="https://github.com/sviete/AIS-home-assistant"
               target="_blank"
               rel="noreferrer"
               >${this.hass.localize("ui.panel.config.info.server")}</a
             >
             &mdash;
             <a
-              href="https://github.com/home-assistant/frontend"
+              href="https://github.com/sviete/AIS-home-assistant-polymer"
               target="_blank"
               rel="noreferrer"
               >${this.hass.localize("ui.panel.config.info.frontend")}</a
