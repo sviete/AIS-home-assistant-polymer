@@ -7,6 +7,7 @@ import {
   html,
   LitElement,
   property,
+  internalProperty,
   TemplateResult,
   query,
 } from "lit-element";
@@ -24,6 +25,7 @@ import type { EntityConfig } from "../../entity-rows/types";
 import type { LovelaceCardEditor } from "../../types";
 import type { GUIModeChangedEvent } from "../types";
 import "../../../../components/ha-circular-progress";
+import { deepEqual } from "../../../../common/util/deep-equal";
 
 export interface ConfigChangedEvent {
   config: LovelaceCardConfig;
@@ -49,27 +51,27 @@ export interface UIConfigChangedEvent extends Event {
 
 @customElement("hui-card-editor")
 export class HuiCardEditor extends LitElement {
-  @property() public hass!: HomeAssistant;
+  @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @property() public lovelace?: LovelaceConfig;
+  @property({ attribute: false }) public lovelace?: LovelaceConfig;
 
-  @property() private _yaml?: string;
+  @internalProperty() private _yaml?: string;
 
-  @property() private _config?: LovelaceCardConfig;
+  @internalProperty() private _config?: LovelaceCardConfig;
 
-  @property() private _configElement?: LovelaceCardEditor;
+  @internalProperty() private _configElement?: LovelaceCardEditor;
 
-  @property() private _configElType?: string;
+  @internalProperty() private _configElType?: string;
 
-  @property() private _GUImode = true;
+  @internalProperty() private _GUImode = true;
 
   // Error: Configuration broken - do not save
-  @property() private _error?: string;
+  @internalProperty() private _error?: string;
 
   // Warning: GUI editor can't handle configuration - ok to save
-  @property() private _warning?: string;
+  @internalProperty() private _warning?: string;
 
-  @property() private _loading = false;
+  @internalProperty() private _loading = false;
 
   @query("ha-code-editor") _yamlEditor?: HaCodeEditor;
 
@@ -81,16 +83,11 @@ export class HuiCardEditor extends LitElement {
     this._yaml = _yaml;
     try {
       this._config = safeLoad(this.yaml);
-      this._updateConfigElement();
       this._error = undefined;
     } catch (err) {
       this._error = err.message;
     }
-    fireEvent(this, "config-changed", {
-      config: this.value!,
-      error: this._error,
-      guiModeAvailable: !(this.hasWarning || this.hasError),
-    });
+    this._setConfig();
   }
 
   public get value(): LovelaceCardConfig | undefined {
@@ -98,9 +95,29 @@ export class HuiCardEditor extends LitElement {
   }
 
   public set value(config: LovelaceCardConfig | undefined) {
-    if (JSON.stringify(config) !== JSON.stringify(this._config || {})) {
-      this.yaml = safeDump(config);
+    if (this._config && deepEqual(config, this._config)) {
+      return;
     }
+    this._config = config;
+    this._yaml = safeDump(config);
+    this._error = undefined;
+    this._setConfig();
+  }
+
+  private _setConfig() {
+    if (!this._error) {
+      try {
+        this._updateConfigElement();
+        this._error = undefined;
+      } catch (err) {
+        this._error = err.message;
+      }
+    }
+    fireEvent(this, "config-changed", {
+      config: this.value!,
+      error: this._error,
+      guiModeAvailable: !(this.hasWarning || this.hasError),
+    });
   }
 
   public get hasWarning(): boolean {
