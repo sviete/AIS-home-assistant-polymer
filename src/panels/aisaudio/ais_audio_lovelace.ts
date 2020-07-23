@@ -197,7 +197,7 @@ export const aisAudioLovelace: LovelaceConfig = {
                       color: "#727272",
                       color_type: "icon",
                       entity: "sensor.ais_player_mode",
-                      icon: "mdi:audiobook",
+                      icon: "mdi:book-music",
                       name: " ",
                       show_state: false,
                       size: "30%",
