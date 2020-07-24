@@ -32,6 +32,7 @@ export const derivedStyles = {
   "paper-slider-active-color": "var(--slider-color)",
   "paper-slider-secondary-color": "var(--slider-secondary-color)",
   "paper-slider-container-color": "var(--slider-bar-color)",
+  "paper-card-background-color": "var(--card-background-color)",
   "data-table-background-color": "var(--card-background-color)",
   "mdc-theme-primary": "var(--primary-color)",
   "mdc-theme-secondary": "var(--accent-color)",
