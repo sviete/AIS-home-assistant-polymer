@@ -46,7 +46,7 @@ export const loadLovelaceResources = (
   const aisJs = [
     "/static/ais_dom/cards/card-tools.js",
     "/static/ais_dom/cards/ais-tts.js",
-    // "/static/ais_dom/cards/lovelace-swipe-navigation.js",
+    "/static/ais_dom/cards/lovelace-swipe-navigation.js",
   ];
   aisJs.forEach((resource) => {
     const normalizedUrl = new URL(resource, hassUrl).toString();
