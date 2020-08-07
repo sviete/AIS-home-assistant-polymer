@@ -73,6 +73,10 @@ class HaMarkdown extends LitElement {
         font-size: 1.5em !important;
         font-weight: bold !important;
       }
+      /* ais h6 center - to center images on markdown element */
+      ha-markdown-element h6 {
+        text-align: center;
+      }
     `;
   }
 }
