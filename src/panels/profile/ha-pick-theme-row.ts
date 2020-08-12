@@ -110,7 +110,7 @@ export class HaPickThemeRow extends LitElement {
             </ha-formfield>
             <div class="color-pickers">
               <paper-input
-                .value=${this.hass!.selectedTheme?.primaryColor || "#03a9f4"}
+                .value=${this.hass!.selectedTheme?.primaryColor || "#ff9800"}
                 type="color"
                 .label=${this.hass!.localize(
                   "ui.panel.profile.themes.primary_color"
@@ -119,7 +119,7 @@ export class HaPickThemeRow extends LitElement {
                 @change=${this._handleColorChange}
               ></paper-input>
               <paper-input
-                .value=${this.hass!.selectedTheme?.accentColor || "#ff9800"}
+                .value=${this.hass!.selectedTheme?.accentColor || "#c66900"}
                 type="color"
                 .label=${this.hass!.localize(
                   "ui.panel.profile.themes.accent_color"
