@@ -61,7 +61,7 @@ class HaConfigAisDomControl extends PolymerElement {
                       >[[aisLocalHostName]]</mwc-button
                     ><ha-icon-button
                       class="user-button"
-                      icon="hass:settings"
+                      icon="hass:cog"
                       on-click="createFlowHostName"
                     ></ha-icon-button>
                   </div>

@@ -700,7 +700,7 @@ const D = (t) => (e) => {
     })(t);
     const o = i.content;
     n
-      ? (function(t, e, n = null) {
+      ? (function (t, e, n = null) {
           const {
             element: { content: i },
             parts: r,
@@ -1288,13 +1288,13 @@ var gt = {},
   bt = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g,
   vt = "[^\\s]+",
   _t = /\[([^]*?)\]/gm,
-  yt = function() {};
+  yt = function () {};
 function wt(t, e) {
   for (var n = [], i = 0, r = t.length; i < r; i++) n.push(t[i].substr(0, e));
   return n;
 }
 function St(t) {
-  return function(e, n, i) {
+  return function (e, n, i) {
     var r = i[t].indexOf(n.charAt(0).toUpperCase() + n.substr(1).toLowerCase());
     ~r && (e.month = r);
   };
@@ -1334,7 +1334,7 @@ gt.i18n = {
   monthNamesShort: At,
   monthNames: kt,
   amPm: ["am", "pm"],
-  DoFn: function(t) {
+  DoFn: function (t) {
     return (
       t +
       ["th", "st", "nd", "rd"][t % 10 > 3 ? 0 : ((t - (t % 10) != 10) * t) % 10]
@@ -1342,87 +1342,87 @@ gt.i18n = {
   },
 };
 var Et = {
-    D: function(t) {
+    D: function (t) {
       return t.getDate();
     },
-    DD: function(t) {
+    DD: function (t) {
       return Mt(t.getDate());
     },
-    Do: function(t, e) {
+    Do: function (t, e) {
       return e.DoFn(t.getDate());
     },
-    d: function(t) {
+    d: function (t) {
       return t.getDay();
     },
-    dd: function(t) {
+    dd: function (t) {
       return Mt(t.getDay());
     },
-    ddd: function(t, e) {
+    ddd: function (t, e) {
       return e.dayNamesShort[t.getDay()];
     },
-    dddd: function(t, e) {
+    dddd: function (t, e) {
       return e.dayNames[t.getDay()];
     },
-    M: function(t) {
+    M: function (t) {
       return t.getMonth() + 1;
     },
-    MM: function(t) {
+    MM: function (t) {
       return Mt(t.getMonth() + 1);
     },
-    MMM: function(t, e) {
+    MMM: function (t, e) {
       return e.monthNamesShort[t.getMonth()];
     },
-    MMMM: function(t, e) {
+    MMMM: function (t, e) {
       return e.monthNames[t.getMonth()];
     },
-    YY: function(t) {
+    YY: function (t) {
       return Mt(String(t.getFullYear()), 4).substr(2);
     },
-    YYYY: function(t) {
+    YYYY: function (t) {
       return Mt(t.getFullYear(), 4);
     },
-    h: function(t) {
+    h: function (t) {
       return t.getHours() % 12 || 12;
     },
-    hh: function(t) {
+    hh: function (t) {
       return Mt(t.getHours() % 12 || 12);
     },
-    H: function(t) {
+    H: function (t) {
       return t.getHours();
     },
-    HH: function(t) {
+    HH: function (t) {
       return Mt(t.getHours());
     },
-    m: function(t) {
+    m: function (t) {
       return t.getMinutes();
     },
-    mm: function(t) {
+    mm: function (t) {
       return Mt(t.getMinutes());
     },
-    s: function(t) {
+    s: function (t) {
       return t.getSeconds();
     },
-    ss: function(t) {
+    ss: function (t) {
       return Mt(t.getSeconds());
     },
-    S: function(t) {
+    S: function (t) {
       return Math.round(t.getMilliseconds() / 100);
     },
-    SS: function(t) {
+    SS: function (t) {
       return Mt(Math.round(t.getMilliseconds() / 10), 2);
     },
-    SSS: function(t) {
+    SSS: function (t) {
       return Mt(t.getMilliseconds(), 3);
     },
-    a: function(t, e) {
+    a: function (t, e) {
       return t.getHours() < 12 ? e.amPm[0] : e.amPm[1];
     },
-    A: function(t, e) {
+    A: function (t, e) {
       return t.getHours() < 12
         ? e.amPm[0].toUpperCase()
         : e.amPm[1].toUpperCase();
     },
-    ZZ: function(t) {
+    ZZ: function (t) {
       var e = t.getTimezoneOffset();
       return (
         (e > 0 ? "-" : "+") +
@@ -1433,68 +1433,68 @@ var Et = {
   Ot = {
     D: [
       "\\d\\d?",
-      function(t, e) {
+      function (t, e) {
         t.day = e;
       },
     ],
     Do: [
       "\\d\\d?" + vt,
-      function(t, e) {
+      function (t, e) {
         t.day = parseInt(e, 10);
       },
     ],
     M: [
       "\\d\\d?",
-      function(t, e) {
+      function (t, e) {
         t.month = e - 1;
       },
     ],
     YY: [
       "\\d\\d?",
-      function(t, e) {
+      function (t, e) {
         var n = +("" + new Date().getFullYear()).substr(0, 2);
         t.year = "" + (e > 68 ? n - 1 : n) + e;
       },
     ],
     h: [
       "\\d\\d?",
-      function(t, e) {
+      function (t, e) {
         t.hour = e;
       },
     ],
     m: [
       "\\d\\d?",
-      function(t, e) {
+      function (t, e) {
         t.minute = e;
       },
     ],
     s: [
       "\\d\\d?",
-      function(t, e) {
+      function (t, e) {
         t.second = e;
       },
     ],
     YYYY: [
       "\\d{4}",
-      function(t, e) {
+      function (t, e) {
         t.year = e;
       },
     ],
     S: [
       "\\d",
-      function(t, e) {
+      function (t, e) {
         t.millisecond = 100 * e;
       },
     ],
     SS: [
       "\\d{2}",
-      function(t, e) {
+      function (t, e) {
         t.millisecond = 10 * e;
       },
     ],
     SSS: [
       "\\d{3}",
-      function(t, e) {
+      function (t, e) {
         t.millisecond = e;
       },
     ],
@@ -1504,14 +1504,14 @@ var Et = {
     MMMM: [vt, St("monthNames")],
     a: [
       vt,
-      function(t, e, n) {
+      function (t, e, n) {
         var i = e.toLowerCase();
         i === n.amPm[0] ? (t.isPm = !1) : i === n.amPm[1] && (t.isPm = !0);
       },
     ],
     ZZ: [
       "[^\\s]*?[\\+\\-]\\d\\d:?\\d\\d|[^\\s]*?Z",
-      function(t, e) {
+      function (t, e) {
         var n,
           i = (e + "").match(/([+-]|\d\d)/gi);
         i &&
@@ -1542,7 +1542,7 @@ function Tt(t) {
     mediumTime: "HH:mm:ss",
     longTime: "HH:mm:ss.SSS",
   }),
-  (gt.format = function(t, e, n) {
+  (gt.format = function (t, e, n) {
     var i = n || gt.i18n;
     if (
       ("number" == typeof t && (t = new Date(t)),
@@ -1552,28 +1552,28 @@ function Tt(t) {
       throw new Error("Invalid Date in fecha.format");
     e = gt.masks[e] || e || gt.masks.default;
     var r = [];
-    return (e = (e = e.replace(_t, function(t, e) {
+    return (e = (e = e.replace(_t, function (t, e) {
       return r.push(e), "@@@";
-    })).replace(bt, function(e) {
+    })).replace(bt, function (e) {
       return e in Et ? Et[e](t, i) : e.slice(1, e.length - 1);
-    })).replace(/@@@/g, function() {
+    })).replace(/@@@/g, function () {
       return r.shift();
     });
   }),
-  (gt.parse = function(t, e, n) {
+  (gt.parse = function (t, e, n) {
     var i = n || gt.i18n;
     if ("string" != typeof e) throw new Error("Invalid format in fecha.parse");
     if (((e = gt.masks[e] || e), t.length > 1e3)) return null;
     var r = {},
       s = [],
       a = [];
-    e = e.replace(_t, function(t, e) {
+    e = e.replace(_t, function (t, e) {
       return a.push(e), "@@@";
     });
     var o,
       c = ((o = e), o.replace(/[|\\{()[^$+*?.-]/g, "\\$&")).replace(
         bt,
-        function(t) {
+        function (t) {
           if (Ot[t]) {
             var e = Ot[t];
             return s.push(e[1]), "(" + e[0] + ")";
@@ -1581,7 +1581,7 @@ function Tt(t) {
           return t;
         }
       );
-    c = c.replace(/@@@/g, function() {
+    c = c.replace(/@@@/g, function () {
       return a.shift();
     });
     var l = t.match(new RegExp(c, "i"));
@@ -1618,33 +1618,33 @@ function Tt(t) {
       d
     );
   });
-(function() {
+(function () {
   try {
     new Date().toLocaleDateString("i");
   } catch (t) {
     return "RangeError" === t.name;
   }
 })(),
-  (function() {
+  (function () {
     try {
       new Date().toLocaleString("i");
     } catch (t) {
       return "RangeError" === t.name;
     }
   })(),
-  (function() {
+  (function () {
     try {
       new Date().toLocaleTimeString("i");
     } catch (t) {
       return "RangeError" === t.name;
     }
   })();
-var Nt = function(t) {
+var Nt = function (t) {
   return t < 10 ? "0" + t : t;
 };
 var Ct = "hass:bookmark",
   Ft = ["closed", "locked", "off"],
-  Rt = function(t, e, n, i) {
+  Rt = function (t, e, n, i) {
     (i = i || {}), (n = null == n ? {} : n);
     var r = new Event(e, {
       bubbles: void 0 === i.bubbles || i.bubbles,
@@ -1659,7 +1659,7 @@ var Ct = "hass:bookmark",
     calendar: "hass:calendar",
     camera: "hass:video",
     climate: "hass:thermostat",
-    configurator: "hass:settings",
+    configurator: "hass:cog",
     conversation: "hass:text-to-speech",
     device_tracker: "hass:account",
     fan: "hass:fan",
@@ -1692,10 +1692,10 @@ var Ct = "hass:bookmark",
     water_heater: "hass:thermometer",
     weblink: "hass:open-in-new",
   };
-var Lt = function(t, e) {
+var Lt = function (t, e) {
     Rt(t, "haptic", e);
   },
-  Bt = function(t, e, n, i, r) {
+  Bt = function (t, e, n, i, r) {
     var s;
     switch (
       (r && n.dbltap_action
@@ -1719,7 +1719,7 @@ var Lt = function(t, e) {
         break;
       case "navigate":
         s.navigation_path &&
-          ((function(t, e, n) {
+          ((function (t, e, n) {
             void 0 === n && (n = !1),
               n
                 ? history.replaceState(null, "", e)
@@ -1733,11 +1733,11 @@ var Lt = function(t, e) {
         break;
       case "toggle":
         n.entity &&
-          ((function(t, e) {
-            (function(t, e, n) {
+          ((function (t, e) {
+            (function (t, e, n) {
               void 0 === n && (n = !0);
               var i,
-                r = (function(t) {
+                r = (function (t) {
                   return t.substr(0, t.indexOf("."));
                 })(e),
                 s = "group" === r ? "homeassistant" : r;
@@ -1782,7 +1782,7 @@ var jt =
     "ontouchstart" in window ||
     navigator.maxTouchPoints > 0 ||
     navigator.msMaxTouchPoints > 0,
-  $t = (function(t) {
+  $t = (function (t) {
     function e() {
       t.call(this),
         (this.holdTime = 500),
@@ -1796,7 +1796,7 @@ var jt =
     return (
       t && (e.__proto__ = t),
       ((e.prototype = Object.create(t && t.prototype)).constructor = e),
-      (e.prototype.connectedCallback = function() {
+      (e.prototype.connectedCallback = function () {
         var t = this;
         Object.assign(this.style, {
           borderRadius: "50%",
@@ -1817,21 +1817,21 @@ var jt =
             "mousewheel",
             "wheel",
             "scroll",
-          ].forEach(function(e) {
+          ].forEach(function (e) {
             document.addEventListener(
               e,
-              function() {
+              function () {
                 clearTimeout(t.timer), t.stopAnimation(), (t.timer = void 0);
               },
               { passive: !0 }
             );
           });
       }),
-      (e.prototype.bind = function(t) {
+      (e.prototype.bind = function (t) {
         var e = this;
         if (!t.longPress) {
           (t.longPress = !0),
-            t.addEventListener("contextmenu", function(t) {
+            t.addEventListener("contextmenu", function (t) {
               var e = t || window.event;
               return (
                 e.preventDefault && e.preventDefault(),
@@ -1841,29 +1841,29 @@ var jt =
                 !1
               );
             });
-          var n = function(n) {
+          var n = function (n) {
               var i, r;
               e.cooldownStart ||
                 ((e.held = !1),
                 n.touches
                   ? ((i = n.touches[0].pageX), (r = n.touches[0].pageY))
                   : ((i = n.pageX), (r = n.pageY)),
-                (e.timer = window.setTimeout(function() {
+                (e.timer = window.setTimeout(function () {
                   e.startAnimation(i, r),
                     (e.held = !0),
                     t.repeat &&
                       !t.isRepeating &&
                       ((t.isRepeating = !0),
-                      (e.repeatTimeout = setInterval(function() {
+                      (e.repeatTimeout = setInterval(function () {
                         t.dispatchEvent(new Event("ha-hold"));
                       }, t.repeat)));
                 }, e.holdTime)),
                 (e.cooldownStart = !0),
-                window.setTimeout(function() {
+                window.setTimeout(function () {
                   return (e.cooldownStart = !1);
                 }, 100));
             },
-            i = function(n) {
+            i = function (n) {
               e.cooldownEnd ||
               (["touchend", "touchcancel"].includes(n.type) &&
                 void 0 === e.timer)
@@ -1882,7 +1882,7 @@ var jt =
                     : t.hasDblClick
                     ? 0 === e.nbClicks
                       ? ((e.nbClicks += 1),
-                        (e.dblClickTimeout = window.setTimeout(function() {
+                        (e.dblClickTimeout = window.setTimeout(function () {
                           1 === e.nbClicks &&
                             ((e.nbClicks = 0),
                             t.dispatchEvent(new Event("ha-click")));
@@ -1892,7 +1892,7 @@ var jt =
                         t.dispatchEvent(new Event("ha-dblclick")))
                     : t.dispatchEvent(new Event("ha-click")),
                   (e.cooldownEnd = !0),
-                  window.setTimeout(function() {
+                  window.setTimeout(function () {
                     return (e.cooldownEnd = !1);
                   }, 100));
             };
@@ -1903,7 +1903,7 @@ var jt =
             t.addEventListener("click", i);
         }
       }),
-      (e.prototype.startAnimation = function(t, e) {
+      (e.prototype.startAnimation = function (t, e) {
         Object.assign(this.style, {
           left: t + "px",
           top: e + "px",
@@ -1912,7 +1912,7 @@ var jt =
           (this.ripple.holdDown = !0),
           this.ripple.simulatedRipple();
       }),
-      (e.prototype.stopAnimation = function() {
+      (e.prototype.stopAnimation = function () {
         (this.ripple.holdDown = !1), (this.style.display = "none");
       }),
       e
@@ -1930,8 +1930,8 @@ customElements.get("long-press-custom-card-helpers") ||
 var Ht,
   Dt,
   It =
-    ((function(t, e) {
-      t.exports = (function(t) {
+    ((function (t, e) {
+      t.exports = (function (t) {
         var e = {};
         function n(i) {
           if (e[i]) return e[i].exports;
@@ -1941,17 +1941,17 @@ var Ht,
         return (
           (n.m = t),
           (n.c = e),
-          (n.d = function(t, e, i) {
+          (n.d = function (t, e, i) {
             n.o(t, e) ||
               Object.defineProperty(t, e, { enumerable: !0, get: i });
           }),
-          (n.r = function(t) {
+          (n.r = function (t) {
             "undefined" != typeof Symbol &&
               Symbol.toStringTag &&
               Object.defineProperty(t, Symbol.toStringTag, { value: "Module" }),
               Object.defineProperty(t, "__esModule", { value: !0 });
           }),
-          (n.t = function(t, e) {
+          (n.t = function (t, e) {
             if ((1 & e && (t = n(t)), 8 & e)) return t;
             if (4 & e && "object" == typeof t && t && t.__esModule) return t;
             var i = Object.create(null);
@@ -1964,48 +1964,48 @@ var Ht,
                 n.d(
                   i,
                   r,
-                  function(e) {
+                  function (e) {
                     return t[e];
                   }.bind(null, r)
                 );
             return i;
           }),
-          (n.n = function(t) {
+          (n.n = function (t) {
             var e =
               t && t.__esModule
-                ? function() {
+                ? function () {
                     return t.default;
                   }
-                : function() {
+                : function () {
                     return t;
                   };
             return n.d(e, "a", e), e;
           }),
-          (n.o = function(t, e) {
+          (n.o = function (t, e) {
             return Object.prototype.hasOwnProperty.call(t, e);
           }),
           (n.p = ""),
           n((n.s = 90))
         );
       })({
-        17: function(t, e, n) {
+        17: function (t, e, n) {
           (e.__esModule = !0), (e.default = void 0);
           var i = n(18),
-            r = (function() {
+            r = (function () {
               function t() {}
               return (
-                (t.getFirstMatch = function(t, e) {
+                (t.getFirstMatch = function (t, e) {
                   var n = e.match(t);
                   return (n && n.length > 0 && n[1]) || "";
                 }),
-                (t.getSecondMatch = function(t, e) {
+                (t.getSecondMatch = function (t, e) {
                   var n = e.match(t);
                   return (n && n.length > 1 && n[2]) || "";
                 }),
-                (t.matchAndReturnConst = function(t, e, n) {
+                (t.matchAndReturnConst = function (t, e, n) {
                   if (t.test(e)) return n;
                 }),
-                (t.getWindowsVersionName = function(t) {
+                (t.getWindowsVersionName = function (t) {
                   switch (t) {
                     case "NT":
                       return "NT";
@@ -2031,11 +2031,11 @@ var Ht,
                       return;
                   }
                 }),
-                (t.getAndroidVersionName = function(t) {
+                (t.getAndroidVersionName = function (t) {
                   var e = t
                     .split(".")
                     .splice(0, 2)
-                    .map(function(t) {
+                    .map(function (t) {
                       return parseInt(t, 10) || 0;
                     });
                   if ((e.push(0), !(1 === e[0] && e[1] < 5)))
@@ -2067,20 +2067,20 @@ var Ht,
                       ? "Oreo"
                       : void 0;
                 }),
-                (t.getVersionPrecision = function(t) {
+                (t.getVersionPrecision = function (t) {
                   return t.split(".").length;
                 }),
-                (t.compareVersions = function(e, n, i) {
+                (t.compareVersions = function (e, n, i) {
                   void 0 === i && (i = !1);
                   var r = t.getVersionPrecision(e),
                     s = t.getVersionPrecision(n),
                     a = Math.max(r, s),
                     o = 0,
-                    c = t.map([e, n], function(e) {
+                    c = t.map([e, n], function (e) {
                       var n = a - t.getVersionPrecision(e),
                         i = e + new Array(n + 1).join(".0");
                       return t
-                        .map(i.split("."), function(t) {
+                        .map(i.split("."), function (t) {
                           return new Array(20 - t.length).join("0") + t;
                         })
                         .reverse();
@@ -2093,7 +2093,7 @@ var Ht,
                     } else if (c[0][a] < c[1][a]) return -1;
                   }
                 }),
-                (t.map = function(t, e) {
+                (t.map = function (t, e) {
                   var n,
                     i = [];
                   if (Array.prototype.map)
@@ -2101,10 +2101,10 @@ var Ht,
                   for (n = 0; n < t.length; n += 1) i.push(e(t[n]));
                   return i;
                 }),
-                (t.getBrowserAlias = function(t) {
+                (t.getBrowserAlias = function (t) {
                   return i.BROWSER_ALIASES_MAP[t];
                 }),
-                (t.getBrowserTypeByAlias = function(t) {
+                (t.getBrowserTypeByAlias = function (t) {
                   return i.BROWSER_MAP[t] || "";
                 }),
                 t
@@ -2112,7 +2112,7 @@ var Ht,
             })();
           (e.default = r), (t.exports = e.default);
         },
-        18: function(t, e, n) {
+        18: function (t, e, n) {
           (e.__esModule = !0),
             (e.ENGINE_MAP = e.OS_MAP = e.PLATFORMS_MAP = e.BROWSER_MAP = e.BROWSER_ALIASES_MAP = void 0),
             (e.BROWSER_ALIASES_MAP = {
@@ -2218,7 +2218,7 @@ var Ht,
               WebKit: "WebKit",
             });
         },
-        90: function(t, e, n) {
+        90: function (t, e, n) {
           (e.__esModule = !0), (e.default = void 0);
           var i,
             r = (i = n(91)) && i.__esModule ? i : { default: i },
@@ -2232,41 +2232,41 @@ var Ht,
                 Object.defineProperty(t, i.key, i);
             }
           }
-          var o = (function() {
+          var o = (function () {
             function t() {}
             var e, n;
             return (
-              (t.getParser = function(t, e) {
+              (t.getParser = function (t, e) {
                 if ((void 0 === e && (e = !1), "string" != typeof t))
                   throw new Error("UserAgent should be a string");
                 return new r.default(t, e);
               }),
-              (t.parse = function(t) {
+              (t.parse = function (t) {
                 return new r.default(t).getResult();
               }),
               (e = t),
               (n = [
                 {
                   key: "BROWSER_MAP",
-                  get: function() {
+                  get: function () {
                     return s.BROWSER_MAP;
                   },
                 },
                 {
                   key: "ENGINE_MAP",
-                  get: function() {
+                  get: function () {
                     return s.ENGINE_MAP;
                   },
                 },
                 {
                   key: "OS_MAP",
-                  get: function() {
+                  get: function () {
                     return s.OS_MAP;
                   },
                 },
                 {
                   key: "PLATFORMS_MAP",
-                  get: function() {
+                  get: function () {
                     return s.PLATFORMS_MAP;
                   },
                 },
@@ -2276,7 +2276,7 @@ var Ht,
           })();
           (e.default = o), (t.exports = e.default);
         },
-        91: function(t, e, n) {
+        91: function (t, e, n) {
           (e.__esModule = !0), (e.default = void 0);
           var i = c(n(92)),
             r = c(n(93)),
@@ -2286,7 +2286,7 @@ var Ht,
           function c(t) {
             return t && t.__esModule ? t : { default: t };
           }
-          var l = (function() {
+          var l = (function () {
             function t(t, e) {
               if ((void 0 === e && (e = !1), null == t || "" === t))
                 throw new Error("UserAgent parameter can't be empty");
@@ -2296,19 +2296,19 @@ var Ht,
             }
             var e = t.prototype;
             return (
-              (e.getUA = function() {
+              (e.getUA = function () {
                 return this._ua;
               }),
-              (e.test = function(t) {
+              (e.test = function (t) {
                 return t.test(this._ua);
               }),
-              (e.parseBrowser = function() {
+              (e.parseBrowser = function () {
                 var t = this;
                 this.parsedResult.browser = {};
-                var e = i.default.find(function(e) {
+                var e = i.default.find(function (e) {
                   if ("function" == typeof e.test) return e.test(t);
                   if (e.test instanceof Array)
-                    return e.test.some(function(e) {
+                    return e.test.some(function (e) {
                       return t.test(e);
                     });
                   throw new Error("Browser's test function is not valid");
@@ -2318,31 +2318,31 @@ var Ht,
                   this.parsedResult.browser
                 );
               }),
-              (e.getBrowser = function() {
+              (e.getBrowser = function () {
                 return this.parsedResult.browser
                   ? this.parsedResult.browser
                   : this.parseBrowser();
               }),
-              (e.getBrowserName = function(t) {
+              (e.getBrowserName = function (t) {
                 return t
                   ? String(this.getBrowser().name).toLowerCase() || ""
                   : this.getBrowser().name || "";
               }),
-              (e.getBrowserVersion = function() {
+              (e.getBrowserVersion = function () {
                 return this.getBrowser().version;
               }),
-              (e.getOS = function() {
+              (e.getOS = function () {
                 return this.parsedResult.os
                   ? this.parsedResult.os
                   : this.parseOS();
               }),
-              (e.parseOS = function() {
+              (e.parseOS = function () {
                 var t = this;
                 this.parsedResult.os = {};
-                var e = r.default.find(function(e) {
+                var e = r.default.find(function (e) {
                   if ("function" == typeof e.test) return e.test(t);
                   if (e.test instanceof Array)
-                    return e.test.some(function(e) {
+                    return e.test.some(function (e) {
                       return t.test(e);
                     });
                   throw new Error("Browser's test function is not valid");
@@ -2352,30 +2352,30 @@ var Ht,
                   this.parsedResult.os
                 );
               }),
-              (e.getOSName = function(t) {
+              (e.getOSName = function (t) {
                 var e = this.getOS().name;
                 return t ? String(e).toLowerCase() || "" : e || "";
               }),
-              (e.getOSVersion = function() {
+              (e.getOSVersion = function () {
                 return this.getOS().version;
               }),
-              (e.getPlatform = function() {
+              (e.getPlatform = function () {
                 return this.parsedResult.platform
                   ? this.parsedResult.platform
                   : this.parsePlatform();
               }),
-              (e.getPlatformType = function(t) {
+              (e.getPlatformType = function (t) {
                 void 0 === t && (t = !1);
                 var e = this.getPlatform().type;
                 return t ? String(e).toLowerCase() || "" : e || "";
               }),
-              (e.parsePlatform = function() {
+              (e.parsePlatform = function () {
                 var t = this;
                 this.parsedResult.platform = {};
-                var e = s.default.find(function(e) {
+                var e = s.default.find(function (e) {
                   if ("function" == typeof e.test) return e.test(t);
                   if (e.test instanceof Array)
-                    return e.test.some(function(e) {
+                    return e.test.some(function (e) {
                       return t.test(e);
                     });
                   throw new Error("Browser's test function is not valid");
@@ -2385,23 +2385,23 @@ var Ht,
                   this.parsedResult.platform
                 );
               }),
-              (e.getEngine = function() {
+              (e.getEngine = function () {
                 return this.parsedResult.engine
                   ? this.parsedResult.engine
                   : this.parseEngine();
               }),
-              (e.getEngineName = function(t) {
+              (e.getEngineName = function (t) {
                 return t
                   ? String(this.getEngine().name).toLowerCase() || ""
                   : this.getEngine().name || "";
               }),
-              (e.parseEngine = function() {
+              (e.parseEngine = function () {
                 var t = this;
                 this.parsedResult.engine = {};
-                var e = a.default.find(function(e) {
+                var e = a.default.find(function (e) {
                   if ("function" == typeof e.test) return e.test(t);
                   if (e.test instanceof Array)
-                    return e.test.some(function(e) {
+                    return e.test.some(function (e) {
                       return t.test(e);
                     });
                   throw new Error("Browser's test function is not valid");
@@ -2411,7 +2411,7 @@ var Ht,
                   this.parsedResult.engine
                 );
               }),
-              (e.parse = function() {
+              (e.parse = function () {
                 return (
                   this.parseBrowser(),
                   this.parseOS(),
@@ -2420,17 +2420,17 @@ var Ht,
                   this
                 );
               }),
-              (e.getResult = function() {
+              (e.getResult = function () {
                 return Object.assign({}, this.parsedResult);
               }),
-              (e.satisfies = function(t) {
+              (e.satisfies = function (t) {
                 var e = this,
                   n = {},
                   i = 0,
                   r = {},
                   s = 0;
                 if (
-                  (Object.keys(t).forEach(function(e) {
+                  (Object.keys(t).forEach(function (e) {
                     var a = t[e];
                     "string" == typeof a
                       ? ((r[e] = a), (s += 1))
@@ -2439,14 +2439,14 @@ var Ht,
                   i > 0)
                 ) {
                   var a = Object.keys(n),
-                    o = a.find(function(t) {
+                    o = a.find(function (t) {
                       return e.isOS(t);
                     });
                   if (o) {
                     var c = this.satisfies(n[o]);
                     if (void 0 !== c) return c;
                   }
-                  var l = a.find(function(t) {
+                  var l = a.find(function (t) {
                     return e.isPlatform(t);
                   });
                   if (l) {
@@ -2455,20 +2455,20 @@ var Ht,
                   }
                 }
                 if (s > 0) {
-                  var d = Object.keys(r).find(function(t) {
+                  var d = Object.keys(r).find(function (t) {
                     return e.isBrowser(t, !0);
                   });
                   if (void 0 !== d) return this.compareVersion(r[d]);
                 }
               }),
-              (e.isBrowser = function(t, e) {
+              (e.isBrowser = function (t, e) {
                 void 0 === e && (e = !1);
                 var n = this.getBrowserName().toLowerCase(),
                   i = t.toLowerCase(),
                   r = o.default.getBrowserTypeByAlias(i);
                 return e && r && (i = r.toLowerCase()), i === n;
               }),
-              (e.compareVersion = function(t) {
+              (e.compareVersion = function (t) {
                 var e = [0],
                   n = t,
                   i = !1,
@@ -2485,23 +2485,23 @@ var Ht,
                     e.indexOf(o.default.compareVersions(r, n, i)) > -1
                   );
               }),
-              (e.isOS = function(t) {
+              (e.isOS = function (t) {
                 return this.getOSName(!0) === String(t).toLowerCase();
               }),
-              (e.isPlatform = function(t) {
+              (e.isPlatform = function (t) {
                 return this.getPlatformType(!0) === String(t).toLowerCase();
               }),
-              (e.isEngine = function(t) {
+              (e.isEngine = function (t) {
                 return this.getEngineName(!0) === String(t).toLowerCase();
               }),
-              (e.is = function(t) {
+              (e.is = function (t) {
                 return this.isBrowser(t) || this.isOS(t) || this.isPlatform(t);
               }),
-              (e.some = function(t) {
+              (e.some = function (t) {
                 var e = this;
                 return (
                   void 0 === t && (t = []),
-                  t.some(function(t) {
+                  t.some(function (t) {
                     return e.is(t);
                   })
                 );
@@ -2511,7 +2511,7 @@ var Ht,
           })();
           (e.default = l), (t.exports = e.default);
         },
-        92: function(t, e, n) {
+        92: function (t, e, n) {
           (e.__esModule = !0), (e.default = void 0);
           var i,
             r = (i = n(17)) && i.__esModule ? i : { default: i },
@@ -2519,7 +2519,7 @@ var Ht,
             a = [
               {
                 test: [/googlebot/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Googlebot" },
                     n =
                       r.default.getFirstMatch(/googlebot\/(\d+(\.\d+))/i, t) ||
@@ -2529,7 +2529,7 @@ var Ht,
               },
               {
                 test: [/opera/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Opera" },
                     n =
                       r.default.getFirstMatch(s, t) ||
@@ -2542,7 +2542,7 @@ var Ht,
               },
               {
                 test: [/opr\/|opios/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Opera" },
                     n =
                       r.default.getFirstMatch(/(?:opr|opios)[\s\/](\S+)/i, t) ||
@@ -2552,7 +2552,7 @@ var Ht,
               },
               {
                 test: [/SamsungBrowser/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Samsung Internet for Android" },
                     n =
                       r.default.getFirstMatch(s, t) ||
@@ -2565,7 +2565,7 @@ var Ht,
               },
               {
                 test: [/Whale/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "NAVER Whale Browser" },
                     n =
                       r.default.getFirstMatch(s, t) ||
@@ -2578,7 +2578,7 @@ var Ht,
               },
               {
                 test: [/MZBrowser/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "MZ Browser" },
                     n =
                       r.default.getFirstMatch(
@@ -2590,7 +2590,7 @@ var Ht,
               },
               {
                 test: [/focus/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Focus" },
                     n =
                       r.default.getFirstMatch(
@@ -2602,7 +2602,7 @@ var Ht,
               },
               {
                 test: [/swing/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Swing" },
                     n =
                       r.default.getFirstMatch(
@@ -2614,7 +2614,7 @@ var Ht,
               },
               {
                 test: [/coast/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Opera Coast" },
                     n =
                       r.default.getFirstMatch(s, t) ||
@@ -2627,7 +2627,7 @@ var Ht,
               },
               {
                 test: [/yabrowser/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Yandex Browser" },
                     n =
                       r.default.getFirstMatch(
@@ -2639,7 +2639,7 @@ var Ht,
               },
               {
                 test: [/ucbrowser/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "UC Browser" },
                     n =
                       r.default.getFirstMatch(s, t) ||
@@ -2652,7 +2652,7 @@ var Ht,
               },
               {
                 test: [/Maxthon|mxios/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Maxthon" },
                     n =
                       r.default.getFirstMatch(s, t) ||
@@ -2665,7 +2665,7 @@ var Ht,
               },
               {
                 test: [/epiphany/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Epiphany" },
                     n =
                       r.default.getFirstMatch(s, t) ||
@@ -2678,7 +2678,7 @@ var Ht,
               },
               {
                 test: [/puffin/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Puffin" },
                     n =
                       r.default.getFirstMatch(s, t) ||
@@ -2691,7 +2691,7 @@ var Ht,
               },
               {
                 test: [/sleipnir/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Sleipnir" },
                     n =
                       r.default.getFirstMatch(s, t) ||
@@ -2704,7 +2704,7 @@ var Ht,
               },
               {
                 test: [/k-meleon/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "K-Meleon" },
                     n =
                       r.default.getFirstMatch(s, t) ||
@@ -2717,7 +2717,7 @@ var Ht,
               },
               {
                 test: [/micromessenger/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "WeChat" },
                     n =
                       r.default.getFirstMatch(
@@ -2729,7 +2729,7 @@ var Ht,
               },
               {
                 test: [/msie|trident/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Internet Explorer" },
                     n = r.default.getFirstMatch(
                       /(?:msie |rv:)(\d+(\.?_?\d+)+)/i,
@@ -2740,7 +2740,7 @@ var Ht,
               },
               {
                 test: [/\sedg\//i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Microsoft Edge" },
                     n = r.default.getFirstMatch(/\sedg\/(\d+(\.?_?\d+)+)/i, t);
                   return n && (e.version = n), e;
@@ -2748,7 +2748,7 @@ var Ht,
               },
               {
                 test: [/edg([ea]|ios)/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Microsoft Edge" },
                     n = r.default.getSecondMatch(
                       /edg([ea]|ios)\/(\d+(\.?_?\d+)+)/i,
@@ -2759,7 +2759,7 @@ var Ht,
               },
               {
                 test: [/vivaldi/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Vivaldi" },
                     n = r.default.getFirstMatch(
                       /vivaldi\/(\d+(\.?_?\d+)+)/i,
@@ -2770,7 +2770,7 @@ var Ht,
               },
               {
                 test: [/seamonkey/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "SeaMonkey" },
                     n = r.default.getFirstMatch(
                       /seamonkey\/(\d+(\.?_?\d+)+)/i,
@@ -2781,7 +2781,7 @@ var Ht,
               },
               {
                 test: [/sailfish/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Sailfish" },
                     n = r.default.getFirstMatch(
                       /sailfish\s?browser\/(\d+(\.\d+)?)/i,
@@ -2792,7 +2792,7 @@ var Ht,
               },
               {
                 test: [/silk/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Amazon Silk" },
                     n = r.default.getFirstMatch(/silk\/(\d+(\.?_?\d+)+)/i, t);
                   return n && (e.version = n), e;
@@ -2800,7 +2800,7 @@ var Ht,
               },
               {
                 test: [/phantom/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "PhantomJS" },
                     n = r.default.getFirstMatch(
                       /phantomjs\/(\d+(\.?_?\d+)+)/i,
@@ -2811,7 +2811,7 @@ var Ht,
               },
               {
                 test: [/slimerjs/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "SlimerJS" },
                     n = r.default.getFirstMatch(
                       /slimerjs\/(\d+(\.?_?\d+)+)/i,
@@ -2822,7 +2822,7 @@ var Ht,
               },
               {
                 test: [/blackberry|\bbb\d+/i, /rim\stablet/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "BlackBerry" },
                     n =
                       r.default.getFirstMatch(s, t) ||
@@ -2835,7 +2835,7 @@ var Ht,
               },
               {
                 test: [/(web|hpw)[o0]s/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "WebOS Browser" },
                     n =
                       r.default.getFirstMatch(s, t) ||
@@ -2848,7 +2848,7 @@ var Ht,
               },
               {
                 test: [/bada/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Bada" },
                     n = r.default.getFirstMatch(/dolfin\/(\d+(\.?_?\d+)+)/i, t);
                   return n && (e.version = n), e;
@@ -2856,7 +2856,7 @@ var Ht,
               },
               {
                 test: [/tizen/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Tizen" },
                     n =
                       r.default.getFirstMatch(
@@ -2868,7 +2868,7 @@ var Ht,
               },
               {
                 test: [/qupzilla/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "QupZilla" },
                     n =
                       r.default.getFirstMatch(
@@ -2880,7 +2880,7 @@ var Ht,
               },
               {
                 test: [/firefox|iceweasel|fxios/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Firefox" },
                     n = r.default.getFirstMatch(
                       /(?:firefox|iceweasel|fxios)[\s\/](\d+(\.?_?\d+)+)/i,
@@ -2891,7 +2891,7 @@ var Ht,
               },
               {
                 test: [/chromium/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Chromium" },
                     n =
                       r.default.getFirstMatch(
@@ -2903,7 +2903,7 @@ var Ht,
               },
               {
                 test: [/chrome|crios|crmo/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Chrome" },
                     n = r.default.getFirstMatch(
                       /(?:chrome|crios|crmo)\/(\d+(\.?_?\d+)+)/i,
@@ -2913,12 +2913,12 @@ var Ht,
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   var e = !t.test(/like android/i),
                     n = t.test(/android/i);
                   return e && n;
                 },
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Android Browser" },
                     n = r.default.getFirstMatch(s, t);
                   return n && (e.version = n), e;
@@ -2926,7 +2926,7 @@ var Ht,
               },
               {
                 test: [/playstation 4/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "PlayStation 4" },
                     n = r.default.getFirstMatch(s, t);
                   return n && (e.version = n), e;
@@ -2934,7 +2934,7 @@ var Ht,
               },
               {
                 test: [/safari|applewebkit/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: "Safari" },
                     n = r.default.getFirstMatch(s, t);
                   return n && (e.version = n), e;
@@ -2942,7 +2942,7 @@ var Ht,
               },
               {
                 test: [/.*/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e =
                     -1 !== t.search("\\(")
                       ? /^(.*)\/(.*)[ \t]\((.*)/
@@ -2956,7 +2956,7 @@ var Ht,
             ];
           (e.default = a), (t.exports = e.default);
         },
-        93: function(t, e, n) {
+        93: function (t, e, n) {
           (e.__esModule = !0), (e.default = void 0);
           var i,
             r = (i = n(17)) && i.__esModule ? i : { default: i },
@@ -2964,14 +2964,14 @@ var Ht,
             a = [
               {
                 test: [/Roku\/DVP/],
-                describe: function(t) {
+                describe: function (t) {
                   var e = r.default.getFirstMatch(/Roku\/DVP-(\d+\.\d+)/i, t);
                   return { name: s.OS_MAP.Roku, version: e };
                 },
               },
               {
                 test: [/windows phone/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = r.default.getFirstMatch(
                     /windows phone (?:os)?\s?(\d+(\.\d+)*)/i,
                     t
@@ -2981,7 +2981,7 @@ var Ht,
               },
               {
                 test: [/windows/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = r.default.getFirstMatch(
                       /Windows ((NT|XP)( \d\d?.\d)?)/i,
                       t
@@ -2992,7 +2992,7 @@ var Ht,
               },
               {
                 test: [/macintosh/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = r.default
                     .getFirstMatch(/mac os x (\d+(\.?_?\d+)+)/i, t)
                     .replace(/[_\s]/g, ".");
@@ -3001,7 +3001,7 @@ var Ht,
               },
               {
                 test: [/(ipod|iphone|ipad)/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = r.default
                     .getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i, t)
                     .replace(/[_\s]/g, ".");
@@ -3009,12 +3009,12 @@ var Ht,
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   var e = !t.test(/like android/i),
                     n = t.test(/android/i);
                   return e && n;
                 },
-                describe: function(t) {
+                describe: function (t) {
                   var e = r.default.getFirstMatch(
                       /android[\s\/-](\d+(\.\d+)*)/i,
                       t
@@ -3026,7 +3026,7 @@ var Ht,
               },
               {
                 test: [/(web|hpw)[o0]s/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = r.default.getFirstMatch(
                       /(?:web|hpw)[o0]s\/(\d+(\.\d+)*)/i,
                       t
@@ -3037,7 +3037,7 @@ var Ht,
               },
               {
                 test: [/blackberry|\bbb\d+/i, /rim\stablet/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e =
                     r.default.getFirstMatch(
                       /rim\stablet\sos\s(\d+(\.\d+)*)/i,
@@ -3053,14 +3053,14 @@ var Ht,
               },
               {
                 test: [/bada/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = r.default.getFirstMatch(/bada\/(\d+(\.\d+)*)/i, t);
                   return { name: s.OS_MAP.Bada, version: e };
                 },
               },
               {
                 test: [/tizen/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = r.default.getFirstMatch(
                     /tizen[\/\s](\d+(\.\d+)*)/i,
                     t
@@ -3070,19 +3070,19 @@ var Ht,
               },
               {
                 test: [/linux/i],
-                describe: function() {
+                describe: function () {
                   return { name: s.OS_MAP.Linux };
                 },
               },
               {
                 test: [/CrOS/],
-                describe: function() {
+                describe: function () {
                   return { name: s.OS_MAP.ChromeOS };
                 },
               },
               {
                 test: [/PlayStation 4/],
-                describe: function(t) {
+                describe: function (t) {
                   var e = r.default.getFirstMatch(
                     /PlayStation 4[\/\s](\d+(\.\d+)*)/i,
                     t
@@ -3093,7 +3093,7 @@ var Ht,
             ];
           (e.default = a), (t.exports = e.default);
         },
-        94: function(t, e, n) {
+        94: function (t, e, n) {
           (e.__esModule = !0), (e.default = void 0);
           var i,
             r = (i = n(17)) && i.__esModule ? i : { default: i },
@@ -3101,13 +3101,13 @@ var Ht,
             a = [
               {
                 test: [/googlebot/i],
-                describe: function() {
+                describe: function () {
                   return { type: "bot", vendor: "Google" };
                 },
               },
               {
                 test: [/huawei/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = r.default.getFirstMatch(/(can-l01)/i, t) && "Nova",
                     n = { type: s.PLATFORMS_MAP.mobile, vendor: "Huawei" };
                   return e && (n.model = e), n;
@@ -3115,13 +3115,13 @@ var Ht,
               },
               {
                 test: [/nexus\s*(?:7|8|9|10).*/i],
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.tablet, vendor: "Nexus" };
                 },
               },
               {
                 test: [/ipad/i],
-                describe: function() {
+                describe: function () {
                   return {
                     type: s.PLATFORMS_MAP.tablet,
                     vendor: "Apple",
@@ -3131,7 +3131,7 @@ var Ht,
               },
               {
                 test: [/kftt build/i],
-                describe: function() {
+                describe: function () {
                   return {
                     type: s.PLATFORMS_MAP.tablet,
                     vendor: "Amazon",
@@ -3141,23 +3141,23 @@ var Ht,
               },
               {
                 test: [/silk/i],
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.tablet, vendor: "Amazon" };
                 },
               },
               {
                 test: [/tablet/i],
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.tablet };
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   var e = t.test(/ipod|iphone/i),
                     n = t.test(/like (ipod|iphone)/i);
                   return e && !n;
                 },
-                describe: function(t) {
+                describe: function (t) {
                   var e = r.default.getFirstMatch(/(ipod|iphone)/i, t);
                   return {
                     type: s.PLATFORMS_MAP.mobile,
@@ -3168,111 +3168,111 @@ var Ht,
               },
               {
                 test: [/nexus\s*[0-6].*/i, /galaxy nexus/i],
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.mobile, vendor: "Nexus" };
                 },
               },
               {
                 test: [/[^-]mobi/i],
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.mobile };
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   return "blackberry" === t.getBrowserName(!0);
                 },
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.mobile, vendor: "BlackBerry" };
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   return "bada" === t.getBrowserName(!0);
                 },
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.mobile };
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   return "windows phone" === t.getBrowserName();
                 },
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.mobile, vendor: "Microsoft" };
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   var e = Number(String(t.getOSVersion()).split(".")[0]);
                   return "android" === t.getOSName(!0) && e >= 3;
                 },
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.tablet };
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   return "android" === t.getOSName(!0);
                 },
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.mobile };
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   return "macos" === t.getOSName(!0);
                 },
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.desktop, vendor: "Apple" };
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   return "windows" === t.getOSName(!0);
                 },
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.desktop };
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   return "linux" === t.getOSName(!0);
                 },
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.desktop };
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   return "playstation 4" === t.getOSName(!0);
                 },
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.tv };
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   return "roku" === t.getOSName(!0);
                 },
-                describe: function() {
+                describe: function () {
                   return { type: s.PLATFORMS_MAP.tv };
                 },
               },
             ];
           (e.default = a), (t.exports = e.default);
         },
-        95: function(t, e, n) {
+        95: function (t, e, n) {
           (e.__esModule = !0), (e.default = void 0);
           var i,
             r = (i = n(17)) && i.__esModule ? i : { default: i },
             s = n(18),
             a = [
               {
-                test: function(t) {
+                test: function (t) {
                   return "microsoft edge" === t.getBrowserName(!0);
                 },
-                describe: function(t) {
+                describe: function (t) {
                   if (/\sedg\//i.test(t)) return { name: s.ENGINE_MAP.Blink };
                   var e = r.default.getFirstMatch(/edge\/(\d+(\.?_?\d+)+)/i, t);
                   return { name: s.ENGINE_MAP.EdgeHTML, version: e };
@@ -3280,7 +3280,7 @@ var Ht,
               },
               {
                 test: [/trident/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: s.ENGINE_MAP.Trident },
                     n = r.default.getFirstMatch(
                       /trident\/(\d+(\.?_?\d+)+)/i,
@@ -3290,22 +3290,22 @@ var Ht,
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   return t.test(/presto/i);
                 },
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: s.ENGINE_MAP.Presto },
                     n = r.default.getFirstMatch(/presto\/(\d+(\.?_?\d+)+)/i, t);
                   return n && (e.version = n), e;
                 },
               },
               {
-                test: function(t) {
+                test: function (t) {
                   var e = t.test(/gecko/i),
                     n = t.test(/like gecko/i);
                   return e && !n;
                 },
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: s.ENGINE_MAP.Gecko },
                     n = r.default.getFirstMatch(/gecko\/(\d+(\.?_?\d+)+)/i, t);
                   return n && (e.version = n), e;
@@ -3313,13 +3313,13 @@ var Ht,
               },
               {
                 test: [/(apple)?webkit\/537\.36/i],
-                describe: function() {
+                describe: function () {
                   return { name: s.ENGINE_MAP.Blink };
                 },
               },
               {
                 test: [/(apple)?webkit/i],
-                describe: function(t) {
+                describe: function (t) {
                   var e = { name: s.ENGINE_MAP.WebKit },
                     n = r.default.getFirstMatch(/webkit\/(\d+(\.?_?\d+)+)/i, t);
                   return n && (e.version = n), e;
@@ -3490,10 +3490,10 @@ const Yt = (t) => {
     Yt(t.committer.element);
   });
 function qt(t, e) {
-  (function(t) {
+  (function (t) {
     return "string" == typeof t && t.includes(".") && 1 === parseFloat(t);
   })(t) && (t = "100%");
-  var n = (function(t) {
+  var n = (function (t) {
     return "string" == typeof t && t.includes("%");
   })(t);
   return (
@@ -3749,7 +3749,7 @@ function re(t) {
     u = !1;
   return (
     "string" == typeof t &&
-      (t = (function(t) {
+      (t = (function (t) {
         if (0 === (t = t.trim().toLowerCase()).length) return !1;
         var e = !1;
         if (ie[t]) (t = ie[t]), (e = !0);
@@ -3812,7 +3812,7 @@ function re(t) {
         : le(t.h) && le(t.s) && le(t.v)
         ? ((a = Zt(t.s)),
           (o = Zt(t.v)),
-          (r = (function(t, e, n) {
+          (r = (function (t, e, n) {
             (t = 6 * qt(t, 360)), (e = qt(e, 100)), (n = qt(n, 100));
             var i = Math.floor(t),
               r = t - i,
@@ -3833,7 +3833,7 @@ function re(t) {
           le(t.l) &&
           ((a = Zt(t.s)),
           (c = Zt(t.l)),
-          (r = (function(t, e, n) {
+          (r = (function (t, e, n) {
             var i, r, s;
             function a(t, e, n) {
               return (
@@ -3901,7 +3901,7 @@ var se = "(?:[-\\+]?\\d*\\.\\d+%?)|(?:[-\\+]?\\d+%?)",
 function le(t) {
   return Boolean(ce.CSS_UNIT.exec(String(t)));
 }
-var ue = (function() {
+var ue = (function () {
   function t(e, n) {
     if ((void 0 === e && (e = ""), void 0 === n && (n = {}), e instanceof t))
       return e;
@@ -3921,17 +3921,17 @@ var ue = (function() {
       (this.isValid = i.ok);
   }
   return (
-    (t.prototype.isDark = function() {
+    (t.prototype.isDark = function () {
       return this.getBrightness() < 128;
     }),
-    (t.prototype.isLight = function() {
+    (t.prototype.isLight = function () {
       return !this.isDark();
     }),
-    (t.prototype.getBrightness = function() {
+    (t.prototype.getBrightness = function () {
       var t = this.toRgb();
       return (299 * t.r + 587 * t.g + 114 * t.b) / 1e3;
     }),
-    (t.prototype.getLuminance = function() {
+    (t.prototype.getLuminance = function () {
       var t = this.toRgb(),
         e = t.r / 255,
         n = t.g / 255,
@@ -3944,19 +3944,19 @@ var ue = (function() {
         0.0722 * (i <= 0.03928 ? i / 12.92 : Math.pow((i + 0.055) / 1.055, 2.4))
       );
     }),
-    (t.prototype.getAlpha = function() {
+    (t.prototype.getAlpha = function () {
       return this.a;
     }),
-    (t.prototype.setAlpha = function(t) {
+    (t.prototype.setAlpha = function (t) {
       return (
         (this.a = Jt(t)), (this.roundA = Math.round(100 * this.a) / 100), this
       );
     }),
-    (t.prototype.toHsv = function() {
+    (t.prototype.toHsv = function () {
       var t = Qt(this.r, this.g, this.b);
       return { h: 360 * t.h, s: t.s, v: t.v, a: this.a };
     }),
-    (t.prototype.toHsvString = function() {
+    (t.prototype.toHsvString = function () {
       var t = Qt(this.r, this.g, this.b),
         e = Math.round(360 * t.h),
         n = Math.round(100 * t.s),
@@ -3965,11 +3965,11 @@ var ue = (function() {
         ? "hsv(" + e + ", " + n + "%, " + i + "%)"
         : "hsva(" + e + ", " + n + "%, " + i + "%, " + this.roundA + ")";
     }),
-    (t.prototype.toHsl = function() {
+    (t.prototype.toHsl = function () {
       var t = Xt(this.r, this.g, this.b);
       return { h: 360 * t.h, s: t.s, l: t.l, a: this.a };
     }),
-    (t.prototype.toHslString = function() {
+    (t.prototype.toHslString = function () {
       var t = Xt(this.r, this.g, this.b),
         e = Math.round(360 * t.h),
         n = Math.round(100 * t.s),
@@ -3978,16 +3978,16 @@ var ue = (function() {
         ? "hsl(" + e + ", " + n + "%, " + i + "%)"
         : "hsla(" + e + ", " + n + "%, " + i + "%, " + this.roundA + ")";
     }),
-    (t.prototype.toHex = function(t) {
+    (t.prototype.toHex = function (t) {
       return void 0 === t && (t = !1), te(this.r, this.g, this.b, t);
     }),
-    (t.prototype.toHexString = function(t) {
+    (t.prototype.toHexString = function (t) {
       return void 0 === t && (t = !1), "#" + this.toHex(t);
     }),
-    (t.prototype.toHex8 = function(t) {
+    (t.prototype.toHex8 = function (t) {
       return (
         void 0 === t && (t = !1),
-        (function(t, e, n, i, r) {
+        (function (t, e, n, i, r) {
           var s,
             a = [
               Kt(Math.round(t).toString(16)),
@@ -4005,10 +4005,10 @@ var ue = (function() {
         })(this.r, this.g, this.b, this.a, t)
       );
     }),
-    (t.prototype.toHex8String = function(t) {
+    (t.prototype.toHex8String = function (t) {
       return void 0 === t && (t = !1), "#" + this.toHex8(t);
     }),
-    (t.prototype.toRgb = function() {
+    (t.prototype.toRgb = function () {
       return {
         r: Math.round(this.r),
         g: Math.round(this.g),
@@ -4016,7 +4016,7 @@ var ue = (function() {
         a: this.a,
       };
     }),
-    (t.prototype.toRgbString = function() {
+    (t.prototype.toRgbString = function () {
       var t = Math.round(this.r),
         e = Math.round(this.g),
         n = Math.round(this.b);
@@ -4024,14 +4024,14 @@ var ue = (function() {
         ? "rgb(" + t + ", " + e + ", " + n + ")"
         : "rgba(" + t + ", " + e + ", " + n + ", " + this.roundA + ")";
     }),
-    (t.prototype.toPercentageRgb = function() {
-      var t = function(t) {
+    (t.prototype.toPercentageRgb = function () {
+      var t = function (t) {
         return Math.round(100 * qt(t, 255)) + "%";
       };
       return { r: t(this.r), g: t(this.g), b: t(this.b), a: this.a };
     }),
-    (t.prototype.toPercentageRgbString = function() {
-      var t = function(t) {
+    (t.prototype.toPercentageRgbString = function () {
+      var t = function (t) {
         return Math.round(100 * qt(t, 255));
       };
       return 1 === this.a
@@ -4046,7 +4046,7 @@ var ue = (function() {
             this.roundA +
             ")";
     }),
-    (t.prototype.toName = function() {
+    (t.prototype.toName = function () {
       if (0 === this.a) return "transparent";
       if (this.a < 1) return !1;
       for (
@@ -4061,7 +4061,7 @@ var ue = (function() {
       }
       return !1;
     }),
-    (t.prototype.toString = function(t) {
+    (t.prototype.toString = function (t) {
       var e = Boolean(t);
       t = t || this.format;
       var n = !1,
@@ -4081,15 +4081,15 @@ var ue = (function() {
         ? this.toName()
         : this.toRgbString();
     }),
-    (t.prototype.clone = function() {
+    (t.prototype.clone = function () {
       return new t(this.toString());
     }),
-    (t.prototype.lighten = function(e) {
+    (t.prototype.lighten = function (e) {
       void 0 === e && (e = 10);
       var n = this.toHsl();
       return (n.l += e / 100), (n.l = Gt(n.l)), new t(n);
     }),
-    (t.prototype.brighten = function(e) {
+    (t.prototype.brighten = function (e) {
       void 0 === e && (e = 10);
       var n = this.toRgb();
       return (
@@ -4099,36 +4099,36 @@ var ue = (function() {
         new t(n)
       );
     }),
-    (t.prototype.darken = function(e) {
+    (t.prototype.darken = function (e) {
       void 0 === e && (e = 10);
       var n = this.toHsl();
       return (n.l -= e / 100), (n.l = Gt(n.l)), new t(n);
     }),
-    (t.prototype.tint = function(t) {
+    (t.prototype.tint = function (t) {
       return void 0 === t && (t = 10), this.mix("white", t);
     }),
-    (t.prototype.shade = function(t) {
+    (t.prototype.shade = function (t) {
       return void 0 === t && (t = 10), this.mix("black", t);
     }),
-    (t.prototype.desaturate = function(e) {
+    (t.prototype.desaturate = function (e) {
       void 0 === e && (e = 10);
       var n = this.toHsl();
       return (n.s -= e / 100), (n.s = Gt(n.s)), new t(n);
     }),
-    (t.prototype.saturate = function(e) {
+    (t.prototype.saturate = function (e) {
       void 0 === e && (e = 10);
       var n = this.toHsl();
       return (n.s += e / 100), (n.s = Gt(n.s)), new t(n);
     }),
-    (t.prototype.greyscale = function() {
+    (t.prototype.greyscale = function () {
       return this.desaturate(100);
     }),
-    (t.prototype.spin = function(e) {
+    (t.prototype.spin = function (e) {
       var n = this.toHsl(),
         i = (n.h + e) % 360;
       return (n.h = i < 0 ? 360 + i : i), new t(n);
     }),
-    (t.prototype.mix = function(e, n) {
+    (t.prototype.mix = function (e, n) {
       void 0 === n && (n = 50);
       var i = this.toRgb(),
         r = new t(e).toRgb(),
@@ -4140,7 +4140,7 @@ var ue = (function() {
         a: (r.a - i.a) * s + i.a,
       });
     }),
-    (t.prototype.analogous = function(e, n) {
+    (t.prototype.analogous = function (e, n) {
       void 0 === e && (e = 6), void 0 === n && (n = 30);
       var i = this.toHsl(),
         r = 360 / n,
@@ -4149,11 +4149,11 @@ var ue = (function() {
         (i.h = (i.h + r) % 360), s.push(new t(i));
       return s;
     }),
-    (t.prototype.complement = function() {
+    (t.prototype.complement = function () {
       var e = this.toHsl();
       return (e.h = (e.h + 180) % 360), new t(e);
     }),
-    (t.prototype.monochromatic = function(e) {
+    (t.prototype.monochromatic = function (e) {
       void 0 === e && (e = 6);
       for (
         var n = this.toHsv(), i = n.h, r = n.s, s = n.v, a = [], o = 1 / e;
@@ -4163,7 +4163,7 @@ var ue = (function() {
         a.push(new t({ h: i, s: r, v: s })), (s = (s + o) % 1);
       return a;
     }),
-    (t.prototype.splitcomplement = function() {
+    (t.prototype.splitcomplement = function () {
       var e = this.toHsl(),
         n = e.h;
       return [
@@ -4172,13 +4172,13 @@ var ue = (function() {
         new t({ h: (n + 216) % 360, s: e.s, l: e.l }),
       ];
     }),
-    (t.prototype.triad = function() {
+    (t.prototype.triad = function () {
       return this.polyad(3);
     }),
-    (t.prototype.tetrad = function() {
+    (t.prototype.tetrad = function () {
       return this.polyad(4);
     }),
-    (t.prototype.polyad = function(e) {
+    (t.prototype.polyad = function (e) {
       for (
         var n = this.toHsl(), i = n.h, r = [this], s = 360 / e, a = 1;
         a < e;
@@ -4187,7 +4187,7 @@ var ue = (function() {
         r.push(new t({ h: (i + a * s) % 360, s: n.s, l: n.l }));
       return r;
     }),
-    (t.prototype.equals = function(e) {
+    (t.prototype.equals = function (e) {
       return this.toRgbString() === new t(e).toRgbString();
     }),
     t
@@ -4679,7 +4679,7 @@ let ve = class extends ct {
             this.config.state.find((t) => "template" === t.operator)) ||
           t.has("_timeRemaining")
         ));
-    return (function(t, e, n) {
+    return (function (t, e, n) {
       if (e.has("config") || n) return !0;
       if (t.config.entity) {
         const n = e.get("hass");
@@ -4719,7 +4719,7 @@ let ve = class extends ct {
         ));
   }
   _calculateRemaining(t) {
-    this._timeRemaining = (function(t) {
+    this._timeRemaining = (function (t) {
       var e = Tt(t.attributes.remaining);
       if ("active" === t.state) {
         var n = new Date().getTime(),
@@ -4731,7 +4731,7 @@ let ve = class extends ct {
   }
   _computeTimeDisplay(t) {
     if (t)
-      return (function(t) {
+      return (function (t) {
         var e = Math.floor(t / 3600),
           n = Math.floor((t % 3600) / 60),
           i = Math.floor((t % 3600) % 60);
@@ -4816,7 +4816,7 @@ let ve = class extends ct {
             t.attributes.color_temp &&
             t.attributes.min_mireds &&
             t.attributes.max_mireds
-          ? ((n = (function(t, e, n) {
+          ? ((n = (function (t, e, n) {
               const i = new ue("rgb(255, 160, 0)"),
                 r = new ue("rgb(166, 209, 255)"),
                 s = new ue("white"),
@@ -4872,7 +4872,7 @@ let ve = class extends ct {
           t.attributes &&
           (n = t.attributes.icon
             ? t.attributes.icon
-            : (function(t, e) {
+            : (function (t, e) {
                 if (t in Vt) return Vt[t];
                 switch (t) {
                   case "alarm_control_panel":
@@ -5172,7 +5172,7 @@ let ve = class extends ct {
         return this._blankCardColoredHtml(c);
       case "card":
       case "label-card": {
-        const t = (function(t) {
+        const t = (function (t) {
           const e = new ue(fe(t));
           return e.isValid && e.getLuminance() > 0.5
             ? "rgb(62, 62, 62)"
@@ -5238,7 +5238,7 @@ let ve = class extends ct {
   _buttonContent(t, e, n) {
     const i = this._buildName(t, e),
       r = this._buildStateString(t),
-      s = (function(t, e) {
+      s = (function (t, e) {
         if (!t && !e) return;
         let n;
         return (n = e ? (t ? `${t}: ${e}` : e) : t);
@@ -5325,7 +5325,7 @@ let ve = class extends ct {
   }
   setConfig(t) {
     if (!t) throw new Error("Invalid configuration");
-    const e = (function() {
+    const e = (function () {
       var t = document.querySelector("home-assistant");
       if (
         (t =

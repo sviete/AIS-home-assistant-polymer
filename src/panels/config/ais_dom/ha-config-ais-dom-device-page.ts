@@ -47,7 +47,7 @@ import {
 } from "../../../data/device_automation";
 import { compare } from "../../../common/string/compare";
 import { computeStateName } from "../../../common/entity/compute_state_name";
-import { createValidEntityId } from "../../../common/entity/valid_entity_id";
+import { slugify } from "../../../common/string/slugify";
 
 export interface EntityRegistryStateEntry extends EntityRegistryEntry {
   stateName?: string;
@@ -152,7 +152,7 @@ export class HaConfigDevicePage extends LitElement {
       <hass-subpage .header=${device.name_by_user || device.name}>
         <ha-icon-button
           slot="toolbar-icon"
-          icon="hass:settings"
+          icon="hass:cog"
           @click=${this._showSettings}
         ></ha-icon-button>
         <ha-icon-button
@@ -306,11 +306,11 @@ export class HaConfigDevicePage extends LitElement {
           }
 
           if (renameEntityid) {
-            const oldSearch = createValidEntityId(oldDeviceName);
+            const oldSearch = slugify(oldDeviceName);
             if (entity.entity_id.includes(oldSearch)) {
               newEntityId = entity.entity_id.replace(
                 oldSearch,
-                createValidEntityId(newDeviceName)
+                slugify(newDeviceName)
               );
             }
           }

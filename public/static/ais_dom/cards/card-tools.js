@@ -97,43 +97,82 @@
     function a() {
       var e = document.querySelector("hc-main");
       return (e = e
-        ? (e =
+        ? ((e =
             (e = (e = e && e.shadowRoot) && e.querySelector("hc-lovelace")) &&
-            e.shadowRoot) && e.querySelector("hui-view")
+            e.shadowRoot) &&
+            e.querySelector("hui-view")) ||
+          e.querySelector("hui-panel-view")
         : (e =
             (e =
               (e =
                 (e =
                   (e =
                     (e =
-                      ((e =
-                        (e =
+                      (e =
+                        ((e =
                           (e =
                             (e =
-                              (e = document.querySelector("home-assistant")) &&
-                              e.shadowRoot) &&
-                            e.querySelector("home-assistant-main")) &&
-                          e.shadowRoot) &&
-                        e.querySelector(
-                          "app-drawer-layout partial-panel-resolver"
-                        )) &&
-                        e.shadowRoot) ||
-                      e) && e.querySelector("ha-panel-lovelace")) &&
-                  e.shadowRoot) && e.querySelector("hui-root")) &&
-              e.shadowRoot) && e.querySelector("ha-app-layout #view")) &&
-          e.firstElementChild);
+                              (e =
+                                (e = document.querySelector(
+                                  "home-assistant"
+                                )) && e.shadowRoot) &&
+                              e.querySelector("home-assistant-main")) &&
+                            e.shadowRoot) &&
+                          e.querySelector(
+                            "app-drawer-layout partial-panel-resolver"
+                          )) &&
+                          e.shadowRoot) ||
+                        e) && e.querySelector("ha-panel-lovelace")) &&
+                    e.shadowRoot) && e.querySelector("hui-root")) &&
+                e.shadowRoot) && e.querySelector("ha-app-layout")) &&
+            e.querySelector("#view")) && e.firstElementChild);
+    }
+    async function i() {
+      if (customElements.get("hui-view")) return !0;
+      await customElements.whenDefined("partial-panel-resolver");
+      const e = document.createElement("partial-panel-resolver");
+      if (
+        ((e.hass = {
+          panels: [{ url_path: "tmp", component_name: "lovelace" }],
+        }),
+        e._updateRoutes(),
+        await e.routerOptions.routes.tmp.load(),
+        !customElements.get("ha-panel-lovelace"))
+      )
+        return !1;
+      const t = document.createElement("ha-panel-lovelace");
+      return (
+        (t.hass = o()),
+        void 0 === t.hass &&
+          (await new Promise((e) => {
+            window.addEventListener(
+              "connection-status",
+              (t) => {
+                console.log(t), e();
+              },
+              { once: !0 }
+            );
+          }),
+          (t.hass = o())),
+        (t.panel = { config: { mode: null } }),
+        t._fetchConfig(),
+        !0
+      );
     }
     r.d(t, "a", function () {
       return o;
     }),
-      r.d(t, "d", function () {
+      r.d(t, "e", function () {
         return n;
       }),
-      r.d(t, "b", function () {
+      r.d(t, "c", function () {
         return s;
       }),
-      r.d(t, "c", function () {
+      r.d(t, "d", function () {
         return a;
+      }),
+      r.d(t, "b", function () {
+        return i;
       });
   },
   function (e, t, r) {
@@ -272,7 +311,7 @@
   },
   function (e) {
     e.exports = JSON.parse(
-      '{"name":"card-tools","private":true,"version":"2.1.2","description":"Lovelace Card Tools","scripts":{"build":"webpack","watch":"webpack --watch --mode=development"},"repository":{"type":"git","url":"github.com:thomasloven/card-tools"},"author":"Thomas Lovén","license":"MIT","devDependencies":{"webpack":"^4.42.0","webpack-cli":"^3.3.11"}}'
+      '{"name":"card-tools","private":true,"version":"2.1.2","description":"Lovelace Card Tools","scripts":{"build":"webpack","watch":"webpack --watch --mode=development"},"repository":{"type":"git","url":"github.com:thomasloven/card-tools"},"author":"Thomas Lovén","license":"MIT","devDependencies":{"webpack":"^4.44.1","webpack-cli":"^3.3.12"}}'
     );
   },
   function (e, t, r) {
@@ -295,24 +334,34 @@
       )
         r.dispatchEvent(e);
       else {
-        var o = Object(a.c)();
+        var o = Object(a.d)();
         o && o.dispatchEvent(e);
       }
     }
     let c = window.cardHelpers;
     const l = new Promise(async (e, t) => {
-      c && e(),
-        window.loadCardHelpers &&
-          ((c = await window.loadCardHelpers()), (window.cardHelpers = c), e());
+      c && e();
+      const r = async () => {
+        (c = await window.loadCardHelpers()), (window.cardHelpers = c), e();
+      };
+      window.loadCardHelpers
+        ? r()
+        : window.addEventListener("load", async () => {
+            Object(a.b)(), window.loadCardHelpers && r();
+          });
     });
     function u(e, t) {
-      const r = document.createElement("hui-error-card");
+      const r = { type: "error", error: e, origConfig: t },
+        o = document.createElement("hui-error-card");
       return (
-        r.setConfig({ type: "error", error: e, origConfig: t }),
-        l.then(() => {
-          i("ll-rebuild", {}, r);
+        customElements.whenDefined("hui-error-card").then(() => {
+          const e = document.createElement("hui-error-card");
+          e.setConfig(r), o.parentElement && o.parentElement.replaceChild(e, o);
         }),
-        r
+        l.then(() => {
+          i("ll-rebuild", {}, o);
+        }),
+        o
       );
     }
     function d(e, t) {
@@ -357,56 +406,56 @@
     function m(e) {
       return c ? c.createHuiElement(e) : d("element", e);
     }
-    function f(e) {
+    function h(e) {
       if (c) return c.createRowElement(e);
       const t = new Set([
-        "call-service",
-        "cast",
-        "conditional",
-        "divider",
-        "section",
-        "select",
-        "weblink",
-      ]);
+          "call-service",
+          "cast",
+          "conditional",
+          "divider",
+          "section",
+          "select",
+          "weblink",
+        ]),
+        r = {
+          alert: "toggle",
+          automation: "toggle",
+          climate: "climate",
+          cover: "cover",
+          fan: "toggle",
+          group: "group",
+          input_boolean: "toggle",
+          input_number: "input-number",
+          input_select: "input-select",
+          input_text: "input-text",
+          light: "toggle",
+          lock: "lock",
+          media_player: "media-player",
+          remote: "toggle",
+          scene: "scene",
+          script: "script",
+          sensor: "sensor",
+          timer: "timer",
+          switch: "toggle",
+          vacuum: "toggle",
+          water_heater: "climate",
+          input_datetime: "input-datetime",
+          none: void 0,
+        };
       if (!e) return u("Invalid configuration given.", e);
       if (
         ("string" == typeof e && (e = { entity: e }),
         "object" != typeof e || (!e.entity && !e.type))
       )
         return u("Invalid configuration given.", e);
-      const r = e.type || "default";
-      return t.has(r) || r.startsWith("custom:")
-        ? d("row", e)
-        : d("entity-row", {
-            type:
-              {
-                alert: "toggle",
-                automation: "toggle",
-                climate: "climate",
-                cover: "cover",
-                fan: "toggle",
-                group: "group",
-                input_boolean: "toggle",
-                input_number: "input-number",
-                input_select: "input-select",
-                input_text: "input-text",
-                light: "toggle",
-                lock: "lock",
-                media_player: "media-player",
-                remote: "toggle",
-                scene: "scene",
-                script: "script",
-                sensor: "sensor",
-                timer: "timer",
-                switch: "toggle",
-                vacuum: "toggle",
-                water_heater: "climate",
-                input_datetime: "input-datetime",
-              }[e.entity.split(".", 1)[0]] || "text",
-            ...e,
-          });
+      const o = e.type || "default";
+      if (t.has(o) || o.startsWith("custom:")) return d("row", e);
+      return d("entity-row", {
+        type: r[e.entity ? e.entity.split(".", 1)[0] : "none"] || "text",
+        ...e,
+      });
     }
-    class h extends o {
+    class f extends o {
       static get version() {
         return 2;
       }
@@ -419,7 +468,7 @@
             ? this.el.setConfig(e)
             : ((this.el = this.create(e)),
               this._hass && (this.el.hass = this._hass),
-              this.noHass && Object(a.d)(this));
+              this.noHass && Object(a.e)(this));
       }
       set config(e) {
         this.setConfig(e);
@@ -434,7 +483,7 @@
         return n`${this.el}`;
       }
     }
-    const _ = function (e, t) {
+    const g = function (e, t) {
         const r = Object.getOwnPropertyDescriptors(t.prototype);
         for (const [t, o] of Object.entries(r))
           "constructor" !== t && Object.defineProperty(e.prototype, t, o);
@@ -451,9 +500,9 @@
           "prototype" !== t &&
             Object.defineProperty(Object.getPrototypeOf(e), t, r);
       },
-      g = customElements.get("card-maker");
-    if (!g || !g.version || g.version < 2) {
-      class e extends h {
+      _ = customElements.get("card-maker");
+    if (!_ || !_.version || _.version < 2) {
+      class e extends f {
         create(e) {
           return p(e);
         }
@@ -463,28 +512,28 @@
             : 1;
         }
       }
-      g ? _(g, e) : customElements.define("card-maker", e);
+      _ ? g(_, e) : customElements.define("card-maker", e);
     }
-    const y = customElements.get("element-maker");
-    if (!y || !y.version || y.version < 2) {
-      class e extends h {
+    const w = customElements.get("element-maker");
+    if (!w || !w.version || w.version < 2) {
+      class e extends f {
         create(e) {
           return m(e);
         }
       }
-      y ? _(y, e) : customElements.define("element-maker", e);
+      w ? g(w, e) : customElements.define("element-maker", e);
     }
-    const w = customElements.get("entity-row-maker");
-    if (!w || !w.version || w.version < 2) {
-      class e extends h {
+    const y = customElements.get("entity-row-maker");
+    if (!y || !y.version || y.version < 2) {
+      class e extends f {
         create(e) {
-          return f(e);
+          return h(e);
         }
       }
-      w ? _(w, e) : customElements.define("entity-row-maker", e);
+      y ? g(y, e) : customElements.define("entity-row-maker", e);
     }
-    var b = r(1);
-    function v(e, t = {}) {
+    var v = r(1);
+    function b(e, t = {}) {
       return (
         customElements.whenDefined("long-press").then(() => {
           document.body.querySelector("long-press").bind(e);
@@ -495,68 +544,256 @@
         e
       );
     }
-    function O(e, t = !1) {
+    async function E(e, t, r = !1) {
+      let o = e;
+      "string" == typeof t && (t = t.split(/(\$| )/));
+      for (const [e, n] of t.entries())
+        if (n.trim().length) {
+          if (!o) return null;
+          o.localName &&
+            o.localName.includes("-") &&
+            (await customElements.whenDefined(o.localName)),
+            o.updateComplete && (await o.updateComplete),
+            (o =
+              "$" === n
+                ? r && e == t.length - 1
+                  ? [o.shadowRoot]
+                  : o.shadowRoot
+                : r && e == t.length - 1
+                ? o.querySelectorAll(n)
+                : o.querySelector(n));
+        }
+      return o;
+    }
+    async function O(e, t, r = !1, o = 1e4) {
+      return Promise.race([
+        E(e, t, r),
+        new Promise((e, t) => setTimeout(() => t(new Error("timeout")), o)),
+      ]).catch((e) => {
+        if (!e.message || "timeout" !== e.message) throw e;
+        return null;
+      });
+    }
+    async function S(e, t = !1) {
       const r =
         document.querySelector("hc-main") ||
         document.querySelector("home-assistant");
       i("hass-more-info", { entityId: e }, r);
-      const o = r._moreInfoEl;
+      const o = await O(r, "$ ha-more-info-dialog");
       return (o.large = t), o;
     }
-    function S() {
+    async function C() {
       const e =
-          document.querySelector("hc-main") ||
-          document.querySelector("home-assistant"),
-        t = e && e._moreInfoEl;
-      t && t.close();
+        document.querySelector("home-assistant") ||
+        document.querySelector("hc-root");
+      i("hass-more-info", { entityId: "." }, e);
+      const t = await O(e, "$ card-tools-popup");
+      t && t.closeDialog();
     }
-    function E(e, t, r = !1, o = null, n = !1) {
-      const s =
-        document.querySelector("hc-main") ||
-        document.querySelector("home-assistant");
-      i("hass-more-info", { entityId: null }, s);
-      const a = s._moreInfoEl;
-      a.close(), a.open();
-      const c = a.shadowRoot.querySelector("more-info-controls");
-      c && (c.style.display = "none");
-      const l = document.createElement("div");
-      l.innerHTML = `\n  <style>\n    app-toolbar {\n      color: var(--more-info-header-color);\n      background-color: var(--more-info-header-background);\n    }\n    .scrollable {\n      overflow: auto;\n      max-width: 100% !important;\n    }\n  </style>\n  ${
-        n
-          ? ""
-          : `\n      <app-toolbar>\n        <paper-icon-button\n          icon="hass:close"\n          dialog-dismiss=""\n        ></paper-icon-button>\n        <div class="main-title" main-title="">\n          ${e}\n        </div>\n      </app-toolbar>\n      `
-      }\n    <div class="scrollable">\n      <card-maker nohass>\n      </card-maker>\n    </div>\n  `;
-      const u = l.querySelector(".scrollable");
-      (u.querySelector("card-maker").config = t),
-        (a.sizingTarget = u),
-        (a.large = r),
-        (a._page = "none"),
-        a.shadowRoot.appendChild(l);
-      let d = {};
-      if (o)
-        for (var p in (a.resetFit(), o))
-          (d[p] = a.style[p]), a.style.setProperty(p, o[p]);
-      return (
-        (a._dialogOpenChanged = function (e) {
-          if (
-            !e &&
-            (this.stateObj && this.fire("hass-more-info", { entityId: null }),
-            this.shadowRoot == l.parentNode)
-          ) {
-            (this._page = null), this.shadowRoot.removeChild(l);
-            const e = this.shadowRoot.querySelector("more-info-controls");
-            if ((e && (e.style.display = "inline"), o))
-              for (var t in (a.resetFit(), d))
-                d[t] ? a.style.setProperty(t, d[t]) : a.style.removeProperty(t);
+    async function x(e, t, r = !1, o = {}, n = !1) {
+      if (!customElements.get("card-tools-popup")) {
+        const e = customElements.get("home-assistant-main")
+            ? Object.getPrototypeOf(customElements.get("home-assistant-main"))
+            : Object.getPrototypeOf(customElements.get("hui-view")),
+          t = e.prototype.html,
+          r = e.prototype.css;
+        class o extends e {
+          static get properties() {
+            return {
+              open: {},
+              large: { reflect: !0, type: Boolean },
+              hass: {},
+            };
           }
-        }),
-        a
-      );
+          updated(e) {
+            e.has("hass") && this.card && (this.card.hass = this.hass);
+          }
+          closeDialog() {
+            this.open = !1;
+          }
+          async _makeCard() {
+            const e = await window.loadCardHelpers();
+            (this.card = await e.createCardElement(this._card)),
+              (this.card.hass = this.hass),
+              this.requestUpdate();
+          }
+          async _applyStyles() {
+            let e = await O(this, "$ ha-dialog");
+            customElements.whenDefined("card-mod").then(async () => {
+              if (!e) return;
+              customElements
+                .get("card-mod")
+                .applyToElement(
+                  e,
+                  "more-info",
+                  this._style,
+                  { config: this._card },
+                  [],
+                  !1
+                );
+            });
+          }
+          async showDialog(e, t, r = !1, o = {}, n = !1) {
+            (this.title = e),
+              (this._card = t),
+              (this.large = r),
+              (this._style = o),
+              (this.fullscreen = !!n),
+              this._makeCard(),
+              await this.updateComplete,
+              (this.open = !0),
+              await this._applyStyles();
+          }
+          _enlarge() {
+            this.large = !this.large;
+          }
+          render() {
+            return this.open
+              ? t`
+            <ha-dialog
+              open
+              @closed=${this.closeDialog}
+              .heading=${!0}
+              hideActions
+              @ll-rebuild=${this._makeCard}
+            >
+            ${
+              this.fullscreen
+                ? t`<div slot="heading"></div>`
+                : t`
+                <app-toolbar slot="heading">
+                  <mwc-icon-button
+                    .label=${"dismiss"}
+                    dialogAction="cancel"
+                  >
+                    <ha-icon
+                      .icon=${"mdi:close"}
+                    ></ha-icon>
+                  </mwc-icon-button>
+                  <div class="main-title" @click=${this._enlarge}>
+                    ${this.title}
+                  </div>
+                </app-toolbar>
+              `
+            }
+              <div class="content">
+                ${this.card}
+              </div>
+            </ha-dialog>
+          `
+              : t``;
+          }
+          static get styles() {
+            return r`
+          ha-dialog {
+            --mdc-dialog-min-width: 400px;
+            --mdc-dialog-max-width: 600px;
+            --mdc-dialog-heading-ink-color: var(--primary-text-color);
+            --mdc-dialog-content-ink-color: var(--primary-text-color);
+            --justify-action-buttons: space-between;
+          }
+          @media all and (max-width: 450px), all and (max-height: 500px) {
+            ha-dialog {
+              --mdc-dialog-min-width: 100vw;
+              --mdc-dialog-max-width: 100vw;
+              --mdc-dialog-min-height: 100%;
+              --mdc-dialog-max-height: 100%;
+              --mdc-shape-medium: 0px;
+              --vertial-align-dialog: flex-end;
+            }
+          }
+
+          app-toolbar {
+            flex-shrink: 0;
+            color: var(--primary-text-color);
+            background-color: var(--secondary-background-color);
+          }
+
+          .main-title {
+            margin-left: 16px;
+            line-height: 1.3em;
+            max-height: 2.6em;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+          }
+          .content {
+            margin: -20px -24px;
+          }
+
+          @media all and (max-width: 450px), all and (max-height: 500px) {
+            app-toolbar {
+              background-color: var(--app-header-background-color);
+              color: var(--app-header-text-color, white);
+            }
+          }
+
+          @media all and (min-width: 451px) and (min-height: 501px) {
+            ha-dialog {
+              --mdc-dialog-max-width: 90vw;
+            }
+
+            .content {
+              width: 400px;
+            }
+            :host([large]) .content {
+              width: calc(90vw - 48px);
+            }
+
+            :host([large]) app-toolbar {
+              max-width: calc(90vw - 32px);
+            }
+          }
+          `;
+          }
+        }
+        customElements.define("card-tools-popup", o);
+      }
+      const s =
+        document.querySelector("home-assistant") ||
+        document.querySelector("hc-root");
+      if (!s) return;
+      let i = await O(s, "$ card-tools-popup");
+      if (
+        (i ||
+          ((i = document.createElement("card-tools-popup")),
+          s.shadowRoot.appendChild(i),
+          Object(a.e)(i)),
+        !window._moreInfoDialogListener)
+      ) {
+        const e = async (e) => {
+          if (e.state && "cardToolsPopup" in e.state)
+            if (e.state.cardToolsPopup) {
+              const {
+                title: t,
+                card: r,
+                large: o,
+                style: n,
+                fullscreen: s,
+              } = e.state.params;
+              x(t, r, o, n, s);
+            } else i.closeDialog();
+        };
+        window.addEventListener("popstate", e),
+          (window._moreInfoDialogListener = !0);
+      }
+      history.replaceState({ cardToolsPopup: !1 }, ""),
+        history.pushState(
+          {
+            cardToolsPopup: !0,
+            params: { title: e, card: t, large: r, style: o, fullscreen: n },
+          },
+          ""
+        ),
+        i.showDialog(e, t, r, o, n);
     }
-    function C(e, t, r) {
+    function D(e, t, r) {
       e || (e = Object(a.a)().connection);
       let o = {
           user: Object(a.a)().user.name,
-          browser: b.a,
+          browser: v.a,
           hash: location.hash.substr(1) || " ",
           ...r.variables,
         },
@@ -575,46 +812,46 @@
       );
     }
     var j = r(2);
-    const D = Object(a.a)().callWS({ type: "config/area_registry/list" }),
-      T = Object(a.a)().callWS({ type: "config/device_registry/list" }),
-      P = Object(a.a)().callWS({ type: "config/entity_registry/list" });
+    const T = Object(a.a)().callWS({ type: "config/area_registry/list" }),
+      P = Object(a.a)().callWS({ type: "config/device_registry/list" }),
+      k = Object(a.a)().callWS({ type: "config/entity_registry/list" });
     async function q() {
       return (
         (window.cardToolsData = window.cardToolsData || {
-          areas: await D,
-          devices: await T,
-          entities: await P,
+          areas: await T,
+          devices: await P,
+          entities: await k,
         }),
         window.cardToolsData
       );
     }
-    function R(e) {
+    function $(e) {
       const t = window.cardToolsData;
       for (const r of t.areas)
         if (r.name.toLowerCase() === e.toLowerCase()) return r;
       return null;
     }
-    function I(e) {
+    function R(e) {
       const t = window.cardToolsData;
       let r = [];
       if (!e) return r;
       for (const o of t.devices) o.area_id === e.area_id && r.push(o);
       return r;
     }
-    function k(e) {
+    function I(e) {
       const t = window.cardToolsData;
       for (const r of t.devices)
         if (r.name.toLowerCase() === e.toLowerCase()) return r;
       return null;
     }
-    function x(e) {
+    function L(e) {
       const t = window.cardToolsData;
       let r = [];
       if (!e) return r;
       for (const o of t.entities) o.device_id === e.id && r.push(o.entity_id);
       return r;
     }
-    function $(e, t) {
+    function M(e, t) {
       window._registerCard ||
         ((window._customCardButtons = []),
         (window._registerCard = (e, t) => {
@@ -643,29 +880,25 @@
         window._registerCard(e, t);
     }
     q();
-    const L = new Promise((e) => {
-      document.querySelector("home-assistant").addEventListener(
-        "show-dialog",
-        async (t) => {
-          t.detail.dialogImport().then(() => {
-            const t = document
-              .querySelector("home-assistant")
-              .shadowRoot.querySelector("hui-dialog-edit-card");
-            t.updateComplete.then(() => {
-              t._close(), e();
-            });
-          });
-        },
-        { once: !0 }
-      ),
-        Object(a.c)()._addCard();
-    });
-    async function M(e) {
-      await L;
-      const t = document.createElement("hui-card-editor");
-      return (t.yaml = e), t.value;
-    }
-    class B {
+    const B = async (e) => {
+      await (async () => {
+        if (customElements.get("developer-tools-event")) return;
+        await customElements.whenDefined("partial-panel-resolver");
+        const e = document.createElement("partial-panel-resolver");
+        (e.hass = {
+          panels: [{ url_path: "tmp", component_name: "developer-tools" }],
+        }),
+          e._updateRoutes(),
+          await e.routerOptions.routes.tmp.load(),
+          await customElements.whenDefined("developer-tools-router");
+        const t = document.createElement("developer-tools-router");
+        await t.routerOptions.routes.event.load();
+      })();
+      return document
+        .createElement("developer-tools-event")
+        ._computeParsedEventData(e);
+    };
+    class N {
       static checkVersion(e) {}
       static args() {}
       static logger() {}
@@ -673,7 +906,7 @@
         return Object(a.a)().localize;
       }
       static get deviceID() {
-        return b.a;
+        return v.a;
       }
       static get fireEvent() {
         return i;
@@ -682,13 +915,13 @@
         return Object(a.a)();
       }
       static get lovelace() {
-        return Object(a.b)();
+        return Object(a.c)();
       }
       static get lovelace_view() {
-        return a.c;
+        return a.d;
       }
       static get provideHass() {
-        return a.d;
+        return a.e;
       }
       static get LitElement() {
         return o;
@@ -700,7 +933,7 @@
         return s;
       }
       static get longpress() {
-        return v;
+        return b;
       }
       static get createCard() {
         return p;
@@ -709,16 +942,16 @@
         return m;
       }
       static get createEntityRow() {
-        return f;
+        return h;
       }
       static get moreInfo() {
-        return O;
+        return S;
       }
       static get popUp() {
-        return E;
+        return x;
       }
       static get closePopUp() {
-        return S;
+        return C;
       }
       static get hasTemplate() {
         return (e) => {
@@ -741,7 +974,7 @@
               (r = Object.assign(
                 {
                   user: e.user.name,
-                  browser: b.a,
+                  browser: v.a,
                   hash: location.hash.substr(1) || " ",
                 },
                 r
@@ -753,36 +986,39 @@
             })(e, t, r);
       }
       static get subscribeRenderTemplate() {
-        return C;
+        return D;
       }
       static get getData() {
         return q;
       }
       static get areaByName() {
-        return R;
-      }
-      static get areaDevices() {
-        return I;
-      }
-      static get deviceByName() {
-        return k;
-      }
-      static get deviceEntities() {
-        return x;
-      }
-      static get registerCard() {
         return $;
       }
-      static get yaml2json() {
+      static get areaDevices() {
+        return R;
+      }
+      static get deviceByName() {
+        return I;
+      }
+      static get deviceEntities() {
+        return L;
+      }
+      static get registerCard() {
         return M;
       }
+      static get yaml2json() {
+        return B;
+      }
+      static get selectTree() {
+        return O;
+      }
     }
-    const N = r(3);
+    const A = r(3);
     customElements.get("card-tools") ||
-      (customElements.define("card-tools", B),
+      (customElements.define("card-tools", N),
       (window.cardTools = customElements.get("card-tools")),
       console.info(
-        `%cCARD-TOOLS ${N.version} IS INSTALLED\n  %cDeviceID: ${
+        `%cCARD-TOOLS ${A.version} IS INSTALLED\n  %cDeviceID: ${
           customElements.get("card-tools").deviceID
         }`,
         "color: green; font-weight: bold",
