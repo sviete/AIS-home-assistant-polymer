@@ -28,6 +28,7 @@ import { haStyle } from "../../../resources/styles";
 import "../../../components/ha-icon-next";
 import { fireEvent } from "../../../common/dom/fire_event";
 import { mdiDotsVertical, mdiOpenInNew } from "@mdi/js";
+import { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 
 export interface ConfigEntryUpdatedEvent {
   entry: ConfigEntry;
@@ -107,9 +108,9 @@ export class HaIntegrationCard extends LitElement {
             @error=${this._onImageError}
             @load=${this._onImageLoad}
           />
-          <h1>
+          <h2>
             ${domainToName(this.hass.localize, this.domain)}
-          </h1>
+          </h2>
         </div>
         <paper-listbox>
           ${this.items.map(
@@ -159,12 +160,12 @@ export class HaIntegrationCard extends LitElement {
               @load=${this._onImageLoad}
             />
           </div>
-          <h1>
-            ${item.localized_domain_name}
-          </h1>
           <h2>
-            ${item.localized_domain_name === item.title ? "" : item.title}
+            ${item.localized_domain_name}
           </h2>
+          <h3>
+            ${item.localized_domain_name === item.title ? "" : item.title}
+          </h3>
           ${devices.length || entities.length
             ? html`
                 <div>
@@ -227,7 +228,7 @@ export class HaIntegrationCard extends LitElement {
                 `
               : ""}
           </div>
-          <ha-button-menu corner="BOTTOM_START">
+          <ha-button-menu corner="BOTTOM_START" @action=${this._handleAction}>
             <mwc-icon-button
               .title=${this.hass.localize("ui.common.menu")}
               .label=${this.hass.localize("ui.common.overflow_menu")}
@@ -235,7 +236,7 @@ export class HaIntegrationCard extends LitElement {
             >
               <ha-svg-icon path=${mdiDotsVertical}></ha-svg-icon>
             </mwc-icon-button>
-            <mwc-list-item @click=${this._showSystemOptions}>
+            <mwc-list-item>
               ${this.hass.localize(
                 "ui.panel.config.integrations.config_entry.system_options"
               )}
@@ -244,7 +245,6 @@ export class HaIntegrationCard extends LitElement {
               ? ""
               : html`
                   <a
-                    class="documentation"
                     href=${this.manifest.documentation}
                     rel="noreferrer"
                     target="_blank"
@@ -259,7 +259,7 @@ export class HaIntegrationCard extends LitElement {
                     </mwc-list-item>
                   </a>
                 `}
-            <mwc-list-item class="warning" @click=${this._removeIntegration}>
+            <mwc-list-item class="warning">
               ${this.hass.localize(
                 "ui.panel.config.integrations.config_entry.delete"
               )}
@@ -309,32 +309,27 @@ export class HaIntegrationCard extends LitElement {
     showOptionsFlowDialog(this, ev.target.closest("ha-card").configEntry);
   }
 
-  private _showSystemOptions(ev) {
-    showConfigEntrySystemOptionsDialog(this, {
-      entry: ev.target.closest("ha-card").configEntry,
-    });
-  }
-
-  private async _editEntryName(ev) {
-    const configEntry = ev.target.closest("ha-card").configEntry;
-    const newName = await showPromptDialog(this, {
-      title: this.hass.localize("ui.panel.config.integrations.rename_dialog"),
-      defaultValue: configEntry.title,
-      inputLabel: this.hass.localize(
-        "ui.panel.config.integrations.rename_input_label"
-      ),
-    });
-    if (newName === null) {
-      return;
+  private _handleAction(ev: CustomEvent<ActionDetail>) {
+    const configEntry = ((ev.target as HTMLElement).closest("ha-card") as any)
+      .configEntry;
+    switch (ev.detail.index) {
+      case 0:
+        this._showSystemOptions(configEntry);
+        break;
+      case 1:
+        this._removeIntegration(configEntry);
+        break;
     }
-    const newEntry = await updateConfigEntry(this.hass, configEntry.entry_id, {
-      title: newName,
-    });
-    fireEvent(this, "entry-updated", { entry: newEntry });
   }
 
-  private async _removeIntegration(ev) {
-    const entryId = ev.target.closest("ha-card").configEntry.entry_id;
+  private _showSystemOptions(configEntry: ConfigEntry) {
+    showConfigEntrySystemOptionsDialog(this, {
+      entry: configEntry,
+    });
+  }
+
+  private async _removeIntegration(configEntry: ConfigEntry) {
+    const entryId = configEntry.entry_id;
 
     const confirmed = await showConfirmationDialog(this, {
       text: this.hass.localize(
@@ -356,6 +351,24 @@ export class HaIntegrationCard extends LitElement {
         });
       }
     });
+  }
+
+  private async _editEntryName(ev) {
+    const configEntry = ev.target.closest("ha-card").configEntry;
+    const newName = await showPromptDialog(this, {
+      title: this.hass.localize("ui.panel.config.integrations.rename_dialog"),
+      defaultValue: configEntry.title,
+      inputLabel: this.hass.localize(
+        "ui.panel.config.integrations.rename_input_label"
+      ),
+    });
+    if (newName === null) {
+      return;
+    }
+    const newEntry = await updateConfigEntry(this.hass, configEntry.entry_id, {
+      title: newName,
+    });
+    fireEvent(this, "entry-updated", { entry: newEntry });
   }
 
   static get styles(): CSSResult[] {
@@ -389,9 +402,6 @@ export class HaIntegrationCard extends LitElement {
           justify-content: space-between;
           align-items: center;
           padding-right: 5px;
-        }
-        .card-actions .documentation {
-          color: var(--primary-text-color);
         }
         .group-header {
           display: flex;
@@ -446,6 +456,9 @@ export class HaIntegrationCard extends LitElement {
         paper-item {
           cursor: pointer;
           min-height: 35px;
+        }
+        mwc-list-item ha-svg-icon {
+          color: var(--secondary-text-color);
         }
         .back-btn {
           position: absolute;
