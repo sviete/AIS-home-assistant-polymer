@@ -58,6 +58,8 @@ import type { Lovelace } from "./types";
 import "./views/hui-panel-view";
 import type { HUIPanelView } from "./views/hui-panel-view";
 import { HUIView } from "./views/hui-view";
+import type { RequestSelectedDetail } from "@material/mwc-list/mwc-list-item";
+import { shouldHandleRequestSelectedEvent } from "../../common/mwc/handle-request-selected-event";
 
 class HUIRoot extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
@@ -66,7 +68,7 @@ class HUIRoot extends LitElement {
 
   @property() public columns?: number;
 
-  @property() public narrow?: boolean;
+  @property({ type: Boolean }) public narrow = false;
 
   @property() public route?: { path: string; prefix: string };
 
@@ -133,14 +135,20 @@ class HUIRoot extends LitElement {
                       <ha-svg-icon path=${mdiPencil}></ha-svg-icon>
                     </mwc-icon-button>
                   </div>
-                  <mwc-icon-button
-                    title="${this.hass!.localize(
-                      "ui.panel.lovelace.menu.help"
-                    )}"
-                    @click="${this._handleHelp}"
+                  <a
+                    href="https://www.home-assistant.io/lovelace/"
+                    rel="noreferrer"
+                    class="menu-link"
+                    target="_blank"
                   >
-                    <ha-svg-icon path=${mdiHelpCircle}></ha-svg-icon>
-                  </mwc-icon-button>
+                    <mwc-icon-button
+                      title="${this.hass!.localize(
+                        "ui.panel.lovelace.menu.help"
+                      )}"
+                    >
+                      <ha-svg-icon path=${mdiHelpCircle}></ha-svg-icon>
+                    </mwc-icon-button>
+                  </a>
                   <ha-button-menu corner="BOTTOM_START">
                     <mwc-icon-button
                       slot="trigger"
@@ -160,14 +168,14 @@ class HUIRoot extends LitElement {
                             aria-label=${this.hass!.localize(
                               "ui.panel.lovelace.unused_entities.title"
                             )}
-                            @tap="${this._handleUnusedEntities}"
+                            @request-selected="${this._handleUnusedEntities}"
                           >
                             ${this.hass!.localize(
                               "ui.panel.lovelace.unused_entities.title"
                             )}
                           </mwc-list-item>
                         `}
-                    <mwc-list-item @tap="${this.lovelace!.enableFullEditMode}">
+                    <mwc-list-item @request-selected="${this._handleRawEditor}">
                       ${this.hass!.localize(
                         "ui.panel.lovelace.editor.menu.raw_editor"
                       )}
@@ -212,7 +220,7 @@ class HUIRoot extends LitElement {
                             aria-label=${this.hass!.localize(
                               "ui.panel.lovelace.menu.refresh"
                             )}
-                            @tap="${this._handleRefresh}"
+                            @request-selected="${this._handleRefresh}"
                           >
                             ${this.hass!.localize(
                               "ui.panel.lovelace.menu.refresh"
@@ -222,7 +230,7 @@ class HUIRoot extends LitElement {
                             aria-label=${this.hass!.localize(
                               "ui.panel.lovelace.unused_entities.title"
                             )}
-                            @tap="${this._handleUnusedEntities}"
+                            @request-selected="${this._handleUnusedEntities}"
                           >
                             ${this.hass!.localize(
                               "ui.panel.lovelace.unused_entities.title"
@@ -237,7 +245,7 @@ class HUIRoot extends LitElement {
                             aria-label=${this.hass!.localize(
                               "ui.panel.lovelace.menu.reload_resources"
                             )}
-                            @tap="${this._handleReloadResources}"
+                            @request-selected=${this._handleReloadResources}
                           >
                             ${this.hass!.localize(
                               "ui.panel.lovelace.menu.reload_resources"
@@ -245,13 +253,13 @@ class HUIRoot extends LitElement {
                           </mwc-list-item>
                         `
                       : ""}
-                    ${this.hass!.user!.is_admin && !this.hass!.config.safe_mode
+                    ${this.hass!.user?.is_admin && !this.hass!.config.safe_mode
                       ? html`
                           <mwc-list-item
                             aria-label=${this.hass!.localize(
                               "ui.panel.lovelace.menu.configure_ui"
                             )}
-                            @tap="${this._editModeEnable}"
+                            @request-selected=${this._handleEnableEditMode}
                           >
                             ${this.hass!.localize(
                               "ui.panel.lovelace.menu.configure_ui"
@@ -259,14 +267,20 @@ class HUIRoot extends LitElement {
                           </mwc-list-item>
                         `
                       : ""}
-                    <mwc-list-item
-                      aria-label=${this.hass!.localize(
-                        "ui.panel.lovelace.menu.help"
-                      )}
-                      @tap="${this._handleHelp}"
+                    <a
+                      href="https://www.home-assistant.io/lovelace/"
+                      rel="noreferrer"
+                      class="menu-link"
+                      target="_blank"
                     >
-                      ${this.hass!.localize("ui.panel.lovelace.menu.help")}
-                    </mwc-list-item>
+                      <mwc-list-item
+                        aria-label=${this.hass!.localize(
+                          "ui.panel.lovelace.menu.help"
+                        )}
+                      >
+                        ${this.hass!.localize("ui.panel.lovelace.menu.help")}
+                      </mwc-list-item>
+                    </a>
                   </ha-button-menu>
                 </app-toolbar>
               `}
@@ -476,11 +490,17 @@ class HUIRoot extends LitElement {
     return this.shadowRoot!.getElementById("view") as HTMLDivElement;
   }
 
-  private _handleRefresh(): void {
+  private _handleRefresh(ev: CustomEvent<RequestSelectedDetail>): void {
+    if (!shouldHandleRequestSelectedEvent(ev)) {
+      return;
+    }
     fireEvent(this, "config-refresh");
   }
 
-  private _handleReloadResources(): void {
+  private _handleReloadResources(ev: CustomEvent<RequestSelectedDetail>): void {
+    if (!shouldHandleRequestSelectedEvent(ev)) {
+      return;
+    }
     this.hass.callService("lovelace", "reload_resources");
     showConfirmationDialog(this, {
       title: this.hass!.localize(
@@ -493,7 +513,17 @@ class HUIRoot extends LitElement {
     });
   }
 
-  private _handleUnusedEntities(): void {
+  private _handleRawEditor(ev: CustomEvent<RequestSelectedDetail>): void {
+    if (!shouldHandleRequestSelectedEvent(ev)) {
+      return;
+    }
+    this.lovelace!.enableFullEditMode();
+  }
+
+  private _handleUnusedEntities(ev: CustomEvent<RequestSelectedDetail>): void {
+    if (!shouldHandleRequestSelectedEvent(ev)) {
+      return;
+    }
     navigate(this, `${this.route?.prefix}/hass-unused-entities`);
   }
 
@@ -501,17 +531,20 @@ class HUIRoot extends LitElement {
     showVoiceCommandDialog(this);
   }
 
-  private _handleHelp(): void {
-    window.open("www.ai-speaker.com/docs/ais_app_index", "_blank");
-  }
-
-  private _editModeEnable(): void {
+  private _handleEnableEditMode(ev: CustomEvent<RequestSelectedDetail>): void {
+    if (!shouldHandleRequestSelectedEvent(ev)) {
+      return;
+    }
     if (this._yamlMode) {
       showAlertDialog(this, {
         text: "The edit UI is not available when in YAML mode.",
       });
       return;
     }
+    this._enableEditMode();
+  }
+
+  private _enableEditMode(): void {
     this.lovelace!.setEditMode(true);
   }
 
@@ -616,7 +649,7 @@ class HUIRoot extends LitElement {
     const viewConfig = this.config.views[viewIndex];
 
     if (!viewConfig) {
-      this._editModeEnable();
+      this._enableEditMode();
       return;
     }
 
@@ -665,7 +698,8 @@ class HUIRoot extends LitElement {
           min-height: 100%;
         }
         paper-tabs {
-          margin-left: 12px;
+          margin-left: max(env(safe-area-inset-left), 12px);
+          margin-right: env(safe-area-inset-right);
           --paper-tabs-selection-bar-color: var(--text-primary-color, #fff);
           text-transform: uppercase;
         }
@@ -731,6 +765,9 @@ class HUIRoot extends LitElement {
         }
         .hide-tab {
           display: none;
+        }
+        .menu-link {
+          text-decoration: none;
         }
       `,
     ];
