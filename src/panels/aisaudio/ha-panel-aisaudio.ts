@@ -21,21 +21,33 @@ import type { HomeAssistant } from "../../types";
 import { haStyle } from "../../resources/styles";
 import "../lovelace/views/hui-view";
 import { Lovelace } from "../lovelace/types";
+// import { loadJS } from "../../common/dom/load_resource";
+// import { hassUrl } from "../../data/auth";
 
 @customElement("ha-panel-aisaudio")
 class PanelAisAudio extends LitElement {
-  @property() public hass!: HomeAssistant;
+  public hass!: HomeAssistant;
 
   @property({ type: Boolean, reflect: true })
   public narrow!: boolean;
 
   @property() private _columns?: number;
 
+  // AIS DOM
+  // aisJs = [
+  //   "/static/ais_dom/cards/card-tools.js?v=11",
+  //   "/static/ais_dom/cards/ais-tts.js",
+  // ].forEach((resource) => {
+  //   const normalizedUrl = new URL(resource, hassUrl).toString();
+  //   loadJS(normalizedUrl);
+  // });
+
   private mqls?: MediaQueryList[];
 
   private lovelace: Lovelace = {
     config: aisAudioLovelace,
     editMode: false,
+    urlPath: null,
     enableFullEditMode: () => undefined,
     mode: "storage",
     language: "pl",

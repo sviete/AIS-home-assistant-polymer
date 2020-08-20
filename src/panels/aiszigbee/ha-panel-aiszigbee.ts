@@ -35,6 +35,7 @@ class PanelAisZigbee extends LitElement {
   private lovelace: Lovelace = {
     config: aisZigbeeLovelace,
     editMode: false,
+    urlPath: null,
     enableFullEditMode: () => undefined,
     mode: "storage",
     language: "pl",

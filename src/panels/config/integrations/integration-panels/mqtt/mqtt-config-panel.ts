@@ -43,13 +43,13 @@ class HaPanelDevMqtt extends LitElement {
     return html`
       <hass-subpage>
         <div class="content">
-          <ha-card header="MQTT settings">
+          <!-- <ha-card header="MQTT settings">
             <div class="card-actions">
               <mwc-button @click=${this._openOptionFlow}
                 >Re-configure MQTT</mwc-button
               >
             </div>
-          </ha-card>
+          </ha-card> -->
           <ha-card
             header="${this.hass.localize(
               "ui.panel.config.mqtt.description_publish"
