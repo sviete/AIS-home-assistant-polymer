@@ -5,6 +5,7 @@ import {
   CSSResultArray,
   css,
   TemplateResult,
+  PropertyValues,
   html,
 } from "lit-element";
 
@@ -26,7 +27,7 @@ import { Lovelace } from "../lovelace/types";
 
 @customElement("ha-panel-aisaudio")
 class PanelAisAudio extends LitElement {
-  public hass!: HomeAssistant;
+  @property() public hass!: HomeAssistant;
 
   @property({ type: Boolean, reflect: true })
   public narrow!: boolean;
