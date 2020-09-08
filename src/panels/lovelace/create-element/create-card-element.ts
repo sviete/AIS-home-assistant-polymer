@@ -3,6 +3,7 @@ import "../cards/hui-ais-easy-picker-card";
 import "../cards/hui-ais-button-card";
 import "../cards/hui-ais-files-list-card";
 import "../cards/hui-button-card";
+import "../cards/hui-calendar-card";
 import "../cards/hui-entities-card";
 import "../cards/hui-entity-button-card";
 import "../cards/hui-entity-card";
@@ -62,7 +63,6 @@ const LAZY_LOAD_TYPES = {
   map: () => import("../cards/hui-map-card"),
   markdown: () => import("../cards/hui-markdown-card"),
   picture: () => import("../cards/hui-picture-card"),
-
   "ais-list": () => import("../cards/hui-ais-list-card"),
   "ais-auto-entities": () => import("../cards/hui-ais-auto-entities-card"),
   "ais-monster": () => import("../cards/hui-ais-monster-card"),
@@ -70,6 +70,7 @@ const LAZY_LOAD_TYPES = {
   "ais-now-playing-poster": () =>
     import("../cards/hui-ais-now-playing-poster-card"),
   "ais-light": () => import("../cards/hui-ais-light-card"),
+  calendar: () => import("../cards/hui-calendar-card"),
 };
 
 // This will not return an error card but will throw the error

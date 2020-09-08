@@ -2,11 +2,15 @@ import { fireEvent } from "../../common/dom/fire_event";
 
 export interface HaDomainTogglerDialogParams {
   domains: string[];
+  exposedDomains: string[] | null;
   toggleDomain: (domain: string, turnOn: boolean) => void;
+  resetDomain: (domain: string) => void;
 }
 
 export const loadDomainTogglerDialog = () =>
-  import(/* webpackChunkName: "dialog-domain-toggler" */ "./dialog-domain-toggler");
+  import(
+    /* webpackChunkName: "dialog-domain-toggler" */ "./dialog-domain-toggler"
+  );
 
 export const showDomainTogglerDialog = (
   element: HTMLElement,
