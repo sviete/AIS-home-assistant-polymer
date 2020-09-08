@@ -33,6 +33,7 @@ import {
   mdiMathLog,
   mdiPencil,
   mdiMonitorSpeaker,
+  mdiNfcVariant,
 } from "@mdi/js";
 
 declare global {
@@ -97,6 +98,15 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       path: "/config/helpers",
       translationKey: "ui.panel.config.helpers.caption",
       iconPath: mdiTools,
+      core: true,
+    },
+  ],
+  experimental: [
+    {
+      component: "tags",
+      path: "/config/tags",
+      translationKey: "ui.panel.config.tags.caption",
+      iconPath: mdiNfcVariant,
       core: true,
     },
   ],
@@ -213,6 +223,13 @@ class HaPanelConfig extends HassRouterPage {
         load: () =>
           import(
             /* webpackChunkName: "panel-config-automation" */ "./automation/ha-config-automation"
+          ),
+      },
+      tags: {
+        tag: "ha-config-tags",
+        load: () =>
+          import(
+            /* webpackChunkName: "panel-config-tags" */ "./tags/ha-config-tags"
           ),
       },
       cloud: {
@@ -423,6 +440,13 @@ class HaPanelConfig extends HassRouterPage {
         load: () =>
           import(
             /* webpackChunkName: "panel-config-mqtt" */ "./integrations/integration-panels/mqtt/mqtt-config-panel"
+          ),
+      },
+      ozw: {
+        tag: "ozw-config-router",
+        load: () =>
+          import(
+            /* webpackChunkName: "panel-config-ozw" */ "./integrations/integration-panels/ozw/ozw-config-router"
           ),
       },
     },

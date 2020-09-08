@@ -5,19 +5,19 @@ import {
   CSSResult,
   customElement,
   html,
+  internalProperty,
   LitElement,
   property,
-  internalProperty,
   TemplateResult,
 } from "lit-element";
 import { classMap } from "lit-html/directives/class-map";
+import { fireEvent } from "../../common/dom/fire_event";
 import "../../components/ha-dialog";
 import "../../components/ha-switch";
 import { PolymerChangedEvent } from "../../polymer-types";
 import { haStyleDialog } from "../../resources/styles";
 import { HomeAssistant } from "../../types";
 import { DialogParams } from "./show-dialog-box";
-import { fireEvent } from "../../common/dom/fire_event";
 
 @customElement("dialog-box")
 class DialogBox extends LitElement {
@@ -55,9 +55,9 @@ class DialogBox extends LitElement {
     return html`
       <ha-dialog
         open
-        scrimClickAction
-        escapeKeyAction
-        @close=${this._close}
+        ?scrimClickAction=${this._params.prompt}
+        ?escapeKeyAction=${this._params.prompt}
+        @closed=${this._dismiss}
         .heading=${this._params.title
           ? this._params.title
           : this._params.confirmation &&
@@ -114,8 +114,8 @@ class DialogBox extends LitElement {
   }
 
   private _dismiss(): void {
-    if (this._params!.cancel) {
-      this._params!.cancel();
+    if (this._params?.cancel) {
+      this._params.cancel();
     }
     this._close();
   }

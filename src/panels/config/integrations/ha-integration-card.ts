@@ -14,6 +14,7 @@ import {
   ConfigEntry,
   updateConfigEntry,
   deleteConfigEntry,
+  reloadConfigEntry,
 } from "../../../data/config_entries";
 import { EntityRegistryEntry } from "../../../data/entity_registry";
 import { DeviceRegistryEntry } from "../../../data/device_registry";
@@ -28,7 +29,8 @@ import { haStyle } from "../../../resources/styles";
 import "../../../components/ha-icon-next";
 import { fireEvent } from "../../../common/dom/fire_event";
 import { mdiDotsVertical, mdiOpenInNew } from "@mdi/js";
-import { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
+import type { RequestSelectedDetail } from "@material/mwc-list/mwc-list-item";
+import { shouldHandleRequestSelectedEvent } from "../../../common/mwc/handle-request-selected-event";
 
 export interface ConfigEntryUpdatedEvent {
   entry: ConfigEntry;
@@ -54,6 +56,10 @@ const integrationsWithPanel = {
   zha: {
     buttonLocalizeKey: "ui.panel.config.zha.button",
     path: "/config/zha/dashboard",
+  },
+  ozw: {
+    buttonLocalizeKey: "ui.panel.config.ozw.button",
+    path: "/config/ozw/dashboard",
   },
   zwave: {
     buttonLocalizeKey: "ui.panel.config.zwave.button",
@@ -133,6 +139,7 @@ export class HaIntegrationCard extends LitElement {
 
   private _renderSingleEntry(item: ConfigEntryExtended): TemplateResult {
     const devices = this._getDevices(item);
+    const services = this._getServices(item);
     const entities = this._getEntities(item);
 
     return html`
@@ -166,7 +173,7 @@ export class HaIntegrationCard extends LitElement {
           <h3>
             ${item.localized_domain_name === item.title ? "" : item.title}
           </h3>
-          ${devices.length || entities.length
+          ${devices.length || services.length || entities.length
             ? html`
                 <div>
                   ${devices.length
@@ -178,10 +185,22 @@ export class HaIntegrationCard extends LitElement {
                             "count",
                             devices.length
                           )}</a
+                        >${services.length ? "," : ""}
+                      `
+                    : ""}
+                  ${services.length
+                    ? html`
+                        <a
+                          href=${`/config/devices/dashboard?historyBack=1&config_entry=${item.entry_id}`}
+                          >${this.hass.localize(
+                            "ui.panel.config.integrations.config_entry.services",
+                            "count",
+                            services.length
+                          )}</a
                         >
                       `
                     : ""}
-                  ${devices.length && entities.length
+                  ${(devices.length || services.length) && entities.length
                     ? this.hass.localize("ui.common.and")
                     : ""}
                   ${entities.length
@@ -228,7 +247,7 @@ export class HaIntegrationCard extends LitElement {
                 `
               : ""}
           </div>
-          <ha-button-menu corner="BOTTOM_START" @action=${this._handleAction}>
+          <ha-button-menu corner="BOTTOM_START">
             <mwc-icon-button
               .title=${this.hass.localize("ui.common.menu")}
               .label=${this.hass.localize("ui.common.overflow_menu")}
@@ -236,7 +255,7 @@ export class HaIntegrationCard extends LitElement {
             >
               <ha-svg-icon path=${mdiDotsVertical}></ha-svg-icon>
             </mwc-icon-button>
-            <mwc-list-item>
+            <mwc-list-item @request-selected="${this._handleSystemOptions}">
               ${this.hass.localize(
                 "ui.panel.config.integrations.config_entry.system_options"
               )}
@@ -259,7 +278,17 @@ export class HaIntegrationCard extends LitElement {
                     </mwc-list-item>
                   </a>
                 `}
-            <mwc-list-item class="warning">
+            ${item.state === "loaded" && item.supports_unload
+              ? html`<mwc-list-item @request-selected="${this._handleReload}">
+                  ${this.hass.localize(
+                    "ui.panel.config.integrations.config_entry.reload"
+                  )}
+                </mwc-list-item>`
+              : ""}
+            <mwc-list-item
+              class="warning"
+              @request-selected="${this._handleDelete}"
+            >
               ${this.hass.localize(
                 "ui.panel.config.integrations.config_entry.delete"
               )}
@@ -292,8 +321,21 @@ export class HaIntegrationCard extends LitElement {
     if (!this.deviceRegistryEntries) {
       return [];
     }
-    return this.deviceRegistryEntries.filter((device) =>
-      device.config_entries.includes(configEntry.entry_id)
+    return this.deviceRegistryEntries.filter(
+      (device) =>
+        device.config_entries.includes(configEntry.entry_id) &&
+        device.entry_type !== "service"
+    );
+  }
+
+  private _getServices(configEntry: ConfigEntry): DeviceRegistryEntry[] {
+    if (!this.deviceRegistryEntries) {
+      return [];
+    }
+    return this.deviceRegistryEntries.filter(
+      (device) =>
+        device.config_entries.includes(configEntry.entry_id) &&
+        device.entry_type === "service"
     );
   }
 
@@ -309,17 +351,31 @@ export class HaIntegrationCard extends LitElement {
     showOptionsFlowDialog(this, ev.target.closest("ha-card").configEntry);
   }
 
-  private _handleAction(ev: CustomEvent<ActionDetail>) {
-    const configEntry = ((ev.target as HTMLElement).closest("ha-card") as any)
-      .configEntry;
-    switch (ev.detail.index) {
-      case 0:
-        this._showSystemOptions(configEntry);
-        break;
-      case 1:
-        this._removeIntegration(configEntry);
-        break;
+  private _handleReload(ev: CustomEvent<RequestSelectedDetail>): void {
+    if (!shouldHandleRequestSelectedEvent(ev)) {
+      return;
     }
+    this._reloadIntegration(
+      ((ev.target as HTMLElement).closest("ha-card") as any).configEntry
+    );
+  }
+
+  private _handleDelete(ev: CustomEvent<RequestSelectedDetail>): void {
+    if (!shouldHandleRequestSelectedEvent(ev)) {
+      return;
+    }
+    this._removeIntegration(
+      ((ev.target as HTMLElement).closest("ha-card") as any).configEntry
+    );
+  }
+
+  private _handleSystemOptions(ev: CustomEvent<RequestSelectedDetail>): void {
+    if (!shouldHandleRequestSelectedEvent(ev)) {
+      return;
+    }
+    this._showSystemOptions(
+      ((ev.target as HTMLElement).closest("ha-card") as any).configEntry
+    );
   }
 
   private _showSystemOptions(configEntry: ConfigEntry) {
@@ -350,6 +406,21 @@ export class HaIntegrationCard extends LitElement {
           ),
         });
       }
+    });
+  }
+
+  private async _reloadIntegration(configEntry: ConfigEntry) {
+    const entryId = configEntry.entry_id;
+
+    reloadConfigEntry(this.hass, entryId).then((result) => {
+      const locale_key = result.require_restart
+        ? "reload_restart_confirm"
+        : "reload_confirm";
+      showAlertDialog(this, {
+        text: this.hass.localize(
+          `ui.panel.config.integrations.config_entry.${locale_key}`
+        ),
+      });
     });
   }
 
