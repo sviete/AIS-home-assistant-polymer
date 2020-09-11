@@ -64,10 +64,14 @@ class PanelMediaBrowser extends LitElement {
                 "ui.components.media-browser.media-player-browser"
               )}
             </div>
-            <mwc-button @click=${this._showSelectMediaPlayerDialog}>
+            <mwc-icon-button
+              @click=${this._showSelectMediaPlayerDialog}
+              .label=${this.hass.localize(
+                "ui.components.media-browser.choose_player"
+              )}
+            >
               <ha-svg-icon .path=${mdiPlayNetwork}></ha-svg-icon>
-              ${this.hass.localize("ui.components.media-browser.choose_player")}
-            </mwc-button>
+            </mwc-icon-button>
           </app-toolbar>
         </app-header>
         <div class="content">
