@@ -17,6 +17,12 @@ import {
   mdiApplication,
   mdiAccountMusicOutline,
   mdiDramaMasks,
+  mdiRadio,
+  mdiHeart,
+  mdiBookmarkMultiple,
+  mdiNas,
+  mdiBookPlay,
+  mdiMusicClefTreble,
 } from "@mdi/js";
 
 export const SUPPORT_PAUSE = 1;
@@ -98,6 +104,12 @@ export const MediaClassBrowserSettings: {
   },
   url: { icon: mdiWeb },
   video: { icon: mdiVideo, layout: "grid" },
+  radio: { icon: mdiRadio },
+  book: { icon: mdiBookPlay },
+  nas: { icon: mdiNas },
+  heart: { icon: mdiHeart },
+  bookmark: { icon: mdiBookmarkMultiple },
+  classicMusic: { icon: mdiMusicClefTreble },
 };
 
 export interface MediaPickedEvent {
