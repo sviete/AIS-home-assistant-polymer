@@ -147,7 +147,7 @@ class PanelMediaBrowser extends LitElement {
           white-space: nowrap;
         }
         .heading .secondary {
-          color: var(--secondary-text-color);
+          color: var(--app-header-text-color);
           font-size: 14px;
           overflow: hidden;
           text-overflow: ellipsis;
