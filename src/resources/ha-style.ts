@@ -17,7 +17,6 @@ documentContainer.innerHTML = `<custom-style>
     html {
       font-size: 14px;
       height: 100vh;
-      label-badge-red: #FF9800;
 
       /* text */
       --primary-text-color: #ffffff;
