@@ -1,15 +1,19 @@
-import type { HassEntity } from "home-assistant-js-websocket";
-import type { HomeAssistant } from "../types";
 import {
-  mdiFolder,
-  mdiPlaylistMusic,
-  mdiFileMusic,
+  mdiAccountMusic,
+  mdiAccountMusicOutline,
   mdiAlbum,
-  mdiMusic,
-  mdiTelevisionClassic,
-  mdiMovie,
-  mdiVideo,
+  mdiApplication,
+  mdiDramaMasks,
+  mdiFileMusic,
+  mdiFolder,
+  mdiGamepadVariant,
   mdiImage,
+  mdiMovie,
+  mdiMusic,
+  mdiPlaylistMusic,
+  mdiPodcast,
+  mdiTelevisionClassic,
+  mdiVideo,
   mdiWeb,
   mdiGamepadVariant,
   mdiAccountMusic,
@@ -54,6 +58,8 @@ import {
   mdiDoctor,
   mdiSunglasses,
 } from "@mdi/js";
+import type { HassEntity } from "home-assistant-js-websocket";
+import type { HomeAssistant } from "../types";
 
 export const SUPPORT_PAUSE = 1;
 export const SUPPORT_SEEK = 2;
@@ -74,7 +80,7 @@ export const CONTRAST_RATIO = 4.5;
 
 export type MediaPlayerBrowseAction = "pick" | "play";
 
-export const BROWSER_SOURCE = "browser";
+export const BROWSER_PLAYER = "browser";
 
 export type MediaClassBrowserSetting = {
   icon: string;

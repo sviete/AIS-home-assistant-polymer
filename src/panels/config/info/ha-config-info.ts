@@ -12,6 +12,7 @@ import "./integrations-card";
 import "./system-health-card";
 import { configSections } from "../ha-panel-config";
 import "../../../layouts/hass-tabs-subpage";
+import { documentationUrl } from "../../../util/documentation-url";
 
 const JS_TYPE = __BUILD__;
 const JS_VERSION = __VERSION__;
@@ -60,7 +61,7 @@ class HaConfigInfo extends LitElement {
           </p>
           <p class="develop">
             <a
-              href="https://www.home-assistant.io/developers/credits/"
+              href="${documentationUrl(this.hass, "/developers/credits/")}"
               target="_blank"
               rel="noreferrer"
             >
