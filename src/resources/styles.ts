@@ -64,7 +64,6 @@ export const derivedStyles = {
   "paper-slider-active-color": "var(--slider-color)",
   "paper-slider-secondary-color": "var(--slider-secondary-color)",
   "paper-slider-container-color": "var(--slider-bar-color)",
-  "paper-card-background-color": "var(--card-background-color)",
   "data-table-background-color": "var(--card-background-color)",
   "markdown-code-background-color": "var(--primary-background-color)",
   "mdc-theme-primary": "var(--primary-color)",
@@ -275,7 +274,7 @@ export const haStyleDialog = css`
       ) !important;
       max-height: calc(100% - 64px);
 
-      position: sticky !important;
+      position: fixed !important;
       bottom: 0px;
       left: env(safe-area-inset-left);
       right: env(safe-area-inset-right);

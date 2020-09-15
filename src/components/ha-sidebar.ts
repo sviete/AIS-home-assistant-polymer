@@ -118,6 +118,7 @@ const defaultPanelSorter = (
 
   const aBuiltIn = a.url_path in SORT_VALUE_URL_PATHS;
   const bBuiltIn = b.url_path in SORT_VALUE_URL_PATHS;
+
   if (aBuiltIn && bBuiltIn) {
     return SORT_VALUE_URL_PATHS[a.url_path] - SORT_VALUE_URL_PATHS[b.url_path];
   }

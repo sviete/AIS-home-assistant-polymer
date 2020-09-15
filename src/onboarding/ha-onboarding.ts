@@ -75,6 +75,7 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
 
   protected render(): TemplateResult {
     const step = this._curStep()!;
+
     if (this._loading || !step) {
       return html` <onboarding-loading></onboarding-loading> `;
     }

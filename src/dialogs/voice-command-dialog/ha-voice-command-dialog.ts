@@ -100,7 +100,7 @@ export class HaVoiceCommandDialog extends LitElement {
           paper-dialog-scrollable.can-scroll {
             --paper-dialog-scrollable: {
               -webkit-overflow-scrolling: touch;
-              max-height: calc(75vh - 175px) !important;
+              max-height: calc(100vh - 175px) !important;
             }
           }
         }
