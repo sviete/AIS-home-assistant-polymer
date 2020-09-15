@@ -218,7 +218,7 @@ export class HaStateLabelBadge extends LitElement {
       }
 
       ha-label-badge {
-        --ha-label-badge-color: var(--label-badge-red, #ff9800);
+        --ha-label-badge-color: var(--label-badge-red, #df4c1e);
       }
       ha-label-badge.has-unit_of_measurement {
         --ha-label-badge-label-text-transform: none;
@@ -226,11 +226,11 @@ export class HaStateLabelBadge extends LitElement {
 
       ha-label-badge.binary_sensor,
       ha-label-badge.updater {
-        --ha-label-badge-color: var(--label-badge-blue, #ca510b);
+        --ha-label-badge-color: var(--label-badge-blue, #039be5);
       }
 
       .red {
-        --ha-label-badge-color: var(--label-badge-red, #ff9800);
+        --ha-label-badge-color: var(--label-badge-red, #df4c1e);
       }
 
       .blue {

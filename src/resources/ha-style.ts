@@ -46,16 +46,13 @@ documentContainer.innerHTML = `<custom-style>
       /* background and sidebar */
       --card-background-color: #323232;
       --primary-background-color: #4c4c4c;
-      --secondary-background-color: #4c4c4c;
-      --paper-listbox-background-color: "#727272"
+      --secondary-background-color: #4c4c4c; /* behind the cards on state */
 
       /* for label-badge */
-      --label-badge-red: #FF9800;
-      --label-badge-blue: #ffc947;
-      --label-badge-green: #c66900;
-      --label-badge-yellow: #ffffff;
-      --label-badge-text-color: #ffffff;
-      --label-badge-color: #FF9800;
+      --label-badge-red: #d6520d;
+      --label-badge-blue: #039be5;
+      --label-badge-green: #0DA035;
+      --label-badge-yellow: #f4b400;
 
       /*
         Paper-styles color.html dependency is stripped on build.
