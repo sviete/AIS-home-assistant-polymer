@@ -7,6 +7,7 @@ import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-dashboard";
+import "../../../components/ha-paper-dropdown-menu";
 import "../../../components/ha-switch";
 import "@polymer/paper-dropdown-menu/paper-dropdown-menu";
 import "@polymer/paper-item/paper-item";

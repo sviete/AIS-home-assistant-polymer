@@ -12,9 +12,12 @@ import {
 import "@polymer/app-layout/app-header-layout/app-header-layout";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
+import "@polymer/paper-checkbox/paper-checkbox";
 import "@material/mwc-checkbox";
 import "@material/mwc-formfield";
 import { showVoiceCommandDialog } from "../../dialogs/voice-command-dialog/show-ha-voice-command-dialog";
+import { showMediaBrowserDialog } from "../../components/media-player/show-media-browser-dialog";
+import { MediaPickedEvent } from "../../data/media-player";
 import "../../components/ha-menu-button";
 import "../../components/ha-card";
 import { aisAudioLovelace } from "./ais_audio_lovelace";
@@ -70,6 +73,19 @@ class PanelAisAudio extends LitElement {
     );
   }
 
+  private _showBrowseMedia(): void {
+    showMediaBrowserDialog(this, {
+      action: "play",
+      entityId: "media_player.wbudowany_glosnik",
+      mediaPickedCallback: (pickedMedia: MediaPickedEvent) =>
+        this.hass!.callService("media_player", "play_media", {
+          entity_id: "media_player.wbudowany_glosnik",
+          media_content_id: pickedMedia.item.media_content_id,
+          media_content_type: pickedMedia.item.media_content_type,
+        }),
+    });
+  }
+
   protected updated(changedProps: PropertyValues): void {
     super.updated(changedProps);
 
@@ -113,6 +129,11 @@ class PanelAisAudio extends LitElement {
               .narrow=${this.narrow}
             ></ha-menu-button>
             <div main-title>Audio</div>
+            <ha-icon-button
+              label="Przeglądaj media"
+              icon="hass:folder-multiple"
+              @click=${this._showBrowseMedia}
+            ></ha-icon-button>
             <ha-icon-button
               label="Rozpocznij rozmowę"
               icon="hass:forum-outline"
