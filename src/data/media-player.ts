@@ -42,7 +42,6 @@ import {
   mdiCashUsdOutline,
   mdiGamepadVariantOutline,
   mdiEmoticonExcitedOutline,
-  mdiGuyFawkesMask,
   mdiBookshelf,
   mdiCookie,
   mdiShoppingOutline,
@@ -51,6 +50,8 @@ import {
   mdiRobotIndustrial,
   mdiDoctor,
   mdiSunglasses,
+  mdiSpotify,
+  mdiYoutube,
 } from "@mdi/js";
 import type { HassEntity } from "home-assistant-js-websocket";
 import type { HomeAssistant } from "../types";
@@ -174,6 +175,8 @@ export const MediaClassBrowserSettings: {
   podcasttechno: { icon: mdiRobotIndustrial },
   podcastdoctor: { icon: mdiDoctor },
   podcasttyflo: { icon: mdiSunglasses },
+  spotify: { icon: mdiSpotify },
+  youtube: { icon: mdiYoutube },
 };
 
 export interface MediaPickedEvent {
