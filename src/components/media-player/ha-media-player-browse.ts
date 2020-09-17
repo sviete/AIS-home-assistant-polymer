@@ -490,7 +490,11 @@ export class HaMediaPlayerBrowse extends LitElement {
             mediaContentId,
             mediaContentType
           )
-        : await browseLocalMediaPlayer(this.hass, mediaContentId);
+        : await browseLocalMediaPlayer(
+            this.hass,
+            mediaContentId,
+            mediaContentType
+          );
 
     return itemData;
   }

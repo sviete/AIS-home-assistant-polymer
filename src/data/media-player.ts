@@ -218,13 +218,16 @@ export const browseMediaPlayer = (
     media_content_type: mediaContentType,
   });
 
+// AIS pass mediaContentType
 export const browseLocalMediaPlayer = (
   hass: HomeAssistant,
-  mediaContentId?: string
+  mediaContentId?: string,
+  mediaContentType?: string
 ): Promise<MediaPlayerItem> =>
   hass.callWS<MediaPlayerItem>({
     type: "media_source/browse_media",
     media_content_id: mediaContentId,
+    media_content_type: mediaContentType,
   });
 
 export const getCurrentProgress = (stateObj: HassEntity): number => {
