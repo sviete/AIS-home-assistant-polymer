@@ -218,7 +218,7 @@ export class HaStateLabelBadge extends LitElement {
       }
 
       ha-label-badge {
-        --ha-label-badge-color: var(--label-badge-red, #df4c1e);
+        --ha-label-badge-color: var(--label-badge-yellow, #ffc107);
       }
       ha-label-badge.has-unit_of_measurement {
         --ha-label-badge-label-text-transform: none;
