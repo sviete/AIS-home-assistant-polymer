@@ -293,7 +293,7 @@ class HaPanelAisgalery extends PolymerElement {
 
   async _editImage() {
     const img = this.getImage(this.currentImgIdx);
-    var win = window.open(
+    const win = window.open(
       "/static/ais_dom/design_tool/index.html?img=" + img.path,
       "_blank"
     );
@@ -301,7 +301,7 @@ class HaPanelAisgalery extends PolymerElement {
   }
 
   async _showHelp() {
-    var win = window.open(
+    const win = window.open(
       "https://www.ai-speaker.com/docs/ais_app_integration_gallery/",
       "_blank"
     );
@@ -348,7 +348,7 @@ class HaPanelAisgalery extends PolymerElement {
   }
 
   previousImage() {
-    var idx = 0;
+    let idx = 0;
     this.autoPlayVideo = true;
     if (this.currentImgIdx === 0) {
       idx = this.images.length - 1;
@@ -360,7 +360,7 @@ class HaPanelAisgalery extends PolymerElement {
   }
 
   nextImage() {
-    var idx = 0;
+    let idx = 0;
     this.autoPlayVideo = true;
     if (this.currentImgIdx >= this.images.length - 1) {
       idx = 0;
@@ -384,7 +384,7 @@ class HaPanelAisgalery extends PolymerElement {
 
   getcurrentImgIdx(hass) {
     try {
-      var idx = Number(hass.states["sensor.ais_gallery_img"].state);
+      const idx = Number(hass.states["sensor.ais_gallery_img"].state);
       this.currentImage = this.getImage(idx);
       return idx;
     } catch (error) {
@@ -393,23 +393,23 @@ class HaPanelAisgalery extends PolymerElement {
   }
 
   getImages(hass) {
-    var paths = [];
+    let paths = [];
     try {
       paths = hass.states["sensor.ais_gallery_img"].attributes.fileList;
     } catch (error) {
       console.log("getImages error: " + error);
     }
-    var lastIndex = 0;
-    var lImages = [];
+    const lastIndex = 0;
+    const lImages = [];
     for (let i = paths.length - 1; i >= lastIndex; i--) {
-      var path = paths[i];
-      var arPath = path.split("/");
-      var imageName = arPath[arPath.length - 1];
-      var arFileName = imageName.split(".");
-      var ext = arFileName[arFileName.length - 1].toLowerCase();
+      const path = paths[i];
+      const arPath = path.split("/");
+      let imageName = arPath[arPath.length - 1];
+      const arFileName = imageName.split(".");
+      const ext = arFileName[arFileName.length - 1].toLowerCase();
       imageName = imageName.substring(0, imageName.length - ext.length - 1);
 
-      var image = {
+      const image = {
         path: path,
         name: imageName,
         extension: ext,
@@ -436,10 +436,10 @@ class HaPanelAisgalery extends PolymerElement {
   }
 
   getVideoDuration(e) {
-    var minutes = parseInt(e.target.duration / 60);
+    let minutes = parseInt(e.target.duration / 60);
     if (minutes < 10) minutes = "0" + minutes;
 
-    var seconds = parseInt(e.target.duration % 60);
+    let seconds = parseInt(e.target.duration % 60);
     seconds = "0" + seconds;
     seconds = seconds.substring(seconds.length - 2);
 

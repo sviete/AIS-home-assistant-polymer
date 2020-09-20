@@ -1,6 +1,6 @@
 import { fireEvent } from "../../common/dom/fire_event";
 
-const loadAisgalerydDialog = () =>
+export const loadAisgalerydDialog = () =>
   import(/* webpackChunkName: "ha-dialog-aisgalery" */ "./ha-dialog-aisgalery");
 
 export const showAisgaleryDialog = (element: HTMLElement): void => {

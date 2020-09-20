@@ -1,183 +1,174 @@
+import "@polymer/paper-input/paper-input";
+import "../../components/ha-icon-button";
+import "@material/mwc-button";
+import "@polymer/app-layout/app-toolbar/app-toolbar";
 import "../../components/dialog/ha-paper-dialog";
-import "@vaadin/vaadin-upload";
-import { loadTokens } from "../../common/auth/token_storage";
+import { createCloseHeading } from "../../components/ha-dialog";
 import {
   LitElement,
   html,
   property,
+  internalProperty,
   CSSResult,
   css,
-  customElement,
-  PropertyValues,
   TemplateResult,
 } from "lit-element";
 import { HomeAssistant } from "../../types";
 import { haStyleDialog } from "../../resources/styles";
 
-@customElement("ha-dialog-aisgalery")
+import { PolymerChangedEvent } from "../../polymer-types";
+
+import "../../components/ha-picture-upload";
+import type { HaPictureUpload } from "../../components/ha-picture-upload";
+import { CropOptions } from "../../dialogs/image-cropper-dialog/show-image-cropper-dialog";
+
+const cropOptions: CropOptions = {
+  round: false,
+  type: "image/jpeg",
+  quality: 0.75,
+  aspectRatio: NaN,
+};
+
 export class HaDialogAisgalery extends LitElement {
+  @property({ attribute: false }) public hass!: HomeAssistant;
+
+  @internalProperty() private _name!: string;
+
+  @internalProperty() private _picture!: string | null;
+
+  @internalProperty() private _picture_last_value!: string | null;
+
+  @internalProperty() private _error?: string;
+
+  @internalProperty() private _submitting = false;
+
+  @internalProperty() private _closeDialog = false;
+
+  public async showDialog(): Promise<void> {
+    this._error = undefined;
+    this._picture = null;
+    this._name = "";
+    this._closeDialog = false;
+  }
+
+  protected render(): TemplateResult {
+    if (this._closeDialog) {
+      return html``;
+    }
+    const nameInvalid = this._name.trim() === "";
+    const pictureInvalid = this._picture == null;
+    return html`
+      <ha-dialog
+        open
+        @closed=${this._close}
+        scrimClickAction
+        escapeKeyAction
+        .heading=${createCloseHeading(this.hass, "Nowe zdjęcie")}     
+      >
+      <div>
+          ${this._error ? html` <div class="error">${this._error}</div> ` : ""}
+          <div class="form">
+            <paper-input
+                dialogInitialFocus
+                .value=${this._name}
+                @value-changed=${this._nameChanged}
+                label="Nazwa"
+                error-message="Nazwa jest wymagana"
+                required
+                auto-validate
+              ></paper-input>
+            <ha-picture-upload
+                  .hass=${this.hass}
+                  .value=${this._picture}
+                  crop
+                  .cropOptions=${cropOptions}
+                  required
+                  auto-validate
+                  error-message="Zdjęcie jest wymagane"
+                  @change=${this._pictureChanged}
+                ></ha-picture-upload>
+          </div>
+      </div>
+        <mwc-button
+            slot="primaryAction"
+            @click="${this._addPicture}"
+            .disabled=${nameInvalid || pictureInvalid || this._submitting}
+          > Dodaj
+          </mwc-button>
+        </ha-dialog>
+      </ha-dialog>
+    `;
+  }
+
+  private _pictureChanged(ev: PolymerChangedEvent<string | null>) {
+    this._error = undefined;
+    this._picture = (ev.target as HaPictureUpload).value;
+    if (this._picture == null) {
+      this._deletePicture();
+    } else {
+      this._picture_last_value = this._picture;
+    }
+  }
+
+  private async _deletePicture() {
+    if (this._picture_last_value) {
+      await this.hass.callService("ais_files", "remove_file", {
+        path: this._picture_last_value,
+      });
+    }
+  }
+
+  private async _savePicture() {
+    await this.hass.callService("ais_files", "transfer_file", {
+      path: this._picture_last_value,
+      name: this._name,
+    });
+    this._picture_last_value = null;
+  }
+
+  private _nameChanged(ev: PolymerChangedEvent<string>) {
+    this._error = undefined;
+    this._name = ev.detail.value;
+  }
+
+  private async _addPicture() {
+    this._submitting = true;
+    try {
+      this._savePicture();
+      this._closeDialog = true;
+    } catch (err) {
+      this._error = err ? err.message : "Unknown error";
+    } finally {
+      this._submitting = false;
+    }
+  }
+
+  private _close(): void {
+    this._closeDialog = true;
+    this._deletePicture();
+  }
+
   static get styles(): CSSResult[] {
     return [
       haStyleDialog,
       css`
-        :host {
-          z-index: 103;
+        .form {
+          padding-bottom: 24px;
         }
-
-        ha-icon-button {
-          color: var(--secondary-text-color);
+        ha-picture-upload {
+          display: block;
         }
-
-        ha-icon-button[active] {
+        ha-user-picker {
+          margin-top: 16px;
+        }
+        a {
           color: var(--primary-color);
         }
-
-        ha-paper-dialog {
-          width: 450px;
-          height: 350px;
-        }
-        a.button {
-          text-decoration: none;
-        }
-        a.button > mwc-button {
-          width: 100%;
-        }
-        .onboarding {
-          padding: 0 24px;
-        }
-        paper-dialog-scrollable.top-border::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 1px;
-          background: var(--divider-color);
+        p {
+          color: var(--primary-text-color);
         }
       `,
     ];
-  }
-  @property() public hass!: HomeAssistant;
-  @property() private _opened = false;
-
-  constructor() {
-    super();
-    this.loadVaadin();
-  }
-
-  public async showDialog(): Promise<void> {
-    this._opened = true;
-    this.loadVaadin();
-  }
-
-  protected render(): TemplateResult {
-    return html`
-      <style>
-        paper-dialog-scrollable {
-          --paper-dialog-scrollable: {
-            -webkit-overflow-scrolling: auto;
-            max-height: 50vh !important;
-          }
-        }
-
-        paper-dialog-scrollable.can-scroll {
-          --paper-dialog-scrollable: {
-            -webkit-overflow-scrolling: touch;
-            max-height: 50vh !important;
-          }
-        }
-
-        @media all and (max-width: 450px), all and (max-height: 500px) {
-          paper-dialog-scrollable {
-            --paper-dialog-scrollable: {
-              -webkit-overflow-scrolling: auto;
-              max-height: calc(100vh - 175px) !important;
-            }
-          }
-
-          paper-dialog-scrollable.can-scroll {
-            --paper-dialog-scrollable: {
-              -webkit-overflow-scrolling: touch;
-              max-height: calc(75vh - 175px) !important;
-            }
-          }
-        }
-        app-toolbar {
-          margin: 0;
-          padding: 0 16px;
-          color: var(--primary-text-color);
-          background-color: var(--secondary-background-color);
-        }
-        app-toolbar [main-title] {
-          margin-left: 16px;
-        }
-      </style>
-      <dom-module id="my-button" theme-for="vaadin-button">
-        <template>
-          <style>
-            :host {
-              color: var(--primary-color);
-              border: 1px solid;
-            }
-          </style>
-        </template>
-      </dom-module>
-      <ha-paper-dialog
-        with-backdrop
-        .opened=${this._opened}
-        @opened-changed=${this._openedChanged}
-      >
-        <app-toolbar>
-          <ha-icon-button icon="hass:close" dialog-dismiss=""></ha-icon-button>
-          <div main-title="">Dodawanie zdjęć</div>
-        </app-toolbar>
-        <vaadin-upload
-          capture="camera"
-          accept="image/*"
-          noAuto="false"
-          style="text-align: center;"
-        >
-          <span slot="drop-label" style="color:white;"
-            >Możesz przeciągnąć i upuścić tu.</span
-          >
-        </vaadin-upload>
-      </ha-paper-dialog>
-    `;
-  }
-
-  protected async loadVaadin() {
-    customElements.whenDefined("vaadin-upload").then(async () => {
-      const upload = this.shadowRoot!.querySelector("vaadin-upload");
-      const tokens = loadTokens();
-      if (upload !== null) {
-        upload.set("i18n.addFiles.many", "Wyślij zdjęcie [plik 5MB max] ...");
-        upload.set(
-          "i18n.fileIsTooBig",
-          "Plik jest za duży. Maksymalnie można przesłać 5MB"
-        );
-        upload.set("method", "POST");
-        upload.set("withCredentials", true);
-        upload.set("target", "api/ais_file/upload");
-        upload.set("headers", {
-          authorization: "Bearer " + tokens.access_token,
-        });
-        upload.addEventListener("file-reject", function (event) {
-          console.log(event.detail.file.name + " error: " + event.detail.error);
-        });
-      }
-    });
-  }
-
-  protected firstUpdated(changedProps: PropertyValues) {
-    super.updated(changedProps);
-  }
-  protected updated(changedProps: PropertyValues) {
-    super.updated(changedProps);
-  }
-
-  private _openedChanged(ev: CustomEvent) {
-    this._opened = ev.detail.value;
-    this.loadVaadin();
   }
 }
 
@@ -186,3 +177,5 @@ declare global {
     "ha-dialog-aisgalery": HaDialogAisgalery;
   }
 }
+
+customElements.define("ha-dialog-aisgalery", HaDialogAisgalery);
