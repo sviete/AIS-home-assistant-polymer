@@ -605,9 +605,9 @@
                     "server": "Serwer"
                 },
                 "media_browsing_error": "Błąd przeglądania multimediów",
-                "media_not_supported": "Przeglądarka odtwarzacza mediów nie obsługuje tego typu mediów",
+                "media_not_supported": "Przeglądarka mediów nie obsługuje tego typu mediów",
                 "media_player": "Odtwarzacz mediów",
-                "media-player-browser": "Przeglądarka odtwarzacza mediów",
+                "media-player-browser": "Przeglądarka mediów",
                 "no_items": "Brak elementów",
                 "pick": "Wybierz",
                 "pick-media": "Wybierz media",
