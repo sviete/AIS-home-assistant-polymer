@@ -4,7 +4,7 @@ import "@material/mwc-fab";
 import { mdiPlus } from "@mdi/js";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
-import { showAisgaleryDialog } from "./show-ha-aisgalery-dialog";
+import { showAisGaleryDialog } from "./show-ha-aisgalery-dialog";
 import "../../components/ha-card";
 import "../../resources/ha-style";
 import "../config/ha-config-section";
@@ -323,7 +323,8 @@ class HaPanelAisgalery extends PolymerElement {
   }
 
   addImage() {
-    showAisgaleryDialog(this);
+    const params = { jsCallback: "" };
+    showAisGaleryDialog(this, params);
   }
 
   getImage(idx) {

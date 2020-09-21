@@ -1,12 +1,19 @@
 import { fireEvent } from "../../common/dom/fire_event";
 
-export const loadAisgalerydDialog = () =>
+export interface AisGaleryDialogParams {
+  jsCallback: Function;
+}
+
+export const loadAisGalerydDialog = () =>
   import(/* webpackChunkName: "ha-dialog-aisgalery" */ "./ha-dialog-aisgalery");
 
-export const showAisgaleryDialog = (element: HTMLElement): void => {
+export const showAisGaleryDialog = (
+  element: HTMLElement,
+  aisGaleryDialogParams: AisGaleryDialogParams
+): void => {
   fireEvent(element, "show-dialog", {
     dialogTag: "ha-dialog-aisgalery",
-    dialogImport: loadAisgalerydDialog,
-    dialogParams: {},
+    dialogImport: loadAisGalerydDialog,
+    dialogParams: aisGaleryDialogParams,
   });
 };

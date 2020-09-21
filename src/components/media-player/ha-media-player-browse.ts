@@ -2,7 +2,15 @@ import "@material/mwc-button/mwc-button";
 import "@material/mwc-fab/mwc-fab";
 import "@material/mwc-list/mwc-list";
 import "@material/mwc-list/mwc-list-item";
-import { mdiArrowLeft, mdiClose, mdiPlay, mdiPlus } from "@mdi/js";
+import {
+  mdiArrowLeft,
+  mdiClose,
+  mdiPlay,
+  mdiPlus,
+  mdiInformation,
+  mdiDelete,
+  mdiImageEdit,
+} from "@mdi/js";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-listbox/paper-listbox";
 import {
@@ -31,7 +39,10 @@ import {
   MediaPlayerBrowseAction,
 } from "../../data/media-player";
 import type { MediaPlayerItem } from "../../data/media-player";
-import { showAlertDialog } from "../../dialogs/generic/show-dialog-box";
+import {
+  showAlertDialog,
+  showConfirmationDialog,
+} from "../../dialogs/generic/show-dialog-box";
 import { installResizeObserver } from "../../panels/lovelace/common/install-resize-observer";
 import { haStyle } from "../../resources/styles";
 import type { HomeAssistant } from "../../types";
@@ -42,7 +53,11 @@ import "../ha-card";
 import "../ha-circular-progress";
 import "../ha-paper-dropdown-menu";
 import "../ha-svg-icon";
-import { showAisgaleryDialog } from "../../panels/aisgalery/show-ha-aisgalery-dialog";
+import {
+  showAisGaleryDialog,
+  AisGaleryDialogParams,
+} from "../../panels/aisgalery/show-ha-aisgalery-dialog";
+import { showWebBrowserPlayMediaDialog } from "../../panels/media-browser/show-media-player-dialog";
 
 declare global {
   interface HASSDomEvents {
@@ -306,12 +321,37 @@ export class HaMediaPlayerBrowse extends LitElement {
                             `
                           : ""}
                       </div>
-                      <div class="title">${child.title}</div>
-                      <div class="type">
-                        ${this.hass.localize(
-                          `ui.components.media-browser.content-type.${child.media_content_type}`
-                        )}
-                      </div>
+                      <!-- AIS add info button -->
+                      ${aisGallery
+                        ? html` <div class="aisButtons">
+                            <mwc-icon-button
+                              class="aisButton aisInfoButton"
+                              .item=${child}
+                              @click=${this._actionClickedInfo}
+                            >
+                              <ha-svg-icon path=${mdiInformation}></ha-svg-icon>
+                            </mwc-icon-button>
+                            <mwc-icon-button
+                              class="aisButton aisEditButton"
+                              .item=${child}
+                              @click=${this._actionClickedEdit}
+                            >
+                              <ha-svg-icon path=${mdiImageEdit}></ha-svg-icon>
+                            </mwc-icon-button>
+                            <mwc-icon-button
+                              class="aisButton aisDeleteButton"
+                              .item=${child}
+                              @click=${this._actionClickedDelete}
+                            >
+                              <ha-svg-icon path=${mdiDelete}></ha-svg-icon>
+                            </mwc-icon-button>
+                          </div>`
+                        : html`<div class="title">${child.title}</div>
+                            <div class="type">
+                              ${this.hass.localize(
+                                `ui.components.media-browser.content-type.${child.media_content_type}`
+                              )}
+                            </div>`}
                     </div>
                   `
                 )}
@@ -448,6 +488,67 @@ export class HaMediaPlayerBrowse extends LitElement {
     this._runAction(item);
   }
 
+  // AIS actions
+  private async _actionClickedInfo(ev: MouseEvent): Promise<void> {
+    ev.stopPropagation();
+    const item = (ev.currentTarget as any).item;
+    const resolvedUrl: any = await this.hass.callWS({
+      type: "media_source/resolve_media",
+      media_content_id: item.media_content_id,
+    });
+
+    showWebBrowserPlayMediaDialog(this, {
+      sourceUrl: resolvedUrl.url,
+      sourceType: resolvedUrl.mime_type,
+      title: item.title,
+    });
+  }
+
+  private async _actionClickedEdit(ev: MouseEvent): Promise<void> {
+    ev.stopPropagation();
+    const item = (ev.currentTarget as any).item;
+    const resolvedUrl: any = await this.hass.callWS({
+      type: "media_source/resolve_media",
+      media_content_id: item.media_content_id,
+    });
+
+    fireEvent(this, "show-dialog", {
+      dialogTag: "hui-dialog-web-browser-ais-edit-image",
+      dialogImport: () =>
+        import(
+          /* webpackChunkName: "hui-dialog-ais-edit-image" */ "../../panels/media-browser/hui-dialog-web-browser-ais-edit-image"
+        ),
+      dialogParams: {
+        sourceUrl: resolvedUrl.url,
+        sourceType: resolvedUrl.mime_type,
+        title: item.title,
+      },
+    });
+  }
+
+  private async _actionClickedDelete(ev: MouseEvent): Promise<void> {
+    ev.stopPropagation();
+    const item = (ev.currentTarget as any).item;
+    const confirmed = await showConfirmationDialog(this, {
+      title: item.title,
+      text: "Jesteś pewny, że chcesz usunąć ten plik?",
+      confirmText: "TAK",
+      dismissText: "NIE",
+    });
+
+    if (confirmed) {
+      const resolvedUrl: any = await this.hass.callWS({
+        type: "media_source/resolve_media",
+        media_content_id: item.media_content_id,
+      });
+      await this.hass.callService("ais_files", "remove_file", {
+        path: resolvedUrl.url,
+      });
+      // refres page
+      this._navigate(this._mediaPlayerItems[this._mediaPlayerItems.length - 1]);
+    }
+  }
+
   private _runAction(item: MediaPlayerItem): void {
     fireEvent(this, "media-picked", { item });
   }
@@ -576,7 +677,13 @@ export class HaMediaPlayerBrowse extends LitElement {
 
   // AIS add image button
   private _addImage(): void {
-    showAisgaleryDialog(this);
+    // refres page
+    const item = this._mediaPlayerItems[this._mediaPlayerItems.length - 1];
+    const x = () => {
+      this._navigate(item);
+    };
+    const aisGaleryDialogParams: AisGaleryDialogParams = { jsCallback: x };
+    showAisGaleryDialog(this, aisGaleryDialogParams);
   }
 
   static get styles(): CSSResultArray {
@@ -962,12 +1069,37 @@ export class HaMediaPlayerBrowse extends LitElement {
           --mdc-fab-box-shadow: none;
           --mdc-theme-secondary: rgba(var(--rgb-primary-color), 0.5);
         }
-        /* AIS addImageFab */
+        /* AIS css start */
         mwc-fab.addImageFab {
           position: fixed !important;
           bottom: 16px !important;
           right: 26px !important;
           --mdc-theme-secondary: var(--accent-color) !important;
+        }
+        mwc-icon-button.aisInfoButton {
+          position: relative !important;
+        }
+        div.aisButtons {
+          position: relative;
+          width: 100%;
+          height: 3em;
+          display: flex;
+          bottom: 3em;
+          margin-bottom: -3em;
+          background-color: #9e9e9e8a;
+        }
+        mwc-icon-button.aisButton.aisDeleteButton {
+          margin-left: auto;
+        }
+        mwc-icon-button.aisInfoButton:hover {
+          color: var(--primary-color);
+        }
+        mwc-icon-button.aisEditButton:hover {
+          color: var(--primary-color);
+        }
+        mwc-icon-button.aisDeleteButton:hover {
+          color: var(--error-color);
+        }
       `,
     ];
   }

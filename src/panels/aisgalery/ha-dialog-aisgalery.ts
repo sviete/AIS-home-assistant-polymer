@@ -21,6 +21,7 @@ import { PolymerChangedEvent } from "../../polymer-types";
 import "../../components/ha-picture-upload";
 import type { HaPictureUpload } from "../../components/ha-picture-upload";
 import { CropOptions } from "../../dialogs/image-cropper-dialog/show-image-cropper-dialog";
+import { AisGaleryDialogParams } from "./show-ha-aisgalery-dialog";
 
 const cropOptions: CropOptions = {
   round: false,
@@ -31,6 +32,9 @@ const cropOptions: CropOptions = {
 
 export class HaDialogAisgalery extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
+
+  @property({ attribute: false })
+  private _params?: AisGaleryDialogParams;
 
   @internalProperty() private _name!: string;
 
@@ -44,7 +48,8 @@ export class HaDialogAisgalery extends LitElement {
 
   @internalProperty() private _closeDialog = false;
 
-  public async showDialog(): Promise<void> {
+  public async showDialog(params: AisGaleryDialogParams): Promise<void> {
+    this._params = params;
     this._error = undefined;
     this._picture = null;
     this._name = "";
@@ -124,6 +129,8 @@ export class HaDialogAisgalery extends LitElement {
       name: this._name,
     });
     this._picture_last_value = null;
+    // refresh...
+    this._params?.jsCallback();
   }
 
   private _nameChanged(ev: PolymerChangedEvent<string>) {

@@ -6,6 +6,7 @@ import {
   LitElement,
   property,
   TemplateResult,
+  internalProperty,
 } from "lit-element";
 import { fireEvent } from "../../common/dom/fire_event";
 import { createCloseHeading } from "../../components/ha-dialog";
@@ -14,10 +15,14 @@ import type { HomeAssistant } from "../../types";
 import { haStyleDialog } from "../../resources/styles";
 import { WebBrowserPlayMediaDialogParams } from "./show-media-player-dialog";
 import "../../components/ha-code-editor";
+import "../../components/ha-radio";
+import "../../components/ha-formfield";
 
-@customElement("hui-dialog-web-browser-play-media")
-export class HuiDialogWebBrowserPlayMedia extends LitElement {
+@customElement("hui-dialog-web-browser-ais-edit-image")
+export class HuiDialogWebBrowserAisEditImage extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
+
+  @internalProperty() private elementType?: string;
 
   @property({ attribute: false })
   private _params?: WebBrowserPlayMediaDialogParams;
@@ -31,13 +36,12 @@ export class HuiDialogWebBrowserPlayMedia extends LitElement {
     fireEvent(this, "dialog-closed", { dialog: this.localName });
   }
 
+  private _handleElementChanged() {}
+
   protected render(): TemplateResult {
     if (!this._params || !this._params.sourceType || !this._params.sourceUrl) {
       return html``;
     }
-
-    const mediaType = this._params.sourceType.split("/", 1)[0];
-
     return html`
       <ha-dialog
         open
@@ -49,47 +53,24 @@ export class HuiDialogWebBrowserPlayMedia extends LitElement {
         )}
         @closed=${this.closeDialog}
       >
-        ${mediaType === "audio"
-          ? html`
-              <audio controls autoplay>
-                <source
-                  src=${this._params.sourceUrl}
-                  type=${this._params.sourceType}
-                />
-                ${this.hass.localize(
-                  "ui.components.media-browser.audio_not_supported"
-                )}
-              </audio>
-            `
-          : mediaType === "video"
-          ? html`
-              <video controls autoplay playsinline>
-                <source
-                  src=${this._params.sourceUrl}
-                  type=${this._params.sourceType}
-                />
-                ${this.hass.localize(
-                  "ui.components.media-browser.video_not_supported"
-                )}
-              </video>
-            `
-          : this._params.sourceType === "application/x-mpegURL"
-          ? html`
-              <ha-hls-player
-                controls
-                autoplay
-                playsinline
-                .hass=${this.hass}
-                .url=${this._params.sourceUrl}
-              ></ha-hls-player>
-            `
-          : mediaType === "image"
-          ? html`<img src=${this._params.sourceUrl} />`
-          : html`${this.hass.localize(
-              "ui.components.media-browser.media_not_supported"
-            )}`}
-        <!-- AIS img code -->
-        <h2>Kod karty Obraz</h2>
+        <img src=${this._params.sourceUrl} />
+        <h2>Konfiguracja karty Obraz w Obrazie</h2>
+        <ha-formfield label="Element Audio">
+          <ha-radio
+            @change=${this._handleElementChanged}
+            name="mode"
+            value="value"
+            ?checked=${this.elementType === "audio"}
+          ></ha-radio>
+        </ha-formfield>
+        <ha-formfield label="Element Light">
+          <ha-radio
+            @change=${this._handleElementChanged}
+            name="mode"
+            value="input"
+            ?checked=${this.elementType === "light"}
+          ></ha-radio>
+        </ha-formfield>
         <ha-code-editor
           mode="yaml"
           readonly
@@ -108,9 +89,9 @@ image: '/local/img/${this._params.title}'"
           ha-dialog {
             --mdc-dialog-max-width: 800px;
             --mdc-dialog-min-width: 400px;
+            width: 100%;
           }
         }
-
         video,
         audio,
         img {
@@ -124,6 +105,6 @@ image: '/local/img/${this._params.title}'"
 
 declare global {
   interface HTMLElementTagNameMap {
-    "hui-dialog-web-browser-play-media": HuiDialogWebBrowserPlayMedia;
+    "hui-dialog-web-browser-ais-edit-image": HuiDialogWebBrowserAisEditImage;
   }
 }
