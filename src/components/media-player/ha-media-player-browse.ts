@@ -42,6 +42,7 @@ import "../ha-card";
 import "../ha-circular-progress";
 import "../ha-paper-dropdown-menu";
 import "../ha-svg-icon";
+import { showAisgaleryDialog } from "../../panels/aisgalery/show-ha-aisgalery-dialog";
 
 declare global {
   interface HASSDomEvents {
@@ -124,6 +125,10 @@ export class HaMediaPlayerBrowse extends LitElement {
     const currentItem = this._mediaPlayerItems[
       this._mediaPlayerItems.length - 1
     ];
+
+    // check if we are in AIS gallery folder -> media-source://media_source/galeria/.
+    const aisGallery =
+      currentItem.media_content_id === "media-source://media_source/galeria/.";
 
     const previousItem: MediaPlayerItem | undefined =
       this._mediaPlayerItems.length > 1
@@ -310,6 +315,17 @@ export class HaMediaPlayerBrowse extends LitElement {
                     </div>
                   `
                 )}
+                <!-- AIS add image button -->
+                ${aisGallery
+                  ? html` <mwc-fab
+                      slot="fab"
+                      title="Dodaj"
+                      @click=${this._addImage}
+                      class="addImageFab"
+                    >
+                      <ha-svg-icon slot="icon" path=${mdiPlus}></ha-svg-icon>
+                    </mwc-fab>`
+                  : ""}
               </div>
             `
           : html`
@@ -556,6 +572,11 @@ export class HaMediaPlayerBrowse extends LitElement {
       `;
     }
     return html`<span class="error">${err.message}</span>`;
+  }
+
+  // AIS add image button
+  private _addImage(): void {
+    showAisgaleryDialog(this);
   }
 
   static get styles(): CSSResultArray {
@@ -941,6 +962,12 @@ export class HaMediaPlayerBrowse extends LitElement {
           --mdc-fab-box-shadow: none;
           --mdc-theme-secondary: rgba(var(--rgb-primary-color), 0.5);
         }
+        /* AIS addImageFab */
+        mwc-fab.addImageFab {
+          position: fixed !important;
+          bottom: 16px !important;
+          right: 26px !important;
+          --mdc-theme-secondary: var(--accent-color) !important;
       `,
     ];
   }
