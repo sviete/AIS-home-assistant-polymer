@@ -14,6 +14,7 @@ import "../../components/ha-hls-player";
 import type { HomeAssistant } from "../../types";
 import { haStyleDialog } from "../../resources/styles";
 import { WebBrowserPlayMediaDialogParams } from "./show-media-player-dialog";
+import { addEntitiesToLovelaceView } from "../lovelace/editor/add-entities-to-view";
 import "../../components/ha-code-editor";
 import "../../components/ha-radio";
 import "../../components/ha-formfield";
@@ -37,6 +38,10 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
   }
 
   private _handleElementChanged() {}
+
+  private _addToLovelaceView(): void {
+    addEntitiesToLovelaceView(this, this.hass, []);
+  }
 
   protected render(): TemplateResult {
     if (!this._params || !this._params.sourceType || !this._params.sourceUrl) {
@@ -75,8 +80,15 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
           mode="yaml"
           readonly
           .value="type: picture
-image: '/local/img/${this._params.title}'"
+          image: '/local/img/${this._params.title}'"
         ></ha-code-editor>
+        <div class="card-actions">
+          <mwc-button @click=${this._addToLovelaceView}>
+            ${this.hass.localize(
+              "ui.panel.config.devices.entities.add_entities_lovelace"
+            ) || "Dodaj do interfejsu użytkownika"}
+          </mwc-button>
+        </div>
       </ha-dialog>
     `;
   }

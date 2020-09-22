@@ -88,14 +88,6 @@ export class HuiDialogWebBrowserPlayMedia extends LitElement {
           : html`${this.hass.localize(
               "ui.components.media-browser.media_not_supported"
             )}`}
-        <!-- AIS img code -->
-        <h2>Kod karty Obraz</h2>
-        <ha-code-editor
-          mode="yaml"
-          readonly
-          .value="type: picture
-image: '/local/img/${this._params.title}'"
-        ></ha-code-editor>
       </ha-dialog>
     `;
   }
