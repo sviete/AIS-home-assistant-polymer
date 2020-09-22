@@ -4,6 +4,7 @@ import {
   saveConfig,
   fetchDashboards,
   LovelacePanelConfig,
+  LovelaceCardConfig,
 } from "../../../data/lovelace";
 import { HomeAssistant } from "../../../types";
 import { showSuggestCardDialog } from "./card-editor/show-suggest-card-dialog";
@@ -13,7 +14,8 @@ import { showAlertDialog } from "../../../dialogs/generic/show-dialog-box";
 export const addEntitiesToLovelaceView = async (
   element: HTMLElement,
   hass: HomeAssistant,
-  entities: string[]
+  entities: string[],
+  cardConfig?: LovelaceCardConfig[]
 ) => {
   const dashboards = await fetchDashboards(hass);
 
@@ -100,6 +102,7 @@ export const addEntitiesToLovelaceView = async (
       },
       path: [0],
       entities,
+      cardConfig,
     });
     return;
   }
@@ -125,6 +128,7 @@ export const addEntitiesToLovelaceView = async (
         },
         path: [viewIndex],
         entities,
+        cardConfig,
       });
     },
   });
