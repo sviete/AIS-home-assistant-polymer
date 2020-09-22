@@ -57,7 +57,7 @@ import {
   showAisGaleryDialog,
   AisGaleryDialogParams,
 } from "../../panels/aisgalery/show-ha-aisgalery-dialog";
-import { showWebBrowserPlayMediaDialog } from "../../panels/media-browser/show-media-player-dialog";
+import { showWebBrowserPlayMediaAisDialog } from "../../panels/media-browser/show-media-player-ais-dialog";
 
 declare global {
   interface HASSDomEvents {
@@ -497,7 +497,7 @@ export class HaMediaPlayerBrowse extends LitElement {
       media_content_id: item.media_content_id,
     });
 
-    showWebBrowserPlayMediaDialog(this, {
+    showWebBrowserPlayMediaAisDialog(this, {
       sourceUrl: resolvedUrl.url,
       sourceType: resolvedUrl.mime_type,
       title: item.title,

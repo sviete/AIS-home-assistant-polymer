@@ -224,7 +224,7 @@ export class HaConfigDevicePage extends LitElement {
                   }
                   <img
                     src=${
-                      integrations[0].startsWith("ais_")
+                      integrations[0] && integrations[0].startsWith("ais_")
                         ? `https://ai-speaker.com/images/brands/${integrations[0]}/logo.png`
                         : `https://brands.home-assistant.io/${integrations[0]}/logo.png`
                     }
