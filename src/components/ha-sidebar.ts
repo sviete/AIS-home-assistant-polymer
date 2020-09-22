@@ -61,7 +61,7 @@ const SUPPORT_SCROLL_IF_NEEDED = "scrollIntoViewIfNeeded" in document.body;
 
 const SORT_VALUE_URL_PATHS = {
   aisaudio: 1,
-  aisgalery: 2,
+  "media-browser": 2,
   aiszigbee: 3,
   map: 4,
   logbook: 5,
