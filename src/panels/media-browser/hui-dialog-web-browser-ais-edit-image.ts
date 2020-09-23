@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import {
   css,
   CSSResult,
@@ -25,12 +26,23 @@ export interface ElemetCssAttr {
   position: string;
   top: string;
   left: string;
+  transform: string;
 }
 
 export interface AisPictureElements {
   type: string;
   entity: string;
   style: ElemetCssAttr;
+}
+
+export interface AisDragItem {
+  style: string;
+  currentX: number;
+  currentY: number;
+  initialX: number;
+  initialY: number;
+  offsetX: number;
+  offsetY: number;
 }
 
 @customElement("hui-dialog-web-browser-ais-edit-image")
@@ -45,28 +57,19 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
 
   @internalProperty() private pictureElements: AisPictureElements[] = [];
 
-  @internalProperty() dragItemStyle;
+  @internalProperty() private dragCurrentItemIndex = -1;
 
-  @internalProperty() dragActive = false;
+  @internalProperty() private dragItems: AisDragItem[] = [];
 
-  @internalProperty() dragCurrentX = 0;
+  @internalProperty() private dragItemStyle = "";
 
-  @internalProperty() dragCurrentY = 0;
-
-  @internalProperty() dragInitialX = 0;
-
-  @internalProperty() dragInitialY = 0;
-
-  @internalProperty() dragOffsetX = 0;
-
-  @internalProperty() dragOffsetY = 0;
+  @internalProperty() private dragActive = false;
 
   @property({ attribute: false })
   private _params?: WebBrowserPlayMediaDialogParams;
 
   public showDialog(params: WebBrowserPlayMediaDialogParams): void {
     this._params = params;
-    // eslint-disable-next-line no-template-curly-in-string
     this.codeValue =
       "type: picture-elements\nimage: '/local/img/${this._params.title}'\ntitle: ''\nelements: []";
     this.selectedElementType = "";
@@ -80,55 +83,95 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
   }
 
   private _dragStart(e) {
-    if (e.type === "touchstart") {
-      this.dragInitialX = e.touches[0].clientX - this.dragOffsetX;
-      this.dragInitialY = e.touches[0].clientY - this.dragOffsetY;
-    } else {
-      this.dragInitialX = e.clientX - this.dragOffsetX;
-      this.dragInitialY = e.clientY - this.dragOffsetY;
+    // 1. check if drag div has id type number
+    if (isNaN(e.target.id)) {
+      return;
+    }
+    // 2. check if draged div id is in the dragItems array
+    if (typeof this.dragItems[e.target.id] === "undefined") {
+      return;
     }
 
-    // if (e.target === this.dragItem) {
+    this.dragCurrentItemIndex = e.target.id;
+
+    if (e.type === "touchstart") {
+      this.dragItems[this.dragCurrentItemIndex].initialX =
+        e.touches[0].clientX -
+        this.dragItems[this.dragCurrentItemIndex].offsetX;
+      this.dragItems[this.dragCurrentItemIndex].initialY =
+        e.touches[0].clientY -
+        this.dragItems[this.dragCurrentItemIndex].offsetY;
+    } else {
+      this.dragItems[this.dragCurrentItemIndex].initialX =
+        e.clientX - this.dragItems[this.dragCurrentItemIndex].offsetX;
+      this.dragItems[this.dragCurrentItemIndex].initialY =
+        e.clientY - this.dragItems[this.dragCurrentItemIndex].offsetY;
+    }
+
     this.dragActive = true;
-    // }
   }
 
   private _dragEnd(e) {
-    this.dragInitialX = this.dragCurrentX;
-    this.dragInitialY = this.dragCurrentY;
+    if (this.dragActive) {
+      this.dragItems[this.dragCurrentItemIndex].initialX = this.dragItems[
+        this.dragCurrentItemIndex
+      ].currentX;
+      this.dragItems[this.dragCurrentItemIndex].initialY = this.dragItems[
+        this.dragCurrentItemIndex
+      ].currentY;
+      this.dragActive = false;
+      this.pictureElements[
+        this.dragCurrentItemIndex
+      ].style.transform = this.dragItemStyle;
+      this._handleCodeChanged();
+    }
+  }
 
-    this.dragActive = false;
+  private _getDragStyle(idx: number) {
+    if (idx === this.dragCurrentItemIndex) {
+      return "transform: " + this.dragItemStyle;
+    }
+    return "transform: " + this.dragItems[idx].style;
   }
 
   private _drag(e) {
     if (this.dragActive) {
       e.preventDefault();
-
+      let currentX;
+      let currentY;
       if (e.type === "touchmove") {
-        this.dragCurrentX = e.touches[0].clientX - this.dragInitialX;
-        this.dragCurrentY = e.touches[0].clientY - this.dragInitialY;
+        currentX =
+          e.touches[0].clientX -
+          this.dragItems[this.dragCurrentItemIndex].initialX;
+        currentY =
+          e.touches[0].clientY -
+          this.dragItems[this.dragCurrentItemIndex].initialY;
       } else {
-        this.dragCurrentX = e.clientX - this.dragInitialX;
-        this.dragCurrentY = e.clientY - this.dragInitialY;
+        currentX =
+          e.clientX - this.dragItems[this.dragCurrentItemIndex].initialX;
+        currentY =
+          e.clientY - this.dragItems[this.dragCurrentItemIndex].initialY;
       }
-
-      this.dragOffsetX = this.dragCurrentX;
-      this.dragOffsetY = this.dragCurrentY;
-
       this.dragItemStyle =
-        "transform: translate3d(" +
-        this.dragCurrentX +
-        "px, " +
-        this.dragCurrentY +
-        "px, 0)";
+        "translate3d(" + currentX + "px, " + currentY + "px, 0)";
+
+      this.dragItems[this.dragCurrentItemIndex].currentX = currentX;
+      this.dragItems[this.dragCurrentItemIndex].currentY = currentY;
+
+      this.dragItems[this.dragCurrentItemIndex].offsetX = currentX;
+      this.dragItems[this.dragCurrentItemIndex].offsetY = currentY;
+
+      this.dragItems[this.dragCurrentItemIndex].style =
+        "translate3d(" + currentX + "px, " + currentY + "px, 0)";
     }
   }
 
   private _handleAddElement() {
     const cssAttr: ElemetCssAttr = {
       position: "absolute",
-      top: "20%",
-      left: "40%",
+      top: "50%",
+      left: "50%",
+      transform: "",
     };
     const element: AisPictureElements = {
       type: this.selectedElementType,
@@ -136,6 +179,16 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
       style: cssAttr,
     };
     this.pictureElements.push(element);
+    const aisDragItem: AisDragItem = {
+      currentX: 0,
+      currentY: 0,
+      initialX: 0,
+      initialY: 0,
+      offsetX: 0,
+      offsetY: 0,
+      style: "",
+    };
+    this.dragItems.push(aisDragItem);
     this.selectedEntityId = "";
     this.selectedElementType = "";
     this._handleCodeChanged();
@@ -155,7 +208,6 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
   }
 
   private _handleCodeChanged() {
-    // eslint-disable-next-line no-template-curly-in-string
     this.codeValue =
       "type: picture-elements\nimage: '/local/img/${this._params.title}'\ntitle: ''\nelements: [\n";
     this.pictureElements.forEach((element) => {
@@ -194,24 +246,30 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
         hideActions
         .heading=${createCloseHeading(
           this.hass,
-          "Konfiguracja elementów obrazu"
+          "Konfiguracja karty elementy obrazu"
         )}
         @closed=${this.closeDialog}
       >
         <div id="outerContainer">
           <div
             id="container"
+            style="background-image: url(${this._params.sourceUrl});"
             @touchstart=${this._dragStart}
             @touchend=${this._dragEnd}
             @touchmove=${this._drag}
             @mousedown=${this._dragStart}
             @mouseup=${this._dragEnd}
             @mousemove=${this._drag}
-            style="background-image: url(${this._params
-              .sourceUrl}); background-repeat: no-repeat"
           >
-            <div id="item" .style=${this.dragItemStyle}></div>
-            TODO
+            ${this.pictureElements.map(
+              (pictureElement, index) => html` <div
+                .id=${index.toString()}
+                class="pictureElementItem"
+                .style=${this._getDragStyle(index)}
+              >
+                ${pictureElement.entity}
+              </div>`
+            )}
           </div>
         </div>
         <h3>Wybierz element do dodania</h3>
@@ -280,20 +338,22 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
         }
         #outerContainer {
           height: 50vh;
-          /* to center
-          display: block;
-          margin: auto; */
         }
         #container {
           height: 50vh;
+          width: 50vw;
           display: flex;
           align-items: center;
           justify-content: center;
           overflow: hidden;
           border-radius: 7px;
           touch-action: none;
+          background-size: 50vw 50vh;
+          background-repeat: no-repeat;
+          background-position: center;
+          margin: auto;
         }
-        #item {
+        div.pictureElementItem {
           width: 80px;
           height: 80px;
           background-color: rgb(245, 230, 99);
@@ -301,13 +361,15 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
           border-radius: 50%;
           touch-action: none;
           user-select: none;
+          top: 50%;
+          left: 50%;
         }
-        #item:active {
+        div.pictureElementItem:active {
           background-color: rgba(168, 218, 220, 1);
         }
-        #item:hover {
+        div.pictureElementItem:hover {
           cursor: pointer;
-          border-width: 20px;
+          /* border-width: 20px; */
         }
       `,
     ];
