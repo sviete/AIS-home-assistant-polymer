@@ -37,9 +37,7 @@ export interface AisPictureElements {
 export class HuiDialogWebBrowserAisEditImage extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  // eslint-disable-next-line no-template-curly-in-string
-  @internalProperty() private codeValue =
-    "type: picture-elements\nimage: '/local/img/${this._params.title}'\ntitle: ''\nelements: []";
+  @internalProperty() private codeValue = "";
 
   @internalProperty() private selectedElementType = "";
 
@@ -47,16 +45,83 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
 
   @internalProperty() private pictureElements: AisPictureElements[] = [];
 
+  @internalProperty() dragItemStyle;
+
+  @internalProperty() dragActive = false;
+
+  @internalProperty() dragCurrentX = 0;
+
+  @internalProperty() dragCurrentY = 0;
+
+  @internalProperty() dragInitialX = 0;
+
+  @internalProperty() dragInitialY = 0;
+
+  @internalProperty() dragOffsetX = 0;
+
+  @internalProperty() dragOffsetY = 0;
+
   @property({ attribute: false })
   private _params?: WebBrowserPlayMediaDialogParams;
 
   public showDialog(params: WebBrowserPlayMediaDialogParams): void {
     this._params = params;
+    // eslint-disable-next-line no-template-curly-in-string
+    this.codeValue =
+      "type: picture-elements\nimage: '/local/img/${this._params.title}'\ntitle: ''\nelements: []";
+    this.selectedElementType = "";
+    this.selectedEntityId = "";
+    this.pictureElements = [];
   }
 
   public closeDialog() {
     this._params = undefined;
     fireEvent(this, "dialog-closed", { dialog: this.localName });
+  }
+
+  private _dragStart(e) {
+    if (e.type === "touchstart") {
+      this.dragInitialX = e.touches[0].clientX - this.dragOffsetX;
+      this.dragInitialY = e.touches[0].clientY - this.dragOffsetY;
+    } else {
+      this.dragInitialX = e.clientX - this.dragOffsetX;
+      this.dragInitialY = e.clientY - this.dragOffsetY;
+    }
+
+    // if (e.target === this.dragItem) {
+    this.dragActive = true;
+    // }
+  }
+
+  private _dragEnd(e) {
+    this.dragInitialX = this.dragCurrentX;
+    this.dragInitialY = this.dragCurrentY;
+
+    this.dragActive = false;
+  }
+
+  private _drag(e) {
+    if (this.dragActive) {
+      e.preventDefault();
+
+      if (e.type === "touchmove") {
+        this.dragCurrentX = e.touches[0].clientX - this.dragInitialX;
+        this.dragCurrentY = e.touches[0].clientY - this.dragInitialY;
+      } else {
+        this.dragCurrentX = e.clientX - this.dragInitialX;
+        this.dragCurrentY = e.clientY - this.dragInitialY;
+      }
+
+      this.dragOffsetX = this.dragCurrentX;
+      this.dragOffsetY = this.dragCurrentY;
+
+      this.dragItemStyle =
+        "transform: translate3d(" +
+        this.dragCurrentX +
+        "px, " +
+        this.dragCurrentY +
+        "px, 0)";
+    }
   }
 
   private _handleAddElement() {
@@ -71,6 +136,8 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
       style: cssAttr,
     };
     this.pictureElements.push(element);
+    this.selectedEntityId = "";
+    this.selectedElementType = "";
     this._handleCodeChanged();
   }
 
@@ -91,14 +158,6 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
     // eslint-disable-next-line no-template-curly-in-string
     this.codeValue =
       "type: picture-elements\nimage: '/local/img/${this._params.title}'\ntitle: ''\nelements: [\n";
-    // this.pictureElements.forEach(element => {
-    //   this.codeValue += "  - type: " + element.elementType + "\n"
-    //   this.codeValue += "    entity: " + element.entityId + "\n"
-    //   this.codeValue += "    style:\n"
-    //   element.elementCss.forEach(attr => {
-    //     this.codeValue += "      " + attr.attrName + ":'" + attr.attrValue +"'\n"
-    //   });
-    // });
     this.pictureElements.forEach((element) => {
       this.codeValue += JSON.stringify(element) + ",\n";
     });
@@ -135,14 +194,28 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
         hideActions
         .heading=${createCloseHeading(
           this.hass,
-          this._params.title ||
-            this.hass.localize("ui.components.media-browser.media_player")
+          "Konfiguracja elementów obrazu"
         )}
         @closed=${this.closeDialog}
       >
-        <img src=${this._params.sourceUrl} />
-        <h2>Konfiguracja karty</h2>
-        <ha-paper-dropdown-menu dynamic-align label-float label="type">
+        <div id="outerContainer">
+          <div
+            id="container"
+            @touchstart=${this._dragStart}
+            @touchend=${this._dragEnd}
+            @touchmove=${this._drag}
+            @mousedown=${this._dragStart}
+            @mouseup=${this._dragEnd}
+            @mousemove=${this._drag}
+            style="background-image: url(${this._params
+              .sourceUrl}); background-repeat: no-repeat"
+          >
+            <div id="item" .style=${this.dragItemStyle}></div>
+            TODO
+          </div>
+        </div>
+        <h3>Wybierz element do dodania</h3>
+        <ha-paper-dropdown-menu dynamic-align label-float label="Typ">
           <paper-listbox
             slot="dropdown-content"
             attr-for-selected="itemId"
@@ -162,10 +235,12 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
           .entityFilter=${this.entityFilter}
           allow-custom-entity
         ></ha-entity-picker>
-        <mwc-button @click=${this._handleAddElement}>
-          <ha-svg-icon .path=${mdiPlus}></ha-svg-icon>
-          Dodaj element do obrazu
-        </mwc-button>
+        ${this.selectedEntityId !== "" && this.selectedElementType !== ""
+          ? html` <mwc-button @click=${this._handleAddElement}>
+              <ha-svg-icon .path=${mdiPlus}></ha-svg-icon>
+              Dodaj element do obrazu
+            </mwc-button>`
+          : ""}
         <br /><br />
         <ha-code-editor mode="yaml" .value=${this.codeValue}></ha-code-editor>
         <div class="card-actions">
@@ -183,18 +258,56 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
     return [
       haStyleDialog,
       css`
-        @media (min-width: 800px) {
+        /* @media (min-width: 800px) {
           ha-dialog {
             --mdc-dialog-max-width: 800px;
             --mdc-dialog-min-width: 400px;
             width: 100%;
           }
+        } */
+        /* make dialog fullscreen */
+        ha-dialog {
+          --mdc-dialog-min-width: calc(
+            100vw - env(safe-area-inset-right) - env(safe-area-inset-left)
+          );
+          --mdc-dialog-max-width: calc(
+            100vw - env(safe-area-inset-right) - env(safe-area-inset-left)
+          );
+          --mdc-dialog-min-height: 100%;
+          --mdc-dialog-max-height: 100%;
+          --mdc-shape-medium: 0px;
+          --vertial-align-dialog: flex-end;
         }
-        video,
-        audio,
-        img {
-          outline: none;
-          width: 100%;
+        #outerContainer {
+          height: 50vh;
+          /* to center
+          display: block;
+          margin: auto; */
+        }
+        #container {
+          height: 50vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          border-radius: 7px;
+          touch-action: none;
+        }
+        #item {
+          width: 80px;
+          height: 80px;
+          background-color: rgb(245, 230, 99);
+          border: 10px solid rgba(136, 136, 136, 0.5);
+          border-radius: 50%;
+          touch-action: none;
+          user-select: none;
+        }
+        #item:active {
+          background-color: rgba(168, 218, 220, 1);
+        }
+        #item:hover {
+          cursor: pointer;
+          border-width: 20px;
         }
       `,
     ];
