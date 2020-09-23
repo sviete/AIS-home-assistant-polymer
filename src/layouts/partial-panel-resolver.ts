@@ -72,10 +72,6 @@ const COMPONENTS = {
     import(
       /* webpackChunkName: "panel-aisdocs" */ "../panels/aisdocs/ha-panel-aisdocs"
     ),
-  aisgalery: () =>
-    import(
-      /* webpackChunkName: "panel-aisgalery" */ "../panels/aisgalery/ha-panel-aisgalery"
-    ),
   aisaudio: () =>
     import(
       /* webpackChunkName: "panel-aisaudio" */ "../panels/aisaudio/ha-panel-aisaudio"

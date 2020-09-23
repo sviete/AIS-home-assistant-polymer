@@ -17,7 +17,6 @@
     "src/panels/mailbox/ha-panel-mailbox.js",
     "src/panels/aishelp/ha-panel-aishelp.js",
     "src/panels/aisdocs/ha-panel-aisdocs.js",
-    "src/panels/aisgalery/ha-panel-aisgalery.js",
     "hassio/src/entrypoint.js"
   ],
   "sources": ["src/**/*", "!src/translations/*"],
