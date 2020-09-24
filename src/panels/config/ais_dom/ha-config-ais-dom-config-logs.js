@@ -420,8 +420,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
   }
 
   _computeLogsSettings(hass) {
-    var connectionInfo = hass.states["sensor.ais_logs_settings_info"];
-    var connInfoAttr = connectionInfo.attributes;
+    const connectionInfo = hass.states["sensor.ais_logs_settings_info"];
+    const connInfoAttr = connectionInfo.attributes;
     this.logDrive = connInfoAttr.logDrive;
     this.logLevel = connInfoAttr.logLevel;
     this.logRotating = connInfoAttr.logRotating;
@@ -446,7 +446,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     } else {
       this.logIconAnimationStyle = "";
     }
-    var logError = "";
+    let logError = "";
     if (connInfoAttr.logError) {
       logError = connInfoAttr.logError;
     }
@@ -501,8 +501,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
 
   // DB recorder
   _computeDbConnectionSettings(hass) {
-    var connectionInfo = hass.states["sensor.ais_db_connection_info"];
-    var connInfoAttr = connectionInfo.attributes;
+    const connectionInfo = hass.states["sensor.ais_db_connection_info"];
+    const connInfoAttr = connectionInfo.attributes;
     this.validationError = connInfoAttr.errorInfo;
     this.dbEngine = connInfoAttr.dbEngine;
     if (!this.dbEngine) {
@@ -518,7 +518,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     this.dbServerName = connInfoAttr.dbServerName;
     this.dbKeepDays = connInfoAttr.dbKeepDays;
 
-    var buttonName = "";
+    let buttonName = "";
     if (connectionInfo.state === "no_db_url_saved") {
       buttonName = "Sprawdź połączenie";
       this.dbIconAnimationStyle = "";
@@ -581,7 +581,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
         ).value;
         this.dbKeepDays = this.shadowRoot.getElementById("db_keep_days").value;
       }
-      var dbUserPass = "";
+      let dbUserPass = "";
       if (this.dbUser || this.dbPassword) {
         dbUserPass = this.dbUser + ":" + this.dbPassword + "@";
       }
@@ -632,13 +632,13 @@ class HaConfigAisDomControlLogs extends PolymerElement {
   }
 
   dbDriveChanged(ev) {
-    var newVal = ev.detail.value;
+    const newVal = ev.detail.value;
     this.dbDrive = newVal;
     this._computeDbUrl();
   }
 
   dbEngineChanged(ev) {
-    var newVal = ev.detail.value;
+    const newVal = ev.detail.value;
     this.dbEngine = newVal;
     this._computeDbUrl();
   }

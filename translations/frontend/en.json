@@ -2942,6 +2942,29 @@
                               "login_expired": "Session expired, please login again."
                             }
                           },
+                          "ais_admin": {
+                            "step": {
+                              "init": {
+                                "data": {
+                                  "username": "Username (admin)",
+                                  "password": "Password (admin)"
+                                }
+                              },
+                              "mfa": {
+                                "data": {
+                                  "code": "Two-factor Authentication Code"
+                                },
+                                "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                              }
+                            },
+                            "error": {
+                              "invalid_auth": "Invalid username or password",
+                              "invalid_code": "Invalid authentication code"
+                            },
+                            "abort": {
+                              "login_expired": "Session expired, please login again."
+                            }
+                          },
                           "ais_cloud": {
                               "step": {
                                 "init": {

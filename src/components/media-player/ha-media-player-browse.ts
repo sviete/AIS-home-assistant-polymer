@@ -321,51 +321,17 @@ export class HaMediaPlayerBrowse extends LitElement {
                             `
                           : ""}
                       </div>
-                      <!-- AIS add info button -->
-                      ${aisGallery
-                        ? html` <div class="aisButtons">
-                            <mwc-icon-button
-                              class="aisButton aisInfoButton"
-                              .item=${child}
-                              @click=${this._actionClickedInfo}
-                            >
-                              <ha-svg-icon path=${mdiInformation}></ha-svg-icon>
-                            </mwc-icon-button>
-                            <mwc-icon-button
-                              class="aisButton aisEditButton"
-                              .item=${child}
-                              @click=${this._actionClickedEdit}
-                            >
-                              <ha-svg-icon path=${mdiImageEdit}></ha-svg-icon>
-                            </mwc-icon-button>
-                            <mwc-icon-button
-                              class="aisButton aisDeleteButton"
-                              .item=${child}
-                              @click=${this._actionClickedDelete}
-                            >
-                              <ha-svg-icon path=${mdiDelete}></ha-svg-icon>
-                            </mwc-icon-button>
-                          </div>`
-                        : html`<div class="title">${child.title}</div>
-                            <div class="type">
-                              ${this.hass.localize(
-                                `ui.components.media-browser.content-type.${child.media_content_type}`
-                              )}
-                            </div>`}
+                      <!-- AIS add info button for admins only aisGallery-->
+                      ${this._getAisImageButtons(
+                        aisGallery,
+                        child,
+                        childrenMediaClass.layout
+                      )}
                     </div>
                   `
                 )}
                 <!-- AIS add image button -->
-                ${aisGallery
-                  ? html` <mwc-fab
-                      slot="fab"
-                      title="Dodaj"
-                      @click=${this._addImage}
-                      class="addImageFab"
-                    >
-                      <ha-svg-icon slot="icon" path=${mdiPlus}></ha-svg-icon>
-                    </mwc-fab>`
-                  : ""}
+                ${this._getAisImageFabButton(aisGallery)}
               </div>
             `
           : html`
@@ -405,6 +371,12 @@ export class HaMediaPlayerBrowse extends LitElement {
                         </mwc-icon-button>
                       </div>
                       <span class="title">${child.title}</span>
+                      <!-- AIS add info button for admins only aisGallery-->
+                      ${this._getAisImageButtons(
+                        aisGallery,
+                        child,
+                        childrenMediaClass.layout
+                      )}
                     </mwc-list-item>
                     <li divider role="separator"></li>
                   `
@@ -489,6 +461,74 @@ export class HaMediaPlayerBrowse extends LitElement {
   }
 
   // AIS actions
+  private _getAisImageFabButton(aisGallery: boolean): TemplateResult {
+    if (aisGallery) {
+      return html` <mwc-fab
+        slot="fab"
+        title="Dodaj"
+        @click=${this._addImage}
+        class="addImageFab"
+      >
+        <ha-svg-icon slot="icon" path=${mdiPlus}></ha-svg-icon>
+      </mwc-fab>`;
+    }
+    return html``;
+  }
+
+  private _getAisImageButtons(
+    aisGallery: boolean,
+    item: MediaPlayerItem,
+    layout: string
+  ): TemplateResult {
+    const addClass = layout === "grid" ? "" : "Line";
+    if (this.hass.user!.is_admin && aisGallery) {
+      return html` <div class="aisButtons${addClass}">
+        <mwc-icon-button
+          class="aisButton${addClass} aisInfoButton"
+          .item=${item}
+          @click=${this._actionClickedInfo}
+        >
+          <ha-svg-icon path=${mdiInformation}></ha-svg-icon>
+        </mwc-icon-button>
+        <mwc-icon-button
+          class="aisButton${addClass} aisEditButton"
+          .item=${item}
+          @click=${this._actionClickedEdit}
+        >
+          <ha-svg-icon path=${mdiImageEdit}></ha-svg-icon>
+        </mwc-icon-button>
+        <mwc-icon-button
+          class="aisButton${addClass} aisDeleteButton"
+          .item=${item}
+          @click=${this._actionClickedDelete}
+        >
+          <ha-svg-icon path=${mdiDelete}></ha-svg-icon>
+        </mwc-icon-button>
+      </div>`;
+    }
+
+    if (item.can_play && this.hass.user!.is_admin && !aisGallery)
+      return html` <div class="aisButtons${addClass}">
+        <mwc-icon-button
+          class="aisButton${addClass} aisInfoButton"
+          .item=${item}
+          @click=${this._actionClickedInfo}
+        >
+          <ha-svg-icon path=${mdiInformation}></ha-svg-icon>
+        </mwc-icon-button>
+      </div>`;
+
+    if (!aisGallery) {
+      return html`<div class="title">${item.title}</div>
+        <div class="type">
+          ${this.hass.localize(
+            `ui.components.media-browser.content-type.${item.media_content_type}`
+          )}
+        </div>`;
+    }
+    return html``;
+  }
+
   private async _actionClickedInfo(ev: MouseEvent): Promise<void> {
     ev.stopPropagation();
     const item = (ev.currentTarget as any).item;
@@ -586,6 +626,7 @@ export class HaMediaPlayerBrowse extends LitElement {
         ),
         text: this._renderError(err),
       });
+      this._loading = false;
       return;
     }
 
@@ -1079,6 +1120,9 @@ export class HaMediaPlayerBrowse extends LitElement {
           --mdc-theme-secondary: rgba(var(--rgb-primary-color), 0.5);
         }
         /* AIS css start */
+        mwc-list-item {
+          display: block;
+        }
         mwc-fab.addImageFab {
           position: fixed !important;
           bottom: 16px !important;
@@ -1096,6 +1140,10 @@ export class HaMediaPlayerBrowse extends LitElement {
           bottom: 3em;
           margin-bottom: -3em;
           background-color: #9e9e9e8a;
+        }
+        div.aisButtonsLine {
+          float: right;
+          position: relative;
         }
         mwc-icon-button.aisButton.aisDeleteButton {
           margin-left: auto;

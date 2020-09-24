@@ -17,6 +17,7 @@ import "@material/mwc-checkbox";
 import "@material/mwc-formfield";
 import { showVoiceCommandDialog } from "../../dialogs/voice-command-dialog/show-ha-voice-command-dialog";
 import { showMediaBrowserDialog } from "../../components/media-player/show-media-browser-dialog";
+import { showCheckMediaSourceAisDialog } from "../../components/media-player/show-check-media-source-ais-dialog";
 import { MediaPickedEvent } from "../../data/media-player";
 import "../../components/ha-menu-button";
 import "../../components/ha-card";
@@ -86,6 +87,13 @@ class PanelAisAudio extends LitElement {
     });
   }
 
+  private _showCheckAisMedia(): void {
+    showCheckMediaSourceAisDialog(this, {
+      selectedOptionCallback: (option: string) =>
+        console.log("option: " + option),
+    });
+  }
+
   protected updated(changedProps: PropertyValues): void {
     super.updated(changedProps);
 
@@ -128,6 +136,11 @@ class PanelAisAudio extends LitElement {
               .hass=${this.hass}
               .narrow=${this.narrow}
             ></ha-menu-button>
+            <ha-icon-button
+              label="Sprawdz audio"
+              icon="hass:send-check"
+              @click=${this._showCheckAisMedia}
+            ></ha-icon-button>
             <div main-title>Audio</div>
             <ha-icon-button
               label="Przeglądaj media"

@@ -103,26 +103,37 @@ export class HuiDialogWebBrowserAisPlayMedia extends LitElement {
               ></ha-hls-player>
             `
           : mediaType === "image"
-          ? html`<img src=${this._params.sourceUrl} />
-              <div class="card-actions">
-                <br />
-                <ha-icon icon="mdi:monitor-dashboard"></ha-icon>
-                ${this.aisLocalPath}<br />
-                <ha-icon icon="mdi:home-import-outline"></ha-icon>${this
-                  .aisLocalUrl}<br />
-                <ha-icon icon="mdi:weather-cloudy-arrow-right"><br /> </ha-icon
-                >${this.aisRemoteUrl} <br />
-                <mwc-button @click=${this._addToLovelaceView}>
-                  ${this.hass.localize(
-                    "ui.panel.config.devices.entities.add_entities_lovelace"
-                  ) || "Dodaj do interfejsu użytkownika"}
-                </mwc-button>
-              </div> `
+          ? html`<img src=${this._params.sourceUrl} />`
           : html`${this.hass.localize(
               "ui.components.media-browser.media_not_supported"
             )}`}
+        ${this.get_ais_item_info(mediaType)}
       </ha-dialog>
     `;
+  }
+
+  private get_ais_item_info(mediaType: string): TemplateResult {
+    // check if we are in AIS gallery folder -> media-source://media_source/galeria/.
+    const aisGallery = this._params!.sourceUrl.startsWith("/media/galeria/");
+    if (aisGallery && mediaType === "image") {
+      return html`<div class="card-actions">
+        <br />
+        <ha-icon icon="mdi:monitor-dashboard"></ha-icon>
+        ${this.aisLocalPath}<br />
+        <ha-icon icon="mdi:home-import-outline"></ha-icon>${this.aisLocalUrl}<br />
+        <ha-icon icon="mdi:weather-cloudy-arrow-right"><br /> </ha-icon>${this
+          .aisRemoteUrl} <br />
+        <mwc-button @click=${this._addToLovelaceView}>
+          ${this.hass.localize(
+            "ui.panel.config.devices.entities.add_entities_lovelace"
+          ) || "Dodaj do interfejsu użytkownika"}
+        </mwc-button>
+      </div> `;
+    }
+    return html`<div class="card-actions">
+      <br />
+      <ha-icon icon="mdi:web"></ha-icon>${this._params!.sourceUrl}<br />
+    </div> `;
   }
 
   private _addToLovelaceView(): void {
