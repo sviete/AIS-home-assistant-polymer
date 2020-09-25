@@ -10,9 +10,11 @@ import {
   html,
   LitElement,
   property,
+  internalProperty,
   TemplateResult,
 } from "lit-element";
-import { fireEvent } from "../../common/dom/fire_event";
+import "../ha-circular-progress";
+// import { fireEvent } from "../../common/dom/fire_event";
 import { createCloseHeading } from "../ha-dialog";
 import { haStyleDialog } from "../../resources/styles";
 import type { HomeAssistant } from "../../types";
@@ -20,8 +22,13 @@ import { HassEntity } from "home-assistant-js-websocket";
 import { CheckMediaSourceAisDialogParams } from "./show-check-media-source-ais-dialog";
 import {
   showAlertDialog,
-  showConfirmationDialog,
+  //  showConfirmationDialog,
 } from "../../dialogs/generic/show-dialog-box";
+
+export const CheckMediaSourceAisWs = (hass: HomeAssistant): Promise<string> =>
+  hass.callWS<string>({
+    type: "ais_cloud/check_ais_media_source",
+  });
 
 @customElement("hui-dialog-check-media-source-ais")
 export class HuiDialogCheckMediaSourceAis extends LitElement {
@@ -29,6 +36,8 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
 
   @property({ attribute: false })
   private _params?: CheckMediaSourceAisDialogParams;
+
+  @internalProperty() private _loading = false;
 
   private _aisMediaInfo?: HassEntity;
 
@@ -41,7 +50,7 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
 
   public closeDialog() {
     this._params = undefined;
-    fireEvent(this, "dialog-closed", { dialog: this.localName });
+    // fireEvent(this, "dialog-closed", { dialog: this.localName });
   }
 
   protected render(): TemplateResult {
@@ -59,14 +68,16 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
         )}
         @closed=${this.closeDialog}
       >
+        ${this._loading
+          ? html`<ha-circular-progress active></ha-circular-progress>`
+          : html``}
         <div class="img404">
           <img src="/static/ais_404.png" />
         </div>
-        ${this._isAudioPlaying()
+        ${this._isAudioPlaying() && !this._loading
           ? html`<h3>
-                Obecnie odtwarzasz
-                ${this._aisMediaInfo?.attributes["media_title"]}, z
-                ${this._aisMediaInfo?.attributes["source"]}
+                Obecnie odtwarzasz ${this._aisMediaInfo?.attributes["source"]}
+                ${this._aisMediaInfo?.attributes["media_title"]}
               </h3>
               <span class="aisUrl"
                 ><ha-icon icon="mdi:web"></ha-icon> Adres URL:
@@ -80,7 +91,7 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
                 Obecnie na wbudowanym odtwarzaczu nie odtwarzasz żadnych mediów,
                 dlatego sprawdzanie nie jest dostępne.
               </p>`}
-        ${this._canSourceBeChecked()
+        ${this._canSourceBeChecked() && !this._loading
           ? html`
                   <p>Jeżeli jest problem z tym zasobem, to możesz automatycznie sprawdzić, czy jest dostępne bardziej aktualne źródło:</p>
                   <div class="sourceCheckButton">
@@ -91,24 +102,36 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
                   </div> 
                 <p></p>Jeżeli automatyczne sprawdzenie nie pomoże, to będzie można wysłać informację o nie działającym zasobie do AI-Speaker.</p>`
           : html`
-              <p>
-                Tu będzie można sprawdzić, czy jest dostępne bardziej aktualne
-                źródło dla odtwarzanych mediów.
-              </p>
-              <p>
-                Obecnie sprawdzamy tylko stacje radiowe - w kolejnych wersjach
-                dodamy sprawdzenie innych zasobów.
-              </p>
+              <div style="text-align: center;">
+                <h2>
+                  <ha-circular-progress active></ha-circular-progress> Sprawdzam
+                  i przeszukuje cały Internet...
+                </h2>
+              </div>
             `}
       </ha-dialog>
     `;
   }
 
+  private async _checkSourceInAis(): Promise<string> {
+    this._loading = true;
+    let itemData = "";
+    try {
+      itemData = await CheckMediaSourceAisWs(this.hass);
+    } catch {
+      this._loading = false;
+    }
+
+    this._loading = false;
+    return itemData;
+  }
+
   private async _handleSourceCheck(): Promise<void> {
     //
+    const itemData = await this._checkSourceInAis();
     await showAlertDialog(this, {
       title: "AIS",
-      text: "Funkcjonalność w przygotowaniu...",
+      text: itemData.info,
     });
     // this.closeDialog();
   }
@@ -124,14 +147,15 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
   }
 
   private _canSourceBeChecked(): boolean {
-    if (
-      this._aisMediaInfo?.attributes["media_title"] &&
-      this._aisMediaInfo?.attributes["media_content_id"] &&
-      this._aisMediaInfo?.attributes["source"] === "Radio"
-    ) {
-      return true;
-    }
-    return false;
+    return true;
+    // if (
+    //   this._aisMediaInfo?.attributes["media_title"] &&
+    //   this._aisMediaInfo?.attributes["media_content_id"] &&
+    //   this._aisMediaInfo?.attributes["source"] === "Radio"
+    // ) {
+    //   return true;
+    // }
+    // return false;
   }
 
   static get styles(): CSSResult[] {
@@ -152,6 +176,12 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
         }
         span.aisUrl {
           word-wrap: break-word;
+        }
+        ha-circular-progress {
+          --mdc-theme-primary: var(--primary-color);
+          display: flex;
+          justify-content: center;
+          margin-top: 40px;
         }
       `,
     ];
