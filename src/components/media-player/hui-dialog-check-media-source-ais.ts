@@ -69,17 +69,24 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
           </mwc-button>
         </div> 
       <p></p>Jeżeli automatyczne sprawdzenie nie pomoże, to będzie można wysłać informację o nie działającym zasobie do AI-Speaker.</p>`
-          : html``}
+          : html`Tu możesz sprawdzić ... obecnie`}
       </ha-dialog>
     `;
   }
 
   private _handleSourceCheck(): void {
+    // 1. check if we have
     this.closeDialog();
   }
 
   private _canSourceBeChecked(): boolean {
-    return true;
+    if (
+      this._aisMediaInfo?.attributes["media_title"] &&
+      this._aisMediaInfo?.attributes["media_content_id"]
+    ) {
+      return true;
+    }
+    return false;
   }
 
   static get styles(): CSSResult[] {
