@@ -22,7 +22,7 @@ import { HassEntity } from "home-assistant-js-websocket";
 import { CheckMediaSourceAisDialogParams } from "./show-check-media-source-ais-dialog";
 import {
   showAlertDialog,
-  //  showConfirmationDialog,
+  showConfirmationDialog,
 } from "../../dialogs/generic/show-dialog-box";
 
 export const CheckMediaSourceAisWs = (hass: HomeAssistant): Promise<string> =>
@@ -82,7 +82,25 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
               <span class="aisUrl"
                 ><ha-icon icon="mdi:web"></ha-icon> Adres URL:
                 ${this._aisMediaInfo?.attributes["media_content_id"]}</span
-              >`
+              >
+              ${this._canSourceBeChecked() && !this._loading
+                ? html`
+                      <p>Jeżeli jest problem z tym zasobem, to możesz automatycznie sprawdzić, czy jest dostępne bardziej aktualne źródło:</p>
+                      <div class="sourceCheckButton">
+                        <mwc-button raised @click=${this._handleSourceCheck}>
+                                  <ha-icon icon="hass:robot"></ha-icon>
+                                  &nbsp; Uruchom Automatyczne Sprawdzanie
+                        </mwc-button>
+                      </div> 
+                    <p></p>Jeżeli automatyczne sprawdzenie nie pomoże, to będzie można wysłać informację o nie działającym zasobie do AI-Speaker.</p>`
+                : html`
+                    <div style="text-align: center;">
+                      <h2>
+                        <ha-circular-progress active></ha-circular-progress>
+                        Sprawdzam i przeszukuje cały Internet...
+                      </h2>
+                    </div>
+                  `} `
           : html`<p>
                 Tu możesz sprawdzić, czy jest dostępne bardziej aktualne źródło
                 dla odtwarzanych mediów.
@@ -91,24 +109,6 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
                 Obecnie na wbudowanym odtwarzaczu nie odtwarzasz żadnych mediów,
                 dlatego sprawdzanie nie jest dostępne.
               </p>`}
-        ${this._canSourceBeChecked() && !this._loading
-          ? html`
-                  <p>Jeżeli jest problem z tym zasobem, to możesz automatycznie sprawdzić, czy jest dostępne bardziej aktualne źródło:</p>
-                  <div class="sourceCheckButton">
-                    <mwc-button raised @click=${this._handleSourceCheck}>
-                              <ha-icon icon="hass:robot"></ha-icon>
-                              &nbsp; Uruchom Automatyczne Sprawdzanie
-                    </mwc-button>
-                  </div> 
-                <p></p>Jeżeli automatyczne sprawdzenie nie pomoże, to będzie można wysłać informację o nie działającym zasobie do AI-Speaker.</p>`
-          : html`
-              <div style="text-align: center;">
-                <h2>
-                  <ha-circular-progress active></ha-circular-progress> Sprawdzam
-                  i przeszukuje cały Internet...
-                </h2>
-              </div>
-            `}
       </ha-dialog>
     `;
   }
@@ -129,11 +129,26 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
   private async _handleSourceCheck(): Promise<void> {
     //
     const itemData = await this._checkSourceInAis();
-    await showAlertDialog(this, {
-      title: "AIS",
-      text: itemData.info,
-    });
-    // this.closeDialog();
+    if (itemData.error) {
+      await showAlertDialog(this, {
+        title: "AIS",
+        text: itemData.info,
+      });
+    } else {
+      //
+      const confirmed = await showConfirmationDialog(this, {
+        title: "AIS",
+        text: itemData.info,
+        confirmText: "TAK",
+        dismissText: "NIE",
+      });
+
+      if (confirmed) {
+        this.closeDialog();
+      } else {
+        // info to AIS
+      }
+    }
   }
 
   private _isAudioPlaying(): boolean {
