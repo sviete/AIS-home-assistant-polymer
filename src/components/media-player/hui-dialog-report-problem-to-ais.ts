@@ -177,7 +177,9 @@ export class HuiDialogReportProblemToAis extends LitElement {
         this.hass,
         "media_source",
         this._problemDescription,
-        this._aisMediaInfo?.attributes["media_content_id"]
+        this._aisMediaInfo?.attributes["media_title"] +
+          " " +
+          this._aisMediaInfo?.attributes["media_content_id"]
       )) as AisAnswer;
     } catch (err) {
       itemData.message = err.message;
