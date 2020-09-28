@@ -71,21 +71,29 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
         ${this._loading
           ? html`<ha-circular-progress active></ha-circular-progress>`
           : html``}
+        <p>
+          Tu możesz sprawdzić, czy jest dostępne bardziej aktualne źródło dla
+          odtwarzanych mediów.
+        </p>
         <div class="img404">
-          <img src="/static/ais_404.png" />
+          ${this._isAudioPlaying()
+            ? html`<img
+                src="${this._aisMediaInfo?.attributes["media_stream_image"]}"
+              />`
+            : html`<img src="/static/ais_404.png" />`}
         </div>
         ${this._isAudioPlaying() && !this._loading
           ? html`<h3>
                 Obecnie odtwarzasz ${this._aisMediaInfo?.attributes["source"]}
                 ${this._aisMediaInfo?.attributes["media_title"]}
               </h3>
-              <span class="aisUrl"
-                ><ha-icon icon="mdi:web"></ha-icon> Adres URL:
+              <span class="aisUrl">
+                Z adresu URL <ha-icon icon="mdi:web"></ha-icon>:
                 ${this._aisMediaInfo?.attributes["media_content_id"]}</span
               >
               ${this._canSourceBeChecked() && !this._loading
                 ? html`
-                      <p>Jeżeli jest problem z tym zasobem, to możesz automatycznie sprawdzić, czy jest dostępne bardziej aktualne źródło:</p>
+                      <p>Jeżeli jest problem z odtwarzaniem z tego zasobu, to możesz automatycznie sprawdzić, czy jest dostępne bardziej aktualne źródło:</p>
                       <div class="sourceCheckButton">
                         <mwc-button raised @click=${this._handleSourceCheck}>
                                   <ha-icon icon="hass:robot"></ha-icon>
@@ -101,14 +109,10 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
                       </h2>
                     </div>
                   `} `
-          : html`<p>
-                Tu możesz sprawdzić, czy jest dostępne bardziej aktualne źródło
-                dla odtwarzanych mediów.
-              </p>
-              <p>
-                Obecnie na wbudowanym odtwarzaczu nie odtwarzasz żadnych mediów,
-                dlatego sprawdzanie nie jest dostępne.
-              </p>`}
+          : html` <p>
+              Obecnie na wbudowanym odtwarzaczu nie odtwarzasz żadnych mediów,
+              dlatego sprawdzanie nie jest dostępne.
+            </p>`}
       </ha-dialog>
     `;
   }
