@@ -20,14 +20,28 @@ import { haStyleDialog } from "../../resources/styles";
 import type { HomeAssistant } from "../../types";
 import { HassEntity } from "home-assistant-js-websocket";
 import { CheckMediaSourceAisDialogParams } from "./show-check-media-source-ais-dialog";
+import { showReportProblemToAisDialog } from "./show-report-problem-to-ais-dialog";
 import {
   showAlertDialog,
   showConfirmationDialog,
 } from "../../dialogs/generic/show-dialog-box";
 
-export const CheckMediaSourceAisWs = (hass: HomeAssistant): Promise<string> =>
-  hass.callWS<string>({
+export interface AisAnswer {
+  info: string;
+  error: boolean;
+  found: boolean;
+}
+
+export const CheckMediaSourceAisWs = (
+  hass: HomeAssistant
+): Promise<AisAnswer> =>
+  hass.callWS<AisAnswer>({
     type: "ais_cloud/check_ais_media_source",
+  });
+
+export const ConfirmMediaSourceAisWs = (hass: HomeAssistant): Promise<string> =>
+  hass.callWS<string>({
+    type: "ais_cloud/confirm_ais_media_source",
   });
 
 @customElement("hui-dialog-check-media-source-ais")
@@ -64,35 +78,29 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
         hideActions
         .heading=${createCloseHeading(
           this.hass,
-          "Sprawdzenie źródła multimediów"
+          "Informacja o źródle multimediów"
         )}
         @closed=${this.closeDialog}
       >
         ${this._loading
           ? html`<ha-circular-progress active></ha-circular-progress>`
           : html``}
-        <p>
-          Tu możesz sprawdzić, czy jest dostępne bardziej aktualne źródło dla
-          odtwarzanych mediów.
-        </p>
-        <div class="img404">
-          ${this._isAudioPlaying()
-            ? html`<img
-                src="${this._aisMediaInfo?.attributes["media_stream_image"]}"
-              />`
-            : html`<img src="/static/ais_404.png" />`}
-        </div>
         ${this._isAudioPlaying() && !this._loading
-          ? html`<h3>
-                Obecnie odtwarzasz ${this._aisMediaInfo?.attributes["source"]}
-                ${this._aisMediaInfo?.attributes["media_title"]}
-              </h3>
+          ? html`<p>
+                Obecnie odtwarzasz ${this._aisMediaInfo?.attributes["source"]},
+                <b></b>${this._aisMediaInfo?.attributes["media_title"]}</b>
               <span class="aisUrl">
-                Z adresu URL <ha-icon icon="mdi:web"></ha-icon>:
-                ${this._aisMediaInfo?.attributes["media_content_id"]}</span
+                <br>z adresu URL <ha-icon icon="mdi:web"></ha-icon>:
+                <b></b>${this._aisMediaInfo?.attributes["media_content_id"]}</b>
+                </span
               >
-              ${this._canSourceBeChecked() && !this._loading
-                ? html`
+              </p>
+              <div class="img404"><img src="${
+                this._aisMediaInfo?.attributes["media_stream_image"]
+              }"/></div>
+              ${
+                this._canSourceBeChecked()
+                  ? html`
                       <p>Jeżeli jest problem z odtwarzaniem z tego zasobu, to możesz automatycznie sprawdzić, czy jest dostępne bardziej aktualne źródło:</p>
                       <div class="sourceCheckButton">
                         <mwc-button raised @click=${this._handleSourceCheck}>
@@ -101,27 +109,35 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
                         </mwc-button>
                       </div> 
                     <p></p>Jeżeli automatyczne sprawdzenie nie pomoże, to będzie można wysłać informację o nie działającym zasobie do AI-Speaker.</p>`
-                : html`
-                    <div style="text-align: center;">
+                  : html`
+                      <div style="text-align: center;">
+                        <h2>
+                          Tego typu mediów jeszcze nie sprawdzamy.
+                        </h2>
+                      </div>
+                    `
+              } `
+          : html` <div class="img404"><img src="/static/ais_404.png" /></div>
+              <p>
+                ${this._loading
+                  ? html`<div style="text-align: center;">
                       <h2>
                         <ha-circular-progress active></ha-circular-progress>
                         Sprawdzam i przeszukuje cały Internet...
                       </h2>
-                    </div>
-                  `} `
-          : html` <p>
-              Obecnie na wbudowanym odtwarzaczu nie odtwarzasz żadnych mediów,
-              dlatego sprawdzanie nie jest dostępne.
-            </p>`}
+                    </div>`
+                  : html`Obecnie na wbudowanym odtwarzaczu nie odtwarzasz
+                    żadnych mediów.`}
+              </p>`}
       </ha-dialog>
     `;
   }
 
-  private async _checkSourceInAis(): Promise<string> {
+  private async _checkSourceInAis(): Promise<AisAnswer> {
     this._loading = true;
-    let itemData = "";
+    let itemData: AisAnswer = { info: "", error: false, found: false };
     try {
-      itemData = await CheckMediaSourceAisWs(this.hass);
+      itemData = (await CheckMediaSourceAisWs(this.hass)) as AisAnswer;
     } catch {
       this._loading = false;
     }
@@ -132,26 +148,72 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
 
   private async _handleSourceCheck(): Promise<void> {
     //
-    const itemData = await this._checkSourceInAis();
-    if (itemData.error) {
+    const aisAnswer = await this._checkSourceInAis();
+    if (aisAnswer.error) {
       await showAlertDialog(this, {
         title: "AIS",
-        text: itemData.info,
+        text: aisAnswer.info,
       });
-    } else {
-      //
+      return;
+    }
+
+    if (aisAnswer.found) {
+      // the new url was found
       const confirmed = await showConfirmationDialog(this, {
         title: "AIS",
-        text: itemData.info,
+        text: aisAnswer.info,
         confirmText: "TAK",
         dismissText: "NIE",
       });
 
       if (confirmed) {
+        this._loading = true;
+        let itemData = "";
+        try {
+          itemData = await ConfirmMediaSourceAisWs(this.hass);
+        } catch {
+          this._loading = false;
+        }
+        this._loading = false;
+        if (aisAnswer.error) {
+          await showAlertDialog(this, {
+            title: "AIS",
+            text: aisAnswer.info,
+          });
+        } else {
+          await showAlertDialog(this, {
+            title: "AIS",
+            text: aisAnswer.info,
+          });
+        }
         this.closeDialog();
       } else {
         // info to AIS
+        const confirmed2 = await showConfirmationDialog(this, {
+          title: "AIS",
+          text: "Czy chcesz zgłosić problem do AIS?",
+          confirmText: "TAK",
+          dismissText: "NIE",
+        });
+        if (confirmed2) {
+          this._showReportProblemToAis();
+        }
+        this.closeDialog();
       }
+    } else {
+      // not able to found the new url
+      const confirmed = await showConfirmationDialog(this, {
+        title: "AIS",
+        text: aisAnswer.info,
+        confirmText: "TAK",
+        dismissText: "NIE",
+      });
+
+      if (confirmed) {
+        // show problem dialog
+        this._showReportProblemToAis();
+      }
+      this.closeDialog();
     }
   }
 
@@ -177,6 +239,13 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
     // return false;
   }
 
+  private _showReportProblemToAis(): void {
+    showReportProblemToAisDialog(this, {
+      selectedOptionCallback: (option: string) =>
+        console.log("option: " + option),
+    });
+  }
+
   static get styles(): CSSResult[] {
     return [
       haStyleDialog,
@@ -192,6 +261,7 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
         }
         img {
           max-width: 500px;
+          max-height: 300px;
         }
         span.aisUrl {
           word-wrap: break-word;

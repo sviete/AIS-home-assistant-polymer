@@ -137,8 +137,8 @@ class PanelAisAudio extends LitElement {
               .narrow=${this.narrow}
             ></ha-menu-button>
             <ha-icon-button
-              label="Sprawdz audio"
-              icon="hass:email-check"
+              label="Informacje o audio"
+              icon="hass:information"
               @click=${this._showCheckAisMedia}
             ></ha-icon-button>
             <div main-title>Audio</div>
