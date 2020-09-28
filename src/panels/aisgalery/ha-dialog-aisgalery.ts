@@ -108,6 +108,10 @@ export class HaDialogAisgalery extends LitElement {
   private _pictureChanged(ev: PolymerChangedEvent<string | null>) {
     this._error = undefined;
     this._picture = (ev.target as HaPictureUpload).value;
+    if (this._name.trim() === "") {
+      this._name = (ev.target as HaPictureUpload).fileName || "";
+      this._name = this._name.split(".")[0];
+    }
     if (this._picture == null) {
       this._deletePicture();
     } else {

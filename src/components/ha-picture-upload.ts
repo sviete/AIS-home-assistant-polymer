@@ -31,6 +31,8 @@ export class HaPictureUpload extends LitElement {
 
   @property() public label?: string;
 
+  @property() public fileName?: string;
+
   @property({ type: Boolean }) public crop = false;
 
   @property({ attribute: false }) public cropOptions?: CropOptions;
@@ -130,6 +132,7 @@ export class HaPictureUpload extends LitElement {
 
   private async _handleFilePicked(ev) {
     if (this.crop) {
+      this.fileName = ev.target.files[0].name || "";
       this._cropFile(ev.target.files[0]);
     } else {
       this._uploadFile(ev.target.files[0]);
@@ -179,6 +182,7 @@ export class HaPictureUpload extends LitElement {
     ev.preventDefault();
     this.value = null;
     this._error = "";
+    this.fileName = "";
     fireEvent(this, "change");
   }
 
