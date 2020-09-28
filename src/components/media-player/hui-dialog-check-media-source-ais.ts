@@ -39,8 +39,10 @@ export const CheckMediaSourceAisWs = (
     type: "ais_cloud/check_ais_media_source",
   });
 
-export const ConfirmMediaSourceAisWs = (hass: HomeAssistant): Promise<string> =>
-  hass.callWS<string>({
+export const ConfirmMediaSourceAisWs = (
+  hass: HomeAssistant
+): Promise<AisAnswer> =>
+  hass.callWS<AisAnswer>({
     type: "ais_cloud/confirm_ais_media_source",
   });
 
@@ -108,7 +110,7 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
                                   &nbsp; Uruchom Automatyczne Sprawdzanie
                         </mwc-button>
                       </div> 
-                    <p></p>Jeżeli automatyczne sprawdzenie nie pomoże, to będzie można wysłać informację o nie działającym zasobie do AI-Speaker.</p>`
+                    <p></p>Jeżeli automatyczne sprawdzenie nie pomoże, to będzie można wysłać informację o tym problemie do AI-Speaker.</p>`
                   : html`
                       <div style="text-align: center;">
                         <h2>
@@ -122,7 +124,6 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
                 ${this._loading
                   ? html`<div style="text-align: center;">
                       <h2>
-                        <ha-circular-progress active></ha-circular-progress>
                         Sprawdzam i przeszukuje cały Internet...
                       </h2>
                     </div>`
@@ -168,22 +169,19 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
 
       if (confirmed) {
         this._loading = true;
-        let itemData = "";
-        try {
-          itemData = await ConfirmMediaSourceAisWs(this.hass);
-        } catch {
-          this._loading = false;
-        }
+        const aisAnswer2 = (await ConfirmMediaSourceAisWs(
+          this.hass
+        )) as AisAnswer;
         this._loading = false;
-        if (aisAnswer.error) {
+        if (aisAnswer2.error) {
           await showAlertDialog(this, {
             title: "AIS",
-            text: aisAnswer.info,
+            text: aisAnswer2.info,
           });
         } else {
           await showAlertDialog(this, {
             title: "AIS",
-            text: aisAnswer.info,
+            text: aisAnswer2.info,
           });
         }
         this.closeDialog();

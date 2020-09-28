@@ -3,6 +3,7 @@ import "@material/mwc-list/mwc-list";
 import "@material/mwc-list/mwc-list-item";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-listbox/paper-listbox";
+import "@polymer/paper-input/paper-textarea";
 import {
   css,
   CSSResult,
@@ -15,7 +16,6 @@ import {
 } from "lit-element";
 import "../ha-circular-progress";
 import { createCloseHeading } from "../ha-dialog";
-import "../ha-code-editor";
 import { haStyleDialog } from "../../resources/styles";
 import type { HomeAssistant } from "../../types";
 import { HassEntity } from "home-assistant-js-websocket";
@@ -106,14 +106,16 @@ export class HuiDialogReportProblemToAis extends LitElement {
               ${
                 !this._aisAnswer
                   ? html` <p>
-                        Dodatkowy info dla AI-Speaker, tu możesz zasugerować np.
-                        nowy adres zasobu, jeżeli go znasz:
+                        Wyślij zgłoszenie do AI-Speaker. Postaramy się jak
+                        najszybciej naprawić ten problem.
                       </p>
-                      <ha-code-editor
-                        mode="text"
-                        .value="${this._problemDescription}"
+                      <paper-textarea
+                        label="Dodatkowy opis dla AI-Speaker"
+                        placeholder="Tu możesz np. podać nowy adres zasobu, jeżeli go znasz."
+                        name="description"
+                        .value=${this._problemDescription}
                         @value-changed=${this._handleProblemDescriptionChange}
-                      ></ha-code-editor>
+                      ></paper-textarea>
                       <div class="sendProblemToAisButton">
                         <mwc-button
                           raised
@@ -158,7 +160,6 @@ export class HuiDialogReportProblemToAis extends LitElement {
               }`
         : html` <p>
             Wysyłam zgłoszenie do AIS
-            <ha-circular-progress active></ha-circular-progress>
           </p>`}
     </ha-dialog>`;
   }
@@ -213,6 +214,8 @@ export class HuiDialogReportProblemToAis extends LitElement {
         img {
           max-width: 500px;
           max-height: 300px;
+          -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
         }
         span.aisUrl {
           word-wrap: break-word;
