@@ -34,6 +34,7 @@ import {
   mdiPencil,
   mdiMonitorSpeaker,
   mdiNfcVariant,
+  mdiZigbee,
 } from "@mdi/js";
 
 declare global {
@@ -197,6 +198,13 @@ export const aisConfigSections: { [name: string]: PageNavigation[] } = {
       iconPath: mdiDevices,
       core: true,
     },
+    {
+      component: "ais_dom_zigbee",
+      path: "/config/ais_dom_zigbee",
+      translationKey: "ui.panel.config.ais_dom_zigbee.caption",
+      iconPath: mdiZigbee,
+      core: true,
+    },
   ],
 };
 
@@ -314,6 +322,13 @@ class HaPanelConfig extends HassRouterPage {
         load: () =>
           import(
             /* webpackChunkName: "panel-config-ais-dom-devices" */ "./ais_dom/ha-config-ais-dom-devices"
+          ),
+      },
+      ais_dom_zigbee: {
+        tag: "ha-config-aiszigbee",
+        load: () =>
+          import(
+            /* webpackChunkName: "panel-aiszigbee-aiszigbee" */ "./ha-config-aiszigbee"
           ),
       },
       devices: {

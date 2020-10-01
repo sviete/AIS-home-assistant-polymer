@@ -2073,6 +2073,10 @@
           "caption": "Configuration of AIS home Devices",
           "description": "Manage your devices with AIS dom software"
         },
+        "ais_dom_zigbee": {
+          "caption": "Configuration of AIS Zigbee",
+          "description": "Manage your zigbee devices"
+        },
         "ais_dom_config_update": {
           "caption": "Gateway software",
           "description": "System update, backup and synchronization with the Integrator Portal"

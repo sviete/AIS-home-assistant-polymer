@@ -1664,6 +1664,10 @@
                     "caption": "Konfiguracja Urządzeń AIS dom",
                     "description": "Zarządzaj swoimi urządzeniami z oprogramowaniem AIS dom"
                 },
+                "ais_dom_zigbee": {
+                    "caption": "Konfiguracja Urządzeń Zigbee",
+                    "description": "Zarządzaj swoimi urządzeniami Zigbee"
+                  },
                 "ais_dom_config_update": {
                     "caption": "Oprogramowanie bramki",
                     "description": "Aktualizacja systemu, kopia zapasowa i synchronizacja bramki z Portalem Integratora"
