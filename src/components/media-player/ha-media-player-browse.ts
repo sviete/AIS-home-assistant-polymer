@@ -541,6 +541,7 @@ export class HaMediaPlayerBrowse extends LitElement {
     showWebBrowserPlayMediaAisDialog(this, {
       sourceUrl: resolvedUrl.url,
       sourceType: resolvedUrl.mime_type,
+      sourceThumbnail: item.thumbnail,
       title: item.title,
     });
   }

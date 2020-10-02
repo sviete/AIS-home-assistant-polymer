@@ -4,6 +4,7 @@ export interface WebBrowserPlayMediaAisDialogParams {
   sourceUrl: string;
   sourceType: string;
   title?: string;
+  sourceThumbnail?: string;
 }
 
 export const showWebBrowserPlayMediaAisDialog = (

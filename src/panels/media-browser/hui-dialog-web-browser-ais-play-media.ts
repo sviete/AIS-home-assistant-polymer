@@ -12,9 +12,10 @@ import { createCloseHeading } from "../../components/ha-dialog";
 import "../../components/ha-hls-player";
 import type { HomeAssistant } from "../../types";
 import { haStyleDialog } from "../../resources/styles";
-import { WebBrowserPlayMediaDialogParams } from "./show-media-player-dialog";
+import { WebBrowserPlayMediaAisDialogParams } from "./show-media-player-ais-dialog";
 import "../../components/ha-code-editor";
 import { addEntitiesToLovelaceView } from "../lovelace/editor/add-entities-to-view";
+import { showAlertDialog } from "../../dialogs/generic/show-dialog-box";
 
 @customElement("hui-dialog-web-browser-ais-play-media")
 export class HuiDialogWebBrowserAisPlayMedia extends LitElement {
@@ -26,10 +27,12 @@ export class HuiDialogWebBrowserAisPlayMedia extends LitElement {
 
   @property() private aisRemoteUrl?: string;
 
-  @property({ attribute: false })
-  private _params?: WebBrowserPlayMediaDialogParams;
+  @property() private aisThumbnail?: string;
 
-  public showDialog(params: WebBrowserPlayMediaDialogParams): void {
+  @property({ attribute: false })
+  private _params?: WebBrowserPlayMediaAisDialogParams;
+
+  public showDialog(params: WebBrowserPlayMediaAisDialogParams): void {
     this._params = params;
     this.aisLocalPath = this._params?.sourceUrl
       .split("?authSig=")[0]
@@ -43,6 +46,7 @@ export class HuiDialogWebBrowserAisPlayMedia extends LitElement {
       this.hass.states["sensor.ais_secure_android_id_dom"].state.trim() +
       ".paczka.pro" +
       this.aisLocalPath.trim();
+    this.aisThumbnail = this._params?.sourceThumbnail;
   }
 
   public closeDialog() {
@@ -130,6 +134,21 @@ export class HuiDialogWebBrowserAisPlayMedia extends LitElement {
         </mwc-button>
       </div> `;
     }
+    if (mediaType === "audio") {
+      const imgSrc = this.aisThumbnail || "";
+      return html`<div class="card-actions">
+        <br />
+        <ha-icon icon="mdi:web"></ha-icon>${this._params!.sourceUrl}<br />
+        <br />
+        <img .src=${imgSrc} />
+        <br />
+        <ha-icon icon="mdi:file-image"></ha-icon>${imgSrc} <br /><br />
+        <mwc-button @click=${this._addToAisLib}>
+          <ha-icon icon="hass:playlist-plus"></ha-icon>
+          Dodaj do mojej biblioteki.
+        </mwc-button>
+      </div> `;
+    }
     return html`<div class="card-actions">
       <br />
       <ha-icon icon="mdi:web"></ha-icon>${this._params!.sourceUrl}<br />
@@ -152,6 +171,13 @@ export class HuiDialogWebBrowserAisPlayMedia extends LitElement {
       ]
     );
     this.closeDialog();
+  }
+
+  private _addToAisLib(): void {
+    showAlertDialog(this, {
+      title: "AIS",
+      text: "TODO",
+    });
   }
 
   static get styles(): CSSResult[] {
