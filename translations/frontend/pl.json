@@ -605,6 +605,9 @@
                     "server": "Serwer"
                 },
                 "media_browsing_error": "Błąd przeglądania multimediów",
+                "learn_adding_local_media": "Dowiedz się więcej o dodawaniu multimediów w {documentation}.",
+                "local_media_files": "Umieść tu swoje zdjęcia pomieszczeń i inne obrazy, aby móc je używać jako tło do kart w interfejsie(np. widok pomieszczenia), wysyłać w powiadomieniach oraz przeglądać i odtwarzać w przeglądarce lub na obsługiwanych odtwarzaczach multimedialnych. Jeżeli masz zintegrowane kamery wideo, to możesz zautomatyzować zapis obrazu z kamery (np. po wykryciu ruchu lub po naciśnięciu dzwonka do drzwi) i automatycznie wysłać zdjęcie w powiadomieniu.",
+                "documentation": "dokumentacji",
                 "media_not_supported": "Przeglądarka mediów nie obsługuje tego typu mediów",
                 "media_player": "Odtwarzacz mediów",
                 "media-player-browser": "Przeglądarka mediów",
