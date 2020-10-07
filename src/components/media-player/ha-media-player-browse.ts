@@ -330,20 +330,12 @@ export class HaMediaPlayerBrowse extends LitElement {
                               `
                             : ""}
                         </div>
-                        <div class="title">
-                          ${child.title}
-                          <paper-tooltip
-                            fitToVisibleBounds
-                            position="top"
-                            offset="4"
-                            >${child.title}</paper-tooltip
-                          >
-                        </div>
-                        <div class="type">
-                          ${this.hass.localize(
-                            `ui.components.media-browser.content-type.${child.media_content_type}`
-                          )}
-                        </div>
+                        <!-- AIS add info button for admins only aisGallery-->
+                        ${this._getAisImageButtons(
+                          aisGallery,
+                          child,
+                          childrenMediaClass.layout
+                        )}
                       </div>
                     `
                   )}
@@ -389,6 +381,12 @@ export class HaMediaPlayerBrowse extends LitElement {
                           </mwc-icon-button>
                         </div>
                         <span class="title">${child.title}</span>
+                        <!-- AIS add info button for admins only aisGallery-->
+                        ${this._getAisImageButtons(
+                          aisGallery,
+                          child,
+                          childrenMediaClass.layout
+                        )}
                       </mwc-list-item>
                       <li divider role="separator"></li>
                     `
@@ -398,16 +396,12 @@ export class HaMediaPlayerBrowse extends LitElement {
           : html`
               <div class="container">
                 ${this.hass.localize("ui.components.media-browser.no_items")}
-                ${currentItem.media_content_id ===
-                "media-source://media_source/local/."
+                ${aisGallery
                   ? html`<br />${this.hass.localize(
                         "ui.components.media-browser.learn_adding_local_media",
                         "documentation",
                         html`<a
-                          href="${documentationUrl(
-                            this.hass,
-                            "/more-info/local-media/add-media"
-                          )}"
+                          href="https://www.ai-speaker.com/docs/ais_app_integration_gallery"
                           target="_blank"
                           rel="noreferrer"
                           >${this.hass.localize(
@@ -568,7 +562,12 @@ export class HaMediaPlayerBrowse extends LitElement {
       </div>`;
 
     if (!aisGallery) {
-      return html`<div class="title">${item.title}</div>
+      return html` <div class="title">
+          ${item.title}
+          <paper-tooltip fitToVisibleBounds position="top" offset="4"
+            >${item.title}</paper-tooltip
+          >
+        </div>
         <div class="type">
           ${this.hass.localize(
             `ui.components.media-browser.content-type.${item.media_content_type}`
