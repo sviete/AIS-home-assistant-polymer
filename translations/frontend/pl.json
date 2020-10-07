@@ -496,9 +496,11 @@
                     "wnw": "zach. płn.-zach.",
                     "wsw": "zach. płd.-zach."
                 },
+                "day": "Dzień",
                 "forecast": "Prognoza",
                 "high": "wysoka",
-                "low": "niska"
+                "low": "niska",
+                "night": "Noc"
             }
         },
         "common": {
@@ -604,6 +606,9 @@
                     "playlist": "Lista odtwarzania",
                     "server": "Serwer"
                 },
+                "documentation": "dokumentacja",
+                "learn_adding_local_media": "Dowiedz się więcej o dodawaniu multimediów w {documentation}.",
+                "local_media_files": "Umieść pliki wideo, audio i obrazy w folderze multimediów, aby móc je przeglądać i odtwarzać w przeglądarce lub obsługiwanych odtwarzaczach multimedialnych.",
                 "media_browsing_error": "Błąd przeglądania multimediów",
                 "learn_adding_local_media": "Dowiedz się więcej o dodawaniu multimediów w {documentation}.",
                 "local_media_files": "Umieść tu swoje zdjęcia pomieszczeń i inne obrazy, aby móc je używać jako tło do kart w interfejsie(np. widok pomieszczenia), wysyłać w powiadomieniach oraz przeglądać i odtwarzać w przeglądarce lub na obsługiwanych odtwarzaczach multimedialnych. Jeżeli masz zintegrowane kamery wideo, to możesz zautomatyzować zapis obrazu z kamery (np. po wykryciu ruchu lub po naciśnięciu dzwonka do drzwi) i automatycznie wysłać zdjęcie w powiadomieniu.",
@@ -612,10 +617,13 @@
                 "media_player": "Odtwarzacz mediów",
                 "media-player-browser": "Przeglądarka mediów",
                 "no_items": "Brak elementów",
+                "no_local_media_found": "Nie znaleziono mediów lokalnych",
+                "no_media_folder": "Wygląda na to, że nie utworzyłeś jeszcze folderu multimediów.",
                 "pick": "Wybierz",
                 "pick-media": "Wybierz media",
                 "play": "Odtwarzaj",
                 "play-media": "Odtwarzaj media",
+                "setup_local_help": "Zapoznaj się z {documentation}, by skonfigurować media lokalne.",
                 "video_not_supported": "Twoja przeglądarka nie obsługuje elementu wideo.",
                 "web-browser": "Przeglądarka internetowa"
             },
@@ -675,7 +683,7 @@
                     "icon": "Nadpisanie ikony",
                     "icon_error": "Ikony powinny mieć format 'prefix:iconname', np. 'mdi:home'",
                     "name": "Nadpisanie nazwy",
-                    "note": "Uwaga: może to jeszcze nie działać ze wszystkimi integracjami.",
+                    "note": "Uwaga: to może jeszcze nie działać ze wszystkimi integracjami.",
                     "unavailable": "Ta encja nie jest obecnie dostępna.",
                     "update": "AKTUALIZUJ"
                 },
@@ -736,6 +744,7 @@
                 "dismiss": "Zamknij okno dialogowe",
                 "edit": "Edytuj encję",
                 "history": "Historia",
+                "last_updated": "Ostatnio zaktualizowano",
                 "person": {
                     "create_zone": "Utwórz strefę z bieżącej lokalizacji"
                 },
@@ -897,7 +906,7 @@
                 },
                 "automation": {
                     "caption": "Automatyzacje",
-                    "description": "Twórz i edytuj automatyzacje",
+                    "description": "Zarządzaj automatyzacjami",
                     "editor": {
                         "actions": {
                             "add": "Dodaj akcję",
@@ -1035,7 +1044,16 @@
                                     "before": "Przed",
                                     "label": "Czas",
                                     "type_input": "Wartość pomocnika typu data/czas",
-                                    "type_value": "Ustalony czas"
+                                    "type_value": "Ustalony czas",
+                                    "weekdays": {
+                                        "fri": "Piątek",
+                                        "mon": "Poniedziałek",
+                                        "sat": "Sobota",
+                                        "sun": "Niedziela",
+                                        "thu": "Czwartek",
+                                        "tue": "Wtorek",
+                                        "wed": "Środa"
+                                    }
                                 },
                                 "zone": {
                                     "entity": "Encja z lokalizacją",
@@ -2034,7 +2052,7 @@
                             "filter": "Encje komponentu filtr",
                             "generic": "Encje komponentu kamera IP generic",
                             "generic_thermostat": "Encje komponentu termostatu generic",
-                            "group": "Grupy",
+                            "group": "Przeładuj grupy, ich encje oraz usługi powiadomień",
                             "heading": "Ponowne wczytanie konfiguracji YAML",
                             "history_stats": "Encje komponentu historia stanów",
                             "homekit": "HomeKit",
@@ -2506,6 +2524,20 @@
                     "refresh": "Wczytaj ponownie"
                 },
                 "editor": {
+                    "action-editor": {
+                        "actions": {
+                            "call-service": "Wywołaj usługę",
+                            "default_action": "Akcja domyślna",
+                            "more-info": "Okno więcej informacji",
+                            "navigate": "Przejdź",
+                            "none": "Brak akcji",
+                            "toggle": "Przełącz",
+                            "url": "URL"
+                        },
+                        "editor_service_data": "Dane usługi można wprowadzać tylko w edytorze kodu",
+                        "navigation_path": "Ścieżka",
+                        "url_path": "Ścieżka adresu URL"
+                    },
                     "card": {
                         "alarm-panel": {
                             "available_states": "Dostępne stany",
@@ -2513,12 +2545,20 @@
                             "name": "Panel alarmu"
                         },
                         "button": {
+                            "default_action_help": "Domyślna akcja zależy od możliwości encji, encja zostanie przełączona lub zostanie wyświetlone okno więcej informacji.",
                             "description": "Karta przycisku umożliwia dodawanie przycisków do wykonywania zadań.",
                             "name": "Przycisk"
                         },
                         "calendar": {
+                            "calendar_entities": "Encje kalendarza",
                             "description": "Karta kalendarza wyświetla kalendarz zawierający widoki dnia, tygodnia i listy",
-                            "name": "Kalendarz"
+                            "inital_view": "Wstępny widok",
+                            "name": "Kalendarz",
+                            "views": {
+                                "dayGridDay": "Dzień",
+                                "dayGridMonth": "Miesiąc",
+                                "listWeek": "Lista"
+                            }
                         },
                         "conditional": {
                             "card": "Karta",
@@ -2537,8 +2577,21 @@
                         },
                         "entities": {
                             "description": "Karta encji jest najbardziej popularnym rodzajem karty. Grupuje ona encje w listy.",
+                            "edit_special_row": "Edytuj wiersz za pomocą edytora kodu",
+                            "entity_row": {
+                                "attribute": "Atrybut",
+                                "button": "Przycisk",
+                                "buttons": "Przyciski",
+                                "call-service": "Wywołaj usługę",
+                                "cast": "Cast",
+                                "conditional": "Warunkowe",
+                                "divider": "Dzielnik",
+                                "section": "Sekcja",
+                                "weblink": "Łącze internetowe"
+                            },
                             "name": "Encje",
                             "show_header_toggle": "Pokaż przełącznik w nagłówku",
+                            "special_row": "wiersz specjalny",
                             "toggle": "Przełącz encje"
                         },
                         "entity-filter": {
@@ -2659,7 +2712,8 @@
                             "description": "Karta sensor zapewnia szybki przegląd stanu sensorów z opcjonalnym wykresem, aby wizualizować zmiany w czasie.",
                             "graph_detail": "Szczegół wykresu",
                             "graph_type": "Rodzaj wykresu",
-                            "name": "Sensor"
+                            "name": "Sensor",
+                            "show_more_detail": "Pokaż więcej informacji"
                         },
                         "shopping-list": {
                             "description": "Karta lista zakupów umożliwia dodawanie, edytowanie, zaznaczanie i usuwanie pozycji z listy zakupów.",
@@ -3083,6 +3137,12 @@
                     "finish": "Zamknij"
                 },
                 "intro": "Czy jesteś gotowy, aby ożywić swój dom, odzyskać prywatność i dołączyć do społeczności fanów automatyki domowej?",
+                "restore": {
+                    "description": "Alternatywnie możesz przywrócić z poprzedniej migawki.",
+                    "hide_log": "Ukryj cały log",
+                    "in_progress": "Trwa przywracanie",
+                    "show_log": "Pokaż cały log"
+                },
                 "user": {
                     "create_account": "Utwórz konto",
                     "data": {

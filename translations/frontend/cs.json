@@ -496,9 +496,11 @@
                     "wnw": "ZSZ",
                     "wsw": "ZJZ"
                 },
+                "day": "Den",
                 "forecast": "Předpověď",
                 "high": "Vysoká",
-                "low": "Nízká"
+                "low": "Nízká",
+                "night": "Noc"
             }
         },
         "common": {
@@ -739,6 +741,7 @@
                 "dismiss": "Zavřít dialog",
                 "edit": "Upravit entitu",
                 "history": "Historie",
+                "last_updated": "Poslední aktualizace",
                 "person": {
                     "create_zone": "Vytvořit zónu z aktuálního umístění"
                 },
@@ -1038,7 +1041,16 @@
                                     "before": "Před",
                                     "label": "Čas",
                                     "type_input": "Hodnota pomocníka \"Datum a/nebo čas\"",
-                                    "type_value": "Pevný čas"
+                                    "type_value": "Pevný čas",
+                                    "weekdays": {
+                                        "fri": "Pátek",
+                                        "mon": "Pondělí",
+                                        "sat": "Sobota",
+                                        "sun": "Neděle",
+                                        "thu": "Čtvrtek",
+                                        "tue": "Úterý",
+                                        "wed": "Středa"
+                                    }
                                 },
                                 "zone": {
                                     "entity": "Entita s umístěním",
@@ -1179,7 +1191,7 @@
                         "add_automation": "Přidat automatizaci",
                         "delete_automation": "Odstranit automatizaci",
                         "delete_confirm": "Opravdu chcete odstranit tuto automatizaci?",
-                        "duplicate": "Duplikovat",
+                        "duplicate": "Duplikát",
                         "duplicate_automation": "Duplikovat automatizaci",
                         "edit_automation": "Upravit automatizaci",
                         "header": "Editor automatizací",
@@ -2085,7 +2097,7 @@
                         "name": "Jméno",
                         "new_password": "Nové heslo",
                         "owner": "Vlastník",
-                        "password_changed": "Heslo změněno!",
+                        "password_changed": "Heslo bylo změněno",
                         "system_generated": "Generovaný systémem",
                         "system_generated_users_not_editable": "Nelze aktualizovat uživatele generované systémem.",
                         "system_generated_users_not_removable": "Nelze odebrat uživatele generované systémem.",
@@ -2292,7 +2304,7 @@
                     },
                     "ozw_log": {
                         "header": "Protokol OZW",
-                        "introduction": "Zobrazit protokol. 0 je minimum (načte celý protokol) a 1000 je maximum. Načíst zobrazí statický protokol a tail automaticky aktualizuje protokol s naposledy zvoleným počtem řádků.",
+                        "introduction": "Zobrazit protokol. 0 je minimum (načte celý protokol) a 1000 je maximum. Načíst zobrazí statický protokol a Konec automaticky aktualizuje protokol s naposledy zvoleným počtem řádků.",
                         "last_log_lines": "Počet řádků posledního protokolu",
                         "load": "Načíst",
                         "tail": "Konec"
@@ -2461,6 +2473,20 @@
                     "refresh": "Obnovit"
                 },
                 "editor": {
+                    "action-editor": {
+                        "actions": {
+                            "call-service": "Zavolání služby",
+                            "default_action": "Výchozí akce",
+                            "more-info": "Více informací",
+                            "navigate": "Přechod na jinou stránku",
+                            "none": "Žádná akce",
+                            "toggle": "Přepínač",
+                            "url": "Url adresa"
+                        },
+                        "editor_service_data": "Data služby lze zadat pouze v editoru kódu",
+                        "navigation_path": "Cesta stránky",
+                        "url_path": "Url adresa"
+                    },
                     "card": {
                         "alarm-panel": {
                             "available_states": "Dostupné režimy",
@@ -2468,12 +2494,20 @@
                             "name": "Ovládací panel alarmu"
                         },
                         "button": {
+                            "default_action_help": "Výchozí akce závisí na vlastnostech entity - bude buď přepnuta, nebo se zobrazí další informace.",
                             "description": "Karta Tlačítko umožňuje přidat tlačítka k provádění úkolů.",
                             "name": "Tlačítko"
                         },
                         "calendar": {
+                            "calendar_entities": "Entity kalendáře",
                             "description": "Karta Kalendář zobrazuje kalendář včetně zobrazení dnů, týdnů a seznamů",
-                            "name": "Kalendář"
+                            "inital_view": "Výchozí pohled",
+                            "name": "Kalendář",
+                            "views": {
+                                "dayGridDay": "Den",
+                                "dayGridMonth": "Měsíc",
+                                "listWeek": "Seznam"
+                            }
                         },
                         "conditional": {
                             "card": "Karta",
@@ -2492,8 +2526,21 @@
                         },
                         "entities": {
                             "description": "Karta Entity je nejběžnějším typem karty. Seskupuje položky do seznamů.",
+                            "edit_special_row": "Upravte řádek pomocí editoru kódu",
+                            "entity_row": {
+                                "attribute": "Atribut",
+                                "button": "Tlačítko",
+                                "buttons": "Tlačítka",
+                                "call-service": "Volání služby",
+                                "cast": "Cast",
+                                "conditional": "Podmínka",
+                                "divider": "Oddělovač",
+                                "section": "Sekce",
+                                "weblink": "Webový odkaz"
+                            },
                             "name": "Entity",
                             "show_header_toggle": "Zobrazit přepínač záhlaví?",
+                            "special_row": "speciální řádek",
                             "toggle": "Přepnout entity."
                         },
                         "entity-filter": {
@@ -2614,7 +2661,8 @@
                             "description": "Karta Sensor poskytuje rychlý přehled o stavu senzorů s volitelným grafem pro vizualizaci změn v průběhu času.",
                             "graph_detail": "Detail grafu",
                             "graph_type": "Typ grafu",
-                            "name": "Senzor"
+                            "name": "Senzor",
+                            "show_more_detail": "Zobrazit více podrobností"
                         },
                         "shopping-list": {
                             "description": "Karta Nákupní seznam umožňuje přidávat, upravovat, odškrtávat a mazat položky z nákupního seznamu.",
@@ -2944,6 +2992,12 @@
                     "more_integrations": "Více"
                 },
                 "intro": "Jste připraveni oživit svůj domov, zachovat si své soukromí a připojit se k celosvětové komunitě tvůrců?",
+                "restore": {
+                    "description": "Případně můžete Home Assistant obnovit z poslední zálohy.",
+                    "hide_log": "Skrýt celý log",
+                    "in_progress": "Probíhá obnovení",
+                    "show_log": "Zobrazit celý log"
+                },
                 "user": {
                     "create_account": "Vytvořit účet",
                     "data": {
