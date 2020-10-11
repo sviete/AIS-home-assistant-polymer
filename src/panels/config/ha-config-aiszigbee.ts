@@ -7,8 +7,9 @@ import {
   property,
   PropertyValues,
   TemplateResult,
+  internalProperty,
 } from "lit-element";
-
+import { loadTokens } from "../../common/auth/token_storage";
 import "../../layouts/hass-loading-screen";
 import "../../layouts/hass-subpage";
 import "../../components/ha-circular-progress";
@@ -25,10 +26,16 @@ class ConfigAisZigbee extends LitElement {
   @property({ type: Boolean })
   public narrow = false;
 
+  @internalProperty() private _access_token = "";
+
   protected render(): TemplateResult {
+    const tokens = loadTokens();
+    this._access_token = tokens?.access_token;
     const zigbee2mqtt = this.hass.states["sensor.status_serwisu_zigbee2mqtt"];
     if (zigbee2mqtt.state === "online") {
-      const iframe = html` <iframe src="/api/zigbee2mqtt/"></iframe>`;
+      const iframe = html` <iframe
+        src="/api/zigbee2mqtt/${this._access_token}/"
+      ></iframe>`;
       return html`<hass-subpage header="Zigbee2Mqtt" .narrow=${this.narrow}>
         ${iframe}
       </hass-subpage>`;
