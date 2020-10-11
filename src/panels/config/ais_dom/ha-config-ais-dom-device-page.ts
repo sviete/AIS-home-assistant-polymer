@@ -203,8 +203,7 @@ export class HaConfigDevicePage extends LitElement {
                 </ha-ais-dom-device-entities-card>
               `
             : html``}
-          ${window.location.protocol === "http:" &&
-          device?.sw_version !== "Rclone"
+          ${device?.sw_version !== "Rclone"
             ? html`
                 <div class="header">Strona urządzenia</div>
                 <ais-dom-iframe-view
