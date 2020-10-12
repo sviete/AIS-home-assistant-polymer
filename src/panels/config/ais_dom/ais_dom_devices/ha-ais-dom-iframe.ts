@@ -37,8 +37,22 @@ class AisDomIframeView extends LitElement {
               } catch {
                 devUrl = "";
               }
+
               let fullUrl = "";
               if (devUrl !== "" && devUrl !== undefined) {
+                // block device menu on demo
+                if (
+                  window.location.hostname.startsWith("dom-demo.") ||
+                  window.location.hostname.startsWith("demo.")
+                ) {
+                  return html`<p style="text-align: center; padding:10px;">
+                    <b>BRAMKA DEMO</b><br />
+                    <span style="font-size:8em" class="text"><b>🤖</b></span>
+                    <br /><br />
+                    <b>BRAK DOSTĘPU DO MENU URZĄDZENIA</b>
+                  </p>`;
+                }
+
                 fullUrl =
                   location.protocol +
                   "//" +
@@ -50,6 +64,8 @@ class AisDomIframeView extends LitElement {
                   "/" +
                   devUrl +
                   "/80/";
+
+                // show device menu
                 return html`
                   ${devUrl !== ""
                     ? html` <iframe .src="${fullUrl}"></iframe> `

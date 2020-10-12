@@ -54,7 +54,7 @@
 })([
   function (e) {
     e.exports = JSON.parse(
-      '{"name":"card-mod","private":true,"version":"2.0.0","description":"","scripts":{"build":"webpack","watch":"webpack --watch --mode=development","update-card-tools":"npm uninstall card-tools && npm install thomasloven/lovelace-card-tools"},"keywords":[],"author":"Thomas Lovén","license":"MIT","devDependencies":{"webpack":"^4.43.0","webpack-cli":"^3.3.11"},"dependencies":{"card-tools":"github:thomasloven/lovelace-card-tools"}}'
+      '{"name":"card-mod","private":true,"version":"2.0.2","description":"","scripts":{"build":"webpack","watch":"webpack --watch --mode=development","update-card-tools":"npm uninstall card-tools && npm install thomasloven/lovelace-card-tools"},"keywords":[],"author":"Thomas Lovén","license":"MIT","devDependencies":{"webpack":"^4.44.2","webpack-cli":"^3.3.12"},"dependencies":{"card-tools":"github:thomasloven/lovelace-card-tools"}}'
     );
   },
   function (e, t, o) {
@@ -72,53 +72,92 @@
         ? document.querySelector("home-assistant").hass
         : void 0;
     }
-    let s = (function () {
-      if (window.fully && "function" == typeof fully.getDeviceId)
-        return fully.getDeviceId();
-      if (!localStorage["lovelace-player-device-id"]) {
+    const s = "lovelace-player-device-id";
+    function i() {
+      if (!localStorage[s]) {
         const e = () =>
           Math.floor(1e5 * (1 + Math.random()))
             .toString(16)
             .substring(1);
-        localStorage["lovelace-player-device-id"] = `${e()}${e()}-${e()}${e()}`;
+        window.fully && "function" == typeof fully.getDeviceId
+          ? (localStorage[s] = fully.getDeviceId())
+          : (localStorage[s] = `${e()}${e()}-${e()}${e()}`);
       }
-      return localStorage["lovelace-player-device-id"];
-    })();
-    const i = async (e) => (
-        await (async () => {
-          if (customElements.get("developer-tools-event")) return;
-          await customElements.whenDefined("partial-panel-resolver");
-          const e = document.createElement("partial-panel-resolver");
-          (e.hass = {
-            panels: [{ url_path: "tmp", component_name: "developer-tools" }],
-          }),
-            e._updateRoutes(),
-            await e.routerOptions.routes.tmp.load(),
-            await customElements.whenDefined("developer-tools-router");
-          const t = document.createElement("developer-tools-router");
-          await t.routerOptions.routes.event.load();
-        })(),
-        document
-          .createElement("developer-tools-event")
-          ._computeParsedEventData(e)
-      ),
-      l = { template: "", variables: {}, entity_ids: [] },
-      c = async (e, t, o, n, r, a = !0) => {
+      return localStorage[s];
+    }
+    let l = i();
+    const c = new URLSearchParams(window.location.search);
+    var d;
+    c.get("deviceID") &&
+      null !== (d = c.get("deviceID")) &&
+      ("clear" === d ? localStorage.removeItem(s) : (localStorage[s] = d),
+      (l = i()));
+    const p = async (e) => {
+      await (async () => {
+        if (customElements.get("developer-tools-event")) return;
+        await customElements.whenDefined("partial-panel-resolver");
+        const e = document.createElement("partial-panel-resolver");
+        (e.hass = {
+          panels: [{ url_path: "tmp", component_name: "developer-tools" }],
+        }),
+          e._updateRoutes(),
+          await e.routerOptions.routes.tmp.load(),
+          await customElements.whenDefined("developer-tools-router");
+        const t = document.createElement("developer-tools-router");
+        await t.routerOptions.routes.event.load();
+      })();
+      return document
+        .createElement("developer-tools-event")
+        ._computeParsedEventData(e);
+    };
+    async function u(e, t, o = !1) {
+      let n = e;
+      "string" == typeof t && (t = t.split(/(\$| )/)),
+        "" === t[t.length - 1] && t.pop();
+      for (const [e, r] of t.entries())
+        if (r.trim().length) {
+          if (!n) return null;
+          n.localName &&
+            n.localName.includes("-") &&
+            (await customElements.whenDefined(n.localName)),
+            n.updateComplete && (await n.updateComplete),
+            (n =
+              "$" === r
+                ? o && e == t.length - 1
+                  ? [n.shadowRoot]
+                  : n.shadowRoot
+                : o && e == t.length - 1
+                ? n.querySelectorAll(r)
+                : n.querySelector(r));
+        }
+      return n;
+    }
+    async function h(e, t, o = !1, n = 1e4) {
+      return Promise.race([
+        u(e, t, o),
+        new Promise((e, t) => setTimeout(() => t(new Error("timeout")), n)),
+      ]).catch((e) => {
+        if (!e.message || "timeout" !== e.message) throw e;
+        return null;
+      });
+    }
+    const m = { template: "", variables: {}, entity_ids: [] },
+      y = async (e, t, o, n, r, a = !0) => {
         e.localName.includes("-") &&
           (await customElements.whenDefined(e.localName)),
           e.updateComplete && (await e.updateComplete),
-          (e._cardMod = e._cardMod || document.createElement("card-mod")),
-          (a ? e.shadowRoot : e).appendChild(e._cardMod),
-          await e.updateComplete,
+          (e._cardMod = e._cardMod || document.createElement("card-mod"));
+        ((a && e.shadowRoot) || e).appendChild(e._cardMod),
+          e.updateComplete && (await e.updateComplete),
           (e._cardMod.type = t),
           (e._cardMod.template = { template: o, variables: n, entity_ids: r });
       };
-    class d extends n {
+    class f extends n {
       static get properties() {
         return { _renderedStyles: {}, _renderer: {} };
       }
       static get applyToElement() {
-        return c;
+        return y;
       }
       constructor() {
         super(),
@@ -142,7 +181,7 @@
           o = a().themes.themes;
         return o[t]
           ? o[t][`card-mod-${this.type}-yaml`]
-            ? await i(o[t][`card-mod-${this.type}-yaml`])
+            ? await p(o[t][`card-mod-${this.type}-yaml`])
             : o[t]["card-mod-" + this.type]
             ? o[t]["card-mod-" + this.type]
             : null
@@ -151,7 +190,7 @@
       set template(e) {
         e &&
           ((this._data = JSON.parse(JSON.stringify(e))),
-          this._setTemplate(this._data));
+          (this.themeApplied = this._setTemplate(this._data)));
       }
       async _setTemplate(e) {
         this._parent ||
@@ -159,17 +198,11 @@
           "string" == typeof e.template && (e.template = { ".": e.template }),
           "string" == typeof e.theme_template &&
             (e.theme_template = { ".": e.theme_template })),
-          e.template &&
-            JSON.stringify(e.template).includes("config.entity") &&
-            !e.entity_ids &&
-            e.variables.config &&
-            e.variables.config.entity &&
-            (e.entity_ids = [e.variables.config.entity]),
           await this.setStyle(e);
       }
       async unStyle() {
         this._styledChildren = this._styledChildren || new Set();
-        for (const e of this._styledChildren) e.template = l;
+        for (const e of this._styledChildren) e.template = m;
       }
       _mergeDeep(e, t) {
         const o = (e) => e && "object" == typeof e && !Array.isArray(e);
@@ -202,19 +235,19 @@
             this._renderer = void 0;
           }
           return (
-            (i = t),
+            (s = t),
             void (
-              (String(i).includes("{%") || String(i).includes("{{")) &&
+              (String(s).includes("{%") || String(s).includes("{{")) &&
               (this._renderer = await (function (e, t, o) {
                 e || (e = a().connection);
                 let n = {
                     user: a().user.name,
-                    browser: s,
+                    browser: l,
                     hash: location.hash.substr(1) || " ",
                     ...o.variables,
                   },
                   r = o.template,
-                  i = o.entity_ids;
+                  s = o.entity_ids;
                 return e.subscribeMessage(
                   (e) => {
                     let o = e.result;
@@ -228,7 +261,7 @@
                     type: "render_template",
                     template: r,
                     variables: n,
-                    entity_ids: i,
+                    entity_ids: s,
                   }
                 );
               })(
@@ -236,38 +269,34 @@
                 (e) => {
                   this._renderedStyles = e;
                 },
-                { template: t, variables: n, entity_ids: r }
+                { template: t, variables: n }
               ))
             )
           );
         }
-        var i;
+        var s;
         await this.updateComplete;
-        const l = this.parentElement || this.parentNode;
-        if (!l) return { template: "", variable: variable, entity_ids: r };
-        l.updateComplete && (await l.updateComplete);
+        const i = this.parentElement || this.parentNode;
+        if (!i) return { template: "", variable: variable, entity_ids: r };
+        i.updateComplete && (await i.updateComplete);
         for (const e of Object.keys(t)) {
           let o = [];
           if ("." !== e) {
-            if (
-              ("$" === e
-                ? (l.localName, (o = [l.shadowRoot]))
-                : (o = l.querySelectorAll(e)),
-              o.length)
-            )
+            if (((o = await h(i, e, !0)), o.length))
               for (const a of o) {
                 if (!a) continue;
                 let o = a.querySelector(":scope > card-mod");
-                (o && o._parent === this) ||
+                (o && o._parent === (this._parent || this)) ||
                   ((o = document.createElement("card-mod")),
                   this._styledChildren.add(o),
-                  (o._parent = this)),
+                  (o._parent = this._parent || this)),
                   (o.template = {
                     template: t[e],
                     variables: n,
                     entity_ids: r,
                   }),
-                  a.appendChild(o);
+                  a.appendChild(o),
+                  await o.themeApplied;
               }
           } else this.setStyle({ template: t[e], variables: n, entity_ids: r });
         }
@@ -284,7 +313,7 @@
       }
     }
     if (!customElements.get("card-mod")) {
-      customElements.define("card-mod", d);
+      customElements.define("card-mod", f);
       const e = o(0);
       console.info(
         `%cCARD-MOD ${e.version} IS INSTALLED`,
@@ -292,7 +321,7 @@
         ""
       );
     }
-    function u(e, t, o = null) {
+    function g(e, t, o = null) {
       if (
         (((e = new Event(e, {
           bubbles: !0,
@@ -345,30 +374,32 @@
       if (e.prototype.cardmod_patched) return;
       e.prototype.cardmod_patched = !0;
       const t = function (e) {
-        return e.config
-          ? e.config
-          : e._config
-          ? e._config
-          : e.host
-          ? t(e.host)
-          : e.parentElement
-          ? t(e.parentElement)
-          : e.parentNode
-          ? t(e.parentNode)
-          : null;
-      };
+          return e.config
+            ? e.config
+            : e._config
+            ? e._config
+            : e.host
+            ? t(e.host)
+            : e.parentElement
+            ? t(e.parentElement)
+            : e.parentNode
+            ? t(e.parentNode)
+            : null;
+        },
+        o = e.prototype.firstUpdated;
       (e.prototype.firstUpdated = function () {
+        o && o();
         const e = this.shadowRoot.querySelector(".card-header");
         e && this.insertBefore(e, this.children[0]);
-        const o = t(this);
-        if (!o) return;
-        o.class && this.classList.add(o.class),
-          o.type && this.classList.add("type-" + o.type.replace(":", "-"));
+        const n = t(this);
+        if (!n) return;
+        n.class && this.classList.add(n.class),
+          n.type && this.classList.add("type-" + n.type.replace(":", "-"));
         (() => {
-          c(this, "card", o.style, { config: o }, o.entity_ids, !1);
+          y(this, "card", n.style, { config: n }, n.entity_ids, !1);
         })();
       }),
-        u("ll-rebuild", {});
+        g("ll-rebuild", {});
     }),
       customElements.whenDefined("hui-entities-card").then(() => {
         const e = customElements.get("hui-entities-card");
@@ -382,80 +413,91 @@
           const n = o.values[0];
           if (!n) return o;
           e.entity_ids;
-          const r = () => c(n, "row", e.style, { config: e }, e.entity_ids);
+          e.class && n.classList.add(e.class);
+          const r = () => y(n, "row", e.style, { config: e }, e.entity_ids);
           return (
             r(), o.values[0] && o.values[0].addEventListener("ll-rebuild", r), o
           );
         }),
-          u("ll-rebuild", {});
+          g("ll-rebuild", {});
       }),
       customElements.whenDefined("hui-glance-card").then(() => {
         const e = customElements.get("hui-glance-card");
-        e.prototype.cardmod_patched ||
-          ((e.prototype.cardmod_patched = !0),
-          (e.prototype.firstUpdated = function () {
-            this.shadowRoot
-              .querySelectorAll("ha-card div.entity")
-              .forEach((e) => {
-                const t = e.attachShadow({ mode: "open" });
-                [...e.children].forEach((e) => t.appendChild(e));
-                const o = document.createElement("style");
-                t.appendChild(o),
-                  (o.innerHTML =
-                    "\n      :host {\n        box-sizing: border-box;\n        padding: 0 4px;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        cursor: pointer;\n        margin-bottom: 12px;\n        width: var(--glance-column-width, 20%);\n      }\n      div {\n        width: 100%;\n        text-align: center;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis;\n      }\n      .name {\n        min-height: var(--paper-font-body1_-_line-height, 20px);\n      }\n      state-badge {\n        margin: 8px 0;\n      }\n      ");
-                const n = e.config || e.entityConf;
-                if (!n) return;
-                n.entity_ids;
-                c(e, "glance", n.style, { config: n }, n.entity_ids);
-              });
-          }),
-          u("ll-rebuild", {}));
+        if (e.prototype.cardmod_patched) return;
+        e.prototype.cardmod_patched = !0;
+        const t = e.prototype.firstUpdated;
+        (e.prototype.firstUpdated = function () {
+          t && t();
+          this.shadowRoot
+            .querySelectorAll("ha-card div.entity")
+            .forEach((e) => {
+              const t = e.attachShadow({ mode: "open" });
+              [...e.children].forEach((e) => t.appendChild(e));
+              const o = document.createElement("style");
+              t.appendChild(o),
+                (o.innerHTML =
+                  "\n      :host {\n        box-sizing: border-box;\n        padding: 0 4px;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        cursor: pointer;\n        margin-bottom: 12px;\n        width: var(--glance-column-width, 20%);\n      }\n      div {\n        width: 100%;\n        text-align: center;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis;\n      }\n      .name {\n        min-height: var(--paper-font-body1_-_line-height, 20px);\n      }\n      state-badge {\n        margin: 8px 0;\n      }\n      ");
+              const n = e.config || e.entityConf;
+              if (!n) return;
+              n.entity_ids;
+              n.class && e.classList.add(n.class);
+              y(e, "glance", n.style, { config: n }, n.entity_ids);
+            });
+        }),
+          g("ll-rebuild", {});
       }),
       customElements.whenDefined("hui-state-label-badge").then(() => {
         const e = customElements.get("hui-state-label-badge");
-        e.prototype.cardmod_patched ||
-          ((e.prototype.cardmod_patched = !0),
-          (e.prototype.firstUpdated = function () {
-            const e = this._config;
-            if (!e) return;
-            e.entity_ids;
-            (() => {
-              c(this, "badge", e.style, { config: e }, e.entity_ids);
-            })();
-          }),
-          u("ll-rebuild", {}));
+        if (e.prototype.cardmod_patched) return;
+        e.prototype.cardmod_patched = !0;
+        const t = e.prototype.firstUpdated;
+        (e.prototype.firstUpdated = function () {
+          t && t();
+          const e = this._config;
+          if (!e) return;
+          e.entity_ids;
+          e.class && this.classList.add(e.class);
+          (() => {
+            y(this, "badge", e.style, { config: e }, e.entity_ids);
+          })();
+        }),
+          g("ll-rebuild", {});
       }),
       customElements.whenDefined("hui-view").then(() => {
         const e = customElements.get("hui-view");
-        e.prototype.cardmod_patched ||
-          ((e.prototype.cardmod_patched = !0),
-          (e.prototype.firstUpdated = function () {
-            (() => {
-              c(this, "view", "", {}, []);
-            })();
-          }),
-          u("ll-rebuild", {}));
+        if (e.prototype.cardmod_patched) return;
+        e.prototype.cardmod_patched = !0;
+        const t = e.prototype.firstUpdated;
+        (e.prototype.firstUpdated = function () {
+          t && t();
+          (() => {
+            y(this, "view", "", {}, []);
+          })();
+        }),
+          g("ll-rebuild", {});
       }),
       customElements.whenDefined("hui-root").then(() => {
         const e = customElements.get("hui-root");
         if (e.prototype.cardmod_patched) return;
-        (e.prototype.cardmod_patched = !0),
-          (e.prototype.firstUpdated = async function () {
-            (() => {
-              c(this, "root", "", {}, []);
-            })();
-          }),
-          u("ll-rebuild", {});
-        let t = document.querySelector("home-assistant");
-        (t = t && t.shadowRoot),
-          (t = t && t.querySelector("home-assistant-main")),
-          (t = t && t.shadowRoot),
-          (t =
-            t && t.querySelector("app-drawer-layout partial-panel-resolver")),
-          (t = t && t.querySelector("ha-panel-lovelace")),
-          (t = t && t.shadowRoot),
-          (t = t && t.querySelector("hui-root")),
-          t && t.firstUpdated();
+        e.prototype.cardmod_patched = !0;
+        const t = e.prototype.firstUpdated;
+        (e.prototype.firstUpdated = async function () {
+          t && t();
+          (() => {
+            y(this, "root", "", {}, []);
+          })();
+        }),
+          g("ll-rebuild", {});
+        let o = document.querySelector("home-assistant");
+        (o = o && o.shadowRoot),
+          (o = o && o.querySelector("home-assistant-main")),
+          (o = o && o.shadowRoot),
+          (o =
+            o && o.querySelector("app-drawer-layout partial-panel-resolver")),
+          (o = o && o.querySelector("ha-panel-lovelace")),
+          (o = o && o.shadowRoot),
+          (o = o && o.querySelector("hui-root")),
+          o && o.firstUpdated();
       }),
       customElements.whenDefined("ha-more-info-dialog").then(() => {
         const e = customElements.get("ha-more-info-dialog");
@@ -464,7 +506,7 @@
         const t = e.prototype.showDialog;
         e.prototype.showDialog = function (e) {
           const o = () => {
-            c(
+            y(
               this.shadowRoot.querySelector("ha-dialog"),
               "more-info",
               "",
@@ -486,32 +528,48 @@
             ((o.showDialog = e.prototype.showDialog.bind(o)),
             o.showDialog({ entityId: o.entityId }));
       });
-    let p = window.cardHelpers;
-    const h = new Promise(async (e, t) => {
-      p && e();
+    let w = window.cardHelpers;
+    const _ = new Promise(async (e, t) => {
+      w && e();
       const o = async () => {
-        (p = await window.loadCardHelpers()), (window.cardHelpers = p), e();
+        (w = await window.loadCardHelpers()), (window.cardHelpers = w), e();
       };
       window.loadCardHelpers
         ? o()
         : window.addEventListener("load", async () => {
-            !(function () {
+            !(async function () {
               if (customElements.get("hui-view")) return !0;
+              await customElements.whenDefined("partial-panel-resolver");
               const e = document.createElement("partial-panel-resolver");
-              if (((e.hass = a()), !e.hass || !e.hass.panels)) return !1;
-              (e.route = { path: "/lovelace/" }), e._updateRoutes();
-              try {
-                document.querySelector("home-assistant").appendChild(e);
-              } catch (e) {
-              } finally {
-                document.querySelector("home-assistant").removeChild(e);
-              }
-              customElements.get("hui-view");
+              if (
+                ((e.hass = {
+                  panels: [{ url_path: "tmp", component_name: "lovelace" }],
+                }),
+                e._updateRoutes(),
+                await e.routerOptions.routes.tmp.load(),
+                !customElements.get("ha-panel-lovelace"))
+              )
+                return !1;
+              const t = document.createElement("ha-panel-lovelace");
+              (t.hass = a()),
+                void 0 === t.hass &&
+                  (await new Promise((e) => {
+                    window.addEventListener(
+                      "connection-status",
+                      (t) => {
+                        console.log(t), e();
+                      },
+                      { once: !0 }
+                    );
+                  }),
+                  (t.hass = a())),
+                (t.panel = { config: { mode: null } }),
+                t._fetchConfig();
             })(),
               window.loadCardHelpers && o();
           });
     });
-    function m(e, t) {
+    function v(e, t) {
       const o = { type: "error", error: e, origConfig: t },
         n = document.createElement("hui-error-card");
       return (
@@ -519,15 +577,15 @@
           const e = document.createElement("hui-error-card");
           e.setConfig(o), n.parentElement && n.parentElement.replaceChild(e, n);
         }),
-        h.then(() => {
-          u("ll-rebuild", {}, n);
+        _.then(() => {
+          g("ll-rebuild", {}, n);
         }),
         n
       );
     }
-    function y(e, t) {
+    function b(e, t) {
       if (!t || "object" != typeof t || !t.type)
-        return m(`No ${e} type configured`, t);
+        return v(`No ${e} type configured`, t);
       let o = t.type;
       if (
         ((o = o.startsWith("custom:")
@@ -540,28 +598,28 @@
           try {
             o.setConfig(JSON.parse(JSON.stringify(t)));
           } catch (e) {
-            o = m(e, t);
+            o = v(e, t);
           }
           return (
-            h.then(() => {
-              u("ll-rebuild", {}, o);
+            _.then(() => {
+              g("ll-rebuild", {}, o);
             }),
             o
           );
         })(o, t);
-      const n = m(`Custom element doesn't exist: ${o}.`, t);
+      const n = v(`Custom element doesn't exist: ${o}.`, t);
       n.style.display = "None";
       const r = setTimeout(() => {
         n.style.display = "";
       }, 2e3);
       return (
         customElements.whenDefined(o).then(() => {
-          clearTimeout(r), u("ll-rebuild", {}, n);
+          clearTimeout(r), g("ll-rebuild", {}, n);
         }),
         n
       );
     }
-    const f = "\nha-card {\n  background: none;\n  box-shadow: none;\n}";
+    const S = "\nha-card {\n  background: none;\n  box-shadow: none;\n}";
     customElements.define(
       "mod-card",
       class extends n {
@@ -571,14 +629,14 @@
         setConfig(e) {
           (this._config = JSON.parse(JSON.stringify(e))),
             void 0 === e.style
-              ? (this._config.style = f)
+              ? (this._config.style = S)
               : "string" == typeof e.style
-              ? (this._config.style = f + e.style)
+              ? (this._config.style = S + e.style)
               : e.style["."]
-              ? (this._config.style["."] = f + e.style["."])
-              : (this._config.style["."] = f),
+              ? (this._config.style["."] = S + e.style["."])
+              : (this._config.style["."] = S),
             (this.card = (function (e) {
-              return p ? p.createCardElement(e) : y("card", e);
+              return w ? w.createCardElement(e) : b("card", e);
             })(this._config.card)),
             (this.card.hass = a());
         }

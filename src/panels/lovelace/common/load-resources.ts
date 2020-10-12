@@ -38,9 +38,9 @@ export const loadLovelaceResources = (
   // AIS DOM
   // tslint:disable-next-line
   const aisJs = [
-    "/static/ais_dom/cards/card-tools.js?v=11",
+    "/static/ais_dom/cards/card-tools.js?v=20201012",
     "/static/ais_dom/cards/ais-tts.js",
-    "/static/ais_dom/cards/lovelace-swipe-navigation.js?v=1.2.5",
+    "/static/ais_dom/cards/lovelace-swipe-navigation.js?v=20201012",
   ];
   aisJs.forEach((resource) => {
     const normalizedUrl = new URL(resource, hassUrl).toString();
@@ -48,7 +48,7 @@ export const loadLovelaceResources = (
       JS_CACHE[normalizedUrl] = loadJS(normalizedUrl);
     }
   });
-  const aisModules = ["/static/ais_dom/cards/card-mod.js?v=2.0.0"];
+  const aisModules = ["/static/ais_dom/cards/card-mod.js?v=20201012"];
   aisModules.forEach((resource) => {
     loadModule(new URL(resource, hassUrl).toString());
   });
