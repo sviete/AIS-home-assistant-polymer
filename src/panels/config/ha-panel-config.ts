@@ -35,6 +35,7 @@ import {
   mdiMonitorSpeaker,
   mdiNfcVariant,
   mdiZigbee,
+  mdiPowerSocketEu,
 } from "@mdi/js";
 
 declare global {
@@ -196,7 +197,7 @@ export const aisConfigSections: { [name: string]: PageNavigation[] } = {
       component: "ais_dom_devices",
       path: "/config/ais_dom_devices",
       translationKey: "ui.panel.config.ais_dom_devices.caption",
-      iconPath: mdiDevices,
+      iconPath: mdiPowerSocketEu,
       core: true,
     },
     {

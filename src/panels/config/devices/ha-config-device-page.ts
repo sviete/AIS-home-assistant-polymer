@@ -45,6 +45,9 @@ import { configSections } from "../ha-panel-config";
 import "./device-detail/ha-device-entities-card";
 import "./device-detail/ha-device-info-card";
 import { showDeviceAutomationDialog } from "./device-detail/show-dialog-device-automation";
+// ais devices
+import "../ais_dom/ais_dom_devices/ha-ais-dom-rf433-config-card";
+import "../ais_dom/ais_dom_devices/ha-ais-dom-iframe";
 
 export interface EntityRegistryStateEntry extends EntityRegistryEntry {
   stateName?: string | null;
@@ -243,7 +246,30 @@ export class HaConfigDevicePage extends LitElement {
               >
               ${this._renderIntegrationInfo(device, integrations)}
               </ha-device-info-card>
-
+               <!-- ais device menu -->
+               ${
+                 device?.sw_version !== "Rclone"
+                   ? html`
+                       <ais-dom-iframe-view
+                         .hass=${this.hass}
+                         .entities=${entities}
+                       ></ais-dom-iframe-view>
+                     `
+                   : html``
+               }
+              ${
+                device.model === "Sonoff Bridge"
+                  ? html`
+                      <ha-ais-dom-rf433-config-card
+                        .hass=${this.hass}
+                        .entities=${entities}
+                        .deviceId=${this.deviceId}
+                      >
+                      </ha-ais-dom-rf433-config-card>
+                    `
+                  : html``
+              }
+              <!-- ais device menu stop -->
             ${
               entities.length
                 ? html`
@@ -518,6 +544,19 @@ export class HaConfigDevicePage extends LitElement {
         </div>
       `);
     }
+    if (integrations.includes("ais_drives_service")) {
+      import(
+        "./device-detail/integration-elements/ais/ha-device-actions-ais-drive"
+      );
+      templates.push(html`
+        <div class="card-actions" slot="actions">
+          <ha-device-actions-ais-drive
+            .hass=${this.hass}
+            .device=${device}
+          ></ha-device-actions-ais-drive>
+        </div>
+      `);
+    }
     if (integrations.includes("ozw")) {
       import("./device-detail/integration-elements/ozw/ha-device-actions-ozw");
       import("./device-detail/integration-elements/ozw/ha-device-info-ozw");
@@ -550,6 +589,7 @@ export class HaConfigDevicePage extends LitElement {
         </div>
       `);
     }
+    console.log("integrations " + integrations);
     return templates;
   }
 

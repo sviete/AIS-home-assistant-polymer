@@ -1,5 +1,10 @@
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
-import { customElement, property, PropertyValues } from "lit-element";
+import {
+  customElement,
+  property,
+  internalProperty,
+  PropertyValues,
+} from "lit-element";
 import {
   AreaRegistryEntry,
   subscribeAreaRegistry,
@@ -18,12 +23,12 @@ import {
   RouterOptions,
 } from "../../../layouts/hass-router-page";
 import { HomeAssistant } from "../../../types";
-import "./ha-config-ais-dom-device-page";
+import "../devices/ha-config-device-page";
 import "./ha-config-ais-dom-devices-dashboard";
 
 @customElement("ha-config-ais-dom-devices")
 class HaConfigAisDomDevices extends HassRouterPage {
-  @property() public hass!: HomeAssistant;
+  @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property() public narrow!: boolean;
 
@@ -39,18 +44,20 @@ class HaConfigAisDomDevices extends HassRouterPage {
         cache: true,
       },
       device: {
-        tag: "ha-config-ais-dom-device-page",
+        tag: "ha-config-device-page",
       },
     },
   };
 
-  @property() private _configEntries: ConfigEntry[] = [];
+  @internalProperty() private _configEntries: ConfigEntry[] = [];
 
-  @property() private _entityRegistryEntries: EntityRegistryEntry[] = [];
+  @internalProperty()
+  private _entityRegistryEntries: EntityRegistryEntry[] = [];
 
-  @property() private _deviceRegistryEntries: DeviceRegistryEntry[] = [];
+  @internalProperty()
+  private _deviceRegistryEntries: DeviceRegistryEntry[] = [];
 
-  @property() private _areas: AreaRegistryEntry[] = [];
+  @internalProperty() private _areas: AreaRegistryEntry[] = [];
 
   private _unsubs?: UnsubscribeFunc[];
 

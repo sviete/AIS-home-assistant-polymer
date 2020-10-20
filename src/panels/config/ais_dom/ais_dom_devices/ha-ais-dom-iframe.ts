@@ -12,7 +12,7 @@ import { loadTokens } from "../../../../common/auth/token_storage";
 import { HomeAssistant } from "../../../../types";
 import "../../../../layouts/hass-loading-screen";
 import "../../../../layouts/hass-subpage";
-import { EntityRegistryStateEntry } from "../ha-config-ais-dom-device-page";
+import { EntityRegistryStateEntry } from "../../devices/ha-config-device-page";
 
 @customElement("ais-dom-iframe-view")
 class AisDomIframeView extends LitElement {
