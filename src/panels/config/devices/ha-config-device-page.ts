@@ -237,6 +237,33 @@ export class HaConfigDevicePage extends LitElement {
                   />
                 </div>
           </div>
+          ${
+            device?.manufacturer === "AI-Speaker" &&
+            device?.sw_version !== "Rclone"
+              ? html`<div class="column ais_device_menu">
+                  <!-- ais device menu -->
+                  ${device?.sw_version !== "Rclone"
+                    ? html`
+                        <ais-dom-iframe-view
+                          .hass=${this.hass}
+                          .entities=${entities}
+                        ></ais-dom-iframe-view>
+                      `
+                    : html``}
+                  ${device.model === "Sonoff Bridge"
+                    ? html`
+                        <ha-ais-dom-rf433-config-card
+                          .hass=${this.hass}
+                          .entities=${entities}
+                          .deviceId=${this.deviceId}
+                        >
+                        </ha-ais-dom-rf433-config-card>
+                      `
+                    : html``}
+                  <!-- ais device menu stop -->
+                </div> `
+              : html``
+          }
           <div class="column">
               <ha-device-info-card
                 .hass=${this.hass}
@@ -246,30 +273,6 @@ export class HaConfigDevicePage extends LitElement {
               >
               ${this._renderIntegrationInfo(device, integrations)}
               </ha-device-info-card>
-               <!-- ais device menu -->
-               ${
-                 device?.sw_version !== "Rclone"
-                   ? html`
-                       <ais-dom-iframe-view
-                         .hass=${this.hass}
-                         .entities=${entities}
-                       ></ais-dom-iframe-view>
-                     `
-                   : html``
-               }
-              ${
-                device.model === "Sonoff Bridge"
-                  ? html`
-                      <ha-ais-dom-rf433-config-card
-                        .hass=${this.hass}
-                        .entities=${entities}
-                        .deviceId=${this.deviceId}
-                      >
-                      </ha-ais-dom-rf433-config-card>
-                    `
-                  : html``
-              }
-              <!-- ais device menu stop -->
             ${
               entities.length
                 ? html`
@@ -553,6 +556,7 @@ export class HaConfigDevicePage extends LitElement {
           <ha-device-actions-ais-drive
             .hass=${this.hass}
             .device=${device}
+            .entities=${this.entities}
           ></ha-device-actions-ais-drive>
         </div>
       `);
@@ -589,7 +593,6 @@ export class HaConfigDevicePage extends LitElement {
         </div>
       `);
     }
-    console.log("integrations " + integrations);
     return templates;
   }
 
@@ -682,9 +685,6 @@ export class HaConfigDevicePage extends LitElement {
         padding: 16px;
       }
 
-      .show-more {
-      }
-
       h1 {
         margin: 0;
         font-family: var(--paper-font-headline_-_font-family);
@@ -702,7 +702,9 @@ export class HaConfigDevicePage extends LitElement {
         display: flex;
         justify-content: space-between;
       }
-
+      .ais_device_menu {
+        min-width: 400px;
+      }
       .column,
       .fullwidth {
         padding: 8px;

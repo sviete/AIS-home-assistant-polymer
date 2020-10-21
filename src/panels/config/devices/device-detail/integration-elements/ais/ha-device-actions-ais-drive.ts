@@ -8,6 +8,7 @@ import {
   css,
 } from "lit-element";
 import { DeviceRegistryEntry } from "../../../../../../data/device_registry";
+import { EntityRegistryEntry } from "../../../../../../data/entity_registry";
 import { showConfirmationDialog } from "../../../../../../dialogs/generic/show-dialog-box";
 import { haStyle } from "../../../../../../resources/styles";
 import { HomeAssistant } from "../../../../../../types";
@@ -18,6 +19,8 @@ export class HaDeviceActionsAisDrive extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property() public device!: DeviceRegistryEntry;
+
+  @property() public entities!: EntityRegistryEntry[];
 
   protected render(): TemplateResult {
     return html`
@@ -39,13 +42,15 @@ export class HaDeviceActionsAisDrive extends LitElement {
       return;
     }
 
-    this.hass.callService("ais_dom_device", "remove_ais_dom_entity", {
-      entity_id: this.device.id,
+    this.hass.callService("ais_dom_device", "remove_ais_dom_device", {
+      device_id: this.device.id,
     });
   }
 
   private async _showDriveInfo(): Promise<void> {
-    fireEvent(this, "hass-more-info", { entityId: this.device.id });
+    fireEvent(this, "hass-more-info", {
+      entityId: this.device.config_entries[0],
+    });
   }
 
   static get styles(): CSSResult[] {
