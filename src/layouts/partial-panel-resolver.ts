@@ -80,6 +80,10 @@ const COMPONENTS = {
     import(
       /* webpackChunkName: "panel-aiszigbee" */ "../panels/aiszigbee/ha-panel-aiszigbee"
     ),
+  aistts: () =>
+    import(
+      /* webpackChunkName: "panel-aistts" */ "../panels/aistts/ha-panel-aistts"
+    ),
   "media-browser": () =>
     import(
       /* webpackChunkName: "panel-media-browser" */ "../panels/media-browser/ha-panel-media-browser"
