@@ -14,6 +14,8 @@ import "../../components/ha-button-menu";
 import "../../components/ha-card";
 import "../../components/ha-menu-button";
 import "../../components/ha-slider";
+import "../../components/ha-expansion-panel";
+import "../../components/ha-code-editor";
 import { showVoiceCommandDialog } from "../../dialogs/voice-command-dialog/show-ha-voice-command-dialog";
 import { repeat } from "lit-html/directives/repeat";
 import { HomeAssistant } from "../../types";
@@ -148,6 +150,12 @@ export class HaPanelAisTts extends LitElement {
 
   @internalProperty() private _selectedVoice = "pl-pl-x-oda-local";
 
+  @internalProperty() private _speedValue = 1;
+
+  @internalProperty() private _pitchValue = 1;
+
+  @internalProperty() private _requestUrl = "";
+
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
     this.hassSubscribe();
@@ -185,11 +193,6 @@ export class HaPanelAisTts extends LitElement {
         <div class="content">
           <ha-card>
             <paper-icon-item>
-              <ha-icon-button
-                slot="item-icon"
-                icon="hass:plus"
-                @click=${this._addItem}
-              ></ha-icon-button>
               <paper-item-body>
                 <paper-textarea
                   class="addBox"
@@ -242,14 +245,12 @@ export class HaPanelAisTts extends LitElement {
                   >
                   <ha-slider
                     editable
-                    step="0.1"
-                    min="0.25"
-                    max="4"
-                    value="1"
                     pin
+                    step="0.1"
+                    min="0.3"
+                    max="4"
+                    .value="${Number(this._speedValue)}"
                     @change="${this._speedValueChanged}"
-                    ignore-bar-touch
-                    id="input"
                   ></ha-slider>
                   <label
                     class="label-is-floating"
@@ -258,44 +259,113 @@ export class HaPanelAisTts extends LitElement {
                   >
                   <ha-slider
                     editable
-                    step="0.1"
-                    min="0.25"
-                    max="4"
-                    value="1"
                     pin
+                    step="0.1"
+                    min="0.3"
+                    max="4"
+                    .value="${Number(this._pitchValue)}"
                     @change="${this._pitchValueChanged}"
-                    ignore-bar-touch
-                    id="input"
                   ></ha-slider>
+                </div>
+                <div class="AisButtons">
+                  <ha-icon-button
+                    slot="item-icon"
+                    icon="hass:play"
+                    @click=${this._playItem}
+                  ></ha-icon-button>
+                  <ha-icon-button
+                    slot="item-icon"
+                    icon="hass:plus"
+                    @click=${this._addItem}
+                  ></ha-icon-button>
                 </div>
               </paper-item-body>
             </paper-icon-item>
-
+          </ha-card>
+          <div class="tip">
+            Wpisz tekst, wybierz język i parametry, a następnie kliknij „Play”,
+            aby usłyszeć czytany tekst.<br />Żeby dodać pozycję do listy
+            naciśnij "Plus".
+          </div>
+          <ha-card>
             ${this._uncheckedItems && this._uncheckedItems!.length > 0
               ? html` <div class="divider"></div>
                   <div class="checked">
                     <span>
-                      Pozycje
+                      Dostępne pozycje
                     </span>
                   </div>
                   ${repeat(
                     this._uncheckedItems!,
                     (item) => item.id,
                     (item) =>
-                      html` <div class="editRow">
-                        <paper-checkbox
-                          tabindex="0"
-                          ?checked=${item.complete}
-                          .itemId=${item.id}
-                          @click=${this._completeItem}
-                        ></paper-checkbox>
-                        <paper-input
-                          no-label-float
-                          .value=${item.name}
-                          .itemId=${item.id}
-                          @change=${this._saveEdit}
-                        ></paper-input>
-                      </div>`
+                      html`
+                        <div class="editRow">
+                          <paper-checkbox
+                            tabindex="0"
+                            ?checked=${item.complete}
+                            .itemId=${item.id}
+                            @click=${this._completeItem}
+                          ></paper-checkbox>
+                          <paper-input
+                            no-label-float
+                            .value=${item.name}
+                            .itemId=${item.id}
+                            @change=${this._saveEdit}
+                          ></paper-input>
+                          <ha-icon-button
+                            slot="item-icon"
+                            icon="hass:play"
+                            .item=${item}
+                            @click=${this._playItemRow}
+                          ></ha-icon-button>
+                        </div>
+                        <ha-expansion-panel
+                          style="margin-left: 1.2em; margin-bottom: 1.2em;"
+                        >
+                          <div class="ItemInfo">
+                            <span class="ItemInfoLabel">Język</span
+                            ><span class="ItemInfoValue">${item.language}</span>
+                            <span class="ItemInfoLabel">Prędkość</span
+                            ><span class="ItemInfoValue">${item.pitch}</span>
+                            <span class="ItemInfoLabel">Ton</span
+                            ><span class="ItemInfoValue">${item.rate}</span>
+                            <span class="ItemInfoLabel">Głos</span
+                            ><span class="ItemInfoValue">${item.voice}</span>
+                          </div>
+                          <div>
+                            <paper-input
+                              readonly
+                              label="Request URL"
+                              .value=${this._requestUrl}
+                              .itemId=${item.id}
+                              @change=${this._saveEdit}
+                            >
+                            </paper-input>
+                          </div>
+                          <div>
+                            <span
+                              style="font-size: 12px; color: var(--primary-color);"
+                              >Request body</span
+                            >
+                            <ha-code-editor
+                              mode="yaml"
+                              .value=${'{\n"text": "' +
+                              item.name +
+                              '",\n"language": "' +
+                              item.language +
+                              '",\n"voice": "' +
+                              item.voice +
+                              '",\n"pitch": "' +
+                              item.pitch +
+                              '",\n"rate": "' +
+                              item.rate +
+                              '"\n}'}
+                              readonly
+                            ></ha-code-editor>
+                          </div>
+                        </ha-expansion-panel>
+                      `
                   )}`
               : ""}
             ${this._checkedItems && this._checkedItems!.length > 0
@@ -338,9 +408,6 @@ export class HaPanelAisTts extends LitElement {
                 `
               : ""}
           </ha-card>
-          <div class="tip">
-            todo - info
-          </div>
         </div>
       </ha-app-layout>
     `;
@@ -348,6 +415,10 @@ export class HaPanelAisTts extends LitElement {
 
   public hassSubscribe(): Promise<UnsubscribeFunc>[] {
     this._fetchData();
+    this._requestUrl =
+      "http://" +
+      this.hass.states["sensor.internal_ip_address"].state.trim() +
+      "/api/services/ais_ai_service/say_it";
     return [
       this.hass!.connection.subscribeEvents(
         () => this._fetchData(),
@@ -398,11 +469,42 @@ export class HaPanelAisTts extends LitElement {
     return this.shadowRoot!.querySelector(".addBox") as PaperInputElement;
   }
 
+  private _playItem(ev): void {
+    const newItem = this._newItem;
+
+    if (newItem.value!.trim().length > 0) {
+      this.hass.callService("ais_ai_service", "say_it", {
+        text: newItem.value,
+        pitch: this._pitchValue,
+        rate: this._speedValue,
+        language: this._selectedLanguage,
+        voice: this._selectedVoice,
+      });
+    }
+  }
+
+  private _playItemRow(ev): void {
+    this.hass.callService("ais_ai_service", "say_it", {
+      text: ev.target.item.name,
+      pitch: ev.target.item.pitch,
+      rate: ev.target.item.rate,
+      language: ev.target.item.language,
+      voice: ev.target.item.voice,
+    });
+  }
+
   private _addItem(ev): void {
     const newItem = this._newItem;
 
     if (newItem.value!.trim().length > 0) {
-      addItem(this.hass!, newItem.value!).catch(() => this._fetchData());
+      addItem(
+        this.hass!,
+        newItem.value!,
+        String(this._pitchValue),
+        String(this._speedValue),
+        this._selectedLanguage,
+        this._selectedVoice
+      ).catch(() => this._fetchData());
     }
 
     newItem.value = "";
@@ -434,13 +536,18 @@ export class HaPanelAisTts extends LitElement {
 
   private _loadVoices(lang): void {
     voices = allVoices.filter((voice: Voice) => voice.lang === lang);
-    console.log(voices);
     this._selectedVoice = voices[0].key;
   }
 
-  private _speedValueChanged(): void {}
+  private _speedValueChanged(ev): void {
+    const newVal = ev.target.value;
+    this._speedValue = newVal;
+  }
 
-  private _pitchValueChanged(): void {}
+  private _pitchValueChanged(ev): void {
+    const newVal = ev.target.value;
+    this._pitchValue = newVal;
+  }
 
   static get styles() {
     return [
@@ -543,7 +650,18 @@ export class HaPanelAisTts extends LitElement {
         }
         .AisTtsSliders {
           display: flex;
-          padding-top: 2.5em;
+          padding-top: 2em;
+        }
+        div.AisButtons {
+          float: right;
+          text-align: right;
+        }
+        div.ItemInfo {
+          font-size: 12px;
+        }
+        span.ItemInfoLabel {
+          margin-right: 6px;
+          color: var(--primary-color);
         }
       `,
     ];

@@ -4,6 +4,10 @@ export interface AisTtsItem {
   id: number;
   name: string;
   complete: boolean;
+  pitch: string;
+  rate: string;
+  language: string;
+  voice: string;
 }
 
 export const fetchItems = (hass: HomeAssistant): Promise<AisTtsItem[]> =>
@@ -32,11 +36,19 @@ export const clearItems = (hass: HomeAssistant): Promise<void> =>
 
 export const addItem = (
   hass: HomeAssistant,
-  name: string
+  name: string,
+  pitch: string,
+  rate: string,
+  language: string,
+  voice: string
 ): Promise<AisTtsItem> =>
   hass.callWS({
     type: "aistts/items/add",
     name,
+    pitch,
+    rate,
+    language,
+    voice,
   });
 
 export const reorderItems = (
