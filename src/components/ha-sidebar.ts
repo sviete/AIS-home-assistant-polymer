@@ -739,6 +739,7 @@ class HaSidebar extends LitElement {
           width: 64px;
         }
         :host([expanded]) {
+          width: 256px;
           width: calc(256px + env(safe-area-inset-left));
         }
         :host([rtl]) {
@@ -746,8 +747,7 @@ class HaSidebar extends LitElement {
           border-left: 1px solid var(--divider-color);
         }
         .menu {
-          box-sizing: border-box;
-          height: 65px;
+          height: var(--header-height);
           display: flex;
           padding: 0 8.5px;
           border-bottom: 1px solid transparent;
@@ -804,7 +804,10 @@ class HaSidebar extends LitElement {
           display: flex;
           flex-direction: column;
           box-sizing: border-box;
-          height: calc(100% - 196px - env(safe-area-inset-bottom));
+          height: calc(100% - var(--header-height) - 132px);
+          height: calc(
+            100% - var(--header-height) - 132px - env(safe-area-inset-bottom)
+          );
           overflow-x: hidden;
           background: none;
           margin-left: env(safe-area-inset-left);
