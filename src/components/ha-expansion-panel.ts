@@ -75,7 +75,7 @@ class HaExpansionPanel extends LitElement {
       }
 
       .summary {
-        /* display: flex; */
+        display: flex;
         padding: 0px 16px;
         min-height: 48px;
         align-items: center;

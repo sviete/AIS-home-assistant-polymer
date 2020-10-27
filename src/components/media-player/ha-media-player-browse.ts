@@ -396,6 +396,7 @@ export class HaMediaPlayerBrowse extends LitElement {
           : html`
               <div class="container">
                 ${this.hass.localize("ui.components.media-browser.no_items")}
+                <br />
                 ${aisGallery
                   ? html`<br />${this.hass.localize(
                         "ui.components.media-browser.learn_adding_local_media",
@@ -412,7 +413,7 @@ export class HaMediaPlayerBrowse extends LitElement {
                       <br />
                       ${this.hass.localize(
                         "ui.components.media-browser.local_media_files"
-                      )}.`
+                      )}`
                   : ""}
               </div>
             `}
