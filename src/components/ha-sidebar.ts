@@ -792,7 +792,7 @@ class HaSidebar extends LitElement {
           display: initial;
         }
         .title mwc-button {
-          width: 100%;
+          width: 90%;
         }
         #sortable,
         .hidden-panel {
