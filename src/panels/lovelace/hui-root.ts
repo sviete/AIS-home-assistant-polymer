@@ -12,6 +12,7 @@ import {
   mdiPlus,
   mdiRefresh,
   mdiShape,
+  mdiMicrophone,
 } from "@mdi/js";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-scroll-effects/effects/waterfall";

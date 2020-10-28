@@ -79,7 +79,7 @@ class HaPanelShoppingList extends LocalizeMixin(PolymerElement) {
 
             <ha-icon-button
               hidden$="[[!conversation]]"
-              aria-label="Start conversation"
+              aria-label="Rozpocznij rozmowę"
               icon="hass:microphone"
               on-click="_showVoiceCommandDialog"
             ></ha-icon-button>

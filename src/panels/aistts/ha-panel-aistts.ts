@@ -172,7 +172,7 @@ export class HaPanelAisTts extends LitElement {
             ></ha-menu-button>
             <div main-title>AIS TTS</div>
             <ha-icon-button
-              aria-label="Start conversation"
+              aria-label="Rozpocznij rozmowę"
               icon="hass:microphone"
               @click=${this._showVoiceCommandDialog}
             ></ha-icon-button>

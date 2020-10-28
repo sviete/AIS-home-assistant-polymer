@@ -73,7 +73,6 @@ class ListCard extends HTMLElement {
         div.delete {
           width: 20px;
           height: 20px;
-          position: fixed;
           padding-left: 4px;
           z-index: 99999;
         }
