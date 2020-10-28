@@ -72,7 +72,7 @@ class SystemHealthCard extends LitElement {
         }
         if (domain !== "homeassistant") {
           sections.push(
-            html` <h3>${domainToName(this.hass.localize, domain)}</h3> `
+            html`<h3>${domainToName(this.hass.localize, domain)}</h3>`
           );
         }
         sections.push(html`
@@ -128,19 +128,26 @@ class SystemHealthCard extends LitElement {
   }
 
   private _copyInfo(): void {
-    const selection = window.getSelection()!;
-    selection.removeAllRanges();
-
     const copyElement = this.shadowRoot?.querySelector(
-      "ha-card"
+      ".card-content"
     ) as HTMLElement;
 
+    // Add temporary heading (fixed in EN since usually executed to provide support data)
+    const tempTitle = document.createElement("h3");
+    tempTitle.innerText = "System Health";
+    copyElement.insertBefore(tempTitle, copyElement.firstElementChild);
+
+    const selection = window.getSelection()!;
+    selection.removeAllRanges();
     const range = document.createRange();
     range.selectNodeContents(copyElement);
     selection.addRange(range);
 
     document.execCommand("copy");
     window.getSelection()!.removeAllRanges();
+
+    // Remove temporary heading again
+    copyElement.removeChild(tempTitle);
 
     this._toolTip!.show();
     setTimeout(() => this._toolTip?.hide(), 3000);

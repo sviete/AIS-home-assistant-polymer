@@ -32,11 +32,7 @@ class ErrorLogCard extends LitElement {
                 </div>
               </ha-card>
             `
-          : html`
-              <mwc-button raised @click=${this._refreshErrorLog}>
-                ${this.hass.localize("ui.panel.config.logs.load_full_log")}
-              </mwc-button>
-            `}
+          : html``}
       </div>
     `;
   }
