@@ -417,6 +417,7 @@ export class HaMediaPlayerBrowse extends LitElement {
                   : ""}
               </div>
             `}
+        ${this._getAisImageFabButton(aisGallery)}
       </div>
     `;
   }
@@ -988,9 +989,9 @@ export class HaMediaPlayerBrowse extends LitElement {
 
         .child .play.can_expand {
           opacity: 1;
-          background-color: rgba(var(--rgb-card-background-color), 0.5);
-          bottom: 4px;
+          bottom: -4px;
           right: 4px;
+          z-index: 9999;
         }
 
         .child .play:hover {

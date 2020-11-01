@@ -158,7 +158,7 @@ class HaConfigAisDomControl extends PolymerElement {
                   <br />
                   <paper-radio-group selected="all" id="backup_type1">
                       <paper-radio-button name="all">Wszystkich</paper-radio-button>
-                      <paper-radio-button name="ha">Home Assistant</paper-radio-button>
+                      <paper-radio-button name="ha">AIS HA</paper-radio-button>
                       <paper-radio-button name="zigbee">Zigbee</paper-radio-button>
                   </paper-radio-group>
                   <br />
@@ -251,7 +251,7 @@ class HaConfigAisDomControl extends PolymerElement {
                         <br />
                         <paper-radio-group selected="all" id="backup_type2">
                             <paper-radio-button name="all">Wszystkich</paper-radio-button>
-                            <paper-radio-button name="ha">Home Assistant</paper-radio-button>
+                            <paper-radio-button name="ha">AIS HA</paper-radio-button>
                             <paper-radio-button name="zigbee">Zigbee</paper-radio-button>
                         </paper-radio-group>
                         <br />
@@ -417,7 +417,7 @@ class HaConfigAisDomControl extends PolymerElement {
 
     if ("dom_app_current_version" in versionInfoAttr) {
       this.aisAutoUpdatFullInfo.push({
-        name: "Home Assistant",
+        name: "AIS HA",
         name_icon: "mdi:home-assistant",
         value: versionInfoAttr.dom_app_current_version,
         new_value: versionInfoAttr.dom_app_newest_version,
@@ -468,7 +468,7 @@ class HaConfigAisDomControl extends PolymerElement {
     if ("file_size" in backupInfoAttr) {
       this.isBackupValid = !!backupInfoAttr.file_name;
       this.aisBackupFullInfo.push({
-        name: "Home Assistant",
+        name: "AIS HA",
         value: backupInfoAttr.file_name,
         new_value: backupInfoAttr.file_size,
         icon: "mdi:home-assistant",

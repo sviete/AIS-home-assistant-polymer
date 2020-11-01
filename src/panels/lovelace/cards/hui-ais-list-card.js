@@ -75,6 +75,7 @@ class ListCard extends HTMLElement {
           height: 20px;
           padding-left: 4px;
           z-index: 99999;
+          position: absolute;
         }
         div.delete {
           ${delIconHide};
