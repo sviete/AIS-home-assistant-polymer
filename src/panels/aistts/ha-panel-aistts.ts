@@ -15,7 +15,6 @@ import "../../components/ha-card";
 import "../../components/ha-menu-button";
 import "../../components/ha-slider";
 import "../../components/ha-expansion-panel";
-import "../../components/ha-code-editor";
 import { showVoiceCommandDialog } from "../../dialogs/voice-command-dialog/show-ha-voice-command-dialog";
 import { repeat } from "lit-html/directives/repeat";
 import { HomeAssistant } from "../../types";
@@ -75,63 +74,63 @@ let voices: Voice[] = [];
 
 const allVoices: Voice[] = [
   {
-    key: "pl-pl-x-oda-local",
+    key: "jola",
     name: "Jola",
     lang: "pl_PL",
   },
   {
-    key: "pl-pl-x-oda#female_1-local",
+    key: "celina",
     name: "Celina",
     lang: "pl_PL",
   },
   {
-    key: "pl-pl-x-oda#female_2-local",
+    key: "anżela",
     name: "Anżela",
     lang: "pl_PL",
   },
   {
-    key: "pl-pl-x-oda#female_3-local",
+    key: "asia",
     name: "Asia",
     lang: "pl_PL",
   },
   {
-    key: "pl-pl-x-oda#male_1-local",
-    name: "Sebastkan",
+    key: "sebastian",
+    name: "Sebastian",
     lang: "pl_PL",
   },
   {
-    key: "pl-pl-x-oda#male_2-local",
+    key: "bartek",
     name: "Bartek",
     lang: "pl_PL",
   },
   {
-    key: "pl-pl-x-oda#male_3-local",
+    key: "andrzej",
     name: "Andrzej",
     lang: "pl_PL",
   },
   {
-    key: "uk-UA-language",
+    key: "mariya",
     name: "Mariya",
     lang: "uk_UA",
   },
   {
-    key: "en-GB-language",
+    key: "allison",
     name: "Allison",
     lang: "en_GB",
   },
   {
-    key: "en-GB-language2",
-    name: "Allison2",
+    key: "jon",
+    name: "Jon",
     lang: "en_GB",
   },
   {
-    key: "en-us-x-sfg-female_2-local",
+    key: "sophia",
     name: "Sophia",
     lang: "en_US",
   },
   {
-    key: "en-us-x-sfg-female_2-local2",
-    name: "Sophia2",
+    key: "sam",
+    name: "Sam",
     lang: "en_US",
   },
 ];
@@ -153,8 +152,6 @@ export class HaPanelAisTts extends LitElement {
   @internalProperty() private _speedValue = 1;
 
   @internalProperty() private _pitchValue = 1;
-
-  @internalProperty() private _requestUrl = "";
 
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
@@ -334,35 +331,22 @@ export class HaPanelAisTts extends LitElement {
                             ><span class="ItemInfoValue">${item.voice}</span>
                           </div>
                           <div>
-                            <paper-input
+                            <paper-textarea
                               readonly
-                              label="Request URL"
-                              .value=${this._requestUrl}
+                              label="GET Request"
+                              .value=${this._getItemRow(item, false)}
                               .itemId=${item.id}
-                              @change=${this._saveEdit}
+                              }
                             >
-                            </paper-input>
-                          </div>
-                          <div>
-                            <span
-                              style="font-size: 12px; color: var(--primary-color);"
-                              >Request body</span
-                            >
-                            <ha-code-editor
-                              mode="yaml"
-                              .value=${'{\n"text": "' +
-                              item.name +
-                              '",\n"language": "' +
-                              item.language +
-                              '",\n"voice": "' +
-                              item.voice +
-                              '",\n"pitch": "' +
-                              item.pitch +
-                              '",\n"rate": "' +
-                              item.rate +
-                              '"\n}'}
+                            </paper-textarea>
+                            <paper-textarea
                               readonly
-                            ></ha-code-editor>
+                              label="Encoded GET Request"
+                              .value=${this._getItemRow(item, true)}
+                              .itemId=${item.id}
+                              }
+                            >
+                            </paper-textarea>
                           </div>
                         </ha-expansion-panel>
                       `
@@ -378,7 +362,7 @@ export class HaPanelAisTts extends LitElement {
                     <ha-icon
                       class="clearall"
                       tabindex="0"
-                      icon="hass:notification-clear-all"
+                      icon="hass:delete"
                       title="Usuń zaznaczone"
                       @click=${this._clearItems}
                     >
@@ -415,10 +399,6 @@ export class HaPanelAisTts extends LitElement {
 
   public hassSubscribe(): Promise<UnsubscribeFunc>[] {
     this._fetchData();
-    this._requestUrl =
-      "http://" +
-      this.hass.states["sensor.internal_ip_address"].state.trim() +
-      "/api/services/ais_ai_service/say_it";
     return [
       this.hass!.connection.subscribeEvents(
         () => this._fetchData(),
@@ -483,6 +463,26 @@ export class HaPanelAisTts extends LitElement {
     }
   }
 
+  private _getItemRow(item, encode): string {
+    const sUrl =
+      "http://" +
+      this.hass.states["sensor.internal_ip_address"].state.trim() +
+      ":8122/text_to_speech?language=" +
+      item.language +
+      "&voice=" +
+      item.voice +
+      "&rate=" +
+      item.rate +
+      "&pitch=" +
+      item.pitch +
+      "&text=" +
+      item.name;
+    if (encode) {
+      return encodeURI(sUrl);
+    }
+    return sUrl;
+  }
+
   private _playItemRow(ev): void {
     this.hass.callService("ais_ai_service", "say_it", {
       text: ev.target.item.name,
@@ -523,6 +523,11 @@ export class HaPanelAisTts extends LitElement {
     showVoiceCommandDialog(this);
   }
 
+  private _loadVoices(lang): void {
+    voices = allVoices.filter((voice: Voice) => voice.lang === lang);
+    this._selectedVoice = voices[0].key;
+  }
+
   private async _setLanguage(ev): Promise<void> {
     const lang = ev.detail.item.getAttribute("lang");
     this._selectedLanguage = lang;
@@ -532,11 +537,6 @@ export class HaPanelAisTts extends LitElement {
   private async _setVoice(ev): Promise<void> {
     const voice = ev.detail.item.getAttribute("voice");
     this._selectedVoice = voice;
-  }
-
-  private _loadVoices(lang): void {
-    voices = allVoices.filter((voice: Voice) => voice.lang === lang);
-    this._selectedVoice = voices[0].key;
   }
 
   private _speedValueChanged(ev): void {
