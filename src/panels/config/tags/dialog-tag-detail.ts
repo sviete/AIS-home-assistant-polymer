@@ -121,7 +121,7 @@ class DialogTagDetail extends LitElement
                       "ui.panel.config.tags.detail.usage",
                       "companion_link",
                       html`<a
-                        href="https://companion.home-assistant.io/"
+                        href="https://www.ai-speaker.com/docs/ais_app_android_dom"
                         target="_blank"
                         rel="noreferrer"
                         >${this.hass!.localize(
@@ -137,7 +137,7 @@ class DialogTagDetail extends LitElement
                     ? this._qrCode
                     : html`
                         <mwc-button @click=${this._generateQR}
-                          >Generate QR code
+                          >Generuj kod QR
                         </mwc-button>
                       `}
                 </div>
@@ -230,13 +230,10 @@ class DialogTagDetail extends LitElement
 
   private async _generateQR() {
     const qrcode = await import("qrcode");
-    const canvas = await qrcode.toCanvas(
-      `https://home-assistant.io/tag/${this._params?.entry?.id}`,
-      {
-        width: 180,
-        errorCorrectionLevel: "Q",
-      }
-    );
+    const canvas = await qrcode.toCanvas(`${this._params?.entry?.id}`, {
+      width: 180,
+      errorCorrectionLevel: "Q",
+    });
     const context = canvas.getContext("2d");
 
     const imageObj = new Image();
