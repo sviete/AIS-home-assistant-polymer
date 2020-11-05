@@ -2,27 +2,7 @@
 
 # AI-Speaker Frontend
 
-This is the repository for the official [Home Assistant](https://home-assistant.io) frontend.
-
-[![Screenshot of the frontend](https://raw.githubusercontent.com/home-assistant/home-assistant-polymer/master/docs/screenshot.png)](https://demo.home-assistant.io/)
-
-- [View demo of Home Assistant](https://demo.home-assistant.io/)
-- [More information about Home Assistant](https://home-assistant.io)
-- [Frontend development instructions](https://developers.home-assistant.io/docs/frontend/development/)
-
-## Development
-
-- Initial setup: `script/setup`
-- Development: [Instructions](https://developers.home-assistant.io/docs/frontend/development/)
-- Production build: `script/build_frontend`
-- Gallery: `cd gallery && script/develop_gallery`
-- Hass.io: [Instructions](https://developers.home-assistant.io/docs/en/hassio_hass.html)
-
-## Frontend development
-
-### Classic environment
-
-A complete guide can be found at the following [link](https://www.home-assistant.io/developers/frontend/). It describes a short guide for the build of project.
+This is the repository for the official [AI-Speaker](https://ai-speaker.com) frontend.
 
 ## License
 
