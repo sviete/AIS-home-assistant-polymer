@@ -237,26 +237,6 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   </paper-listbox>
                 </ha-paper-dropdown-menu>
                 <br /><br />
-                Żeby utrzymać system w dobrej kondycji, codziennie dokładnie o
-                godzinie 4:12 rano Asystent usuwa z bazy zdarzenia i stany
-                starsze niż <b>określona liczba dni</b> (2 dni dla bazy w
-                pamięci urządzenia i domyślnie 10 dla innych lokalizacji).
-                <br />
-                W tym miejscu możesz określić liczbę dni, których historia ma
-                być przechowywana na zewnętrznym dysku.
-                <paper-input
-                  id="db_keep_days"
-                  type="number"
-                  value="[[dbKeepDays]]"
-                  on-change="_computeDbUrl"
-                  maxlength="4"
-                  max="9999"
-                  min="1"
-                  label-float="Liczba dni przechowywanych w bazie"
-                  label="Liczba dni przechowywanych w bazie"
-                >
-                  <ha-icon icon="mdi:calendar" slot="suffix"></ha-icon>
-                </paper-input>
               </div>
               <div class="card-content" style$="[[dbConectionDisplayStyle]]">
                 Parametry połączenia z bazą danych: <br />
@@ -297,13 +277,15 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   ><ha-icon icon="mdi:database-check" slot="suffix"></ha-icon
                 ></paper-input>
                 <br /><br />
+              </div>
+              <div class="card-content" style$="[[dbKeepDaysDisplayStyle]]">
                 Żeby utrzymać system w dobrej kondycji, codziennie dokładnie o
                 godzinie 4:12 rano Asystent usuwa z bazy zdarzenia i stany
                 starsze niż <b>określona liczba dni</b> (2 dni dla bazy w
                 pamięci urządzenia i domyślnie 10 dla innych lokalizacji).
                 <br />
                 W tym miejscu możesz określić liczbę dni, których historia ma
-                być przechowywana w zdalnej bazie danych.
+                być przechowywana w bazie danych.
                 <paper-input
                   id="db_keep_days"
                   type="number"
@@ -312,8 +294,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   maxlength="4"
                   max="9999"
                   min="1"
-                  label-float="Liczba dni przechowywanych w historii"
-                  label="Liczba dni przechowywanych w historii"
+                  label-float="Liczba dni historii przechowywanych w bazie"
+                  label="Liczba dni historii przechowywanych w bazie"
                 >
                   <ha-icon icon="mdi:calendar" slot="suffix"></ha-icon>
                 </paper-input>
@@ -392,6 +374,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
       dbUrl: String,
       dbConectionDisplayStyle: String,
       dbFileDisplayStyle: String,
+      dbKeepDaysDisplayStyle: String,
       dbDrive: String,
       dbEngine: String,
       dbUser: String,
@@ -554,10 +537,12 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     if (this.dbEngine === "-") {
       this.dbConectionDisplayStyle = "display: none";
       this.dbFileDisplayStyle = "display: none";
+      this.dbKeepDaysDisplayStyle = "display: none";
       dbUrl = "";
     } else if (this.dbEngine === "SQLite (file)") {
       this.dbConectionDisplayStyle = "display: none";
       this.dbFileDisplayStyle = "";
+      this.dbKeepDaysDisplayStyle = "";
       dbUrl =
         "sqlite://///data/data/pl.sviete.dom/files/home/dom/dyski-wymienne/" +
         this.dbDrive +
@@ -568,10 +553,12 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     } else if (this.dbEngine === "SQLite (memory)") {
       this.dbConectionDisplayStyle = "display: none";
       this.dbFileDisplayStyle = "display: none";
+      this.dbKeepDaysDisplayStyle = "display: none";
       dbUrl = "sqlite:///:memory:";
     } else {
       this.dbFileDisplayStyle = "display: none";
       this.dbConectionDisplayStyle = "";
+      this.dbKeepDaysDisplayStyle = "";
       if (getFromPage) {
         this.dbPassword = this.shadowRoot.getElementById("db_password").value;
         this.dbUser = this.shadowRoot.getElementById("db_user").value;
