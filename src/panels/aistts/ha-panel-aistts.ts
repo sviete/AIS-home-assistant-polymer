@@ -339,14 +339,6 @@ export class HaPanelAisTts extends LitElement {
                               }
                             >
                             </paper-textarea>
-                            <paper-textarea
-                              readonly
-                              label="Encoded GET Request"
-                              .value=${this._getItemRow(item, true)}
-                              .itemId=${item.id}
-                              }
-                            >
-                            </paper-textarea>
                           </div>
                         </ha-expansion-panel>
                       `
