@@ -15,7 +15,6 @@
     "src/panels/map/ha-panel-map.js",
     "src/panels/shopping-list/ha-panel-shopping-list.js",
     "src/panels/mailbox/ha-panel-mailbox.js",
-    "src/panels/aishelp/ha-panel-aishelp.js",
     "src/panels/aisdocs/ha-panel-aisdocs.js",
     "src/panels/aistts/ha-panel-aistts.js",
     "hassio/src/entrypoint.js"

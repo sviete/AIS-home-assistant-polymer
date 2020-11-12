@@ -87,7 +87,7 @@ class PanelAisZigbee extends LitElement {
   }
 
   async _showHelp() {
-    var win = window.open(
+    const win = window.open(
       "https://www.ai-speaker.com/docs/ais_app_integration_zigbee",
       "_blank"
     );
