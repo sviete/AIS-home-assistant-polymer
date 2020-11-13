@@ -59,8 +59,9 @@ class HaPanelAishelp extends LitElement {
   }
 
   async _generateQR() {
+    const qrUrl = "https://" + this.aisSecureAndroidId + ".paczka.pro";
     const qrcode = await import("qrcode");
-    const canvas = await qrcode.toCanvas(`${this.aisSecureAndroidId}`, {
+    const canvas = await qrcode.toCanvas(`${qrUrl}`, {
       width: 280,
       errorCorrectionLevel: "Q",
     });
@@ -84,13 +85,6 @@ class HaPanelAishelp extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <app-toolbar>
-        <ha-menu-button
-          .hass=${this.hass}
-          .narrow=${this.narrow}
-        ></ha-menu-button>
-        <div main-title>${this.panel.title}</div>
-      </app-toolbar>
       <div class="content">
         <hass-subpage>
           <ha-config-section class="content" ?is-wide=${this.isWide}>
