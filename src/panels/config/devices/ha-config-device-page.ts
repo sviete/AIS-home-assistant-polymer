@@ -48,6 +48,7 @@ import { showDeviceAutomationDialog } from "./device-detail/show-dialog-device-a
 // ais devices
 import "../ais_dom/ais_dom_devices/ha-ais-dom-rf433-config-card";
 import "../ais_dom/ais_dom_devices/ha-ais-dom-iframe";
+import { brandsUrl } from "../../../util/brands-url";
 
 export interface EntityRegistryStateEntry extends EntityRegistryEntry {
   stateName?: string | null;
@@ -146,9 +147,10 @@ export class HaConfigDevicePage extends LitElement {
     if (!device) {
       return html`
         <hass-error-screen
-          error="${this.hass.localize(
+          .hass=${this.hass}
+          .error=${this.hass.localize(
             "ui.panel.config.devices.device_not_found"
-          )}"
+          )}
         ></hass-error-screen>
       `;
     }
@@ -225,16 +227,19 @@ export class HaConfigDevicePage extends LitElement {
                         `
                       : ""
                   }
-                  <img
-                    src=${
-                      integrations[0] && integrations[0].startsWith("ais_")
-                        ? `https://ai-speaker.com/images/brands/${integrations[0]}/logo.png`
-                        : `https://brands.home-assistant.io/${integrations[0]}/logo.png`
-                    }
-                    referrerpolicy="no-referrer"
-                    @load=${this._onImageLoad}
-                    @error=${this._onImageError}
-                  />
+                  ${
+                    integrations.length
+                      ? html`
+                          <img
+                            src=${brandsUrl(integrations[0], "logo")}
+                            referrerpolicy="no-referrer"
+                            @load=${this._onImageLoad}
+                            @error=${this._onImageError}
+                          />
+                        `
+                      : ""
+                  }
+
                 </div>
           </div>
           ${
@@ -573,6 +578,19 @@ export class HaConfigDevicePage extends LitElement {
         </div>
       `);
     }
+    if (integrations.includes("tasmota")) {
+      import(
+        "./device-detail/integration-elements/tasmota/ha-device-actions-tasmota"
+      );
+      templates.push(html`
+        <div class="card-actions" slot="actions">
+          <ha-device-actions-tasmota
+            .hass=${this.hass}
+            .device=${device}
+          ></ha-device-actions-tasmota>
+        </div>
+      `);
+    }
     if (integrations.includes("zha")) {
       import("./device-detail/integration-elements/zha/ha-device-actions-zha");
       import("./device-detail/integration-elements/zha/ha-device-info-zha");
@@ -619,7 +637,7 @@ export class HaConfigDevicePage extends LitElement {
             text: this.hass.localize(
               "ui.panel.config.devices.confirm_rename_entity_ids_warning"
             ),
-            confirmText: this.hass.localize("ui.common.yes"),
+            confirmText: this.hass.localize("ui.common.rename"),
             dismissText: this.hass.localize("ui.common.no"),
             warning: true,
           }));

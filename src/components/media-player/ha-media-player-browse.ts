@@ -691,21 +691,24 @@ export class HaMediaPlayerBrowse extends LitElement {
     mediaContentType?: string
   ): Promise<MediaPlayerItem> {
     this._loading = true;
-    const itemData =
-      this.entityId !== BROWSER_PLAYER
-        ? await browseMediaPlayer(
-            this.hass,
-            this.entityId,
-            mediaContentId,
-            mediaContentType
-          )
-        : await browseLocalMediaPlayer(
-            this.hass,
-            mediaContentId,
-            mediaContentType
-          );
-
-    this._loading = false;
+    let itemData: any;
+    try {
+      itemData =
+        this.entityId !== BROWSER_PLAYER
+          ? await browseMediaPlayer(
+              this.hass,
+              this.entityId,
+              mediaContentId,
+              mediaContentType
+            )
+          : await browseLocalMediaPlayer(
+              this.hass,
+              mediaContentId,
+              mediaContentType
+            );
+    } finally {
+      this._loading = false;
+    }
     return itemData;
   }
 
