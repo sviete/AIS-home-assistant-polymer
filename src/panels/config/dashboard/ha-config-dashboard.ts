@@ -82,24 +82,6 @@ class HaConfigDashboard extends LitElement {
             </ha-card>
           `
         : ""}
-      ${CONF_HAPPENING && !localStorage.dismissConf2020
-        ? html`
-            <ha-card class="conf-card">
-              <a
-                target="_blank"
-                href="https://www.home-assistant.io/conference"
-                rel="noopener noreferrer"
-              >
-                <img src="/static/images/conference.png" />
-                <div class="carrot"><ha-icon-next></ha-icon-next></div>
-              </a>
-              <ha-svg-icon
-                .path=${mdiClose}
-                @click=${this._dismissConference}
-              ></ha-svg-icon>
-            </ha-card>
-          `
-        : ""}
       ${Object.values(configSections).map(
         (section) => html`
           <ha-card>
