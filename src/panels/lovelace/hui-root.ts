@@ -18,6 +18,7 @@ import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-scroll-effects/effects/waterfall";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
 import "@polymer/paper-tabs/paper-tab";
+import "@polymer/paper-tabs/paper-tabs";
 import {
   css,
   CSSResult,
@@ -102,16 +103,13 @@ class HUIRoot extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <ha-app-layout id="layout">
-        <app-header
-          slot="header"
-          effects="waterfall"
-          class=${classMap({
-            "edit-mode": this._editMode,
-          })}
-          fixed
-          condenses
-        >
+      <ha-app-layout
+        class=${classMap({
+          "edit-mode": this._editMode,
+        })}
+        id="layout"
+      >
+        <app-header slot="header" effects="waterfall" fixed condenses>
           ${this._editMode
             ? html`
                 <app-toolbar class="edit-mode">
@@ -284,15 +282,13 @@ class HUIRoot extends LitElement {
                       ? html`
                           <mwc-list-item
                             aria-label=${this.hass!.localize(
-                              "ui.panel.lovelace.menu.refresh"
+                              "ui.common.refresh"
                             )}
                             graphic="icon"
                             @request-selected="${this._handleRefresh}"
                           >
                             <span
-                              >${this.hass!.localize(
-                                "ui.panel.lovelace.menu.refresh"
-                              )}</span
+                              >${this.hass!.localize("ui.common.refresh")}</span
                             >
                             <ha-svg-icon
                               slot="graphic"
@@ -382,7 +378,7 @@ class HUIRoot extends LitElement {
           ${this._editMode
             ? html`
                 <div sticky>
-                  <ha-tabs
+                  <paper-tabs
                     scrollable
                     .selected="${this._curView}"
                     @iron-activate="${this._handleViewSelected}"
@@ -407,7 +403,11 @@ class HUIRoot extends LitElement {
                           ${this._editMode
                             ? html`
                                 <ha-icon-button-arrow-prev
-                                  title="${this.hass!.localize(
+                                  .hass=${this.hass}
+                                  .title="${this.hass!.localize(
+                                    "ui.panel.lovelace.editor.edit_view.move_left"
+                                  )}"
+                                  .label="${this.hass!.localize(
                                     "ui.panel.lovelace.editor.edit_view.move_left"
                                   )}"
                                   class="edit-icon view"
@@ -435,7 +435,11 @@ class HUIRoot extends LitElement {
                                   @click="${this._editView}"
                                 ></ha-svg-icon>
                                 <ha-icon-button-arrow-next
-                                  title="${this.hass!.localize(
+                                  .hass=${this.hass}
+                                  .title="${this.hass!.localize(
+                                    "ui.panel.lovelace.editor.edit_view.move_right"
+                                  )}"
+                                  .label="${this.hass!.localize(
                                     "ui.panel.lovelace.editor.edit_view.move_right"
                                   )}"
                                   class="edit-icon view"
@@ -462,7 +466,7 @@ class HUIRoot extends LitElement {
                           </mwc-icon-button>
                         `
                       : ""}
-                  </ha-tabs>
+                  </paper-tabs>
                 </div>
               `
             : ""}
@@ -610,6 +614,8 @@ class HUIRoot extends LitElement {
       text: this.hass!.localize(
         "ui.panel.lovelace.reload_resources.refresh_body"
       ),
+      confirmText: this.hass.localize("ui.common.refresh"),
+      dismissText: this.hass.localize("ui.common.not_now"),
       confirm: () => location.reload(),
     });
   }
@@ -799,14 +805,20 @@ class HUIRoot extends LitElement {
           width: 100%;
           height: 100%;
           margin-left: 4px;
+        }
+        paper-tabs {
+          margin-left: 12px;
+          margin-left: max(env(safe-area-inset-left), 12px);
+          margin-right: env(safe-area-inset-right);
+        }
+        ha-tabs,
+        paper-tabs {
           --paper-tabs-selection-bar-color: var(--text-primary-color, #fff);
           text-transform: uppercase;
         }
-        .edit-mode ha-tabs {
-          margin-left: max(env(safe-area-inset-left), 24px);
-          margin-right: max(env(safe-area-inset-right), 24px);
-        }
-        .edit-mode {
+
+        .edit-mode app-header,
+        .edit-mode app-toolbar {
           background-color: var(--dark-color, #455a64);
           color: var(--text-dark-color);
         }
@@ -850,6 +862,12 @@ class HUIRoot extends LitElement {
           */
           position: relative;
           display: flex;
+        }
+        /**
+         * In edit mode we have the tab bar on a new line *
+         */
+        .edit-mode #view {
+          min-height: calc(100vh - var(--header-height) - 48px);
         }
         #view > * {
           /**

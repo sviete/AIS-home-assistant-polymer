@@ -47,6 +47,7 @@ const LAZY_LOAD_TYPES = {
   "alarm-panel": () => import("../cards/hui-alarm-panel-card"),
   error: () => import("../cards/hui-error-card"),
   "empty-state": () => import("../cards/hui-empty-state-card"),
+  grid: () => import("../cards/hui-grid-card"),
   starting: () => import("../cards/hui-starting-card"),
   "entity-filter": () => import("../cards/hui-entity-filter-card"),
   humidifier: () => import("../cards/hui-humidifier-card"),
@@ -71,6 +72,7 @@ const LAZY_LOAD_TYPES = {
     import("../cards/hui-ais-now-playing-poster-card"),
   "ais-light": () => import("../cards/hui-ais-light-card"),
   calendar: () => import("../cards/hui-calendar-card"),
+  logbook: () => import("../cards/hui-logbook-card"),
 };
 
 // This will not return an error card but will throw the error

@@ -23,6 +23,7 @@ import { HomeAssistant } from "../../types";
 import { documentationUrl } from "../../util/documentation-url";
 import { FlowConfig } from "./show-dialog-data-entry-flow";
 import { configFlowContentStyles } from "./styles";
+import { brandsUrl } from "../../util/brands-url";
 
 interface HandlerObj {
   name: string;
@@ -102,9 +103,7 @@ class StepFlowPickHandler extends LitElement {
                 <img
                   slot="item-icon"
                   loading="lazy"
-                  src=${handler.slug.startsWith("ais_")
-                    ? `https://ai-speaker.com/images/brands/${handler.slug}/icon.png`
-                    : `https://brands.home-assistant.io/_/${handler.slug}/icon.png`}
+                  src=${brandsUrl(handler.slug, "icon", true)}
                   referrerpolicy="no-referrer"
                 />
 
