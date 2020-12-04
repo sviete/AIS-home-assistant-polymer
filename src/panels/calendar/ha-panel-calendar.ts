@@ -165,6 +165,7 @@ class PanelCalendar extends LitElement {
   }
 
   private async _handleRefresh(): Promise<void> {
+    this.hass!.callService("google", "scan_for_calendars");
     this._events = await this._fetchEvents(
       this._start!,
       this._end!,
