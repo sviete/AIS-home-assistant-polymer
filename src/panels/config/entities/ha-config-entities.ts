@@ -276,7 +276,6 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
       let startLength = entities.length + stateEntities.length;
 
       entities = showReadOnly ? entities.concat(stateEntities) : entities;
-
       filters.forEach((value, key) => {
         switch (key) {
           case "config_entry":
@@ -299,7 +298,8 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
       if (!showDisabled) {
         entities = entities.filter((entity) => !entity.disabled_by);
       }
-
+      // ais dom
+      let aisInternalEntity = 0;
       for (const entry of entities) {
         const entity = this.hass.states[entry.entity_id];
         const unavailable = entity?.state === UNAVAILABLE;
@@ -308,34 +308,41 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         if (!showUnavailable && unavailable) {
           continue;
         }
-
-        result.push({
-          ...entry,
-          icon: entity
-            ? stateIcon(entity)
-            : domainIcon(computeDomain(entry.entity_id)),
-          name:
-            computeEntityRegistryName(this.hass!, entry) ||
-            this.hass.localize("state.default.unavailable"),
-          unavailable,
-          restored,
-          status: restored
-            ? this.hass.localize(
-                "ui.panel.config.entities.picker.status.restored"
-              )
-            : unavailable
-            ? this.hass.localize(
-                "ui.panel.config.entities.picker.status.unavailable"
-              )
-            : entry.disabled_by
-            ? this.hass.localize(
-                "ui.panel.config.entities.picker.status.disabled"
-              )
-            : this.hass.localize("ui.panel.config.entities.picker.status.ok"),
-        });
+        // ais dom filter
+        if (
+          !entry.entity_id.startsWith(entry.platform + ".ais") &&
+          !entry.entity_id.startsWith("group.all_ais")
+        ) {
+          result.push({
+            ...entry,
+            icon: entity
+              ? stateIcon(entity)
+              : domainIcon(computeDomain(entry.entity_id)),
+            name:
+              computeEntityRegistryName(this.hass!, entry) ||
+              this.hass.localize("state.default.unavailable"),
+            unavailable,
+            restored,
+            status: restored
+              ? this.hass.localize(
+                  "ui.panel.config.entities.picker.status.restored"
+                )
+              : unavailable
+              ? this.hass.localize(
+                  "ui.panel.config.entities.picker.status.unavailable"
+                )
+              : entry.disabled_by
+              ? this.hass.localize(
+                  "ui.panel.config.entities.picker.status.disabled"
+                )
+              : this.hass.localize("ui.panel.config.entities.picker.status.ok"),
+          });
+        } else {
+          aisInternalEntity += 1;
+        }
+        this._numHiddenEntities =
+          startLength - result.length - aisInternalEntity;
       }
-
-      this._numHiddenEntities = startLength - result.length;
       return result;
     }
   );
