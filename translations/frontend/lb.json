@@ -7,6 +7,7 @@
         }
     },
     "groups": {
+        "owner": "Besëtzer",
         "system-admin": "Administrateuren",
         "system-read-only": "Benotzer mat nëmmen Lies Rechter",
         "system-users": "Benotzer"
@@ -511,16 +512,23 @@
             "continue": "Weider",
             "copied": "Kopéiert",
             "delete": "Läschen",
+            "disable": "Desaktivéieren",
+            "enable": "Aktivéieren",
             "error_required": "Erfuerderlech",
+            "leave": "Fortgoen",
             "loading": "Lued",
             "menu": "Menu",
             "next": "Nächst",
             "no": "Nee",
+            "not_now": "Net elo",
             "overflow_menu": "Iwwerlaf menu",
             "previous": "Virdrun",
             "refresh": "Aktualiséieren",
+            "remove": "Läschen",
+            "rename": "Ëmbenennen",
             "save": "Späicheren",
             "skip": "Iwwersprangen",
+            "stay": "Bleiwen",
             "successfully_deleted": "Erfollegräich geläscht.",
             "successfully_saved": "Erfollegräich gespäichert.",
             "undo": "Réckgängeg maachen",
@@ -539,6 +547,11 @@
                 "area": "Beräich",
                 "clear": "Läschen",
                 "show_areas": "Beräicher uweisen"
+            },
+            "blueprint-picker": {
+                "add_user": "Benotzer erstellen",
+                "remove_user": "Benotzer läschen",
+                "select_blueprint": "Plang auswielen"
             },
             "data-table": {
                 "no-data": "Keng Donnée",
@@ -709,6 +722,7 @@
                     "enabled_cause": "Desaktivéiert duerch {cause}.",
                     "enabled_description": "Deaktivéiert Entitéiten ginn net am Home Assistant bäigesat.",
                     "enabled_label": "Entitéit aktivéieren",
+                    "enabled_restart_confirm": "Start Home Assistant nei fir dës Entitéiten z'aktivéieren",
                     "entity_id": "ID vun der Entitéit",
                     "icon": "Ikon",
                     "icon_error": "Ikonen sollten am format 'prefix:numm' sinn, Beispill: 'mdi:home'",
@@ -781,6 +795,11 @@
             },
             "more_info_control": {
                 "controls": "Kontrollen",
+                "cover": {
+                    "close_cover": "Paart zoumaachen",
+                    "open_cover": "Paart opmaachen",
+                    "open_tilt_cover": "Paart op Kipp stelle"
+                },
                 "details": "Detailler",
                 "dismiss": "Dialog ofbriechen",
                 "edit": "Entitéit änneren",
@@ -844,6 +863,29 @@
             },
             "quick-bar": {
                 "commands": {
+                    "navigation": {
+                        "areas": "Beräicher",
+                        "automation": "Automatisme",
+                        "blueprint": "Pläng",
+                        "core": "Generell",
+                        "customize": "Personaliséierungen",
+                        "devices": "Apparate",
+                        "entities": "Entitéite",
+                        "helpers": "Helfer",
+                        "info": "Info",
+                        "integrations": "Integratioune",
+                        "logs": "Logs",
+                        "lovelace": "Lovelace Tableau de Bord",
+                        "navigate_to": "Navigéieren zu {panel}",
+                        "navigate_to_config": "Navigéieren zu {panel} Konfiguratioun",
+                        "person": "Persoune",
+                        "scene": "Zeene",
+                        "script": "Skripte",
+                        "server_control": "Server Kontrolle",
+                        "tags": "Tags",
+                        "users": "Benotzer",
+                        "zone": "Zone"
+                    },
                     "reload": {
                         "automation": "Automatisme frësch lueden",
                         "command_line": "Kommando Zeilen Entitéite frësch lueden",
@@ -986,6 +1028,20 @@
                 "automation": {
                     "caption": "Automatismen",
                     "description": "Automatismen verwalten",
+                    "dialog_new": {
+                        "blueprint": {
+                            "use_blueprint": "Plang benotzen"
+                        },
+                        "header": "Nei Automatisme erstellen",
+                        "how": "Wéi wëlls du deng nei Automatisme erstellen?",
+                        "start_empty": "Mat enger eideler Automatisme ufänken",
+                        "thingtalk": {
+                            "create": "Erstellen",
+                            "header": "Beschréif den Automatisme deen soll erstallt ginn",
+                            "input_label": "Wat soll dësen Automatisme maachen?",
+                            "intro": "A mir probéieren et fir dech z'erstellen. Zum Beispill: Schalt Luuchten aus wann ech fort ginn."
+                        }
+                    },
                     "editor": {
                         "actions": {
                             "add": "Aktioun dobäisetzen",
@@ -1066,6 +1122,14 @@
                             "unsupported_action": "Keng UI Ënnerstëtzung fir Aktioun: {action}"
                         },
                         "alias": "Numm",
+                        "blueprint": {
+                            "blueprint_to_use": "Plang fir ze benotzen",
+                            "header": "Plang",
+                            "inputs": "Agab",
+                            "manage_blueprints": "Pläng verwalten",
+                            "no_blueprints": "Du hues kee Plang",
+                            "no_inputs": "Dëse Plang huet keng Agab."
+                        },
                         "conditions": {
                             "add": "Konditioun dobäisetzen",
                             "delete": "Läschen",
@@ -1306,6 +1370,39 @@
                             "introduction": "Gëff ënnendran an wat déi Automatisme maache sollt, a mir probéieren et an eng Home Assistant Automatisme ëmzewandelen.",
                             "language_note": "Nott: Nëmmen Englesch gëtt fir de Moment ënnerstëtzt."
                         }
+                    }
+                },
+                "blueprint": {
+                    "add": {
+                        "error_no_url": "Gëff d'URL vum Plang un.",
+                        "file_name": "Lokal Plang Datei Numm",
+                        "header": "Neie Plang erstellen",
+                        "import_btn": "Plang importéieren",
+                        "import_header": "Import \"{name}\" (typ: {domain})",
+                        "import_introduction": "Du kanns Pl¨ng vun aaner Github Benotzer an Community Forumer importéieren. Gëff d'URL vum Plang an.",
+                        "importing": "Plang gëtt importéiert...",
+                        "raw_blueprint": "Plang Inhalt",
+                        "save_btn": "Plang späicheren",
+                        "saving": "Plang gëtt gespäichert...",
+                        "unsupported_blueprint": "Dëse Plang gëtt net ënnerstëtzt",
+                        "url": "URL vum Plang"
+                    },
+                    "caption": "Pläng",
+                    "description": "Pläng verwalten",
+                    "overview": {
+                        "add_blueprint": "Plang importéieren",
+                        "confirm_delete_header": "Dëse Plang läschen?",
+                        "confirm_delete_text": "Sécher fir dëse Plang ze läsche?",
+                        "delete_blueprint": "Plang läschen",
+                        "header": "Plang Editeur",
+                        "headers": {
+                            "domain": "Domain",
+                            "file_name": "Datei Numm",
+                            "name": "Numm"
+                        },
+                        "introduction": "De Plang Editeur erlabt et Pläng z'erstellen an ze veränneren.",
+                        "learn_more": "Méi iwwert Plèang léieren",
+                        "use_blueprint": "Automatisme erstellen"
                     }
                 },
                 "cloud": {
@@ -1621,6 +1718,7 @@
                         },
                         "header": "Entitéiten",
                         "headers": {
+                            "area": "Beräich",
                             "entity_id": "ID vun der Entitéit",
                             "integration": "Integratioun",
                             "name": "Numm",
@@ -1682,6 +1780,8 @@
                 "info": {
                     "built_using": "Erstallt mat",
                     "caption": "Info",
+                    "copy_github": "Fir Github",
+                    "copy_raw": "Rengen Text",
                     "custom_uis": "Personaliséierte Benotzer Interface:",
                     "description": "Informatioune zu denger Home Assistant Installation uweisen",
                     "developed_by": "Entwéckelt vun enger ganzer Rei fantastesche Leit.",
@@ -1697,6 +1797,42 @@
                     "server": "server",
                     "source": "Quell:",
                     "system_health_error": "System Gesondheet Komponent net gelueden. Setz 'system_health:' zur configuration.yaml dobäi",
+                    "system_health": {
+                        "checks": {
+                            "cloud": {
+                                "alexa_enabled": "Alexa aktivéiert",
+                                "can_reach_cert_server": "Zertifikat Server ereechbar",
+                                "can_reach_cloud": "Home Assistant Cloud ereechbar",
+                                "can_reach_cloud_auth": "Authentifikatioun Server ereechbar",
+                                "google_enabled": "Google aktivéiert",
+                                "logged_in": "Ageloggt",
+                                "relayer_connected": "Relayer verbonnen",
+                                "remote_connected": "Remote verbonnen",
+                                "remote_enabled": "Remote aktivéiert",
+                                "subscription_expiration": "Abonnement Verfallsdatum"
+                            },
+                            "homeassistant": {
+                                "arch": "CPU Architektur",
+                                "dev": "Entwécklung",
+                                "docker": "Docker",
+                                "hassio": "HassOS",
+                                "installation_type": "Typ vun Installatioun",
+                                "os_name": "Betribssystem Numm",
+                                "os_version": "Betribssystem Versioun",
+                                "python_version": "Python Versioun",
+                                "timezone": "Zäitzon",
+                                "version": "Versioun",
+                                "virtualenv": "Virtuellen Environnement"
+                            },
+                            "lovelace": {
+                                "dashboards": "Tableau de Bord",
+                                "mode": "Modus",
+                                "resources": "Ressourcen"
+                            }
+                        },
+                        "manage": "Verwalten",
+                        "more_info": "Méi Informatiounen"
+                    },
                     "title": "Info"
                 },
                 "integration_panel_move": {
@@ -2109,6 +2245,8 @@
                     },
                     "picker": {
                         "add_script": "Neie Skript erstellen",
+                        "duplicate": "Duplizéieren",
+                        "duplicate_script": "Skript duplizéieren",
                         "edit_script": "Skript änneren",
                         "header": "Skript Editeur",
                         "headers": {
@@ -2182,6 +2320,8 @@
                     "add_tag": "Tag dobäisetzen",
                     "automation_title": "Tag {name} gouf gescannt",
                     "caption": "Tags",
+                    "confirm_remove": "Sécher fir den Tag {tag} ze läsche?",
+                    "confirm_remove_title": "Tag läschen?",
                     "create_automation": "Erstell Automatisme mam Tag",
                     "description": "Tags verwalten",
                     "detail": {
@@ -2238,18 +2378,24 @@
                         "system_generated_users_not_editable": "Net méiglech System generéiert Benotzer z'aktualiséieren.",
                         "system_generated_users_not_removable": "Ka keng System generéiert Benotzer läschen.",
                         "unnamed_user": "Benotzer ouni Numm",
-                        "update_user": "Aktualiséieren"
+                        "update_user": "Aktualiséieren",
+                        "username": "Benotzernumm"
                     },
                     "picker": {
+                        "add_user": "Benotzer erstellen",
                         "headers": {
                             "group": "Grupp",
+                            "is_active": "Aktiv",
+                            "is_owner": "Besëtzer",
                             "name": "Numm",
-                            "system": "System"
+                            "system": "System",
+                            "username": "Benotzernumm"
                         }
                     },
                     "users_privileges_note": "Benotzer Gruppp ass nach \"Work in progress\". De Benotzer kann d'Instanz net via UI verwalten. MIr sin mat engem Audit am gaang vun all Management API Endpunkt fir sécher ze stellen dass déi den accès richteg op Administrateuren limitéieren."
                 },
                 "zha": {
+                    "add_device": "Apparat dobäisetzen",
                     "add_device_page": {
                         "discovered_text": "Apparater tauchen hei op soubaal se entdeckt sinn.",
                         "discovery_text": "Entdeckten Apparater tauchen op dëser Platz op. Suivéiert d'Instruktiounen fir är Apparater an aktivéiert den Kupplung's Mod.",
@@ -2295,6 +2441,16 @@
                         "value": "Wäert"
                     },
                     "description": "Gestioun vum Zigbee Home Automation Reseau",
+                    "device_pairing_card": {
+                        "CONFIGURED": "Konfiguratioun fäerdeg",
+                        "CONFIGURED_status_text": "Initialiséiert",
+                        "INITIALIZED": "Initialiséierung fäerdeg",
+                        "INITIALIZED_status_text": "Den Apparat ass prett fir ze benotzen",
+                        "INTERVIEW_COMPLETE": "Interview fäerdeg",
+                        "INTERVIEW_COMPLETE_status_text": "Konfiguréiert",
+                        "PAIRED": "Apparat fonnt",
+                        "PAIRED_status_text": "Interview fänkt un"
+                    },
                     "devices": {
                         "header": "Zigbee Haus Automatismen - Apparat"
                     },
@@ -2310,6 +2466,7 @@
                         "unbind_button_label": "Grupp opléisen"
                     },
                     "groups": {
+                        "add_group": "Grupp dobäisetzen",
                         "add_members": "Membere bäisetzen",
                         "adding_members": "Membere gi bäigesat",
                         "caption": "Gruppe",
@@ -2352,7 +2509,11 @@
                         "hint_wakeup": "Verschidden Apparater wéi Xiaomi Sensoren hunn ee klenge Knäppchen deen een an Intervalle vu ~5s drécke ka fir dass den Apparat un bléift wärend der Interaktioun.",
                         "introduction": "ZHA Kommandoe ausféieren déi nëmmen een Apparat betreffen. Wielt een Apparat aus fir seng Lëscht vun verfügbare Kommandoe ze gesinn."
                     },
-                    "title": "Zigbee Haus Automatismen"
+                    "title": "Zigbee Haus Automatismen",
+                    "visualization": {
+                        "caption": "Visualisatioun",
+                        "header": "Visualisatioun vum Netzwierk"
+                    }
                 },
                 "zone": {
                     "add_zone": "Zon dobäisetzen",
@@ -2521,6 +2682,8 @@
                         "filter_attributes": "Attributer filteren",
                         "filter_entities": "Entitéite filteren",
                         "filter_states": "Zoustänn filteren",
+                        "last_changed": "Läscht Ännerung",
+                        "last_updated": "Läscht Aktualiséierung",
                         "more_info": "Méi Info",
                         "no_entities": "Keng Entitéiten",
                         "set_state": "Zoustand setzen",
@@ -2772,6 +2935,10 @@
                             "description": "Luucht Kaart erlaabt et d'Hellegkeet vun de Luuchten ze veränneren.",
                             "name": "Luucht"
                         },
+                        "logbook": {
+                            "description": "Logbuch weist eng Lëscht vun Evenementer vun Entitéiten un.",
+                            "name": "Logbuch"
+                        },
                         "map": {
                             "dark_mode": "Däischteren Modus",
                             "default_zoom": "Standard Zoom",
@@ -2844,8 +3011,18 @@
                         "entity": "Entitéit",
                         "no_description": "Keng Beschreiwung verfügbar"
                     },
+                    "common": {
+                        "add": "Dobäisetzen",
+                        "clear": "Läschen",
+                        "edit": "Änneren",
+                        "none": "Keen"
+                    },
+                    "edit_badges": {
+                        "panel_mode": "Dës Badge gi net ugewise well dës Usiicht am \"Panel Modus\" ass."
+                    },
                     "edit_card": {
                         "add": "Kaart dobäisetzen",
+                        "clear": "Läschen",
                         "confirm_cancel": "Sécher fir ofzebriechen ?",
                         "delete": "Kaart läschen",
                         "duplicate": "Kaart Replikéieren",
@@ -2886,6 +3063,22 @@
                         }
                     },
                     "header": "UI änneren",
+                    "header-footer": {
+                        "choose_header_footer": "{typ} auswielen",
+                        "footer": "Fousszeilen",
+                        "header": "Entête",
+                        "types": {
+                            "buttons": {
+                                "name": "Knäppercher"
+                            },
+                            "graph": {
+                                "name": "Graph"
+                            },
+                            "picture": {
+                                "name": "Bild"
+                            }
+                        }
+                    },
                     "menu": {
                         "open": "Lovelace Menu opmaachen",
                         "raw_editor": "Editeur fir déi reng Konfiguratioun"
@@ -2929,6 +3122,13 @@
                     "select_view": {
                         "dashboard_label": "Tableau de Bord",
                         "header": "Vue auswielen"
+                    },
+                    "sub-element-editor": {
+                        "types": {
+                            "footer": "Fousszeilen Editeur",
+                            "header": "Entête Editeur",
+                            "row": "Editeur vun der Réih vun Entitéiten"
+                        }
                     },
                     "suggest_card": {
                         "add": "Zu Lovelace bäisetzen",
