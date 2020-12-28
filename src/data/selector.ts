@@ -4,6 +4,7 @@ export type Selector =
   | AreaSelector
   | TargetSelector
   | NumberSelector
+  | TextSelector
   | BooleanSelector
   | TimeSelector
   | ActionSelector;
@@ -66,6 +67,11 @@ export interface NumberSelector {
     mode: "box" | "slider";
     unit_of_measurement?: string;
   };
+}
+
+export interface TextSelector {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  text: {};
 }
 
 export interface BooleanSelector {

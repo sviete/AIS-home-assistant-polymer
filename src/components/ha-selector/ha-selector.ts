@@ -7,6 +7,7 @@ import "./ha-selector-device";
 import "./ha-selector-area";
 import "./ha-selector-target";
 import "./ha-selector-number";
+import "./ha-selector-text";
 import "./ha-selector-boolean";
 import "./ha-selector-time";
 import "./ha-selector-action";
