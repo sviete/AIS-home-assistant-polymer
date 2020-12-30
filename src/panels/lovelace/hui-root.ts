@@ -735,9 +735,7 @@ class HUIRoot extends LitElement {
     if (viewIndex === "hass-unused-entities") {
       const unusedEntities = document.createElement("hui-unused-entities");
       // Wait for promise to resolve so that the element has been upgraded.
-      import(
-        /* webpackChunkName: "hui-unused-entities" */ "./editor/unused-entities/hui-unused-entities"
-      ).then(() => {
+      import("./editor/unused-entities/hui-unused-entities").then(() => {
         unusedEntities.hass = this.hass!;
         unusedEntities.lovelace = this.lovelace!;
         unusedEntities.narrow = this.narrow;
@@ -796,10 +794,6 @@ class HUIRoot extends LitElement {
 
         ha-app-layout {
           min-height: 100%;
-          background: var(
-            --lovelace-background,
-            var(--primary-background-color)
-          );
         }
         ha-tabs {
           width: 100%;
@@ -886,6 +880,12 @@ class HUIRoot extends LitElement {
         }
         .menu-link {
           text-decoration: none;
+        }
+        hui-view {
+          background: var(
+            --lovelace-background,
+            var(--primary-background-color)
+          );
         }
       `,
     ];

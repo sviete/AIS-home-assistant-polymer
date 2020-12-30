@@ -1,4 +1,4 @@
-import "@material/mwc-fab";
+import "../../../components/ha-fab";
 import {
   mdiCheck,
   mdiContentSave,
@@ -35,6 +35,7 @@ import "../../../components/ha-icon-input";
 import "../../../components/ha-svg-icon";
 import "../../../components/ha-yaml-editor";
 import type { HaYamlEditor } from "../../../components/ha-yaml-editor";
+import { copyToClipboard } from "../../../common/util/copy-clipboard";
 import {
   Action,
   deleteScript,
@@ -388,7 +389,7 @@ export class HaScriptEditor extends KeyboardShortcutMixin(LitElement) {
               `
             : ``}
         </div>
-        <mwc-fab
+        <ha-fab
           slot="fab"
           .label=${this.hass.localize(
             "ui.panel.config.script.editor.save_script"
@@ -400,7 +401,7 @@ export class HaScriptEditor extends KeyboardShortcutMixin(LitElement) {
           })}
         >
           <ha-svg-icon slot="icon" .path=${mdiContentSave}></ha-svg-icon>
-        </mwc-fab>
+        </ha-fab>
       </hass-tabs-subpage>
     `;
   }
@@ -545,7 +546,7 @@ export class HaScriptEditor extends KeyboardShortcutMixin(LitElement) {
 
   private async _copyYaml() {
     if (this._editor?.yaml) {
-      navigator.clipboard.writeText(this._editor.yaml);
+      copyToClipboard(this._editor.yaml);
     }
   }
 
@@ -690,12 +691,12 @@ export class HaScriptEditor extends KeyboardShortcutMixin(LitElement) {
         span[slot="introduction"] a {
           color: var(--primary-color);
         }
-        mwc-fab {
+        ha-fab {
           position: relative;
           bottom: calc(-80px - env(safe-area-inset-bottom));
           transition: bottom 0.3s;
         }
-        mwc-fab.dirty {
+        ha-fab.dirty {
           bottom: 0;
         }
         .selected_menu_item {
