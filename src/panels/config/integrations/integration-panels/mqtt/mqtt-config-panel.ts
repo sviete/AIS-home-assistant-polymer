@@ -17,6 +17,10 @@ import { HomeAssistant } from "../../../../../types";
 import "./mqtt-subscribe-card";
 import "../../../../../layouts/hass-subpage";
 import { showOptionsFlowDialog } from "../../../../../dialogs/config-flow/show-dialog-options-flow";
+import {
+  showAisFileDialog,
+  HaAisFileDialogParams,
+} from "../../../../../dialogs/ais-files/show-dialog-ais-file";
 import { getConfigEntries } from "../../../../../data/config_entries";
 
 @customElement("mqtt-config-panel")
@@ -43,13 +47,17 @@ class HaPanelDevMqtt extends LitElement {
     return html`
       <hass-subpage .hass=${this.hass}>
         <div class="content">
-          <!-- <ha-card header="MQTT settings">
+          <ha-card header="Ustawienia MQTT">
             <div class="card-actions">
               <mwc-button @click=${this._openOptionFlow}
-                >Re-configure MQTT</mwc-button
+                >Re-konfiguracja połączania MQTT</mwc-button
+              >
+              <mwc-button @click=${this._openMosquittoFile}
+                >Konfiguracja brokera MQTT</mwc-button
               >
             </div>
-          </ha-card> -->
+          </ha-card>
+
           <ha-card
             header="${this.hass.localize(
               "ui.panel.config.mqtt.description_publish"
@@ -121,6 +129,20 @@ class HaPanelDevMqtt extends LitElement {
       (entry) => entry.entry_id === configEntryId
     );
     showOptionsFlowDialog(this, configEntry!);
+  }
+
+  private async _openMosquittoFile() {
+    const filePath =
+      "/data/data/pl.sviete.dom/files/usr/etc/mosquitto/mosquitto.conf";
+    const file = await this.hass.callApi<string>("POST", "ais_file/read", {
+      filePath: filePath,
+    });
+    const fileParams: HaAisFileDialogParams = {
+      filePath: filePath,
+      fileBody: file,
+      readonly: false,
+    };
+    showAisFileDialog(this, fileParams);
   }
 
   static get styles(): CSSResultArray {
