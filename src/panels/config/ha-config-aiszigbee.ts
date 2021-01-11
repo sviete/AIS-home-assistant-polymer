@@ -16,6 +16,11 @@ import "../../components/ha-circular-progress";
 import { fireEvent } from "../../common/dom/fire_event";
 import { haStyle } from "../../resources/styles";
 import { HomeAssistant, Route } from "../../types";
+import "../../components/ha-icon-button";
+import {
+  showAisFileDialog,
+  HaAisFileDialogParams,
+} from "../../dialogs/ais-files/show-dialog-ais-file";
 
 @customElement("ha-config-aiszigbee")
 class ConfigAisZigbee extends LitElement {
@@ -37,11 +42,21 @@ class ConfigAisZigbee extends LitElement {
         src="/api/zigbee2mqtt/${this._access_token}/"
       ></iframe>`;
       return html`<hass-subpage header="Zigbee2Mqtt" .narrow=${this.narrow}>
+        <ha-icon-button
+          slot="toolbar-icon"
+          icon="hass:application-cog"
+          @click=${this._openZigbee2MqttFileConfig}
+        ></ha-icon-button>
         ${iframe}
       </hass-subpage>`;
     }
 
     return html`<hass-subpage header="Zigbee2Mqtt" .narrow=${this.narrow}>
+      <ha-icon-button
+        slot="toolbar-icon"
+        icon="hass:application-cog"
+        @click=${this._openZigbee2MqttFileConfig}
+      ></ha-icon-button>
       <div
         style="width: 100%; height: 100%; display: flex; align-items: center;"
       >
@@ -104,6 +119,20 @@ class ConfigAisZigbee extends LitElement {
     fireEvent(this, "hass-more-info", {
       entityId: "sensor.status_serwisu_zigbee2mqtt",
     });
+  }
+
+  private async _openZigbee2MqttFileConfig() {
+    const filePath =
+      "/data/data/pl.sviete.dom/files/home/zigbee2mqtt/data/configuration.yaml";
+    const file = await this.hass.callApi<string>("POST", "ais_file/read", {
+      filePath: filePath,
+    });
+    const fileParams: HaAisFileDialogParams = {
+      filePath: filePath,
+      fileBody: file,
+      readonly: false,
+    };
+    showAisFileDialog(this, fileParams);
   }
 
   static get styles(): CSSResultArray {
