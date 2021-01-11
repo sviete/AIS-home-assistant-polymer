@@ -53,7 +53,7 @@ class AisFileDialog extends LitElement
         scrimClickAction
         escapeKeyAction
         hideActions
-        .heading=${createCloseHeading(this.hass, "MQTT Bridge")}
+        .heading=${createCloseHeading(this.hass, this._params.dialogTitle)}
       >
         <div class="content">
           <ha-code-editor

@@ -128,6 +128,7 @@ class ConfigAisZigbee extends LitElement {
       filePath: filePath,
     });
     const fileParams: HaAisFileDialogParams = {
+      dialogTitle: "Zigbee2Mqtt configuration.yaml",
       filePath: filePath,
       fileBody: file,
       readonly: false,

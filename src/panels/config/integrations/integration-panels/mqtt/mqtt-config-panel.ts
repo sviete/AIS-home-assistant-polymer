@@ -138,6 +138,7 @@ class HaPanelDevMqtt extends LitElement {
       filePath: filePath,
     });
     const fileParams: HaAisFileDialogParams = {
+      dialogTitle: "MQTT mosquitto.conf",
       filePath: filePath,
       fileBody: file,
       readonly: false,
