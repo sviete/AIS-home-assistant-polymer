@@ -1,3 +1,5 @@
+import "@material/mwc-list/mwc-list-item";
+import "../../../../../components/ha-button-menu";
 import "@material/mwc-button";
 import "@polymer/paper-input/paper-input";
 import {
@@ -22,6 +24,7 @@ import {
   HaAisFileDialogParams,
 } from "../../../../../dialogs/ais-files/show-dialog-ais-file";
 import { getConfigEntries } from "../../../../../data/config_entries";
+import { mdiDotsVertical } from "@mdi/js";
 
 @customElement("mqtt-config-panel")
 class HaPanelDevMqtt extends LitElement {
@@ -46,14 +49,22 @@ class HaPanelDevMqtt extends LitElement {
   protected render(): TemplateResult {
     return html`
       <hass-subpage .hass=${this.hass}>
+        <ha-button-menu corner="BOTTOM_START" slot="toolbar-icon">
+          <mwc-icon-button slot="trigger" alt="menu">
+            <ha-svg-icon .path=${mdiDotsVertical}></ha-svg-icon>
+          </mwc-icon-button>
+          <mwc-list-item @click=${this._openMosquittoFile}>
+            Edit mosquitto.conf
+          </mwc-list-item>
+          <mwc-list-item @click=${this._restartMosquittoService}>
+            Restart mosquitto sevice
+          </mwc-list-item>
+        </ha-button-menu>
         <div class="content">
           <ha-card header="Ustawienia MQTT">
             <div class="card-actions">
               <mwc-button @click=${this._openOptionFlow}
                 >Re-konfiguracja połączania MQTT</mwc-button
-              >
-              <mwc-button @click=${this._openMosquittoFile}
-                >Konfiguracja brokera MQTT</mwc-button
               >
             </div>
           </ha-card>
@@ -144,6 +155,12 @@ class HaPanelDevMqtt extends LitElement {
       readonly: false,
     };
     showAisFileDialog(this, fileParams);
+  }
+
+  private async _restartMosquittoService() {
+    this.hass.callService("ais_shell_command", "restart_pm2_service", {
+      service: "mqtt",
+    });
   }
 
   static get styles(): CSSResultArray {
