@@ -416,7 +416,7 @@ export const aisAudioLovelace: LovelaceConfig = {
                         {
                           card: {
                             show_header_toggle: false,
-                            title: "Cam 2 TV - ... w przygotowaniu ...",
+                            title: "Kamery",
                             type: "entities",
                           },
                           filter: {
@@ -433,8 +433,8 @@ export const aisAudioLovelace: LovelaceConfig = {
                     },
                     conditions: [
                       {
-                        entity: "sensor.ais_tv_mode",
-                        state: "tv_on",
+                        entity: "sensor.ais_tv_activity",
+                        state: "camera",
                       },
                     ],
                     type: "conditional",
