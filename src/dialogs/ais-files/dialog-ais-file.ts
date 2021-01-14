@@ -1,3 +1,4 @@
+import "@polymer/paper-input/paper-textarea";
 import "@material/mwc-button/mwc-button";
 import {
   css,
@@ -55,30 +56,26 @@ class AisFileDialog extends LitElement
         hideActions
         .heading=${createCloseHeading(this.hass, this._params.dialogTitle)}
       >
-        <div class="content">
-          <ha-code-editor
-            mode="text"
-            autofocus
-            .value="${fileBody}"
-            .hass=${this.hass}
-            @editor-save="${this._handleSave}"
-          ></ha-code-editor>
-        </div>
-        <div class="saveButton">
-          <mwc-button @click=${this._handleSave}>
-            SAVE
-          </mwc-button>
+        <div class="container">
+          <textarea
+            spellcheck="false"
+            class="lineTextArea"
+            .value=${fileBody}
+          ></textarea>
+
+          <div class="saveButton">
+            <mwc-button @click=${this._handleSave}>
+              SAVE
+            </mwc-button>
+          </div>
         </div>
       </ha-dialog>
     `;
   }
 
-  private get configEditor(): HaCodeEditor {
-    return this.shadowRoot!.querySelector("ha-code-editor")! as HaCodeEditor;
-  }
-
   private _handleSave(ev) {
-    const fileBody = this.configEditor.value;
+    const fileBody = this.shadowRoot!.querySelector("textarea.lineTextArea")!
+      .value;
     this.hass.callApi<string>("POST", "ais_file/write", {
       filePath: this._params.filePath,
       fileBody: fileBody,
@@ -90,11 +87,38 @@ class AisFileDialog extends LitElement
     return [
       haStyleDialog,
       css`
-        :host {
+        /* :host {
           --code-mirror-height: 100%;
-        }
+        } */
         div.saveButton {
           float: right;
+        }
+        /* make dialog fullscreen */
+        ha-dialog {
+          --mdc-dialog-min-width: calc(
+            100vw - env(safe-area-inset-right) - env(safe-area-inset-left)
+          );
+          --mdc-dialog-max-width: calc(
+            100vw - env(safe-area-inset-right) - env(safe-area-inset-left)
+          );
+          --mdc-dialog-min-height: 100%;
+          --mdc-dialog-max-height: 100%;
+          --mdc-shape-medium: 0px;
+          --vertial-align-dialog: flex-end;
+        }
+        textarea.lineTextArea {
+          background: url(http://i.imgur.com/2cOaJ.png);
+          background-attachment: local;
+          background-repeat: no-repeat;
+          padding-left: 35px;
+          padding-top: 10px;
+          border-color: #ccc;
+          line-height: 16px;
+          width: calc(100vw - 75px);
+          min-height: 400px;
+          height: 80vh;
+          color: white;
+          font-family: monospace;
         }
       `,
     ];
