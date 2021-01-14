@@ -100,21 +100,21 @@ export const aisAudioLovelace: LovelaceConfig = {
                       color: "#727272",
                       color_type: "icon",
                       entity: "sensor.ais_player_mode",
-                      icon: "mdi:newspaper",
+                      icon: "mdi:monitor-speaker",
                       name: " ",
                       show_state: false,
                       size: "30%",
                       state: [
                         {
                           color: "var(--primary-color)",
-                          value: "ais_rss_news_remote",
+                          value: "ais_tv",
                         },
                       ],
                       tap_action: {
                         action: "call-service",
                         service: "ais_ai_service.set_context",
                         service_data: {
-                          text: "wiadomo\u015bci",
+                          text: "ais_tv",
                         },
                       },
                       type: "ais-button",
@@ -250,6 +250,207 @@ export const aisAudioLovelace: LovelaceConfig = {
                 "{{ states.sensor.aisknowledgeanswer.attributes.text }}\n",
               type: "markdown",
             },
+            {
+              card: {
+                cards: [
+                  {
+                    cards: [
+                      {
+                        color: "#727272",
+                        color_type: "icon",
+                        entity: "sensor.ais_tv_mode",
+                        icon: "mdi:monitor-dashboard",
+                        name: " ",
+                        show_state: false,
+                        size: "12%",
+                        state: [
+                          {
+                            color: "var(--primary-color)",
+                            value: "tv_on",
+                          },
+                        ],
+                        tap_action: {
+                          action: "call-service",
+                          service: "ais_ai_service.set_context",
+                          service_data: {
+                            text: "ais_tv_on",
+                          },
+                        },
+                        type: "ais-button",
+                      },
+                      {
+                        color: "#727272",
+                        color_type: "icon",
+                        entity: "sensor.ais_tv_mode",
+                        icon: "mdi:television-off",
+                        name: " ",
+                        show_state: false,
+                        size: "12%",
+                        state: [
+                          {
+                            color: "var(--primary-color)",
+                            value: "tv_off",
+                          },
+                        ],
+                        tap_action: {
+                          action: "call-service",
+                          service: "ais_ai_service.set_context",
+                          service_data: {
+                            text: "ais_tv_off",
+                          },
+                        },
+                        type: "ais-button",
+                      },
+                    ],
+                    type: "horizontal-stack",
+                  },
+                  {
+                    card: {
+                      cards: [
+                        {
+                          color: "#727272",
+                          color_type: "icon",
+                          entity: "sensor.ais_tv_activity",
+                          icon: "mdi:youtube-tv",
+                          name: " ",
+                          show_state: false,
+                          size: "12%",
+                          state: [
+                            {
+                              color: "var(--primary-color)",
+                              value: "youtube",
+                            },
+                          ],
+                          tap_action: {
+                            action: "call-service",
+                            service: "ais_ai_service.set_context",
+                            service_data: {
+                              text: "ais_tv_youtube",
+                            },
+                          },
+                          type: "ais-button",
+                        },
+                        {
+                          color: "#727272",
+                          color_type: "icon",
+                          entity: "sensor.ais_tv_activity",
+                          icon: "mdi:spotify",
+                          name: " ",
+                          show_state: false,
+                          size: "12%",
+                          state: [
+                            {
+                              color: "var(--primary-color)",
+                              value: "spotify",
+                            },
+                          ],
+                          tap_action: {
+                            action: "call-service",
+                            service: "ais_ai_service.set_context",
+                            service_data: {
+                              text: "ais_tv_spotify",
+                            },
+                          },
+                          type: "ais-button",
+                        },
+                        {
+                          color: "#727272",
+                          color_type: "icon",
+                          entity: "sensor.ais_tv_activity",
+                          icon: "mdi:cctv",
+                          name: " ",
+                          show_state: false,
+                          size: "12%",
+                          state: [
+                            {
+                              color: "var(--primary-color)",
+                              value: "camera",
+                            },
+                          ],
+                          tap_action: {
+                            action: "call-service",
+                            service: "ais_ai_service.set_context",
+                            service_data: {
+                              text: "ais_tv_camera",
+                            },
+                          },
+                          type: "ais-button",
+                        },
+                        {
+                          color: "#727272",
+                          color_type: "icon",
+                          entity: "sensor.ais_tv_activity",
+                          icon: "mdi:tune-variant",
+                          name: " ",
+                          show_state: false,
+                          size: "12%",
+                          state: [
+                            {
+                              color: "var(--primary-color)",
+                              value: "settings",
+                            },
+                          ],
+                          tap_action: {
+                            action: "call-service",
+                            service: "ais_ai_service.set_context",
+                            service_data: {
+                              text: "ais_tv_settings",
+                            },
+                          },
+                          type: "ais-button",
+                        },
+                      ],
+                      type: "horizontal-stack",
+                    },
+                    conditions: [
+                      {
+                        entity: "sensor.ais_tv_mode",
+                        state: "tv_on",
+                      },
+                    ],
+                    type: "conditional",
+                  },
+                  {
+                    card: {
+                      cards: [
+                        {
+                          card: {
+                            show_header_toggle: false,
+                            title: "Cam 2 TV - ... w przygotowaniu ...",
+                            type: "entities",
+                          },
+                          filter: {
+                            include: [
+                              {
+                                domain: "camera",
+                              },
+                            ],
+                          },
+                          type: "ais-auto-entities",
+                        },
+                      ],
+                      type: "horizontal-stack",
+                    },
+                    conditions: [
+                      {
+                        entity: "sensor.ais_tv_mode",
+                        state: "tv_on",
+                      },
+                    ],
+                    type: "conditional",
+                  },
+                ],
+                type: "vertical-stack",
+              },
+              conditions: [
+                {
+                  entity: "sensor.ais_player_mode",
+                  state: "ais_tv",
+                },
+              ],
+              type: "conditional",
+            },
+
             {
               card: {
                 cards: [
@@ -460,24 +661,6 @@ export const aisAudioLovelace: LovelaceConfig = {
               card: {
                 cards: [
                   {
-                    entity: "input_select.rss_news_category",
-                    type: "ais-easy-picker",
-                  },
-                ],
-                type: "vertical-stack",
-              },
-              conditions: [
-                {
-                  entity: "sensor.ais_player_mode",
-                  state: "ais_rss_news_remote",
-                },
-              ],
-              type: "conditional",
-            },
-            {
-              card: {
-                cards: [
-                  {
                     entity: "input_select.book_autor",
                     type: "ais-easy-picker",
                   },
@@ -508,38 +691,6 @@ export const aisAudioLovelace: LovelaceConfig = {
                 {
                   entity: "sensor.ais_player_mode",
                   state: "local_audio",
-                },
-              ],
-              type: "conditional",
-            },
-            {
-              card: {
-                cards: [
-                  {
-                    entity: "input_select.rss_news_channel",
-                    type: "ais-easy-picker",
-                  },
-                  {
-                    card: {
-                      entity: ["sensor.rssnewslist"],
-                      media_source: "News",
-                      type: "ais-list",
-                    },
-                    conditions: [
-                      {
-                        entity: "sensor.ais_player_mode",
-                        state: "ais_rss_news_remote",
-                      },
-                    ],
-                    type: "conditional",
-                  },
-                ],
-                type: "vertical-stack",
-              },
-              conditions: [
-                {
-                  entity: "sensor.ais_player_mode",
-                  state: "ais_rss_news_remote",
                 },
               ],
               type: "conditional",
@@ -728,20 +879,6 @@ export const aisAudioLovelace: LovelaceConfig = {
                 {
                   entity: "sensor.ais_player_mode",
                   state: "audiobooks_player",
-                },
-              ],
-              type: "conditional",
-            },
-            {
-              card: {
-                content: "{{states.sensor.rssnewstext.attributes.text}}\n",
-                title: "Tre\u015b\u0107 artyku\u0142u",
-                type: "markdown",
-              },
-              conditions: [
-                {
-                  entity: "sensor.ais_player_mode",
-                  state: "ais_rss_news_remote",
                 },
               ],
               type: "conditional",
