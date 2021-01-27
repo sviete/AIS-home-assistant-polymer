@@ -371,7 +371,7 @@ export const aisAudioLovelace: LovelaceConfig = {
                             action: "call-service",
                             service: "ais_ai_service.set_context",
                             service_data: {
-                              text: "ais_tv_camera",
+                              text: "ais_tv_cameras",
                             },
                           },
                           type: "ais-button",
@@ -415,14 +415,24 @@ export const aisAudioLovelace: LovelaceConfig = {
                       cards: [
                         {
                           card: {
-                            show_header_toggle: false,
-                            title: "Kamery",
-                            type: "entities",
+                            type: "glance",
+                            columns: 3,
+                            show_state: false,
                           },
                           filter: {
                             include: [
                               {
                                 domain: "camera",
+                                options: {
+                                  tap_action: {
+                                    action: "call-service",
+                                    service: "ais_ai_service.set_context",
+                                    service_data: {
+                                      text: "ais_tv_show_camera",
+                                      entity_id: "this.entity_id",
+                                    },
+                                  },
+                                },
                               },
                             ],
                           },
