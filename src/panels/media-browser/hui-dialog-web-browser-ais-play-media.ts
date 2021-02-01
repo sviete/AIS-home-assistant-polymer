@@ -197,6 +197,10 @@ export class HuiDialogWebBrowserAisPlayMedia extends LitElement {
           outline: none;
           width: 100%;
         }
+        ha-dialog {
+          /* Place above other dialogs */
+          --dialog-z-index: 104;
+        }
       `,
     ];
   }

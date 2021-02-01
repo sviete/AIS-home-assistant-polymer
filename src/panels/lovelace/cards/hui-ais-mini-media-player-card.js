@@ -2083,9 +2083,9 @@
           var k = b && p.call(t, "__wrapped__"),
             S = w && p.call(e, "__wrapped__");
           if (k || S) {
-            var j = k ? t.value() : t,
-              $ = S ? e.value() : e;
-            return m || (m = new n()), f(j, $, r, d, m);
+            var $ = k ? t.value() : t,
+              j = S ? e.value() : e;
+            return m || (m = new n()), f($, j, r, d, m);
           }
         }
         return !!x && (m || (m = new n()), s(t, e, r, d, f, m));
@@ -2520,16 +2520,16 @@
         (S["[object Error]"] = S["[object Function]"] = S[
           "[object WeakMap]"
         ] = !1),
-        (t.exports = function t(e, r, j, $, O, P) {
-          var C,
+        (t.exports = function t(e, r, $, j, O, C) {
+          var P,
             A = 1 & r,
-            E = 2 & r,
-            M = 4 & r;
-          if ((j && (C = O ? j(e, $, O, P) : j(e)), void 0 !== C)) return C;
+            M = 2 & r,
+            E = 4 & r;
+          if (($ && (P = O ? $(e, j, O, C) : $(e)), void 0 !== P)) return P;
           if (!w(e)) return e;
           var T = _(e);
           if (T) {
-            if (((C = m(e)), !A)) return l(e, C);
+            if (((P = m(e)), !A)) return l(e, P);
           } else {
             var I = f(e),
               V = "[object Function]" == I || "[object GeneratorFunction]" == I;
@@ -2539,32 +2539,32 @@
               "[object Arguments]" == I ||
               (V && !O)
             ) {
-              if (((C = E || V ? {} : v(e)), !A))
-                return E ? h(e, a(C, e)) : u(e, s(C, e));
+              if (((P = M || V ? {} : v(e)), !A))
+                return M ? h(e, a(P, e)) : u(e, s(P, e));
             } else {
               if (!S[I]) return O ? e : {};
-              C = g(e, I, A);
+              P = g(e, I, A);
             }
           }
-          P || (P = new n());
-          var N = P.get(e);
+          C || (C = new n());
+          var N = C.get(e);
           if (N) return N;
-          P.set(e, C),
+          C.set(e, P),
             x(e)
               ? e.forEach(function (n) {
-                  C.add(t(n, r, j, n, e, P));
+                  P.add(t(n, r, $, n, e, C));
                 })
               : b(e) &&
                 e.forEach(function (n, i) {
-                  C.set(i, t(n, r, j, i, e, P));
+                  P.set(i, t(n, r, $, i, e, C));
                 });
-          var z = M ? (E ? d : p) : E ? keysIn : k,
-            L = T ? void 0 : z(e);
+          var L = E ? (M ? d : p) : M ? keysIn : k,
+            z = T ? void 0 : L(e);
           return (
-            i(L || e, function (n, i) {
-              L && (n = e[(i = n)]), o(C, i, t(n, r, j, i, e, P));
+            i(z || e, function (n, i) {
+              z && (n = e[(i = n)]), o(P, i, t(n, r, $, i, e, C));
             }),
-            C
+            P
           );
         });
     },
@@ -3058,14 +3058,14 @@
                 var S = g[k];
                 w < 0 && S > h / 2 && (w = k), (x[k] = h - S);
               }
-              var j = this;
+              var $ = this;
               return (function (t) {
                 var e = t + "1",
                   r = t + "2",
-                  n = j.dimension[e],
-                  i = j.dimension[r],
-                  o = j.clone(),
-                  s = j.clone(),
+                  n = $.dimension[e],
+                  i = $.dimension[r],
+                  o = $.clone(),
+                  s = $.clone(),
                   a = w - n,
                   c = i - w;
                 for (
@@ -3073,7 +3073,7 @@
                     ? ((i = Math.min(i - 1, ~~(w + c / 2))),
                       (i = Math.max(0, i)))
                     : ((i = Math.max(n, ~~(w - 1 - a / 2))),
-                      (i = Math.min(j.dimension[r], i)));
+                      (i = Math.min($.dimension[r], i)));
                   !g[i];
 
                 )
@@ -3761,42 +3761,42 @@
           !k || (w && g[w]) || ((y = y.substr(2)), (this.slashes = !0));
         }
         if (!g[w] && (k || (w && !v[w]))) {
-          for (var S, j, $ = -1, O = 0; O < p.length; O++) {
-            -1 !== (P = y.indexOf(p[O])) && (-1 === $ || P < $) && ($ = P);
+          for (var S, $, j = -1, O = 0; O < p.length; O++) {
+            -1 !== (C = y.indexOf(p[O])) && (-1 === j || C < j) && (j = C);
           }
-          -1 !== (j = -1 === $ ? y.lastIndexOf("@") : y.lastIndexOf("@", $)) &&
-            ((S = y.slice(0, j)),
-            (y = y.slice(j + 1)),
+          -1 !== ($ = -1 === j ? y.lastIndexOf("@") : y.lastIndexOf("@", j)) &&
+            ((S = y.slice(0, $)),
+            (y = y.slice($ + 1)),
             (this.auth = decodeURIComponent(S))),
-            ($ = -1);
+            (j = -1);
           for (O = 0; O < h.length; O++) {
-            var P;
-            -1 !== (P = y.indexOf(h[O])) && (-1 === $ || P < $) && ($ = P);
+            var C;
+            -1 !== (C = y.indexOf(h[O])) && (-1 === j || C < j) && (j = C);
           }
-          -1 === $ && ($ = y.length),
-            (this.host = y.slice(0, $)),
-            (y = y.slice($)),
+          -1 === j && (j = y.length),
+            (this.host = y.slice(0, j)),
+            (y = y.slice(j)),
             this.parseHost(),
             (this.hostname = this.hostname || "");
-          var C =
+          var P =
             "[" === this.hostname[0] &&
             "]" === this.hostname[this.hostname.length - 1];
-          if (!C)
+          if (!P)
             for (
-              var A = this.hostname.split(/\./), E = ((O = 0), A.length);
-              O < E;
+              var A = this.hostname.split(/\./), M = ((O = 0), A.length);
+              O < M;
               O++
             ) {
-              var M = A[O];
-              if (M && !M.match(d)) {
-                for (var T = "", I = 0, V = M.length; I < V; I++)
-                  M.charCodeAt(I) > 127 ? (T += "x") : (T += M[I]);
+              var E = A[O];
+              if (E && !E.match(d)) {
+                for (var T = "", I = 0, V = E.length; I < V; I++)
+                  E.charCodeAt(I) > 127 ? (T += "x") : (T += E[I]);
                 if (!T.match(d)) {
                   var N = A.slice(0, O),
-                    z = A.slice(O + 1),
-                    L = M.match(f);
-                  L && (N.push(L[1]), z.unshift(L[2])),
-                    z.length && (y = "/" + z.join(".") + y),
+                    L = A.slice(O + 1),
+                    z = E.match(f);
+                  z && (N.push(z[1]), L.unshift(z[2])),
+                    L.length && (y = "/" + L.join(".") + y),
                     (this.hostname = N.join("."));
                   break;
                 }
@@ -3805,12 +3805,12 @@
           this.hostname.length > 255
             ? (this.hostname = "")
             : (this.hostname = this.hostname.toLowerCase()),
-            C || (this.hostname = n.toASCII(this.hostname));
+            P || (this.hostname = n.toASCII(this.hostname));
           var D = this.port ? ":" + this.port : "",
-            F = this.hostname || "";
-          (this.host = F + D),
+            R = this.hostname || "";
+          (this.host = R + D),
             (this.href += this.host),
-            C &&
+            P &&
               ((this.hostname = this.hostname.substr(
                 1,
                 this.hostname.length - 2
@@ -3818,22 +3818,22 @@
               "/" !== y[0] && (y = "/" + y));
         }
         if (!m[x])
-          for (O = 0, E = u.length; O < E; O++) {
-            var R = u[O];
-            if (-1 !== y.indexOf(R)) {
-              var U = encodeURIComponent(R);
-              U === R && (U = escape(R)), (y = y.split(R).join(U));
+          for (O = 0, M = u.length; O < M; O++) {
+            var F = u[O];
+            if (-1 !== y.indexOf(F)) {
+              var U = encodeURIComponent(F);
+              U === F && (U = escape(F)), (y = y.split(F).join(U));
             }
           }
-        var q = y.indexOf("#");
-        -1 !== q && ((this.hash = y.substr(q)), (y = y.slice(0, q)));
-        var B = y.indexOf("?");
+        var B = y.indexOf("#");
+        -1 !== B && ((this.hash = y.substr(B)), (y = y.slice(0, B)));
+        var q = y.indexOf("?");
         if (
-          (-1 !== B
-            ? ((this.search = y.substr(B)),
-              (this.query = y.substr(B + 1)),
+          (-1 !== q
+            ? ((this.search = y.substr(q)),
+              (this.query = y.substr(q + 1)),
               e && (this.query = _.parse(this.query)),
-              (y = y.slice(0, B)))
+              (y = y.slice(0, q)))
             : e && ((this.search = ""), (this.query = {})),
           y && (this.pathname = y),
           v[x] && this.hostname && !this.pathname && (this.pathname = "/"),
@@ -3994,9 +3994,9 @@
           else if (!i.isNullOrUndefined(t.search)) {
             if (S)
               (r.hostname = r.host = k.shift()),
-                (C =
+                (P =
                   !!(r.host && r.host.indexOf("@") > 0) && r.host.split("@")) &&
-                  ((r.auth = C.shift()), (r.host = r.hostname = C.shift()));
+                  ((r.auth = P.shift()), (r.host = r.hostname = P.shift()));
             return (
               (r.search = t.search),
               (r.query = t.query),
@@ -4015,33 +4015,33 @@
               r
             );
           for (
-            var j = k.slice(-1)[0],
-              $ =
+            var $ = k.slice(-1)[0],
+              j =
                 ((r.host || t.host || k.length > 1) &&
-                  ("." === j || ".." === j)) ||
-                "" === j,
+                  ("." === $ || ".." === $)) ||
+                "" === $,
               O = 0,
-              P = k.length;
-            P >= 0;
-            P--
+              C = k.length;
+            C >= 0;
+            C--
           )
-            "." === (j = k[P])
-              ? k.splice(P, 1)
-              : ".." === j
-              ? (k.splice(P, 1), O++)
-              : O && (k.splice(P, 1), O--);
+            "." === ($ = k[C])
+              ? k.splice(C, 1)
+              : ".." === $
+              ? (k.splice(C, 1), O++)
+              : O && (k.splice(C, 1), O--);
           if (!w && !x) for (; O--; O) k.unshift("..");
           !w ||
             "" === k[0] ||
             (k[0] && "/" === k[0].charAt(0)) ||
             k.unshift(""),
-            $ && "/" !== k.join("/").substr(-1) && k.push("");
-          var C,
+            j && "/" !== k.join("/").substr(-1) && k.push("");
+          var P,
             A = "" === k[0] || (k[0] && "/" === k[0].charAt(0));
           S &&
             ((r.hostname = r.host = A ? "" : k.length ? k.shift() : ""),
-            (C = !!(r.host && r.host.indexOf("@") > 0) && r.host.split("@")) &&
-              ((r.auth = C.shift()), (r.host = r.hostname = C.shift())));
+            (P = !!(r.host && r.host.indexOf("@") > 0) && r.host.split("@")) &&
+              ((r.auth = P.shift()), (r.host = r.hostname = P.shift())));
           return (
             (w = w || (r.host && k.length)) && !A && k.unshift(""),
             k.length
@@ -4681,8 +4681,8 @@
        */
       const S = (t) =>
           null === t || !("object" == typeof t || "function" == typeof t),
-        j = (t) => Array.isArray(t) || !(!t || !t[Symbol.iterator]);
-      class $ {
+        $ = (t) => Array.isArray(t) || !(!t || !t[Symbol.iterator]);
+      class j {
         constructor(t, e, r) {
           (this.dirty = !0),
             (this.element = t),
@@ -4704,7 +4704,7 @@
             const e = this.parts[n];
             if (void 0 !== e) {
               const t = e.value;
-              if (S(t) || !j(t)) r += "string" == typeof t ? t : String(t);
+              if (S(t) || !$(t)) r += "string" == typeof t ? t : String(t);
               else for (const e of t) r += "string" == typeof e ? e : String(e);
             }
           }
@@ -4733,7 +4733,7 @@
           this.value !== y && this.committer.commit();
         }
       }
-      class P {
+      class C {
         constructor(t) {
           (this.value = void 0),
             (this.__pendingValue = void 0),
@@ -4771,7 +4771,7 @@
               ? this.__commitTemplateResult(t)
               : t instanceof Node
               ? this.__commitNode(t)
-              : j(t)
+              : $(t)
               ? this.__commitIterable(t)
               : t === b
               ? ((this.value = b), this.clear())
@@ -4810,7 +4810,7 @@
           for (const i of t)
             (r = e[n]),
               void 0 === r &&
-                ((r = new P(this.options)),
+                ((r = new C(this.options)),
                 e.push(r),
                 0 === n ? r.appendIntoPart(this) : r.insertAfterPart(e[n - 1])),
               r.setValue(i),
@@ -4822,7 +4822,7 @@
           i(this.startNode.parentNode, t.nextSibling, this.endNode);
         }
       }
-      class C {
+      class P {
         constructor(t, e, r) {
           if (
             ((this.value = void 0),
@@ -4852,13 +4852,13 @@
             (this.__pendingValue = y);
         }
       }
-      class A extends $ {
+      class A extends j {
         constructor(t, e, r) {
           super(t, e, r),
             (this.single = 2 === r.length && "" === r[0] && "" === r[1]);
         }
         _createPart() {
-          return new E(this);
+          return new M(this);
         }
         _getValue() {
           return this.single ? this.parts[0].value : super._getValue();
@@ -4868,13 +4868,13 @@
             ((this.dirty = !1), (this.element[this.name] = this._getValue()));
         }
       }
-      class E extends O {}
-      let M = !1;
+      class M extends O {}
+      let E = !1;
       (() => {
         try {
           const t = {
             get capture() {
-              return (M = !0), !1;
+              return (E = !0), !1;
             },
           };
           window.addEventListener("test", t, t),
@@ -4932,7 +4932,7 @@
       }
       const I = (t) =>
         t &&
-        (M
+        (E
           ? { capture: t.capture, passive: t.passive, once: t.once }
           : t.capture);
       /**
@@ -4964,7 +4964,7 @@
         );
       }
       const N = new Map(),
-        z = new WeakMap();
+        L = new WeakMap();
       /**
        * @license
        * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -4977,7 +4977,7 @@
        * Code distributed by Google as part of the polymer project is also
        * subject to an additional IP rights grant found at
        * http://polymer.github.io/PATENTS.txt
-       */ const L = new /**
+       */ const z = new /**
        * @license
        * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
        * This code may only be used under the BSD style license found at
@@ -4997,11 +4997,11 @@
             return new A(t, e.slice(1), r).parts;
           }
           if ("@" === i) return [new T(t, e.slice(1), n.eventContext)];
-          if ("?" === i) return [new C(t, e.slice(1), r)];
-          return new $(t, e, r).parts;
+          if ("?" === i) return [new P(t, e.slice(1), r)];
+          return new j(t, e, r).parts;
         }
         handleTextExpression(t) {
-          return new P(t);
+          return new C(t);
         }
       })();
       /**
@@ -5018,18 +5018,18 @@
        * http://polymer.github.io/PATENTS.txt
        */ "undefined" != typeof window &&
         (window.litHtmlVersions || (window.litHtmlVersions = [])).push("1.2.1");
-      const D = (t, ...e) => new k(t, e, "html", L),
-        F = (t, e) => `${t}--${e}`;
-      let R = !0;
+      const D = (t, ...e) => new k(t, e, "html", z),
+        R = (t, e) => `${t}--${e}`;
+      let F = !0;
       void 0 === window.ShadyCSS
-        ? (R = !1)
+        ? (F = !1)
         : void 0 === window.ShadyCSS.prepareTemplateDom &&
           (console.warn(
             "Incompatible ShadyCSS version detected. Please update to at least @webcomponents/webcomponentsjs@2.0.2 and @webcomponents/shadycss@1.3.1."
           ),
-          (R = !1));
+          (F = !1));
       const U = (t) => (e) => {
-          const r = F(e.type, t);
+          const r = R(e.type, t);
           let n = N.get(r);
           void 0 === n &&
             ((n = { stringsArray: new WeakMap(), keyString: new Map() }),
@@ -5039,16 +5039,16 @@
           const s = e.strings.join(o);
           if (((i = n.keyString.get(s)), void 0 === i)) {
             const r = e.getTemplateElement();
-            R && window.ShadyCSS.prepareTemplateDom(r, t),
+            F && window.ShadyCSS.prepareTemplateDom(r, t),
               (i = new c(e, r)),
               n.keyString.set(s, i);
           }
           return n.stringsArray.set(e.strings, i), i;
         },
-        q = ["html", "svg"],
-        B = new Set(),
+        B = ["html", "svg"],
+        q = new Set(),
         H = (t, e, r) => {
-          B.add(t);
+          q.add(t);
           const n = r ? r.element : document.createElement("template"),
             i = e.querySelectorAll("style"),
             { length: o } = i;
@@ -5059,8 +5059,8 @@
             e.parentNode.removeChild(e), (s.textContent += e.textContent);
           }
           ((t) => {
-            q.forEach((e) => {
-              const r = N.get(F(e, t));
+            B.forEach((e) => {
+              const r = N.get(R(e, t));
               void 0 !== r &&
                 r.keyString.forEach((t) => {
                   const {
@@ -5139,14 +5139,14 @@
           },
         },
         W = (t, e) => e !== t && (e == e || t == t),
-        X = {
+        Z = {
           attribute: !0,
           type: String,
           converter: G,
           reflect: !1,
           hasChanged: W,
         };
-      class Z extends HTMLElement {
+      class X extends HTMLElement {
         constructor() {
           super(),
             (this._updateState = 0),
@@ -5182,7 +5182,7 @@
               t.forEach((t, e) => this._classProperties.set(e, t));
           }
         }
-        static createProperty(t, e = X) {
+        static createProperty(t, e = Z) {
           if (
             (this._ensureClassProperties(),
             this._classProperties.set(t, e),
@@ -5207,7 +5207,7 @@
           };
         }
         static getPropertyOptions(t) {
-          return (this._classProperties && this._classProperties.get(t)) || X;
+          return (this._classProperties && this._classProperties.get(t)) || Z;
         }
         static finalize() {
           const t = Object.getPrototypeOf(this);
@@ -5283,7 +5283,7 @@
         attributeChangedCallback(t, e, r) {
           e !== r && this._attributeToProperty(t, r);
         }
-        _propertyToAttribute(t, e, r = X) {
+        _propertyToAttribute(t, e, r = Z) {
           const n = this.constructor,
             i = n._attributeNameForProperty(t, r);
           if (void 0 !== i) {
@@ -5382,7 +5382,7 @@
         updated(t) {}
         firstUpdated(t) {}
       }
-      Z.finalized = !0;
+      X.finalized = !0;
       /**
 @license
 Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
@@ -5452,7 +5452,7 @@ found at http://polymer.github.io/PATENTS.txt
         "2.3.1"
       );
       const tt = {};
-      class et extends Z {
+      class et extends X {
         static getStyles() {
           return this.styles;
         }
@@ -5527,26 +5527,26 @@ found at http://polymer.github.io/PATENTS.txt
           if (!r || "object" != typeof r || !r.scopeName)
             throw new Error("The `scopeName` option is required.");
           const n = r.scopeName,
-            o = z.has(e),
-            s = R && 11 === e.nodeType && !!e.host,
-            a = s && !B.has(n),
+            o = L.has(e),
+            s = F && 11 === e.nodeType && !!e.host,
+            a = s && !q.has(n),
             c = a ? document.createDocumentFragment() : e;
           if (
             (((t, e, r) => {
-              let n = z.get(e);
+              let n = L.get(e);
               void 0 === n &&
                 (i(e, e.firstChild),
-                z.set(e, (n = new P(Object.assign({ templateFactory: V }, r)))),
+                L.set(e, (n = new C(Object.assign({ templateFactory: V }, r)))),
                 n.appendInto(e)),
                 n.setValue(t),
                 n.commit();
             })(t, c, Object.assign({ templateFactory: U(n) }, r)),
             a)
           ) {
-            const t = z.get(c);
-            z.delete(c);
+            const t = L.get(c);
+            L.delete(c);
             const r = t.value instanceof w ? t.value.template : void 0;
-            H(n, c, r), i(e, e.firstChild), e.appendChild(c), z.set(e, t);
+            H(n, c, r), i(e, e.firstChild), e.appendChild(c), L.set(e, t);
           }
           !o && s && window.ShadyCSS.styleElement(e.host);
         });
@@ -5587,7 +5587,7 @@ found at http://polymer.github.io/PATENTS.txt
         it = v((t) => (e) => {
           if (
             !(e instanceof O) ||
-            e instanceof E ||
+            e instanceof M ||
             "class" !== e.committer.name ||
             e.committer.parts.length > 1
           )
@@ -5615,7 +5615,7 @@ found at http://polymer.github.io/PATENTS.txt
         st = v((t) => (e) => {
           if (
             !(e instanceof O) ||
-            e instanceof E ||
+            e instanceof M ||
             "style" !== e.committer.name ||
             e.committer.parts.length > 1
           )
@@ -5639,6 +5639,9 @@ found at http://polymer.github.io/PATENTS.txt
       var at = r(62);
       const ct = {
           shuffle: !0,
+          power: !1,
+          source: !0,
+          toggle_power: !1,
           power_state: !0,
           artwork_border: !0,
           icon_state: !0,
@@ -5651,14 +5654,15 @@ found at http://polymer.github.io/PATENTS.txt
           play_stop: !0,
           prev: !1,
           next: !1,
+          state_label: !1,
         },
-        lt = "mdi:cast",
+        lt = "mdi:speaker",
         ut = "mdi:chevron-down",
         ht = "mdi:speaker-multiple",
         pt = { true: "mdi:volume-off", false: "mdi:volume-high" },
         dt = "mdi:skip-next",
         ft = { true: "mdi:pause", false: "mdi:play" },
-        mt = "mdi:power",
+        mt = "mdi:play-box-multiple",
         gt = "mdi:skip-previous",
         vt = "mdi:shuffle",
         _t = { true: "mdi:stop", false: "mdi:play" },
@@ -5666,6 +5670,7 @@ found at http://polymer.github.io/PATENTS.txt
         bt = "mdi:volume-plus",
         wt = [
           "entity",
+          "groupMgmtEntity",
           "_overflow",
           "break",
           "thumbnail",
@@ -5686,8 +5691,8 @@ found at http://polymer.github.io/PATENTS.txt
           { attr: "app_name" },
         ],
         St = "squeezebox",
-        jt = "soundtouch",
-        $t = (t) => {
+        $t = "soundtouch",
+        jt = (t) => {
           ((t) => {
             if (!t.entity || "media_player" !== t.entity.split(".")[0])
               throw new Error(
@@ -5697,6 +5702,8 @@ found at http://polymer.github.io/PATENTS.txt
           const e = {
             artwork: "default",
             info: "default",
+            group: !1,
+            volume_stateless: !1,
             more_info: !0,
             source: "default",
             sound_mode: "default",
@@ -5722,7 +5729,8 @@ found at http://polymer.github.io/PATENTS.txt
             e
           );
         };
-      var Ot = (t) => {
+      var Ot = jt;
+      var Ct = (t) => {
         let e = "";
         return (
           [].slice
@@ -5736,6 +5744,7 @@ found at http://polymer.github.io/PATENTS.txt
           (this.hass = t || {}),
             (this.config = e || {}),
             (this.entity = r || {}),
+            (this.entityId = (r && r.entity_id) || this.config.entity),
             (this.state = r.state),
             (this.attr = r.attributes),
             (this.idle = !!e.idle_view && this.idleView),
@@ -5804,7 +5813,7 @@ found at http://polymer.github.io/PATENTS.txt
           return this.config.entity;
         }
         get isMaster() {
-          return this.master === this.config.entity;
+          return this.master === this.entityId;
         }
         get sources() {
           return this.attr.source_list || [];
@@ -5845,6 +5854,16 @@ found at http://polymer.github.io/PATENTS.txt
             !this.config.hide.progress &&
             !this.idle &&
             xt.every((t) => t in this.attr)
+          );
+        }
+        get supportsPrev() {
+          return (
+            (16 | this.attr.supported_features) === this.attr.supported_features
+          );
+        }
+        get supportsNext() {
+          return (
+            (32 | this.attr.supported_features) === this.attr.supported_features
           );
         }
         get progress() {
@@ -5899,7 +5918,7 @@ found at http://polymer.github.io/PATENTS.txt
           try {
             const e = await fetch(new Request(t)),
               r = await e.arrayBuffer(),
-              n = Ot(r);
+              n = Ct(r);
             return `url(data:${
               e.headers.get("Content-Type") || "image/jpeg"
             };base64,${n})`;
@@ -5911,11 +5930,7 @@ found at http://polymer.github.io/PATENTS.txt
           return this.attr[t] || "";
         }
         toggle(t) {
-          return this.config.toggle_power
-            ? this.callService(t, "toggle")
-            : this.isOff
-            ? this.callService(t, "turn_on")
-            : void this.callService(t, "turn_off");
+          console.log("AIS media browser todo");
         }
         toggleMute(t) {
           this.config.speaker_group.sync_volume
@@ -5961,7 +5976,7 @@ found at http://polymer.github.io/PATENTS.txt
         volumeUp(t) {
           this.supportsVolumeSet && this.config.volume_step > 0
             ? this.callService(t, "volume_set", {
-                entity_id: this.config.entity,
+                entity_id: this.entityId,
                 volume_level: Math.min(
                   this.vol + this.config.volume_step / 100,
                   1
@@ -5972,7 +5987,7 @@ found at http://polymer.github.io/PATENTS.txt
         volumeDown(t) {
           this.supportsVolumeSet && this.config.volume_step > 0
             ? this.callService(t, "volume_set", {
-                entity_id: this.config.entity,
+                entity_id: this.entityId,
                 volume_level: Math.max(
                   this.vol - this.config.volume_step / 100,
                   0
@@ -6001,7 +6016,7 @@ found at http://polymer.github.io/PATENTS.txt
                   });
               })
             : this.callService(t, "volume_set", {
-                entity_id: this.config.entity,
+                entity_id: this.entityId,
                 volume_level: e,
               });
         }
@@ -6009,8 +6024,8 @@ found at http://polymer.github.io/PATENTS.txt
           const { platform: n } = this,
             i = { entity_id: e };
           if (r)
-            switch (((i.master = this.config.entity), n)) {
-              case jt:
+            switch (((i.master = this.entityId), n)) {
+              case $t:
                 return this.handleSoundtouch(
                   t,
                   this.isGrouped ? "ADD_ZONE_SLAVE" : "CREATE_ZONE",
@@ -6020,7 +6035,7 @@ found at http://polymer.github.io/PATENTS.txt
                 return this.callService(
                   t,
                   "sync",
-                  { entity_id: this.config.entity, other_player: e },
+                  { entity_id: this.entityId, other_player: e },
                   St
                 );
               default:
@@ -6028,7 +6043,7 @@ found at http://polymer.github.io/PATENTS.txt
             }
           else
             switch (n) {
-              case jt:
+              case $t:
                 return this.handleSoundtouch(t, "REMOVE_ZONE_SLAVE", e);
               case St:
                 return this.callService(t, "unsync", i, St);
@@ -6041,7 +6056,7 @@ found at http://polymer.github.io/PATENTS.txt
             t,
             e,
             { master: this.master, slaves: r },
-            jt,
+            $t,
             !0
           );
         }
@@ -6056,12 +6071,12 @@ found at http://polymer.github.io/PATENTS.txt
         callService(t, e, r, n = "media_player", i = !1) {
           t.stopPropagation(),
             this.hass.callService(n, e, {
-              ...(!i && { entity_id: this.config.entity }),
+              ...(!i && { entity_id: this.entityId }),
               ...r,
             });
         }
       }
-      var Ct = Y`
+      var At = Y`
   :host {
     overflow: visible !important;
     display: block;
@@ -6111,6 +6126,12 @@ found at http://polymer.github.io/PATENTS.txt
     --mdc-theme-on-primary: var(--mmp-text-color);
     --paper-checkbox-unchecked-color: var(--mmp-text-color);
     --paper-checkbox-label-color: var(--mmp-text-color);
+    --switch-checked-color: var(--mmp-accent-color);
+    --switch-checked-button-color: var(--mmp-accent-color);
+    --switch-checked-track-color: var(--mmp-accent-color);
+    --switch-unchecked-color: var(--mmp-text-color);
+    --switch-unchecked-button-color: var(--mmp-text-color);
+    --switch-unchecked-track-color: var(--mmp-text-color);
     color: var(--mmp-text-color);
   }
   ha-card {
@@ -6481,8 +6502,18 @@ found at http://polymer.github.io/PATENTS.txt
     from { opacity: 0; }
     to { opacity: 1; }
   }
+  ha-switch {
+    padding: 16px 6px;
+  }
+  .side-by-side {
+    display: flex;
+  }
+  .side-by-side > * {
+    flex: 1;
+    padding-right: 4px;
+  }
 `;
-      var At = Y`
+      var Mt = Y`
   .ellipsis {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -6510,7 +6541,7 @@ found at http://polymer.github.io/PATENTS.txt
   }
 `,
         Et = r(63);
-      const Mt = (t, e, r) => {
+      const Tt = (t, e, r) => {
           const n = [t, e, r].map((t) => {
             let e = t;
             return (
@@ -6520,23 +6551,23 @@ found at http://polymer.github.io/PATENTS.txt
           });
           return 0.2126 * n[0] + 0.7152 * n[1] + 0.0722 * n[2];
         },
-        Tt = (t, e) =>
+        It = (t, e) =>
           Math.round(
             100 *
               (((t, e) => {
-                const r = Mt(...t),
-                  n = Mt(...e);
+                const r = Tt(...t),
+                  n = Tt(...e);
                 return (Math.max(r, n) + 0.05) / (Math.min(r, n) + 0.05);
               })(t, e) +
                 Number.EPSILON)
           ) / 100,
-        It = (t) => {
+        Vt = (t) => {
           t.sort((t, e) => e.population - t.population);
           const e = t[0];
           let r;
           const n = new Map();
           function i(t) {
-            return n.has(t) || n.set(t, Tt(e.rgb, t.rgb)), n.get(t) > 4.5;
+            return n.has(t) || n.set(t, It(e.rgb, t.rgb)), n.get(t) > 4.5;
           }
           for (let e = 1; e < t.length && void 0 === r; e += 1) {
             if (i(t[e])) {
@@ -6562,7 +6593,7 @@ found at http://polymer.github.io/PATENTS.txt
           return void 0 === r && (r = e.bodyTextColor), [r, e.hex];
         };
       r(186);
-      var Vt = {
+      var Nt = {
         en: {
           placeholder: { tts: "Text to speech" },
           label: {
@@ -6598,6 +6629,18 @@ found at http://polymer.github.io/PATENTS.txt
           state: { idle: "Tétlen", unavailable: "Nem elérhető" },
           title: { speaker_management: "Hangszórók csoportosítása" },
         },
+        no: {
+          placeholder: { tts: "Tekst til tale" },
+          label: {
+            leave: "Forlat",
+            ungroup: "Oppløs gruppe",
+            group_all: "Grupper alle",
+            send: "Send",
+            master: "Master",
+          },
+          state: { idle: "Inaktiv", unavailable: "Utilgjengelig" },
+          title: { speaker_management: "Gruppestyring" },
+        },
         pl: {
           placeholder: { tts: "Wyślij media lub tekst do odtwarzaczy" },
           label: {
@@ -6621,23 +6664,73 @@ found at http://polymer.github.io/PATENTS.txt
           state: { idle: "бездіяльність", unavailable: "недоступний" },
           title: { speaker_management: "Управління групою" },
         },
+        cz: {
+          placeholder: { tts: "Převeď text na řeč" },
+          label: {
+            leave: "Odejít",
+            ungroup: "Zrušit seskupení",
+            group_all: "Seskupit vše",
+            send: "Poslat",
+            master: "Master",
+          },
+          state: { idle: "Nečinný", unavailable: "Nedostupný" },
+          title: { speaker_management: "Správa skupin" },
+        },
       };
-      const Nt = (t, e) =>
+      const Lt = (t, e) =>
         e.split(".").reduce((t, e) => (t && t[e]) || null, t);
       var zt = (t, e, r, n = "unknown") => {
         const i = t.selectedLanguage || t.language;
         return (
-          (Vt[i] && Nt(Vt[i], e)) ||
+          (Nt[i] && Lt(Nt[i], e)) ||
           (t.resources[i] && t.resources[i][r]) ||
-          Nt(Vt.en, e) ||
+          Lt(Nt.en, e) ||
           n
         );
       };
+      customElements.define(
+        "mmp-checkbox",
+        class extends et {
+          static get properties() {
+            return { checked: Boolean, disabled: Boolean, label: String };
+          }
+          render() {
+            return D`
+      <ha-switch 
+        .checked=${this.checked}
+        ?disabled=${this.disabled}>
+      </ha-switch>
+      <span ?disabled=${this.disabled}>
+        <slot>
+          ${this.label}
+        </slot>
+      </span>
+    `;
+          }
+          static get styles() {
+            return Y`
+      :host {
+        display: flex;
+        padding: .6em 0;
+        align-items: center;
+      }
+      span {
+        margin-left: 1em;
+        font-weight: 400;
+      }
+      span[disabled] {
+        opacity: .65;
+      }
+    `;
+          }
+        }
+      );
       customElements.define(
         "mmp-group-item",
         class extends et {
           static get properties() {
             return {
+              hass: {},
               item: {},
               checked: Boolean,
               disabled: Boolean,
@@ -6646,43 +6739,40 @@ found at http://polymer.github.io/PATENTS.txt
           }
           render() {
             return D`
-      <paper-checkbox
-        ?checked=${this.checked}
-        ?disabled=${this.disabled}
+      <mmp-checkbox
+        .checked=${this.checked}
+        .disabled=${this.disabled}
         @change='${(t) => t.stopPropagation()}'
         @click='${this.handleClick}'>
-        ${this.item.name}
-        ${this.master ? D`<span>(${zt(this.hass, "label.master")})</span>` : ""}
-      </paper-checkbox>
+          ${this.item.name}
+          ${
+            this.master
+              ? D`<span class="master">(${zt(
+                  this.hass,
+                  "label.master"
+                )})</span>`
+              : ""
+          }
+      </mmp-checkbox>
     `;
           }
           handleClick(t) {
             t.stopPropagation(),
-              this.dispatchEvent(
-                new CustomEvent("change", {
-                  detail: {
-                    entity: this.item.entity_id,
-                    checked: !this.checked,
-                  },
-                })
-              );
+              t.preventDefault(),
+              this.disabled ||
+                this.dispatchEvent(
+                  new CustomEvent("change", {
+                    detail: {
+                      entity: this.item.entity_id,
+                      checked: !this.checked,
+                    },
+                  })
+                );
           }
           static get styles() {
             return Y`
-      paper-checkbox {
-        padding: 8px 0;
-      }
-      paper-checkbox > span {
-        font-weight: 600;
-        text-transform: lowercase;
-      }
-
-      ha-card[artwork*='cover'][has-artwork] paper-checkbox[disabled] {
-        --paper-checkbox-checkmark-color: rgba(0,0,0,.5);
-      }
-      ha-card[artwork*='cover'][has-artwork] paper-checkbox {
-        --paper-checkbox-unchecked-color: #FFFFFF;
-        --paper-checkbox-label-color: #FFFFFF;
+      .master {
+        font-weight: 500;
       }
     `;
           }
@@ -6825,6 +6915,7 @@ found at http://polymer.github.io/PATENTS.txt
       <mmp-group-item
         @change=${this.handleGroupChange}
         .item=${t}
+        .hass=${this.hass}
         .checked=${r === e || this.group.includes(r)}
         .disabled=${r === e || !this.isMaster}
         .master=${r === this.master}
@@ -6926,7 +7017,7 @@ found at http://polymer.github.io/PATENTS.txt
           }
           static get styles() {
             return [
-              At,
+              Mt,
               Y`
         :host {
           display: block;
@@ -7024,15 +7115,7 @@ found at http://polymer.github.io/PATENTS.txt
                   data: { entity_id: this.hass.states[e[t]].entity_id },
                 });
               }
-            return (
-              this.shortcuts.list.push({
-                name: "Wyszukaj dostępne odtwarzacze",
-                icon: "mdi:sync",
-                id: "ais_shell_command.scan_network_for_ais_players",
-                type: "service",
-              }),
-              this.shortcuts.list
-            );
+            return this.shortcuts.list;
           }
           get show() {
             return !this.shortcuts.hide_when_off || this.player.active;
@@ -7100,7 +7183,7 @@ found at http://polymer.github.io/PATENTS.txt
           }
           static get styles() {
             return [
-              At,
+              Mt,
               Y`
         .mmp-shortcuts__buttons {
           box-sizing: border-box;
@@ -7293,7 +7376,7 @@ found at http://polymer.github.io/PATENTS.txt
           }
         }
       );
-      var Lt = (t) => {
+      var Dt = (t) => {
         let e = parseInt(t % 60, 10),
           r = parseInt((t / 60) % 60, 10),
           n = parseInt((t / 3600) % 24, 10);
@@ -7359,8 +7442,8 @@ found at http://polymer.github.io/PATENTS.txt
           this.showTime
             ? D`
           <div class='mmp-progress__duration'>
-            <span>${Lt(this.seekProgress || this.progress)}</span>
-            <span>${Lt(this.duration)}</span>
+            <span>${Dt(this.seekProgress || this.progress)}</span>
+            <span>${Dt(this.duration)}</span>
           </div>
         `
             : ""
@@ -7593,23 +7676,23 @@ found at http://polymer.github.io/PATENTS.txt
           this.config.flow || this.break
         }>
           ${
-            t.prev
-              ? ""
-              : D`
+            !t.prev && this.player.supportsPrev
+              ? D`
             <ha-icon-button
               @click=${(t) => this.player.prev(t)}
               .icon=${gt}>
             </ha-icon-button>`
+              : ""
           }
           ${this.renderPlayButtons()}
           ${
-            t.next
-              ? ""
-              : D`
+            !t.next && this.player.supportsNext
+              ? D`
             <ha-icon-button
               @click=${(t) => this.player.next(t)}
               .icon=${dt}>
             </ha-icon-button>`
+              : ""
           }
         </div>
       `
@@ -7743,7 +7826,7 @@ found at http://polymer.github.io/PATENTS.txt
           }
           static get styles() {
             return [
-              At,
+              Mt,
               Y`
         :host {
           display: flex;
@@ -7846,8 +7929,11 @@ found at http://polymer.github.io/PATENTS.txt
               this.player.soundModes.length > 0 && !this.config.hide.sound_mode
             );
           }
+          get showLabel() {
+            return !this.config.hide.state_label;
+          }
           render() {
-            return this.player.isUnavailable
+            return this.player.isUnavailable && this.showLabel
               ? D`
         <span class='label ellipsis'>
           ${zt(this.hass, "state.unavailable", "state.default.unavailable")}
@@ -7919,15 +8005,17 @@ found at http://polymer.github.io/PATENTS.txt
           .icon=${ft[this.player.isPlaying]}
           @click=${(t) => this.player.playPause(t)}>
         </ha-icon-button>`
-              : D`
+              : this.showLabel
+              ? D`
         <span class='label ellipsis'>
           ${zt(this.hass, "state.idle", "state.media_player.idle")}
         </span>
-      `;
+      `
+              : D``;
           }
           static get styles() {
             return [
-              At,
+              Mt,
               Y`
         :host {
           display: flex;
@@ -7953,6 +8041,266 @@ found at http://polymer.github.io/PATENTS.txt
           }
         }
       );
+      const Rt = ["cover", "full-cover", "material", "cover-fit", "none"],
+        Ft = ["icon", "full"],
+        Ut = ["icon", "full"],
+        Bt = ["short", "scroll"],
+        qt = ["play_pause", "stop", "play_stop", "next"];
+      customElements.define(
+        "mini-media-player-editor",
+        class extends et {
+          static get styles() {
+            return At;
+          }
+          static get properties() {
+            return { hass: {}, _config: {} };
+          }
+          setConfig(t) {
+            this._config = Object.assign({}, Ot, t);
+          }
+          get getMediaPlayerEntities() {
+            return Object.keys(this.hass.states).filter(
+              (t) => "media_player" === t.substr(0, t.indexOf("."))
+            );
+          }
+          get _group() {
+            return this._config.group || !1;
+          }
+          get _volume_stateless() {
+            return this._config.volume_stateless || !1;
+          }
+          get _toggle_power() {
+            return this._config.toggle_power || !0;
+          }
+          render() {
+            return this.hass
+              ? D`
+      <div class='card-config'>
+        <div class='overall-config'>
+  
+          <paper-dropdown-menu
+            label="Entity (required)"
+            .configValue="${"entity"}"
+            @value-changed=${this.valueChanged}
+            >
+            <paper-listbox
+              slot="dropdown-content" 
+              .selected="${this.getMediaPlayerEntities.indexOf(
+                this._config.entity
+              )}"
+            >
+              ${this.getMediaPlayerEntities.map(
+                (t) => D`<paper-item>${t}</paper-item>`
+              )}
+            </paper-listbox>
+          </paper-dropdown-menu>
+
+          <div class="side-by-side">
+            <paper-input
+              label="Name"
+              .value="${this._config.name}"
+              .configValue="${"name"}"
+              @value-changed=${this.valueChanged}
+            ></paper-input>
+
+            <paper-input
+              label="Icon"
+              .value="${this._config.icon}"
+              .configValue="${"icon"}"
+              @value-changed=${this.valueChanged}
+            ></paper-input>
+          </div>
+
+          <div class="side-by-side">
+            <ha-formfield label="Group cards">
+              <ha-switch
+                .checked=${this._group}
+                .configValue="${"group"}"
+                @change=${this.valueChanged}
+              ></ha-switch>
+            </ha-formfield>
+
+            <ha-formfield label="Swap volume slider for buttons">
+              <ha-switch
+                .checked="${this._volume_stateless}"
+                .configValue="${"volume_stateless"}"
+                @change=${this.valueChanged}
+              ></ha-switch>
+            </ha-formfield>
+
+            <ha-formfield label="Toggle power button behavior">
+              <ha-switch
+                .checked="${this._toggle_power}"
+                .configValue="${"toggle_power"}"
+                @change=${this.valueChanged}
+              ></ha-switch>
+            </ha-formfield>
+          </div>
+          
+          <div class="side-by-side">
+            <paper-dropdown-menu
+              label="Artwork"
+              .configValue=${"artwork"}
+              @value-changed=${this.valueChanged}
+              class="dropdown"
+              >
+              <paper-listbox
+                slot="dropdown-content"
+                .selected=${Object.values(Rt).indexOf(this._config.artwork)}
+              >
+                ${Object.values(Rt).map(
+                  (t) => D` <paper-item>${t}</paper-item> `
+                )}
+              </paper-listbox>
+            </paper-dropdown-menu>
+
+            <paper-dropdown-menu
+              label="Source"
+              .configValue=${"source"}
+              @value-changed=${this.valueChanged}
+              class="dropdown"
+              >
+              <paper-listbox
+                slot="dropdown-content"
+                .selected=${Object.values(Ft).indexOf(this._config.source)}
+              >
+                ${Object.values(Ft).map(
+                  (t) => D` <paper-item>${t}</paper-item> `
+                )}
+              </paper-listbox>
+            </paper-dropdown-menu>
+
+            <paper-dropdown-menu
+              label="Sound Mode"
+              .configValue=${"sound_mode"}
+              @value-changed=${this.valueChanged}
+              class="dropdown"
+              >
+              <paper-listbox
+                slot="dropdown-content"
+                .selected=${Object.values(Ut).indexOf(this._config.sound_mode)}
+              >
+                ${Object.values(Ut).map(
+                  (t) => D` <paper-item>${t}</paper-item> `
+                )}
+              </paper-listbox>
+            </paper-dropdown-menu>
+          </div>
+
+          <div class="side-by-side">
+            <paper-dropdown-menu
+              label="Info"
+              .configValue=${"info"}
+              @value-changed=${this.valueChanged}
+              class="dropdown"
+              >
+              <paper-listbox
+                slot="dropdown-content"
+                .selected=${Object.values(Bt).indexOf(this._config.info)}
+              >
+                ${Object.values(Bt).map(
+                  (t) => D` <paper-item>${t}</paper-item> `
+                )}
+              </paper-listbox>
+            </paper-dropdown-menu>
+
+            <paper-dropdown-menu
+              label="Replace Mute"
+              .configValue=${"replace_mute"}
+              @value-changed=${this.valueChanged}
+              class="dropdown"
+              >
+              <paper-listbox
+                slot="dropdown-content"
+                .selected=${Object.values(qt).indexOf(
+                  this._config.replace_mute
+                )}
+              >
+                ${Object.values(qt).map(
+                  (t) => D` <paper-item>${t}</paper-item> `
+                )}
+              </paper-listbox>
+            </paper-dropdown-menu>
+          </div>
+
+          <div class="side-by-side">
+            <paper-input
+              label="Volume Step (1-100)"
+              .value="${this._config.volume_step}"
+              .configValue="${"volume_step"}"
+              @value-changed=${this.valueChanged}
+            ></paper-input>
+
+            <paper-input
+              label="Max Volume (1-100)"
+              .value="${this._config.max_volume}"
+              .configValue="${"max_volume"}"
+              @value-changed=${this.valueChanged}
+            ></paper-input>
+
+            <paper-input
+              label="Min Volume (1-100)"
+              .value="${this._config.min_volume}"
+              .configValue="${"min_volume"}"
+              @value-changed=${this.valueChanged}
+            ></paper-input>
+          </div>
+
+          <div class="side-by-side">
+            <paper-input
+              label="Idle View"
+              .value="${this._config.idle_view}"
+              .configValue="${"idle_view"}"
+              @value-changed=${this.valueChanged}
+            ></paper-input>
+
+            <paper-input
+              label="Background"
+              .value="${this._config.background}"
+              .configValue="${"background"}"
+              @value-changed=${this.valueChanged}
+            ></paper-input>
+
+            <paper-input
+              label="Scale"
+              .value="${this._config.scale}"
+              .configValue="${"scale"}"
+              @value-changed=${this.valueChanged}
+            ></paper-input>
+          </div>
+
+          <div>
+            Settings for Tap actions, TTS, hiding UI elements, idle view, speaker groups and shortcuts can only be configured in the code editor
+          </div>
+
+        </div>
+      </div>
+    `
+              : D``;
+          }
+          valueChanged(t) {
+            if (!this._config || !this.hass) return;
+            const { target: e } = t;
+            this["_" + e.configValue] !== e.value &&
+              (e.configValue &&
+                ("" === e.value
+                  ? delete this._config[e.configValue]
+                  : (this._config = {
+                      ...this._config,
+                      [e.configValue]:
+                        void 0 !== e.checked ? e.checked : e.value,
+                    })),
+              ((t, e, r = {}, n = {}) => {
+                const i = new Event(e, {
+                  bubbles: void 0 === n.bubbles || n.bubbles,
+                  cancelable: Boolean(n.cancelable),
+                  composed: void 0 === n.composed || n.composed,
+                });
+                (i.detail = r), t.dispatchEvent(i);
+              })(this, "config-changed", { config: this._config }));
+          }
+        }
+      );
       customElements.define(
         "hui-ais-mini-media-player-card",
         class extends et {
@@ -7975,6 +8323,8 @@ found at http://polymer.github.io/PATENTS.txt
               config: {},
               entity: {},
               player: {},
+              groupMgmtEntity: {},
+              groupMgmtPlayer: Pt,
               _overflow: Boolean,
               break: Boolean,
               initial: Boolean,
@@ -7990,36 +8340,30 @@ found at http://polymer.github.io/PATENTS.txt
             };
           }
           static get styles() {
-            return [At, Ct];
+            return [Mt, At];
           }
           set hass(t) {
             if (!t) return;
             const e = t.states[this.config.entity];
-            (this._hass = t),
+            if (
+              ((this._hass = t),
               e &&
                 this.entity !== e &&
                 ((this.entity = e),
                 (this.player = new Pt(t, this.config, e)),
                 (this.rtl = this.computeRTL(t)),
                 (this.idle = this.player.idle),
-                this.player.trackIdle && this.updateIdleStatus());
-            const r = Object.keys(t.states);
-            let n;
-            for (
-              this.ais_speaker_group_entities = [], n = 0;
-              n < r.length;
-              n += 1
-            )
-              if (r[n].startsWith("media_player.")) {
-                const e = t.states[r[n]].attributes;
-                this.ais_speaker_group_entities.push({
-                  entity_id: t.states[r[n]].entity_id,
-                  name: e.friendly_name || "Głośnik",
-                });
-              }
-            (this.config.speaker_group.show_group_count = !0),
-              (this.config.speaker_group.platform = "ais_exo_player"),
-              (this.config.speaker_group.entities = this.ais_speaker_group_entities);
+                this.player.trackIdle && this.updateIdleStatus()),
+              this.config &&
+                this.config.speaker_group &&
+                this.config.speaker_group.group_mgmt_entity)
+            ) {
+              const e = t.states[this.config.speaker_group.group_mgmt_entity];
+              e &&
+                this.groupMgmtPlayer !== e &&
+                ((this.groupMgmtEntity = e),
+                (this.groupMgmtPlayer = new Pt(t, this.config, e)));
+            }
           }
           get hass() {
             return this._hass;
@@ -8033,8 +8377,11 @@ found at http://polymer.github.io/PATENTS.txt
           get name() {
             return this.config.name || this.player.name;
           }
+          static getConfigElement() {
+            return window.document.createElement("mini-media-player-editor");
+          }
           setConfig(t) {
-            this.config = $t(t);
+            this.config = jt(t);
           }
           shouldUpdate(t) {
             return (
@@ -8139,7 +8486,9 @@ found at http://polymer.github.io/PATENTS.txt
               .hass=${this.hass}
               .visible=${this.edit}
               .entities=${t.speaker_group.entities}
-              .player=${this.player}>
+              .player=${
+                this.groupMgmtPlayer ? this.groupMgmtPlayer : this.player
+              }>>
             </mmp-group-list>
           </div>
         </div>
@@ -8311,13 +8660,16 @@ found at http://polymer.github.io/PATENTS.txt
           }
           speakerCount() {
             if (this.config.speaker_group.show_group_count) {
-              const t = this.player.groupCount;
+              const t = this.groupMgmtPlayer
+                ? this.groupMgmtPlayer.groupCount
+                : this.player.groupCount;
               return t > 1 ? " +" + (t - 1) : "";
             }
           }
           computeStyles() {
             const { scale: t } = this.config;
             return st({
+              ...(t && { "--mmp-unit": 40 * t + "px" }),
               ...(this.foregroundColor &&
                 this.player.isActive && {
                   "--mmp-text-color": this.foregroundColor,
@@ -8334,18 +8686,13 @@ found at http://polymer.github.io/PATENTS.txt
             const { picture: t, hasArtwork: e } = this.player;
             if (e && t !== this.picture) {
               this.picture = t;
-              try {
-                const t = await this.player.fetchArtwork();
-                this.thumbnail && (this.prevThumbnail = this.thumbnail),
-                  (this.thumbnail = t);
-              } catch (e) {
-                this.thumbnail = `url(${t})`;
-              }
+              const e = await this.player.fetchArtwork();
+              this.thumbnail && (this.prevThumbnail = this.thumbnail),
+                (this.thumbnail = e || `url(${t})`);
             }
-            return !(!e || !this.thumbnail);
           }
           computeIcon() {
-            return this.config.icon ? this.config.icon : this.player.icon || lt;
+            return this.config.icon ? this.player.icon : lt;
           }
           measureCard() {
             const t = this.shadowRoot.querySelector("ha-card");
@@ -8399,7 +8746,7 @@ found at http://polymer.github.io/PATENTS.txt
               try {
                 [this.foregroundColor, this.backgroundColor] = await ((t = this
                   .player.picture),
-                new Et(t, { colorCount: 16, generator: It }).getPalette());
+                new Et(t, { colorCount: 16, generator: Vt }).getPalette());
               } catch (t) {
                 console.error("Error getting Image Colors", t),
                   (this.foregroundColor = ""),
@@ -8409,7 +8756,14 @@ found at http://polymer.github.io/PATENTS.txt
             }
           }
         }
-      );
+      ),
+        (window.customCards = window.customCards || []),
+        window.customCards.push({
+          type: "hui-ais-mini-media-player-card",
+          name: "AIS Media Player",
+          preview: !1,
+          description: "AAIS Media Player Card",
+        });
     },
   ]);
 });
