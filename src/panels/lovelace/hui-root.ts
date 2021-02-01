@@ -3,16 +3,19 @@ import "@material/mwc-list/mwc-list-item";
 import type { RequestSelectedDetail } from "@material/mwc-list/mwc-list-item";
 import {
   mdiClose,
+  mdiCodeBraces,
   mdiCog,
   mdiDotsVertical,
-  mdiForumOutline,
+  mdiFileMultiple,
+  mdiFormatListBulletedTriangle,
   mdiHelp,
   mdiHelpCircle,
   mdiPencil,
   mdiPlus,
   mdiRefresh,
   mdiShape,
-  mdiMicrophone,
+  mdiViewDashboard,
+  mdiForumOutline,
 } from "@mdi/js";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-scroll-effects/effects/waterfall";
@@ -170,21 +173,63 @@ class HUIRoot extends LitElement {
                       ? ""
                       : html`
                           <mwc-list-item
+                            graphic="icon"
                             aria-label=${this.hass!.localize(
                               "ui.panel.lovelace.unused_entities.title"
                             )}
                             @request-selected="${this._handleUnusedEntities}"
                           >
+                            <ha-svg-icon
+                              slot="graphic"
+                              .path=${mdiFormatListBulletedTriangle}
+                            >
+                            </ha-svg-icon>
                             ${this.hass!.localize(
                               "ui.panel.lovelace.unused_entities.title"
                             )}
                           </mwc-list-item>
                         `}
-                    <mwc-list-item @request-selected="${this._handleRawEditor}">
+                    <mwc-list-item
+                      graphic="icon"
+                      @request-selected="${this._handleRawEditor}"
+                    >
+                      <ha-svg-icon
+                        slot="graphic"
+                        .path=${mdiCodeBraces}
+                      ></ha-svg-icon>
                       ${this.hass!.localize(
                         "ui.panel.lovelace.editor.menu.raw_editor"
                       )}
                     </mwc-list-item>
+                    ${__DEMO__ /* No config available in the demo */
+                      ? ""
+                      : html`<mwc-list-item
+                            graphic="icon"
+                            @request-selected="${this._handleManageDashboards}"
+                          >
+                            <ha-svg-icon
+                              slot="graphic"
+                              .path=${mdiViewDashboard}
+                            ></ha-svg-icon>
+                            ${this.hass!.localize(
+                              "ui.panel.lovelace.editor.menu.manage_dashboards"
+                            )}
+                          </mwc-list-item>
+                          ${this.hass.userData?.showAdvanced
+                            ? html`<mwc-list-item
+                                graphic="icon"
+                                @request-selected="${this
+                                  ._handleManageResources}"
+                              >
+                                <ha-svg-icon
+                                  slot="graphic"
+                                  .path=${mdiFileMultiple}
+                                ></ha-svg-icon>
+                                ${this.hass!.localize(
+                                  "ui.panel.lovelace.editor.menu.manage_resources"
+                                )}
+                              </mwc-list-item>`
+                            : ""} `}
                   </ha-button-menu>
                 </app-toolbar>
               `
@@ -627,6 +672,22 @@ class HUIRoot extends LitElement {
     this.lovelace!.enableFullEditMode();
   }
 
+  private _handleManageDashboards(
+    ev: CustomEvent<RequestSelectedDetail>
+  ): void {
+    if (!shouldHandleRequestSelectedEvent(ev)) {
+      return;
+    }
+    navigate(this, "/config/lovelace/dashboards");
+  }
+
+  private _handleManageResources(ev: CustomEvent<RequestSelectedDetail>): void {
+    if (!shouldHandleRequestSelectedEvent(ev)) {
+      return;
+    }
+    navigate(this, "/config/lovelace/resources");
+  }
+
   private _handleUnusedEntities(ev: CustomEvent<RequestSelectedDetail>): void {
     if (!shouldHandleRequestSelectedEvent(ev)) {
       return;
@@ -807,7 +868,10 @@ class HUIRoot extends LitElement {
         }
         ha-tabs,
         paper-tabs {
-          --paper-tabs-selection-bar-color: var(--text-primary-color, #fff);
+          --paper-tabs-selection-bar-color: var(
+            --app-header-selection-bar-color,
+            var(--app-header-text-color, #fff)
+          );
           text-transform: uppercase;
         }
 

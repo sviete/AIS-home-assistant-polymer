@@ -1,5 +1,4 @@
 import "@material/mwc-button/mwc-button";
-import "../ha-fab";
 import "@material/mwc-list/mwc-list";
 import "@material/mwc-list/mwc-list-item";
 import {
@@ -54,6 +53,7 @@ import "../entity/ha-entity-picker";
 import "../ha-button-menu";
 import "../ha-card";
 import "../ha-circular-progress";
+import "../ha-fab";
 import "../ha-paper-dropdown-menu";
 import "../ha-svg-icon";
 import {

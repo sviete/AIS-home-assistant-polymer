@@ -32,25 +32,24 @@ import {
 } from "../../../data/entity_registry";
 import { SceneEntities, showSceneEditor } from "../../../data/scene";
 import { findRelated, RelatedResult } from "../../../data/search";
-import {
-  loadDeviceRegistryDetailDialog,
-  showDeviceRegistryDetailDialog,
-} from "./device-registry-detail/show-dialog-device-registry-detail";
 import { showConfirmationDialog } from "../../../dialogs/generic/show-dialog-box";
 import "../../../layouts/hass-error-screen";
 import "../../../layouts/hass-tabs-subpage";
+import { haStyle } from "../../../resources/styles";
 import { HomeAssistant, Route } from "../../../types";
+import { brandsUrl } from "../../../util/brands-url";
 import "../ha-config-section";
 import { configSections } from "../ha-panel-config";
 import "./device-detail/ha-device-entities-card";
 import "./device-detail/ha-device-info-card";
 import { showDeviceAutomationDialog } from "./device-detail/show-dialog-device-automation";
+import {
+  loadDeviceRegistryDetailDialog,
+  showDeviceRegistryDetailDialog,
+} from "./device-registry-detail/show-dialog-device-registry-detail";
 // ais devices
 import "../ais_dom/ais_dom_devices/ha-ais-dom-rf433-config-card";
 import "../ais_dom/ais_dom_devices/ha-ais-dom-iframe";
-import { brandsUrl } from "../../../util/brands-url";
-import { haStyle } from "../../../resources/styles";
-
 export interface EntityRegistryStateEntry extends EntityRegistryEntry {
   stateName?: string | null;
 }
@@ -646,6 +645,17 @@ export class HaConfigDevicePage extends LitElement {
             .device=${device}
           ></ha-device-actions-zha>
         </div>
+      `);
+    }
+    if (integrations.includes("zwave_js")) {
+      import(
+        "./device-detail/integration-elements/zwave_js/ha-device-info-zwave_js"
+      );
+      templates.push(html`
+        <ha-device-info-zwave_js
+          .hass=${this.hass}
+          .device=${device}
+        ></ha-device-info-zwave_js>
       `);
     }
     return templates;
