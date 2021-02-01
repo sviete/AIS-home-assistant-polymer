@@ -7,23 +7,23 @@ import {
   CSSResultArray,
   customElement,
   html,
+  internalProperty,
   LitElement,
   property,
-  internalProperty,
   TemplateResult,
 } from "lit-element";
 import "../../../../../components/ha-card";
 import "../../../../../components/ha-code-editor";
+import { getConfigEntries } from "../../../../../data/config_entries";
+import { showOptionsFlowDialog } from "../../../../../dialogs/config-flow/show-dialog-options-flow";
+import "../../../../../layouts/hass-subpage";
 import { haStyle } from "../../../../../resources/styles";
 import { HomeAssistant } from "../../../../../types";
 import "./mqtt-subscribe-card";
-import "../../../../../layouts/hass-subpage";
-import { showOptionsFlowDialog } from "../../../../../dialogs/config-flow/show-dialog-options-flow";
 import {
   showAisFileDialog,
   HaAisFileDialogParams,
 } from "../../../../../dialogs/ais-files/show-dialog-ais-file";
-import { getConfigEntries } from "../../../../../data/config_entries";
 import { mdiDotsVertical } from "@mdi/js";
 
 @customElement("mqtt-config-panel")
