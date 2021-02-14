@@ -3459,14 +3459,13 @@
         },
         "ais-restore-backup": {
           "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
-          "ais_restore_intro_step1": "Log in to the AI-Speaker integrator portal.",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
           "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
           "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
           "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
           "ais_restore_button": "RESTORE",
           "ais_login": "Log in to AI-Speaker",
-          "ais_logout": "Log out from AI-Speaker",
-          "finish": "Skip"
+          "ais_logout": "Log out from AI-Speaker"
         },
         "ais-wifi": {
           "intro_ais_enable_wifi_1": "For this step you need an internet connection. If you haven't set up a WiFi connection yet, you can do it now.",

@@ -40,7 +40,6 @@ export interface OnboardingResponses {
   core_config: OnboardingCoreConfigStepResponse;
   integration: OnboardingIntegrationStepResponse;
   mob_integration: OnboardingMobIntegrationStepResponse;
-  ais_restore_backup: OnboardingAisRestoreBackupStepResponse;
 }
 
 export type ValidOnboardingStep = keyof OnboardingResponses;
@@ -79,24 +78,6 @@ export const onboardAisCloudLoginStep = (params: {
       credentials: "same-origin",
       body: JSON.stringify(params),
     })
-  );
-
-export const onboardAisRestoreBackupStep = (params: {
-  gate_id: string;
-  backup_password: string;
-}) =>
-  handleFetchPromise<OnboardingAisRestoreBackupResponse>(
-    fetch("/api/onboarding/ais_restore_backup", {
-      method: "POST",
-      credentials: "same-origin",
-      body: JSON.stringify(params),
-    })
-  );
-
-export const onboardRestoreBackupStep = (hass: HomeAssistant) =>
-  hass.callApi<OnboardingAisRestoreBackupStepResponse>(
-    "POST",
-    "onboarding/ais_restore_backup"
   );
 
 export const onboardCoreConfigStep = (hass: HomeAssistant) =>
