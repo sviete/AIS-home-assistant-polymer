@@ -17,13 +17,35 @@ import {
   TemplateResult,
 } from "lit-element";
 import { LocalizeFunc } from "../common/translations/localize";
-import {
-  onboardAisCloudLoginStep,
-  onboardAisRestoreBackupStep,
-} from "../data/onboarding";
 import { PolymerChangedEvent } from "../polymer-types";
 import type { HomeAssistant } from "../types";
 import { showAisRestoreBackupDialog } from "../../hassio/src/dialogs/ais/show-ais-dialog-restore-backup";
+import { handleFetchPromise } from "../util/hass-call-api";
+
+export interface OnboardingAisGateInfoResponse {
+  result: string;
+  error: string;
+  gates: Array<{
+    gate_id: string;
+    gate_name: string;
+    gate_desc: string;
+    gate_backup_ha: string;
+    gate_backup_zigbee: string;
+  }>;
+}
+
+export const onboardAisCloudLoginStep = (params: {
+  username: string;
+  password: string;
+  language: string;
+}) =>
+  handleFetchPromise<OnboardingAisGateInfoResponse>(
+    fetch("/api/onboarding/ais_gates_info", {
+      method: "POST",
+      credentials: "same-origin",
+      body: JSON.stringify(params),
+    })
+  );
 
 @customElement("onboarding-ais-restore-backup")
 class OnboardingAisRestoreBackup extends ProvideHassLitMixin(LitElement) {
@@ -39,8 +61,6 @@ class OnboardingAisRestoreBackup extends ProvideHassLitMixin(LitElement) {
 
   @property() private _loading = false;
 
-  @property() private _errorMsg?: string = undefined;
-
   @property() private _aisGates: Array<{
     gate_id: string;
     gate_name: string;
@@ -52,6 +72,8 @@ class OnboardingAisRestoreBackup extends ProvideHassLitMixin(LitElement) {
   @property() private _aisLogged = false;
 
   @property() private _infoMsg?: string = undefined;
+
+  @property() private _errorMsg?: string = undefined;
 
   protected render(): TemplateResult {
     return html`
@@ -231,38 +253,7 @@ class OnboardingAisRestoreBackup extends ProvideHassLitMixin(LitElement) {
   private async _restoreFromAis(ev): Promise<void> {
     ev.preventDefault();
     const gate_id = ev.target.dataset.gate_id;
-
     showAisRestoreBackupDialog(this, { gateId: gate_id });
-
-    //   this._loading = true;
-    //   this._infoMsg =
-    //     this.localize(
-    //       "ui.panel.page-onboarding.ais-restore-backup.ais_restore_ok_info_step1"
-    //     ) +
-    //     " " +
-    //     gate_id;
-
-    //   try {
-    //     const result = await onboardAisRestoreBackupStep({
-    //       gate_id: gate_id,
-    //       backup_password: backup_password,
-    //     });
-
-    //     if (result.result === "invalid") {
-    //       this._errorMsg = result.message;
-    //       this._infoMsg = "";
-    //       this._loading = false;
-    //     } else {
-    //       this._errorMsg = "";
-    //       this._infoMsg = result.message;
-    //       this._loading = false;
-    //     }
-    //   } catch (err) {
-    //     // eslint-disable-next-line
-    //     this._infoMsg = "";
-    //     this._loading = false;
-    //     this._errorMsg = err.body.message;
-    //   }
   }
 
   private async _submitForm(ev): Promise<void> {
@@ -328,6 +319,9 @@ class OnboardingAisRestoreBackup extends ProvideHassLitMixin(LitElement) {
       }
       .row {
         display: flex;
+      }
+      a {
+        color: var(--primary-color);
       }
     `;
   }

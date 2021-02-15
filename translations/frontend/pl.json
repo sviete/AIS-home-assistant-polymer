@@ -3575,8 +3575,8 @@
                 },
                 "mob-integration": {
                     "h1": "Aplikacja mobilna!",
-                    "intro": "Zwiększ funkcjonalność Asystenta domowego, instalując naszą oficjalną aplikację mobilną na platformę Android.",
-                    "mob_benefits": "Dzięki aplikacji możesz wysyłać komendy głosowe z telefonu, otrzymywać powiadomienia o zdarzeniach w domu, kontrolować spoza domu, wysyłać swoją aktualną lokalizację do bramki itp. Zeskanuj kod lub go kliknij, aby zainstalować aplikację AIS dom:",
+                    "intro": "Zwiększ funkcjonalność Asystenta domowego, instalując naszą oficjalną aplikację mobilną na platformę Android. Zeskanuj kod lub go kliknij:",
+                    "mob_benefits": "Dzięki aplikacji możesz wysyłać komendy głosowe z telefonu, otrzymywać powiadomienia o zdarzeniach w domu, kontrolować spoza domu, wysyłać swoją aktualną lokalizację do bramki itp.",
                     "other_mob_apps": "Możesz też zainstalować mobilną aplikację Home Assistant Companion:",
                     "finish": "Zamknij"
                 },

@@ -3478,8 +3478,8 @@
         },
         "mob-integration": {
           "h1": "Mobile App!",
-          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app.",
-          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. Scan the code or click it to install the application AIS dom:",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
           "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
           "finish": "Finish"
         },
