@@ -3556,14 +3556,13 @@
                 },
                 "ais-restore-backup": {
                     "ais_restore_intro": "Czy chcesz przywrócić konfigurację systemu z kopii zapasowej?",
-                    "ais_restore_intro_step1": "Zaloguj się do portalu integratora AI-Speaker.",
+                    "ais_restore_intro_step1": "Zaloguj się do portalu integratora:",
                     "ais_restore_intro_step2": "Jeśli zabezpieczyłeś kopie hasłem to je podaj:",
                     "ais_restore_intro_step3": "Wybierz bramkę której konfigurację chcesz przywrócić:",
                     "ais_restore_ok_info_step1": "Przywracam konfigurację z kopii zapasowej... poczekaj na ponowne uruchomienie",
                     "ais_restore_button": "PRZYWRÓĆ",
                     "ais_login": "Zaloguj do AI-Speaker",
-                    "ais_logout": "Wyloguj się z AI-Speaker",
-                    "finish": "Pomiń"
+                    "ais_logout": "Wyloguj się z AI-Speaker"
                   },
                 "ais-wifi": {
                     "intro_ais_enable_wifi_1": "Do tego kroku jest potrzebne połączenie z Internetem. Jeśli jeszcze nie skonfigurowałeś połączenia WiFi możesz to zrobić teraz.",
@@ -3576,8 +3575,8 @@
                 },
                 "mob-integration": {
                     "h1": "Aplikacja mobilna!",
-                    "intro": "Zwiększ funkcjonalność Asystenta domowego, instalując naszą oficjalną aplikację mobilną na platformę Android.",
-                    "mob_benefits": "Dzięki aplikacji możesz wysyłać komendy głosowe z telefonu, otrzymywać powiadomienia o zdarzeniach w domu, kontrolować spoza domu, wysyłać swoją aktualną lokalizację do bramki itp. Zeskanuj kod lub go kliknij, aby zainstalować aplikację AIS dom:",
+                    "intro": "Zwiększ funkcjonalność Asystenta domowego, instalując naszą oficjalną aplikację mobilną na platformę Android. Zeskanuj kod lub go kliknij:",
+                    "mob_benefits": "Dzięki aplikacji możesz wysyłać komendy głosowe z telefonu, otrzymywać powiadomienia o zdarzeniach w domu, kontrolować spoza domu, wysyłać swoją aktualną lokalizację do bramki itp.",
                     "other_mob_apps": "Możesz też zainstalować mobilną aplikację Home Assistant Companion:",
                     "finish": "Zamknij"
                 },

@@ -3,6 +3,9 @@ import "@polymer/paper-input/paper-input";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
 import "../components/ha-icon";
+import "../components/ha-expansion-panel";
+import { makeDialogManager } from "../dialogs/make-dialog-manager";
+import { ProvideHassLitMixin } from "../mixins/provide-hass-lit-mixin";
 import {
   css,
   CSSResult,
@@ -14,17 +17,38 @@ import {
   TemplateResult,
 } from "lit-element";
 import { LocalizeFunc } from "../common/translations/localize";
-import {
-  onboardAisCloudLoginStep,
-  onboardAisRestoreBackupStep,
-  onboardRestoreBackupStep,
-} from "../data/onboarding";
 import { PolymerChangedEvent } from "../polymer-types";
 import type { HomeAssistant } from "../types";
-import { fireEvent } from "../common/dom/fire_event";
+import { showAisRestoreBackupDialog } from "../../hassio/src/dialogs/ais/show-ais-dialog-restore-backup";
+import { handleFetchPromise } from "../util/hass-call-api";
 
-@customElement("onboarding-restore-backup")
-class OnboardingRestoreBackup extends LitElement {
+export interface OnboardingAisGateInfoResponse {
+  result: string;
+  error: string;
+  gates: Array<{
+    gate_id: string;
+    gate_name: string;
+    gate_desc: string;
+    gate_backup_ha: string;
+    gate_backup_zigbee: string;
+  }>;
+}
+
+export const onboardAisCloudLoginStep = (params: {
+  username: string;
+  password: string;
+  language: string;
+}) =>
+  handleFetchPromise<OnboardingAisGateInfoResponse>(
+    fetch("/api/onboarding/ais_gates_info", {
+      method: "POST",
+      credentials: "same-origin",
+      body: JSON.stringify(params),
+    })
+  );
+
+@customElement("onboarding-ais-restore-backup")
+class OnboardingAisRestoreBackup extends ProvideHassLitMixin(LitElement) {
   @property() public localize!: LocalizeFunc;
 
   @property() public hass!: HomeAssistant;
@@ -35,11 +59,7 @@ class OnboardingRestoreBackup extends LitElement {
 
   @property() private _password = "";
 
-  @property() private _backup_password = "";
-
   @property() private _loading = false;
-
-  @property() private _errorMsg?: string = undefined;
 
   @property() private _aisGates: Array<{
     gate_id: string;
@@ -53,14 +73,13 @@ class OnboardingRestoreBackup extends LitElement {
 
   @property() private _infoMsg?: string = undefined;
 
+  @property() private _errorMsg?: string = undefined;
+
   protected render(): TemplateResult {
     return html`
-    <br>
-      <p>
-          <b>${this.localize(
-            "ui.panel.page-onboarding.ais-restore-backup.ais_restore_intro"
-          )}</b>
-      </p>
+    <ha-expansion-panel header=${this.localize(
+      "ui.panel.page-onboarding.ais-restore-backup.ais_restore_intro"
+    )}>
     ${
       this._aisLogged
         ? ""
@@ -69,11 +88,10 @@ class OnboardingRestoreBackup extends LitElement {
               ${this.localize(
                 "ui.panel.page-onboarding.ais-restore-backup.ais_restore_intro_step1"
               )}
+              <a target="_blank" href="https://powiedz.co/ords/f?p=100"
+                >AI-Speaker</a
+              >
             </p>
-            <onboarding-ais-wifi
-              .hass=${this.hass}
-              .localize=${this.localize}
-            ></onboarding-ais-wifi>
           `
     }
 
@@ -102,26 +120,11 @@ class OnboardingRestoreBackup extends LitElement {
     <form>
     ${
       this._aisLogged
-        ? html` <span>
-              ${this.localize(
-                "ui.panel.page-onboarding.ais-restore-backup.ais_restore_intro_step2"
-              )}
-            </span>
-            <paper-input
-              name="backup_password"
-              label="${this.localize(
-                "ui.panel.page-onboarding.user.data.password"
-              )}"
-              value=${this._backup_password}
-              @value-changed=${this._handleValueChanged}
-              .disabled=${this._loading}
-              type="password"
-            ></paper-input>
-            <p>
-              ${this.localize(
-                "ui.panel.page-onboarding.ais-restore-backup.ais_restore_intro_step3"
-              )}
-            </p>`
+        ? html` <p>
+            ${this.localize(
+              "ui.panel.page-onboarding.ais-restore-backup.ais_restore_intro_step3"
+            )}
+          </p>`
         : ""
     }
 
@@ -150,7 +153,6 @@ class OnboardingRestoreBackup extends LitElement {
                   @click=${this._restoreFromAis}
                   .disabled=${this._loading}
                   data-gate_id=${gate.gate_id}
-                  data-backup_password=${this._backup_password}
                 >
                   ${this.localize(
                     "ui.panel.page-onboarding.ais-restore-backup.ais_restore_button"
@@ -217,29 +219,13 @@ class OnboardingRestoreBackup extends LitElement {
       }
     </div>
   </form>
-  <div class="footer">
-        <mwc-button @click=${this._finish}>
-          ${this.localize("ui.panel.page-onboarding.ais-restore-backup.finish")}
-        </mwc-button>
-  </div>
+  </ha-expansion-panel>
 `;
-  }
-
-  private async _finish(ev) {
-    ev.preventDefault();
-    try {
-      const result = await onboardRestoreBackupStep(this.hass);
-      fireEvent(this, "onboarding-step", {
-        type: "ais_restore_backup",
-        result,
-      });
-    } catch (err) {
-      alert(`Failed to save: ${err.message}`);
-    }
   }
 
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
+    makeDialogManager(this, this.shadowRoot!);
     setTimeout(
       () => this.shadowRoot!.querySelector("paper-input")!.focus(),
       100
@@ -267,36 +253,7 @@ class OnboardingRestoreBackup extends LitElement {
   private async _restoreFromAis(ev): Promise<void> {
     ev.preventDefault();
     const gate_id = ev.target.dataset.gate_id;
-    const backup_password = ev.target.dataset.backup_password;
-    this._loading = true;
-    this._infoMsg =
-      this.localize(
-        "ui.panel.page-onboarding.ais-restore-backup.ais_restore_ok_info_step1"
-      ) +
-      " " +
-      gate_id;
-
-    try {
-      const result = await onboardAisRestoreBackupStep({
-        gate_id: gate_id,
-        backup_password: backup_password,
-      });
-
-      if (result.result === "invalid") {
-        this._errorMsg = result.message;
-        this._infoMsg = "";
-        this._loading = false;
-      } else {
-        this._errorMsg = "";
-        this._infoMsg = result.message;
-        this._loading = false;
-      }
-    } catch (err) {
-      // eslint-disable-next-line
-      this._infoMsg = "";
-      this._loading = false;
-      this._errorMsg = err.body.message;
-    }
+    showAisRestoreBackupDialog(this, { gateId: gate_id });
   }
 
   private async _submitForm(ev): Promise<void> {
@@ -363,12 +320,15 @@ class OnboardingRestoreBackup extends LitElement {
       .row {
         display: flex;
       }
+      a {
+        color: var(--primary-color);
+      }
     `;
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "onboarding-restore-backup": OnboardingRestoreBackup;
+    "onboarding-ais-restore-backup": OnboardingAisRestoreBackup;
   }
 }
