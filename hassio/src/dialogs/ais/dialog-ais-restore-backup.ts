@@ -62,6 +62,11 @@ export class DialogAisRestoreBackup extends LitElement
   public async showDialog(params: AisRestoreBackupDialogParams): Promise<void> {
     this._params = params;
     await this.updateComplete;
+    this.addEventListener("keypress", (ev) => {
+      if (ev.keyCode === 13) {
+        this._restoreBakupFromAis(ev);
+      }
+    });
   }
 
   public closeDialog(): void {

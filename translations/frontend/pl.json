@@ -3496,7 +3496,7 @@
                     "working": "Proszę czekać"
                 },
                 "initializing": "inicjalizacja",
-                "logging_in_to_with": "Logowanie do ** {locationName} ** przy użyciu ** {authProviderName} **.",
+                "logging_in_to_with": "Logowanie do **{locationName}** przy użyciu **{authProviderName}**.",
                 "logging_in_with": "Logowanie za pomocą **{authProviderName}**.",
                 "pick_auth_provider": "Lub zaloguj się za pomocą"
             },
