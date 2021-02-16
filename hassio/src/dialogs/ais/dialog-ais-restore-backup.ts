@@ -20,6 +20,7 @@ import { AisRestoreBackupDialogParams } from "./show-ais-dialog-restore-backup";
 import { LocalizeFunc } from "../../../../src/common/translations/localize";
 import { PolymerChangedEvent } from "../../../../src/polymer-types";
 import { handleFetchPromise } from "../../../../src/util/hass-call-api";
+import "../../../../src/components/ha-expansion-panel";
 
 export interface OnboardingAisRestoreBackupResponse {
   result: string;
@@ -129,7 +130,7 @@ export class DialogAisRestoreBackup extends LitElement
           : ""}
 
         <p class="action">
-          ${!this._errorMsg && !this._infoMsg
+          ${!this._infoMsg
             ? html`
                 <mwc-button
                   raised
@@ -140,7 +141,7 @@ export class DialogAisRestoreBackup extends LitElement
                 </mwc-button>
               `
             : ""}
-          ${this._errorMsg || this._infoMsg
+          ${this._infoMsg
             ? html`
                 <mwc-button raised @click=${this._refreshPage}>
                   ok, odśwież stronę
