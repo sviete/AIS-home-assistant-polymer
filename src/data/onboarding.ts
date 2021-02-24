@@ -8,23 +8,6 @@ export interface OnboardingUserStepResponse {
   auth_code: string;
 }
 
-export interface OnboardingAisGateInfoResponse {
-  result: string;
-  error: string;
-  gates: Array<{
-    gate_id: string;
-    gate_name: string;
-    gate_desc: string;
-    gate_backup_ha: string;
-    gate_backup_zigbee: string;
-  }>;
-}
-
-export interface OnboardingAisRestoreBackupResponse {
-  result: string;
-  message: string;
-}
-
 export interface OnboardingIntegrationStepResponse {
   auth_code: string;
 }
@@ -32,15 +15,11 @@ export interface OnboardingIntegrationStepResponse {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface OnboardingMobIntegrationStepResponse {}
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface OnboardingAisRestoreBackupStepResponse {}
-
 export interface OnboardingResponses {
   user: OnboardingUserStepResponse;
   core_config: OnboardingCoreConfigStepResponse;
   integration: OnboardingIntegrationStepResponse;
   mob_integration: OnboardingMobIntegrationStepResponse;
-  ais_restore_backup: OnboardingAisRestoreBackupStepResponse;
 }
 
 export type ValidOnboardingStep = keyof OnboardingResponses;
@@ -66,37 +45,6 @@ export const onboardUserStep = (params: {
       credentials: "same-origin",
       body: JSON.stringify(params),
     })
-  );
-
-export const onboardAisCloudLoginStep = (params: {
-  username: string;
-  password: string;
-  language: string;
-}) =>
-  handleFetchPromise<OnboardingAisGateInfoResponse>(
-    fetch("/api/onboarding/ais_gates_info", {
-      method: "POST",
-      credentials: "same-origin",
-      body: JSON.stringify(params),
-    })
-  );
-
-export const onboardAisRestoreBackupStep = (params: {
-  gate_id: string;
-  backup_password: string;
-}) =>
-  handleFetchPromise<OnboardingAisRestoreBackupResponse>(
-    fetch("/api/onboarding/ais_restore_backup", {
-      method: "POST",
-      credentials: "same-origin",
-      body: JSON.stringify(params),
-    })
-  );
-
-export const onboardRestoreBackupStep = (hass: HomeAssistant) =>
-  hass.callApi<OnboardingAisRestoreBackupStepResponse>(
-    "POST",
-    "onboarding/ais_restore_backup"
   );
 
 export const onboardCoreConfigStep = (hass: HomeAssistant) =>
