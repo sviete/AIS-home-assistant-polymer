@@ -1,7 +1,9 @@
 import "@material/mwc-button/mwc-button";
 import "@material/mwc-icon-button";
-import "../../../components/ha-circular-progress";
+import { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
+import "@material/mwc-list/mwc-list-item";
 import { mdiContentCopy } from "@mdi/js";
+import "@polymer/paper-tooltip/paper-tooltip";
 import {
   css,
   CSSResult,
@@ -9,21 +11,23 @@ import {
   internalProperty,
   LitElement,
   property,
-  query,
   TemplateResult,
 } from "lit-element";
+import { formatDateTime } from "../../../common/datetime/format_date_time";
+import { copyToClipboard } from "../../../common/util/copy-clipboard";
+import { isComponentLoaded } from "../../../common/config/is_component_loaded";
+import "../../../components/ha-button-menu";
 import "../../../components/ha-card";
-import "@polymer/paper-tooltip/paper-tooltip";
-import type { PaperTooltipElement } from "@polymer/paper-tooltip/paper-tooltip";
+import "../../../components/ha-circular-progress";
+import "../../../components/ha-svg-icon";
 import { domainToName } from "../../../data/integration";
 import {
   subscribeSystemHealthInfo,
-  SystemHealthInfo,
   SystemCheckValueObject,
+  SystemHealthInfo,
 } from "../../../data/system_health";
 import { HomeAssistant } from "../../../types";
-import { formatDateTime } from "../../../common/datetime/format_date_time";
-import { copyToClipboard } from "../../../common/util/copy-clipboard";
+import { showToast } from "../../../util/toast";
 
 const sortKeys = (a: string, b: string) => {
   if (a === "homeassistant") {
@@ -45,8 +49,6 @@ class SystemHealthCard extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @internalProperty() private _info?: SystemHealthInfo;
-
-  @query("paper-tooltip", true) private _toolTip?: PaperTooltipElement;
 
   protected render(): TemplateResult {
     if (!this.hass) {
@@ -152,18 +154,21 @@ class SystemHealthCard extends LitElement {
           <div class="card-header-text">
             ${domainToName(this.hass.localize, "system_health")}
           </div>
-          <mwc-icon-button id="copy" @click=${this._copyInfo}>
-            <ha-svg-icon .path=${mdiContentCopy}></ha-svg-icon>
-          </mwc-icon-button>
-          <paper-tooltip
-            manual-mode
-            for="copy"
-            position="left"
-            animation-delay="0"
-            offset="4"
+          <ha-button-menu
+            corner="BOTTOM_START"
+            slot="toolbar-icon"
+            @action=${this._copyInfo}
           >
-            ${this.hass.localize("ui.common.copied")}
-          </paper-tooltip>
+            <mwc-icon-button slot="trigger" alt="menu">
+              <ha-svg-icon .path=${mdiContentCopy}></ha-svg-icon>
+            </mwc-icon-button>
+            <mwc-list-item>
+              ${this.hass.localize("ui.panel.config.info.copy_raw")}
+            </mwc-list-item>
+            <mwc-list-item>
+              ${this.hass.localize("ui.panel.config.info.copy_github")}
+            </mwc-list-item>
+          </ha-button-menu>
         </h1>
         <div class="card-content">${sections}</div>
       </ha-card>
@@ -175,7 +180,7 @@ class SystemHealthCard extends LitElement {
 
     this.hass!.loadBackendTranslation("system_health");
 
-    if (!this.hass!.config.components.includes("system_health")) {
+    if (!isComponentLoaded(this.hass!, "system_health")) {
       this._info = {
         system_health: {
           info: {
@@ -193,13 +198,24 @@ class SystemHealthCard extends LitElement {
     });
   }
 
-  private _copyInfo(): void {
+  private async _copyInfo(ev: CustomEvent<ActionDetail>): Promise<void> {
+    const github = ev.detail.index === 1;
     let haContent: string | undefined;
     const domainParts: string[] = [];
 
     for (const domain of Object.keys(this._info!).sort(sortKeys)) {
       const domainInfo = this._info![domain];
-      const parts = [`${domainToName(this.hass.localize, domain)}\n`];
+      let first = true;
+      const parts = [
+        `${
+          github && domain !== "homeassistant"
+            ? `<details><summary>${domainToName(
+                this.hass.localize,
+                domain
+              )}</summary>\n`
+            : ""
+        }`,
+      ];
 
       for (const key of Object.keys(domainInfo.info)) {
         let value: unknown;
@@ -217,23 +233,33 @@ class SystemHealthCard extends LitElement {
         } else {
           value = domainInfo.info[key];
         }
-
-        parts.push(`${key}: ${value}`);
+        if (github && first) {
+          parts.push(`${key} | ${value}\n-- | --`);
+          first = false;
+        } else {
+          parts.push(`${key}${github ? " | " : ": "}${value}`);
+        }
       }
 
       if (domain === "homeassistant") {
         haContent = parts.join("\n");
       } else {
         domainParts.push(parts.join("\n"));
+        if (github && domain !== "homeassistant") {
+          domainParts.push("</details>");
+        }
       }
     }
 
-    copyToClipboard(
-      `System Health\n\n${haContent}\n\n${domainParts.join("\n\n")}`
+    await copyToClipboard(
+      `${github ? "## " : ""}System Health\n${haContent}\n\n${domainParts.join(
+        "\n\n"
+      )}`
     );
 
-    this._toolTip!.show();
-    setTimeout(() => this._toolTip?.hide(), 3000);
+    showToast(this, {
+      message: this.hass.localize("ui.common.copied_clipboard"),
+    });
   }
 
   static get styles(): CSSResult {
