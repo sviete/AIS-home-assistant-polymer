@@ -1,4 +1,4 @@
-import "../../../layouts/ha-app-layout";
+import { mdiCloudLock } from "@mdi/js";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
 import {
@@ -13,18 +13,15 @@ import {
 import { isComponentLoaded } from "../../../common/config/is_component_loaded";
 import "../../../components/ha-card";
 import "../../../components/ha-icon-next";
-import "../../../components/ha-svg-icon";
 import "../../../components/ha-menu-button";
+import "../../../components/ha-svg-icon";
 import { CloudStatus } from "../../../data/cloud";
+import "../../../layouts/ha-app-layout";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
 import "../ha-config-section";
 import { configSections, aisConfigSections } from "../ha-panel-config";
 import "./ha-config-navigation";
-import { mdiClose, mdiCloudLock } from "@mdi/js";
-import { showConfirmationDialog } from "../../../dialogs/generic/show-dialog-box";
-
-const CONF_HAPPENING = new Date() < new Date("2020-12-13T23:00:00Z");
 
 @customElement("ha-config-dashboard")
 class HaConfigDashboard extends LitElement {
@@ -157,33 +154,6 @@ class HaConfigDashboard extends LitElement {
     `;
   }
 
-  private async _dismissConference() {
-    if (
-      await showConfirmationDialog(this, {
-        title: "Home Assistant Conference",
-        text: html`
-          If you've
-          <a
-            target="_blank"
-            href="https://hopin.to/events/home-assistant-conference"
-            rel="noopener noreferrer"
-            >bought your ticket</a
-          >
-          or have
-          <a
-            target="_blank"
-            href="https://www.youtube.com/watch?v=xSB_MuKkgxE"
-            rel="noopener noreferrer"
-            >subscribed to the livestream</a
-          >, you might want to dismiss this banner. Do you want to continue?
-        `,
-      })
-    ) {
-      localStorage.dismissConf2020 = "1";
-      this.requestUpdate();
-    }
-  }
-
   static get styles(): CSSResultArray {
     return [
       haStyle,
@@ -206,28 +176,6 @@ class HaConfigDashboard extends LitElement {
         ha-card a {
           text-decoration: none;
           color: var(--primary-text-color);
-        }
-        .conf-card {
-          position: relative;
-        }
-        .conf-card img {
-          display: block;
-          width: 100%;
-        }
-        .conf-card .carrot {
-          position: absolute;
-          top: 0;
-          right: 16px;
-          bottom: 0;
-          display: flex;
-          align-items: center;
-          color: white;
-        }
-        .conf-card ha-svg-icon {
-          position: absolute;
-          bottom: -4px;
-          left: -4px;
-          color: #a2cdf3;
         }
         .promo-advanced {
           text-align: center;

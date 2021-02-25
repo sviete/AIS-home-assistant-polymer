@@ -53,10 +53,47 @@ import {
   mdiSpotify,
   mdiYoutube,
 } from "@mdi/js";
-import type { HassEntity } from "home-assistant-js-websocket";
+import type {
+  HassEntityAttributeBase,
+  HassEntityBase,
+} from "home-assistant-js-websocket";
+import { supportsFeature } from "../common/entity/supports-feature";
 import type { HomeAssistant } from "../types";
 import { UNAVAILABLE_STATES } from "./entity";
-import { supportsFeature } from "../common/entity/supports-feature";
+
+interface MediaPlayerEntityAttributes extends HassEntityAttributeBase {
+  media_content_type?: any;
+  media_artist?: string;
+  media_playlist?: string;
+  media_series_title?: string;
+  media_season?: any;
+  media_episode?: any;
+  app_name?: string;
+  media_position_updated_at?: string | number | Date;
+  media_duration?: number;
+  media_position?: number;
+  media_title?: string;
+  icon?: string;
+  entity_picture_local?: string;
+  is_volume_muted?: boolean;
+  volume_level?: number;
+  source?: string;
+  source_list?: string[];
+  sound_mode?: string;
+  sound_mode_list?: string[];
+}
+
+export interface MediaPlayerEntity extends HassEntityBase {
+  attributes: MediaPlayerEntityAttributes;
+  state:
+    | "playing"
+    | "paused"
+    | "idle"
+    | "off"
+    | "on"
+    | "unavailable"
+    | "unknown";
+}
 
 export const SUPPORT_PAUSE = 1;
 export const SUPPORT_SEEK = 2;
@@ -73,7 +110,6 @@ export const SUPPORT_STOP = 4096;
 export const SUPPORT_PLAY = 16384;
 export const SUPPORT_SELECT_SOUND_MODE = 65536;
 export const SUPPORT_BROWSE_MEDIA = 131072;
-export const CONTRAST_RATIO = 4.5;
 
 export type MediaPlayerBrowseAction = "pick" | "play";
 
@@ -232,32 +268,34 @@ export const browseLocalMediaPlayer = (
     media_content_type: mediaContentType,
   });
 
-export const getCurrentProgress = (stateObj: HassEntity): number => {
-  let progress = stateObj.attributes.media_position;
+export const getCurrentProgress = (stateObj: MediaPlayerEntity): number => {
+  let progress = stateObj.attributes.media_position!;
 
   if (stateObj.state !== "playing") {
     return progress;
   }
   progress +=
     (Date.now() -
-      new Date(stateObj.attributes.media_position_updated_at).getTime()) /
+      new Date(stateObj.attributes.media_position_updated_at!).getTime()) /
     1000.0;
   return progress;
 };
 
-export const computeMediaDescription = (stateObj: HassEntity): string => {
+export const computeMediaDescription = (
+  stateObj: MediaPlayerEntity
+): string => {
   let secondaryTitle: string;
 
   switch (stateObj.attributes.media_content_type) {
     case "music":
     case "image":
-      secondaryTitle = stateObj.attributes.media_artist;
+      secondaryTitle = stateObj.attributes.media_artist!;
       break;
     case "playlist":
-      secondaryTitle = stateObj.attributes.media_playlist;
+      secondaryTitle = stateObj.attributes.media_playlist!;
       break;
     case "tvshow":
-      secondaryTitle = stateObj.attributes.media_series_title;
+      secondaryTitle = stateObj.attributes.media_series_title!;
       if (stateObj.attributes.media_season) {
         secondaryTitle += " S" + stateObj.attributes.media_season;
 
@@ -274,7 +312,7 @@ export const computeMediaDescription = (stateObj: HassEntity): string => {
 };
 
 export const computeMediaControls = (
-  stateObj: HassEntity
+  stateObj: MediaPlayerEntity
 ): ControlButton[] | undefined => {
   if (!stateObj) {
     return undefined;
