@@ -494,7 +494,7 @@
         },
         "dialogs": {
             "config_entry_system_options": {
-                "enable_new_entities_description": "Jeśli wyłączone, nowo wykryte encje integracji {integration} nie będą automatycznie dodawane do Asystenta domowego.",",
+                "enable_new_entities_description": "Jeśli wyłączone, nowo wykryte encje integracji {integration} nie będą automatycznie dodawane do Asystenta domowego.",
                 "enable_new_entities_label": "Włącz dodawanie nowych encji.",
                 "title": "Opcje systemowe dla {integration}",
                 "update": "Aktualizuj"
