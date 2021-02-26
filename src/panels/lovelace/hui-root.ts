@@ -287,7 +287,7 @@ class HUIRoot extends LitElement {
                           )}
                           @click=${this._showVoiceCommandDialog}
                         >
-                          <ha-svg-icon .path=${mdiForumOutline}></ha-svg-icon>
+                          <ha-svg-icon .path=${mdiMicrophone}></ha-svg-icon>
                         </mwc-icon-button>
                       `
                     : ""}

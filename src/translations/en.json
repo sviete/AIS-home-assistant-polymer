@@ -2468,75 +2468,6 @@
             "refresh_entity": "Refresh Entity"
           }
         },
-        "zwave_js": {
-          "button": "Configure",
-          "navigation": {
-            "network": "Network"
-          },
-          "common": {
-            "network": "Network",
-            "node_id": "Node ID",
-            "home_id": "Home ID",
-            "close": "Close",
-            "add_node": "Add Node",
-            "remove_node": "Remove Node"
-          },
-          "dashboard": {
-            "header": "Manage your Z-Wave Network",
-            "introduction": "Manage your Z-Wave network and Z-Wave nodes",
-            "driver_version": "Driver Version",
-            "server_version": "Server Version",
-            "home_id": "Home ID",
-            "nodes_ready": "Nodes ready",
-            "dump_debug": "Download a dump of your network to help diagnose issues",
-            "dump_dead_nodes_title": "Some of your nodes are dead",
-            "dump_dead_nodes_text": "Some of your nodes didn't respond and are assumed dead. These will not be fully exported.",
-            "dump_not_ready_title": "Not all nodes are ready yet",
-            "dump_not_ready_text": "If you create an export while not all nodes are ready, you could miss needed data. Give your network some time to query all nodes. Do you want to continue with the dump?",
-            "dump_not_ready_confirm": "Download"
-          },
-          "device_info": {
-            "zwave_info": "Z-Wave Info",
-            "node_status": "Node Status",
-            "node_ready": "Node Ready"
-          },
-          "node_status": {
-            "unknown": "Unknown",
-            "asleep": "Asleep",
-            "awake": "Awake",
-            "dead": "Dead",
-            "alive": "Alive"
-          },
-          "network_status": {
-            "connected": "Connected",
-            "connecting": "Connecting",
-            "unknown": "Unknown"
-          },
-          "add_node": {
-            "title": "Add a Z-Wave Node",
-            "introduction": "This wizard will guide you through adding a node to your Z-Wave network.",
-            "use_secure_inclusion": "Use secure inclusion",
-            "secure_inclusion_warning": "Secure devices require additional bandwidth; too many secure devices can slow down your Z-Wave network. We recommend only using secure inclusion for devices that require it, like locks or garage door openers.",
-            "start_inclusion": "Start Inclusion",
-            "start_secure_inclusion": "Start Secure Inclusion",
-            "cancel_inclusion": "Cancel Inclusion",
-            "controller_in_inclusion_mode": "Your Z-Wave controller is now in inclusion mode.",
-            "follow_device_instructions": "Follow the directions that came with your device to trigger pairing on the device.",
-            "inclusion_failed": "The node could not be added. Please check the logs for more information.",
-            "inclusion_finished": "The node has been added. It may take a few minutes for all entities to show up as we finish setting up the node in the background.",
-            "view_device": "View Device"
-          },
-          "remove_node": {
-            "title": "Remove a Z-Wave Node",
-            "introduction": "Remove a node from your Z-Wave network, and remove the associated device and entities from Home Assistant.",
-            "start_exclusion": "Start Exclusion",
-            "cancel_exclusion": "Cancel Exclusion",
-            "controller_in_exclusion_mode": "Your Z-Wave controller is now in exclusion mode.",
-            "follow_device_instructions": "Follow the directions that came with your device to trigger exclusion on the device.",
-            "exclusion_failed": "The node could not be removed. Please check the logs for more information.",
-            "exclusion_finished": "Node {id} has been removed from your Z-Wave network."
-          }
-        },
         "ais_dom_config": {
           "header": "Configure AIS Home Gateway",
           "introduction": "Here it is possible to configure your AIS Home Gateway. Not everything is possible to configure from the UI yet, but we're working on it."
@@ -2584,6 +2515,75 @@
         "ais_dom_config_power": {
           "caption": "Stop the Gate",
           "description": "Restart or turn off the gate"
+        }
+      },
+      "zwave_js": {
+        "button": "Configure",
+        "navigation": {
+          "network": "Network"
+        },
+        "common": {
+          "network": "Network",
+          "node_id": "Node ID",
+          "home_id": "Home ID",
+          "close": "Close",
+          "add_node": "Add Node",
+          "remove_node": "Remove Node"
+        },
+        "dashboard": {
+          "header": "Manage your Z-Wave Network",
+          "introduction": "Manage your Z-Wave network and Z-Wave nodes",
+          "driver_version": "Driver Version",
+          "server_version": "Server Version",
+          "home_id": "Home ID",
+          "nodes_ready": "Nodes ready",
+          "dump_debug": "Download a dump of your network to help diagnose issues",
+          "dump_dead_nodes_title": "Some of your nodes are dead",
+          "dump_dead_nodes_text": "Some of your nodes didn't respond and are assumed dead. These will not be fully exported.",
+          "dump_not_ready_title": "Not all nodes are ready yet",
+          "dump_not_ready_text": "If you create an export while not all nodes are ready, you could miss needed data. Give your network some time to query all nodes. Do you want to continue with the dump?",
+          "dump_not_ready_confirm": "Download"
+        },
+        "device_info": {
+          "zwave_info": "Z-Wave Info",
+          "node_status": "Node Status",
+          "node_ready": "Node Ready"
+        },
+        "node_status": {
+          "unknown": "Unknown",
+          "asleep": "Asleep",
+          "awake": "Awake",
+          "dead": "Dead",
+          "alive": "Alive"
+        },
+        "network_status": {
+          "connected": "Connected",
+          "connecting": "Connecting",
+          "unknown": "Unknown"
+        },
+        "add_node": {
+          "title": "Add a Z-Wave Node",
+          "introduction": "This wizard will guide you through adding a node to your Z-Wave network.",
+          "use_secure_inclusion": "Use secure inclusion",
+          "secure_inclusion_warning": "Secure devices require additional bandwidth; too many secure devices can slow down your Z-Wave network. We recommend only using secure inclusion for devices that require it, like locks or garage door openers.",
+          "start_inclusion": "Start Inclusion",
+          "start_secure_inclusion": "Start Secure Inclusion",
+          "cancel_inclusion": "Cancel Inclusion",
+          "controller_in_inclusion_mode": "Your Z-Wave controller is now in inclusion mode.",
+          "follow_device_instructions": "Follow the directions that came with your device to trigger pairing on the device.",
+          "inclusion_failed": "The node could not be added. Please check the logs for more information.",
+          "inclusion_finished": "The node has been added. It may take a few minutes for all entities to show up as we finish setting up the node in the background.",
+          "view_device": "View Device"
+        },
+        "remove_node": {
+          "title": "Remove a Z-Wave Node",
+          "introduction": "Remove a node from your Z-Wave network, and remove the associated device and entities from Home Assistant.",
+          "start_exclusion": "Start Exclusion",
+          "cancel_exclusion": "Cancel Exclusion",
+          "controller_in_exclusion_mode": "Your Z-Wave controller is now in exclusion mode.",
+          "follow_device_instructions": "Follow the directions that came with your device to trigger exclusion on the device.",
+          "exclusion_failed": "The node could not be removed. Please check the logs for more information.",
+          "exclusion_finished": "Node {id} has been removed from your Z-Wave network."
         }
       },
       "history": {
@@ -3509,9 +3509,30 @@
           "button_detect": "Detect",
           "finish": "Next"
         },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "ais-wifi": {
+          "intro_ais_enable_wifi_1": "For this step you need an internet connection. If you haven't set up a WiFi connection yet, you can do it now.",
+          "intro_ais_enable_wifi_2": "CONNECT TO WIFI"
+        },
         "integration": {
           "intro": "Devices and services are represented in Home Assistant as integrations. You can set them up now, or do it later from the configuration screen.",
           "more_integrations": "More",
+          "finish": "Next"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
           "finish": "Finish"
         },
         "restore": {

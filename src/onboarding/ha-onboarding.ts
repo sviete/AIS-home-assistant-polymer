@@ -30,7 +30,8 @@ import { HassElement } from "../state/hass-element";
 import { HomeAssistant } from "../types";
 import { registerServiceWorker } from "../util/register-service-worker";
 import "./onboarding-create-user";
-import "./onboarding-ais_wifi";
+import "./onboarding-ais-wifi";
+import "./onboarding-ais-restore-backup";
 import "./onboarding-loading";
 
 type OnboardingEvent =
@@ -48,10 +49,6 @@ type OnboardingEvent =
   | {
       type: "mob_integration";
       result: OnboardingResponses["mob_integration"];
-    }
-  | {
-      type: "ais_restore_backup";
-      result: OnboardingResponses["ais_restore_backup"];
     };
 
 declare global {
@@ -101,15 +98,9 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
             >
             </onboarding-restore-snapshot>`
           : ""}
-      `;
-    }
-    if (step.step === "ais_restore_backup") {
-      return html`
-        <onboarding-restore-backup
-          .hass=${this.hass}
-          .localize=${this.localize}
-          .language=${this.language}
-        ></onboarding-restore-backup>
+        <!-- ais restore after reset -->
+        <onboarding-ais-restore-backup .localize=${this.localize}>
+        </onboarding-ais-restore-backup>
       `;
     }
     if (step.step === "core_config") {
@@ -146,7 +137,6 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
     import("./onboarding-integrations");
     import("./onboarding-core-config");
     import("./onboarding-mob-integrations");
-    import("./onboarding-restore-backup");
     registerServiceWorker(this, false);
     this.addEventListener("onboarding-step", (ev) => this._handleStepDone(ev));
   }
@@ -246,8 +236,6 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
       } finally {
         this._loading = false;
       }
-    } else if (stepResult.type === "ais_restore_backup") {
-      // We do nothing
     } else if (stepResult.type === "core_config") {
       // We do nothing
     } else if (stepResult.type === "integration") {

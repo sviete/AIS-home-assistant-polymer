@@ -516,10 +516,10 @@
                     "delete": "Usuń",
                     "device_disabled": "Urządzenie tej encji jest wyłączone",
                     "enabled_cause": "Wyłączone przez {cause}.",
-                    "enabled_delay_confirm": "Włączone encje zostaną dodane do Asystencie domowym po {delay} sekundach",
+                    "enabled_delay_confirm": "Włączone encje zostaną dodane do Asystenta domowego po {delay} sekundach",
                     "enabled_description": "Wyłączone encje nie będą dostępne w Asystencie domowym.",
                     "enabled_label": "Włącz encję",
-                    "enabled_restart_confirm": "Uruchom ponownie Home Assistanta, aby zakończyć włączanie encji",
+                    "enabled_restart_confirm": "Uruchom ponownie Asystenta domowego, aby zakończyć włączanie encji",
                     "entity_id": "Identyfikator encji",
                     "follow_device_area": "Użyj obszaru urządzenia",
                     "icon": "Ikona",
@@ -547,7 +547,7 @@
                     "initial": "Wartość początkowa",
                     "maximum": "Wartość maksymalna",
                     "minimum": "Wartość minimalna",
-                    "restore": "Przywróć ostatnią znaną wartość po uruchomieniu Home Assistanta",
+                    "restore": "Przywróć ostatnią znaną wartość po uruchomieniu Asystenta domowego",
                     "step": "Skok"
                 },
                 "generic": {
@@ -728,7 +728,7 @@
                 "filter_placeholder": "Filtr encji"
             },
             "voice_command": {
-                "did_not_hear": "nic nie słychać...",
+                "did_not_hear": "Asystent niczego nie usłyszał",
                 "error": "Ups, wystąpił błąd",
                 "found": "Znalazłem dla Ciebie:",
                 "how_can_i_help": "Jak mogę pomóc?",
@@ -1181,7 +1181,7 @@
                             "error_unsupported": "Nie mogliśmy (jeszcze?) utworzyć takiej automatyzacji",
                             "for_example": "Na przykład:",
                             "header": "Utwórz nową automatyzację",
-                            "introduction": "Wpisz poniżej, co ma robić ta automatyzacja, a my spróbujemy przekształcić ją w automatyzację Home Assistanta.",
+                            "introduction": "Wpisz poniżej, co ma robić ta automatyzacja, a my spróbujemy przekształcić ją w automatyzację Asystenta domowego.",
                             "language_note": "Uwaga: obecnie obsługiwany jest tylko język angielski."
                         }
                     }
@@ -1578,7 +1578,7 @@
                         "introduction2": "Użyj rejestru encji, aby nadpisać jej nazwę, zmienić jej identyfikator lub usunąć ją z Asystenta domowego. Uwaga: usunięcie wpisu rejestru encji nie spowoduje usunięcia encji. Aby to zrobić, kliknij poniższy link i usuń integracje encji.",
                         "remove_selected": {
                             "button": "Usuń wybrane",
-                            "confirm_partly_text": "Można usunąć tylko {removable} z wybranych {selected} encji. Encje można usunąć tylko wtedy, gdy integracja wspiera taką możliwość. Czasami trzeba ponownie uruchomić Home Assistanta, zanim będzie można usunąć encje usuniętej integracji. Czy na pewno chcesz usunąć usuwalne encje?",
+                            "confirm_partly_text": "Można usunąć tylko {removable} z wybranych {selected} encji. Encje można usunąć tylko wtedy, gdy integracja wspiera taką możliwość. Czasami trzeba ponownie uruchomić Asystenta domowego, zanim będzie można usunąć encje usuniętej integracji. Czy na pewno chcesz usunąć usuwalne encje?",
                             "confirm_partly_title": "Można usunąć tylko {number} {number, plural,\n  one {encję}\n  few {encje}\n  many {encji}\n  other {encji}\n}.",
                             "confirm_text": "Powinieneś uprzednio usunąć integrację z automatyzacji i konfiguracji Lovelace, jeśli encje w niej występują.",
                             "confirm_title": "Czy chcesz usunąć {number} {number, plural,\n  one {encję}\n  few {encje}\n  many {encji}\n  other {encji}\n}?"
@@ -1638,7 +1638,7 @@
                     "documentation": "Dokumentacja",
                     "frontend": "frontend-ui",
                     "frontend_version": "Wersja interfejsu użytkownika: {version} - {type}",
-                    "home_assistant_logo": "Logo Home Assistant",
+                    "home_assistant_logo": "Logo Asystenta domowego",
                     "icons_by": "ikon",
                     "integrations": "Integracje",
                     "issues": "Problemy",
@@ -3339,14 +3339,13 @@
                 },
                 "ais-restore-backup": {
                     "ais_restore_intro": "Czy chcesz przywrócić konfigurację systemu z kopii zapasowej?",
-                    "ais_restore_intro_step1": "Zaloguj się do portalu integratora AI-Speaker.",
+                    "ais_restore_intro_step1": "Zaloguj się do portalu integratora:",
                     "ais_restore_intro_step2": "Jeśli zabezpieczyłeś kopie hasłem to je podaj:",
                     "ais_restore_intro_step3": "Wybierz bramkę której konfigurację chcesz przywrócić:",
                     "ais_restore_ok_info_step1": "Przywracam konfigurację z kopii zapasowej... poczekaj na ponowne uruchomienie",
                     "ais_restore_button": "PRZYWRÓĆ",
                     "ais_login": "Zaloguj do AI-Speaker",
-                    "ais_logout": "Wyloguj się z AI-Speaker",
-                    "finish": "Pomiń"
+                    "ais_logout": "Wyloguj się z AI-Speaker"
                   },
                 "ais-wifi": {
                     "intro_ais_enable_wifi_1": "Do tego kroku jest potrzebne połączenie z Internetem. Jeśli jeszcze nie skonfigurowałeś połączenia WiFi możesz to zrobić teraz.",
@@ -3359,8 +3358,8 @@
                 },
                 "mob-integration": {
                     "h1": "Aplikacja mobilna!",
-                    "intro": "Zwiększ funkcjonalność Asystenta domowego, instalując naszą oficjalną aplikację mobilną na platformę Android.",
-                    "mob_benefits": "Dzięki aplikacji możesz wysyłać komendy głosowe z telefonu, otrzymywać powiadomienia o zdarzeniach w domu, kontrolować spoza domu, wysyłać swoją aktualną lokalizację do bramki itp. Zeskanuj kod lub go kliknij, aby zainstalować aplikację AIS dom:",
+                    "intro": "Zwiększ funkcjonalność Asystenta domowego, instalując naszą oficjalną aplikację mobilną na platformę Android. Zeskanuj kod lub go kliknij:",
+                    "mob_benefits": "Dzięki aplikacji możesz wysyłać komendy głosowe z telefonu, otrzymywać powiadomienia o zdarzeniach w domu, kontrolować spoza domu, wysyłać swoją aktualną lokalizację do bramki itp.",
                     "other_mob_apps": "Możesz też zainstalować mobilną aplikację Home Assistant Companion:",
                     "finish": "Zamknij"
                 },
@@ -3438,7 +3437,7 @@
                     "create_failed": "Nie udało się utworzyć tokena.",
                     "created": "Utworzony {date}",
                     "delete_failed": "Nie udało się usunąć tokena.",
-                    "description": "Długoterminowe tokeny dostępu umożliwiają skryptom interakcję z Home Assistantem. Każdy token będzie ważny przez 10 lat od utworzenia. Następujące tokeny są obecnie aktywne.",
+                    "description": "Długoterminowe tokeny dostępu umożliwiają skryptom interakcję z Asystentem domowym. Każdy token będzie ważny przez 10 lat od utworzenia. Następujące tokeny są obecnie aktywne.",
                     "empty_state": "Nie masz jeszcze żadnych tokenów.",
                     "header": "Tokeny dostępu",
                     "learn_auth_requests": "Dowiedz się, jak tworzyć uwierzytelnione żądania.",

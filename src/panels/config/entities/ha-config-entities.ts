@@ -351,6 +351,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
           (entity) => !entity.disabled_by
         );
       }
+      // ais dom
       let aisInternalEntity = 0;
       for (const entry of filteredEntities) {
         const entity = this.hass.states[entry.entity_id];
@@ -362,6 +363,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         if (!showUnavailable && unavailable) {
           continue;
         }
+        // ais dom filter
         if (
           !entry.entity_id.startsWith(entry.platform + ".ais") &&
           !entry.entity_id.startsWith("group.all_ais")

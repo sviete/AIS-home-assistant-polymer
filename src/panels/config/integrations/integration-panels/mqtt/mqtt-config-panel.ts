@@ -1,3 +1,5 @@
+import "@material/mwc-list/mwc-list-item";
+import "../../../../../components/ha-button-menu";
 import "@material/mwc-button";
 import "@polymer/paper-input/paper-input";
 import {
@@ -18,6 +20,11 @@ import "../../../../../layouts/hass-subpage";
 import { haStyle } from "../../../../../resources/styles";
 import { HomeAssistant } from "../../../../../types";
 import "./mqtt-subscribe-card";
+import {
+  showAisFileDialog,
+  HaAisFileDialogParams,
+} from "../../../../../dialogs/ais-files/show-dialog-ais-file";
+import { mdiDotsVertical } from "@mdi/js";
 
 @customElement("mqtt-config-panel")
 class HaPanelDevMqtt extends LitElement {
@@ -42,14 +49,26 @@ class HaPanelDevMqtt extends LitElement {
   protected render(): TemplateResult {
     return html`
       <hass-subpage .hass=${this.hass}>
+        <ha-button-menu corner="BOTTOM_START" slot="toolbar-icon">
+          <mwc-icon-button slot="trigger" alt="menu">
+            <ha-svg-icon .path=${mdiDotsVertical}></ha-svg-icon>
+          </mwc-icon-button>
+          <mwc-list-item @click=${this._openMosquittoFile}>
+            Edit mosquitto.conf
+          </mwc-list-item>
+          <mwc-list-item @click=${this._restartMosquittoService}>
+            Restart mosquitto sevice
+          </mwc-list-item>
+        </ha-button-menu>
         <div class="content">
-          <!-- <ha-card header="MQTT settings">
+          <ha-card header="Ustawienia MQTT">
             <div class="card-actions">
               <mwc-button @click=${this._openOptionFlow}
-                >Re-configure MQTT</mwc-button
+                >Re-konfiguracja połączania MQTT</mwc-button
               >
             </div>
-          </ha-card> -->
+          </ha-card>
+
           <ha-card
             header="${this.hass.localize(
               "ui.panel.config.mqtt.description_publish"
@@ -121,6 +140,27 @@ class HaPanelDevMqtt extends LitElement {
       (entry) => entry.entry_id === configEntryId
     );
     showOptionsFlowDialog(this, configEntry!);
+  }
+
+  private async _openMosquittoFile() {
+    const filePath =
+      "/data/data/pl.sviete.dom/files/usr/etc/mosquitto/mosquitto.conf";
+    const file = await this.hass.callApi<string>("POST", "ais_file/read", {
+      filePath: filePath,
+    });
+    const fileParams: HaAisFileDialogParams = {
+      dialogTitle: "MQTT mosquitto.conf",
+      filePath: filePath,
+      fileBody: file,
+      readonly: false,
+    };
+    showAisFileDialog(this, fileParams);
+  }
+
+  private async _restartMosquittoService() {
+    this.hass.callService("ais_shell_command", "restart_pm2_service", {
+      service: "mqtt",
+    });
   }
 
   static get styles(): CSSResultArray {

@@ -1,3 +1,5 @@
+import "@material/mwc-list/mwc-list-item";
+import "../../components/ha-button-menu";
 import {
   css,
   CSSResultArray,
@@ -16,6 +18,12 @@ import "../../components/ha-circular-progress";
 import { fireEvent } from "../../common/dom/fire_event";
 import { haStyle } from "../../resources/styles";
 import { HomeAssistant, Route } from "../../types";
+import "../../components/ha-icon-button";
+import {
+  showAisFileDialog,
+  HaAisFileDialogParams,
+} from "../../dialogs/ais-files/show-dialog-ais-file";
+import { mdiDotsVertical } from "@mdi/js";
 
 @customElement("ha-config-aiszigbee")
 class ConfigAisZigbee extends LitElement {
@@ -37,11 +45,33 @@ class ConfigAisZigbee extends LitElement {
         src="/api/zigbee2mqtt/${this._access_token}/"
       ></iframe>`;
       return html`<hass-subpage header="Zigbee2Mqtt" .narrow=${this.narrow}>
+        <ha-button-menu corner="BOTTOM_START" slot="toolbar-icon">
+          <mwc-icon-button slot="trigger" alt="menu">
+            <ha-svg-icon .path=${mdiDotsVertical}></ha-svg-icon>
+          </mwc-icon-button>
+          <mwc-list-item @click=${this._openZigbee2MqttFileConfig}>
+            Edit Zigbee2Mqtt configuration.yaml
+          </mwc-list-item>
+          <mwc-list-item @click=${this._restartZigbeeService}>
+            Restart zigbee sevice
+          </mwc-list-item>
+        </ha-button-menu>
         ${iframe}
       </hass-subpage>`;
     }
 
     return html`<hass-subpage header="Zigbee2Mqtt" .narrow=${this.narrow}>
+      <ha-button-menu corner="BOTTOM_START" slot="toolbar-icon">
+        <mwc-icon-button slot="trigger" alt="menu">
+          <ha-svg-icon .path=${mdiDotsVertical}></ha-svg-icon>
+        </mwc-icon-button>
+        <mwc-list-item @click=${this._openZigbee2MqttFileConfig}>
+          Edit Zigbee2Mqtt configuration.yaml
+        </mwc-list-item>
+        <mwc-list-item @click=${this._restartZigbeeService}>
+          Restart Zigbee2Mqtt sevice
+        </mwc-list-item>
+      </ha-button-menu>
       <div
         style="width: 100%; height: 100%; display: flex; align-items: center;"
       >
@@ -103,6 +133,27 @@ class ConfigAisZigbee extends LitElement {
   private showZigbeeStatus() {
     fireEvent(this, "hass-more-info", {
       entityId: "sensor.status_serwisu_zigbee2mqtt",
+    });
+  }
+
+  private async _openZigbee2MqttFileConfig() {
+    const filePath =
+      "/data/data/pl.sviete.dom/files/home/zigbee2mqtt/data/configuration.yaml";
+    const file = await this.hass.callApi<string>("POST", "ais_file/read", {
+      filePath: filePath,
+    });
+    const fileParams: HaAisFileDialogParams = {
+      dialogTitle: "Zigbee2Mqtt configuration.yaml",
+      filePath: filePath,
+      fileBody: file,
+      readonly: false,
+    };
+    showAisFileDialog(this, fileParams);
+  }
+
+  private async _restartZigbeeService() {
+    this.hass.callService("ais_shell_command", "restart_pm2_service", {
+      service: "zigbee",
     });
   }
 

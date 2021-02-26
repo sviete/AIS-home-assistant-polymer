@@ -48,11 +48,9 @@ import {
   loadDeviceRegistryDetailDialog,
   showDeviceRegistryDetailDialog,
 } from "./device-registry-detail/show-dialog-device-registry-detail";
-
 // ais devices
 import "../ais_dom/ais_dom_devices/ha-ais-dom-rf433-config-card";
 import "../ais_dom/ais_dom_devices/ha-ais-dom-iframe";
-
 export interface EntityRegistryStateEntry extends EntityRegistryEntry {
   stateName?: string | null;
 }
@@ -897,6 +895,9 @@ export class HaConfigDevicePage extends LitElement {
 
         ha-card a {
           color: var(--primary-text-color);
+        }
+        .ais_device_menu {
+          min-width: 400px;
         }
       `,
     ];
