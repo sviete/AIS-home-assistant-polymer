@@ -256,79 +256,53 @@ class HaPanelConfig extends HassRouterPage {
       },
       ais_dom: {
         tag: "ha-config-ais-dom-dashboard",
-        load: () =>
-          import(
-            /* webpackChunkName: "panel-config-ais-dom-dashboard" */ "./ais_dom/ha-config-ais-dom-dashboard"
-          ),
+        load: () => import("./ais_dom/ha-config-ais-dom-dashboard"),
       },
       ais_dom_config_update: {
         tag: "ha-config-ais-dom-config-update",
-        load: () =>
-          import(
-            /* webpackChunkName: "panel-config-ais-dom-update" */ "./ais_dom/ha-config-ais-dom-config-update"
-          ),
+        load: () => import("./ais_dom/ha-config-ais-dom-config-update"),
       },
       ais_dom_config_wifi: {
         tag: "ha-config-ais-dom-config-wifi",
-        load: () =>
-          import(
-            /* webpackChunkName: "panel-config-ais-dom-wifi" */ "./ais_dom/ha-config-ais-dom-config-wifi"
-          ),
+        load: () => import("./ais_dom/ha-config-ais-dom-config-wifi"),
       },
       ais_dom_config_display: {
         tag: "ha-config-ais-dom-config-display",
-        load: () =>
-          import(
-            /* webpackChunkName: "panel-config-ais-dom-display" */ "./ais_dom/ha-config-ais-dom-config-display"
-          ),
+        load: () => import("./ais_dom/ha-config-ais-dom-config-display"),
       },
       ais_dom_config_tts: {
         tag: "ha-config-ais-dom-config-tts",
-        load: () =>
-          import(
-            /* webpackChunkName: "panel-config-ais-dom-tts" */ "./ais_dom/ha-config-ais-dom-config-tts"
-          ),
+        load: () => import("./ais_dom/ha-config-ais-dom-config-tts"),
       },
       ais_dom_config_night: {
         tag: "ha-config-ais-dom-config-night",
-        load: () =>
-          import(
-            /* webpackChunkName: "panel-config-ais-dom-night" */ "./ais_dom/ha-config-ais-dom-config-night"
-          ),
+        load: () => import("./ais_dom/ha-config-ais-dom-config-night"),
       },
       ais_dom_config_remote: {
         tag: "ha-config-ais-dom-config-remote",
-        load: () =>
-          import(
-            /* webpackChunkName: "panel-config-ais-dom-remote" */ "./ais_dom/ha-config-ais-dom-config-remote"
-          ),
+        load: () => import("./ais_dom/ha-config-ais-dom-config-remote"),
       },
       ais_dom_config_logs: {
         tag: "ha-config-ais-dom-config-logs",
-        load: () =>
-          import(
-            /* webpackChunkName: "panel-config-ais-dom-remote" */ "./ais_dom/ha-config-ais-dom-config-logs"
-          ),
+        load: () => import("./ais_dom/ha-config-ais-dom-config-logs"),
       },
       ais_dom_config_power: {
         tag: "ha-config-ais-dom-config-power",
-        load: () =>
-          import(
-            /* webpackChunkName: "panel-config-ais-dom-power" */ "./ais_dom/ha-config-ais-dom-config-power"
-          ),
+        load: () => import("./ais_dom/ha-config-ais-dom-config-power"),
       },
       ais_dom_devices: {
         tag: "ha-config-ais-dom-devices",
-        load: () =>
-          import(
-            /* webpackChunkName: "panel-config-ais-dom-devices" */ "./ais_dom/ha-config-ais-dom-devices"
-          ),
+        load: () => import("./ais_dom/ha-config-ais-dom-devices"),
       },
       ais_dom_zigbee: {
         tag: "ha-config-aiszigbee",
+        load: () => import("./ha-config-aiszigbee"),
+      },
+      ais_mqtt: {
+        tag: "ais-mqtt-config-panel",
         load: () =>
           import(
-            /* webpackChunkName: "panel-aiszigbee-aiszigbee" */ "./ha-config-aiszigbee"
+            "./integrations/integration-panels/ais_mqtt/ais-mqtt-config-panel"
           ),
       },
       devices: {

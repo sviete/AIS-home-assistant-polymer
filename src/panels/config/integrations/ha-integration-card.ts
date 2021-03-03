@@ -73,6 +73,10 @@ const integrationsWithPanel = {
     buttonLocalizeKey: "ui.panel.config.zwave_js.button",
     path: "/config/zwave_js/dashboard",
   },
+  ais_supla_mqtt: {
+    buttonLocalizeKey: "ui.panel.config.mqtt.button",
+    path: "/config/ais_mqtt",
+  },
 };
 
 @customElement("ha-integration-card")

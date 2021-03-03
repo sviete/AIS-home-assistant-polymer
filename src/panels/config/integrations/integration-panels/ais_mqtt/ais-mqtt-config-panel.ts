@@ -26,8 +26,8 @@ import {
 } from "../../../../../dialogs/ais-files/show-dialog-ais-file";
 import { mdiDotsVertical } from "@mdi/js";
 
-@customElement("mqtt-config-panel")
-class HaPanelDevMqtt extends LitElement {
+@customElement("ais-mqtt-config-panel")
+class HaPanelDevAisMqtt extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @internalProperty() private topic = "";
@@ -49,22 +49,11 @@ class HaPanelDevMqtt extends LitElement {
   protected render(): TemplateResult {
     return html`
       <hass-subpage .hass=${this.hass}>
-        <ha-button-menu corner="BOTTOM_START" slot="toolbar-icon">
-          <mwc-icon-button slot="trigger" alt="menu">
-            <ha-svg-icon .path=${mdiDotsVertical}></ha-svg-icon>
-          </mwc-icon-button>
-          <mwc-list-item @click=${this._openMosquittoFile}>
-            Edit mosquitto.conf
-          </mwc-list-item>
-          <mwc-list-item @click=${this._restartMosquittoService}>
-            Restart mosquitto sevice
-          </mwc-list-item>
-        </ha-button-menu>
         <div class="content">
-          <ha-card header="Ustawienia MQTT">
+          <ha-card header="Ustawienia SUPLA MQTT">
             <div class="card-actions">
               <mwc-button @click=${this._openOptionFlow}
-                >Re-konfiguracja połączenia MQTT</mwc-button
+                >Re-konfiguracja połączenia Supla</mwc-button
               >
             </div>
           </ha-card>
@@ -98,8 +87,6 @@ class HaPanelDevMqtt extends LitElement {
               >
             </div>
           </ha-card>
-
-          <mqtt-subscribe-card .hass=${this.hass}></mqtt-subscribe-card>
         </div>
       </hass-subpage>
     `;
@@ -142,27 +129,6 @@ class HaPanelDevMqtt extends LitElement {
     showOptionsFlowDialog(this, configEntry!);
   }
 
-  private async _openMosquittoFile() {
-    const filePath =
-      "/data/data/pl.sviete.dom/files/usr/etc/mosquitto/mosquitto.conf";
-    const file = await this.hass.callApi<string>("POST", "ais_file/read", {
-      filePath: filePath,
-    });
-    const fileParams: HaAisFileDialogParams = {
-      dialogTitle: "MQTT mosquitto.conf",
-      filePath: filePath,
-      fileBody: file,
-      readonly: false,
-    };
-    showAisFileDialog(this, fileParams);
-  }
-
-  private async _restartMosquittoService() {
-    this.hass.callService("ais_shell_command", "restart_pm2_service", {
-      service: "mqtt",
-    });
-  }
-
   static get styles(): CSSResultArray {
     return [
       haStyle,
@@ -193,6 +159,6 @@ class HaPanelDevMqtt extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "developer-tools-mqtt": HaPanelDevMqtt;
+    "ais-supla-mqtt-dev-panel": HaPanelDevAisMqtt;
   }
 }
