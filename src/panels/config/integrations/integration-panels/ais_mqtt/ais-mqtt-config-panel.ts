@@ -19,12 +19,6 @@ import { showOptionsFlowDialog } from "../../../../../dialogs/config-flow/show-d
 import "../../../../../layouts/hass-subpage";
 import { haStyle } from "../../../../../resources/styles";
 import { HomeAssistant } from "../../../../../types";
-import "./mqtt-subscribe-card";
-import {
-  showAisFileDialog,
-  HaAisFileDialogParams,
-} from "../../../../../dialogs/ais-files/show-dialog-ais-file";
-import { mdiDotsVertical } from "@mdi/js";
 
 @customElement("ais-mqtt-config-panel")
 class HaPanelDevAisMqtt extends LitElement {
@@ -53,67 +47,13 @@ class HaPanelDevAisMqtt extends LitElement {
           <ha-card header="Ustawienia SUPLA MQTT">
             <div class="card-actions">
               <mwc-button @click=${this._openOptionFlow}
-                >Re-konfiguracja połączenia Supla</mwc-button
-              >
-            </div>
-          </ha-card>
-
-          <ha-card
-            header="${this.hass.localize(
-              "ui.panel.config.mqtt.description_publish"
-            )}"
-          >
-            <div class="card-content">
-              <paper-input
-                label="${this.hass.localize("ui.panel.config.mqtt.topic")}"
-                .value=${this.topic}
-                @value-changed=${this._handleTopic}
-              ></paper-input>
-
-              <p>
-                ${this.hass.localize("ui.panel.config.mqtt.payload")}
-              </p>
-              <ha-code-editor
-                mode="jinja2"
-                .value="${this.payload}"
-                @value-changed=${this._handlePayload}
-              ></ha-code-editor>
-            </div>
-            <div class="card-actions">
-              <mwc-button @click=${this._publish}
-                >${this.hass.localize(
-                  "ui.panel.config.mqtt.publish"
-                )}</mwc-button
+                >TODO - Re-konfiguracja połączenia Supla</mwc-button
               >
             </div>
           </ha-card>
         </div>
       </hass-subpage>
     `;
-  }
-
-  private _handleTopic(ev: CustomEvent) {
-    this.topic = ev.detail.value;
-    if (localStorage && this.inited) {
-      localStorage["panel-dev-mqtt-topic"] = this.topic;
-    }
-  }
-
-  private _handlePayload(ev: CustomEvent) {
-    this.payload = ev.detail.value;
-    if (localStorage && this.inited) {
-      localStorage["panel-dev-mqtt-payload"] = this.payload;
-    }
-  }
-
-  private _publish(): void {
-    if (!this.hass) {
-      return;
-    }
-    this.hass.callService("mqtt", "publish", {
-      topic: this.topic,
-      payload_template: this.payload,
-    });
   }
 
   private async _openOptionFlow() {
