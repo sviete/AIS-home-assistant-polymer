@@ -73,10 +73,6 @@ class OnboardingCoreConfig extends LitElement {
             "ui.panel.page-onboarding.core-config.intro_location"
           )}
         </p>
-        <onboarding-ais-wifi
-          .hass=${this.hass}
-          .localize=${this.onboardingLocalize}
-        ></onboarding-ais-wifi>
         <div class="row">
           <div>
             ${this.onboardingLocalize(

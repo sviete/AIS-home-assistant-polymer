@@ -3437,10 +3437,6 @@
                     "ais_login": "Log in to AI-Speaker",
                     "ais_logout": "Log out from AI-Speaker"
                   },
-                "ais-wifi": {
-                    "intro_ais_enable_wifi_1": "For this step you need an internet connection. If you haven't set up a WiFi connection yet, you can do it now.",
-                    "intro_ais_enable_wifi_2": "CONNECT TO WIFI"
-                },
                 "intro": "Are you ready to awaken your home, reclaim your privacy and join a worldwide community of tinkerers?",
                 "restore": {
                     "description": "Alternatively you can restore from a previous snapshot.",
