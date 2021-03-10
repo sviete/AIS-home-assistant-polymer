@@ -3359,10 +3359,6 @@
                     "ais_login": "Zaloguj do AI-Speaker",
                     "ais_logout": "Wyloguj się z AI-Speaker"
                   },
-                "ais-wifi": {
-                    "intro_ais_enable_wifi_1": "Do tego kroku jest potrzebne połączenie z Internetem. Jeśli jeszcze nie skonfigurowałeś połączenia WiFi możesz to zrobić teraz.",
-                    "intro_ais_enable_wifi_2": "POŁĄCZ Z WIFI"
-                },
                 "integration": {
                     "finish": "Dalej",
                     "intro": "Urządzenia i usługi są reprezentowane w Asystent domowy jako integracje. Możesz je teraz skonfigurować lub zrobić to później w konfiguracji.",

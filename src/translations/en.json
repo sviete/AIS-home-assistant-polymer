@@ -3526,10 +3526,6 @@
           "ais_login": "Log in to AI-Speaker",
           "ais_logout": "Log out from AI-Speaker"
         },
-        "ais-wifi": {
-          "intro_ais_enable_wifi_1": "For this step you need an internet connection. If you haven't set up a WiFi connection yet, you can do it now.",
-          "intro_ais_enable_wifi_2": "CONNECT TO WIFI"
-        },
         "integration": {
           "intro": "Devices and services are represented in Home Assistant as integrations. You can set them up now, or do it later from the configuration screen.",
           "more_integrations": "More",
@@ -3566,10 +3562,6 @@
         "ais_login": "Log in to AI-Speaker",
         "ais_logout": "Log out from AI-Speaker",
         "finish": "Skip"
-      },
-      "ais-wifi": {
-        "intro_ais_enable_wifi_1": "For this step you need an internet connection. If you haven't set up a WiFi connection yet, you can do it now.",
-        "intro_ais_enable_wifi_2": "CONNECT TO WIFI"
       },
       "mob-integration": {
         "h1": "Mobile App!",
