@@ -47,7 +47,7 @@ class HaPanelDevAisMqtt extends LitElement {
           <ha-card header="Ustawienia SUPLA MQTT">
             <div class="card-actions">
               <mwc-button @click=${this._openOptionFlow}
-                >TODO - Re-konfiguracja połączenia Supla</mwc-button
+                >Re-konfiguracja połączenia Supla</mwc-button
               >
             </div>
           </ha-card>
@@ -99,6 +99,6 @@ class HaPanelDevAisMqtt extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "ais-supla-mqtt-dev-panel": HaPanelDevAisMqtt;
+    "ais-mqtt-config-panel": HaPanelDevAisMqtt;
   }
 }
