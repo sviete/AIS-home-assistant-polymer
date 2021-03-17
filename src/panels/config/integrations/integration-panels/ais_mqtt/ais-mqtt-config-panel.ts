@@ -7,7 +7,6 @@ import {
   CSSResultArray,
   customElement,
   html,
-  internalProperty,
   LitElement,
   property,
   TemplateResult,
@@ -24,21 +23,7 @@ import { HomeAssistant } from "../../../../../types";
 class HaPanelDevAisMqtt extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @internalProperty() private topic = "";
-
-  @internalProperty() private payload = "";
-
-  private inited = false;
-
-  protected firstUpdated() {
-    if (localStorage && localStorage["panel-dev-mqtt-topic"]) {
-      this.topic = localStorage["panel-dev-mqtt-topic"];
-    }
-    if (localStorage && localStorage["panel-dev-mqtt-payload"]) {
-      this.payload = localStorage["panel-dev-mqtt-payload"];
-    }
-    this.inited = true;
-  }
+  protected firstUpdated() {}
 
   protected render(): TemplateResult {
     return html`
@@ -47,7 +32,7 @@ class HaPanelDevAisMqtt extends LitElement {
           <ha-card header="Ustawienia SUPLA MQTT">
             <div class="card-actions">
               <mwc-button @click=${this._openOptionFlow}
-                >Re-konfiguracja połączenia Supla</mwc-button
+                >Dane połączenia</mwc-button
               >
             </div>
           </ha-card>
