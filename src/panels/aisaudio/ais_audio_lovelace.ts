@@ -554,6 +554,14 @@ export const aisAudioLovelace: LovelaceConfig = {
                           cards: [
                             {
                               icon: "mdi:folder-music",
+                              entity: "sensor.ais_spotify_favorites_mode",
+                              show_name: false,
+                              state: [
+                                {
+                                  color: "var(--primary-color)",
+                                  value: "featured-playlists",
+                                },
+                              ],
                               tap_action: {
                                 action: "call-service",
                                 service: "ais_spotify_service.get_favorites",
@@ -561,10 +569,18 @@ export const aisAudioLovelace: LovelaceConfig = {
                                   type: "featured-playlists",
                                 },
                               },
-                              type: "button",
+                              type: "ais-button",
                             },
                             {
                               icon: "mdi:playlist-music",
+                              entity: "sensor.ais_spotify_favorites_mode",
+                              show_name: false,
+                              state: [
+                                {
+                                  color: "var(--primary-color)",
+                                  value: "playlists",
+                                },
+                              ],
                               tap_action: {
                                 action: "call-service",
                                 service: "ais_spotify_service.get_favorites",
@@ -572,21 +588,38 @@ export const aisAudioLovelace: LovelaceConfig = {
                                   type: "playlists",
                                 },
                               },
-                              type: "button",
+                              type: "ais-button",
                             },
                             {
                               icon: "mdi:account",
+                              entity: "sensor.ais_spotify_favorites_mode",
+                              show_name: false,
+                              state: [
+                                {
+                                  color: "var(--primary-color)",
+                                  value: "artists",
+                                },
+                              ],
                               tap_action: {
                                 action: "call-service",
                                 service: "ais_spotify_service.get_favorites",
+
                                 service_data: {
                                   type: "artists",
                                 },
                               },
-                              type: "button",
+                              type: "ais-button",
                             },
                             {
                               icon: "mdi:album",
+                              entity: "sensor.ais_spotify_favorites_mode",
+                              show_name: false,
+                              state: [
+                                {
+                                  color: "var(--primary-color)",
+                                  value: "albums",
+                                },
+                              ],
                               tap_action: {
                                 action: "call-service",
                                 service: "ais_spotify_service.get_favorites",
@@ -594,10 +627,18 @@ export const aisAudioLovelace: LovelaceConfig = {
                                   type: "albums",
                                 },
                               },
-                              type: "button",
+                              type: "ais-button",
                             },
                             {
                               icon: "mdi:music-note",
+                              entity: "sensor.ais_spotify_favorites_mode",
+                              show_name: false,
+                              state: [
+                                {
+                                  color: "var(--primary-color)",
+                                  value: "tracks",
+                                },
+                              ],
                               tap_action: {
                                 action: "call-service",
                                 service: "ais_spotify_service.get_favorites",
@@ -605,7 +646,7 @@ export const aisAudioLovelace: LovelaceConfig = {
                                   type: "tracks",
                                 },
                               },
-                              type: "button",
+                              type: "ais-button",
                             },
                           ],
                           type: "horizontal-stack",
