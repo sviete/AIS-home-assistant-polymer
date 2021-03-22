@@ -1,11 +1,8 @@
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import { html } from "@polymer/polymer/lib/utils/html-tag";
-import { PolymerElement } from "@polymer/polymer/polymer-element";
-
+import { HomeAssistant } from "../../../types";
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
-
 import "./ha-config-ais-dom-dashboard";
 import "../../../components/ha-paper-dropdown-menu";
 import "../../../components/ha-switch";
@@ -14,13 +11,76 @@ import "@polymer/paper-item/paper-item";
 import "@polymer/paper-listbox/paper-listbox";
 import "../../../components/buttons/ha-call-service-button";
 import "../../../components/ha-icon";
-/*
- *
- */
-class HaConfigAisDomControlLogs extends PolymerElement {
-  static get template() {
-    return html`
-      <style include="iron-flex ha-style">
+import "../../../components/ha-icon-button";
+import {
+  css,
+  CSSResultArray,
+  customElement,
+  html,
+  LitElement,
+  property,
+  PropertyValues,
+  TemplateResult,
+} from "lit-element";
+
+import { haStyle } from "../../../resources/styles";
+
+@customElement("ha-config-ais-dom-config-logs")
+class HaConfigAisDomConfiglLogs extends LitElement {
+  @property({ attribute: false }) public hass!: HomeAssistant;
+
+  @property() public isWide?: boolean;
+
+  @property({ type: String }) private logLevel = "info";
+
+  @property({ type: String }) private logDrive = "-";
+
+  @property({ type: String }) private logError = "";
+
+  @property({ type: Number }) private logRotating = 1;
+
+  @property({ type: String }) private logIconAnimationStyle;
+
+  @property({ type: String }) private dbIconAnimationStyle;
+
+  @property({ type: Array }) private usbDrives = [];
+
+  @property({ type: Array }) private dbDrives = [];
+
+  @property({ type: Boolean }) private dbConnectionValidating = false;
+
+  @property({ type: String }) private dbConnectionInfoButton = "";
+
+  @property({ type: String }) private validationError = "";
+
+  @property({ type: String }) private logModeInfo = "";
+
+  @property({ type: String }) private dbUrl = "";
+
+  @property({ type: String }) private dbConectionDisplayStyle = "";
+
+  @property({ type: String }) private dbKeepDaysDisplayStyle = "";
+
+  @property({ type: String }) private dbFileDisplayStyle = "";
+
+  @property({ type: Array }) private dbDrive = [];
+
+  @property({ type: String }) private dbEngine = "";
+
+  @property({ type: String }) private dbUser = "";
+
+  @property({ type: String }) private dbPassword = "";
+
+  @property({ type: String }) private dbServerIp = "";
+
+  @property({ type: String }) private dbServerName = "";
+
+  @property({ type: String }) private dbKeepDays = "";
+
+  static get styles(): CSSResultArray {
+    return [
+      haStyle,
+      css`
         .content {
           padding-bottom: 32px;
         }
@@ -69,18 +129,30 @@ class HaConfigAisDomControlLogs extends PolymerElement {
             background-color: var(--material-error-color);
           }
         }
-      </style>
+      `,
+    ];
+  }
 
+  protected firstUpdated(changedProps: PropertyValues): void {
+    super.firstUpdated(changedProps);
+    this.dbConnectionInfoButton = this._computeDbConnectionSettings(this.hass);
+    this.dbDrives = this.hass.states[
+      "input_select.ais_usb_flash_drives"
+    ].attributes.options;
+    this.usbDrives = this.dbDrives;
+  }
+
+  protected render(): TemplateResult {
+    return html`
       <hass-subpage header="Konfiguracja bramki AIS dom">
-        <div class$="[[computeClasses(isWide)]]">
-          <ha-config-section is-wide="[[isWide]]">
+        <div .class=${this.isWide}>
+          <ha-config-section .is-wide=${this.isWide}>
             <span slot="header">Ustawienie zapisu logów systemu</span>
-            <span slot="introduction"
-              >Tu możesz skonfigurować zapis logów do pliku na wymiennym
-              dysku</span
-            >
+            <span slot="introduction">
+              Tu możesz skonfigurować zapis logów do pliku na wymiennym dysku
+            </span>
             <ha-card header="Zapis logów systemu do pliku">
-              <div id="card-icon" style$="[[logIconAnimationStyle]]">
+              <div id="card-icon" .style=${this.logIconAnimationStyle}>
                 <ha-icon-button icon="mdi:record-rec"></ha-icon-button>
               </div>
               <div class="card-content">
@@ -91,6 +163,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 liczbę dni przechowywanych w jednym pliku loga. <br /><br />
                 Wybór dysku do zapisu logów systemu: <br />
                 <ha-icon-button icon="mdi:usb-flash-drive"></ha-icon-button>
+
                 <ha-paper-dropdown-menu
                   label-float="Wybrany dysk"
                   dynamic-align=""
@@ -98,19 +171,22 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 >
                   <paper-listbox
                     slot="dropdown-content"
-                    selected="[[logDrive]]"
-                    on-selected-changed="logDriveChanged"
                     attr-for-selected="item-name"
+                    .selected=${this.logDrive}
+                    .on-selected-item-changed=${this.logDriveChanged}
                   >
-                    <template
-                      is="dom-repeat"
-                      items="[[usbDrives.attributes.options]]"
-                    >
-                      <paper-item item-name$="[[item]]">[[item]]</paper-item>
-                    </template>
+                    ${this.usbDrives!.map(
+                      (item: string) =>
+                        html`
+                          <paper-item .itemName=${item} .itemValue=${item}>
+                            ${item}
+                          </paper-item>
+                        `
+                    )}
                   </paper-listbox>
                 </ha-paper-dropdown-menu>
               </div>
+
               <div class="card-content">
                 Wybór poziomu logowania: <br />
                 <ha-icon-button icon="mdi:bug-check"></ha-icon-button>
@@ -121,9 +197,9 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 >
                   <paper-listbox
                     slot="dropdown-content"
-                    selected="[[logLevel]]"
-                    on-selected-changed="logLevelChanged"
                     attr-for-selected="item-name"
+                    .selected=${this.logLevel}
+                    .selected-item-changed=${this.logLevelChanged}
                   >
                     <paper-item item-name="critical">critical</paper-item>
                     <paper-item item-name="fatal">fatal</paper-item>
@@ -140,8 +216,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 północy.
                 <paper-input
                   type="number"
-                  value="[[logRotating]]"
-                  on-change="logRotatingDaysChanged"
+                  .value=${this.logRotating}
+                  .on-change=${this.logRotatingDaysChanged}
                   maxlength="4"
                   max="9999"
                   min="1"
@@ -152,12 +228,12 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 </paper-input>
                 <div class="config-invalid">
                   <span class="text">
-                    [[logError]]
+                    ${this.logError}
                   </span>
                 </div>
               </div>
               <div class="card-content">
-                [[logModeInfo]]
+                ${this.logModeInfo}
               </div>
               <div class="card-content">
                 * Zmiana poziomu logowania wykonywana jest online - po tej
@@ -168,14 +244,14 @@ class HaConfigAisDomControlLogs extends PolymerElement {
             </ha-card>
           </ha-config-section>
 
-          <ha-config-section is-wide="[[isWide]]">
+          <ha-config-section .is-wide=${this.isWide}>
             <span slot="header">Ustawienia zapisu zdarzeń systemu</span>
             <span slot="introduction">
               Tu możesz skonfigurować zapis zdarzeń do bazy danych na dysku
               wymiennym lub do zdalnego serwera bazodanowego
             </span>
             <ha-card header="Zapis zdarzeń do bazy danych">
-              <div id="card-icon" style$="[[dbIconAnimationStyle]]">
+              <div id="card-icon" .style=${this.dbIconAnimationStyle}>
                 <ha-icon-button icon="mdi:database"></ha-icon-button>
               </div>
               <div class="card-content">
@@ -196,10 +272,10 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   label="Silnik bazy danych"
                 >
                   <paper-listbox
-                    slot="dropdown-content"
-                    selected="[[dbEngine]]"
-                    on-selected-changed="dbEngineChanged"
                     attr-for-selected="item-name"
+                    slot="dropdown-content"
+                    selected=${this.dbEngine}
+                    .on-selected-changed=${this.dbEngineChanged}
                   >
                     <paper-item item-name="-">-</paper-item>
                     <paper-item item-name="SQLite (memory)"
@@ -214,7 +290,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   </paper-listbox>
                 </ha-paper-dropdown-menu>
               </div>
-              <div class="card-content" style$="[[dbFileDisplayStyle]]">
+
+              <div class="card-content" .style=${this.dbFileDisplayStyle}>
                 Wybór dysku do zapisu bazy danych: <br />
                 <ha-icon-button icon="mdi:usb-flash-drive"></ha-icon-button>
                 <ha-paper-dropdown-menu
@@ -224,28 +301,30 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 >
                   <paper-listbox
                     slot="dropdown-content"
-                    selected="[[dbDrive]]"
-                    on-selected-changed="dbDriveChanged"
                     attr-for-selected="item-name"
+                    .selected=${this.logDrive}
+                    .selected-changed=${this.logDriveChanged}
                   >
-                    <template
-                      is="dom-repeat"
-                      items="[[usbDrives.attributes.options]]"
-                    >
-                      <paper-item item-name$="[[item]]">[[item]]</paper-item>
-                    </template>
+                    ${this.dbDrive!.map(
+                      (item: string) =>
+                        html`
+                          <paper-item .itemName=${item} .itemValue=${item}>
+                            ${item}
+                          </paper-item>
+                        `
+                    )}
                   </paper-listbox>
                 </ha-paper-dropdown-menu>
                 <br /><br />
               </div>
-              <div class="card-content" style$="[[dbConectionDisplayStyle]]">
+              <div class="card-content" .style=${this.dbConectionDisplayStyle}>
                 Parametry połączenia z bazą danych: <br />
                 <paper-input
                   placeholder="Użytkownik"
                   type="text"
                   id="db_user"
-                  value="[[dbUser]]"
-                  on-change="_computeDbUrl"
+                  value=${this.dbUser}
+                  .on-change=${this._computeDbUrl}
                 >
                   <ha-icon icon="mdi:account" slot="suffix"></ha-icon>
                 </paper-input>
@@ -254,31 +333,34 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                   no-label-float=""
                   type="password"
                   id="db_password"
-                  value="[[dbPassword]]"
-                  on-change="_computeDbUrl"
-                  ><ha-icon icon="mdi:lastpass" slot="suffix"></ha-icon
-                ></paper-input>
+                  .value=${this.dbPassword}
+                  .on-change=${this._computeDbUrl}
+                >
+                  <ha-icon icon="mdi:lastpass" slot="suffix"></ha-icon>
+                </paper-input>
                 <paper-input
                   placeholder="IP Serwera DB"
                   no-label-float=""
                   type="text"
                   id="db_server_ip"
-                  value="[[dbServerIp]]"
-                  on-change="_computeDbUrl"
-                  ><ha-icon icon="mdi:ip-network" slot="suffix"></ha-icon
-                ></paper-input>
+                  value=${this.dbServerIp}
+                  .on-change=${this._computeDbUrl}
+                >
+                  <ha-icon icon="mdi:ip-network" slot="suffix"></ha-icon>
+                </paper-input>
                 <paper-input
                   placeholder="Nazwa bazy"
                   no-label-float=""
                   type="text"
                   id="db_server_name"
-                  value="[[dbServerName]]"
-                  on-change="_computeDbUrl"
-                  ><ha-icon icon="mdi:database-check" slot="suffix"></ha-icon
-                ></paper-input>
+                  value=${this.dbServerName}
+                  .on-change=${this._computeDbUrl}
+                >
+                  <ha-icon icon="mdi:database-check" slot="suffix"></ha-icon>
+                </paper-input>
                 <br /><br />
               </div>
-              <div class="card-content" style$="[[dbKeepDaysDisplayStyle]]">
+              <div class="card-content" style=${this.dbKeepDaysDisplayStyle}>
                 Żeby utrzymać system w dobrej kondycji, codziennie dokładnie o
                 godzinie 4:12 rano Asystent usuwa z bazy zdarzenia i stany
                 starsze niż <b>określona liczba dni</b> (2 dni dla bazy w
@@ -289,8 +371,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 <paper-input
                   id="db_keep_days"
                   type="number"
-                  value="[[dbKeepDays]]"
-                  on-change="_computeDbUrl"
+                  value=${this.dbKeepDays}
+                  .on-change=${this._computeDbUrl}
                   maxlength="4"
                   max="9999"
                   min="1"
@@ -301,25 +383,25 @@ class HaConfigAisDomControlLogs extends PolymerElement {
                 </paper-input>
               </div>
               <div class="card-content">
-                [[dbUrl]]
+                ${this.dbUrl}
                 <br /><br />
                 <div class="center-container">
-                  <template is="dom-if" if="[[dbConnectionValidating]]">
+                  <template is="dom-if" if=${!this.dbConnectionValidating}>
                     <paper-spinner active=""></paper-spinner>
                   </template>
-                  <template is="dom-if" if="[[!dbConnectionValidating]]">
+                  <template is="dom-if" if=${!this.dbConnectionValidating}>
                     <div class="config-invalid">
                       <span class="text">
-                        [[validationError]]
+                        ${!this.validationError}
                       </span>
                     </div>
                     <ha-call-service-button
                       class="warning"
-                      hass="[[hass]]"
+                      .hass=${!this.hass}
                       domain="ais_files"
                       service="check_db_connection"
-                      service-data="[[_addAisDbConnectionData()]]"
-                      >[[dbConnectionInfoButton]]
+                      .service-data=${this._addAisDbConnectionData()}
+                      >${this.dbConnectionInfoButton}
                     </ha-call-service-button>
                   </template>
                 </div>
@@ -334,75 +416,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     `;
   }
 
-  static get properties() {
-    return {
-      hass: Object,
-      isWide: Boolean,
-      logLevel: {
-        type: String,
-        value: "info",
-      },
-      logDrive: {
-        type: String,
-        value: "-",
-      },
-      logError: {
-        type: String,
-        computed: "_computeLogsSettings(hass)",
-      },
-      logRotating: Number,
-      logIconAnimationStyle: String,
-      dbIconAnimationStyle: String,
-      usbDrives: {
-        type: Object,
-        computed: "_computeUsbDrives(hass)",
-      },
-      dbDrives: {
-        type: Object,
-        computed: "_computeDbDrives(hass)",
-      },
-      dbConnectionValidating: {
-        type: Boolean,
-        value: false,
-      },
-      dbConnectionInfoButton: {
-        type: String,
-        computed: "_computeDbConnectionSettings(hass)",
-      },
-      validationError: String,
-      logModeInfo: String,
-      dbUrl: String,
-      dbConectionDisplayStyle: String,
-      dbFileDisplayStyle: String,
-      dbKeepDaysDisplayStyle: String,
-      dbDrive: String,
-      dbEngine: String,
-      dbUser: String,
-      dbPassword: String,
-      dbServerIp: String,
-      dbServerName: String,
-      dbKeepDays: Number,
-    };
-  }
-
-  ready() {
-    super.ready();
-    this.hass.callService("ais_files", "get_db_log_settings_info");
-    this._computeLogsSettings(this.hass);
-    // this.dbKeepDays = 10;
-    // this.logRotating = 10;
-  }
-
-  // LOGS
-  computeClasses(isWide) {
-    return isWide ? "content" : "content narrow";
-  }
-
-  _computeUsbDrives(hass) {
-    return hass.states["input_select.ais_usb_flash_drives"];
-  }
-
-  _computeLogsSettings(hass) {
+  private _computeLogsSettings(hass) {
     const connectionInfo = hass.states["sensor.ais_logs_settings_info"];
     const connInfoAttr = connectionInfo.attributes;
     this.logDrive = connInfoAttr.logDrive;
@@ -441,7 +455,8 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     return logError;
   }
 
-  logDriveChanged(ev) {
+  private logDriveChanged(ev) {
+    console.log("logDriveChanged");
     this.logDrive = ev.detail.value;
     if (this.logDrive !== "-") {
       this.logModeInfo =
@@ -453,21 +468,23 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     this.hass.callService("ais_files", "change_logger_settings", {
       log_drive: this.logDrive,
       log_level: this.logLevel,
-      log_rotating: String(this.logRotating),
+      log_rotating: this.logRotating,
     });
   }
 
-  logLevelChanged(ev) {
+  private logLevelChanged(ev) {
+    console.log("logLevelChanged");
     this.logLevel = ev.detail.value;
     this.logModeInfo = "Poziom logów: " + this.logLevel;
     this.hass.callService("ais_files", "change_logger_settings", {
       log_drive: this.logDrive,
       log_level: this.logLevel,
-      log_rotating: String(this.logRotating),
+      log_rotating: this.logRotating,
     });
   }
 
-  logRotatingDaysChanged(ev) {
+  private logRotatingDaysChanged(ev) {
+    console.log("logRotatingDaysChanged");
     this.logRotating = Number(ev.target.value);
     if (this.logRotating === 1) {
       this.logModeInfo = "Rotacja logów codziennie.";
@@ -478,12 +495,12 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     this.hass.callService("ais_files", "change_logger_settings", {
       log_drive: this.logDrive,
       log_level: this.logLevel,
-      log_rotating: String(this.logRotating),
+      log_rotating: this.logRotating,
     });
   }
 
   // DB recorder
-  _computeDbConnectionSettings(hass) {
+  private _computeDbConnectionSettings(hass) {
     const connectionInfo = hass.states["sensor.ais_db_connection_info"];
     const connInfoAttr = connectionInfo.attributes;
     this.validationError = connInfoAttr.errorInfo;
@@ -521,18 +538,13 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     return buttonName;
   }
 
-  _addAisDbConnectionData() {
+  private _addAisDbConnectionData() {
     return {
       buttonClick: true,
     };
   }
 
-  _computeDbDrives(hass) {
-    const drives = hass.states["input_select.ais_usb_flash_drives"];
-    return drives;
-  }
-
-  _doComputeDbUrl(getFromPage) {
+  private _doComputeDbUrl(getFromPage) {
     let dbUrl = "";
     if (this.dbEngine === "-") {
       this.dbConectionDisplayStyle = "display: none";
@@ -560,10 +572,10 @@ class HaConfigAisDomControlLogs extends PolymerElement {
       this.dbConectionDisplayStyle = "";
       this.dbKeepDaysDisplayStyle = "";
       if (getFromPage) {
-        this.dbPassword = this.shadowRoot.getElementById("db_password").value;
-        this.dbUser = this.shadowRoot.getElementById("db_user").value;
-        this.dbServerIp = this.shadowRoot.getElementById("db_server_ip").value;
-        this.dbServerName = this.shadowRoot.getElementById(
+        this.dbPassword = this.shadowRoot?.getElementById("db_password").value;
+        this.dbUser = this.shadowRoot?.getElementById("db_user").value;
+        this.dbServerIp = this.shadowRoot?.getElementById("db_server_ip").value;
+        this.dbServerName = this.shadowRoot?.getElementById(
           "db_server_name"
         ).value;
         this.dbKeepDays = this.shadowRoot.getElementById("db_keep_days").value;
@@ -601,7 +613,7 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     this.dbUrl = dbUrl;
   }
 
-  _computeDbUrl() {
+  private _computeDbUrl() {
     this._doComputeDbUrl(true);
     // set backend state
     this.hass.callService("ais_files", "check_db_connection", {
@@ -618,20 +630,21 @@ class HaConfigAisDomControlLogs extends PolymerElement {
     });
   }
 
-  dbDriveChanged(ev) {
+  private dbDriveChanged(ev) {
     const newVal = ev.detail.value;
     this.dbDrive = newVal;
     this._computeDbUrl();
   }
 
-  dbEngineChanged(ev) {
+  private dbEngineChanged(ev) {
     const newVal = ev.detail.value;
     this.dbEngine = newVal;
     this._computeDbUrl();
   }
 }
 
-customElements.define(
-  "ha-config-ais-dom-config-logs",
-  HaConfigAisDomControlLogs
-);
+declare global {
+  interface HTMLElementTagNameMap {
+    "ha-config-ais-dom-config-logs": HaConfigAisDomConfiglLogs;
+  }
+}
