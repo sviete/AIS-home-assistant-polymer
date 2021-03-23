@@ -14,7 +14,7 @@ import "../../../components/ha-icon";
 import "../../../components/ha-icon-button";
 import {
   css,
-  CSSResultArray,
+  CSSResult,
   customElement,
   html,
   LitElement,
@@ -24,6 +24,7 @@ import {
 } from "lit-element";
 
 import { haStyle } from "../../../resources/styles";
+import { LOG_OUTPUT } from "../../../data/zha";
 
 @customElement("ha-config-ais-dom-config-logs")
 class HaConfigAisDomConfiglLogs extends LitElement {
@@ -31,11 +32,13 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
   @property() public isWide?: boolean;
 
-  @property({ type: String }) private logLevel = "info";
+  @property({ type: String }) private logLevel = "";
 
-  @property({ type: String }) private logDrive = "-";
+  @property({ type: String }) private logDrive = "";
 
   @property({ type: String }) private logError = "";
+
+  @property({ type: String }) private haLogError = "";
 
   @property({ type: Number }) private logRotating = 1;
 
@@ -43,7 +46,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
   @property({ type: String }) private dbIconAnimationStyle;
 
-  @property({ type: Array }) private usbDrives = [];
+  @property({ type: Array }) private logDrives = [];
 
   @property({ type: Array }) private dbDrives = [];
 
@@ -51,11 +54,13 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
   @property({ type: String }) private dbConnectionInfoButton = "";
 
-  @property({ type: String }) private validationError = "";
+  @property({ type: String }) private dbConnectionValidationError = "";
 
   @property({ type: String }) private logModeInfo = "";
 
   @property({ type: String }) private dbUrl = "";
+
+  @property({ type: String }) private dbConnectionInfoState = "";
 
   @property({ type: String }) private dbConectionDisplayStyle = "";
 
@@ -77,7 +82,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
   @property({ type: String }) private dbKeepDays = "";
 
-  static get styles(): CSSResultArray {
+  static get styles(): CSSResult[] {
     return [
       haStyle,
       css`
@@ -109,7 +114,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
           height: 70px;
         }
         .config-invalid .text {
-          color: var(--google-red-500);
+          color: red;
           font-weight: 500;
         }
 
@@ -118,7 +123,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
             background-color: var(--card-background-color);
           }
           100% {
-            background-color: var(--primary-color);
+            background-color: orange;
           }
         }
         @keyframes pulseRed {
@@ -126,317 +131,23 @@ class HaConfigAisDomConfiglLogs extends LitElement {
             background-color: var(--card-background-color);
           }
           100% {
-            background-color: var(--material-error-color);
+            background-color: red;
           }
         }
       `,
     ];
   }
 
-  protected firstUpdated(changedProps: PropertyValues): void {
-    super.firstUpdated(changedProps);
-    this.dbConnectionInfoButton = this._computeDbConnectionSettings(this.hass);
-    this.dbDrives = this.hass.states[
-      "input_select.ais_usb_flash_drives"
-    ].attributes.options;
-    this.usbDrives = this.dbDrives;
-  }
-
-  protected render(): TemplateResult {
-    return html`
-      <hass-subpage header="Konfiguracja bramki AIS dom">
-        <div .class=${this.isWide}>
-          <ha-config-section .is-wide=${this.isWide}>
-            <span slot="header">Ustawienie zapisu logów systemu</span>
-            <span slot="introduction">
-              Tu możesz skonfigurować zapis logów do pliku na wymiennym dysku
-            </span>
-            <ha-card header="Zapis logów systemu do pliku">
-              <div id="card-icon" .style=${this.logIconAnimationStyle}>
-                <ha-icon-button icon="mdi:record-rec"></ha-icon-button>
-              </div>
-              <div class="card-content">
-                Żeby włączyć logowanie w systemie Asystent domowy, wystarczy
-                wybrać lokalizację na dysku wymiennym, w której będzie
-                zapisywany plik z rejestrem działań w systemie. <br />
-                Dodatkowo można też określić poziom szczegółowości logowania i
-                liczbę dni przechowywanych w jednym pliku loga. <br /><br />
-                Wybór dysku do zapisu logów systemu: <br />
-                <ha-icon-button icon="mdi:usb-flash-drive"></ha-icon-button>
-
-                <ha-paper-dropdown-menu
-                  label-float="Wybrany dysk"
-                  dynamic-align=""
-                  label="Dyski wymienne"
-                >
-                  <paper-listbox
-                    slot="dropdown-content"
-                    attr-for-selected="item-name"
-                    .selected=${this.logDrive}
-                    .on-selected-item-changed=${this.logDriveChanged}
-                  >
-                    ${this.usbDrives!.map(
-                      (item: string) =>
-                        html`
-                          <paper-item .itemName=${item} .itemValue=${item}>
-                            ${item}
-                          </paper-item>
-                        `
-                    )}
-                  </paper-listbox>
-                </ha-paper-dropdown-menu>
-              </div>
-
-              <div class="card-content">
-                Wybór poziomu logowania: <br />
-                <ha-icon-button icon="mdi:bug-check"></ha-icon-button>
-                <ha-paper-dropdown-menu
-                  label-float="Poziom logowania"
-                  dynamic-align=""
-                  label="Poziomy logowania"
-                >
-                  <paper-listbox
-                    slot="dropdown-content"
-                    attr-for-selected="item-name"
-                    .selected=${this.logLevel}
-                    .selected-item-changed=${this.logLevelChanged}
-                  >
-                    <paper-item item-name="critical">critical</paper-item>
-                    <paper-item item-name="fatal">fatal</paper-item>
-                    <paper-item item-name="error">error</paper-item>
-                    <paper-item item-name="warning">warning</paper-item>
-                    <paper-item item-name="warn">warn</paper-item>
-                    <paper-item item-name="info">info</paper-item>
-                    <paper-item item-name="debug">debug</paper-item>
-                  </paper-listbox>
-                </ha-paper-dropdown-menu>
-                <br /><br />
-                W tym miejscu możesz określić liczbę dni przechowywanych w
-                jednym pliku loga. Rotacja plików dziennika wykonywna jest o
-                północy.
-                <paper-input
-                  type="number"
-                  .value=${this.logRotating}
-                  .on-change=${this.logRotatingDaysChanged}
-                  maxlength="4"
-                  max="9999"
-                  min="1"
-                  label-float="Liczba dni przechowywanych w jednym pliku loga"
-                  label="Liczba dni przechowywanych w jednym pliku loga"
-                >
-                  <ha-icon icon="mdi:calendar" slot="suffix"></ha-icon>
-                </paper-input>
-                <div class="config-invalid">
-                  <span class="text">
-                    ${this.logError}
-                  </span>
-                </div>
-              </div>
-              <div class="card-content">
-                ${this.logModeInfo}
-              </div>
-              <div class="card-content">
-                * Zmiana poziomu logowania wykonywana jest online - po tej
-                zmianie nie trzeba ponownie uruchomieć systemu. Zastosowanie
-                zmiany dysku do zapisu systemu lub zmiany liczby dni
-                przechowywanych w jednym pliku loga wymaga restartu systemu.
-              </div>
-            </ha-card>
-          </ha-config-section>
-
-          <ha-config-section .is-wide=${this.isWide}>
-            <span slot="header">Ustawienia zapisu zdarzeń systemu</span>
-            <span slot="introduction">
-              Tu możesz skonfigurować zapis zdarzeń do bazy danych na dysku
-              wymiennym lub do zdalnego serwera bazodanowego
-            </span>
-            <ha-card header="Zapis zdarzeń do bazy danych">
-              <div id="card-icon" .style=${this.dbIconAnimationStyle}>
-                <ha-icon-button icon="mdi:database"></ha-icon-button>
-              </div>
-              <div class="card-content">
-                Wybierz silnik bazodanowy, który chcesz użyć do rejestracji
-                zdarzeń.<br /><br />Najprostszy wybór to baza SQLite, która nie
-                wymaga konfiguracji i może rejestrować dane w pamięci - taka
-                baza jest automatycznie używana, gdy rejestracja zdarzeń
-                włączana jest przez integrację (np. Historia lub Dziennik).
-                <br /><br />Gdy system generuje więcej zdarzeń lub gdy chcesz
-                mieć dostęp do historii, to zalecamy zapisywać zdarzenia na
-                zewnętrznym dysku lub w zdalnej bazie danych. <br /><br />
-                Wybór silnika bazy danych:
-                <br />
-                <ha-icon-button icon="mdi:database"></ha-icon-button>
-                <ha-paper-dropdown-menu
-                  label-float="Silnik bazy danych"
-                  dynamic-align=""
-                  label="Silnik bazy danych"
-                >
-                  <paper-listbox
-                    attr-for-selected="item-name"
-                    slot="dropdown-content"
-                    selected=${this.dbEngine}
-                    .on-selected-changed=${this.dbEngineChanged}
-                  >
-                    <paper-item item-name="-">-</paper-item>
-                    <paper-item item-name="SQLite (memory)"
-                      >SQLite (memory)</paper-item
-                    >
-                    <paper-item item-name="SQLite (file)"
-                      >SQLite (file)</paper-item
-                    >
-                    <paper-item item-name="MariaDB">MariaDB</paper-item>
-                    <paper-item item-name="MySQL">MySQL</paper-item>
-                    <paper-item item-name="PostgreSQL">PostgreSQL</paper-item>
-                  </paper-listbox>
-                </ha-paper-dropdown-menu>
-              </div>
-
-              <div class="card-content" .style=${this.dbFileDisplayStyle}>
-                Wybór dysku do zapisu bazy danych: <br />
-                <ha-icon-button icon="mdi:usb-flash-drive"></ha-icon-button>
-                <ha-paper-dropdown-menu
-                  label-float="Wybrany dysk"
-                  dynamic-align=""
-                  label="Dyski wymienne"
-                >
-                  <paper-listbox
-                    slot="dropdown-content"
-                    attr-for-selected="item-name"
-                    .selected=${this.logDrive}
-                    .selected-changed=${this.logDriveChanged}
-                  >
-                    ${this.dbDrive!.map(
-                      (item: string) =>
-                        html`
-                          <paper-item .itemName=${item} .itemValue=${item}>
-                            ${item}
-                          </paper-item>
-                        `
-                    )}
-                  </paper-listbox>
-                </ha-paper-dropdown-menu>
-                <br /><br />
-              </div>
-              <div class="card-content" .style=${this.dbConectionDisplayStyle}>
-                Parametry połączenia z bazą danych: <br />
-                <paper-input
-                  placeholder="Użytkownik"
-                  type="text"
-                  id="db_user"
-                  value=${this.dbUser}
-                  .on-change=${this._computeDbUrl}
-                >
-                  <ha-icon icon="mdi:account" slot="suffix"></ha-icon>
-                </paper-input>
-                <paper-input
-                  placeholder="Hasło"
-                  no-label-float=""
-                  type="password"
-                  id="db_password"
-                  .value=${this.dbPassword}
-                  .on-change=${this._computeDbUrl}
-                >
-                  <ha-icon icon="mdi:lastpass" slot="suffix"></ha-icon>
-                </paper-input>
-                <paper-input
-                  placeholder="IP Serwera DB"
-                  no-label-float=""
-                  type="text"
-                  id="db_server_ip"
-                  value=${this.dbServerIp}
-                  .on-change=${this._computeDbUrl}
-                >
-                  <ha-icon icon="mdi:ip-network" slot="suffix"></ha-icon>
-                </paper-input>
-                <paper-input
-                  placeholder="Nazwa bazy"
-                  no-label-float=""
-                  type="text"
-                  id="db_server_name"
-                  value=${this.dbServerName}
-                  .on-change=${this._computeDbUrl}
-                >
-                  <ha-icon icon="mdi:database-check" slot="suffix"></ha-icon>
-                </paper-input>
-                <br /><br />
-              </div>
-              <div class="card-content" style=${this.dbKeepDaysDisplayStyle}>
-                Żeby utrzymać system w dobrej kondycji, codziennie dokładnie o
-                godzinie 4:12 rano Asystent usuwa z bazy zdarzenia i stany
-                starsze niż <b>określona liczba dni</b> (2 dni dla bazy w
-                pamięci urządzenia i domyślnie 10 dla innych lokalizacji).
-                <br />
-                W tym miejscu możesz określić liczbę dni, których historia ma
-                być przechowywana w bazie danych.
-                <paper-input
-                  id="db_keep_days"
-                  type="number"
-                  value=${this.dbKeepDays}
-                  .on-change=${this._computeDbUrl}
-                  maxlength="4"
-                  max="9999"
-                  min="1"
-                  label-float="Liczba dni historii przechowywanych w bazie"
-                  label="Liczba dni historii przechowywanych w bazie"
-                >
-                  <ha-icon icon="mdi:calendar" slot="suffix"></ha-icon>
-                </paper-input>
-              </div>
-              <div class="card-content">
-                ${this.dbUrl}
-                <br /><br />
-                <div class="center-container">
-                  <template is="dom-if" if=${!this.dbConnectionValidating}>
-                    <paper-spinner active=""></paper-spinner>
-                  </template>
-                  <template is="dom-if" if=${!this.dbConnectionValidating}>
-                    <div class="config-invalid">
-                      <span class="text">
-                        ${!this.validationError}
-                      </span>
-                    </div>
-                    <ha-call-service-button
-                      class="warning"
-                      .hass=${!this.hass}
-                      domain="ais_files"
-                      service="check_db_connection"
-                      .service-data=${this._addAisDbConnectionData()}
-                      >${this.dbConnectionInfoButton}
-                    </ha-call-service-button>
-                  </template>
-                </div>
-                <div>
-                  * po zmianie połączenia z bazą wymagany jest restart systemu.
-                </div>
-              </div>
-            </ha-card>
-          </ha-config-section>
-        </div>
-      </hass-subpage>
-    `;
-  }
-
-  private _computeLogsSettings(hass) {
-    const connectionInfo = hass.states["sensor.ais_logs_settings_info"];
-    const connInfoAttr = connectionInfo.attributes;
-    this.logDrive = connInfoAttr.logDrive;
-    this.logLevel = connInfoAttr.logLevel;
-    this.logRotating = connInfoAttr.logRotating;
-    if (connectionInfo.state > 0) {
+  private _computeLogsSettings(sendToHa: boolean) {
+    if (this.logDrive !== "-") {
       if (this.logLevel === "debug") {
-        this.logIconAnimationStyle = "animation: pulseRed 2s infinite;";
+        this.logIconAnimationStyle = "animation: pulseRed 7s infinite;";
       } else if (this.logLevel === "info") {
-        this.logIconAnimationStyle = "animation: pulseRed 4s infinite;";
-      } else if (this.logLevel === "info") {
-        this.logIconAnimationStyle = "animation: pulse 5s infinite;";
-      } else if (this.logLevel === "warn") {
-        this.logIconAnimationStyle = "animation: pulse 6s infinite;";
+        this.logIconAnimationStyle = "animation: pulse 4s infinite;";
       } else if (this.logLevel === "warning") {
         this.logIconAnimationStyle = "animation: pulse 7s infinite;";
       } else if (this.logLevel === "error") {
         this.logIconAnimationStyle = "animation: pulse 8s infinite;";
-      } else if (this.logLevel === "fatal") {
-        this.logIconAnimationStyle = "animation: pulse 9s infinite;";
       } else if (this.logLevel === "critical") {
         this.logIconAnimationStyle = "animation: pulse 10s infinite;";
       }
@@ -444,107 +155,39 @@ class HaConfigAisDomConfiglLogs extends LitElement {
       this.logIconAnimationStyle = "";
     }
     let logError = "";
-    if (connInfoAttr.logError) {
-      logError = connInfoAttr.logError;
+    if (this.haLogError) {
+      logError = this.haLogError;
     }
-    if (this.logLevel === "debug" && connectionInfo.state) {
+    if (this.logLevel === "debug") {
       logError +=
-        " Logowanie w trybie debug generuje duże ilości logów i obciąża system. Używaj go tylko na czas diagnozowania problemu. ";
+        " Logowanie w trybie debug generuje duże ilości logów i obciąża system. Używaj go tylko podczas diagnozowania problemu. ";
     }
-
-    return logError;
-  }
-
-  private logDriveChanged(ev) {
-    console.log("logDriveChanged");
-    this.logDrive = ev.detail.value;
-    if (this.logDrive !== "-") {
-      this.logModeInfo =
-        "Zapis logów do pliku /dyski-wymienne/" + this.logDrive + "/ais.log";
-    } else {
-      this.logModeInfo = "Zapis logów do pliku wyłączony ";
+    this.logError = logError;
+    if (sendToHa) {
+      this.saveLoggerSettings();
     }
-
-    this.hass.callService("ais_files", "change_logger_settings", {
-      log_drive: this.logDrive,
-      log_level: this.logLevel,
-      log_rotating: this.logRotating,
-    });
-  }
-
-  private logLevelChanged(ev) {
-    console.log("logLevelChanged");
-    this.logLevel = ev.detail.value;
-    this.logModeInfo = "Poziom logów: " + this.logLevel;
-    this.hass.callService("ais_files", "change_logger_settings", {
-      log_drive: this.logDrive,
-      log_level: this.logLevel,
-      log_rotating: this.logRotating,
-    });
-  }
-
-  private logRotatingDaysChanged(ev) {
-    console.log("logRotatingDaysChanged");
-    this.logRotating = Number(ev.target.value);
-    if (this.logRotating === 1) {
-      this.logModeInfo = "Rotacja logów codziennie.";
-    } else {
-      this.logModeInfo = "Rotacja logów co " + this.logRotating + " dni.";
-    }
-
-    this.hass.callService("ais_files", "change_logger_settings", {
-      log_drive: this.logDrive,
-      log_level: this.logLevel,
-      log_rotating: this.logRotating,
-    });
   }
 
   // DB recorder
-  private _computeDbConnectionSettings(hass) {
-    const connectionInfo = hass.states["sensor.ais_db_connection_info"];
-    const connInfoAttr = connectionInfo.attributes;
-    this.validationError = connInfoAttr.errorInfo;
-    this.dbEngine = connInfoAttr.dbEngine;
-    if (!this.dbEngine) {
-      this.dbEngine = "-";
-    }
-    if (!this.dbDrive) {
-      this.dbDrive = connInfoAttr.dbDrive;
-    }
-    this.dbUrl = connInfoAttr.dbUrl;
-    this.dbPassword = connInfoAttr.dbPassword;
-    this.dbUser = connInfoAttr.dbUser;
-    this.dbServerIp = connInfoAttr.dbServerIp;
-    this.dbServerName = connInfoAttr.dbServerName;
-    this.dbKeepDays = connInfoAttr.dbKeepDays;
+  private _computeDbConnectionSettings(sendToHa: boolean) {
+    console.log("_computeDbConnectionSettings");
 
-    let buttonName = "";
-    if (connectionInfo.state === "no_db_url_saved") {
-      buttonName = "Sprawdź połączenie";
+    this.dbConnectionValidating = true;
+    if (this.dbConnectionInfoState === "no_db_url_saved") {
+      this.dbConnectionInfoButton = "Sprawdź połączenie";
       this.dbIconAnimationStyle = "";
-    } else if (connectionInfo.state === "db_url_saved") {
-      buttonName = "Usuń polączenie";
+    } else if (this.dbConnectionInfoState === "db_url_saved") {
+      this.dbConnectionInfoButton = "Usuń polączenie";
       this.dbIconAnimationStyle = "animation: pulse 6s infinite;";
-    } else if (connectionInfo.state === "db_url_not_valid") {
-      buttonName = "Sprawdź połączenie";
+    } else if (this.dbConnectionInfoState === "db_url_not_valid") {
+      this.dbConnectionInfoButton = "Sprawdź połączenie";
       this.dbIconAnimationStyle = "animation: pulseRed 3s infinite;";
-    } else if (connectionInfo.state === "db_url_valid") {
-      buttonName = "Zapisz połączenie";
+    } else if (this.dbConnectionInfoState === "db_url_valid") {
+      this.dbConnectionInfoButton = "Zapisz połączenie";
       this.dbIconAnimationStyle = "animation: pulse 4s infinite;";
     }
 
-    this.dbConnectionValidating = false;
-    this._doComputeDbUrl(false);
-    return buttonName;
-  }
-
-  private _addAisDbConnectionData() {
-    return {
-      buttonClick: true,
-    };
-  }
-
-  private _doComputeDbUrl(getFromPage) {
+    // connection URL
     let dbUrl = "";
     if (this.dbEngine === "-") {
       this.dbConectionDisplayStyle = "display: none";
@@ -559,9 +202,6 @@ class HaConfigAisDomConfiglLogs extends LitElement {
         "sqlite://///data/data/pl.sviete.dom/files/home/dom/dyski-wymienne/" +
         this.dbDrive +
         "/ais.db";
-      if (getFromPage) {
-        this.dbKeepDays = this.shadowRoot.getElementById("db_keep_days").value;
-      }
     } else if (this.dbEngine === "SQLite (memory)") {
       this.dbConectionDisplayStyle = "display: none";
       this.dbFileDisplayStyle = "display: none";
@@ -571,15 +211,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
       this.dbFileDisplayStyle = "display: none";
       this.dbConectionDisplayStyle = "";
       this.dbKeepDaysDisplayStyle = "";
-      if (getFromPage) {
-        this.dbPassword = this.shadowRoot?.getElementById("db_password").value;
-        this.dbUser = this.shadowRoot?.getElementById("db_user").value;
-        this.dbServerIp = this.shadowRoot?.getElementById("db_server_ip").value;
-        this.dbServerName = this.shadowRoot?.getElementById(
-          "db_server_name"
-        ).value;
-        this.dbKeepDays = this.shadowRoot.getElementById("db_keep_days").value;
-      }
+
       let dbUserPass = "";
       if (this.dbUser || this.dbPassword) {
         dbUserPass = this.dbUser + ":" + this.dbPassword + "@";
@@ -611,11 +243,332 @@ class HaConfigAisDomConfiglLogs extends LitElement {
     }
 
     this.dbUrl = dbUrl;
+
+    //
+    if (sendToHa) {
+      this.saveDbSettings();
+    }
+
+    //
+    this.dbConnectionValidating = false;
   }
 
-  private _computeDbUrl() {
-    this._doComputeDbUrl(true);
-    // set backend state
+  private _addAisDbConnectionData() {
+    return {
+      buttonClick: true,
+    };
+  }
+
+  protected firstUpdated(changedProps: PropertyValues): void {
+    super.firstUpdated(changedProps);
+
+    // DB
+    const dbConnectionInfo = this.hass.states["sensor.ais_db_connection_info"];
+    const dbConnInfoAttr = dbConnectionInfo.attributes;
+    this.dbDrives = this.hass.states[
+      "input_select.ais_usb_flash_drives"
+    ].attributes.options;
+    console.log("dbDrives " + this.dbDrives);
+    this.dbConnectionValidationError = dbConnInfoAttr.errorInfo;
+    this.dbEngine = dbConnInfoAttr.dbEngine;
+    this.dbDrive = dbConnInfoAttr.dbDrive;
+    this.dbUrl = dbConnInfoAttr.dbUrl;
+    this.dbPassword = dbConnInfoAttr.dbPassword;
+    this.dbUser = dbConnInfoAttr.dbUser;
+    this.dbServerIp = dbConnInfoAttr.dbServerIp;
+    this.dbServerName = dbConnInfoAttr.dbServerName;
+    this.dbKeepDays = dbConnInfoAttr.dbKeepDays;
+    this.dbConnectionInfoState = dbConnectionInfo.state;
+    this._computeDbConnectionSettings(false);
+
+    // LOG
+    const connectionInfo = this.hass.states["sensor.ais_logs_settings_info"];
+    const connInfoAttr = connectionInfo.attributes;
+    this.logDrives = this.dbDrives;
+    this.logDrive = connInfoAttr.logDrive;
+    this.logLevel = connInfoAttr.logLevel;
+    this.logRotating = connInfoAttr.logRotating;
+    this.haLogError = connInfoAttr.logError;
+    this._computeLogsSettings(false);
+  }
+
+  protected render(): TemplateResult {
+    return html`
+      <hass-subpage header="Konfiguracja bramki AIS dom">
+        <ha-config-section .is-wide=${this.isWide}>
+          <span slot="header">Ustawienia zapisu zdarzeń systemu</span>
+          <span slot="introduction">
+            Tu możesz skonfigurować zapis zdarzeń do bazy danych na dysku
+            wymiennym lub do zdalnego serwera bazodanowego
+          </span>
+          <ha-card header="Zapis zdarzeń do bazy danych">
+            <div id="card-icon" .style=${this.dbIconAnimationStyle}>
+              <ha-icon-button icon="mdi:database"></ha-icon-button>
+            </div>
+            <div class="card-content">
+              Wybierz silnik bazodanowy, który chcesz użyć do rejestracji
+              zdarzeń.<br /><br />Najprostszy wybór to baza SQLite, która nie
+              wymaga konfiguracji i może rejestrować dane w pamięci - taka baza
+              jest automatycznie używana, gdy rejestracja zdarzeń włączana jest
+              przez integrację (np. Historia lub Dziennik). <br /><br />Gdy
+              system generuje więcej zdarzeń lub gdy chcesz mieć dostęp do
+              historii, to zalecamy zapisywać zdarzenia na zewnętrznym dysku lub
+              w zdalnej bazie danych. <br /><br />
+              Wybór silnika bazy danych:
+              <br />
+              <ha-icon-button icon="mdi:database"></ha-icon-button>
+              <ha-paper-dropdown-menu
+                label-float="Silnik bazy danych"
+                dynamic-align=""
+                label="Silnik bazy danych"
+              >
+                <paper-listbox
+                  attr-for-selected="item-name"
+                  slot="dropdown-content"
+                  selected=${this.dbEngine}
+                  @iron-select=${this.dbEngineChanged}
+                >
+                  <paper-item item-name="-">-</paper-item>
+                  <paper-item item-name="SQLite (memory)"
+                    >SQLite (memory)</paper-item
+                  >
+                  <paper-item item-name="SQLite (file)"
+                    >SQLite (file)</paper-item
+                  >
+                  <paper-item item-name="MariaDB">MariaDB</paper-item>
+                  <paper-item item-name="MySQL">MySQL</paper-item>
+                  <paper-item item-name="PostgreSQL">PostgreSQL</paper-item>
+                </paper-listbox>
+              </ha-paper-dropdown-menu>
+            </div>
+
+            <div class="card-content" .style=${this.dbFileDisplayStyle}>
+              Wybór dysku do zapisu bazy danych: <br />
+              <ha-icon-button icon="mdi:usb-flash-drive"></ha-icon-button>
+              <ha-paper-dropdown-menu
+                label-float="Wybrany dysk"
+                dynamic-align=""
+                label="Dyski wymienne"
+              >
+                <paper-listbox
+                  slot="dropdown-content"
+                  attr-for-selected="item-name"
+                  .selected=${this.logDrive}
+                  @iron-select=${this.dbDriveChanged}
+                >
+                  ${this.dbDrives!.map(
+                    (item: string) =>
+                      html`
+                        <paper-item .itemName=${item} .itemValue=${item}>
+                          ${item}
+                        </paper-item>
+                      `
+                  )}
+                </paper-listbox>
+              </ha-paper-dropdown-menu>
+              <br /><br />
+            </div>
+            <div class="card-content" .style=${this.dbConectionDisplayStyle}>
+              Parametry połączenia z bazą danych: <br />
+              <paper-input
+                placeholder="Użytkownik"
+                type="text"
+                id="db_user"
+                value=${this.dbUser}
+                @value-changed=${this.dbUserChanged}
+              >
+                <ha-icon icon="mdi:account" slot="suffix"></ha-icon>
+              </paper-input>
+              <paper-input
+                placeholder="Hasło"
+                no-label-float=""
+                type="password"
+                id="db_password"
+                .value=${this.dbPassword}
+                @value-changed=${this.dbPasswordChanged}
+              >
+                <ha-icon icon="mdi:lastpass" slot="suffix"></ha-icon>
+              </paper-input>
+              <paper-input
+                placeholder="IP Serwera DB"
+                no-label-float=""
+                type="text"
+                id="db_server_ip"
+                value=${this.dbServerIp}
+                @value-changed=${this.dbServerIpChanged}
+              >
+                <ha-icon icon="mdi:ip-network" slot="suffix"></ha-icon>
+              </paper-input>
+              <paper-input
+                placeholder="Nazwa bazy"
+                no-label-float=""
+                type="text"
+                id="db_server_name"
+                value=${this.dbServerName}
+                @value-changed=${this.dbServerNameChanged}
+              >
+                <ha-icon icon="mdi:database-check" slot="suffix"></ha-icon>
+              </paper-input>
+              <br /><br />
+            </div>
+            <div class="card-content" style=${this.dbKeepDaysDisplayStyle}>
+              Żeby utrzymać system w dobrej kondycji, codziennie dokładnie o
+              godzinie 5:15 rano Asystent usuwa z bazy zdarzenia i stany starsze
+              niż <b>określona liczba dni</b> (2 dni dla bazy w pamięci
+              urządzenia i domyślnie 10 dla innych lokalizacji).
+              <br />
+              W tym miejscu możesz określić liczbę dni, których historia ma być
+              przechowywana w bazie danych.
+              <paper-input
+                id="db_keep_days"
+                type="number"
+                value=${this.dbKeepDays}
+                @value-changed=${this.dbKeepDaysChanged}
+                maxlength="4"
+                max="9999"
+                min="1"
+                label-float="Liczba dni historii przechowywanych w bazie"
+                label="Liczba dni historii przechowywanych w bazie"
+              >
+                <ha-icon icon="mdi:calendar" slot="suffix"></ha-icon>
+              </paper-input>
+            </div>
+            <div class="card-content">
+              ${this.dbUrl}
+              <br /><br />
+              <div class="center-container">
+                ${this.dbConnectionValidating
+                  ? html` <paper-spinner active=""></paper-spinner> `
+                  : html`
+                      <div class="config-invalid">
+                        <span class="text">
+                          ${this.dbConnectionValidationError}
+                        </span>
+                      </div>
+                      <ha-call-service-button
+                        class="warning"
+                        .hass=${this.hass}
+                        domain="ais_files"
+                        service="check_db_connection"
+                        .service-data=${this._addAisDbConnectionData()}
+                      >
+                        ${this.dbConnectionInfoButton}
+                      </ha-call-service-button>
+                    `}
+              </div>
+              <div>
+                * po zmianie połączenia z bazą wymagany jest restart systemu.
+              </div>
+            </div>
+          </ha-card> </ha-config-section
+        ><ha-config-section .is-wide=${this.isWide}>
+          <span slot="header">Ustawienie zapisu logów systemu</span>
+          <span slot="introduction">
+            Tu możesz skonfigurować zapis logów do pliku na wymiennym dysku
+          </span>
+          <ha-card header="Zapis logów systemu do pliku">
+            <div id="card-icon" .style=${this.logIconAnimationStyle}>
+              <ha-icon-button icon="mdi:record-rec"></ha-icon-button>
+            </div>
+            <div class="card-content">
+              Żeby włączyć logowanie w systemie Asystent domowy, wystarczy
+              wybrać lokalizację na dysku wymiennym, w której będzie zapisywany
+              plik z rejestrem działań w systemie. <br />
+              Dodatkowo można też określić poziom szczegółowości logowania i
+              liczbę dni przechowywanych w jednym pliku loga. <br /><br />
+              Wybór dysku do zapisu logów systemu: <br />
+              <ha-icon-button icon="mdi:usb-flash-drive"></ha-icon-button>
+
+              <ha-paper-dropdown-menu
+                label-float="Wybrany dysk"
+                dynamic-align=""
+                label="Dyski wymienne"
+              >
+                <paper-listbox
+                  slot="dropdown-content"
+                  attr-for-selected="item-name"
+                  .selected=${this.logDrive}
+                  @iron-select=${this.logDriveChanged}
+                >
+                  ${this.logDrives!.map(
+                    (item: string) =>
+                      html`
+                        <paper-item .itemName=${item} .itemValue=${item}>
+                          ${item}
+                        </paper-item>
+                      `
+                  )}
+                </paper-listbox>
+              </ha-paper-dropdown-menu>
+            </div>
+
+            <div class="card-content">
+              Wybór poziomu logowania: <br />
+              <ha-icon-button icon="mdi:bug-check"></ha-icon-button>
+              <ha-paper-dropdown-menu
+                label-float="Poziom logowania"
+                dynamic-align=""
+                label="Poziomy logowania"
+              >
+                <paper-listbox
+                  slot="dropdown-content"
+                  attr-for-selected="item-name"
+                  .selected=${this.logLevel}
+                  @iron-select=${this.logLevelChanged}
+                >
+                  <paper-item item-name="critical">critical</paper-item>
+                  <paper-item item-name="error">error</paper-item>
+                  <paper-item item-name="warning">warning</paper-item>
+                  <paper-item item-name="info">info</paper-item>
+                  <paper-item item-name="debug">debug</paper-item>
+                </paper-listbox>
+              </ha-paper-dropdown-menu>
+              <br /><br />
+              W tym miejscu możesz określić liczbę dni przechowywanych w jednym
+              pliku loga. Rotacja plików dziennika wykonywna jest o północy.
+              <paper-input
+                type="number"
+                .value=${this.logRotating}
+                @change=${this.logRotatingDaysChanged}
+                maxlength="4"
+                max="9999"
+                min="1"
+                label-float="Liczba dni przechowywanych w jednym pliku loga"
+                label="Liczba dni przechowywanych w jednym pliku loga"
+              >
+                <ha-icon icon="mdi:calendar" slot="suffix"></ha-icon>
+              </paper-input>
+              <div class="config-invalid">
+                <span class="text">
+                  ${this.logError}
+                </span>
+              </div>
+            </div>
+            <div class="card-content">
+              ${this.logModeInfo}
+            </div>
+            <div class="card-content">
+              * Zmiana poziomu logowania wykonywana jest online - po tej zmianie
+              nie trzeba ponownie uruchomieć systemu. Zastosowanie zmiany dysku
+              do zapisu systemu lub zmiany liczby dni przechowywanych w jednym
+              pliku loga wymaga restartu systemu.
+            </div>
+          </ha-card>
+        </ha-config-section>
+        <br />
+      </hass-subpage>
+    `;
+  }
+
+  private saveLoggerSettings() {
+    this.hass.callService("ais_files", "change_logger_settings", {
+      log_drive: this.logDrive,
+      log_level: this.logLevel,
+      log_rotating: this.logRotating,
+    });
+  }
+
+  private saveDbSettings() {
     this.hass.callService("ais_files", "check_db_connection", {
       buttonClick: false,
       dbEngine: this.dbEngine,
@@ -630,16 +583,97 @@ class HaConfigAisDomConfiglLogs extends LitElement {
     });
   }
 
+  private logDriveChanged(ev) {
+    const newValue = ev.target!.selected;
+    if (newValue !== this.logDrive) {
+      this.logDrive = newValue;
+      if (this.logDrive !== "-") {
+        this.logModeInfo =
+          "Zapis logów do pliku /dyski-wymienne/" + this.logDrive + "/ais.log";
+      } else {
+        this.logModeInfo = "Zapis logów do pliku wyłączony ";
+      }
+      this._computeLogsSettings(true);
+    }
+  }
+
+  private logLevelChanged(ev) {
+    const newValue = ev.target!.selected;
+    if (newValue !== this.logLevel) {
+      this.logLevel = newValue;
+      this.logModeInfo = "Poziom logowania: " + this.logLevel;
+      this._computeLogsSettings(true);
+    }
+  }
+
+  private logRotatingDaysChanged(ev) {
+    const newValue = Number(ev.target.value);
+    if (this.logRotating !== newValue) {
+      this.logRotating = newValue;
+      if (this.logRotating === 1) {
+        this.logModeInfo = "Rotacja logów codziennie.";
+      } else {
+        this.logModeInfo = "Rotacja logów co " + this.logRotating + " dni.";
+      }
+      this._computeLogsSettings(true);
+    }
+  }
+
   private dbDriveChanged(ev) {
-    const newVal = ev.detail.value;
-    this.dbDrive = newVal;
-    this._computeDbUrl();
+    const newVal = ev.target!.selected;
+    if (newVal !== this.dbDrive) {
+      this.dbDrive = newVal;
+      this._computeDbConnectionSettings(false);
+    }
   }
 
   private dbEngineChanged(ev) {
+    console.log("dbEngineChanged");
+    const newVal = ev.target!.selected;
+    if (newVal !== this.dbEngine) {
+      this.dbEngine = newVal;
+      this._computeDbConnectionSettings(false);
+    }
+  }
+
+  private dbUserChanged(ev) {
     const newVal = ev.detail.value;
-    this.dbEngine = newVal;
-    this._computeDbUrl();
+    if (newVal !== this.dbUser) {
+      this.dbUser = newVal;
+      this._computeDbConnectionSettings(false);
+    }
+  }
+
+  private dbPasswordChanged(ev) {
+    const newVal = ev.detail.value;
+    if (newVal !== this.dbPassword) {
+      this.dbPassword = newVal;
+      this._computeDbConnectionSettings(false);
+    }
+  }
+
+  private dbServerIpChanged(ev) {
+    const newVal = ev.detail.value;
+    if (newVal !== this.dbServerIp) {
+      this.dbServerIp = newVal;
+      this._computeDbConnectionSettings(false);
+    }
+  }
+
+  private dbServerNameChanged(ev) {
+    const newVal = ev.detail.value;
+    if (newVal !== this.dbServerName) {
+      this.dbServerName = newVal;
+      this._computeDbConnectionSettings(false);
+    }
+  }
+
+  private dbKeepDaysChanged(ev) {
+    const newVal = ev.detail.value;
+    if (newVal !== this.dbKeepDays) {
+      this.dbKeepDays = newVal;
+      this._computeDbConnectionSettings(false);
+    }
   }
 }
 

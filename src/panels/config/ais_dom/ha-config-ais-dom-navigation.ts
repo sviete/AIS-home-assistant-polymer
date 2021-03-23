@@ -91,6 +91,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
 @customElement("ha-config-ais-dom-navigation")
 class HaConfigAisDomNavigation extends LitElement {
   @property() public hass!: HomeAssistant;
+
   @property() public showAdvanced!: boolean;
 
   protected render(): TemplateResult | void {
