@@ -28,7 +28,7 @@ import {
 import { haStyle } from "../../../resources/styles";
 
 export interface aisSaveDbSettingsResponse {
-  result: string;
+  info: string;
   error: string;
 }
 
@@ -39,7 +39,9 @@ export const aisSaveDbSettings = (params: {
   dbPassword: string;
   dbServerIp: string;
   dbServerName: string;
-  dbKeepDays: string;
+  dbKeepDays: number;
+  dbShowLogbook: boolean;
+  dbShowHistory: boolean;
 }) =>
   handleFetchPromise<aisSaveDbSettingsResponse>(
     fetch("/api/ais_file/ais_db_view", {
@@ -77,9 +79,15 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
   @property({ type: String }) private dbServerName = "";
 
-  @property({ type: String }) private dbKeepDays = "10";
+  @property({ type: Number }) private dbKeepDays = 10;
 
   @property({ type: String }) private errorDbInfo = "";
+
+  @property({ type: String }) private messageDbInfo = "";
+
+  @property({ type: Boolean }) private dbShowLogbook = false;
+
+  @property({ type: Boolean }) private dbShowHistory = false;
 
   static get styles(): CSSResult[] {
     return [
@@ -111,9 +119,16 @@ class HaConfigAisDomConfiglLogs extends LitElement {
           text-align: center;
           height: 70px;
         }
-        .config-invalid .text {
+
+        .config-invalid {
           color: red;
-          font-weight: 500;
+          text-align: center;
+          padding-bottom: 1em;
+        }
+        .config-valid {
+          color: green;
+          text-align: center;
+          padding-bottom: 1em;
         }
 
         @keyframes pulse {
@@ -148,8 +163,22 @@ class HaConfigAisDomConfiglLogs extends LitElement {
     return logError;
   }
 
+  private isNotSeleced(option) {
+    if (!option) {
+      return true;
+    }
+    if (option === "-") {
+      return true;
+    }
+    if (option === "") {
+      return true;
+    }
+
+    return false;
+  }
+
   private getLogIconAnimationStyle(logSettingsInfo) {
-    if (this.logDrive !== "-") {
+    if (!this.isNotSeleced(this.logDrive)) {
       if (this.logLevel === "debug") {
         return "animation: pulseRed 2s infinite;";
       }
@@ -173,7 +202,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
   private getDbStatusIcon(dbEngine) {
     // memory "animation: pulse 6s infinite;";
-    if (dbEngine === "-") {
+    if (this.isNotSeleced(dbEngine)) {
       return html``;
     }
     let dbIcon = "mdi:database";
@@ -204,9 +233,14 @@ class HaConfigAisDomConfiglLogs extends LitElement {
     this.dbServerIp = dbConnInfoAttr.dbServerIp;
     this.dbServerName = dbConnInfoAttr.dbServerName;
     this.dbKeepDays = dbConnInfoAttr.dbKeepDays;
+    this.errorDbInfo = "";
+    this.messageDbInfo = "";
+    this.dbShowLogbook = dbConnInfoAttr.dbShowLogbook;
+    this.dbShowHistory = dbConnInfoAttr.dbShowHistory;
   }
 
   private _getLogSettings() {
+    // LOG
     const connectionInfo = this.hass.states["sensor.ais_logs_settings_info"];
     const connInfoAttr = connectionInfo.attributes;
     this.logDrive = connInfoAttr.logDrive;
@@ -235,17 +269,19 @@ class HaConfigAisDomConfiglLogs extends LitElement {
               ? html`
                   <div class="card-content">
                     Najprostszy wybór to baza SQLite, która nie wymaga
-                    konfiguracji i może rejestrować dane w pamięci - taka baza
-                    jest automatycznie używana, gdy włączysz komponent Historia
-                    lub Dziennik.
+                    konfiguracji i może rejestrować dane w pamięci.
+                    <b>Zmiany konfiguracji bazy wymagają restartu systemu.</b>
+                    Baza w pamięci jest automatycznie używana, gdy włączysz
+                    komponent Historia lub Dziennik.
                     <br />
                     <br />
                     <ha-icon icon="hass:poll-box" slot="suffix"></ha-icon>
                     <ha-switch
-                      checked=${this.dbEngine}
-                      @value-changed=${this.dbUserChanged}
+                      .checked=${this.dbShowHistory}
+                      @change=${this.dbShowHistoryChanged}
                     ></ha-switch>
-                    Historia
+                    Historia - prezentowanie zdarzeń zapisanych w bazie na
+                    wykresach w aplikacji
                     <br />
                     <br />
 
@@ -254,10 +290,11 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                       slot="suffix"
                     ></ha-icon>
                     <ha-switch
-                      checked=${this.dbEngine}
-                      @value-changed=${this.dbUserChanged}
+                      .checked=${this.dbShowLogbook}
+                      @change=${this.dbShowLogbookChanged}
                     ></ha-switch>
-                    Dziennik
+                    Dziennik - prezentowanie zmian zapisanych w bazie w
+                    chronologicznej kolejności
 
                     <br /><br />
 
@@ -429,11 +466,6 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                     </paper-input>
                   </div>
                   <div class="center-container">
-                    <div class="config-invalid">
-                            <span class="text">
-                              ${this.errorDbInfo}
-                            </span>
-                          </div>
                           <mwc-button
                             @click="${this.saveDbSettings}"
                           > Sprawdź i zapisz
@@ -446,6 +478,19 @@ class HaConfigAisDomConfiglLogs extends LitElement {
               : html`<div style="width: 100%; text-align: center;">
                   <ha-circular-progress active></ha-circular-progress>
                 </div>`}
+
+            <div class="center-content">
+              <div class="config-invalid">
+                <span class="text">
+                  ${this.errorDbInfo}
+                </span>
+              </div>
+              <div class="config-valid">
+                <span class="text">
+                  ${this.messageDbInfo}
+                </span>
+              </div>
+            </div>
           </ha-card>
         </ha-config-section>
 
@@ -511,7 +556,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
               </ha-paper-dropdown-menu>
 
               <br /><br />
-              ${this.logDrive !== "-"
+              ${!this.isNotSeleced(this.logDrive)
                 ? html`
                     Możesz określić liczbę dni przechowywanych w jednym pliku.
                     Rotacja plików dziennika wykonywna jest o północy.
@@ -547,6 +592,8 @@ class HaConfigAisDomConfiglLogs extends LitElement {
             </div>
           </ha-card>
         </ha-config-section>
+        <br />
+        <br />
       </hass-subpage>
     `;
   }
@@ -563,7 +610,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
     const newValue = ev.target!.selected;
     if (newValue !== this.logDrive) {
       this.logDrive = newValue;
-      if (this.logDrive !== "-") {
+      if (!this.isNotSeleced(this.logDrive)) {
         this.logModeInfo =
           "Zapis logów do pliku /dyski-wymienne/" + this.logDrive + "/ais.log";
       } else {
@@ -606,9 +653,12 @@ class HaConfigAisDomConfiglLogs extends LitElement {
         dbServerIp: this.dbServerIp,
         dbServerName: this.dbServerName,
         dbKeepDays: this.dbKeepDays,
+        dbShowLogbook: this.dbShowLogbook,
+        dbShowHistory: this.dbShowHistory,
       });
 
       this.errorDbInfo = result.error;
+      this.messageDbInfo = result.info;
     } catch (err) {
       // eslint-disable-next-line
       this.errorDbInfo = err;
@@ -617,11 +667,35 @@ class HaConfigAisDomConfiglLogs extends LitElement {
     this.dbConnectionValidating = false;
   }
 
+  private dbShowLogbookChanged(ev) {
+    const newVal = ev.target.checked;
+    if (newVal !== this.dbShowLogbook) {
+      this.dbShowLogbook = newVal;
+      if (this.dbShowLogbook && this.isNotSeleced(this.dbEngine)) {
+        this.dbEngine = "SQLite (memory)";
+      }
+      this.saveDbSettings();
+    }
+  }
+
+  private dbShowHistoryChanged(ev) {
+    const newVal = ev.target.checked;
+    if (newVal !== this.dbShowHistory) {
+      this.dbShowHistory = newVal;
+      if (this.dbShowHistory && this.isNotSeleced(this.dbEngine)) {
+        this.dbEngine = "SQLite (memory)";
+      }
+      this.saveDbSettings();
+    }
+  }
+
   private dbEngineChanged(ev) {
     const newVal = ev.target!.selected;
     if (newVal !== this.dbEngine) {
       this.dbEngine = newVal;
-      if (newVal === "-") {
+      if (this.isNotSeleced(newVal)) {
+        this.dbShowHistory = false;
+        this.dbShowLogbook = false;
         this.saveDbSettings();
       }
       if (newVal === "SQLite (memory)") {
