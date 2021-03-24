@@ -77,7 +77,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
   @property({ type: String }) private dbServerName = "";
 
-  @property({ type: String }) private dbKeepDays = "";
+  @property({ type: String }) private dbKeepDays = "10";
 
   @property({ type: String }) private errorDbInfo = "";
 
@@ -171,19 +171,19 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
   // DB recorder
 
-  private getDbStatusIcon(dbConnectionInfoState) {
+  private getDbStatusIcon(dbEngine) {
     // memory "animation: pulse 6s infinite;";
-    if (this.dbEngine === "-") {
+    if (dbEngine === "-") {
       return html``;
     }
     let dbIcon = "mdi:database";
-    if (this.dbEngine === "SQLite (memory)") {
+    if (dbEngine === "SQLite (memory)") {
       dbIcon = "mdi:memory";
     }
-    if (this.dbEngine === "SQLite (file)") {
+    if (dbEngine === "SQLite (file)") {
       dbIcon = "mdi:file";
     }
-    if (this.dbEngine === "PostgreSQL") {
+    if (dbEngine === "PostgreSQL") {
       dbIcon = "mdi:server";
     }
     return html`
@@ -191,10 +191,6 @@ class HaConfigAisDomConfiglLogs extends LitElement {
         <ha-icon-button icon=${dbIcon}></ha-icon-button>
       </div>
     `;
-  }
-
-  private getDbConnectionInfoButton(dbConnectionInfoState) {
-    return "Sprawdź i zapisz";
   }
 
   private _getDbConnectionSettings() {
@@ -208,7 +204,6 @@ class HaConfigAisDomConfiglLogs extends LitElement {
     this.dbServerIp = dbConnInfoAttr.dbServerIp;
     this.dbServerName = dbConnInfoAttr.dbServerName;
     this.dbKeepDays = dbConnInfoAttr.dbKeepDays;
-    this.errorDbInfo = "";
   }
 
   private _getLogSettings() {
@@ -235,9 +230,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
           <span slot="header">Konfiguracja zapisu zdarzeń systemu</span>
           <ha-card header="Baza danych do zapisu zdarzeń">
             <!-- show db satus  -->
-            ${this.getDbStatusIcon(
-              this.hass.states["sensor.ais_db_connection_info"]
-            )}
+            ${this.getDbStatusIcon(this.dbEngine)}
             ${!this.dbConnectionValidating
               ? html`
                   <div class="card-content">
@@ -245,6 +238,27 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                     konfiguracji i może rejestrować dane w pamięci - taka baza
                     jest automatycznie używana, gdy włączysz komponent Historia
                     lub Dziennik.
+                    <br />
+                    <br />
+                    <ha-icon icon="hass:poll-box" slot="suffix"></ha-icon>
+                    <ha-switch
+                      checked=${this.dbEngine}
+                      @value-changed=${this.dbUserChanged}
+                    ></ha-switch>
+                    Historia
+                    <br />
+                    <br />
+
+                    <ha-icon
+                      icon="hass:format-list-bulleted-type"
+                      slot="suffix"
+                    ></ha-icon>
+                    <ha-switch
+                      checked=${this.dbEngine}
+                      @value-changed=${this.dbUserChanged}
+                    ></ha-switch>
+                    Dziennik
+
                     <br /><br />
 
                     Wybór silnika bazy danych:
@@ -422,12 +436,8 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                           </div>
                           <mwc-button
                             @click="${this.saveDbSettings}"
-                          >                      
-                            ${this.getDbConnectionInfoButton(
-                              this.hass.states["sensor.ais_db_connection_info"]
-                                .state
-                            )}
-                    </mwc-button>
+                          > Sprawdź i zapisz
+                          </mwc-button>
                   </div>
                 </div>
                 `
@@ -515,7 +525,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                       label-float="Liczba dni przechowywanych w jednym pliku loga"
                       label="Liczba dni przechowywanych w jednym pliku loga"
                     >
-                      <ha-icon icon="mdi:calendar" slot="prefix"></ha-icon>
+                      <ha-icon icon="mdi:calendar" slot="suffix"></ha-icon>
                     </paper-input>
                     Zmiana dysku lub zmiana liczby dni przechowywanych będzie
                     zralizowana po restartcie systemu.
@@ -598,15 +608,13 @@ class HaConfigAisDomConfiglLogs extends LitElement {
         dbKeepDays: this.dbKeepDays,
       });
 
-      if (result.result === "invalid") {
-        this.dbConnectionValidating = false;
-      } else {
-        this.dbConnectionValidating = false;
-      }
+      this.errorDbInfo = result.error;
     } catch (err) {
       // eslint-disable-next-line
-      this.dbConnectionValidating = false;
+      this.errorDbInfo = err;
     }
+
+    this.dbConnectionValidating = false;
   }
 
   private dbEngineChanged(ev) {
