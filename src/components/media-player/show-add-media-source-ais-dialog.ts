@@ -12,7 +12,7 @@ export const showAddMediaSourceAisDialog = (
     dialogTag: "hui-dialog-add-media-source-ais",
     dialogImport: () =>
       import(
-        /* webpackChunkName: "hui-dialog-add-media-source-ais" */ "./hui-dialog-add-media-source-ais"
+        /* webpackChunkName: "hui-dialog-add-media-source-ais" */ "./hui-dialog-add-media-source-ais-dialog"
       ),
     dialogParams: addMediaSourceAisDialogParams,
   });
