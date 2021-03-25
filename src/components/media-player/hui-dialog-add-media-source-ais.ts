@@ -2,10 +2,9 @@ import "@material/mwc-button/mwc-button";
 import "@material/mwc-list/mwc-list";
 import "@material/mwc-list/mwc-list-item";
 import "@polymer/paper-item/paper-item";
-import "@polymer/paper-listbox/paper-listbox";
 import "@polymer/paper-radio-group/paper-radio-group";
 import "@polymer/paper-radio-button/paper-radio-button";
-import { PaperInputElement } from "@polymer/paper-input/paper-input";
+import "@polymer/paper-input/paper-input";
 import {
   css,
   CSSResult,
@@ -17,16 +16,12 @@ import {
   TemplateResult,
 } from "lit-element";
 import "../ha-circular-progress";
+import "../ha-chips";
 import { createCloseHeading } from "../ha-dialog";
 import { haStyleDialog } from "../../resources/styles";
 import type { HomeAssistant } from "../../types";
 import { HassEntity } from "home-assistant-js-websocket";
 import { CheckMediaSourceAisDialogParams } from "./show-check-media-source-ais-dialog";
-import { showReportProblemToAisDialog } from "./show-report-problem-to-ais-dialog";
-import {
-  showAlertDialog,
-  showConfirmationDialog,
-} from "../../dialogs/generic/show-dialog-box";
 
 export interface AisAnswer {
   info: string;
@@ -53,9 +48,16 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property({ attribute: false })
-  private _params?: CheckMediaSourceAisDialogParams;
+  @internalProperty()
+  private _loading = false;
 
-  @internalProperty() private _loading = false;
+  @internalProperty() private audioName = "";
+
+  @internalProperty() private radioType = "";
+
+  @internalProperty() private shareAudio = false;
+
+  private _params?: CheckMediaSourceAisDialogParams;
 
   private _aisMediaInfo?: HassEntity;
 
@@ -93,7 +95,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
                   ? html`
                   <span class="aisUrl">
                     Odtwarzasz z URL, <ha-icon icon="mdi:web"></ha-icon>:
-                    <b></b>${this._aisMediaInfo?.attributes["media_content_id"]}</b>
+                    <b></b>${this.hass.states["media_player.wbudowany_glosnik"].attributes.media_content_id}</b>
                     <br/>ten adres został wypełniony automatycznie - sprawdź czy się zgadza.
                     </span
                   >
@@ -105,7 +107,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
                     `}
               </p>
 
-              <label id="eventlabel">
+              <label>
                 Typ audio:
               </label>
               <paper-radio-group selected="radio" id="media_type">
@@ -139,6 +141,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
               <paper-input
                 placeholder="Typ radia"
                 type="text"
+                .value=${this.radioType}
                 id="audio_category"
                 @value-changed=${this._canSourceBeAdded}
               >
@@ -147,6 +150,13 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
                   slot="suffix"
                 ></ha-icon>
               </paper-input>
+              <ha-chips
+                @chip-clicked=${this._pickRadioType}
+                .items=${this.hass.states[
+                  "input_select.radio_type"
+                ].attributes.options.map((radioType) => radioType)}
+              >
+              </ha-chips>
               <paper-input
                 placeholder="Adres URL Strumienia"
                 type="text"
@@ -168,8 +178,8 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
               <div style="text-align:center;">
                 <ha-icon icon="mdi:share-variant"></ha-icon>
                 <ha-switch
-                  .checked=${this.shareAduio}
-                  @change=${this.dbShowHistoryChanged}
+                  .checked=${this.shareAudio}
+                  @change=${this._shareAudioChanged}
                 >
                 </ha-switch>
                 Udostępnij dla wszystkich (po sprawdzeniu w AIS)
@@ -181,7 +191,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
               </div>
               ${this._canSourceBeAdded()
                 ? html` <div class="sourceCheckButton">
-                      <mwc-button raised @click=${this._handleSourceCheck}>
+                      <mwc-button raised @click=${this._handleAddMedia}>
                         <ha-icon icon="hass:music-note-plus"></ha-icon>
                         &nbsp; Dodaj do swojej biblioteki
                       </mwc-button>
@@ -199,28 +209,42 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
     `;
   }
 
-  private async _checkSourceInAis(): Promise<AisAnswer> {
-    this._loading = true;
-    let itemData: AisAnswer = { info: "", error: false, found: false };
-    try {
-      itemData = (await CheckMediaSourceAisWs(this.hass)) as AisAnswer;
-    } catch {
-      this._loading = false;
-    }
-
-    this._loading = false;
-    return itemData;
-  }
-
   private _isAudioPlaying(): boolean {
-    if (this._aisMediaInfo?.attributes["media_content_id"]) {
+    if (this._aisMediaInfo?.attributes.media_content_id) {
       return true;
     }
     return false;
   }
 
   private _canSourceBeAdded(): boolean {
-    return false;
+    return true;
+  }
+
+  private _pickRadioType(ev): void {
+    const newIdx = ev.detail.index;
+    const newType = this.hass.states["input_select.radio_type"].attributes
+      .options[newIdx];
+    if (newType !== this.radioType) {
+      this.radioType = newType;
+    }
+  }
+
+  private _shareAudioChanged(ev): void {
+    const newVal = ev.target.checked;
+    if (newVal !== this.shareAudio) {
+      this.shareAudio = newVal;
+    }
+  }
+
+  private _audioNameChanged(ev): void {
+    const newVal = ev.target.checked;
+    if (newVal !== this.shareAudio) {
+      this.audioName = newVal;
+    }
+  }
+
+  private _handleAddMedia(): void {
+    console.log("xxx");
   }
 
   static get styles(): CSSResult[] {
