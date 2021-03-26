@@ -17,8 +17,6 @@ class ListCard extends HTMLElement {
     const content = document.createElement("div");
     const style = document.createElement("style");
     const iconColor = cardConfig.icon_color || "white";
-    const delIconHide =
-      cardConfig.show_delete_icon === true ? "" : "display:none;";
     const flagColor = "var(--primary-color)";
     const accent = "var(--paper-card-background-color)";
     const accentSelected = "var(--primary-color)";
@@ -78,7 +76,6 @@ class ListCard extends HTMLElement {
           position: absolute;
         }
         div.delete {
-          ${delIconHide};
           cursor: pointer;
           width: 12px;
         }
@@ -125,6 +122,10 @@ class ListCard extends HTMLElement {
           if (entry in feed) {
             if (rows >= rowLimit) break;
             const mediaSourceInfo = feed[entry].audio_type || mediaSource;
+            let displayDeleteIcon = "none";
+            if (config.show_delete_icon === true && feed[entry].editable) {
+              displayDeleteIcon = "normal";
+            }
             let selectedClass = "";
             if (Number(selectedId) === rows) {
               selectedClass = "_selected";
@@ -142,7 +143,7 @@ class ListCard extends HTMLElement {
                     <svg class="play" preserveAspectRatio="none" viewBox="0 0 100 100" data-id="${rows}" data-media-source="${mediaSource}">
                     </svg>
                   </div>
-                  <div class="delete" data-id="${rows}" data-media-source="${mediaSource}" style="cursor: pointer; ">
+                  <div class="delete" data-id="${rows}" data-media-source="${mediaSource}" style="cursor: pointer; display:${displayDeleteIcon}">
                     <svg style="width:12px;height:12px" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
                     </svg>                  

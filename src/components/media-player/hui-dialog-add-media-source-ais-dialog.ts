@@ -88,7 +88,16 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
     this.mediaCategory = "radio";
     this.mediaName = "";
     this.mediaType = "";
-    this.mediaStreamUrl = "";
+    if (
+      this.hass.states["media_player.wbudowany_glosnik"].attributes
+        .media_content_id
+    ) {
+      this.mediaStreamUrl = this.hass.states[
+        "media_player.wbudowany_glosnik"
+      ].attributes.media_content_id;
+    } else {
+      this.mediaStreamUrl = "";
+    }
     this.mediaImageUrl = "";
     this.mediaShare = false;
   }
@@ -149,9 +158,6 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
                 </paper-radio-button>
                 <paper-radio-button name="music">
                   <ha-icon icon="mdi:music"></ha-icon>
-                </paper-radio-button>
-                <paper-radio-button name="video">
-                  <ha-icon icon="mdi:file-video"></ha-icon>
                 </paper-radio-button>
               </paper-radio-group>
               <br />

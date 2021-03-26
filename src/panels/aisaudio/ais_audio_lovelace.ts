@@ -896,6 +896,7 @@ export const aisAudioLovelace: LovelaceConfig = {
               card: {
                 entity: ["sensor.radiolist"],
                 media_source: "Radio",
+                show_delete_icon: true,
                 type: "ais-list",
               },
               conditions: [
