@@ -7,11 +7,11 @@ class AisEasyPicker extends HTMLElement {
   setConfig(config) {
     const root = this.shadowRoot;
     if (root.lastChild) root.removeChild(root.lastChild);
-    const cardConfig = config;
     const card = document.createElement("ha-card");
     card.header = config.title;
     const content = document.createElement("div");
     const style = document.createElement("style");
+
     style.textContent = `
       div.tags {
         width: 100%;
@@ -57,19 +57,43 @@ class AisEasyPicker extends HTMLElement {
     card.appendChild(style);
     card.appendChild(content);
     root.appendChild(card);
-    this._config = cardConfig;
+    this._config = config;
   }
 
   _updateContent(element, options, state) {
-    var a = "";
-    var c = "";
+    let a = "";
+    let c = "";
+    const orgin = this._config.orgin;
+
     options.map((option) => {
       if (state === option) {
         c = "clicked";
       } else {
         c = "";
       }
-      a += `<div class="tag ${c}" data-option="${option}"><div class="text"> ${option} </div> </div>`;
+      if (!orgin) {
+        a += `<div class="tag ${c}" data-option="${option}"><div class="text"> ${option} </div> </div>`;
+      } else {
+        if (orgin === "private" && option.startsWith("Moje ")) {
+          a += `<div class="tag ${c}" data-option="${option}"><div class="text"> ${option.replace(
+            "Moje ",
+            ""
+          )} </div> </div>`;
+        }
+        if (orgin === "shared" && option.startsWith("Udostępnione ")) {
+          a += `<div class="tag ${c}" data-option="${option}"><div class="text"> ${option.replace(
+            "Udostępnione ",
+            ""
+          )} </div> </div>`;
+        }
+        if (
+          orgin === "public" &&
+          !option.startsWith("Udostępnione ") &&
+          !option.startsWith("Moje ")
+        ) {
+          a += `<div class="tag ${c}" data-option="${option}"><div class="text"> ${option} </div> </div>`;
+        }
+      }
     });
     element.innerHTML = `${a}`;
   }
