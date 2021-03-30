@@ -361,8 +361,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
 
   private _mediaTypePicket(ev): void {
     const newIdx = ev.detail.index;
-    const newType = this.hass.states["input_select.radio_type"].attributes
-      .options[newIdx];
+    const newType = this.mediaChips[newIdx];
     if (newType !== this.mediaType) {
       this.mediaType = newType;
     }
