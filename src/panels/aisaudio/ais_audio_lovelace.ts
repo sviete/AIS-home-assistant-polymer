@@ -864,7 +864,7 @@ export const aisAudioLovelace: LovelaceConfig = {
                     icon: "mdi:share-variant",
                     entity: "sensor.ais_radio_origin",
                     show_name: true,
-                    name: "Dla Mnie",
+                    name: "Udostępnione",
                     state: [
                       {
                         color: "var(--primary-color)",
