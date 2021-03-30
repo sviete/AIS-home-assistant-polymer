@@ -13,11 +13,15 @@ import {
 } from "lit-element";
 import "../../../../../components/ha-card";
 import "../../../../../components/ha-code-editor";
-import { getConfigEntries } from "../../../../../data/config_entries";
+import {
+  getConfigEntries,
+  reloadConfigEntry,
+} from "../../../../../data/config_entries";
 import { showOptionsFlowDialog } from "../../../../../dialogs/config-flow/show-dialog-options-flow";
 import "../../../../../layouts/hass-subpage";
 import { haStyle } from "../../../../../resources/styles";
 import { HomeAssistant } from "../../../../../types";
+import { showAlertDialog } from "../../../../../dialogs/generic/show-dialog-box";
 
 @customElement("ais-mqtt-config-panel")
 class HaPanelDevAisMqtt extends LitElement {
@@ -30,10 +34,14 @@ class HaPanelDevAisMqtt extends LitElement {
       <hass-subpage .hass=${this.hass}>
         <div class="content">
           <ha-card header="Ustawienia SUPLA MQTT">
+            <ha-dialog> </ha-dialog>
             <div class="card-actions">
               <mwc-button @click=${this._openOptionFlow}
-                >Dane połączenia</mwc-button
-              >
+                >Dane połączenia
+              </mwc-button>
+              <mwc-button @click=${this._reloadIntegration}
+                >Wczytaj ponownie
+              </mwc-button>
             </div>
           </ha-card>
         </div>
@@ -52,6 +60,18 @@ class HaPanelDevAisMqtt extends LitElement {
       (entry) => entry.entry_id === configEntryId
     );
     showOptionsFlowDialog(this, configEntry!);
+  }
+
+  private async _reloadIntegration() {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (!searchParams.has("config_entry")) {
+      console.log("No config_entry");
+    } else {
+      await reloadConfigEntry(this.hass, searchParams.get("config_entry"));
+      showAlertDialog(this, {
+        text: "OK. Integracja została ponownie wczytana.",
+      });
+    }
   }
 
   static get styles(): CSSResultArray {
