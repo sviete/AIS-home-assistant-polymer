@@ -75,6 +75,8 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
 
   @internalProperty() private mediaShare = false;
 
+  @internalProperty() private mediaChips = [];
+
   private _params?: AddMediaSourceAisDialogParams;
 
   private _aisMediaInfo?: HassEntity;
@@ -100,6 +102,24 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
     }
     this.mediaImageUrl = "";
     this.mediaShare = false;
+
+    this.mediaChips = [];
+    const options = this.hass.states["input_select.radio_type"].attributes
+      .options;
+    options.forEach((element) => {
+      if (!element.startsWith("Moje") && !element.startsWith("Udostępnione")) {
+        this.mediaChips.push(element);
+      }
+    });
+
+    // this._config!.forEach((item) => {
+    //   if (
+    //     item.container === target.container &&
+    //     item.host !== parseInt(String(target.value), 10)
+    //   ) {
+    //     item.host = target.value ? parseInt(String(target.value), 10) : null;
+    //   }
+    // });
   }
 
   public closeDialog() {
@@ -187,11 +207,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
                     </paper-input>
                     <ha-chips
                       @chip-clicked=${this._mediaTypePicket}
-                      .items=${this.hass.states[
-                        "input_select.radio_type"
-                      ].attributes.options.map(
-                        (mediaCategory) => mediaCategory
-                      )}
+                      .items=${this.mediaChips}
                     >
                     </ha-chips>
                     <paper-input

@@ -108,7 +108,7 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
                                   &nbsp; Uruchom Automatyczne Sprawdzanie
                         </mwc-button>
                       </div> 
-                    <p></p>Jeżeli automatyczne sprawdzenie nie pomoże, to będzie można wysłać informację o tym problemie do AI-Speaker.</p>`
+                    <p></p>Jeżeli automatyczne sprawdzenie nie pomoże, to będzie można wysłać informację o tym problemie do AI-Speaker. <br /> Automatycznie powiadomimy udostępniającego media o problemie.</p>`
                   : html`
                       <div style="text-align: center;">
                         <h2>
