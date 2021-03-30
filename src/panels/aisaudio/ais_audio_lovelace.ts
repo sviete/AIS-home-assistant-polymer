@@ -821,26 +821,6 @@ export const aisAudioLovelace: LovelaceConfig = {
               card: {
                 cards: [
                   {
-                    icon: "mdi:earth",
-                    entity: "sensor.ais_radio_origin",
-                    show_name: true,
-                    name: "Publiczne",
-                    state: [
-                      {
-                        color: "var(--primary-color)",
-                        value: "public",
-                      },
-                    ],
-                    tap_action: {
-                      action: "call-service",
-                      service: "ais_ai_service.set_context",
-                      service_data: {
-                        text: "radio_public",
-                      },
-                    },
-                    type: "ais-button",
-                  },
-                  {
                     icon: "mdi:account",
                     entity: "sensor.ais_radio_origin",
                     show_name: true,
@@ -856,6 +836,26 @@ export const aisAudioLovelace: LovelaceConfig = {
                       service: "ais_ai_service.set_context",
                       service_data: {
                         text: "radio_private",
+                      },
+                    },
+                    type: "ais-button",
+                  },
+                  {
+                    icon: "mdi:earth",
+                    entity: "sensor.ais_radio_origin",
+                    show_name: true,
+                    name: "Publiczne",
+                    state: [
+                      {
+                        color: "var(--primary-color)",
+                        value: "public",
+                      },
+                    ],
+                    tap_action: {
+                      action: "call-service",
+                      service: "ais_ai_service.set_context",
+                      service_data: {
+                        text: "radio_public",
                       },
                     },
                     type: "ais-button",
