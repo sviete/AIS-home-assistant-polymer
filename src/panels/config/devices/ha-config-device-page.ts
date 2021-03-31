@@ -183,15 +183,17 @@ export class HaConfigDevicePage extends LitElement {
                 <span slot="header">
                   ${computeDeviceName(device, this.hass)}
                 </span>
+                <ha-icon-button
+                  slot="toolbar-icon"
+                  icon="hass:pencil"
+                  @click=${this._showSettings}
+                ></ha-icon-button>
               `
             : ""
         }
 
-        <ha-icon-button
-          slot="toolbar-icon"
-          icon="hass:cog"
-          @click=${this._showSettings}
-        ></ha-icon-button>
+
+
 
         <div class="container">
           <div class="header fullwidth">
@@ -199,19 +201,25 @@ export class HaConfigDevicePage extends LitElement {
               this.narrow
                 ? ""
                 : html`
-                    <div>
-                      <h1>${computeDeviceName(device, this.hass)}</h1>
-                      ${area
-                        ? html`
-                            <a href="/config/areas/area/${area.area_id}"
-                              >${this.hass.localize(
-                                "ui.panel.config.integrations.config_entry.area",
-                                "area",
-                                area.name || "Unnamed Area"
-                              )}</a
-                            >
-                          `
-                        : ""}
+                    <div class="header-name">
+                      <div>
+                        <h1>${computeDeviceName(device, this.hass)}</h1>
+                        ${area
+                          ? html`
+                              <a href="/config/areas/area/${area.area_id}"
+                                >${this.hass.localize(
+                                  "ui.panel.config.integrations.config_entry.area",
+                                  "area",
+                                  area.name || "Unnamed Area"
+                                )}</a
+                              >
+                            `
+                          : ""}
+                      </div>
+                      <ha-icon-button
+                        icon="hass:pencil"
+                        @click=${this._showSettings}
+                      ></ha-icon-button>
                     </div>
                   `
             }
@@ -220,7 +228,7 @@ export class HaConfigDevicePage extends LitElement {
                     batteryState
                       ? html`
                           <div class="battery">
-                            ${batteryIsBinary ? "" : batteryState.state + "%"}
+                            ${batteryIsBinary ? "" : batteryState.state + " %"}
                             <ha-battery-icon
                               .hass=${this.hass!}
                               .batteryStateObj=${batteryState}
@@ -656,11 +664,20 @@ export class HaConfigDevicePage extends LitElement {
       import(
         "./device-detail/integration-elements/zwave_js/ha-device-info-zwave_js"
       );
+      import(
+        "./device-detail/integration-elements/zwave_js/ha-device-actions-zwave_js"
+      );
       templates.push(html`
         <ha-device-info-zwave_js
           .hass=${this.hass}
           .device=${device}
         ></ha-device-info-zwave_js>
+        <div class="card-actions" slot="actions">
+          <ha-device-actions-zwave_js
+            .hass=${this.hass}
+            .device=${device}
+          ></ha-device-actions-zwave_js>
+        </div>
       `);
     }
     return templates;
@@ -820,6 +837,12 @@ export class HaConfigDevicePage extends LitElement {
         .header {
           display: flex;
           justify-content: space-between;
+        }
+
+        .header-name {
+          display: flex;
+          align-items: center;
+          padding-left: 8px;
         }
 
         .column,

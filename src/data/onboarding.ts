@@ -14,12 +14,14 @@ export interface OnboardingIntegrationStepResponse {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface OnboardingMobIntegrationStepResponse {}
+export interface OnboardingAnalyticsStepResponse {}
 
 export interface OnboardingResponses {
   user: OnboardingUserStepResponse;
   core_config: OnboardingCoreConfigStepResponse;
   integration: OnboardingIntegrationStepResponse;
   mob_integration: OnboardingMobIntegrationStepResponse;
+  analytics: OnboardingAnalyticsStepResponse;
 }
 
 export type ValidOnboardingStep = keyof OnboardingResponses;
@@ -58,6 +60,9 @@ export const onboardMobIntegrationStep = (hass: HomeAssistant) =>
     "POST",
     "onboarding/mob_integration"
   );
+
+export const onboardAnalyticsStep = (hass: HomeAssistant) =>
+  hass.callApi<OnboardingAnalyticsStepResponse>("POST", "onboarding/analytics");
 
 export const onboardIntegrationStep = (
   hass: HomeAssistant,
