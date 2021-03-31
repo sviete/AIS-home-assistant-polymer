@@ -30,7 +30,6 @@ import { HassElement } from "../state/hass-element";
 import { HomeAssistant } from "../types";
 import { registerServiceWorker } from "../util/register-service-worker";
 import "./onboarding-create-user";
-import "./onboarding-ais-wifi";
 import "./onboarding-ais-restore-backup";
 import "./onboarding-loading";
 

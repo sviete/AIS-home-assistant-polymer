@@ -18,6 +18,7 @@ import "@material/mwc-formfield";
 import { showVoiceCommandDialog } from "../../dialogs/voice-command-dialog/show-ha-voice-command-dialog";
 import { showMediaBrowserDialog } from "../../components/media-player/show-media-browser-dialog";
 import { showCheckMediaSourceAisDialog } from "../../components/media-player/show-check-media-source-ais-dialog";
+import { showAddMediaSourceAisDialog } from "../../components/media-player/show-add-media-source-ais-dialog";
 import { MediaPickedEvent } from "../../data/media-player";
 import "../../components/ha-menu-button";
 import "../../components/ha-card";
@@ -94,6 +95,13 @@ class PanelAisAudio extends LitElement {
     });
   }
 
+  private _showAddAisMedia(): void {
+    showAddMediaSourceAisDialog(this, {
+      selectedOptionCallback: (option: string) =>
+        console.log("option: " + option),
+    });
+  }
+
   protected updated(changedProps: PropertyValues): void {
     super.updated(changedProps);
 
@@ -140,6 +148,11 @@ class PanelAisAudio extends LitElement {
               label="Informacje o audio"
               icon="hass:information"
               @click=${this._showCheckAisMedia}
+            ></ha-icon-button>
+            <ha-icon-button
+              label="Dodaj audio"
+              icon="hass:music-note-plus"
+              @click=${this._showAddAisMedia}
             ></ha-icon-button>
             <div main-title>Audio</div>
             <ha-icon-button

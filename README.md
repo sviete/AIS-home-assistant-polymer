@@ -6,6 +6,4 @@ This is the repository for the official [AI-Speaker](https://ai-speaker.com) fro
 
 ## License
 
-Home Assistant is open-source and Apache 2 licensed. Feel free to browse the repository, learn and reuse parts in your own projects.
-
-We use [BrowserStack](https://www.browserstack.com) to test Home Assistant on a large variety of devices.
+AI-Speaker is open-source and Apache 2 licensed. Feel free to browse the repository, learn and reuse parts in your own projects.

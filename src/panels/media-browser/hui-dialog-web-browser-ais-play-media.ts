@@ -143,10 +143,10 @@ export class HuiDialogWebBrowserAisPlayMedia extends LitElement {
         <img .src=${imgSrc} />
         <br />
         <ha-icon icon="mdi:file-image"></ha-icon>${imgSrc} <br /><br />
-        <mwc-button @click=${this._addToAisLib}>
+        <!-- <mwc-button @click=${this._addToAisLib}>
           <ha-icon icon="hass:playlist-plus"></ha-icon>
           Dodaj do mojej biblioteki.
-        </mwc-button>
+        </mwc-button> -->
       </div> `;
     }
     return html`<div class="card-actions">

@@ -40,7 +40,7 @@ import {
   SUPPORT_TURN_ON,
 } from "../../../data/media-player";
 import type { HomeAssistant } from "../../../types";
-import { findEntities } from "../common/find-entites";
+import { findEntities } from "../common/find-entities";
 import { hasConfigOrEntityChanged } from "../common/has-changed";
 import { installResizeObserver } from "../common/install-resize-observer";
 import "../components/hui-marquee";

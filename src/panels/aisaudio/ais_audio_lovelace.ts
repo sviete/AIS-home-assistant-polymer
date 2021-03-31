@@ -550,66 +550,6 @@ export const aisAudioLovelace: LovelaceConfig = {
                           title: "Wyszukiwanie Muzyki",
                           type: "entities",
                         },
-                        {
-                          cards: [
-                            {
-                              icon: "mdi:folder-music",
-                              tap_action: {
-                                action: "call-service",
-                                service: "ais_spotify_service.get_favorites",
-                                service_data: {
-                                  type: "featured-playlists",
-                                },
-                              },
-                              type: "button",
-                            },
-                            {
-                              icon: "mdi:playlist-music",
-                              tap_action: {
-                                action: "call-service",
-                                service: "ais_spotify_service.get_favorites",
-                                service_data: {
-                                  type: "playlists",
-                                },
-                              },
-                              type: "button",
-                            },
-                            {
-                              icon: "mdi:account",
-                              tap_action: {
-                                action: "call-service",
-                                service: "ais_spotify_service.get_favorites",
-                                service_data: {
-                                  type: "artists",
-                                },
-                              },
-                              type: "button",
-                            },
-                            {
-                              icon: "mdi:album",
-                              tap_action: {
-                                action: "call-service",
-                                service: "ais_spotify_service.get_favorites",
-                                service_data: {
-                                  type: "albums",
-                                },
-                              },
-                              type: "button",
-                            },
-                            {
-                              icon: "mdi:music-note",
-                              tap_action: {
-                                action: "call-service",
-                                service: "ais_spotify_service.get_favorites",
-                                service_data: {
-                                  type: "tracks",
-                                },
-                              },
-                              type: "button",
-                            },
-                          ],
-                          type: "horizontal-stack",
-                        },
                       ],
                       type: "vertical-stack",
                     },
@@ -638,16 +578,6 @@ export const aisAudioLovelace: LovelaceConfig = {
             },
             {
               cards: [
-                {
-                  entities: [
-                    {
-                      entity: "input_boolean.ais_audio_mono",
-                    },
-                  ],
-                  show_header_toggle: false,
-                  title: "Equalizer",
-                  type: "entities",
-                },
                 {
                   card: {
                     show_header_toggle: false,
@@ -756,6 +686,120 @@ export const aisAudioLovelace: LovelaceConfig = {
             },
             {
               card: {
+                cards: [
+                  {
+                    icon: "mdi:folder-music",
+                    entity: "sensor.ais_spotify_favorites_mode",
+                    show_name: false,
+                    state: [
+                      {
+                        color: "var(--primary-color)",
+                        value: "featured-playlists",
+                      },
+                    ],
+                    tap_action: {
+                      action: "call-service",
+                      service: "ais_spotify_service.get_favorites",
+                      service_data: {
+                        type: "featured-playlists",
+                      },
+                    },
+                    type: "ais-button",
+                  },
+                  {
+                    icon: "mdi:playlist-music",
+                    entity: "sensor.ais_spotify_favorites_mode",
+                    show_name: false,
+                    state: [
+                      {
+                        color: "var(--primary-color)",
+                        value: "playlists",
+                      },
+                    ],
+                    tap_action: {
+                      action: "call-service",
+                      service: "ais_spotify_service.get_favorites",
+                      service_data: {
+                        type: "playlists",
+                      },
+                    },
+                    type: "ais-button",
+                  },
+                  {
+                    icon: "mdi:account",
+                    entity: "sensor.ais_spotify_favorites_mode",
+                    show_name: false,
+                    state: [
+                      {
+                        color: "var(--primary-color)",
+                        value: "artists",
+                      },
+                    ],
+                    tap_action: {
+                      action: "call-service",
+                      service: "ais_spotify_service.get_favorites",
+
+                      service_data: {
+                        type: "artists",
+                      },
+                    },
+                    type: "ais-button",
+                  },
+                  {
+                    icon: "mdi:album",
+                    entity: "sensor.ais_spotify_favorites_mode",
+                    show_name: false,
+                    state: [
+                      {
+                        color: "var(--primary-color)",
+                        value: "albums",
+                      },
+                    ],
+                    tap_action: {
+                      action: "call-service",
+                      service: "ais_spotify_service.get_favorites",
+                      service_data: {
+                        type: "albums",
+                      },
+                    },
+                    type: "ais-button",
+                  },
+                  {
+                    icon: "mdi:music-note",
+                    entity: "sensor.ais_spotify_favorites_mode",
+                    show_name: false,
+                    state: [
+                      {
+                        color: "var(--primary-color)",
+                        value: "tracks",
+                      },
+                    ],
+                    tap_action: {
+                      action: "call-service",
+                      service: "ais_spotify_service.get_favorites",
+                      service_data: {
+                        type: "tracks",
+                      },
+                    },
+                    type: "ais-button",
+                  },
+                ],
+                type: "horizontal-stack",
+              },
+              conditions: [
+                {
+                  entity: "sensor.ais_player_mode",
+                  state: "music_player",
+                },
+                {
+                  entity: "input_select.ais_music_service",
+                  state: "Spotify",
+                },
+              ],
+              type: "conditional",
+            },
+            {
+              card: {
                 entity: ["sensor.spotifysearchlist"],
                 media_source: "SpotifySearch",
                 show_delete_icon: true,
@@ -775,13 +819,128 @@ export const aisAudioLovelace: LovelaceConfig = {
             },
             {
               card: {
-                entity: "input_select.radio_type",
-                type: "ais-easy-picker",
+                cards: [
+                  {
+                    icon: "mdi:account",
+                    entity: "sensor.ais_radio_origin",
+                    show_name: true,
+                    name: "Moje",
+                    state: [
+                      {
+                        color: "var(--primary-color)",
+                        value: "private",
+                      },
+                    ],
+                    tap_action: {
+                      action: "call-service",
+                      service: "ais_ai_service.set_context",
+                      service_data: {
+                        text: "radio_private",
+                      },
+                    },
+                    type: "ais-button",
+                  },
+                  {
+                    icon: "mdi:earth",
+                    entity: "sensor.ais_radio_origin",
+                    show_name: true,
+                    name: "Publiczne",
+                    state: [
+                      {
+                        color: "var(--primary-color)",
+                        value: "public",
+                      },
+                    ],
+                    tap_action: {
+                      action: "call-service",
+                      service: "ais_ai_service.set_context",
+                      service_data: {
+                        text: "radio_public",
+                      },
+                    },
+                    type: "ais-button",
+                  },
+                  {
+                    icon: "mdi:share-variant",
+                    entity: "sensor.ais_radio_origin",
+                    show_name: true,
+                    name: "Udostępnione",
+                    state: [
+                      {
+                        color: "var(--primary-color)",
+                        value: "shared",
+                      },
+                    ],
+                    tap_action: {
+                      action: "call-service",
+                      service: "ais_ai_service.set_context",
+                      service_data: {
+                        text: "radio_shared",
+                      },
+                    },
+                    type: "ais-button",
+                  },
+                ],
+                type: "horizontal-stack",
               },
               conditions: [
                 {
                   entity: "sensor.ais_player_mode",
                   state: "radio_player",
+                },
+              ],
+              type: "conditional",
+            },
+            {
+              card: {
+                entity: "input_select.radio_type",
+                type: "ais-easy-picker",
+                orgin: "public",
+              },
+              conditions: [
+                {
+                  entity: "sensor.ais_player_mode",
+                  state: "radio_player",
+                },
+                {
+                  entity: "sensor.ais_radio_origin",
+                  state: "public",
+                },
+              ],
+              type: "conditional",
+            },
+            {
+              card: {
+                entity: "input_select.radio_type",
+                type: "ais-easy-picker",
+                orgin: "private",
+              },
+              conditions: [
+                {
+                  entity: "sensor.ais_player_mode",
+                  state: "radio_player",
+                },
+                {
+                  entity: "sensor.ais_radio_origin",
+                  state: "private",
+                },
+              ],
+              type: "conditional",
+            },
+            {
+              card: {
+                entity: "input_select.radio_type",
+                type: "ais-easy-picker",
+                orgin: "shared",
+              },
+              conditions: [
+                {
+                  entity: "sensor.ais_player_mode",
+                  state: "radio_player",
+                },
+                {
+                  entity: "sensor.ais_radio_origin",
+                  state: "shared",
                 },
               ],
               type: "conditional",
@@ -855,6 +1014,7 @@ export const aisAudioLovelace: LovelaceConfig = {
               card: {
                 entity: ["sensor.radiolist"],
                 media_source: "Radio",
+                show_delete_icon: true,
                 type: "ais-list",
               },
               conditions: [

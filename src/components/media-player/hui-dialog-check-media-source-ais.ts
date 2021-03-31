@@ -14,7 +14,6 @@ import {
   TemplateResult,
 } from "lit-element";
 import "../ha-circular-progress";
-// import { fireEvent } from "../../common/dom/fire_event";
 import { createCloseHeading } from "../ha-dialog";
 import { haStyleDialog } from "../../resources/styles";
 import type { HomeAssistant } from "../../types";
@@ -66,7 +65,6 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
 
   public closeDialog() {
     this._params = undefined;
-    // fireEvent(this, "dialog-closed", { dialog: this.localName });
   }
 
   protected render(): TemplateResult {
@@ -89,16 +87,16 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
           : html``}
         ${this._isAudioPlaying() && !this._loading
           ? html`<p>
-                Obecnie odtwarzasz ${this._aisMediaInfo?.attributes["source"]},
-                <b></b>${this._aisMediaInfo?.attributes["media_title"]}</b>
+                Obecnie odtwarzasz ${this._aisMediaInfo?.attributes.source},
+                <b></b>${this._aisMediaInfo?.attributes.media_title}</b>
               <span class="aisUrl">
                 <br>z adresu URL <ha-icon icon="mdi:web"></ha-icon>:
-                <b></b>${this._aisMediaInfo?.attributes["media_content_id"]}</b>
+                <b></b>${this._aisMediaInfo?.attributes.media_content_id}</b>
                 </span
               >
               </p>
               <div class="img404"><img src="${
-                this._aisMediaInfo?.attributes["media_stream_image"]
+                this._aisMediaInfo?.attributes.media_stream_image
               }"/></div>
               ${
                 this._canSourceBeChecked()
@@ -110,7 +108,7 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
                                   &nbsp; Uruchom Automatyczne Sprawdzanie
                         </mwc-button>
                       </div> 
-                    <p></p>Jeżeli automatyczne sprawdzenie nie pomoże, to będzie można wysłać informację o tym problemie do AI-Speaker.</p>`
+                    <p></p>Jeżeli automatyczne sprawdzenie nie pomoże, to będzie można wysłać informację o tym problemie do AI-Speaker. <br /> Automatycznie powiadomimy udostępniającego media o problemie.</p>`
                   : html`
                       <div style="text-align: center;">
                         <h2>
@@ -217,8 +215,8 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
 
   private _isAudioPlaying(): boolean {
     if (
-      this._aisMediaInfo?.attributes["media_title"] &&
-      this._aisMediaInfo?.attributes["media_content_id"]
+      this._aisMediaInfo?.attributes.media_title &&
+      this._aisMediaInfo?.attributes.media_content_id
     ) {
       return true;
     }
