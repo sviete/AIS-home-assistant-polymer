@@ -336,7 +336,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
     if (this.mediaName.length < 3) {
       return false;
     }
-    if (this.mediaCategory.length < 3) {
+    if (this.mediaType.length < 3) {
       return false;
     }
     if (this.mediaStreamUrl.length < 10) {
