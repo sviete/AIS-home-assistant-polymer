@@ -16,7 +16,7 @@ import {
   TemplateResult,
 } from "lit-element";
 import "../ha-circular-progress";
-import "../ha-chips";
+import "../ha-chip";
 import "../ha-switch";
 import { createCloseHeading } from "../ha-dialog";
 import { haStyleDialog } from "../../resources/styles";
@@ -205,11 +205,11 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
                         slot="suffix"
                       ></ha-icon>
                     </paper-input>
-                    <ha-chips
+                    <ha-chip
                       @chip-clicked=${this._mediaTypePicket}
                       .items=${this.mediaChips}
                     >
-                    </ha-chips>
+                    </ha-chip>
                     <paper-input
                       placeholder="Adres URL Strumienia"
                       type="text"
