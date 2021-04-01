@@ -151,9 +151,10 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
     import("./onboarding-mob-integrations");
     registerServiceWorker(this, false);
     this.addEventListener("onboarding-step", (ev) => this._handleStepDone(ev));
-    if (window.innerWidth > 450) {
-      import("./particles");
-    }
+    // ais fix - no particles
+    // if (window.innerWidth > 450) {
+    //   import("./particles");
+    // }
   }
 
   protected updated(changedProps: PropertyValues) {
