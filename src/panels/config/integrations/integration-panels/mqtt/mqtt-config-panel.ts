@@ -30,6 +30,8 @@ import { mdiDotsVertical } from "@mdi/js";
 class HaPanelDevMqtt extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
+  @property({ type: Boolean }) public narrow!: boolean;
+
   @internalProperty() private topic = "";
 
   @internalProperty() private payload = "";
@@ -48,7 +50,7 @@ class HaPanelDevMqtt extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <hass-subpage .hass=${this.hass}>
+      <hass-subpage .narrow=${this.narrow} .hass=${this.hass}>
         <ha-button-menu corner="BOTTOM_START" slot="toolbar-icon">
           <mwc-icon-button slot="trigger" alt="menu">
             <ha-svg-icon .path=${mdiDotsVertical}></ha-svg-icon>
