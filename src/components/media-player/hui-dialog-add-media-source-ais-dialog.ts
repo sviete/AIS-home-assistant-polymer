@@ -16,7 +16,7 @@ import {
   TemplateResult,
 } from "lit-element";
 import "../ha-circular-progress";
-import "../ha-chip";
+import "../ha-chip-set";
 import "../ha-switch";
 import { createCloseHeading } from "../ha-dialog";
 import { haStyleDialog } from "../../resources/styles";
@@ -77,6 +77,13 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
 
   @internalProperty() private mediaChips = [];
 
+  @internalProperty() private mediaNamePlaceholder =
+    "Nazwa (komenda: Włącz radio nazwa)";
+
+  @internalProperty() private mediaTypePlaceholder = "Typ radia";
+
+  @internalProperty() private mediaUrlPlaceholder = "Adres URL Strumienia";
+
   private _params?: AddMediaSourceAisDialogParams;
 
   private _aisMediaInfo?: HassEntity;
@@ -111,15 +118,6 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
         this.mediaChips.push(element);
       }
     });
-
-    // this._config!.forEach((item) => {
-    //   if (
-    //     item.container === target.container &&
-    //     item.host !== parseInt(String(target.value), 10)
-    //   ) {
-    //     item.host = target.value ? parseInt(String(target.value), 10) : null;
-    //   }
-    // });
   }
 
   public closeDialog() {
@@ -181,10 +179,11 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
                 </paper-radio-button>
               </paper-radio-group>
               <br />
-              ${this.mediaCategory === "radio"
+              ${this.mediaCategory === "radio" ||
+              this.mediaCategory === "podcast"
                 ? html`
                     <paper-input
-                      placeholder="Nazwa (komenda: Włącz radio nazwa)"
+                      .placeholder=${this.mediaNamePlaceholder}
                       type="text"
                       value=${this.mediaName}
                       id="audio_name"
@@ -194,7 +193,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
                     </paper-input>
 
                     <paper-input
-                      placeholder="Typ radia"
+                      .placeholder=${this.mediaTypePlaceholder}
                       type="text"
                       value=${this.mediaType}
                       id="audio_category"
@@ -205,13 +204,13 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
                         slot="suffix"
                       ></ha-icon>
                     </paper-input>
-                    <ha-chip
+                    <ha-chip-set
                       @chip-clicked=${this._mediaTypePicket}
                       .items=${this.mediaChips}
                     >
-                    </ha-chip>
+                    </ha-chip-set>
                     <paper-input
-                      placeholder="Adres URL Strumienia"
+                      .placeholder=${this.mediaUrlPlaceholder}
                       type="text"
                       value=${this.mediaStreamUrl}
                       @value-changed=${this._mediaStreamUrlChanged}
@@ -349,6 +348,37 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
     const newVal = ev.detail.value;
     if (newVal !== this.mediaCategory) {
       this.mediaCategory = newVal;
+      if (newVal === "radio") {
+        this.mediaNamePlaceholder = "Nazwa (komenda: Włącz radio nazwa)";
+        this.mediaTypePlaceholder = "Typ radia";
+        this.mediaUrlPlaceholder = "Adres URL Strumienia";
+        this.mediaChips = [];
+        const options = this.hass.states["input_select.radio_type"].attributes
+          .options;
+        options.forEach((element) => {
+          if (
+            !element.startsWith("Moje") &&
+            !element.startsWith("Udostępnione")
+          ) {
+            this.mediaChips.push(element);
+          }
+        });
+      } else if (newVal === "podcast") {
+        this.mediaNamePlaceholder = "Nazwa (komenda: Włącz podcast nazwa)";
+        this.mediaTypePlaceholder = "Typ podcasta";
+        this.mediaUrlPlaceholder = "Adres URL Kanału RSS (rss feed)";
+        this.mediaChips = [];
+        const options = this.hass.states["input_select.podcast_type"].attributes
+          .options;
+        options.forEach((element) => {
+          if (
+            !element.startsWith("Moje") &&
+            !element.startsWith("Udostępnione")
+          ) {
+            this.mediaChips.push(element);
+          }
+        });
+      }
     }
   }
 

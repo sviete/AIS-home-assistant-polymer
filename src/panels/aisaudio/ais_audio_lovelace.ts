@@ -947,13 +947,128 @@ export const aisAudioLovelace: LovelaceConfig = {
             },
             {
               card: {
-                entity: "input_select.podcast_type",
-                type: "ais-easy-picker",
+                cards: [
+                  {
+                    icon: "mdi:account",
+                    entity: "sensor.ais_podcast_origin",
+                    show_name: true,
+                    name: "Moje",
+                    state: [
+                      {
+                        color: "var(--primary-color)",
+                        value: "private",
+                      },
+                    ],
+                    tap_action: {
+                      action: "call-service",
+                      service: "ais_ai_service.set_context",
+                      service_data: {
+                        text: "podcast_private",
+                      },
+                    },
+                    type: "ais-button",
+                  },
+                  {
+                    icon: "mdi:earth",
+                    entity: "sensor.ais_podcast_origin",
+                    show_name: true,
+                    name: "Publiczne",
+                    state: [
+                      {
+                        color: "var(--primary-color)",
+                        value: "public",
+                      },
+                    ],
+                    tap_action: {
+                      action: "call-service",
+                      service: "ais_ai_service.set_context",
+                      service_data: {
+                        text: "podcast_public",
+                      },
+                    },
+                    type: "ais-button",
+                  },
+                  {
+                    icon: "mdi:share-variant",
+                    entity: "sensor.ais_podcast_origin",
+                    show_name: true,
+                    name: "Udostępnione",
+                    state: [
+                      {
+                        color: "var(--primary-color)",
+                        value: "shared",
+                      },
+                    ],
+                    tap_action: {
+                      action: "call-service",
+                      service: "ais_ai_service.set_context",
+                      service_data: {
+                        text: "podcast_shared",
+                      },
+                    },
+                    type: "ais-button",
+                  },
+                ],
+                type: "horizontal-stack",
               },
               conditions: [
                 {
                   entity: "sensor.ais_player_mode",
                   state: "podcast_player",
+                },
+              ],
+              type: "conditional",
+            },
+            {
+              card: {
+                entity: "input_select.podcast_type",
+                type: "ais-easy-picker",
+                orgin: "public",
+              },
+              conditions: [
+                {
+                  entity: "sensor.ais_player_mode",
+                  state: "podcast_player",
+                },
+                {
+                  entity: "sensor.ais_podcast_origin",
+                  state: "public",
+                },
+              ],
+              type: "conditional",
+            },
+            {
+              card: {
+                entity: "input_select.podcast_type",
+                type: "ais-easy-picker",
+                orgin: "private",
+              },
+              conditions: [
+                {
+                  entity: "sensor.ais_player_mode",
+                  state: "podcast_player",
+                },
+                {
+                  entity: "sensor.ais_podcast_origin",
+                  state: "private",
+                },
+              ],
+              type: "conditional",
+            },
+            {
+              card: {
+                entity: "input_select.podcast_type",
+                type: "ais-easy-picker",
+                orgin: "shared",
+              },
+              conditions: [
+                {
+                  entity: "sensor.ais_player_mode",
+                  state: "podcast_player",
+                },
+                {
+                  entity: "sensor.ais_podcast_origin",
+                  state: "shared",
                 },
               ],
               type: "conditional",
