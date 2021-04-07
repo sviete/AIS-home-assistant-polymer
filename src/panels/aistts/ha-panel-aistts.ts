@@ -25,6 +25,7 @@ import { PaperInputElement } from "@polymer/paper-input/paper-input";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import { guard } from "lit-html/directives/guard";
 import { mdiDrag } from "@mdi/js";
+import { showConfirmationDialog } from "../../dialogs/generic/show-dialog-box";
 import {
   css,
   customElement,
@@ -44,6 +45,7 @@ import {
   updateItem,
   reorderItems,
 } from "./aistts";
+import { HaFormTimeData } from "../../components/ha-form/ha-form";
 
 interface Language {
   key: string;
@@ -168,6 +170,12 @@ export class HaPanelAisTts extends LitElement {
     super.firstUpdated(changedProps);
     this.hassSubscribeListUpdate();
     this.hassSubscribeSayText();
+    this._timeData = {
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      milliseconds: 0,
+    };
   }
 
   protected render() {
@@ -287,11 +295,37 @@ export class HaPanelAisTts extends LitElement {
                     @change="${this._pitchValueChanged}"
                   ></ha-slider>
                 </div>
-                <div class="AisTtsSliders"></div>
+                <paper-input
+                  label="Nazwa pliku"
+                  placeholder="jeśli podasz nazwę pliku to zapiszemy go pod tą nazwą w bibliotece na dysku"
+                  type="text"
+                  @keydown=${this._pitchValueChanged}
+                  maxRows="1"
+                ></paper-input>
+                <div class="AisTtsDelay">
+                  <div class="AisTtsDelayItems">
+                    <paper-input
+                      class="AisTtsDelayInput"
+                      label="Opóźnienie wysłania komunikatu w sekundach"
+                      placeholder="0"
+                      type="number"
+                      min="0"
+                      max="99"
+                      .value=${0}
+                      step="1"
+                      @keydown=${this._pitchValueChanged}
+                    ></paper-input>
+                  </div>
+                </div>
                 <div class="AisButtons">
                   <ha-icon-button
                     slot="item-icon"
                     icon="hass:play"
+                    @click=${this._playItem}
+                  ></ha-icon-button>
+                  <ha-icon-button
+                    slot="item-icon"
+                    icon="hass:stop"
                     @click=${this._playItem}
                   ></ha-icon-button>
                   <ha-icon-button
@@ -497,9 +531,16 @@ export class HaPanelAisTts extends LitElement {
   }
 
   private _clearItems(): void {
-    if (this.hass) {
-      clearItems(this.hass).catch(() => this._fetchData());
-    }
+    // const confirmed = await showConfirmationDialog(this, {
+    //   title: "Usuwanie zaznaczonych komunikatów",
+    //   text: "Zaznaczone pozycje zostaną trwale usunięte. Czy jesteś pewny?",
+    //   confirmText: "Tak potiwerdzam",
+    //   dismissText: "Anuluj",
+    // });
+
+    // if (!confirmed) {
+    clearItems(this.hass).catch(() => this._fetchData());
+    // }
   }
 
   private get _newItem(): PaperInputElement {
@@ -612,7 +653,6 @@ export class HaPanelAisTts extends LitElement {
           reorderItems(this.hass!, this._sortable.toArray()).catch(() =>
             this._fetchData()
           );
-          // Move the shopping list item in memory.
           this._uncheckedItems!.splice(
             evt.newIndex,
             0,
@@ -627,7 +667,6 @@ export class HaPanelAisTts extends LitElement {
         },
       }
     );
-    console.log("sortable-tts: " + this._sortable.toArray());
   }
 
   private _showVoiceCommandDialog(): void {
@@ -641,7 +680,6 @@ export class HaPanelAisTts extends LitElement {
 
   private async _setLanguage(ev): Promise<void> {
     const newVal = ev.detail.value;
-    console.log("newVal " + newVal);
     this._selectedLanguage = newVal;
     this._loadVoices(newVal);
   }
@@ -760,9 +798,13 @@ export class HaPanelAisTts extends LitElement {
         .AisTtsLang {
           display: flex;
         }
-        .AisTtsSliders {
+        .AisTtsDelay {
           display: flex;
-          padding-top: 2em;
+          align-items: flex-end;
+          justify-content: flex-end;
+        }
+        .AisTtsDelayItems {
+          width: 16em;
         }
         div.AisButtons {
           float: right;
