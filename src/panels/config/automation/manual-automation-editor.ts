@@ -270,6 +270,34 @@ export class HaManualAutomationEditor extends LitElement {
     fireEvent(this, "value-changed", {
       value: { ...this.config!, [name]: newVal },
     });
+
+    // ais
+    if (target.name === "alias") {
+      let desc = this.shadowRoot!.querySelector(
+        "paper-textarea[name='description']"
+      );
+
+      if (newVal.trim().toLowerCase().startsWith("jolka:")) {
+        desc?.setAttribute("label", "Aliasy polecenia");
+        desc?.setAttribute(
+          "placeholder",
+          "Opcjonalne komendy rozdzielone średnikiem"
+        );
+      } else {
+        desc?.setAttribute(
+          "label",
+          this.hass.localize(
+            "ui.panel.config.automation.editor.description.label"
+          )
+        );
+        desc?.setAttribute(
+          "placeholder",
+          this.hass.localize(
+            "ui.panel.config.automation.editor.description.placeholder"
+          )
+        );
+      }
+    }
   }
 
   private _modeChanged(ev: CustomEvent) {
