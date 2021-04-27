@@ -54,21 +54,15 @@ export class HaManualAutomationEditor extends LitElement {
         <ha-card>
           <div class="card-content">
             <paper-input
-              .label=${this.hass.localize(
-                "ui.panel.config.automation.editor.alias"
-              )}
+              .label=${this._get_ais_name_label()}
               name="alias"
               .value=${this.config.alias}
               @value-changed=${this._valueChanged}
             >
             </paper-input>
             <paper-textarea
-              .label=${this.hass.localize(
-                "ui.panel.config.automation.editor.description.label"
-              )}
-              .placeholder=${this.hass.localize(
-                "ui.panel.config.automation.editor.description.placeholder"
-              )}
+              .label=${this._get_ais_desc_label()}
+              .placeholder=${this._get_ais_desc_placeholder()}
               name="description"
               .value=${this.config.description}
               @value-changed=${this._valueChanged}
@@ -253,6 +247,36 @@ export class HaManualAutomationEditor extends LitElement {
     triggerAutomationActions(this.hass, (ev.target as any).stateObj.entity_id);
   }
 
+  // AIS START
+  private _get_ais_name_label(): string {
+    if (this.config.alias.trim().toLowerCase().startsWith("jolka:")) {
+      return (
+        "Polecenie uruchamiające: " +
+        this.config.alias.toLowerCase().replace("jolka:", "")
+      );
+    }
+    return this.hass.localize("ui.panel.config.automation.editor.alias");
+  }
+
+  private _get_ais_desc_label(): string {
+    if (this.config.alias.trim().toLowerCase().startsWith("jolka:")) {
+      return "Aliasy polecenia";
+    }
+    return this.hass.localize(
+      "ui.panel.config.automation.editor.description.label"
+    );
+  }
+
+  private _get_ais_desc_placeholder(): string {
+    if (this.config.alias.trim().toLowerCase().startsWith("jolka:")) {
+      return "Opcjonalne dodatkowe komendy uruchamiające rozdzielone średnikiem";
+    }
+    return this.hass.localize(
+      "ui.panel.config.automation.editor.description.placeholder"
+    );
+  }
+  // AIS STOP
+
   private _valueChanged(ev: CustomEvent) {
     ev.stopPropagation();
     const target = ev.target as any;
@@ -270,34 +294,6 @@ export class HaManualAutomationEditor extends LitElement {
     fireEvent(this, "value-changed", {
       value: { ...this.config!, [name]: newVal },
     });
-
-    // ais
-    if (target.name === "alias") {
-      let desc = this.shadowRoot!.querySelector(
-        "paper-textarea[name='description']"
-      );
-
-      if (newVal.trim().toLowerCase().startsWith("jolka:")) {
-        desc?.setAttribute("label", "Aliasy polecenia");
-        desc?.setAttribute(
-          "placeholder",
-          "Opcjonalne komendy rozdzielone średnikiem"
-        );
-      } else {
-        desc?.setAttribute(
-          "label",
-          this.hass.localize(
-            "ui.panel.config.automation.editor.description.label"
-          )
-        );
-        desc?.setAttribute(
-          "placeholder",
-          this.hass.localize(
-            "ui.panel.config.automation.editor.description.placeholder"
-          )
-        );
-      }
-    }
   }
 
   private _modeChanged(ev: CustomEvent) {
