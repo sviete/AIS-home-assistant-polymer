@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Asystent domowy</title>
-    <link rel="preload" href="<%= latestPageJS %>" as="script" crossorigin="use-credentials" />
+    <link rel="modulepreload" href="<%= latestPageJS %>" crossorigin="use-credentials" />
     <%= renderTemplate('_header') %>
     <style>
       /* ais */
@@ -52,7 +52,7 @@
   <body>
     <div class="content">
       <div class="header">
-        <img src="/static/icons/favicon-192x192.png" height="52" />
+        <img src="/static/icons/favicon-192x192.png" height="52" width="52" />
         Asystent domowy
       </div>
 
