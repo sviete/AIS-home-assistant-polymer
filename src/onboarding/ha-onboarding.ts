@@ -169,6 +169,19 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
         { dark: true }
       );
     }
+    if (matchMedia("(prefers-color-scheme: dark)").matches) {
+      applyThemesOnElement(
+        document.documentElement,
+        {
+          default_theme: "default",
+          default_dark_theme: null,
+          themes: {},
+          darkMode: false,
+        },
+        "default",
+        { dark: true }
+      );
+    }
   }
 
   protected updated(changedProps: PropertyValues) {
