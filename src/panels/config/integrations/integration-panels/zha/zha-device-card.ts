@@ -52,9 +52,10 @@ class ZHADeviceCard extends SubscribeMixin(LitElement) {
     ): EntityRegistryStateEntry[] =>
       entities
         .filter((entity) => entity.device_id === deviceId)
-        .map((entity) => {
-          return { ...entity, stateName: this._computeEntityName(entity) };
-        })
+        .map((entity) => ({
+          ...entity,
+          stateName: this._computeEntityName(entity),
+        }))
         .sort((ent1, ent2) =>
           compare(
             ent1.stateName || `zzz${ent1.entity_id}`,
@@ -159,7 +160,7 @@ class ZHADeviceCard extends SubscribeMixin(LitElement) {
       }
 
       if (!newName && !newEntityId) {
-        return new Promise((resolve) => resolve());
+        return undefined;
       }
 
       return updateEntityRegistryEntry(this.hass!, entity.entity_id, {
@@ -177,7 +178,7 @@ class ZHADeviceCard extends SubscribeMixin(LitElement) {
     });
   }
 
-  private _computeEntityName(entity: EntityRegistryEntry): string {
+  private _computeEntityName(entity: EntityRegistryEntry): string | null {
     if (this.hass.states[entity.entity_id]) {
       return computeStateName(this.hass.states[entity.entity_id]);
     }

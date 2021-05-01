@@ -314,9 +314,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         }
       }
 
-      entities.forEach((entity) => {
-        return entity;
-      });
+      entities.forEach((entity) => entity);
 
       let filteredEntities = showReadOnly
         ? entities.concat(stateEntities)
@@ -671,6 +669,10 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
           entity_id: entityId,
           platform: computeDomain(entityId),
           disabled_by: null,
+          area_id: null,
+          config_entry_id: null,
+          device_id: null,
+          icon: null,
           readonly: true,
           selectable: false,
         });
