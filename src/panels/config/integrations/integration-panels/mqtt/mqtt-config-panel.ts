@@ -59,7 +59,7 @@ class HaPanelDevMqtt extends LitElement {
             Edit mosquitto.conf
           </mwc-list-item>
           <mwc-list-item @click=${this._restartMosquittoService}>
-            Restart mosquitto sevice
+            Restart MQTT sevice
           </mwc-list-item>
         </ha-button-menu>
         <div class="content">
