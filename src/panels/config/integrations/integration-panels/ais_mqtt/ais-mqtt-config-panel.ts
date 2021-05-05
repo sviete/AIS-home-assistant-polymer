@@ -92,7 +92,7 @@ class HaPanelDevAisMqtt extends LitElement {
 
   private async _openMosquittoFile() {
     const filePath =
-      "/data/data/pl.sviete.dom/files/home/AIS/.dom/mqtt_conf.d/supla.conf";
+      "/data/data/pl.sviete.dom/files/usr/etc/mosquitto/mqtt_conf.d/supla.conf";
     const file = await this.hass.callApi<string>("POST", "ais_file/read", {
       filePath: filePath,
     });
