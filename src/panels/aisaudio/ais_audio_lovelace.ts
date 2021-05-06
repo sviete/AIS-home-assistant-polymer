@@ -1,7 +1,7 @@
 import { LovelaceConfig } from "../../data/lovelace";
 
 export const aisAudioLovelace: LovelaceConfig = {
-  title: "Asystent domowy",
+  title: "AI-Speaker",
   views: [
     {
       badges: [],

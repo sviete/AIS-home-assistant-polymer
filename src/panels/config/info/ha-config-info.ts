@@ -51,7 +51,7 @@ class HaConfigInfo extends LitElement {
               )}"
           /></a>
           <br />
-          <h2>Asystent domowy ${hass.connection.haVersion}</h2>
+          <h2>AI-Speaker ${hass.connection.haVersion}</h2>
           <p>
             ${this.hass.localize(
               "ui.panel.config.info.path_configuration",

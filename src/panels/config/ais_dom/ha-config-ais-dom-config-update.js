@@ -80,7 +80,7 @@ class HaConfigAisDomControl extends PolymerElement {
               zapasową ustawień i zsynchronizować bramkę z Portalem
               Integratora</span
             >
-            <ha-card header="Wersja systemu Asystent domowy">
+            <ha-card header="Wersja systemu AI-Speaker">
               <div class="card-content">
                 [[aisVersionInfo]]
                 <div>

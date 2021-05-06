@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Asystent domowy</title>
+    <title>AI-Speaker</title>
     <link rel="modulepreload" href="<%= latestPageJS %>" crossorigin="use-credentials" />
     <%= renderTemplate('_header') %>
     <style>
@@ -42,7 +42,7 @@
     <div class="content">
       <div class="header">
         <img src="/static/icons/favicon-192x192.png" height="52" />
-        Asystent domowy
+        AI-Speaker
       </div>
       <ha-authorize><p>Initializing</p></ha-authorize>
     </div>

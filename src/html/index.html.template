@@ -6,7 +6,7 @@
     <link rel="modulepreload" href="<%= latestAppJS %>" crossorigin="use-credentials" />
     <% } %>
     <%= renderTemplate('_header') %>
-    <title>Asystent domowy</title>
+    <title>AI-Speaker</title>
     <link rel="mask-icon" href="/static/icons/mask-icon.svg" color="#03a9f4" />
     <link
       rel="apple-touch-icon"

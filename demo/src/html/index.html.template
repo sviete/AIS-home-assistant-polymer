@@ -61,7 +61,7 @@
       name="twitter:image"
       content="https://www.home-assistant.io/images/default-social.png"
     />
-    <title>Asystent domowy Demo</title>
+    <title>AI-Speaker Demo</title>
     <style>
       body {
         font-family: Roboto, Noto, sans-serif;
