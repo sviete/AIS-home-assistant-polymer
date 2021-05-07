@@ -1,4 +1,3 @@
-import "./ais-countdown-element";
 import "../../layouts/ha-app-layout";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";

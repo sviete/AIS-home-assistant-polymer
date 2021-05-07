@@ -6,7 +6,6 @@ import {
   mdiHistory,
   mdiInformationOutline,
   mdiPencil,
-  mdiPlus,
   mdiElectricSwitch,
 } from "@mdi/js";
 import "@polymer/paper-tooltip/paper-tooltip";
