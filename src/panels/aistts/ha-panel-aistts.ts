@@ -1,3 +1,4 @@
+import "./ais-countdown-element";
 import "../../layouts/ha-app-layout";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
@@ -43,6 +44,8 @@ import {
   updateItem,
   reorderItems,
 } from "./aistts";
+import { showConfirmationDialog } from "../../dialogs/generic/show-dialog-box";
+import { navigate } from "../../common/navigate";
 
 interface Language {
   key: string;
@@ -147,6 +150,8 @@ export class HaPanelAisTts extends LitElement {
 
   @internalProperty() private _checkedItems?: AisTtsItem[];
 
+  @internalProperty() private _textValue = "";
+
   @internalProperty() private _selectedLanguage = "pl_PL";
 
   @internalProperty() private _selectedVoice = "pl-pl-x-oda-local";
@@ -154,6 +159,14 @@ export class HaPanelAisTts extends LitElement {
   @internalProperty() private _speedValue = 1;
 
   @internalProperty() private _pitchValue = 1;
+
+  @internalProperty() private _delayValue = 0;
+
+  @internalProperty() private _counterValue = 0;
+
+  @internalProperty() private _play_counting = false;
+
+  @internalProperty() private _fileNameValue = "";
 
   @internalProperty() private _reordering = false;
 
@@ -189,7 +202,12 @@ export class HaPanelAisTts extends LitElement {
               .hass=${this.hass}
               .narrow=${this.narrow}
             ></ha-menu-button>
-            <div main-title>TTS w trybie ręcznym</div>
+            <div main-title>TTS Ręczny</div>
+            <ha-icon-button
+              label="Dodaj"
+              icon="hass:music-box-multiple-outline"
+              @click=${this._showBrowseMedia}
+            ></ha-icon-button>
           </app-toolbar>
         </app-header>
 
@@ -200,21 +218,33 @@ export class HaPanelAisTts extends LitElement {
               .selected=${this._selectedLanguage}
               @selected-changed=${this._setLanguage}
             >
-              <paper-radio-button name="pl_PL" lang="pl_PL">
+              <paper-radio-button
+                name="pl_PL"
+                lang="pl_PL"
+                .disabled=${this._play_counting}
+              >
                 <img
                   style="width: 50px;"
                   src="/static/ais_dom/Flag_of_Poland.svg"
                 />
                 Polski
               </paper-radio-button>
-              <paper-radio-button name="en_GB" lang="en_GB">
+              <paper-radio-button
+                name="en_GB"
+                lang="en_GB"
+                .disabled=${this._play_counting}
+              >
                 <img
                   style="width: 50px;"
                   src="/static/ais_dom/Flag_of_the_United_Kingdom.svg"
                 />
                 English
               </paper-radio-button>
-              <paper-radio-button name="uk_UA" lang="uk_UA">
+              <paper-radio-button
+                name="uk_UA"
+                lang="uk_UA"
+                .disabled=${this._play_counting}
+              >
                 <img
                   style="width: 50px;"
                   src="/static/ais_dom/Flag_of_Ukraine.svg"
@@ -230,7 +260,9 @@ export class HaPanelAisTts extends LitElement {
                   placeholder="wpisz nowy tekst do przeczytania"
                   name="description"
                   maxRows="1"
-                  @keydown=${this._addKeyPress}
+                  .disabled=${this._play_counting}
+                  .value="${this._textValue}"
+                  @change="${this._textValueChanged}"
                 ></paper-textarea>
                 ${this.hass.user!.is_admin
                   ? html`
@@ -238,6 +270,7 @@ export class HaPanelAisTts extends LitElement {
                         <paper-dropdown-menu-light
                           label="Głos"
                           style="margin-left: 30px; width:250px;"
+                          .disabled=${this._play_counting}
                         >
                           <paper-listbox
                             slot="dropdown-content"
@@ -267,6 +300,7 @@ export class HaPanelAisTts extends LitElement {
                           max="4"
                           .value="${Number(this._speedValue)}"
                           @change="${this._speedValueChanged}"
+                          .disabled=${this._play_counting}
                         ></ha-slider>
                         <label
                           class="label-is-floating"
@@ -281,14 +315,17 @@ export class HaPanelAisTts extends LitElement {
                           max="4"
                           .value="${Number(this._pitchValue)}"
                           @change="${this._pitchValueChanged}"
+                          .disabled=${this._play_counting}
                         ></ha-slider>
                       </div>
                       <paper-input
                         label="Nazwa pliku"
                         placeholder="jeśli podasz nazwę pliku to zapiszemy go pod tą nazwą w bibliotece na dysku"
                         type="text"
-                        @keydown=${this._pitchValueChanged}
+                        .value=${this._fileNameValue}
+                        @change=${this._fileNameValueChanged}
                         maxRows="1"
+                        .disabled=${this._play_counting}
                       ></paper-input>
                     `
                   : ``}
@@ -301,22 +338,32 @@ export class HaPanelAisTts extends LitElement {
                       type="number"
                       min="0"
                       max="99"
-                      .value=${0}
+                      .value=${this._delayValue}
                       step="1"
-                      @keydown=${this._pitchValueChanged}
+                      @change=${this._delayValueChanged}
+                      .disabled=${this._play_counting}
                     ></paper-input>
                   </div>
                 </div>
                 <div class="AisButtons">
+                  ${Number(this._counterValue) > 0
+                    ? html` <mwc-button
+                        name="Opóźnienie"
+                        style="margin-top: 6px;"
+                      >
+                        Opóźnienie: ${this._counterValue}
+                      </mwc-button>`
+                    : html``}
                   <ha-icon-button
                     slot="item-icon"
                     icon="hass:play"
                     @click=${this._playItem}
+                    .disabled=${this._play_counting}
                   ></ha-icon-button>
                   <ha-icon-button
                     slot="item-icon"
                     icon="hass:stop"
-                    @click=${this._playItem}
+                    @click=${this._stopPlayItem}
                   ></ha-icon-button>
                   ${this.hass.user!.is_admin
                     ? html`
@@ -324,6 +371,7 @@ export class HaPanelAisTts extends LitElement {
                           slot="item-icon"
                           icon="hass:plus"
                           @click=${this._addItem}
+                          .disabled=${this._play_counting}
                         ></ha-icon-button>
                       `
                     : ``}
@@ -347,59 +395,65 @@ export class HaPanelAisTts extends LitElement {
                   Możesz też dodać opóźnienie i wybrać tekst z listy.
                 </div>
               `}
-          <ha-card>
-            ${this._reordering
-              ? html`
-                  ${guard(
-                    [this._uncheckedItems, this._renderEmptySortable],
-                    () =>
-                      this._renderEmptySortable
-                        ? ""
-                        : this._renderItems(this._uncheckedItems!)
-                  )}
-                `
-              : this._renderItems(this._uncheckedItems!)}
-            ${this._checkedItems && this._checkedItems!.length > 0
-              ? html`
-                  <div class="divider"></div>
-                  <div class="checked">
-                    <span> Pozycje zaznaczone </span>
-                    <ha-icon
-                      class="clearall"
-                      tabindex="0"
-                      icon="hass:delete"
-                      title="Usuń zaznaczone"
-                      @click=${this._clearItems}
-                    >
-                    </ha-icon>
-                  </div>
-                  ${repeat(
-                    this._checkedItems!,
-                    (item) => item.id,
-                    (item) =>
-                      html`
-                        <div class="editRow">
-                          <paper-checkbox
-                            tabindex="0"
-                            ?checked=${item.complete}
-                            .itemId=${item.id}
-                            @click=${this._completeItem}
-                          ></paper-checkbox>
-                          <paper-input
-                            no-label-float
-                            .value=${item.name}
-                            .itemId=${item.id}
-                            @change=${this._saveEdit}
-                          ></paper-input>
-                        </div>
-                      `
-                  )}
-                `
-              : ""}
-          </ha-card>
+          ${!this._play_counting
+            ? html`<ha-card>
+                ${this._reordering
+                  ? html`
+                      ${guard(
+                        [this._uncheckedItems, this._renderEmptySortable],
+                        () =>
+                          this._renderEmptySortable
+                            ? ""
+                            : this._renderItems(this._uncheckedItems!)
+                      )}
+                    `
+                  : this._renderItems(this._uncheckedItems!)}
+                ${this._checkedItems && this._checkedItems!.length > 0
+                  ? html`
+                      <div class="divider"></div>
+                      <div class="checked">
+                        <span> Pozycje zaznaczone </span>
+                        <ha-icon
+                          class="clearall"
+                          tabindex="0"
+                          icon="hass:delete"
+                          title="Usuń zaznaczone"
+                          @click=${this._clearItems}
+                        >
+                        </ha-icon>
+                      </div>
+                      ${repeat(
+                        this._checkedItems!,
+                        (item) => item.id,
+                        (item) =>
+                          html`
+                            <div class="editRow">
+                              <paper-checkbox
+                                tabindex="0"
+                                ?checked=${item.complete}
+                                .itemId=${item.id}
+                                @click=${this._completeItem}
+                              ></paper-checkbox>
+                              <paper-input
+                                no-label-float
+                                .value=${item.name}
+                                .itemId=${item.id}
+                                @change=${this._saveEdit}
+                              ></paper-input>
+                            </div>
+                          `
+                      )}
+                    `
+                  : ""}
+              </ha-card>`
+            : html``}
         </div>
       </ha-app-layout>
     `;
+  }
+
+  private _showBrowseMedia(): void {
+    navigate(this, "/media-browser");
   }
 
   public hassSubscribeListUpdate(): Promise<UnsubscribeFunc>[] {
@@ -422,26 +476,21 @@ export class HaPanelAisTts extends LitElement {
     ];
   }
 
-  public isAdmin() {
-    if (this.hass.user!.is_admin) {
-      return true;
-    }
-    return false;
-  }
-
   private _renderItems(items: AisTtsItem[]) {
     if (items === undefined) {
       return html``;
     }
 
-    return html` <div class="AisButtons">
-        <ha-icon-button
-          slot="item-icon"
-          icon="hass:sort"
-          @click=${this._toggleReorder}
-        ></ha-icon-button>
-      </div>
-      <div class="divider"></div>
+    return html` ${this.hass.user!.is_admin
+        ? html`<div class="AisButtons">
+              <ha-icon-button
+                slot="item-icon"
+                icon="hass:sort"
+                @click=${this._toggleReorder}
+              ></ha-icon-button>
+            </div>
+            <div class="divider"></div>`
+        : html``}
       <div class="checked">
         <span> Dostępne pozycje </span>
       </div>
@@ -543,41 +592,65 @@ export class HaPanelAisTts extends LitElement {
     ev.target.blur();
   }
 
-  private _clearItems(): void {
-    // const confirmed = await showConfirmationDialog(this, {
-    //   title: "Usuwanie zaznaczonych komunikatów",
-    //   text: "Zaznaczone pozycje zostaną trwale usunięte. Czy jesteś pewny?",
-    //   confirmText: "Tak potiwerdzam",
-    //   dismissText: "Anuluj",
-    // });
-
-    // if (!confirmed) {
-    clearItems(this.hass).catch(() => this._fetchData());
-    // }
+  private _clearItems() {
+    showConfirmationDialog(this, {
+      text: "Zaznaczone pozycje zostaną trwale usunięte. Czy jesteś pewny?",
+      dismissText: "Anuluj",
+      confirmText: "Tak potwierdzam",
+      confirm: () => {
+        clearItems(this.hass).catch(() => this._fetchData());
+      },
+    });
   }
 
   private get _newItem(): PaperInputElement {
     return this.shadowRoot!.querySelector(".addBox") as PaperInputElement;
   }
 
+  private _updateCounterAndPlay(text) {
+    this._counterValue -= 1;
+    if (this._counterValue > 0 && this._play_counting) {
+      setTimeout(() => this._updateCounterAndPlay(text), 1000);
+      return;
+    }
+
+    // play and unblock
+    if (this._play_counting) {
+      this._play_counting = false;
+      this.hass.callService("ais_ai_service", "say_it", {
+        text: text,
+        pitch: this._pitchValue,
+        rate: this._speedValue,
+        language: this._selectedLanguage,
+        voice: this._selectedVoice,
+      });
+    }
+  }
+
   private _playItem(ev): void {
     const newItem = this._newItem;
     let text = newItem.value;
-    if (text === undefined) {
+    if (text === undefined || text === null || text.length === 0) {
       text = "Wpisz tekst do przeczytania";
+      this.hass.callService("ais_ai_service", "say_it", {
+        text: text,
+        pitch: this._pitchValue,
+        rate: this._speedValue,
+        language: this._selectedLanguage,
+        voice: this._selectedVoice,
+      });
+    } else {
+      this._counterValue = this._delayValue;
+      this._play_counting = true;
+      this._updateCounterAndPlay(text);
     }
-    if (text === null) {
-      text = "Wpisz tekst do przeczytania";
-    }
-    if (text.length === 0) {
-      text = "Wpisz tekst do przeczytania";
-    }
-    this.hass.callService("ais_ai_service", "say_it", {
-      text: text,
-      pitch: this._pitchValue,
-      rate: this._speedValue,
-      language: this._selectedLanguage,
-      voice: this._selectedVoice,
+  }
+
+  private _stopPlayItem(ev): void {
+    this._play_counting = false;
+    this._counterValue = 0;
+    this.hass.callService("ais_tts", "stop_talking", {
+      mode: "manual",
     });
   }
 
@@ -602,13 +675,19 @@ export class HaPanelAisTts extends LitElement {
   }
 
   private _playItemRow(ev): void {
-    this.hass.callService("ais_ai_service", "say_it", {
-      text: ev.target.item.name,
-      pitch: ev.target.item.pitch,
-      rate: ev.target.item.rate,
-      language: ev.target.item.language,
-      voice: ev.target.item.voice,
-    });
+    this._counterValue = this._delayValue;
+    this._pitchValue = ev.target.item.pitch;
+    this._speedValue = ev.target.item.rate;
+    this._selectedLanguage = ev.target.item.language;
+    this._play_counting = true;
+    const name = ev.target.item.name;
+    this._textValue = name;
+    const voice = ev.target.item.voice;
+    const that = this;
+    setTimeout(function () {
+      that._selectedVoice = voice;
+      that._updateCounterAndPlay(name);
+    }, 500);
   }
 
   private _addItem(ev): void {
@@ -631,12 +710,6 @@ export class HaPanelAisTts extends LitElement {
     }
   }
 
-  private _addKeyPress(ev): void {
-    if (ev.keyCode === 13) {
-      this._addItem(null);
-    }
-  }
-
   private async _toggleReorder() {
     if (!Sortable) {
       const sortableImport = await import(
@@ -655,6 +728,9 @@ export class HaPanelAisTts extends LitElement {
   }
 
   private _createSortable() {
+    if (!this.hass.user!.is_admin) {
+      return;
+    }
     this._sortable = new Sortable(
       this.shadowRoot!.getElementById("sortable-tts"),
       {
@@ -698,6 +774,11 @@ export class HaPanelAisTts extends LitElement {
     this._selectedVoice = voice;
   }
 
+  private _textValueChanged(ev): void {
+    const newVal = ev.target.value;
+    this._textValue = newVal;
+  }
+
   private _speedValueChanged(ev): void {
     const newVal = ev.target.value;
     this._speedValue = newVal;
@@ -706,6 +787,17 @@ export class HaPanelAisTts extends LitElement {
   private _pitchValueChanged(ev): void {
     const newVal = ev.target.value;
     this._pitchValue = newVal;
+  }
+
+  private _delayValueChanged(ev): void {
+    const newVal = ev.target.value;
+    this._delayValue = newVal;
+    this._counterValue = newVal;
+  }
+
+  private _fileNameValueChanged(ev): void {
+    const newVal = ev.target.value;
+    this._fileNameValue = newVal;
   }
 
   static get styles() {
@@ -818,6 +910,7 @@ export class HaPanelAisTts extends LitElement {
         div.AisButtons {
           float: right;
           text-align: right;
+          display: ruby;
         }
         div.ItemInfo {
           font-size: 12px;
