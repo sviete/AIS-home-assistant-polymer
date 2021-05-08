@@ -622,6 +622,7 @@ export class HaPanelAisTts extends LitElement {
         rate: this._speedValue,
         language: this._selectedLanguage,
         voice: this._selectedVoice,
+        path: this._fileNameValue,
       });
     }
   }
@@ -633,10 +634,6 @@ export class HaPanelAisTts extends LitElement {
       text = "Wpisz tekst do przeczytania";
       this.hass.callService("ais_ai_service", "say_it", {
         text: text,
-        pitch: this._pitchValue,
-        rate: this._speedValue,
-        language: this._selectedLanguage,
-        voice: this._selectedVoice,
       });
     } else {
       this._counterValue = this._delayValue;
@@ -674,6 +671,7 @@ export class HaPanelAisTts extends LitElement {
   }
 
   private _playItemRow(ev): void {
+    this._fileNameValue = "";
     this._counterValue = this._delayValue;
     this._pitchValue = ev.target.item.pitch;
     this._speedValue = ev.target.item.rate;
