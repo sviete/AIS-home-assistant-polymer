@@ -51,6 +51,7 @@ import {
 // ais devices
 import "../ais_dom/ais_dom_devices/ha-ais-dom-rf433-config-card";
 import "../ais_dom/ais_dom_devices/ha-ais-dom-iframe";
+
 export interface EntityRegistryStateEntry extends EntityRegistryEntry {
   stateName?: string | null;
 }

@@ -2579,6 +2579,10 @@
           "caption": "Configuration of AIS Zigbee",
           "description": "Manage your zigbee devices"
         },
+        "ais_dom_zwave": {
+          "caption": "Configuration of AIS ZWave",
+          "description": "Manage your ZWave devices"
+        },
         "ais_dom_config_update": {
           "caption": "Gateway software",
           "description": "System update, backup and synchronization with the Integrator Portal"

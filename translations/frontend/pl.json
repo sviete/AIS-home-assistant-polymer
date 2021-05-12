@@ -2310,6 +2310,10 @@
                     "caption": "Konfiguracja Urządzeń Zigbee",
                     "description": "Zarządzaj swoimi urządzeniami Zigbee"
                   },
+                "ais_dom_zwave": {
+                    "caption": "Konfiguracja Urządzeń ZWave",
+                    "description": "Zarządzaj swoimi urządzeniami ZWave"
+                },
                 "ais_dom_config_update": {
                     "caption": "Oprogramowanie bramki",
                     "description": "Aktualizacja systemu, kopia zapasowa i synchronizacja bramki z Portalem Integratora"
