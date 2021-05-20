@@ -18,10 +18,6 @@ import "../../components/ha-circular-progress";
 import { haStyle } from "../../resources/styles";
 import { HomeAssistant, Route } from "../../types";
 import "../../components/ha-icon-button";
-import {
-  showAisFileDialog,
-  HaAisFileDialogParams,
-} from "../../dialogs/ais-files/show-dialog-ais-file";
 import { mdiDotsVertical, mdiHelpCircle } from "@mdi/js";
 import { showAlertDialog } from "../../dialogs/generic/show-dialog-box";
 
@@ -53,9 +49,6 @@ class ConfigAisZwave extends LitElement {
         <mwc-icon-button slot="trigger" alt="menu">
           <ha-svg-icon .path=${mdiDotsVertical}></ha-svg-icon>
         </mwc-icon-button>
-        <mwc-list-item @click=${this._openZwaveJs2MqttFileConfig}>
-          Edit ZWaveJs2Mqtt configuration
-        </mwc-list-item>
         <mwc-list-item @click=${this._restartZwaveService}>
           Restart zwave sevice
         </mwc-list-item>
@@ -88,21 +81,6 @@ class ConfigAisZwave extends LitElement {
         </p>
       `,
     });
-  }
-
-  private async _openZwaveJs2MqttFileConfig() {
-    const filePath =
-      "/data/data/pl.sviete.dom/files/home/zigbee2mqtt/data/configuration.yaml";
-    const file = await this.hass.callApi<string>("POST", "ais_file/read", {
-      filePath: filePath,
-    });
-    const fileParams: HaAisFileDialogParams = {
-      dialogTitle: "ZWaveJs2Mqtt configuration",
-      filePath: filePath,
-      fileBody: file,
-      readonly: false,
-    };
-    showAisFileDialog(this, fileParams);
   }
 
   private async _restartZwaveService() {
