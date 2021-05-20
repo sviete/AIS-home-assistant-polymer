@@ -22,7 +22,8 @@ import {
   showAisFileDialog,
   HaAisFileDialogParams,
 } from "../../dialogs/ais-files/show-dialog-ais-file";
-import { mdiDotsVertical } from "@mdi/js";
+import { mdiDotsVertical, mdiHelpCircle } from "@mdi/js";
+import { showAlertDialog } from "../../dialogs/generic/show-dialog-box";
 
 @customElement("ha-config-aiszwave")
 class ConfigAisZwave extends LitElement {
@@ -37,11 +38,17 @@ class ConfigAisZwave extends LitElement {
 
   protected render(): TemplateResult {
     const tokens = loadTokens();
-    this._access_token = tokens?.access_token;
-    const iframe = html` <iframe
-      src="/api/zwavejs2mqtt/${this._access_token}/"
-    ></iframe>`;
-    return html` <hass-subpage header="ZWaveJs2Mqtt" .narrow=${this.narrow}>
+    // this._access_token = tokens?.access_token;
+    // const iframe = html` <iframe
+    //   src="/api/zwave2mqtt/${this._access_token}/"
+    // ></iframe>`;
+    return html` <hass-subpage
+      header="ZWaveJs2Mqtt (alfa)"
+      .narrow=${this.narrow}
+    >
+      <mwc-icon-button slot="toolbar-icon" @click=${this._showHelp}>
+        <ha-svg-icon .path=${mdiHelpCircle}></ha-svg-icon>
+      </mwc-icon-button>
       <ha-button-menu corner="BOTTOM_START" slot="toolbar-icon">
         <mwc-icon-button slot="trigger" alt="menu">
           <ha-svg-icon .path=${mdiDotsVertical}></ha-svg-icon>
@@ -53,12 +60,34 @@ class ConfigAisZwave extends LitElement {
           Restart zwave sevice
         </mwc-list-item>
       </ha-button-menu>
-      ${iframe}
+      <iframe
+        src="http://${this.hass.states["sensor.internal_ip_address"]
+          .state}:8091/"
+      ></iframe>
     </hass-subpage>`;
   }
 
   protected updated(changedProps: PropertyValues) {
     super.updated(changedProps);
+  }
+
+  private _showHelp() {
+    showAlertDialog(this, {
+      title: "Zwave",
+      text: html`
+        Integracja w przygotowaniu. Obecnie uruchomienie integracji Zwave wymaga
+        wykonania ręczej instalacji.
+        <p>
+          <a
+            href="https://ai-speaker.com/docs/ais_app_integration_zwave"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Dowiedz się więcej o integracji zwave
+          </a>
+        </p>
+      `,
+    });
   }
 
   private async _openZwaveJs2MqttFileConfig() {
