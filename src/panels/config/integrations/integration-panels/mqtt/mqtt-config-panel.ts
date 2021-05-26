@@ -59,7 +59,7 @@ class HaPanelDevMqtt extends LitElement {
             Edit mosquitto.conf
           </mwc-list-item>
           <mwc-list-item @click=${this._restartMosquittoService}>
-            Restart mosquitto sevice
+            Restart MQTT sevice
           </mwc-list-item>
         </ha-button-menu>
         <div class="content">
@@ -83,9 +83,7 @@ class HaPanelDevMqtt extends LitElement {
                 @value-changed=${this._handleTopic}
               ></paper-input>
 
-              <p>
-                ${this.hass.localize("ui.panel.config.mqtt.payload")}
-              </p>
+              <p>${this.hass.localize("ui.panel.config.mqtt.payload")}</p>
               <ha-code-editor
                 mode="jinja2"
                 .value="${this.payload}"

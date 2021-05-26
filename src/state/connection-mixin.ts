@@ -3,6 +3,7 @@ import {
   callService,
   Connection,
   ERR_INVALID_AUTH,
+  ERR_CONNECTION_LOST,
   HassConfig,
   subscribeConfig,
   subscribeEntities,
@@ -13,6 +14,7 @@ import { broadcastConnectionStatus } from "../data/connection-status";
 import { subscribeFrontendUserData } from "../data/frontend";
 import { forwardHaptic } from "../data/haptics";
 import { DEFAULT_PANEL } from "../data/panel";
+import { serviceCallWillDisconnect } from "../data/service";
 import { NumberFormat } from "../data/translation";
 import { subscribePanels } from "../data/ws-panels";
 import { translationMetadata } from "../resources/translations-metadata";
@@ -76,8 +78,14 @@ export const connectionMixin = <T extends Constructor<HassBaseEl>>(
               service,
               serviceData,
               target
-            )) as Promise<ServiceCallResponse>;
+            )) as ServiceCallResponse;
           } catch (err) {
+            if (
+              err.error?.code === ERR_CONNECTION_LOST &&
+              serviceCallWillDisconnect(domain, service)
+            ) {
+              return { context: { id: "" } };
+            }
             if (__DEV__) {
               // eslint-disable-next-line no-console
               console.error(

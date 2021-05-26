@@ -87,12 +87,20 @@ export class HaAutomationTrace extends LitElement {
 
     const title = stateObj?.attributes.friendly_name || this._entityId;
 
+    let devButtons: TemplateResult | string = "";
+    if (__DEV__) {
+      devButtons = html`<div style="position: absolute; right: 0;">
+        <button @click=${this._importTrace}>Import trace</button>
+        <button @click=${this._loadLocalStorageTrace}>Load stored trace</button>
+      </div>`;
+    }
+
     const actionButtons = html`
       <mwc-icon-button label="Refresh" @click=${() => this._loadTraces()}>
         <ha-svg-icon .path=${mdiRefresh}></ha-svg-icon>
       </mwc-icon-button>
       <mwc-icon-button
-        .disabled=${!this._runId}
+        .disabled=${!this._trace}
         label="Download Trace"
         @click=${this._downloadTrace}
       >
@@ -101,6 +109,7 @@ export class HaAutomationTrace extends LitElement {
     `;
 
     return html`
+      ${devButtons}
       <hass-tabs-subpage
         .hass=${this.hass}
         .narrow=${this.narrow}
@@ -108,12 +117,8 @@ export class HaAutomationTrace extends LitElement {
         .tabs=${configSections.automation}
       >
         ${this.narrow
-          ? html`<span slot="header">
-                ${title}
-              </span>
-              <div slot="toolbar-icon">
-                ${actionButtons}
-              </div>`
+          ? html`<span slot="header"> ${title} </span>
+              <div slot="toolbar-icon">${actionButtons}</div>`
           : ""}
         <div class="toolbar">
           ${!this.narrow
@@ -145,12 +150,12 @@ export class HaAutomationTrace extends LitElement {
                       this._traces,
                       (trace) => trace.run_id,
                       (trace) =>
-                        html`<option value=${trace.run_id}
-                          >${formatDateTimeWithSeconds(
+                        html`<option value=${trace.run_id}>
+                          ${formatDateTimeWithSeconds(
                             new Date(trace.timestamp.start),
                             this.hass.locale
-                          )}</option
-                        >`
+                          )}
+                        </option>`
                     )}
                   </select>
                   <mwc-icon-button
@@ -408,6 +413,27 @@ export class HaAutomationTrace extends LitElement {
       )
     )}`;
     aEl.click();
+  }
+
+  private _importTrace() {
+    const traceText = prompt("Enter downloaded trace");
+    if (!traceText) {
+      return;
+    }
+    localStorage.devTrace = traceText;
+    this._loadLocalTrace(traceText);
+  }
+
+  private _loadLocalStorageTrace() {
+    if (localStorage.devTrace) {
+      this._loadLocalTrace(localStorage.devTrace);
+    }
+  }
+
+  private _loadLocalTrace(traceText: string) {
+    const traceInfo = JSON.parse(traceText);
+    this._trace = traceInfo.trace;
+    this._logbookEntries = traceInfo.logbookEntries;
   }
 
   private _showTab(ev) {

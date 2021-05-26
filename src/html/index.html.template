@@ -6,7 +6,7 @@
     <link rel="modulepreload" href="<%= latestAppJS %>" crossorigin="use-credentials" />
     <% } %>
     <%= renderTemplate('_header') %>
-    <title>Asystent domowy</title>
+    <title>AI-Speaker</title>
     <link rel="mask-icon" href="/static/icons/mask-icon.svg" color="#03a9f4" />
     <link
       rel="apple-touch-icon"
@@ -51,6 +51,7 @@
       @media (prefers-color-scheme: dark) {
         html {
           background-color: #111111;
+          color: #e1e1e1;
         }
         #ha-init-skeleton::before {
           background-color: #1c1c1c;

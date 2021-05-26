@@ -22,6 +22,11 @@ import "../../../../../layouts/hass-subpage";
 import { haStyle } from "../../../../../resources/styles";
 import { HomeAssistant } from "../../../../../types";
 import { showAlertDialog } from "../../../../../dialogs/generic/show-dialog-box";
+import {
+  showAisFileDialog,
+  HaAisFileDialogParams,
+} from "../../../../../dialogs/ais-files/show-dialog-ais-file";
+import { mdiDotsVertical } from "@mdi/js";
 
 @customElement("ais-mqtt-config-panel")
 class HaPanelDevAisMqtt extends LitElement {
@@ -32,6 +37,17 @@ class HaPanelDevAisMqtt extends LitElement {
   protected render(): TemplateResult {
     return html`
       <hass-subpage .hass=${this.hass}>
+        <ha-button-menu corner="BOTTOM_START" slot="toolbar-icon">
+          <mwc-icon-button slot="trigger" alt="menu">
+            <ha-svg-icon .path=${mdiDotsVertical}></ha-svg-icon>
+          </mwc-icon-button>
+          <mwc-list-item @click=${this._openMosquittoFile}>
+            Edit MQTT supla.conf
+          </mwc-list-item>
+          <mwc-list-item @click=${this._restartMosquittoService}>
+            Restart MQTT sevice
+          </mwc-list-item>
+        </ha-button-menu>
         <div class="content">
           <ha-card header="Ustawienia SUPLA MQTT">
             <ha-dialog> </ha-dialog>
@@ -72,6 +88,27 @@ class HaPanelDevAisMqtt extends LitElement {
         text: "OK. Integracja została ponownie wczytana.",
       });
     }
+  }
+
+  private async _openMosquittoFile() {
+    const filePath =
+      "/data/data/pl.sviete.dom/files/usr/etc/mosquitto/mqtt_conf.d/supla.conf";
+    const file = await this.hass.callApi<string>("POST", "ais_file/read", {
+      filePath: filePath,
+    });
+    const fileParams: HaAisFileDialogParams = {
+      dialogTitle: "MQTT mosquitto.conf",
+      filePath: filePath,
+      fileBody: file,
+      readonly: false,
+    };
+    showAisFileDialog(this, fileParams);
+  }
+
+  private async _restartMosquittoService() {
+    this.hass.callService("ais_shell_command", "restart_pm2_service", {
+      service: "mqtt",
+    });
   }
 
   static get styles(): CSSResultArray {

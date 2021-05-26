@@ -489,9 +489,10 @@ export class HaSceneEditor extends SubscribeMixin(
     this._scene = scene;
     const { context } = await activateScene(this.hass, this._scene.entity_id);
     this._activateContextId = context.id;
-    this._unsubscribeEvents = await this.hass!.connection.subscribeEvents<
-      HassEvent
-    >((event) => this._stateChanged(event), "state_changed");
+    this._unsubscribeEvents = await this.hass!.connection.subscribeEvents<HassEvent>(
+      (event) => this._stateChanged(event),
+      "state_changed"
+    );
   }
 
   private _showMoreInfo(ev: Event) {
@@ -556,20 +557,18 @@ export class HaSceneEditor extends SubscribeMixin(
     if (this._entities.includes(entityId)) {
       return;
     }
-    this._entities = [...this._entities, entityId];
-    this._storeState(entityId);
-
     const entityRegistry = this._entityRegistryEntries.find(
       (entityReg) => entityReg.entity_id === entityId
     );
-
     if (
       entityRegistry?.device_id &&
       !this._devices.includes(entityRegistry.device_id)
     ) {
-      this._devices = [...this._devices, entityRegistry.device_id];
+      this._pickDevice(entityRegistry.device_id);
+    } else {
+      this._entities = [...this._entities, entityId];
+      this._storeState(entityId);
     }
-
     this._dirty = true;
   }
 
@@ -582,14 +581,12 @@ export class HaSceneEditor extends SubscribeMixin(
     this._dirty = true;
   }
 
-  private _devicePicked(ev: CustomEvent) {
-    const device = ev.detail.value;
-    (ev.target as any).value = "";
-    if (this._devices.includes(device)) {
+  private _pickDevice(device_id: string) {
+    if (this._devices.includes(device_id)) {
       return;
     }
-    this._devices = [...this._devices, device];
-    const deviceEntities = this._deviceEntityLookup[device];
+    this._devices = [...this._devices, device_id];
+    const deviceEntities = this._deviceEntityLookup[device_id];
     if (!deviceEntities) {
       return;
     }
@@ -598,6 +595,12 @@ export class HaSceneEditor extends SubscribeMixin(
       this._storeState(entityId);
     });
     this._dirty = true;
+  }
+
+  private _devicePicked(ev: CustomEvent) {
+    const device = ev.detail.value;
+    (ev.target as any).value = "";
+    this._pickDevice(device);
   }
 
   private _deleteDevice(ev: Event) {
@@ -627,7 +630,12 @@ export class HaSceneEditor extends SubscribeMixin(
     if ((this._config![name] || "") === newVal) {
       return;
     }
-    this._config = { ...this._config!, [name]: newVal };
+    if (!newVal) {
+      delete this._config![name];
+      this._config = { ...this._config! };
+    } else {
+      this._config = { ...this._config!, [name]: newVal };
+    }
     this._dirty = true;
   }
 

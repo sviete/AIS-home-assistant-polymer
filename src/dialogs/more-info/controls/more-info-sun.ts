@@ -29,8 +29,9 @@ class MoreInfoSun extends LitElement {
     const order = risingDate > settingDate ? ["set", "ris"] : ["ris", "set"];
 
     return html`
-      ${order.map((item) => {
-        return html`
+      <hr />
+      ${order.map(
+        (item) => html`
           <div class="row">
             <div class="key">
               <span
@@ -54,8 +55,8 @@ class MoreInfoSun extends LitElement {
               )}
             </div>
           </div>
-        `;
-      })}
+        `
+      )}
       <div class="row">
         <div class="key">
           ${this.hass.localize("ui.dialogs.more_info_control.sun.elevation")}
@@ -81,6 +82,11 @@ class MoreInfoSun extends LitElement {
       }
       ha-relative-time::first-letter {
         text-transform: lowercase;
+      }
+      hr {
+        border-color: var(--divider-color);
+        border-bottom: none;
+        margin: 16px 0;
       }
     `;
   }

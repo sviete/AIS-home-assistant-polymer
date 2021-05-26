@@ -22,6 +22,7 @@ import {
   mdiMonitorSpeaker,
   mdiZigbee,
   mdiPowerSocketEu,
+  mdiZWave,
 } from "@mdi/js";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
@@ -216,6 +217,13 @@ export const aisConfigSections: { [name: string]: PageNavigation[] } = {
       iconPath: mdiZigbee,
       core: true,
     },
+    {
+      component: "ais_dom_zwave",
+      path: "/config/ais_dom_zwave",
+      translationKey: "ui.panel.config.ais_dom_zwave.caption",
+      iconPath: mdiZWave,
+      core: true,
+    },
   ],
 };
 
@@ -297,6 +305,10 @@ class HaPanelConfig extends HassRouterPage {
       ais_dom_zigbee: {
         tag: "ha-config-aiszigbee",
         load: () => import("./ha-config-aiszigbee"),
+      },
+      ais_dom_zwave: {
+        tag: "ha-config-aiszwave",
+        load: () => import("./ha-config-aiszwave"),
       },
       ais_mqtt: {
         tag: "ais-mqtt-config-panel",

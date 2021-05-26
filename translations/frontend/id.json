@@ -473,6 +473,7 @@
                 "unhealthy_title": "Instalasi Anda tidak sehat",
                 "unsupported_description": "Di bawah ini adalah daftar masalah yang ditemukan pada instalasi Anda, klik pada tautan untuk mempelajari cara menyelesaikan masalah tersebut.",
                 "unsupported_reason": {
+                    "apparmor": "AppArmor tidak diaktifkan di host",
                     "container": "Kontainer diketahui menyebabkan masalah",
                     "content-trust": "Validasi kepercayaan konten dinonaktifkan",
                     "dbus": "DBUS",
@@ -560,9 +561,12 @@
             },
             "light": {
                 "brightness": "Kecerahan",
+                "cold_white_value": "Kecerahan putih dingin",
+                "color_brightness": "Kecerahan warna",
                 "color_temperature": "Temperatur warna",
                 "effect": "Efek",
-                "white_value": "Nilai putih"
+                "warm_white_value": "Kecerahan putih hangat",
+                "white_value": "Kecerahan putih"
             },
             "lock": {
                 "code": "Kode",
@@ -723,6 +727,9 @@
                 "today": "Hari ini"
             },
             "data-table": {
+                "clear": "Hapus",
+                "filtering_by": "Filter menurut",
+                "hidden": "{number} disembunyikan",
                 "no-data": "Tidak ada data",
                 "search": "Cari"
             },
@@ -837,6 +844,14 @@
                 "label": "Gambar",
                 "unsupported_format": "Format tidak didukung, pilih gambar JPEG, PNG, atau GIF."
             },
+            "related-filter-menu": {
+                "filter_by_area": "Filter menurut area",
+                "filter_by_device": "Filter menurut perangkat",
+                "filter_by_entity": "Filter menurut entitas",
+                "filtered_by_area": "area: {area_name}",
+                "filtered_by_device": "perangkat: {device_name}",
+                "filtered_by_entity": "entitas: {entity_name}"
+            },
             "related-items": {
                 "area": "Area",
                 "automation": "Bagian dari otomasi berikut",
@@ -874,6 +889,7 @@
                 }
             },
             "service-control": {
+                "integration_doc": "Dokumentasi integrasi",
                 "required": "Bidang ini wajib diisi",
                 "service_data": "Data layanan",
                 "target": "Target",
@@ -1179,6 +1195,22 @@
                 "zha_device_card": {
                     "device_name_placeholder": "Ubah nama perangkat"
                 }
+            },
+            "zha_reconfigure_device": {
+                "attribute": "Atribut",
+                "button_hide": "Sembunyikan Detail",
+                "button_show": "Tampilkan Detail",
+                "cluster_header": "Klaster",
+                "configuration_complete": "Konfigurasi ulang perangkat selesai.",
+                "configuration_failed": "Konfigurasi ulang perangkat gagal. Informasi tambahan mungkin tersedia di log.",
+                "configuring_alt": "Mengonfigurasi",
+                "heading": "Mengonfigurasi ulang perangkat",
+                "in_progress": "Perangkat sedang dikonfigurasi ulang. Proses ini mungkin membutuhkan beberapa saat.",
+                "introduction": "Konfigurasi ulang sebuah perangkat di jaringan Zigbee Anda. Gunakan fitur ini jika perangkat tersebut tidak berfungsi dengan benar.",
+                "min_max_change": "min/maks/perubahan",
+                "reporting_header": "Pelaporan",
+                "run_in_background": "Anda dapat menutup dialog ini dan konfigurasi ulang akan dilanjutkan di latar belakang.",
+                "start_reconfiguration": "Mulai Konfigurasi Ulang"
             }
         },
         "duration": {
@@ -1199,6 +1231,14 @@
                 "key_wrong_type": "Nilai yang disediakan untuk \"{key}\" tidak didukung oleh editor visual. Kami mendukung ({type_correct}) tetapi diterima ({type_wrong}).",
                 "no_template_editor_support": "Templat tidak didukung di editor visual",
                 "no_type_provided": "Tidak ada tipe yang tersedia."
+            },
+            "supervisor": {
+                "ask": "Dapatkan bantuan",
+                "observer": "Periksa Observer",
+                "reboot": "Coba me-reboot host",
+                "system_health": "Periksa Kesehatan Sistem",
+                "title": "Tidak dapat memuat panel Supervisor!",
+                "wait": "Jika Anda baru saja memulai, pastikan Anda telah memberikan cukup waktu kepada Supervisor untuk memulai."
             }
         },
         "login-form": {
@@ -1216,10 +1256,12 @@
         "notification_toast": {
             "connection_lost": "Koneksi terputus. Menghubungkan kembali…",
             "dismiss": "Tutup",
+            "intergration_starting": "Memulai {integration}, tidak semuanya akan tersedia hingga prosesnya selesai.",
             "service_call_failed": "Gagal memanggil layanan {service}.",
             "started": "Home Assistant telah dimulai!",
             "starting": "Home Assistant sedang dimulai, belum semuanya akan tersedia hingga selesai.",
-            "triggered": "Dipicu {name}"
+            "triggered": "Dipicu {name}",
+            "wrapping_up_startup": "Menyelesaikan proses mulai, tidak semuanya akan tersedia hingga prosesnya selesai."
         },
         "panel": {
             "config": {
@@ -1231,7 +1273,8 @@
                     "caption": "Area",
                     "data_table": {
                         "area": "Area",
-                        "devices": "Perangkat"
+                        "devices": "Perangkat",
+                        "entities": "Entitas"
                     },
                     "delete": {
                         "confirmation_text": "Semua perangkat di area ini akan dibatalkan penetapan areanya.",
@@ -1243,8 +1286,10 @@
                         "create": "Buat",
                         "default_name": "Area Baru",
                         "delete": "Hapus",
+                        "linked_entities_caption": "Entitas",
                         "name": "Nama",
                         "name_required": "Nama wajib diisi",
+                        "no_linked_entities": "Tidak ada entitas yang terkait dengan area ini.",
                         "unknown_error": "Kesalahan yang tidak diketahui",
                         "update": "Perbarui"
                     },
@@ -1307,6 +1352,7 @@
                                     "extra_fields": {
                                         "brightness_pct": "Kecerahan",
                                         "code": "Kode",
+                                        "flash": "Flash",
                                         "humidity": "Kelembaban",
                                         "message": "Pesan",
                                         "mode": "Mode",
@@ -1472,6 +1518,7 @@
                         "move_down": "Pindahkan ke bawah",
                         "move_up": "Pindahkan ke atas",
                         "save": "Simpan",
+                        "show_trace": "Tampilkan jejak",
                         "triggers": {
                             "add": "Tambah pemicu",
                             "delete": "Hapus",
@@ -1580,6 +1627,7 @@
                         "add_automation": "Tambah otomasi",
                         "delete_automation": "Hapus otomasi",
                         "delete_confirm": "Yakin ingin menghapus otomasi ini?",
+                        "dev_automation": "Otomatisasi debug",
                         "duplicate": "Gandakan",
                         "duplicate_automation": "Gandakan otomasi",
                         "edit_automation": "Edit otomasi",
@@ -1678,6 +1726,8 @@
                             "info": "Dengan integrasi Google Assistant untuk Home Assistant Cloud, Anda akan dapat mengontrol semua perangkat Home Assistant melalui perangkat yang mendukung Home Assistant.",
                             "info_state_reporting": "Jika Anda mengaktifkan pelaporan status, Home Assistant akan mengirim semua perubahan status entitas yang terpapar ke Google. Ini memungkinkan Anda untuk selalu melihat status terbaru di aplikasi Google.",
                             "manage_entities": "Kelola Entitas",
+                            "not_configured_text": "Sebelum dapat menggunakan Asisten Google, Anda harus mengaktifkan keterampilan Home Assistant Cloud untuk Asisten Google di aplikasi Google Home.",
+                            "not_configured_title": "Asisten Google tidak diaktifkan",
                             "security_devices": "Perangkat Keamanan",
                             "sync_entities": "Sinkronkan Entitas ke Google",
                             "sync_entities_404_message": "Gagal menyinkronkan entitas Anda ke Google, minta Google 'Ok Google, sinkronkan perangkat saya' untuk menyinkronkan entitas Anda.",
@@ -1840,6 +1890,25 @@
                     "description": "Sistem unit, lokasi, zona waktu & parameter umum lainnya",
                     "section": {
                         "core": {
+                            "analytics": {
+                                "documentation": "Sebelum Anda mengaktifkan, pastikan Anda mengunjungi halaman dokumentasi analitika {link} untuk memahami apa yang Anda kirim dan bagaimana penyimpanannya.",
+                                "header": "Analitika",
+                                "instance_id": "ID Instans: {huuid}",
+                                "learn_more": "Cara kami memproses data Anda",
+                                "needs_base": "Anda perlu mengaktifkan analitik dasar agar opsi ini tersedia",
+                                "preference": {
+                                    "base": {
+                                        "description": "ID instans, versi, dan jenis instalasi."
+                                    },
+                                    "usage_supervisor": {
+                                        "description": "Nama, versi, dan kemampuan.",
+                                        "title": "Integrasi dan add-on yang digunakan"
+                                    },
+                                    "usage": {
+                                        "title": "Integrasi yang Digunakan"
+                                    }
+                                }
+                            },
                             "core_config": {
                                 "edit_requires_storage": "Editor dinonaktifkan karena konfigurasi disimpan dalam configuration.yaml.",
                                 "elevation": "Ketinggian",
@@ -2027,6 +2096,9 @@
                     "filtering_by": "Filter menurut",
                     "show": "Tampilkan"
                 },
+                "hassio": {
+                    "button": "Konfigurasi"
+                },
                 "header": "Mengonfigurasi Home Assistant",
                 "helpers": {
                     "caption": "Pembantu",
@@ -2092,6 +2164,8 @@
                     "caption": "Integrasi",
                     "config_entry": {
                         "area": "Di {area}",
+                        "check_the_logs": "Periksa log",
+                        "configure": "Konfigurasikan",
                         "delete": "Hapus",
                         "delete_confirm": "Yakin ingin menghapus integrasi ini?",
                         "device_unavailable": "Perangkat tidak tersedia",
@@ -2113,8 +2187,10 @@
                         "entity_unavailable": "Entitas tidak tersedia",
                         "firmware": "Firmware: {version}",
                         "hub": "Terhubung via",
+                        "logs": "log",
                         "manuf": "oleh {manufacturer}",
                         "no_area": "Tidak Ada Area",
+                        "not_loaded": "Tidak dimuat, periksa {logs_link}",
                         "options": "Opsi",
                         "reload": "Muat Ulang",
                         "reload_confirm": "Integrasi telah dimuat ulang",
@@ -2140,6 +2216,7 @@
                         "finish": "Selesai",
                         "loading_first_time": "Mohon tunggu sementara integrasi sedang dipasang",
                         "not_all_required_fields": "Belum semua bidang wajib telah terisi.",
+                        "not_loaded": "Integrasi tidak dapat dimuat, coba mulai ulang Home Assistant.",
                         "pick_flow_step": {
                             "new_flow": "Tidak, siapkan instans {integration} lainnya",
                             "title": "Kami menemukan yang berikut, ingin menyiapkannya?"
@@ -2154,6 +2231,7 @@
                     "disable": {
                         "disabled_integrations": "{number} dinonaktifkan",
                         "hide_disabled": "Sembunyikan integrasi yang dinonaktifkan",
+                        "show": "Tampilkan",
                         "show_disabled": "Tampilkan integrasi yang dinonaktifkan"
                     },
                     "discovered": "Ditemukan",
@@ -2189,6 +2267,13 @@
                     "clear": "Bersihkan",
                     "description": "Lihat log Home Assistant",
                     "details": "Detail Log ({level})",
+                    "level": {
+                        "critical": "CRITICAL",
+                        "debug": "DEBUG",
+                        "error": "ERROR",
+                        "info": "INFO",
+                        "warning": "WARNING"
+                    },
                     "load_full_log": "Muat Log Lengkap Home Assistant",
                     "loading_log": "Memuat log kesalahan…",
                     "multiple_messages": "pesan pertama kali muncul pada {time} dan muncul {counter} kali",
@@ -3674,6 +3759,10 @@
                 }
             },
             "page-onboarding": {
+                "analytics": {
+                    "finish": "Berikutnya",
+                    "intro": "Bagikan analitika dari instans Anda. Data ini akan tersedia untuk umum di {link}"
+                },
                 "core-config": {
                     "button_detect": "Deteksi",
                     "finish": "Berikutnya",
@@ -3683,12 +3772,14 @@
                     "location_name": "Beri nama instalasi Home Assistant Anda",
                     "location_name_default": "Rumah"
                 },
+                "finish": "Selesai",
                 "integration": {
                     "finish": "Selesai",
                     "intro": "Perangkat dan layanan diwakili di Home Assistant sebagai integrasi. Anda dapat mengaturnya sekarang, atau melakukannya nanti dari layar konfigurasi.",
                     "more_integrations": "Lebih Lanjut"
                 },
                 "intro": "Siap untuk membuat rumah Anda lebih hidup, merebut kembali privasi Anda, dan bergabung dengan komunitas pemikir di seluruh dunia?",
+                "next": "Berikutnya",
                 "restore": {
                     "description": "Atau, Anda dapat memulihkan dari snapshot sebelumnya.",
                     "hide_log": "Sembunyikan log lengkap",
@@ -3782,6 +3873,19 @@
                     "disable": "Nonaktifkan",
                     "enable": "Aktifkan",
                     "header": "Modul Autentikasi Multifaktor"
+                },
+                "number_format": {
+                    "description": "Pilih cara pemformatan bilangan",
+                    "dropdown_label": "Format bilangan",
+                    "formats": {
+                        "comma_decimal": "1,234,567.89",
+                        "decimal_comma": "1.234.567,89",
+                        "language": "Otomatis (gunakan pengaturan bahasa)",
+                        "none": "Tidak ada",
+                        "space_comma": "1 234 567,89",
+                        "system": "Gunakan pelokalan sistem"
+                    },
+                    "header": "Format Bilangan"
                 },
                 "push_notifications": {
                     "add_device_prompt": {

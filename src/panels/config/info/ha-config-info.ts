@@ -51,7 +51,7 @@ class HaConfigInfo extends LitElement {
               )}"
           /></a>
           <br />
-          <h2>Asystent domowy ${hass.connection.haVersion}</h2>
+          <h2>AI-Speaker ${hass.connection.haVersion}</h2>
           <p>
             ${this.hass.localize(
               "ui.panel.config.info.path_configuration",
@@ -137,7 +137,10 @@ class HaConfigInfo extends LitElement {
         </div>
         <div class="content">
           <system-health-card .hass=${this.hass}></system-health-card>
-          <integrations-card .hass=${this.hass}></integrations-card>
+          <integrations-card
+            .hass=${this.hass}
+            .narrow=${this.narrow}
+          ></integrations-card>
         </div>
       </hass-tabs-subpage>
     `;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Asystent domowy</title>
+    <title>AI-Speaker</title>
     <link rel="modulepreload" href="<%= latestPageJS %>" crossorigin="use-credentials" />
     <%= renderTemplate('_header') %>
     <style>
@@ -31,11 +31,9 @@
         margin-right: 16px;
       }
       @media (prefers-color-scheme: dark) {
-        body {
+        html {
           background-color: #111111;
           color: #e1e1e1;
-          --primary-text-color: #e1e1e1;
-          --secondary-text-color: #9b9b9b;
         }
       }
     </style>
@@ -44,7 +42,7 @@
     <div class="content">
       <div class="header">
         <img src="/static/icons/favicon-192x192.png" height="52" />
-        Asystent domowy
+        AI-Speaker
       </div>
       <ha-authorize><p>Initializing</p></ha-authorize>
     </div>

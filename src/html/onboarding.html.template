@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Asystent domowy</title>
-    <link rel="modulepreload" href="<%= latestPageJS %>" crossorigin="use-credentials" />
+    <title>AI-Speaker</title>
+    <link
+      rel="modulepreload"
+      href="<%= latestPageJS %>"
+      crossorigin="use-credentials"
+    />
     <%= renderTemplate('_header') %>
     <style>
       /* ais */
@@ -31,8 +35,22 @@
       }
       .content {
         padding: 20px 16px;
-        max-width: 400px;
-        margin: 0 auto;
+        border-radius: 4px;
+        max-width: 432px;
+        margin: 64px auto 0;
+        box-shadow: var(
+          --ha-card-box-shadow,
+          rgba(0, 0, 0, 0.25) 0px 54px 55px,
+          rgba(0, 0, 0, 0.12) 0px -12px 30px,
+          rgba(0, 0, 0, 0.12) 0px 4px 6px,
+          rgba(0, 0, 0, 0.17) 0px 12px 13px,
+          rgba(0, 0, 0, 0.09) 0px -3px 5px
+        );
+        background: var(
+          --ha-card-background,
+          var(--card-background-color, white)
+        );
+        color: var(--primary-text-color, #212121);
       }
 
       .header {
@@ -47,13 +65,26 @@
       .header img {
         margin-right: 16px;
       }
+
+      @media (prefers-color-scheme: dark) {
+        html {
+          color: #e1e1e1;
+        }
+      }
+
+      @media (max-width: 450px) {
+        .content {
+          min-height: 100%;
+          margin: 0;
+        }
+      }
     </style>
   </head>
-  <body>
+  <body id="particles">
     <div class="content">
       <div class="header">
         <img src="/static/icons/favicon-192x192.png" height="52" width="52" />
-        Asystent domowy
+        AI-Speaker
       </div>
 
       <ha-onboarding></ha-onboarding>

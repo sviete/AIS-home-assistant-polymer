@@ -39,6 +39,7 @@ const COMPONENTS = {
   aisaudio: () => import("../panels/aisaudio/ha-panel-aisaudio"),
   aiszigbee: () => import("../panels/aiszigbee/ha-panel-aiszigbee"),
   aistts: () => import("../panels/aistts/ha-panel-aistts"),
+  aisttsauto: () => import("../panels/aistts/ha-panel-aisttsauto"),
   "media-browser": () =>
     import("../panels/media-browser/ha-panel-media-browser"),
 };

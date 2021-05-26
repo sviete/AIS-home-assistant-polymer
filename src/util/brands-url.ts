@@ -6,7 +6,7 @@ export const brandsUrl = (
   if (domain.startsWith("ais_")) {
     return `https://ai-speaker.com/images/brands/${domain}/${type}.png`;
   }
-  return `https://brands.home-assistant.io/_/${
-    useFallback ? "" : ""
+  return `https://brands.home-assistant.io/${
+    useFallback ? "_/" : ""
   }${domain}/${type}.png`;
 };
