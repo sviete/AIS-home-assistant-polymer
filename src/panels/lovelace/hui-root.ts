@@ -15,8 +15,6 @@ import {
   mdiRefresh,
   mdiShape,
   mdiViewDashboard,
-  // ais
-  mdiForumOutline,
   mdiMicrophone,
 } from "@mdi/js";
 import "@polymer/app-layout/app-header/app-header";

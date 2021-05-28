@@ -1,5 +1,5 @@
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
-import {property, customElement} from 'lit/decorators';
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { property, customElement } from "lit/decorators";
 import { HomeAssistant } from "../../../../types";
 import "../../../../components/entity/state-badge";
 import "@polymer/paper-item/paper-item";
@@ -10,9 +10,7 @@ import "../../../../components/ha-icon";
 import "../../../../components/ha-switch";
 import { EntityRegistryStateEntry } from "../../devices/ha-config-device-page";
 import { HassEntity } from "home-assistant-js-websocket";
-import {
-  loadAddAisDomDeviceDialog,
-} from "./show-dialog-ais-dom-device-detail";
+import { loadAddAisDomDeviceDialog } from "./show-dialog-ais-dom-device-detail";
 
 @customElement("ha-ais-dom-rf433-config-card")
 export class HaDeviceEntitiesCard extends LitElement {
@@ -203,7 +201,8 @@ export class HaDeviceEntitiesCard extends LitElement {
             </div>
           </div>
           `
-          : html``}
+                : html``
+            }
         </ha-card>
         <mqtt-subscribe-card .hass=${this.hass}></mqtt-subscribe-card>
       </div>
@@ -266,10 +265,12 @@ export class HaDeviceEntitiesCard extends LitElement {
       const gateTopic = ev.currentTarget["data-topic"];
       const idx = ev.currentTarget["data-idx"];
       const entityTtt = ev.currentTarget["data-ttt"];
-      const entityName = this.shadowRoot!.getElementById("name_" + idx);
+      const entityName = this.shadowRoot!.getElementById(
+        "name_" + idx
+      ) as HTMLInputElement;
 
       this.hass.callService("ais_dom_device", "add_ais_dom_entity", {
-        name: entityName!.value,
+        name: entityName.value,
         topic: gateTopic,
         deviceId: this.deviceId,
         code: b0,
@@ -281,7 +282,7 @@ export class HaDeviceEntitiesCard extends LitElement {
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		"ha-ais-dom-rf433-config-card": HaDeviceEntitiesCard
-	}
+  interface HTMLElementTagNameMap {
+    "ha-ais-dom-rf433-config-card": HaDeviceEntitiesCard;
+  }
 }

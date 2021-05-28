@@ -1,5 +1,12 @@
-import {css, CSSResultArray, html, LitElement, PropertyValues, TemplateResult} from "lit";
-import {property, customElement} from 'lit/decorators';
+import {
+  css,
+  CSSResultArray,
+  html,
+  LitElement,
+  PropertyValues,
+  TemplateResult,
+} from "lit";
+import { property, customElement } from "lit/decorators";
 import "@polymer/app-layout/app-header-layout/app-header-layout";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
@@ -26,11 +33,12 @@ class PanelAisZigbee extends LitElement {
 
   private lovelace: Lovelace = {
     config: aisZigbeeLovelace,
+    rawConfig: aisZigbeeLovelace,
     editMode: false,
     urlPath: null,
     enableFullEditMode: () => undefined,
     mode: "storage",
-    language: "pl",
+    locale: this.hass.locale,
     saveConfig: async () => undefined,
     deleteConfig: async () => undefined,
     setEditMode: () => undefined,
@@ -83,7 +91,7 @@ class PanelAisZigbee extends LitElement {
       "https://www.ai-speaker.com/docs/ais_app_integration_zigbee",
       "_blank"
     );
-    win.focus();
+    win!.focus();
   }
 
   protected render(): TemplateResult {

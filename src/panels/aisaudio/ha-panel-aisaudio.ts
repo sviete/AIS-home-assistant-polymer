@@ -1,5 +1,12 @@
-import {css, CSSResultArray, html, LitElement, PropertyValues, TemplateResult} from "lit";
-import {property, customElement} from 'lit/decorators';
+import {
+  css,
+  CSSResultArray,
+  html,
+  LitElement,
+  PropertyValues,
+  TemplateResult,
+} from "lit";
+import { property, customElement } from "lit/decorators";
 import "@polymer/app-layout/app-header-layout/app-header-layout";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
@@ -43,11 +50,12 @@ class PanelAisAudio extends LitElement {
 
   private lovelace: Lovelace = {
     config: aisAudioLovelace,
+    rawConfig: aisAudioLovelace,
     editMode: false,
     urlPath: null,
     enableFullEditMode: () => undefined,
     mode: "storage",
-    language: "pl",
+    locale: this.hass.locale,
     saveConfig: async () => undefined,
     deleteConfig: async () => undefined,
     setEditMode: () => undefined,

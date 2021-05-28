@@ -1,8 +1,8 @@
 import "../../lovelace/entity-rows/hui-timer-entity-row";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
-import {customElement, property} from 'lit/decorators';
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { customElement, property } from "lit/decorators";
 import { HomeAssistant } from "../../../types";
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
@@ -67,8 +67,8 @@ class HaConfigAisDomControl extends LitElement {
 
     return html`
       <hass-subpage header="Konfiguracja bramki AIS dom">
-        <div .isWide=${this.isWide}>
-          <ha-config-section .isWide=${this.isWide}>
+        <div>
+          <ha-config-section>
             <span slot="header">Zdalny dostęp</span>
             <span slot="introduction"
               >W tej sekcji możesz skonfigurować zdalny dostęp do bramki</span

@@ -2,8 +2,8 @@ import "@material/mwc-list/mwc-list-item";
 import "../../../../../components/ha-button-menu";
 import "@material/mwc-button";
 import "@polymer/paper-input/paper-input";
-import {css, CSSResultArray, html, LitElement, TemplateResult} from "lit";
-import {property, customElement} from 'lit/decorators';
+import { css, CSSResultArray, html, LitElement, TemplateResult } from "lit";
+import { property, customElement } from "lit/decorators";
 import "../../../../../components/ha-card";
 import "../../../../../components/ha-code-editor";
 import {
@@ -77,7 +77,10 @@ class HaPanelDevAisMqtt extends LitElement {
       // eslint-disable-next-line no-console
       console.log("No config_entry");
     } else {
-      await reloadConfigEntry(this.hass, searchParams.get("config_entry"));
+      await reloadConfigEntry(
+        this.hass,
+        searchParams.get("config_entry") || ""
+      );
       showAlertDialog(this, {
         text: "OK. Integracja została ponownie wczytana.",
       });

@@ -5,8 +5,8 @@ import "@polymer/paper-item/paper-item";
 import "@polymer/paper-radio-group/paper-radio-group";
 import "@polymer/paper-radio-button/paper-radio-button";
 import "@polymer/paper-input/paper-input";
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
-import {property, customElement} from 'lit/decorators';
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { property, customElement } from "lit/decorators";
 import "../ha-circular-progress";
 import "../ha-chip-set";
 import "../ha-switch";
@@ -14,7 +14,6 @@ import { createCloseHeading } from "../ha-dialog";
 import { haStyleDialog } from "../../resources/styles";
 import type { HomeAssistant } from "../../types";
 import { HassEntity } from "home-assistant-js-websocket";
-import { AddMediaSourceAisDialogParams } from "./show-add-media-source-ais-dialog";
 import {
   showAlertDialog,
   showConfirmationDialog,
@@ -67,7 +66,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
 
   @property() private mediaShare = false;
 
-  @property() private mediaChips = [];
+  @property() private mediaChips: string[] = [];
 
   @property() private mediaNamePlaceholder =
     "Nazwa (komenda: Włącz radio nazwa)";
@@ -76,13 +75,10 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
 
   @property() private mediaUrlPlaceholder = "Adres URL Strumienia";
 
-  private _params?: AddMediaSourceAisDialogParams;
-
   private _aisMediaInfo?: HassEntity;
 
-  public showDialog(params: AddMediaSourceAisDialogParams): void {
+  public showDialog(): void {
     this._opened = true;
-    this._params = params;
     this._aisMediaInfo = this.hass.states[
       "media_player.wbudowany_glosnik"
     ] as HassEntity;
@@ -105,15 +101,14 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
     this.mediaChips = [];
     const options = this.hass.states["input_select.radio_type"].attributes
       .options;
-    options.forEach((element) => {
+    options.forEach((element: string) => {
       if (!element.startsWith("Moje") && !element.startsWith("Udostępnione")) {
-        this.mediaChips.push(element);
+        this.mediaChips.push(element || "");
       }
     });
   }
 
   public closeDialog() {
-    this._params = undefined;
     this._opened = false;
     fireEvent(this, "dialog-closed", { dialog: this.localName });
   }
@@ -148,9 +143,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
                     `}
               </p>
 
-              <label>
-                Typ audio:
-              </label>
+              <label> Typ audio: </label>
               <paper-radio-group
                 .selected=${this.mediaCategory}
                 .value=${this.mediaCategory}
@@ -242,9 +235,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
                           <br />`
                       : html`
                           <div style="text-align: center;">
-                            <h2>
-                              Wypełnij wszsytkie wymagane pola.
-                            </h2>
+                            <h2>Wypełnij wszsytkie wymagane pola.</h2>
                           </div>
                           <br />
                         `}

@@ -1,5 +1,5 @@
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
-import {property, customElement} from 'lit/decorators';
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { property, customElement } from "lit/decorators";
 import { loadTokens } from "../../../../common/auth/token_storage";
 import { HomeAssistant } from "../../../../types";
 import "../../../../layouts/hass-loading-screen";
@@ -18,7 +18,7 @@ class AisDomIframeView extends LitElement {
 
   protected render(): TemplateResult {
     const tokens = loadTokens();
-    this._access_token = tokens?.access_token;
+    this._access_token = tokens?.access_token || "";
     return html`
       <ha-card>
         ${this.entities.length

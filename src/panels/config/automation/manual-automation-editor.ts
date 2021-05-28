@@ -243,7 +243,7 @@ export class HaManualAutomationEditor extends LitElement {
 
   // AIS START
   private _get_ais_name_label(): string {
-    if (this.config.alias.trim().toLowerCase().startsWith("jolka:")) {
+    if (this?.config?.alias?.trim().toLowerCase().startsWith("jolka:")) {
       return (
         "Polecenie uruchamiające: " +
         this.config.alias.toLowerCase().replace("jolka:", "")
@@ -253,7 +253,7 @@ export class HaManualAutomationEditor extends LitElement {
   }
 
   private _get_ais_desc_label(): string {
-    if (this.config.alias.trim().toLowerCase().startsWith("jolka:")) {
+    if (this?.config?.alias?.trim().toLowerCase().startsWith("jolka:")) {
       return "Aliasy polecenia";
     }
     return this.hass.localize(
@@ -262,7 +262,7 @@ export class HaManualAutomationEditor extends LitElement {
   }
 
   private _get_ais_desc_placeholder(): string {
-    if (this.config.alias.trim().toLowerCase().startsWith("jolka:")) {
+    if (this?.config?.alias?.trim().toLowerCase().startsWith("jolka:")) {
       return "Opcjonalne dodatkowe komendy uruchamiające rozdzielone średnikiem";
     }
     return this.hass.localize(

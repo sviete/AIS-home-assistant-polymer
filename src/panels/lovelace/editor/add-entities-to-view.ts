@@ -1,6 +1,7 @@
 import {
   fetchConfig,
   fetchDashboards,
+  LovelaceCardConfig,
   LovelaceConfig,
   LovelacePanelConfig,
   saveConfig,

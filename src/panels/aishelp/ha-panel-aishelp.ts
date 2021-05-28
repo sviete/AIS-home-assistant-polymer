@@ -1,5 +1,5 @@
-
-import "../../layouts/hass-subpage";import "../../components/ha-menu-button";
+import "../../layouts/hass-subpage";
+import "../../components/ha-menu-button";
 import "@material/mwc-button";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
 import "@polymer/paper-input/paper-input";
@@ -8,8 +8,8 @@ import "../../components/ha-card";
 import "../../resources/ha-style";
 import "../config/ha-config-section";
 import { CustomPanelInfo } from "../../data/panel_custom";
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
-import {property, customElement} from 'lit/decorators';
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { property, customElement } from "lit/decorators";
 
 @customElement("ha-panel-aishelp")
 class HaPanelAishelp extends LitElement {
@@ -80,7 +80,7 @@ class HaPanelAishelp extends LitElement {
     return html`
       <div class="content">
         <hass-subpage>
-          <ha-config-section class="content" ?is-wide=${this.isWide}>
+          <ha-config-section class="content">
             <span slot="header">Przydatne Linki</span>
             <span slot="introduction"
               >W tej sekcji znajdziesz przydatne linki dotyczące twojej

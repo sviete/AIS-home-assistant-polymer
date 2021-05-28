@@ -1,8 +1,14 @@
 import "@material/mwc-list/mwc-list-item";
 import "../../components/ha-button-menu";
-import {css, CSSResultArray, html, LitElement, PropertyValues, TemplateResult} from "lit";
-import {customElement, property} from 'lit/decorators';
-import { loadTokens } from "../../common/auth/token_storage";
+import {
+  css,
+  CSSResultArray,
+  html,
+  LitElement,
+  PropertyValues,
+  TemplateResult,
+} from "lit";
+import { customElement, property } from "lit/decorators";
 import "../../layouts/hass-loading-screen";
 import "../../layouts/hass-subpage";
 import "../../components/ha-circular-progress";
@@ -21,10 +27,10 @@ class ConfigAisZwave extends LitElement {
   @property({ type: Boolean })
   public narrow = false;
 
-  @property() private _access_token = "";
+  // @property() private _access_token = "";
 
   protected render(): TemplateResult {
-    const tokens = loadTokens();
+    // const tokens = loadTokens();
     // this._access_token = tokens?.access_token;
     // const iframe = html` <iframe
     //   src="/api/zwave2mqtt/${this._access_token}/"

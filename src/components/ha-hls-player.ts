@@ -91,11 +91,6 @@ class HaHLSPlayer extends LitElement {
   }
 
   private async _getUseExoPlayer(): Promise<boolean> {
-    // AIS - allow to use exo player
-    if ("JavascriptHandler" in window && this.allowExoPlayer) {
-      return true;
-    }
-
     if (!this.hass!.auth.external || !this.allowExoPlayer) {
       return false;
     }
@@ -156,22 +151,13 @@ class HaHLSPlayer extends LitElement {
     window.addEventListener("resize", this._resizeExoPlayer);
     this.updateComplete.then(() => nextRender()).then(this._resizeExoPlayer);
     this._videoEl.style.visibility = "hidden";
-    // AIS - play via exo player
-    if ("JavascriptHandler" in window) {
-      const payload = JSON.stringify({
+    await this.hass!.auth.external!.sendMessage({
+      type: "exoplayer/play_hls",
+      payload: {
         url: new URL(url, window.location.href).toString(),
         muted: this.muted,
-      });
-      window.JavascriptHandler.exoplayerPlayHls(payload);
-    } else {
-      await this.hass!.auth.external!.sendMessage({
-        type: "exoplayer/play_hls",
-        payload: {
-          url: new URL(url, window.location.href).toString(),
-          muted: this.muted,
-        },
-      });
-    }
+      },
+    });
   }
 
   private _resizeExoPlayer = () => {
@@ -179,27 +165,15 @@ class HaHLSPlayer extends LitElement {
       return;
     }
     const rect = this._videoEl.getBoundingClientRect();
-
-    // AIS resize Exo player
-    if ("JavascriptHandler" in window) {
-      const payload = JSON.stringify({
+    this.hass!.auth.external!.fireMessage({
+      type: "exoplayer/resize",
+      payload: {
         left: rect.left,
         top: rect.top,
         right: rect.right,
         bottom: rect.bottom,
-      });
-      window.JavascriptHandler.exoplayeResizeHls(payload);
-    } else {
-      this.hass!.auth.external!.fireMessage({
-        type: "exoplayer/resize",
-        payload: {
-          left: rect.left,
-          top: rect.top,
-          right: rect.right,
-          bottom: rect.bottom,
-        },
-      });
-    }
+      },
+    });
   };
 
   private async _renderHLSPolyfill(
@@ -239,12 +213,7 @@ class HaHLSPlayer extends LitElement {
     }
     if (this._useExoPlayer) {
       window.removeEventListener("resize", this._resizeExoPlayer);
-      // AIS stop Exo player
-      if ("JavascriptHandler" in window) {
-        window.JavascriptHandler.exoplayerStop();
-      } else {
-        this.hass!.auth.external!.fireMessage({ type: "exoplayer/stop" });
-      }
+      this.hass!.auth.external!.fireMessage({ type: "exoplayer/stop" });
     }
   }
 
