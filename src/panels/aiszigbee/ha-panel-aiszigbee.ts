@@ -31,19 +31,6 @@ class PanelAisZigbee extends LitElement {
 
   private mqls?: MediaQueryList[];
 
-  private lovelace: Lovelace = {
-    config: aisZigbeeLovelace,
-    rawConfig: aisZigbeeLovelace,
-    editMode: false,
-    urlPath: null,
-    enableFullEditMode: () => undefined,
-    mode: "storage",
-    locale: this.hass.locale,
-    saveConfig: async () => undefined,
-    deleteConfig: async () => undefined,
-    setEditMode: () => undefined,
-  };
-
   private _updateColumns() {
     const matchColumns = this.mqls!.reduce(
       (cols, mql) => cols + Number(mql.matches),
@@ -95,6 +82,19 @@ class PanelAisZigbee extends LitElement {
   }
 
   protected render(): TemplateResult {
+    const lovelace: Lovelace = {
+      config: aisZigbeeLovelace,
+      rawConfig: aisZigbeeLovelace,
+      editMode: false,
+      urlPath: null,
+      enableFullEditMode: () => undefined,
+      mode: "storage",
+      locale: this.hass.locale,
+      saveConfig: async () => undefined,
+      deleteConfig: async () => undefined,
+      setEditMode: () => undefined,
+    };
+
     return html`
       <app-header-layout has-scrolling-region>
         <app-header fixed slot="header">
@@ -113,7 +113,7 @@ class PanelAisZigbee extends LitElement {
         </app-header>
         <hui-view
           .hass=${this.hass}
-          .lovelace=${this.lovelace}
+          .lovelace=${lovelace}
           index="0"
           .columns=${this._columns}
         ></hui-view>
