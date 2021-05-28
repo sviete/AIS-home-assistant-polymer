@@ -9,15 +9,8 @@ import {
   mdiElectricSwitch,
 } from "@mdi/js";
 import "@polymer/paper-tooltip/paper-tooltip";
-import {
-  css,
-  customElement,
-  html,
-  LitElement,
-  property,
-  TemplateResult,
-  PropertyValues,
-} from "lit-element";
+import {css, html, LitElement, PropertyValues, TemplateResult} from "lit";
+import {property, customElement} from 'lit/decorators';
 import "@polymer/polymer/lib/elements/dom-repeat";
 import { fireEvent } from "../../common/dom/fire_event";
 import { navigate } from "../../common/navigate";
@@ -159,7 +152,7 @@ class HaPanelAisTtsAuto extends LitElement {
     super.firstUpdated(changedProps);
   }
 
-  private _get_automations(states) {
+  private _get_automations(_states) {
     const l_automation: AutomationRowData[] = [];
     Object.values(this.hass.states).forEach((entity) => {
       if (

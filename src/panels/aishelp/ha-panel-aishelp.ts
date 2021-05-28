@@ -1,4 +1,5 @@
-import "../../components/ha-menu-button";
+
+import "../../layouts/hass-subpage";import "../../components/ha-menu-button";
 import "@material/mwc-button";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
 import "@polymer/paper-input/paper-input";
@@ -7,36 +8,28 @@ import "../../components/ha-card";
 import "../../resources/ha-style";
 import "../config/ha-config-section";
 import { CustomPanelInfo } from "../../data/panel_custom";
-import {
-  customElement,
-  property,
-  css,
-  html,
-  CSSResult,
-  internalProperty,
-  TemplateResult,
-  LitElement,
-} from "lit-element";
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
+import {property, customElement} from 'lit/decorators';
 
 @customElement("ha-panel-aishelp")
 class HaPanelAishelp extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @internalProperty() private _qrCode?: TemplateResult;
+  @property() private _qrCode?: TemplateResult;
 
   @property() public panel!: CustomPanelInfo;
 
   @property() public narrow!: boolean;
 
-  @internalProperty() private aisLocalIP;
+  @property() private aisLocalIP;
 
-  @internalProperty() private remoteDomain;
+  @property() private remoteDomain;
 
-  @internalProperty() private remoteConnectedInfo;
+  @property() private remoteConnectedInfo;
 
-  @internalProperty() private serviceRemoteStatusColor = "#000000";
+  @property() private serviceRemoteStatusColor = "#000000";
 
-  @internalProperty() private aisSecureAndroidId = "dom-xxxxxxxx";
+  @property() private aisSecureAndroidId = "dom-xxxxxxxx";
 
   protected firstUpdated() {
     this.aisLocalIP = this.hass.states["sensor.internal_ip_address"].state;
@@ -207,7 +200,7 @@ class HaPanelAishelp extends LitElement {
     `;
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [
       css`
         app-toolbar {

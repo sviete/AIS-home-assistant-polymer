@@ -24,17 +24,8 @@ import { PaperInputElement } from "@polymer/paper-input/paper-input";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import { guard } from "lit-html/directives/guard";
 import { mdiDrag } from "@mdi/js";
-import {
-  css,
-  customElement,
-  html,
-  LitElement,
-  property,
-  PropertyValues,
-  internalProperty,
-  query,
-} from "lit-element";
-
+import {css, html, LitElement, PropertyValues} from "lit";
+import {property, customElement, query} from 'lit/decorators';
 import {
   addItem,
   clearItems,
@@ -145,31 +136,31 @@ export class HaPanelAisTts extends LitElement {
 
   @property() public narrow!: boolean;
 
-  @internalProperty() private _uncheckedItems?: AisTtsItem[];
+  @property() private _uncheckedItems?: AisTtsItem[];
 
-  @internalProperty() private _checkedItems?: AisTtsItem[];
+  @property() private _checkedItems?: AisTtsItem[];
 
-  @internalProperty() private _textValue = "";
+  @property() private _textValue = "";
 
-  @internalProperty() private _selectedLanguage = "pl_PL";
+  @property() private _selectedLanguage = "pl_PL";
 
-  @internalProperty() private _selectedVoice = "pl-pl-x-oda-local";
+  @property() private _selectedVoice = "pl-pl-x-oda-local";
 
-  @internalProperty() private _speedValue = 1;
+  @property() private _speedValue = 1;
 
-  @internalProperty() private _pitchValue = 1;
+  @property() private _pitchValue = 1;
 
-  @internalProperty() private _delayValue = 0;
+  @property() private _delayValue = 0;
 
-  @internalProperty() private _counterValue = 0;
+  @property() private _counterValue = 0;
 
-  @internalProperty() private _play_counting = false;
+  @property() private _play_counting = false;
 
-  @internalProperty() private _fileNameValue = "";
+  @property() private _fileNameValue = "";
 
-  @internalProperty() private _reordering = false;
+  @property() private _reordering = false;
 
-  @internalProperty() private _renderEmptySortable = false;
+  @property() private _renderEmptySortable = false;
 
   private _sortable?;
 
@@ -306,7 +297,7 @@ export class HaPanelAisTts extends LitElement {
                           style="margin-left: 30px; font-size: 12px; color: var(--primary-color);"
                           >Ton</label
                         >
-                        <ha-slider
+                        <ha-sidebar
                           editable
                           pin
                           step="0.1"
@@ -315,7 +306,7 @@ export class HaPanelAisTts extends LitElement {
                           .value="${Number(this._pitchValue)}"
                           @change="${this._pitchValueChanged}"
                           .disabled=${this._play_counting}
-                        ></ha-slider>
+                        ></ha-sidebar>
                       </div>
                       <paper-input
                         label="Nazwa pliku"

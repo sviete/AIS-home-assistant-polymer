@@ -5,15 +5,8 @@ import "../../../components/ha-card";
 import "../../../components/ha-icon-next";
 import { PageNavigation } from "../../../layouts/hass-tabs-subpage";
 import "../../../components/ha-icon";
-import {
-  LitElement,
-  html,
-  TemplateResult,
-  property,
-  customElement,
-  CSSResult,
-  css,
-} from "lit-element";
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
+import {customElement, property} from 'lit/decorators';
 import { HomeAssistant } from "../../../types";
 import "../dashboard/ha-config-navigation";
 import {
@@ -110,7 +103,7 @@ class HaConfigAisDomNavigation extends LitElement {
     `;
   }
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       a {
         text-decoration: none;

@@ -1,13 +1,5 @@
-import {
-  customElement,
-  LitElement,
-  property,
-  CSSResultArray,
-  css,
-  TemplateResult,
-  html,
-} from "lit-element";
-
+import {css, CSSResultArray, html, LitElement, PropertyValues, TemplateResult} from "lit";
+import {property, customElement} from 'lit/decorators';
 import "@polymer/app-layout/app-header-layout/app-header-layout";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";

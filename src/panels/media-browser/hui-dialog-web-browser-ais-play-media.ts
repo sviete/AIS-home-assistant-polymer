@@ -1,12 +1,5 @@
-import {
-  css,
-  CSSResult,
-  customElement,
-  html,
-  LitElement,
-  property,
-  TemplateResult,
-} from "lit-element";
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
+import {property, customElement} from 'lit/decorators';
 import { fireEvent } from "../../common/dom/fire_event";
 import { createCloseHeading } from "../../components/ha-dialog";
 import "../../components/ha-hls-player";
@@ -15,7 +8,6 @@ import { haStyleDialog } from "../../resources/styles";
 import { WebBrowserPlayMediaAisDialogParams } from "./show-media-player-ais-dialog";
 import "../../components/ha-code-editor";
 import { addEntitiesToLovelaceView } from "../lovelace/editor/add-entities-to-view";
-import { showAlertDialog } from "../../dialogs/generic/show-dialog-box";
 
 @customElement("hui-dialog-web-browser-ais-play-media")
 export class HuiDialogWebBrowserAisPlayMedia extends LitElement {
@@ -143,10 +135,7 @@ export class HuiDialogWebBrowserAisPlayMedia extends LitElement {
         <img .src=${imgSrc} />
         <br />
         <ha-icon icon="mdi:file-image"></ha-icon>${imgSrc} <br /><br />
-        <!-- <mwc-button @click=${this._addToAisLib}>
-          <ha-icon icon="hass:playlist-plus"></ha-icon>
-          Dodaj do mojej biblioteki.
-        </mwc-button> -->
+
       </div> `;
     }
     return html`<div class="card-actions">
@@ -173,14 +162,8 @@ export class HuiDialogWebBrowserAisPlayMedia extends LitElement {
     this.closeDialog();
   }
 
-  private _addToAisLib(): void {
-    showAlertDialog(this, {
-      title: "AIS",
-      text: "TODO",
-    });
-  }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [
       haStyleDialog,
       css`

@@ -1,4 +1,5 @@
-import { html, LitElement, PropertyDeclarations, property } from "lit-element";
+import { html, LitElement, PropertyDeclarations } from "lit";
+import {property} from 'lit/decorators';
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
 import "../../../components/ha-card";
