@@ -14,17 +14,8 @@ import "../../../components/ha-icon";
 import "../../../components/ha-icon-button";
 import "../../../components/ha-circular-progress";
 import { handleFetchPromise } from "../../../util/hass-call-api";
-import {
-  css,
-  CSSResult,
-  customElement,
-  html,
-  LitElement,
-  property,
-  PropertyValues,
-  TemplateResult,
-} from "lit-element";
-
+import {css, CSSResultGroup, html, LitElement, PropertyValues, TemplateResult} from "lit";
+import {customElement, property} from 'lit/decorators';
 import { haStyle } from "../../../resources/styles";
 
 export interface aisSaveDbSettingsResponse {
@@ -89,7 +80,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
   @property({ type: Boolean }) private dbShowHistory = false;
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [
       haStyle,
       css`
@@ -177,7 +168,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
     return false;
   }
 
-  private getLogIconAnimationStyle(logSettingsInfo) {
+  private getLogIconAnimationStyle(_logSettingsInfo) {
     if (!this.isNotSeleced(this.logDrive)) {
       if (this.logLevel === "debug") {
         return "animation: pulseRed 2s infinite;";

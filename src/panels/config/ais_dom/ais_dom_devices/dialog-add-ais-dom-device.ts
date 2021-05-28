@@ -1,15 +1,8 @@
-import {
-  LitElement,
-  html,
-  css,
-  CSSResult,
-  TemplateResult,
-  property,
-} from "lit-element";
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
+import {property} from 'lit/decorators';
 import "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
 import "@polymer/paper-input/paper-input";
 import "@material/mwc-button";
-import memoizeOne from "memoize-one";
 
 import "../../../../components/dialog/ha-paper-dialog";
 import "../../../../components/entity/ha-entities-picker";
@@ -29,12 +22,6 @@ class DialogPersonDetail extends LitElement {
 
   @property() private _submitting = false;
 
-  private _deviceTrackersAvailable = memoizeOne((hass) => {
-    return Object.keys(hass.states).some(
-      (entityId) =>
-        entityId.substr(0, entityId.indexOf(".")) === "device_tracker"
-    );
-  });
 
   public async showDialog(): Promise<void> {
     this._name = "";
@@ -101,7 +88,6 @@ class DialogPersonDetail extends LitElement {
     `;
   }
 
-  private _closeDialog() {}
 
   private _nameChanged(ev: PolymerChangedEvent<string>) {
     this._name = ev.detail.value;
@@ -118,15 +104,17 @@ class DialogPersonDetail extends LitElement {
   private async _updateEntry() {
     this._submitting = true;
     try {
+      // eslint-disable-next-line no-console
       console.log("update");
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.log(err);
     } finally {
       this._submitting = false;
     }
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [
       haStyleDialog,
       css`

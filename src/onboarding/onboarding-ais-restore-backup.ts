@@ -6,16 +6,8 @@ import "../components/ha-icon";
 import "../components/ha-expansion-panel";
 import { makeDialogManager } from "../dialogs/make-dialog-manager";
 import { ProvideHassLitMixin } from "../mixins/provide-hass-lit-mixin";
-import {
-  css,
-  CSSResult,
-  customElement,
-  html,
-  LitElement,
-  property,
-  PropertyValues,
-  TemplateResult,
-} from "lit-element";
+import {css, CSSResultGroup, html, LitElement, PropertyValues, TemplateResult} from "lit";
+import {property, customElement} from 'lit/decorators';
 import { LocalizeFunc } from "../common/translations/localize";
 import { PolymerChangedEvent } from "../polymer-types";
 import type { HomeAssistant } from "../types";
@@ -290,7 +282,7 @@ class OnboardingAisRestoreBackup extends ProvideHassLitMixin(LitElement) {
     }
   }
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       .error {
         color: red;

@@ -1,14 +1,6 @@
 import { mdiClose } from "@mdi/js";
-import {
-  css,
-  CSSResult,
-  customElement,
-  html,
-  internalProperty,
-  LitElement,
-  property,
-  TemplateResult,
-} from "lit-element";
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
+import {property, customElement} from 'lit/decorators';
 import "@material/mwc-button";
 import { fireEvent } from "../../../../src/common/dom/fire_event";
 import "../../../../src/components/ha-header-bar";
@@ -57,7 +49,7 @@ export class DialogAisRestoreBackup extends LitElement
 
   @property() private _logMsg?: string = undefined;
 
-  @internalProperty() private _params?: AisRestoreBackupDialogParams;
+  @property() private _params?: AisRestoreBackupDialogParams;
 
   public async showDialog(params: AisRestoreBackupDialogParams): Promise<void> {
     this._params = params;
@@ -158,18 +150,18 @@ export class DialogAisRestoreBackup extends LitElement
     `;
   }
 
-  private async _refreshPage(ev): Promise<void> {
+  private async _refreshPage(_ev): Promise<void> {
     location.reload();
   }
 
-  private async _restoreBakupFromAis(ev): Promise<void> {
+  private async _restoreBakupFromAis(ev: KeyboardEvent): Promise<void> {
     ev.preventDefault();
     this._loading = true;
     this._infoMsg = "Pobieram konfigurację bramki: " + this._params?.gateId;
 
     try {
       const result = await onboardAisRestoreBackupStep({
-        gate_id: this._params?.gateId,
+        gate_id: this._params?.gateId || "",
         backup_password: this._backup_password,
       });
 
@@ -196,7 +188,7 @@ export class DialogAisRestoreBackup extends LitElement
     this[`_${name}`] = ev.detail.value;
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [
       haStyleDialog,
       css`

@@ -4,16 +4,8 @@ import "@material/mwc-list/mwc-list-item";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-listbox/paper-listbox";
 import "@polymer/paper-input/paper-textarea";
-import {
-  css,
-  CSSResult,
-  customElement,
-  html,
-  LitElement,
-  property,
-  internalProperty,
-  TemplateResult,
-} from "lit-element";
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
+import {property, customElement} from 'lit/decorators';
 import "../ha-circular-progress";
 import { createCloseHeading } from "../ha-dialog";
 import { haStyleDialog } from "../../resources/styles";
@@ -48,11 +40,11 @@ export class HuiDialogReportProblemToAis extends LitElement {
   @property({ attribute: false })
   private _params?: CheckMediaSourceAisDialogParams;
 
-  @internalProperty() private _loading = false;
+  @property() private _loading = false;
 
-  @internalProperty() private _problemDescription = "";
+  @property() private _problemDescription = "";
 
-  @internalProperty() private _aisAnswer: AisAnswer | undefined;
+  @property() private _aisAnswer: AisAnswer | undefined;
 
   private _aisMediaInfo?: HassEntity;
 
@@ -91,17 +83,17 @@ export class HuiDialogReportProblemToAis extends LitElement {
       ${!this._loading
         ? html`<p>
                 Problem z odtwarzaniem ${
-                  this._aisMediaInfo?.attributes["source"]
+                  this._aisMediaInfo?.attributes.source
                 },
-                <b></b>${this._aisMediaInfo?.attributes["media_title"]}</b>
+                <b></b>${this._aisMediaInfo?.attributes.media_title}</b>
               <span class="aisUrl">
                 <br>z adresu URL <ha-icon icon="mdi:web"></ha-icon>:
-                <b></b>${this._aisMediaInfo?.attributes["media_content_id"]}</b>
+                <b></b>${this._aisMediaInfo?.attributes.media_content_id}</b>
                 </span
               >
               </p>
               <div class="img404"><img src="${
-                this._aisMediaInfo?.attributes["media_stream_image"]
+                this._aisMediaInfo?.attributes.media_stream_image
               }"/></div>
               ${
                 !this._aisAnswer
@@ -177,9 +169,9 @@ export class HuiDialogReportProblemToAis extends LitElement {
         this.hass,
         "media_source",
         this._problemDescription,
-        this._aisMediaInfo?.attributes["media_title"] +
+        this._aisMediaInfo?.attributes.media_title +
           " " +
-          this._aisMediaInfo?.attributes["media_content_id"]
+          this._aisMediaInfo?.attributes.media_content_id
       )) as AisAnswer;
     } catch (err) {
       itemData.message = err.message;
@@ -199,7 +191,7 @@ export class HuiDialogReportProblemToAis extends LitElement {
     this._problemDescription = ev.detail.value;
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [
       haStyleDialog,
       css`

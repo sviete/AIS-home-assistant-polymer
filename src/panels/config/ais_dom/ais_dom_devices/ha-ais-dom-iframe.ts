@@ -1,13 +1,5 @@
-import {
-  LitElement,
-  customElement,
-  property,
-  TemplateResult,
-  html,
-  CSSResult,
-  css,
-  internalProperty,
-} from "lit-element";
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
+import {property, customElement} from 'lit/decorators';
 import { loadTokens } from "../../../../common/auth/token_storage";
 import { HomeAssistant } from "../../../../types";
 import "../../../../layouts/hass-loading-screen";
@@ -22,7 +14,7 @@ class AisDomIframeView extends LitElement {
 
   @property() public entities!: EntityRegistryStateEntry[];
 
-  @internalProperty() private _access_token = "";
+  @property() private _access_token = "";
 
   protected render(): TemplateResult {
     const tokens = loadTokens();
@@ -79,7 +71,7 @@ class AisDomIframeView extends LitElement {
     `;
   }
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       iframe {
         display: block;

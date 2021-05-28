@@ -1,12 +1,5 @@
-import {
-  CSSResult,
-  customElement,
-  html,
-  LitElement,
-  property,
-  TemplateResult,
-  css,
-} from "lit-element";
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
+import {customElement, property} from 'lit/decorators';
 import { DeviceRegistryEntry } from "../../../../../../data/device_registry";
 import { EntityRegistryEntry } from "../../../../../../data/entity_registry";
 import { showConfirmationDialog } from "../../../../../../dialogs/generic/show-dialog-box";
@@ -53,7 +46,7 @@ export class HaDeviceActionsAisDrive extends LitElement {
     });
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [
       haStyle,
       css`

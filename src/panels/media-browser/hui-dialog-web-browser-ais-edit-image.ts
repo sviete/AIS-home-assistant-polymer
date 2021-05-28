@@ -1,14 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
-import {
-  css,
-  CSSResult,
-  customElement,
-  html,
-  LitElement,
-  property,
-  TemplateResult,
-  internalProperty,
-} from "lit-element";
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
+import {property, customElement} from 'lit/decorators';
 import "@polymer/paper-listbox/paper-listbox";
 import { mdiPlus } from "@mdi/js";
 import { fireEvent } from "../../common/dom/fire_event";
@@ -49,21 +41,21 @@ export interface AisDragItem {
 export class HuiDialogWebBrowserAisEditImage extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @internalProperty() private codeValue = "";
+  @property() private codeValue = "";
 
-  @internalProperty() private selectedElementType = "";
+  @property() private selectedElementType = "";
 
-  @internalProperty() private selectedEntityId = "";
+  @property() private selectedEntityId = "";
 
-  @internalProperty() private pictureElements: AisPictureElements[] = [];
+  @property() private pictureElements: AisPictureElements[] = [];
 
-  @internalProperty() private dragCurrentItemIndex = -1;
+  @property() private dragCurrentItemIndex = -1;
 
-  @internalProperty() private dragItems: AisDragItem[] = [];
+  @property() private dragItems: AisDragItem[] = [];
 
-  @internalProperty() private dragItemStyle = "";
+  @property() private dragItemStyle = "";
 
-  @internalProperty() private dragActive = false;
+  @property() private dragActive = false;
 
   @property({ attribute: false })
   private _params?: WebBrowserPlayMediaDialogParams;
@@ -111,7 +103,7 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
     this.dragActive = true;
   }
 
-  private _dragEnd(e) {
+  private _dragEnd(_e) {
     if (this.dragActive) {
       this.dragItems[this.dragCurrentItemIndex].initialX = this.dragItems[
         this.dragCurrentItemIndex
@@ -312,7 +304,7 @@ export class HuiDialogWebBrowserAisEditImage extends LitElement {
     `;
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [
       haStyleDialog,
       css`

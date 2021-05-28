@@ -5,16 +5,8 @@ import "@polymer/paper-item/paper-item";
 import "@polymer/paper-radio-group/paper-radio-group";
 import "@polymer/paper-radio-button/paper-radio-button";
 import "@polymer/paper-input/paper-input";
-import {
-  css,
-  CSSResult,
-  customElement,
-  html,
-  LitElement,
-  property,
-  internalProperty,
-  TemplateResult,
-} from "lit-element";
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
+import {property, customElement} from 'lit/decorators';
 import "../ha-circular-progress";
 import "../ha-chip-set";
 import "../ha-switch";
@@ -58,31 +50,31 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property({ attribute: false })
-  @internalProperty()
+  @property()
   private _loading = false;
 
-  @internalProperty() private _opened = false;
+  @property() private _opened = false;
 
-  @internalProperty() private mediaCategory = "radio";
+  @property() private mediaCategory = "radio";
 
-  @internalProperty() private mediaName = "";
+  @property() private mediaName = "";
 
-  @internalProperty() private mediaType = "";
+  @property() private mediaType = "";
 
-  @internalProperty() private mediaStreamUrl = "";
+  @property() private mediaStreamUrl = "";
 
-  @internalProperty() private mediaImageUrl = "";
+  @property() private mediaImageUrl = "";
 
-  @internalProperty() private mediaShare = false;
+  @property() private mediaShare = false;
 
-  @internalProperty() private mediaChips = [];
+  @property() private mediaChips = [];
 
-  @internalProperty() private mediaNamePlaceholder =
+  @property() private mediaNamePlaceholder =
     "Nazwa (komenda: Włącz radio nazwa)";
 
-  @internalProperty() private mediaTypePlaceholder = "Typ radia";
+  @property() private mediaTypePlaceholder = "Typ radia";
 
-  @internalProperty() private mediaUrlPlaceholder = "Adres URL Strumienia";
+  @property() private mediaUrlPlaceholder = "Adres URL Strumienia";
 
   private _params?: AddMediaSourceAisDialogParams;
 
@@ -425,7 +417,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
     }
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [
       haStyleDialog,
       css`
