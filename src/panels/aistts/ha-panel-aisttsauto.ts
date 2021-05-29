@@ -25,9 +25,12 @@ import { formatDateTime } from "../../common/datetime/format_date_time";
 import memoizeOne from "memoize-one";
 import { HassEntityBase } from "home-assistant-js-websocket";
 import { HaCheckbox } from "../../components/ha-checkbox";
+// eslint-disable-next-line import/no-duplicates
+import "../../components/data-table/ha-data-table";
 import {
   DataTableColumnContainer,
   DataTableRowData,
+  // eslint-disable-next-line import/no-duplicates
 } from "../../components/data-table/ha-data-table";
 
 export interface AutomationRowData extends DataTableRowData {

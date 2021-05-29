@@ -270,7 +270,7 @@ export class HaPanelAisTts extends LitElement {
                           style="margin-left: 30px; font-size: 12px; color: var(--primary-color);"
                           >Ton</label
                         >
-                        <ha-sidebar
+                        <ha-slider
                           editable
                           pin
                           step="0.1"
@@ -279,7 +279,7 @@ export class HaPanelAisTts extends LitElement {
                           .value="${Number(this._pitchValue)}"
                           @change="${this._pitchValueChanged}"
                           .disabled=${this._play_counting}
-                        ></ha-sidebar>
+                        ></ha-slider>
                       </div>
                       <paper-input
                         label="Nazwa pliku"
