@@ -56,7 +56,6 @@ import "../ha-button-menu";
 import "../ha-card";
 import "../ha-circular-progress";
 import "../ha-fab";
-import "../ha-paper-dropdown-menu";
 import "../ha-svg-icon";
 import {
   showAisGaleryDialog,
@@ -344,7 +343,8 @@ export class HaMediaPlayerBrowse extends LitElement {
                         hasMeta
                         dir=${computeRTLDirection(this.hass)}
                       >
-                        <div class="graphic"
+                        <div
+                          class="graphic"
                           style=${ifDefined(
                             mediaClass.show_list_images && child.thumbnail
                               ? `background-image: url(${child.thumbnail})`
