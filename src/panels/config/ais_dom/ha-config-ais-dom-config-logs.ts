@@ -14,8 +14,15 @@ import "../../../components/ha-icon";
 import "../../../components/ha-icon-button";
 import "../../../components/ha-circular-progress";
 import { handleFetchPromise } from "../../../util/hass-call-api";
-import {css, CSSResultGroup, html, LitElement, PropertyValues, TemplateResult} from "lit";
-import {customElement, property} from 'lit/decorators';
+import {
+  css,
+  CSSResultGroup,
+  html,
+  LitElement,
+  PropertyValues,
+  TemplateResult,
+} from "lit";
+import { customElement, property } from "lit/decorators";
 import { haStyle } from "../../../resources/styles";
 
 export interface aisSaveDbSettingsResponse {
@@ -120,6 +127,10 @@ class HaConfigAisDomConfiglLogs extends LitElement {
           color: green;
           text-align: center;
           padding-bottom: 1em;
+        }
+        .inportant-info {
+          color: var(--primary-color);
+          font-weight: bold;
         }
 
         @keyframes pulse {
@@ -310,6 +321,9 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                         <paper-item item-name="SQLite (file)"
                           >SQLite (file)</paper-item
                         >
+                        <paper-item item-name="MariaDB (local)"
+                          >MariaDB (local)</paper-item
+                        >
                         <paper-item item-name="MariaDB">MariaDB</paper-item>
                         <paper-item item-name="MySQL">MySQL</paper-item>
                         <paper-item item-name="PostgreSQL"
@@ -325,11 +339,42 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                         <div class="card-content">
                           Żeby utrzymać system w dobrej kondycji, codziennie
                           dokładnie o godzinie 5:15 rano, Asystent czyści pamięć
-                          i usuwa zdarzenia i stany starsze niż 2 dni.
+                          i usuwa zdarzenia i stany starsze niż <b>2 dni</b>.
+                          <br /><br />
+                          <span class="inportant-info">
+                            Jeżeli zacznie brakować pamięci w systemie, to
+                            automatycznie wyczyścimy całą historię bazy, żeby
+                            zwolnić miejsce.
+                          </span>
                           <br /><br />
                           Gdy chcesz zapisywać większą ilość dni w historii, to
-                          zalecamy zapisywać zdarzenia na zewnętrznym dysku lub
-                          w zdalnej bazie danych.
+                          zalecamy zapisywać zdarzenia w zdalnej bazie danych.
+                        </div>
+                      `
+                    : html``}
+
+                  <!-- MariaDB (local) -->
+                  ${this.dbEngine === "MariaDB (local)"
+                    ? html`
+                        <div class="card-content">
+                          Żeby utrzymać system w dobrej kondycji, codziennie
+                          dokładnie o godzinie 5:15 rano, Asystent czyści
+                          lokalną bazę i usuwa zdarzenia i stany starsze niż
+                          <b>10 dni</b>. <br /><br />
+                          <span class="inportant-info">
+                            Jeżeli zacznie brakować miejsca na dysku w systemie,
+                            to automatycznie wyczyścimy całą historię lokalnej
+                            bazy, żeby zwolnić miejsce.
+                          </span>
+                          <br /><br />
+                          Gdy chcesz zapisywać większą ilość dni w historii, to
+                          zalecamy zapisywać zdarzenia w zdalnej bazie danych.
+                        </div>
+
+                        <div class="center-container">
+                          <mwc-button @click="${this.saveDbSettings}">
+                            Sprawdź i zapisz
+                          </mwc-button>
                         </div>
                       `
                     : html``}
@@ -456,6 +501,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                       <ha-icon icon="mdi:calendar" slot="suffix"></ha-icon>
                     </paper-input>
                   </div>
+
                   <div class="center-container">
                           <mwc-button
                             @click="${this.saveDbSettings}"
@@ -472,14 +518,10 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
             <div class="center-content">
               <div class="config-invalid">
-                <span class="text">
-                  ${this.errorDbInfo}
-                </span>
+                <span class="text"> ${this.errorDbInfo} </span>
               </div>
               <div class="config-valid">
-                <span class="text">
-                  ${this.messageDbInfo}
-                </span>
+                <span class="text"> ${this.messageDbInfo} </span>
               </div>
             </div>
           </ha-card>
@@ -578,9 +620,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                 </span>
               </div>
             </div>
-            <div class="card-content">
-              ${this.logModeInfo}
-            </div>
+            <div class="card-content">${this.logModeInfo}</div>
           </ha-card>
         </ha-config-section>
         <br />
