@@ -449,7 +449,7 @@ class HaConfigAisDomControl extends PolymerElement {
   }
 
   _computeAisBackupStep(hass) {
-    var backupInfo = hass.states["sensor.aisbackupinfo"];
+    var backupInfo = hass.states["sensor.ais_backup_info"];
     if (backupInfo.state === "0") {
       this.validating = false;
     }
@@ -457,7 +457,7 @@ class HaConfigAisDomControl extends PolymerElement {
   }
 
   _computeAisBackupInfo(hass) {
-    var backupInfo = hass.states["sensor.aisbackupinfo"];
+    var backupInfo = hass.states["sensor.ais_backup_info"];
     var backupInfoAttr = backupInfo.attributes;
     this.aisBackupFullInfo = [];
     this.isBackupValid = false;
