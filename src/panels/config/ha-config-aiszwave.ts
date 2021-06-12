@@ -9,6 +9,7 @@ import {
   TemplateResult,
 } from "lit";
 import { customElement, property } from "lit/decorators";
+import { loadTokens } from "../../common/auth/token_storage";
 import "../../layouts/hass-loading-screen";
 import "../../layouts/hass-subpage";
 import "../../components/ha-circular-progress";
@@ -27,14 +28,14 @@ class ConfigAisZwave extends LitElement {
   @property({ type: Boolean })
   public narrow = false;
 
-  // @property() private _access_token = "";
+  @property() private _access_token = "";
 
   protected render(): TemplateResult {
-    // const tokens = loadTokens();
-    // this._access_token = tokens?.access_token;
-    // const iframe = html` <iframe
-    //   src="/api/zwave2mqtt/${this._access_token}/"
-    // ></iframe>`;
+    const tokens = loadTokens();
+    this._access_token = tokens?.access_token || "";
+    const iframe = html` <iframe
+      src="/api/zwave2mqtt/${this._access_token}/"
+    ></iframe>`;
     return html` <hass-subpage
       header="ZWaveJs2Mqtt (alfa)"
       .narrow=${this.narrow}
@@ -50,10 +51,7 @@ class ConfigAisZwave extends LitElement {
           Restart zwave sevice
         </mwc-list-item>
       </ha-button-menu>
-      <iframe
-        src="http://${this.hass.states["sensor.internal_ip_address"]
-          .state}:8091/"
-      ></iframe>
+      ${iframe}
     </hass-subpage>`;
   }
 
