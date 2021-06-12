@@ -36,10 +36,7 @@ class ConfigAisZwave extends LitElement {
     const iframe = html` <iframe
       src="/api/zwave2mqtt/${this._access_token}/"
     ></iframe>`;
-    return html` <hass-subpage
-      header="ZWaveJs2Mqtt (alfa)"
-      .narrow=${this.narrow}
-    >
+    return html` <hass-subpage header="ZWaveJs2Mqtt" .narrow=${this.narrow}>
       <mwc-icon-button slot="toolbar-icon" @click=${this._showHelp}>
         <ha-svg-icon .path=${mdiHelpCircle}></ha-svg-icon>
       </mwc-icon-button>
