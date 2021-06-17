@@ -12,7 +12,7 @@ import "../../../components/ha-button-menu";
 import "@material/mwc-list/mwc-list-item";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
-import { mdiZigbee, mdiZWave } from "@mdi/js";
+import { mdiZigbee, mdiZWave, mdiVoiceOff, mdiAccountVoice } from "@mdi/js";
 /*
  *
  */
@@ -24,13 +24,7 @@ class HaConfigAisDomConfigUsb extends LitElement {
 
   @property({ type: Boolean }) public narrow = false;
 
-  @property({ type: String }) public autoUsb = "";
-
-  protected firstUpdated() {
-    this.autoUsb = this.hass.states[
-      "input_boolean.ais_auto_services_for_usb"
-    ].state;
-  }
+  protected firstUpdated() {}
 
   protected render(): TemplateResult {
     return html`
@@ -41,18 +35,17 @@ class HaConfigAisDomConfigUsb extends LitElement {
             <span slot="introduction">
               W tym miejscu możesz ustalić czy Asystent ma sam rozpoznawać
               adaptery USB i uruchamiać automatycznie domyślne usługi Zigbee i
-              Zwave.
+              Zwave. <br />
+              Oraz czy ma głosowo powiadamiać o dodaniu i usunięciu urządzenia
+              USB.
             </span>
             <ha-card header="Automatyczne rozpoznawanie urządzeń USB">
               <div class="card-content">
-                Na bramce dostarczamy działającą w tle usługę USB, której celem
-                jest wykrywanie połączenia i rozłączania urządzeń USB. Usługa
-                monitoruje zdarzenia za pomocą mechanizmu inotify dostępnego w
-                systemie Linux. Dzięki temu Asystent domowy powiadamia
-                komunikatem głosowym o tym, jakie urządzenie zostało dodane i
-                jeżeli obsługa danego urządzenia jest wspierana, to Asystent
-                rozpozna, na jakim porcie działa urządzenie i wykona dalsze
-                akcje związane z obsługą danego urządzenia.
+                Asystent domowy powiadamia komunikatem głosowym o tym, jakie
+                urządzenie zostało dodane i jeżeli obsługa danego urządzenia
+                jest wspierana, to Asystent rozpozna, na jakim porcie działa
+                urządzenie i wykona dalsze akcje związane z obsługą danego
+                urządzenia.
                 <br />
                 <br />
                 <h2>
@@ -60,7 +53,7 @@ class HaConfigAisDomConfigUsb extends LitElement {
                   <ha-svg-icon slot="icon" path=${mdiZigbee}></ha-svg-icon>
                   <ha-svg-icon slot="icon" path=${mdiZWave}></ha-svg-icon>
                 </h2>
-                ${this.hass.states["input_boolean.ais_auto_services_for_usb"]
+                ${this.hass.states["input_boolean.ais_auto_service_for_usb"]
                   .state === "on"
                   ? html`
                       Asystent automatycznie uruchamia i zatrzymuje domyślne
@@ -78,9 +71,48 @@ class HaConfigAisDomConfigUsb extends LitElement {
                 <b>Automatyczny start usług dla urządzeń USB:&nbsp;</b>
                 <ha-switch
                   .checked=${this.hass.states[
-                    "input_boolean.ais_auto_services_for_usb"
+                    "input_boolean.ais_auto_service_for_usb"
                   ].state === "on"}
                   @change=${this.switchAutoUsb}
+                ></ha-switch>
+                <br />
+                <br />
+
+                ${this.hass.states[
+                  "input_boolean.ais_voice_notification_for_usb"
+                ].state === "on"
+                  ? html`
+                      <h2>
+                        Powiadomienia głosowe o urządzeniach USB
+                        <ha-svg-icon
+                          slot="icon"
+                          path=${mdiAccountVoice}
+                        ></ha-svg-icon>
+                      </h2>
+                      Asystent powiadamia komunikatem głosowym o tym, jakie
+                      urządzenie USB zostało dodane lub usunięte. Możesz tę
+                      funkcję wyłączyć.
+                    `
+                  : html`
+                      <h2>
+                        Powiadomienia głosowe o urządzeniach USB
+                        <ha-svg-icon
+                          slot="icon"
+                          path=${mdiVoiceOff}
+                        ></ha-svg-icon>
+                      </h2>
+                      Jeśl chcesz, żeby asystent powiadamiał komunikatem
+                      głosowym o tym, jakie urządzenie USB zostało dodane lub
+                      usunięte, to możesz tę funkcję włączyć.
+                    `}
+
+                <br /><br />
+                <b>Powiadomienia głosowe o urządzeniach USB:&nbsp;</b>
+                <ha-switch
+                  .checked=${this.hass.states[
+                    "input_boolean.ais_voice_notification_for_usb"
+                  ].state === "on"}
+                  @change=${this.switchVoiceForUsb}
                 ></ha-switch>
               </div>
             </ha-card>
@@ -126,7 +158,13 @@ class HaConfigAisDomConfigUsb extends LitElement {
 
   switchAutoUsb() {
     this.hass.callService("input_boolean", "toggle", {
-      entity_id: "input_boolean.ais_auto_services_for_usb",
+      entity_id: "input_boolean.ais_auto_service_for_usb",
+    });
+  }
+
+  switchVoiceForUsb() {
+    this.hass.callService("input_boolean", "toggle", {
+      entity_id: "input_boolean.ais_voice_notification_for_usb",
     });
   }
 }
