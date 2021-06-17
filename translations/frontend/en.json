@@ -2361,6 +2361,10 @@
                     "caption": "Logs and recorder",
                     "description": "Configuration of logs and DB recorder"
                   },
+                  "ais_dom_config_usb": {
+                    "caption": "USB devices",
+                    "description": "Support for USB devices"
+                  },
                   "ais_dom_config_power": {
                     "caption": "Stop the Gate",
                     "description": "Restart or turn off the gate"

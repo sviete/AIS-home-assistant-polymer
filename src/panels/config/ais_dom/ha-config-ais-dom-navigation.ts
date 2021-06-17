@@ -5,8 +5,8 @@ import "../../../components/ha-card";
 import "../../../components/ha-icon-next";
 import { PageNavigation } from "../../../layouts/hass-tabs-subpage";
 import "../../../components/ha-icon";
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
-import {customElement, property} from 'lit/decorators';
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { customElement, property } from "lit/decorators";
 import { HomeAssistant } from "../../../types";
 import "../dashboard/ha-config-navigation";
 import {
@@ -18,6 +18,7 @@ import {
   mdiWeb,
   mdiDatabaseSettings,
   mdiRestart,
+  mdiUsb,
 } from "@mdi/js";
 
 const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
@@ -69,6 +70,13 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
       path: "/config/ais_dom_config_logs",
       translationKey: "ui.panel.config.ais_dom_config_logs.caption",
       iconPath: mdiDatabaseSettings,
+      core: true,
+    },
+    {
+      component: "ais_dom_config_usb",
+      path: "/config/ais_dom_config_usb",
+      translationKey: "ui.panel.config.ais_dom_config_usb.caption",
+      iconPath: mdiUsb,
       core: true,
     },
     {
