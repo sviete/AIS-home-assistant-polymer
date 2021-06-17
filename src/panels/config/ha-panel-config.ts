@@ -290,6 +290,10 @@ class HaPanelConfig extends HassRouterPage {
         tag: "ha-config-ais-dom-config-logs",
         load: () => import("./ais_dom/ha-config-ais-dom-config-logs"),
       },
+      ais_dom_config_usb: {
+        tag: "ha-config-ais-dom-config-usb",
+        load: () => import("./ais_dom/ha-config-ais-dom-config-usb"),
+      },
       ais_dom_config_power: {
         tag: "ha-config-ais-dom-config-power",
         load: () => import("./ais_dom/ha-config-ais-dom-config-power"),

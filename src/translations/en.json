@@ -2623,6 +2623,10 @@
           "caption": "Remote control",
           "description": "Configuration of remote access to the gateway"
         },
+        "ais_dom_config_usb": {
+          "caption": "USB devices",
+          "description": "Support for USB devices"
+        },
         "ais_dom_config_power": {
           "caption": "Stop the Gate",
           "description": "Restart or turn off the gate"

@@ -2356,6 +2356,10 @@
                     "caption": "Logi i baza danych",
                     "description": "Konfiguracja logów i zapisu zdarzeń do bazy danych"
                   },
+                  "ais_dom_config_usb": {
+                    "caption": "Urządzenia USB",
+                    "description": "Obsługa urządzeń USB"
+                  },
                   "ais_dom_config_power": {
                     "caption": "Zatrzymanie bramki",
                     "description": "Restart lub wyłączenie bramki"
