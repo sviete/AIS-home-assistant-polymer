@@ -18,6 +18,7 @@ import { HomeAssistant, Route } from "../../types";
 import "../../components/ha-icon-button";
 import { mdiDotsVertical, mdiHelpCircle } from "@mdi/js";
 import { showAlertDialog } from "../../dialogs/generic/show-dialog-box";
+import { fireEvent } from "../../common/dom/fire_event";
 
 @customElement("ha-config-aiszwave")
 class ConfigAisZwave extends LitElement {
@@ -31,8 +32,9 @@ class ConfigAisZwave extends LitElement {
   @property() private _access_token = "";
 
   protected render(): TemplateResult {
-    const zigbee2mqtt = this.hass.states["sensor.status_serwisu_zigbee2mqtt"];
-    if (zigbee2mqtt.state === "online111") {
+    const zwave2mqtt = this.hass.states["sensor.status_serwisu_zwavejs2mqtt"]
+      .state;
+    if (zwave2mqtt === "True") {
       const tokens = loadTokens();
       this._access_token = tokens?.access_token || "";
       const iframe = html` <iframe
@@ -99,6 +101,13 @@ class ConfigAisZwave extends LitElement {
             <span class="text"
               ><b>czekam na połączenie, to może potrwać kilka minut...</b></span
             >
+            <span
+              .onclick="${this.showZwaveStatus}"
+              style="text-decoration: underline; cursor: pointer;"
+            >
+              <br /><a> status usługi </a>
+            </span>
+
             <br /><br />
             <ha-circular-progress active></ha-circular-progress>
             <br />
@@ -120,6 +129,12 @@ class ConfigAisZwave extends LitElement {
 
   protected updated(changedProps: PropertyValues) {
     super.updated(changedProps);
+  }
+
+  private showZwaveStatus() {
+    fireEvent(this, "hass-more-info", {
+      entityId: "sensor.status_serwisu_zwavejs2mqtt",
+    });
   }
 
   private _showHelp() {
