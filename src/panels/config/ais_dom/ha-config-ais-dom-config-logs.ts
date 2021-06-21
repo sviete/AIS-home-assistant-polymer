@@ -1,3 +1,6 @@
+import "../../../components/ha-yaml-editor";
+import "../../../components/ha-code-editor";
+import "../../../components/ha-expansion-panel";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
 import { HomeAssistant } from "../../../types";
@@ -24,6 +27,7 @@ import {
 } from "lit";
 import { customElement, property } from "lit/decorators";
 import { haStyle } from "../../../resources/styles";
+import { dump, load } from "js-yaml";
 
 export interface aisSaveDbSettingsResponse {
   info: string;
@@ -40,6 +44,8 @@ export const aisSaveDbSettings = (params: {
   dbKeepDays: number;
   dbShowLogbook: boolean;
   dbShowHistory: boolean;
+  dbInclude: any;
+  dbExclude: any;
 }) =>
   handleFetchPromise<aisSaveDbSettingsResponse>(
     fetch("/api/ais_file/ais_db_view", {
@@ -86,6 +92,10 @@ class HaConfigAisDomConfiglLogs extends LitElement {
   @property({ type: Boolean }) private dbShowLogbook = false;
 
   @property({ type: Boolean }) private dbShowHistory = false;
+
+  @property() private dbInclude = "";
+
+  @property() private dbExclude = "";
 
   static get styles(): CSSResultGroup[] {
     return [
@@ -239,6 +249,8 @@ class HaConfigAisDomConfiglLogs extends LitElement {
     this.messageDbInfo = "";
     this.dbShowLogbook = dbConnInfoAttr.dbShowLogbook;
     this.dbShowHistory = dbConnInfoAttr.dbShowHistory;
+    this.dbInclude = dump(dbConnInfoAttr.dbInclude || "").trimRight();
+    this.dbExclude = dump(dbConnInfoAttr.dbExclude || "").trimRight();
   }
 
   private _getLogSettings() {
@@ -339,7 +351,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                         <div class="card-content">
                           Żeby utrzymać system w dobrej kondycji, codziennie
                           dokładnie o godzinie 5:15 rano, Asystent czyści pamięć
-                          i usuwa zdarzenia i stany starsze niż <b>2 dni</b>.
+                          i usuwa zdarzenia i stany starsze niż <b>5 dni</b>.
                           <br /><br />
                           <span class="inportant-info">
                             Jeżeli zacznie brakować pamięci w systemie, to
@@ -369,12 +381,6 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                           <br /><br />
                           Gdy chcesz zapisywać większą ilość dni w historii, to
                           zalecamy zapisywać zdarzenia w zdalnej bazie danych.
-                        </div>
-
-                        <div class="center-container">
-                          <mwc-button @click="${this.saveDbSettings}">
-                            Sprawdź i zapisz
-                          </mwc-button>
                         </div>
                       `
                     : html``}
@@ -476,6 +482,36 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                       `
                     : html``}
 
+                  <div class="card-content">
+                    <ha-expansion-panel
+                      .header=${html`<ha-icon icon="mdi:filter-plus"></ha-icon>
+                        &nbsp;Lista wybranych do zapisywania:`}
+                    >
+                      <ha-code-editor
+                        mode="yaml"
+                        .value=${this.dbInclude}
+                        @value-changed=${this.dbIncludeChanged}
+                      >
+                      </ha-code-editor>
+                    </ha-expansion-panel>
+                  </div>
+
+                  <div class="card-content">
+                    <ha-expansion-panel
+                      .header=${html`<ha-icon
+                          icon="mdi:filter-remove"
+                        ></ha-icon>
+                        &nbsp;Lista wykluczonych z zapisywania:`}
+                    >
+                      <ha-code-editor
+                        mode="yaml"
+                        .value=${this.dbExclude}
+                        @value-changed=${this.dbExcludeChanged}
+                      >
+                      </ha-code-editor>
+                    </ha-expansion-panel>
+                  </div>
+
                   <!-- KEEP DAYS -->
                   ${this.dbEngine === "SQLite (file)" ||
                   this.dbEngine === "MariaDB" ||
@@ -501,13 +537,6 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                       <ha-icon icon="mdi:calendar" slot="suffix"></ha-icon>
                     </paper-input>
                   </div>
-
-                  <div class="center-container">
-                          <mwc-button
-                            @click="${this.saveDbSettings}"
-                          > Sprawdź i zapisz
-                          </mwc-button>
-                  </div>
                 </div>
                 `
                     : html``}
@@ -515,6 +544,12 @@ class HaConfigAisDomConfiglLogs extends LitElement {
               : html`<div style="width: 100%; text-align: center;">
                   <ha-circular-progress active></ha-circular-progress>
                 </div>`}
+
+            <div class="center-container">
+              <mwc-button @click="${this.saveDbSettings}">
+                Sprawdź i zapisz
+              </mwc-button>
+            </div>
 
             <div class="center-content">
               <div class="config-invalid">
@@ -686,6 +721,8 @@ class HaConfigAisDomConfiglLogs extends LitElement {
         dbKeepDays: this.dbKeepDays,
         dbShowLogbook: this.dbShowLogbook,
         dbShowHistory: this.dbShowHistory,
+        dbInclude: load(this.dbInclude),
+        dbExclude: load(this.dbExclude, {}),
       });
 
       this.errorDbInfo = result.error;
@@ -778,6 +815,16 @@ class HaConfigAisDomConfiglLogs extends LitElement {
     if (newVal !== this.dbKeepDays) {
       this.dbKeepDays = newVal;
     }
+  }
+
+  private dbIncludeChanged(ev) {
+    ev.stopPropagation();
+    this.dbInclude = ev.detail.value;
+  }
+
+  private dbExcludeChanged(ev) {
+    ev.stopPropagation();
+    this.dbExclude = ev.detail.value;
   }
 }
 
