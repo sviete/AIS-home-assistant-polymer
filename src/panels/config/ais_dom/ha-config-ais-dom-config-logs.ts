@@ -481,11 +481,11 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                         </div>
                       `
                     : html``}
-
                   <div class="card-content">
+                    <h1>Filtrowanie zapisu zdarzeń</h1>
                     <ha-expansion-panel
                       .header=${html`<ha-icon icon="mdi:filter-plus"></ha-icon>
-                        &nbsp;Lista wybranych do zapisywania:`}
+                        &nbsp;Wybrane do zapisywania:`}
                     >
                       <ha-code-editor
                         mode="yaml"
@@ -494,14 +494,12 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                       >
                       </ha-code-editor>
                     </ha-expansion-panel>
-                  </div>
 
-                  <div class="card-content">
                     <ha-expansion-panel
                       .header=${html`<ha-icon
                           icon="mdi:filter-remove"
                         ></ha-icon>
-                        &nbsp;Lista wykluczonych z zapisywania:`}
+                        &nbsp;Wykluczone z zapisywania:`}
                     >
                       <ha-code-editor
                         mode="yaml"
@@ -819,12 +817,16 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
   private dbIncludeChanged(ev) {
     ev.stopPropagation();
-    this.dbInclude = ev.detail.value;
+    if (ev.detail.value.replace(/\s/g, "").length > 0) {
+      this.dbInclude = ev.detail.value;
+    }
   }
 
   private dbExcludeChanged(ev) {
     ev.stopPropagation();
-    this.dbExclude = ev.detail.value;
+    if (ev.detail.value.replace(/\s/g, "").length > 0) {
+      this.dbExclude = ev.detail.value;
+    }
   }
 }
 

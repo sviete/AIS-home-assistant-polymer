@@ -5,7 +5,7 @@ import { css, CSSResultArray, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
-
+import "../../../components/ha-circular-progress";
 import "./ha-config-ais-dom-dashboard";
 import "../../../components/paper-time-input";
 import "../../../components/ha-button-menu";
@@ -13,6 +13,33 @@ import "@material/mwc-list/mwc-list-item";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
 import { mdiZigbee, mdiZWave, mdiVoiceOff, mdiAccountVoice } from "@mdi/js";
+import { handleFetchPromise } from "../../../util/hass-call-api";
+
+export interface aisUsbSettingsInfo {
+  usbAutoStartServices: boolean;
+  usbVoiceNotification: boolean;
+}
+export interface aisSaveUsbSettingsResponse {
+  info: string;
+  error: string;
+}
+
+export const aisGetUsbSettings = () =>
+  handleFetchPromise<aisUsbSettingsInfo>(
+    fetch("/api/ais_file/ais_usb_view", {
+      method: "GET",
+      credentials: "same-origin",
+    })
+  );
+
+export const aisSaveUsbSettings = (params: aisUsbSettingsInfo) =>
+  handleFetchPromise<aisSaveUsbSettingsResponse>(
+    fetch("/api/ais_file/ais_usb_view", {
+      method: "POST",
+      credentials: "same-origin",
+      body: JSON.stringify(params),
+    })
+  );
 /*
  *
  */
@@ -20,11 +47,30 @@ import { mdiZigbee, mdiZWave, mdiVoiceOff, mdiAccountVoice } from "@mdi/js";
 class HaConfigAisDomConfigUsb extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
+  @property({ type: Boolean }) private usbsetingsValidating = false;
+
   @property({ type: Boolean }) public isWide = true;
 
   @property({ type: Boolean }) public narrow = false;
 
-  protected firstUpdated() {}
+  @property({ type: String }) private errorUsbInfo = "";
+
+  @property({ type: String }) private messageUsbInfo = "";
+
+  @property() private usbSettingsInfo = {
+    usbAutoStartServices: true,
+    usbVoiceNotification: true,
+  };
+
+  protected async firstUpdated() {
+    try {
+      const result = await aisGetUsbSettings();
+      this.usbSettingsInfo = result;
+    } catch (err) {
+      // eslint-disable-next-line
+      this.errorUsbInfo = err;
+    }
+  }
 
   protected render(): TemplateResult {
     return html`
@@ -53,8 +99,7 @@ class HaConfigAisDomConfigUsb extends LitElement {
                   <ha-svg-icon slot="icon" path=${mdiZigbee}></ha-svg-icon>
                   <ha-svg-icon slot="icon" path=${mdiZWave}></ha-svg-icon>
                 </h2>
-                ${this.hass.states["input_boolean.ais_auto_service_for_usb"]
-                  .state === "on"
+                ${this.usbSettingsInfo.usbAutoStartServices
                   ? html`
                       Asystent automatycznie uruchamia i zatrzymuje domyślne
                       usługi powiązane z obsługiwanymi urządzeniami
@@ -68,19 +113,21 @@ class HaConfigAisDomConfigUsb extends LitElement {
                     `}
 
                 <br /><br />
-                <b>Automatyczny start usług dla urządzeń USB:&nbsp;</b>
-                <ha-switch
-                  .checked=${this.hass.states[
-                    "input_boolean.ais_auto_service_for_usb"
-                  ].state === "on"}
-                  @change=${this.switchAutoUsb}
-                ></ha-switch>
+                ${!this.usbsetingsValidating
+                  ? html` <b
+                        >Automatyczny start usług dla urządzeń USB:&nbsp;</b
+                      >
+                      <ha-switch
+                        .checked=${this.usbSettingsInfo.usbAutoStartServices}
+                        @change=${this.switchAutoUsb}
+                      ></ha-switch>`
+                  : html`<div style="width: 100%; text-align: center;">
+                      <ha-circular-progress active></ha-circular-progress>
+                    </div>`}
                 <br />
                 <br />
 
-                ${this.hass.states[
-                  "input_boolean.ais_voice_notification_for_usb"
-                ].state === "on"
+                ${this.usbSettingsInfo.usbVoiceNotification
                   ? html`
                       <h2>
                         Powiadomienia głosowe o urządzeniach USB
@@ -107,13 +154,15 @@ class HaConfigAisDomConfigUsb extends LitElement {
                     `}
 
                 <br /><br />
-                <b>Powiadomienia głosowe o urządzeniach USB:&nbsp;</b>
-                <ha-switch
-                  .checked=${this.hass.states[
-                    "input_boolean.ais_voice_notification_for_usb"
-                  ].state === "on"}
-                  @change=${this.switchVoiceForUsb}
-                ></ha-switch>
+                ${!this.usbsetingsValidating
+                  ? html` <b>Powiadomienia głosowe o urządzeniach USB:&nbsp;</b>
+                      <ha-switch
+                        .checked=${this.usbSettingsInfo.usbVoiceNotification}
+                        @change=${this.switchVoiceForUsb}
+                      ></ha-switch>`
+                  : html`<div style="width: 100%; text-align: center;">
+                      <ha-circular-progress active></ha-circular-progress>
+                    </div>`}
               </div>
             </ha-card>
           </ha-config-section>
@@ -156,16 +205,27 @@ class HaConfigAisDomConfigUsb extends LitElement {
     ];
   }
 
-  switchAutoUsb() {
-    this.hass.callService("input_boolean", "toggle", {
-      entity_id: "input_boolean.ais_auto_service_for_usb",
-    });
+  switchAutoUsb(ev) {
+    this.usbSettingsInfo.usbAutoStartServices = ev.target.checked;
+    this.saveUsbSettings();
   }
 
-  switchVoiceForUsb() {
-    this.hass.callService("input_boolean", "toggle", {
-      entity_id: "input_boolean.ais_voice_notification_for_usb",
-    });
+  switchVoiceForUsb(ev) {
+    this.usbSettingsInfo.usbVoiceNotification = ev.target.checked;
+    this.saveUsbSettings();
+  }
+
+  private async saveUsbSettings(): Promise<void> {
+    this.usbsetingsValidating = true;
+    try {
+      const result = await aisSaveUsbSettings(this.usbSettingsInfo);
+      this.errorUsbInfo = result.error;
+      this.messageUsbInfo = result.info;
+    } catch (err) {
+      this.errorUsbInfo = err;
+    }
+
+    this.usbsetingsValidating = false;
   }
 }
 
