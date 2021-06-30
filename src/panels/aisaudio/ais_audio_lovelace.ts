@@ -47,6 +47,37 @@ export const aisAudioLovelace: LovelaceConfig = {
               type: "ais-mini-media-player",
             },
             {
+              type: "conditional",
+              conditions: [
+                {
+                  entity: "sensor.ais_gate_model",
+                  state: "AIS-PRO1",
+                },
+              ],
+              card: {
+                type: "ais-expansion-panel",
+                icon: "mdi:tune",
+                cards: [
+                  {
+                    entities: [
+                      {
+                        entity: "input_select.ais_audio_routing",
+                      },
+                      {
+                        entity: "input_boolean.ais_audio_mono",
+                      },
+                      {
+                        entity: "input_number.media_player_speed",
+                      },
+                    ],
+                    show_header_toggle: false,
+                    type: "entities",
+                  },
+                ],
+              },
+            },
+            //
+            {
               cards: [
                 {
                   cards: [
@@ -581,7 +612,6 @@ export const aisAudioLovelace: LovelaceConfig = {
                 {
                   card: {
                     show_header_toggle: false,
-                    title: "Odtwarzacze",
                     type: "entities",
                   },
                   filter: {
@@ -594,8 +624,8 @@ export const aisAudioLovelace: LovelaceConfig = {
                   type: "ais-auto-entities",
                 },
               ],
-              show_header_toggle: false,
-              type: "vertical-stack",
+              icon: "mdi:speaker-multiple",
+              type: "ais-expansion-panel",
             },
             {
               card: {

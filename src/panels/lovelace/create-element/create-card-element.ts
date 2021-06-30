@@ -17,6 +17,7 @@ import "../cards/hui-vertical-stack-card";
 import "../cards/hui-weather-forecast-card";
 import "../cards/hui-ais-zigbee2mqtt-card";
 import "../cards/hui-ais-mini-media-player-card";
+import "../cards/hui-ais-expansion-panel-card";
 import {
   createLovelaceElement,
   getLovelaceElementClass,
@@ -41,6 +42,7 @@ const ALWAYS_LOADED_TYPES = new Set([
   "weather-forecast",
   "ais-zigbee2mqtt",
   "ais-mini-media-player",
+  "ais-expansion-panel",
 ]);
 
 const LAZY_LOAD_TYPES = {
