@@ -7,7 +7,7 @@
     <% } %>
     <%= renderTemplate('_header') %>
     <title>AI-Speaker</title>
-    <link rel="mask-icon" href="/static/icons/mask-icon.svg" color="#03a9f4" />
+    <link rel="mask-icon" href="/static/icons/mask-icon.svg" color="#ff9800" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
