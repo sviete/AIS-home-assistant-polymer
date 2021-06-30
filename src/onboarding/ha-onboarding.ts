@@ -12,7 +12,10 @@ import { HASSDomEvent } from "../common/dom/fire_event";
 import { extractSearchParamsObject } from "../common/url/search-params";
 import { subscribeOne } from "../common/util/subscribe-one";
 import { AuthUrlSearchParams, hassUrl } from "../data/auth";
-import { fetchDiscoveryInformation } from "../data/discovery";
+import {
+  DiscoveryInformation,
+  fetchDiscoveryInformation,
+} from "../data/discovery";
 import {
   fetchOnboardingOverview,
   OnboardingResponses,
@@ -73,6 +76,8 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
 
   @state() private _steps?: OnboardingStep[];
 
+  @state() private _discoveryInformation?: DiscoveryInformation;
+
   protected render(): TemplateResult {
     const step = this._curStep()!;
 
@@ -92,6 +97,7 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
           ? html`<onboarding-restore-snapshot
               .localize=${this.localize}
               .restoring=${this._restoring}
+              .discoveryInformation=${this._discoveryInformation}
               @restoring=${this._restoringSnapshot}
             >
             </onboarding-restore-snapshot>`

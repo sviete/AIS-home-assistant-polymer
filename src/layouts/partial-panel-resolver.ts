@@ -49,7 +49,7 @@ const COMPONENTS = {
 class PartialPanelResolver extends HassRouterPage {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @property() public narrow?: boolean;
+  @property({ type: Boolean }) public narrow?: boolean;
 
   private _waitForStart = false;
 
@@ -212,7 +212,7 @@ class PartialPanelResolver extends HassRouterPage {
       this._currentPage &&
       !this.hass.panels[this._currentPage]
     ) {
-      if (this.hass.config.state !== STATE_NOT_RUNNING) {
+      if (this.hass.config.state === STATE_NOT_RUNNING) {
         this._waitForStart = true;
         if (this.lastChild) {
           this.removeChild(this.lastChild);
