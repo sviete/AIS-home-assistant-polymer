@@ -1,14 +1,7 @@
 import "@polymer/paper-input/paper-textarea";
 import "@material/mwc-button/mwc-button";
-import {
-  css,
-  CSSResultArray,
-  customElement,
-  html,
-  internalProperty,
-  LitElement,
-  TemplateResult,
-} from "lit-element";
+import { css, CSSResultArray, html, LitElement, TemplateResult } from "lit";
+import { property, customElement } from "lit/decorators";
 import { fireEvent } from "../../common/dom/fire_event";
 import { createCloseHeading } from "../../components/ha-dialog";
 import "../../components/ha-formfield";
@@ -18,14 +11,14 @@ import { HomeAssistant } from "../../types";
 import { HassDialog } from "../make-dialog-manager";
 import { HaAisFileDialogParams } from "./show-dialog-ais-file";
 import "../../components/ha-code-editor";
-import type { HaCodeEditor } from "../../components/ha-code-editor";
 
 @customElement("dialog-ais-file")
-class AisFileDialog extends LitElement
+class AisFileDialog
+  extends LitElement
   implements HassDialog<HaAisFileDialogParams> {
   public hass!: HomeAssistant;
 
-  @internalProperty() private _params?: HaAisFileDialogParams;
+  @property() private _params?: HaAisFileDialogParams;
 
   public showDialog(params: HaAisFileDialogParams): void {
     this._params = params;
@@ -42,11 +35,6 @@ class AisFileDialog extends LitElement
     }
 
     const fileBody = this._params.fileBody;
-    let readOnly = "";
-    if (this._params.readonly) {
-      readOnly = "readonly";
-    }
-
     return html`
       <ha-dialog
         open
@@ -64,20 +52,19 @@ class AisFileDialog extends LitElement
           ></textarea>
 
           <div class="saveButton">
-            <mwc-button @click=${this._handleSave}>
-              SAVE
-            </mwc-button>
+            <mwc-button @click=${this._handleSave}> SAVE </mwc-button>
           </div>
         </div>
       </ha-dialog>
     `;
   }
 
-  private _handleSave(ev) {
-    const fileBody = this.shadowRoot!.querySelector("textarea.lineTextArea")!
-      .value;
+  private _handleSave(_ev) {
+    const fileBody = (this.shadowRoot!.querySelector(
+      "textarea.lineTextArea"
+    ) as HTMLInputElement).value;
     this.hass.callApi<string>("POST", "ais_file/write", {
-      filePath: this._params.filePath,
+      filePath: this._params!.filePath,
       fileBody: fileBody,
     });
     this.closeDialog();

@@ -3,14 +3,8 @@ import "@polymer/paper-dropdown-menu/paper-dropdown-menu-light";
 import "@polymer/paper-input/paper-textarea";
 import { PaperListboxElement } from "@polymer/paper-listbox";
 import { HassEntity } from "home-assistant-js-websocket";
-import {
-  css,
-  CSSResult,
-  customElement,
-  LitElement,
-  property,
-} from "lit-element";
-import { html } from "lit-html";
+import { css, CSSResultGroup, html, LitElement } from "lit";
+import { customElement, property } from "lit/decorators";
 import { fireEvent } from "../../../common/dom/fire_event";
 import "../../../components/entity/ha-entity-toggle";
 import "../../../components/ha-card";
@@ -249,7 +243,7 @@ export class HaManualAutomationEditor extends LitElement {
 
   // AIS START
   private _get_ais_name_label(): string {
-    if (this.config.alias.trim().toLowerCase().startsWith("jolka:")) {
+    if (this?.config?.alias?.trim().toLowerCase().startsWith("jolka:")) {
       return (
         "Polecenie uruchamiające: " +
         this.config.alias.toLowerCase().replace("jolka:", "")
@@ -259,7 +253,7 @@ export class HaManualAutomationEditor extends LitElement {
   }
 
   private _get_ais_desc_label(): string {
-    if (this.config.alias.trim().toLowerCase().startsWith("jolka:")) {
+    if (this?.config?.alias?.trim().toLowerCase().startsWith("jolka:")) {
       return "Aliasy polecenia";
     }
     return this.hass.localize(
@@ -268,7 +262,7 @@ export class HaManualAutomationEditor extends LitElement {
   }
 
   private _get_ais_desc_placeholder(): string {
-    if (this.config.alias.trim().toLowerCase().startsWith("jolka:")) {
+    if (this?.config?.alias?.trim().toLowerCase().startsWith("jolka:")) {
       return "Opcjonalne dodatkowe komendy uruchamiające rozdzielone średnikiem";
     }
     return this.hass.localize(
@@ -341,7 +335,7 @@ export class HaManualAutomationEditor extends LitElement {
     });
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup {
     return [
       haStyle,
       css`

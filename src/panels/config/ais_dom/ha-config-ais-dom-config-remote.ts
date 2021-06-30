@@ -1,16 +1,8 @@
 import "../../lovelace/entity-rows/hui-timer-entity-row";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import {
-  customElement,
-  property,
-  css,
-  html,
-  CSSResult,
-  internalProperty,
-  TemplateResult,
-  LitElement,
-} from "lit-element";
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { customElement, property } from "lit/decorators";
 import { HomeAssistant } from "../../../types";
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
@@ -23,11 +15,11 @@ import "../../../components/ha-switch";
 class HaConfigAisDomControl extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @internalProperty() private _qrCode?: TemplateResult;
+  @property() private _qrCode?: TemplateResult;
 
   @property() public narrow!: boolean;
 
-  @internalProperty() private remoteDomain;
+  @property() private remoteDomain;
 
   async _generateQR() {
     const qrcode = await import("qrcode");
@@ -75,8 +67,8 @@ class HaConfigAisDomControl extends LitElement {
 
     return html`
       <hass-subpage header="Konfiguracja bramki AIS dom">
-        <div .isWide=${this.isWide}>
-          <ha-config-section .isWide=${this.isWide}>
+        <div>
+          <ha-config-section>
             <span slot="header">Zdalny dostęp</span>
             <span slot="introduction"
               >W tej sekcji możesz skonfigurować zdalny dostęp do bramki</span
@@ -152,7 +144,7 @@ class HaConfigAisDomControl extends LitElement {
     `;
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [
       css`
         .content {

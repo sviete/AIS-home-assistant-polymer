@@ -3,16 +3,8 @@ import "@material/mwc-list/mwc-list";
 import "@material/mwc-list/mwc-list-item";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-listbox/paper-listbox";
-import {
-  css,
-  CSSResult,
-  customElement,
-  html,
-  LitElement,
-  property,
-  internalProperty,
-  TemplateResult,
-} from "lit-element";
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
+import {property, customElement} from 'lit/decorators';
 import "../ha-circular-progress";
 import { createCloseHeading } from "../ha-dialog";
 import { haStyleDialog } from "../../resources/styles";
@@ -52,7 +44,7 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
   @property({ attribute: false })
   private _params?: CheckMediaSourceAisDialogParams;
 
-  @internalProperty() private _loading = false;
+  @property() private _loading = false;
 
   private _aisMediaInfo?: HassEntity;
 
@@ -238,11 +230,12 @@ export class HuiDialogCheckMediaSourceAis extends LitElement {
   private _showReportProblemToAis(): void {
     showReportProblemToAisDialog(this, {
       selectedOptionCallback: (option: string) =>
+        // eslint-disable-next-line no-console
         console.log("option: " + option),
     });
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [
       haStyleDialog,
       css`

@@ -4,15 +4,8 @@ import "@material/mwc-button";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
 import "../../components/dialog/ha-paper-dialog";
 import { createCloseHeading } from "../../components/ha-dialog";
-import {
-  LitElement,
-  html,
-  property,
-  internalProperty,
-  CSSResult,
-  css,
-  TemplateResult,
-} from "lit-element";
+import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
+import {property} from 'lit/decorators';
 import { HomeAssistant } from "../../types";
 import { haStyleDialog } from "../../resources/styles";
 
@@ -36,17 +29,17 @@ export class HaDialogAisgalery extends LitElement {
   @property({ attribute: false })
   private _params?: AisGaleryDialogParams;
 
-  @internalProperty() private _name!: string;
+  @property() private _name!: string;
 
-  @internalProperty() private _picture!: string | null;
+  @property() private _picture!: string | null;
 
-  @internalProperty() private _picture_last_value!: string | null;
+  @property() private _picture_last_value!: string | null;
 
-  @internalProperty() private _error?: string;
+  @property() private _error?: string;
 
-  @internalProperty() private _submitting = false;
+  @property() private _submitting = false;
 
-  @internalProperty() private _closeDialog = false;
+  @property() private _closeDialog = false;
 
   public async showDialog(params: AisGaleryDialogParams): Promise<void> {
     this._params = params;
@@ -159,7 +152,7 @@ export class HaDialogAisgalery extends LitElement {
     this._deletePicture();
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [
       haStyleDialog,
       css`

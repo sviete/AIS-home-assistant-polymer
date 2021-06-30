@@ -5,15 +5,8 @@ import "../../../components/ha-card";
 import "../../../components/ha-icon-next";
 import { PageNavigation } from "../../../layouts/hass-tabs-subpage";
 import "../../../components/ha-icon";
-import {
-  LitElement,
-  html,
-  TemplateResult,
-  property,
-  customElement,
-  CSSResult,
-  css,
-} from "lit-element";
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { customElement, property } from "lit/decorators";
 import { HomeAssistant } from "../../../types";
 import "../dashboard/ha-config-navigation";
 import {
@@ -25,6 +18,7 @@ import {
   mdiWeb,
   mdiDatabaseSettings,
   mdiRestart,
+  mdiUsb,
 } from "@mdi/js";
 
 const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
@@ -79,6 +73,13 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
       core: true,
     },
     {
+      component: "ais_dom_config_usb",
+      path: "/config/ais_dom_config_usb",
+      translationKey: "ui.panel.config.ais_dom_config_usb.caption",
+      iconPath: mdiUsb,
+      core: true,
+    },
+    {
       component: "ais_dom_config_power",
       path: "/config/ais_dom_config_power",
       translationKey: "ui.panel.config.ais_dom_config_power.caption",
@@ -110,7 +111,7 @@ class HaConfigAisDomNavigation extends LitElement {
     `;
   }
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       a {
         text-decoration: none;

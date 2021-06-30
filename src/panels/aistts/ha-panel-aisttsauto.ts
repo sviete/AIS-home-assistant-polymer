@@ -1,4 +1,3 @@
-import "../../components/data-table/ha-data-table";
 import "../../components/ha-card";
 import "../../components/ha-menu-button";
 import "@material/mwc-icon-button";
@@ -9,15 +8,8 @@ import {
   mdiElectricSwitch,
 } from "@mdi/js";
 import "@polymer/paper-tooltip/paper-tooltip";
-import {
-  css,
-  customElement,
-  html,
-  LitElement,
-  property,
-  TemplateResult,
-  PropertyValues,
-} from "lit-element";
+import { css, html, LitElement, PropertyValues, TemplateResult } from "lit";
+import { property, customElement } from "lit/decorators";
 import "@polymer/polymer/lib/elements/dom-repeat";
 import { fireEvent } from "../../common/dom/fire_event";
 import { navigate } from "../../common/navigate";
@@ -29,18 +21,21 @@ import { triggerAutomationActions } from "../../data/automation";
 import { haStyle } from "../../resources/styles";
 import { computeStateDomain } from "../../common/entity/compute_state_domain";
 import { HomeAssistant } from "../../types";
-import {
-  DataTableColumnContainer,
-  DataTableRowData,
-} from "../../components/data-table/ha-data-table";
 import { formatDateTime } from "../../common/datetime/format_date_time";
 import memoizeOne from "memoize-one";
 import { HassEntityBase } from "home-assistant-js-websocket";
 import { HaCheckbox } from "../../components/ha-checkbox";
+// eslint-disable-next-line import/no-duplicates
+import "../../components/data-table/ha-data-table";
+import {
+  DataTableColumnContainer,
+  DataTableRowData,
+  // eslint-disable-next-line import/no-duplicates
+} from "../../components/data-table/ha-data-table";
 
 export interface AutomationRowData extends DataTableRowData {
   id: string;
-  name: string;
+  name: string | undefined;
   last_triggered: string;
   entity: HassEntityBase;
 }
@@ -114,7 +109,7 @@ class HaPanelAisTtsAuto extends LitElement {
         columns.info = {
           title: "",
           type: "icon-button",
-          template: (_info, automation) => html`
+          template: (_info, automation: any) => html`
             <mwc-icon-button
               .automation=${automation.entity}
               @click=${this._showInfo}
@@ -159,7 +154,7 @@ class HaPanelAisTtsAuto extends LitElement {
     super.firstUpdated(changedProps);
   }
 
-  private _get_automations(states) {
+  private _get_automations(_states) {
     const l_automation: AutomationRowData[] = [];
     Object.values(this.hass.states).forEach((entity) => {
       if (
@@ -211,17 +206,17 @@ class HaPanelAisTtsAuto extends LitElement {
 
   private _showInfo(ev) {
     ev.stopPropagation();
-    const entityId = ev.currentTarget.automation.entity_id;
+    const entityId = (ev.currentTarget as any).automation.entity_id;
     fireEvent(this, "hass-more-info", { entityId });
   }
 
   private _runActions(ev) {
-    const entityId = ev.currentTarget.automation.entity_id;
+    const entityId = (ev.currentTarget as any).automation.entity_id;
     triggerAutomationActions(this.hass, entityId);
   }
 
   private _createNew() {
-    navigate(this, "/config/automation/edit/new");
+    navigate("/config/automation/edit/new");
   }
 
   private _handleRowCheckboxClick(ev: Event) {

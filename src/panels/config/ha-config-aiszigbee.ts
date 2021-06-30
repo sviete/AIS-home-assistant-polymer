@@ -1,16 +1,7 @@
 import "@material/mwc-list/mwc-list-item";
 import "../../components/ha-button-menu";
-import {
-  css,
-  CSSResultArray,
-  customElement,
-  html,
-  LitElement,
-  property,
-  PropertyValues,
-  TemplateResult,
-  internalProperty,
-} from "lit-element";
+import {css, CSSResultArray, html, LitElement, PropertyValues, TemplateResult} from "lit";
+import {customElement, property} from 'lit/decorators';
 import { loadTokens } from "../../common/auth/token_storage";
 import "../../layouts/hass-loading-screen";
 import "../../layouts/hass-subpage";
@@ -34,11 +25,11 @@ class ConfigAisZigbee extends LitElement {
   @property({ type: Boolean })
   public narrow = false;
 
-  @internalProperty() private _access_token = "";
+  @property() private _access_token = "";
 
   protected render(): TemplateResult {
     const tokens = loadTokens();
-    this._access_token = tokens?.access_token;
+    this._access_token = tokens?.access_token || "";
     const zigbee2mqtt = this.hass.states["sensor.status_serwisu_zigbee2mqtt"];
     if (zigbee2mqtt.state === "online") {
       const iframe = html` <iframe

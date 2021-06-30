@@ -1,13 +1,5 @@
-import {
-  customElement,
-  html,
-  internalProperty,
-  LitElement,
-  CSSResult,
-  property,
-  TemplateResult,
-  css,
-} from "lit-element";
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { customElement, property } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { HASSDomEvent } from "../../../common/dom/fire_event";
 import { navigate } from "../../../common/navigate";
@@ -25,11 +17,7 @@ import {
   DeviceEntityLookup,
   DeviceRegistryEntry,
 } from "../../../data/device_registry";
-import {
-  EntityRegistryEntry,
-  findBatteryChargingEntity,
-  findBatteryEntity,
-} from "../../../data/entity_registry";
+import { EntityRegistryEntry } from "../../../data/entity_registry";
 import { domainToName } from "../../../data/integration";
 import "../../../layouts/hass-tabs-subpage-data-table";
 import { HomeAssistant, Route } from "../../../types";
@@ -42,12 +30,13 @@ interface DeviceRowData extends DeviceRegistryEntry {
   device?: DeviceRowData;
   area?: string;
   integration?: string;
-  sw_version?: string;
+  battery_entity?: [string | undefined, string | undefined];
+  sw_version: string | null;
 }
 
 @customElement("ha-config-ais-dom-devices-dashboard")
 export class HaConfigAisDomDeviceDashboard extends LitElement {
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       .content {
         padding: 4px;
@@ -77,7 +66,7 @@ export class HaConfigAisDomDeviceDashboard extends LitElement {
 
   @property() public route!: Route;
 
-  @internalProperty() private _searchParms = new URLSearchParams(
+  @property() private _searchParms = new URLSearchParams(
     window.location.search
   );
 
@@ -165,32 +154,30 @@ export class HaConfigAisDomDeviceDashboard extends LitElement {
         }
       });
 
-      outputDevices = outputDevices.map((device) => {
-        return {
-          ...device,
-          name: computeDeviceName(
-            device,
-            this.hass,
-            deviceEntityLookup[device.id]
-          ),
-          model: device.model || "<unknown>",
-          manufacturer: device.manufacturer || "<unknown>",
-          area: device.area_id
-            ? areaLookup[device.area_id].name
-            : this.hass.localize("ui.panel.config.devices.data_table.no_area"),
-          integration: device.config_entries.length
-            ? device.config_entries
-                .filter((entId) => entId in entryLookup)
-                .map(
-                  (entId) =>
-                    localize(`component.${entryLookup[entId].domain}.title`) ||
-                    entryLookup[entId].domain
-                )
-                .join(", ")
-            : "No integration",
-          sw_version: device.sw_version,
-        };
-      });
+      outputDevices = outputDevices.map((device) => ({
+        ...device,
+        name: computeDeviceName(
+          device,
+          this.hass,
+          deviceEntityLookup[device.id]
+        ),
+        model: device.model || "<unknown>",
+        manufacturer: device.manufacturer || "<unknown>",
+        area: device.area_id
+          ? areaLookup[device.area_id].name
+          : this.hass.localize("ui.panel.config.devices.data_table.no_area"),
+        integration: device.config_entries.length
+          ? device.config_entries
+              .filter((entId) => entId in entryLookup)
+              .map(
+                (entId) =>
+                  localize(`component.${entryLookup[entId].domain}.title`) ||
+                  entryLookup[entId].domain
+              )
+              .join(", ")
+          : "No integration",
+        sw_version: device.sw_version,
+      }));
 
       return outputDevices;
     }
@@ -206,14 +193,12 @@ export class HaConfigAisDomDeviceDashboard extends LitElement {
               filterable: true,
               direction: "asc",
               grows: true,
-              template: (name, device: DataTableRowData) => {
-                return html`
-                  ${name}
-                  <div class="secondary">
-                    ${device.area} | ${device.integration}
-                  </div>
-                `;
-              },
+              template: (name, device: DataTableRowData) => html`
+                ${name}
+                <div class="secondary">
+                  ${device.area} | ${device.integration}
+                </div>
+              `,
             },
           }
         : {
@@ -319,31 +304,9 @@ export class HaConfigAisDomDeviceDashboard extends LitElement {
     `;
   }
 
-  private _batteryEntity(
-    deviceId: string,
-    deviceEntityLookup: DeviceEntityLookup
-  ): string | undefined {
-    const batteryEntity = findBatteryEntity(
-      this.hass,
-      deviceEntityLookup[deviceId] || []
-    );
-    return batteryEntity ? batteryEntity.entity_id : undefined;
-  }
-
-  private _batteryChargingEntity(
-    deviceId: string,
-    deviceEntityLookup: DeviceEntityLookup
-  ): string | undefined {
-    const batteryChargingEntity = findBatteryChargingEntity(
-      this.hass,
-      deviceEntityLookup[deviceId] || []
-    );
-    return batteryChargingEntity ? batteryChargingEntity.entity_id : undefined;
-  }
-
   private _handleRowClicked(ev: HASSDomEvent<RowClickedEvent>) {
     const deviceId = ev.detail.id;
-    navigate(this, `/config/devices/device/${deviceId}`);
+    navigate(`/config/devices/device/${deviceId}`);
   }
 
   private _continueFlow(flowId) {
@@ -361,7 +324,7 @@ export class HaConfigAisDomDeviceDashboard extends LitElement {
       .callApi("POST", "config/config_entries/flow", {
         handler: "ais_dom_device",
       })
-      .then((result) => {
+      .then((result: any) => {
         // eslint-disable-next-line no-console
         console.log(result);
         this._continueFlow(result.flow_id);

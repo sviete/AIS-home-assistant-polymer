@@ -1,20 +1,22 @@
 import type HlsType from "hls.js";
 import {
   css,
-  CSSResult,
-  customElement,
+  CSSResultGroup,
   html,
-  internalProperty,
   LitElement,
-  property,
   PropertyValues,
-  query,
   TemplateResult,
-} from "lit-element";
+} from "lit";
+import { customElement, property, query, state } from "lit/decorators";
 import { fireEvent } from "../common/dom/fire_event";
 import { nextRender } from "../common/util/render-status";
 import { getExternalConfig } from "../external_app/external_config";
 import type { HomeAssistant } from "../types";
+
+type HlsLite = Omit<
+  HlsType,
+  "subtitleTrackController" | "audioTrackController" | "emeController"
+>;
 
 @customElement("ha-hls-player")
 class HaHLSPlayer extends LitElement {
@@ -40,9 +42,9 @@ class HaHLSPlayer extends LitElement {
   // don't cache this, as we remove it on disconnects
   @query("video") private _videoEl!: HTMLVideoElement;
 
-  @internalProperty() private _attached = false;
+  @state() private _attached = false;
 
-  private _hlsPolyfillInstance?: HlsType;
+  private _hlsPolyfillInstance?: HlsLite;
 
   private _useExoPlayer = false;
 
@@ -94,11 +96,6 @@ class HaHLSPlayer extends LitElement {
   }
 
   private async _getUseExoPlayer(): Promise<boolean> {
-    // AIS - allow to use exo player
-    if ("JavascriptHandler" in window && this.allowExoPlayer) {
-      return true;
-    }
-
     if (!this.hass!.auth.external || !this.allowExoPlayer) {
       return false;
     }
@@ -111,7 +108,8 @@ class HaHLSPlayer extends LitElement {
     const useExoPlayerPromise = this._getUseExoPlayer();
     const masterPlaylistPromise = fetch(this.url);
 
-    const Hls = (await import("hls.js")).default;
+    const Hls: typeof HlsType = (await import("hls.js/dist/hls.light.min.js"))
+      .default;
     let hlsSupported = Hls.isSupported();
 
     if (!hlsSupported) {
@@ -159,22 +157,13 @@ class HaHLSPlayer extends LitElement {
     window.addEventListener("resize", this._resizeExoPlayer);
     this.updateComplete.then(() => nextRender()).then(this._resizeExoPlayer);
     this._videoEl.style.visibility = "hidden";
-    // AIS - play via exo player
-    if ("JavascriptHandler" in window) {
-      const payload = JSON.stringify({
+    await this.hass!.auth.external!.sendMessage({
+      type: "exoplayer/play_hls",
+      payload: {
         url: new URL(url, window.location.href).toString(),
         muted: this.muted,
-      });
-      window.JavascriptHandler.exoplayerPlayHls(payload);
-    } else {
-      await this.hass!.auth.external!.sendMessage({
-        type: "exoplayer/play_hls",
-        payload: {
-          url: new URL(url, window.location.href).toString(),
-          muted: this.muted,
-        },
-      });
-    }
+      },
+    });
   }
 
   private _resizeExoPlayer = () => {
@@ -182,27 +171,15 @@ class HaHLSPlayer extends LitElement {
       return;
     }
     const rect = this._videoEl.getBoundingClientRect();
-
-    // AIS resize Exo player
-    if ("JavascriptHandler" in window) {
-      const payload = JSON.stringify({
+    this.hass!.auth.external!.fireMessage({
+      type: "exoplayer/resize",
+      payload: {
         left: rect.left,
         top: rect.top,
         right: rect.right,
         bottom: rect.bottom,
-      });
-      window.JavascriptHandler.exoplayeResizeHls(payload);
-    } else {
-      this.hass!.auth.external!.fireMessage({
-        type: "exoplayer/resize",
-        payload: {
-          left: rect.left,
-          top: rect.top,
-          right: rect.right,
-          bottom: rect.bottom,
-        },
-      });
-    }
+      },
+    });
   };
 
   private async _renderHLSPolyfill(
@@ -211,7 +188,7 @@ class HaHLSPlayer extends LitElement {
     url: string
   ) {
     const hls = new Hls({
-      liveBackBufferLength: 60,
+      backBufferLength: 60,
       fragLoadingTimeOut: 30000,
       manifestLoadingTimeOut: 30000,
       levelLoadingTimeOut: 30000,
@@ -242,16 +219,11 @@ class HaHLSPlayer extends LitElement {
     }
     if (this._useExoPlayer) {
       window.removeEventListener("resize", this._resizeExoPlayer);
-      // AIS stop Exo player
-      if ("JavascriptHandler" in window) {
-        window.JavascriptHandler.exoplayerStop();
-      } else {
-        this.hass!.auth.external!.fireMessage({ type: "exoplayer/stop" });
-      }
+      this.hass!.auth.external!.fireMessage({ type: "exoplayer/stop" });
     }
   }
 
-  static get styles(): CSSResult {
+  static get styles(): CSSResultGroup {
     return css`
       :host,
       video {

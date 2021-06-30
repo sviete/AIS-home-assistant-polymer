@@ -1,13 +1,12 @@
 import {
-  customElement,
-  LitElement,
-  property,
-  CSSResultArray,
   css,
-  TemplateResult,
+  CSSResultArray,
   html,
-} from "lit-element";
-
+  LitElement,
+  PropertyValues,
+  TemplateResult,
+} from "lit";
+import { property, customElement } from "lit/decorators";
 import "@polymer/app-layout/app-header-layout/app-header-layout";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
@@ -31,18 +30,6 @@ class PanelAisZigbee extends LitElement {
   @property() private _columns?: number;
 
   private mqls?: MediaQueryList[];
-
-  private lovelace: Lovelace = {
-    config: aisZigbeeLovelace,
-    editMode: false,
-    urlPath: null,
-    enableFullEditMode: () => undefined,
-    mode: "storage",
-    language: "pl",
-    saveConfig: async () => undefined,
-    deleteConfig: async () => undefined,
-    setEditMode: () => undefined,
-  };
 
   private _updateColumns() {
     const matchColumns = this.mqls!.reduce(
@@ -91,10 +78,23 @@ class PanelAisZigbee extends LitElement {
       "https://www.ai-speaker.com/docs/ais_app_integration_zigbee",
       "_blank"
     );
-    win.focus();
+    win!.focus();
   }
 
   protected render(): TemplateResult {
+    const lovelace: Lovelace = {
+      config: aisZigbeeLovelace,
+      rawConfig: aisZigbeeLovelace,
+      editMode: false,
+      urlPath: null,
+      enableFullEditMode: () => undefined,
+      mode: "storage",
+      locale: this.hass.locale,
+      saveConfig: async () => undefined,
+      deleteConfig: async () => undefined,
+      setEditMode: () => undefined,
+    };
+
     return html`
       <app-header-layout has-scrolling-region>
         <app-header fixed slot="header">
@@ -113,7 +113,7 @@ class PanelAisZigbee extends LitElement {
         </app-header>
         <hui-view
           .hass=${this.hass}
-          .lovelace=${this.lovelace}
+          .lovelace=${lovelace}
           index="0"
           .columns=${this._columns}
         ></hui-view>

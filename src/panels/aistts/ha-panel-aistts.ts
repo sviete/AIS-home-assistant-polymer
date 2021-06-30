@@ -17,24 +17,13 @@ import "../../components/ha-card";
 import "../../components/ha-menu-button";
 import "../../components/ha-slider";
 import "../../components/ha-expansion-panel";
-import { repeat } from "lit-html/directives/repeat";
 import { HomeAssistant } from "../../types";
 import { haStyle } from "../../resources/styles";
 import { PaperInputElement } from "@polymer/paper-input/paper-input";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
-import { guard } from "lit-html/directives/guard";
 import { mdiDrag } from "@mdi/js";
-import {
-  css,
-  customElement,
-  html,
-  LitElement,
-  property,
-  PropertyValues,
-  internalProperty,
-  query,
-} from "lit-element";
-
+import { css, html, LitElement, PropertyValues } from "lit";
+import { property, customElement, query } from "lit/decorators";
 import {
   addItem,
   clearItems,
@@ -45,32 +34,14 @@ import {
 } from "./aistts";
 import { showConfirmationDialog } from "../../dialogs/generic/show-dialog-box";
 import { navigate } from "../../common/navigate";
-
-interface Language {
-  key: string;
-  name: string;
-}
+import { repeat } from "lit/directives/repeat";
+import { guard } from "lit/directives/guard";
 
 interface Voice {
   key: string;
   name: string;
   lang: string;
 }
-
-const languages: Language[] = [
-  {
-    key: "pl_PL",
-    name: "Polski (pl_PL)",
-  },
-  {
-    key: "en_GB",
-    name: "English (en_GB)",
-  },
-  {
-    key: "uk_UA",
-    name: "Український (uk_UA)",
-  },
-];
 
 let voices: Voice[] = [];
 
@@ -145,31 +116,31 @@ export class HaPanelAisTts extends LitElement {
 
   @property() public narrow!: boolean;
 
-  @internalProperty() private _uncheckedItems?: AisTtsItem[];
+  @property() private _uncheckedItems?: AisTtsItem[];
 
-  @internalProperty() private _checkedItems?: AisTtsItem[];
+  @property() private _checkedItems?: AisTtsItem[];
 
-  @internalProperty() private _textValue = "";
+  @property() private _textValue = "";
 
-  @internalProperty() private _selectedLanguage = "pl_PL";
+  @property() private _selectedLanguage = "pl_PL";
 
-  @internalProperty() private _selectedVoice = "pl-pl-x-oda-local";
+  @property() private _selectedVoice = "pl-pl-x-oda-local";
 
-  @internalProperty() private _speedValue = 1;
+  @property() private _speedValue = 1;
 
-  @internalProperty() private _pitchValue = 1;
+  @property() private _pitchValue = 1;
 
-  @internalProperty() private _delayValue = 0;
+  @property() private _delayValue = 0;
 
-  @internalProperty() private _counterValue = 0;
+  @property() private _counterValue = 0;
 
-  @internalProperty() private _play_counting = false;
+  @property() private _play_counting = false;
 
-  @internalProperty() private _fileNameValue = "";
+  @property() private _fileNameValue = "";
 
-  @internalProperty() private _reordering = false;
+  @property() private _reordering = false;
 
-  @internalProperty() private _renderEmptySortable = false;
+  @property() private _renderEmptySortable = false;
 
   private _sortable?;
 
@@ -183,13 +154,6 @@ export class HaPanelAisTts extends LitElement {
     }
 
     this._fetchData();
-
-    this._timeData = {
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-      milliseconds: 0,
-    };
   }
 
   protected render() {
@@ -452,7 +416,7 @@ export class HaPanelAisTts extends LitElement {
   }
 
   private _showBrowseMedia(): void {
-    navigate(this, "/media-browser");
+    navigate("/media-browser");
   }
 
   public hassSubscribeListUpdate(): Promise<UnsubscribeFunc>[] {
@@ -627,7 +591,7 @@ export class HaPanelAisTts extends LitElement {
     }
   }
 
-  private _playItem(ev): void {
+  private _playItem(_ev): void {
     const newItem = this._newItem;
     let text = newItem.value;
     if (text === undefined || text === null || text.length === 0) {
@@ -642,7 +606,7 @@ export class HaPanelAisTts extends LitElement {
     }
   }
 
-  private _stopPlayItem(ev): void {
+  private _stopPlayItem(_ev): void {
     this._play_counting = false;
     this._counterValue = 0;
     this.hass.callService("ais_tts", "stop_talking", {
@@ -680,6 +644,7 @@ export class HaPanelAisTts extends LitElement {
     const name = ev.target.item.name;
     this._textValue = name;
     const voice = ev.target.item.voice;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     setTimeout(function () {
       that._selectedVoice = voice;

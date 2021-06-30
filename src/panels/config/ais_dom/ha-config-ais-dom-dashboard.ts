@@ -1,12 +1,5 @@
-import {
-  LitElement,
-  TemplateResult,
-  html,
-  CSSResultArray,
-  css,
-  customElement,
-  property,
-} from "lit-element";
+import {css, CSSResultArray, html, LitElement, TemplateResult} from "lit";
+import {customElement, property} from 'lit/decorators';
 import "@polymer/app-layout/app-header-layout/app-header-layout";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
@@ -38,7 +31,7 @@ class HaConfigAisDomDashboard extends LitElement {
       <hass-subpage
         header=${this.hass.localize("ui.panel.config.ais_dom_config.header")}
       >
-        <div class$="[[computeClasses(isWide)]]">
+        <div>
           <div class="content">
             <ha-config-section is-wide="[[isWide]]">
               <div slot="header">

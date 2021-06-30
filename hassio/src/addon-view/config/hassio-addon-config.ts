@@ -3,18 +3,16 @@ import { ActionDetail } from "@material/mwc-list";
 import "@material/mwc-list/mwc-list-item";
 import { mdiDotsVertical } from "@mdi/js";
 import "@polymer/iron-autogrow-textarea/iron-autogrow-textarea";
+import { DEFAULT_SCHEMA, Type } from "js-yaml";
 import {
   css,
-  CSSResult,
-  customElement,
+  CSSResultGroup,
   html,
-  internalProperty,
   LitElement,
-  property,
   PropertyValues,
-  query,
   TemplateResult,
-} from "lit-element";
+} from "lit";
+import { customElement, property, query, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { fireEvent } from "../../../../src/common/dom/fire_event";
 import "../../../../src/components/buttons/ha-progress-button";
@@ -30,6 +28,7 @@ import {
   HassioAddonDetails,
   HassioAddonSetOptionParams,
   setHassioAddonOption,
+  validateHassioAddonOption,
 } from "../../../../src/data/hassio/addon";
 import { extractApiErrorMessage } from "../../../../src/data/hassio/common";
 import { Supervisor } from "../../../../src/data/supervisor/supervisor";
@@ -40,6 +39,13 @@ import { suggestAddonRestart } from "../../dialogs/suggestAddonRestart";
 import { hassioStyle } from "../../resources/hassio-style";
 
 const SUPPORTED_UI_TYPES = ["string", "select", "boolean", "integer", "float"];
+
+const ADDON_YAML_SCHEMA = DEFAULT_SCHEMA.extend([
+  new Type("!secret", {
+    kind: "scalar",
+    construct: (data) => `!secret ${data}`,
+  }),
+]);
 
 @customElement("hassio-addon-config")
 class HassioAddonConfig extends LitElement {
@@ -53,15 +59,15 @@ class HassioAddonConfig extends LitElement {
 
   @property({ type: Boolean }) private _valid = true;
 
-  @internalProperty() private _canShowSchema = false;
+  @state() private _canShowSchema = false;
 
-  @internalProperty() private _showOptional = false;
+  @state() private _showOptional = false;
 
-  @internalProperty() private _error?: string;
+  @state() private _error?: string;
 
-  @internalProperty() private _options?: Record<string, unknown>;
+  @state() private _options?: Record<string, unknown>;
 
-  @internalProperty() private _yamlMode = false;
+  @state() private _yamlMode = false;
 
   @query("ha-yaml-editor") private _editor?: HaYamlEditor;
 
@@ -128,6 +134,7 @@ class HassioAddonConfig extends LitElement {
               ></ha-form>`
             : html` <ha-yaml-editor
                 @value-changed=${this._configChanged}
+                .schema=${ADDON_YAML_SCHEMA}
               ></ha-yaml-editor>`}
           ${this._error ? html` <div class="errors">${this._error}</div> ` : ""}
           ${!this._yamlMode ||
@@ -262,36 +269,45 @@ class HassioAddonConfig extends LitElement {
 
   private async _saveTapped(ev: CustomEvent): Promise<void> {
     const button = ev.currentTarget as any;
+    const eventdata = {
+      success: true,
+      response: undefined,
+      path: "options",
+    };
     button.progress = true;
 
     this._error = undefined;
 
     try {
+      const validation = await validateHassioAddonOption(
+        this.hass,
+        this.addon.slug,
+        this._editor?.value
+      );
+      if (!validation.valid) {
+        throw Error(validation.message);
+      }
       await setHassioAddonOption(this.hass, this.addon.slug, {
         options: this._yamlMode ? this._editor?.value : this._options,
       });
 
       this._configHasChanged = false;
-      const eventdata = {
-        success: true,
-        response: undefined,
-        path: "options",
-      };
-      fireEvent(this, "hass-api-called", eventdata);
       if (this.addon?.state === "started") {
         await suggestAddonRestart(this, this.hass, this.supervisor, this.addon);
       }
     } catch (err) {
       this._error = this.supervisor.localize(
-        "addon.configuration.options.failed_to_save",
+        "addon.failed_to_save",
         "error",
         extractApiErrorMessage(err)
       );
+      eventdata.success = false;
     }
     button.progress = false;
+    fireEvent(this, "hass-api-called", eventdata);
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup {
     return [
       haStyle,
       hassioStyle,

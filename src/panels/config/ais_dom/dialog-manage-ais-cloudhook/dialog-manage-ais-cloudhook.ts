@@ -1,31 +1,23 @@
-import {
-  html,
-  LitElement,
-  PropertyDeclarations,
-  css,
-  CSSResult,
-  property,
-} from "lit-element";
-
 import "@material/mwc-button";
-import "@polymer/paper-input/paper-input";
 import "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
+import "@polymer/paper-input/paper-input";
+import type { PaperInputElement } from "@polymer/paper-input/paper-input";
+import { css, CSSResultGroup, html, LitElement, PropertyDeclarations } from "lit";
+import { property } from "lit/decorators";
 import "../../../../components/dialog/ha-paper-dialog";
-// This is not a duplicate import, one is for types, one is for element.
-// tslint:disable-next-line
-import { HaPaperDialog } from "../../../../components/dialog/ha-paper-dialog";
-// tslint:disable-next-line
-import { PaperInputElement } from "@polymer/paper-input/paper-input";
-
+import type { HaPaperDialog } from "../../../../components/dialog/ha-paper-dialog";
 import { HomeAssistant } from "../../../../types";
 import { haStyle } from "../../../../resources/styles";
 import { WebhookDialogParams } from "./show-dialog-manage-ais-cloudhook";
+
 
 const inputLabel =
   "Publiczny unikalny adres URL – kliknij, aby skopiować do schowka.";
 
 export class DialogManageAisCloudhook extends LitElement {
+  
   public hass!: HomeAssistant;
+
   @property() private _params?: WebhookDialogParams;
 
   static get properties(): PropertyDeclarations {
@@ -103,7 +95,7 @@ export class DialogManageAisCloudhook extends LitElement {
     this._paperInput.label = inputLabel;
   }
 
-  static get styles(): CSSResult[] {
+  static get styles(): CSSResultGroup[] {
     return [
       haStyle,
       css`

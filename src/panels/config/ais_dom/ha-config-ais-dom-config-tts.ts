@@ -1,16 +1,7 @@
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import {
-  css,
-  CSSResultArray,
-  customElement,
-  html,
-  LitElement,
-  property,
-  PropertyValues,
-  TemplateResult,
-  internalProperty,
-} from "lit-element";
+import {css, CSSResultArray, html, LitElement, TemplateResult} from "lit";
+import {customElement, property} from 'lit/decorators';
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 

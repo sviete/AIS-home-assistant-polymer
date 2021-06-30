@@ -73,8 +73,8 @@ export interface NumberSelector {
   number: {
     min: number;
     max: number;
-    step: number;
-    mode: "box" | "slider";
+    step?: number;
+    mode?: "box" | "slider";
     unit_of_measurement?: string;
   };
 }

@@ -292,7 +292,7 @@
             "save": "Salvesta",
             "show_more": "Kuva selle kohta rohkem teavet",
             "update": "Uuenda",
-            "update_available": "{count, plural,\n  one {värskendus}\n  other {{count] värskendust}\n} on saadaval",
+            "update_available": "{count, plural,\n  one {uuendus}\n  other {{count} uuendust}\n} on saadaval",
             "version": "Versioon",
             "yes": "Jah"
         },
@@ -314,7 +314,7 @@
             "addon_new_version": "Uus versioon on saadaval",
             "addon_running": "Lisandmoodul töötab",
             "addon_stopped": "Lisandmoodul on peatatud",
-            "addons": "Lisandmoodulid",
+            "addons": "Paigaldatud lisandmoodulid",
             "no_addons": "Ühtegi lisandmoodulit pole veel paigaldatud. Alustamiseks mine lisandmoodulite hoidlasse!"
         },
         "dialog": {
@@ -366,6 +366,7 @@
         },
         "my": {
             "error": "Viga",
+            "error_addon_no_ingress": "Valitud lisandmoodul ei toeta ingressi",
             "error_addon_not_found": "Lisandmoodulit ei leitud",
             "faq_link": "KKK viide",
             "not_supported": "pole toetatud"
@@ -383,8 +384,14 @@
             "create": "Loo",
             "create_blocked_not_running": "Hetktõmmise loomine pole praegu võimalik kuna süsteem on olekus {state}.",
             "create_snapshot": "Loo hetktõmmis",
+            "created": "Loodud",
+            "delete_selected": "Kustuta valitud hetktõmmised",
+            "delete_snapshot_confirm": "kustuta",
+            "delete_snapshot_text": "Kas kustutada {number} {number, plural,\n  one {hetktõmmis}\n  other {hetktõmmist}\n}?",
+            "delete_snapshot_title": "Kustuta hetktõmmis",
             "description": "Hetktõmmised võimaldavad hõlpsalt varundada ja taastada kõik Home Assistanti andmed.",
             "enter_password": "Sisesta salasõna.",
+            "failed_to_delete": "Kustutamine nurjus",
             "folder": {
                 "addons/local": "Kohalikud lisandmoodulid",
                 "homeassistant": "Home Assistanti sätted",
@@ -394,14 +401,16 @@
             },
             "folders": "Kaustad",
             "full_snapshot": "Täielik hetktõmmis",
-            "name": "Nimi",
+            "name": "Hetktõmmise nimi",
             "no_snapshots": "Sul pole veel ühtegi hetktõmmist.",
             "partial_snapshot": "Osaline hetktõmmis",
-            "password": "Salasõna",
+            "password": "Hetktõmmise salasõna",
             "password_protected": "salasõnaha kaitstud",
             "password_protection": "Salasõnaga kaitstud",
             "security": "Turvalisus",
-            "type": "Tüüp",
+            "select_type": "Vali mida taastada",
+            "selected": "{number} valitud",
+            "type": "Hetktõmmise tüüp",
             "upload_snapshot": "Hetktõmmise üleslaadimine"
         },
         "store": {
@@ -458,6 +467,7 @@
                 "leave_beta_description": "Hangi Home Assistanti, Supervisori ja hosti jaoks stabiilseid uuendusi",
                 "ram_usage": "Supervisori mälu kasutus",
                 "reload_supervisor": "Taaslae Supevisor",
+                "search": "Otsing",
                 "share_diagnostics": "Jaga silumisteavet",
                 "share_diagnostics_description": "Jaga krahhiaruandeid ja diagnostikateavet.",
                 "share_diagonstics_description": "Kas soovid automaatselt jagada krahhiaruandeid ja diagnostikateavet kui Supervisoris ilmneb ootamatuid tõrkeid? {line_break} See võimaldab meil probleeme lahendada, teave on kättesaadav ainult Home Assistanti põhimeeskonnale ja seda ei jagata teistega. {line_break} Andmed ei sisalda privaatset/tundlikku teavet ja saad selle sätetes igal ajal keelata.",
@@ -717,6 +727,9 @@
                 "no_match": "Sobivaid alasid ei leitud",
                 "show_areas": "Näita alasid"
             },
+            "attributes": {
+                "expansion_header": "Atribuudid"
+            },
             "blueprint-picker": {
                 "add_user": "Lisa kasutaja",
                 "remove_user": "Kustuta kasutaja",
@@ -868,7 +881,7 @@
                     "day": "{count} {count, plural,\n  one {päev}\n  other {päeva}\n}",
                     "hour": "{count} {count, plural,\n  one {tund}\n  other {tunni}\n}",
                     "minute": "{count} {count, plural,\n  one {minut}\n  other {minuti}\n}",
-                    "second": "{count} {count, plural,\n  one {sekund}\n  other {sekundit}\n}",
+                    "second": "{count} {count, plural,\n  one {sekund}\n  other {sekundi}\n}",
                     "week": "{count} {count, plural,\n  one {nädala}\n  other {nädala}\n}"
                 },
                 "future_duration": {
@@ -916,8 +929,11 @@
         },
         "dialogs": {
             "config_entry_system_options": {
-                "enable_new_entities_description": "Kui see on keelatud ei lisata äsja avastatud sidumise {integration} olemeid automaatselt Home Assistant'i.",
+                "enable_new_entities_description": "Kas lisada äsja avastatud sidumise {integration} olemed automaatselt Home Assistant'i.",
                 "enable_new_entities_label": "Luba äsja lisatud olemid.",
+                "enable_polling_description": "Kas Home Assistant peaks automaatselt küsitlema {integration} üksusi uuenduste saamiseks.",
+                "enable_polling_label": "Luba värskenduste jaoks küsitlus.",
+                "restart_home_assistant": "Muudatuste jõustumiseks pead Home Assistanti taaskäivitama.",
                 "title": "Süsteemi valikud {integration} jaoks",
                 "update": "Uuenda"
             },
@@ -1217,8 +1233,8 @@
         },
         "duration": {
             "day": "{count} {count, plural,\n  one {päev}\n  other {päeva}\n}",
-            "hour": "{count} {count, plural,\n  one {tund}\n  other {tunni}\n}",
-            "minute": "{count} {count, plural,\n  one {minut}\n  other {minuti}\n}",
+            "hour": "{count} {count, plural,\n  one {tund}\n  other {tundi}\n}",
+            "minute": "{count} {count, plural,\n  one {minut}\n  other {minutit}\n}",
             "second": "{count} {count, plural,\n  one {sekund}\n  other {sekundit}\n}",
             "week": "{count} {count, plural,\n  one {nädal}\n  other {nädalat}\n}"
         },
@@ -1258,7 +1274,7 @@
         "notification_toast": {
             "connection_lost": "Ühendus kadunud. Taasühendamine...",
             "dismiss": "Loobu",
-            "intergration_starting": "Sidumine {integration} käivitub, kõik elemendid pole veel saadaval.",
+            "integration_starting": "Sidumine {integration} käivitub, kõik elemendid pole veel saadaval.",
             "service_call_failed": "Teenuse {service} väljakutsumine ebaõnnestus.",
             "started": "Home Assistant on käivitunud!",
             "starting": "Home Assistant  käivitub, kõik elemendid ei pruugi veel saadaval olla",
@@ -1716,6 +1732,7 @@
                             "title": "Alexa"
                         },
                         "connected": "Ühendatud",
+                        "connecting": "Ühendun...",
                         "connection_status": "Pilveühenduse olek",
                         "fetching_subscription": "Tellimuse andmete toomine ...",
                         "google": {
@@ -2059,7 +2076,8 @@
                     "scripts": "Skriptid",
                     "unknown_error": "Tundmatu viga",
                     "unnamed_device": "Nimetu seade",
-                    "update": "Uuenda"
+                    "update": "Uuenda",
+                    "update_device_error": "Seadme värskendamine nurjus"
                 },
                 "entities": {
                     "caption": "Olemite register",
@@ -2166,7 +2184,7 @@
                     "license": "Avaldatud Apache 2.0 litsentsi alusel",
                     "path_configuration": "configuration.yaml asukoht: {path}",
                     "server": "server",
-                    "setup_time": "Kellaaja suvandid",
+                    "setup_time": "Käivitusaeg",
                     "source": "Allikas:",
                     "system_health_error": "Süsteemi seisundi komponenti ei laadita. Lisage \"system_health:\" configuration.yaml",
                     "system_health": {
@@ -2192,6 +2210,7 @@
                         "depends_on_cloud": "Sõltub pilveteenusest",
                         "device_unavailable": "Seade pole saadaval",
                         "devices": "{count} {count, plural,\n  one {seade}\n  other {seadet}\n}",
+                        "disable_error": "Sidumise lubamine või keelamine nurjus",
                         "disable_restart_confirm": "Taaskäivita Home Assistant, et lõpetada selle sidumise keelamine",
                         "disable": {
                             "disable_confirm": "Kas soovid selle seadistuskirje kindlasti keelata? Selle seadmed ja üksused keelatakse.",
@@ -2203,6 +2222,7 @@
                             },
                             "disabled_cause": "Keelatud {cause} põhjusel"
                         },
+                        "disabled_polling": "Uuendatud andmete automaatne päring on välja lülitatud",
                         "documentation": "Vaata dokumentatsiooni",
                         "enable_restart_confirm": "Selle sidumise lubamise lõpetamiseks taaskäivita Home Assistant",
                         "entities": "{count} {count, plural,\n  one {olem}\n  other{olemit}\n}",
@@ -2585,6 +2605,8 @@
                         "add_scene": "Lisa stseen",
                         "delete_confirm": "Oled kindel, et soovid selle stseeni kustutada?",
                         "delete_scene": "Kustuta stseen",
+                        "duplicate": "Paljunda",
+                        "duplicate_scene": "Paljunda stseen",
                         "edit_scene": "Muuda stseeni",
                         "header": "Stseeniredaktor",
                         "headers": {
@@ -2912,7 +2934,9 @@
                         "controller_in_inclusion_mode": "Z-Wave kontroller on nüüd kaasamise režiimis.",
                         "follow_device_instructions": "Sidumise käivitamiseks järgi seadmega kaasas olnud juhiseid.",
                         "inclusion_failed": "Sõlme ei saanud lisada. Lisateabe saamiseks vaata logi.",
-                        "inclusion_finished": "Sõlm on lisatud. See võib võtta paar minutit, et kõik üksused ilmuksid kuni me lõpetame taustal sõlme loomise.",
+                        "inclusion_finished": "Sõlm on lisatud.",
+                        "interview_failed": "Seadme küsitlemine nurjus. Lisateave võib olla kättesaadav logides.",
+                        "interview_started": "Seadet küsitletakse. See võib võtta aega.",
                         "introduction": "See viisard juhendab sõlme lisamisel Z-Wave'i võrku.",
                         "secure_inclusion_warning": "Turvalised seadmed vajavad täiendavat ribalaiust; liiga palju turvalisi seadmeid võib Z-Wave võrku aeglustada. Turvalist kaasamist soovitame kasutada ainult seadmete jaoks mis seda vajavad, näiteks lukud või garaažiukse avajad.",
                         "start_inclusion": "Alusta kaasamist",
@@ -2952,6 +2976,7 @@
                     },
                     "logs": {
                         "log_level": "Logimise tase",
+                        "log_level_changed": "Silumisteave on muudetud: {level}",
                         "subscribed_to_logs": "Z-Wave JS Logi sõnumite tellimine...",
                         "title": "Z-Wave JS logid"
                     },
@@ -4000,6 +4025,17 @@
                     "link_promo": "Lisateave teemade kohta",
                     "primary_color": "Esmane värv",
                     "reset": "Lähtesta"
+                },
+                "time_format": {
+                    "description": "Vali kuidas ajad vormindatakse.",
+                    "dropdown_label": "Ajavorming",
+                    "formats": {
+                        "12": "12 tundi (AM/PM)",
+                        "24": "24 tundi",
+                        "language": "Automaatne (kasuta keeleseadet)",
+                        "system": "Kasuta süsteemi poolt määratut"
+                    },
+                    "header": "Ajavorming"
                 },
                 "vibrate": {
                     "description": "Seadmete juhtimisel lubage või keelake vibratsioon.",
