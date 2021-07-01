@@ -35,11 +35,7 @@ export class HaPickThemeRow extends LitElement {
   protected render(): TemplateResult {
     const hasThemes =
       this.hass.themes.themes && Object.keys(this.hass.themes.themes).length;
-    const curTheme =
-      this.hass.selectedTheme?.theme || this.hass.themes.darkMode
-        ? this.hass.themes.default_dark_theme || this.hass.themes.default_theme
-        : this.hass.themes.default_theme;
-
+    const curTheme = this.hass.selectedTheme?.theme;
     const themeSettings = this.hass.selectedTheme;
 
     return html`
