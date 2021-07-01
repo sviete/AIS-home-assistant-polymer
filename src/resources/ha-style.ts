@@ -57,7 +57,7 @@ documentContainer.innerHTML = `<custom-style>
       --label-badge-yellow: #f4b400;
 
       /* states and badges */
-      --state-icon-color: #44739e;
+      --state-icon-color: #727272;
       /* an active state is anything that would require attention */
       --state-icon-active-color: #FDD835;
       /* an error state is anything that would be considered an error */
@@ -76,7 +76,7 @@ documentContainer.innerHTML = `<custom-style>
       --state-climate-eco-color: #00ff7f;
       --state-climate-cool-color: #2b9af9;
       --state-climate-heat-color: #ff8100;
-      --state-climate-manual-color: #44739e;
+      --state-climate-manual-color: #727272;
       --state-climate-off-color: #8a8a8a;
       --state-climate-fan_only-color: #8a8a8a;
       --state-climate-dry-color: #efbd07;
