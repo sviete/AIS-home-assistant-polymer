@@ -9,8 +9,6 @@ import "../../../resources/ha-style";
 import "./ha-config-ais-dom-dashboard";
 import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
 import { fireEvent } from "../../../common/dom/fire_event";
-
-import "../../../components/state-history-charts";
 import { processConfigEntities } from "../../lovelace/common/process-config-entities";
 
 /*
@@ -45,8 +43,8 @@ class HaConfigAisDomControl extends PolymerElement {
       </style>
 
       <hass-subpage header="Konfiguracja bramki AIS dom">
-        <div class$="[[computeClasses(isWide)]]">
-          <ha-config-section is-wide="[[isWide]]">
+        <div .class=${this.computeClasses(this.isWide)}>
+          <ha-config-section .is-wide=${this.isWide}>
             <span slot="header">Połączenie WiFi</span>
             <span slot="introduction"
               >Możesz sprawdzić lub skonfigurować parametry połączenia
@@ -57,22 +55,25 @@ class HaConfigAisDomControl extends PolymerElement {
                 <div style="text-align: center;">
                   <div class="aisInfoRow">Lokalna nazwa hosta</div>
                   <div class="aisInfoRow">
-                    <mwc-button on-click="showLocalIpInfo"
+                    <mwc-button @click=${this.showLocalIpInfo}
                       >[[aisLocalHostName]]</mwc-button
                     ><ha-icon-button
                       class="user-button"
                       icon="hass:cog"
-                      on-click="createFlowHostName"
+                      @click=${this.createFlowHostName}
                     ></ha-icon-button>
                   </div>
                 </div>
-                <div on-click="showLocalIpInfo" style="text-align: center;">
+                <div @click=${this.showLocalIpInfo} style="text-align: center;">
                   <div class="aisInfoRow">Lokalny adres IP</div>
                   <div class="aisInfoRow">
                     <mwc-button>[[aisLocalIP]]</mwc-button>
                   </div>
                 </div>
-                <div on-click="showWiFiSpeedInfo" style="text-align: center;">
+                <div
+                  @click=${this.showWiFiSpeedInfo}
+                  style="text-align: center;"
+                >
                   <div class="aisInfoRow">Prędkość połączenia WiFi</div>
                   <div class="aisInfoRow">
                     <mwc-button>[[aisWiFiSpeed]]</mwc-button>
@@ -84,9 +85,9 @@ class HaConfigAisDomControl extends PolymerElement {
                   <ha-icon-button
                     class="user-button"
                     icon="hass:wifi"
-                    on-click="showWiFiGroup"
+                    @click=${this.showWiFiGroup}
                   ></ha-icon-button
-                  ><mwc-button on-click="createFlowWifi"
+                  ><mwc-button @click=${this.createFlowWifi}
                     >Konfigurator połączenia z siecą WiFi</mwc-button
                   >
                 </div>
