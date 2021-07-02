@@ -23,8 +23,6 @@ class HaPanelAishelp extends LitElement {
 
   @property() private aisLocalIP;
 
-  @property() private remoteDomain;
-
   @property() private remoteConnectedInfo;
 
   @property() private serviceRemoteStatusColor = "#000000";
@@ -47,7 +45,6 @@ class HaPanelAishelp extends LitElement {
       this.remoteConnectedInfo =
         "Gdy włączysz szyfrowany tunel to Twoja bramka będzie dostępna z Internetu pod adresem: ";
     }
-
     this._generateQR();
   }
 
@@ -170,10 +167,22 @@ class HaPanelAishelp extends LitElement {
               </div>
               <div class="card-content">
                 ${this.remoteConnectedInfo}
-                <a href=${this.remoteDomain}>${this.remoteDomain}</a>
+                <p>
+                  <a
+                    href="https://${this.hass.states[
+                      "sensor.ais_secure_android_id_dom"
+                    ].state}.paczka.pro"
+                  >
+                    https://${this.hass.states[
+                      "sensor.ais_secure_android_id_dom"
+                    ].state}.paczka.pro
+                  </a>
+                </p>
                 <p>
                   Ustawienia zdalnego dostępu możesz zmienić w
-                  <a href="/config/ais_dom">konfiguracji bramki</a>
+                  <a href="/config/ais_dom_config_remote"
+                    >konfiguracji bramki</a
+                  >
                 </p>
               </div>
             </ha-card>
