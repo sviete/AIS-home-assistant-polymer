@@ -1,50 +1,38 @@
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import { html } from "@polymer/polymer/lib/utils/html-tag";
-import { PolymerElement } from "@polymer/polymer/polymer-element";
-
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-dashboard";
 import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
 import { fireEvent } from "../../../common/dom/fire_event";
-import { processConfigEntities } from "../../lovelace/common/process-config-entities";
+// import { processConfigEntities } from "../../lovelace/common/process-config-entities";
+import { css, html, CSSResultArray, LitElement, TemplateResult } from "lit";
+import { customElement, property } from "lit/decorators";
+import { haStyle } from "../../../resources/styles";
+import { HomeAssistant } from "../../../types";
 
-/*
- *
- */
-class HaConfigAisDomControl extends PolymerElement {
-  static get template() {
+@customElement("ha-config-ais-dom-config-wifi")
+class HaConfigAisDomConfigWifi extends LitElement {
+  @property({ attribute: false }) public hass!: HomeAssistant;
+
+  @property({ type: Boolean }) public isWide = true;
+
+  @property({ type: Boolean }) public narrow = false;
+
+  protected async firstUpdated() {
+    // console.log("ok");
+  }
+
+  protected render(): TemplateResult {
+    if (!this.hass) {
+      return html``;
+    }
+
     return html`
-      <style include="iron-flex ha-style">
-        .content {
-          padding-bottom: 32px;
-        }
-        .border {
-          margin: 32px auto 0;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-          max-width: 1040px;
-        }
-        .narrow .border {
-          max-width: 640px;
-        }
-        div.aisInfoRow {
-          display: inline-block;
-        }
-        .center-container {
-          @apply --layout-vertical;
-          @apply --layout-center-center;
-          height: 70px;
-        }
-        ha-icon-button {
-          vertical-align: middle;
-        }
-      </style>
-
       <hass-subpage header="Konfiguracja bramki AIS dom">
-        <div .class=${this.computeClasses(this.isWide)}>
-          <ha-config-section .is-wide=${this.isWide}>
+        <div .narrow=${this.narrow}>
+          <ha-config-section .isWide=${this.isWide}>
             <span slot="header">Połączenie WiFi</span>
             <span slot="introduction"
               >Możesz sprawdzić lub skonfigurować parametry połączenia
@@ -55,19 +43,24 @@ class HaConfigAisDomControl extends PolymerElement {
                 <div style="text-align: center;">
                   <div class="aisInfoRow">Lokalna nazwa hosta</div>
                   <div class="aisInfoRow">
-                    <mwc-button @click=${this.showLocalIpInfo}
-                      >[[aisLocalHostName]]</mwc-button
-                    ><ha-icon-button
+                    <mwc-button
+                      >${this.hass.states["sensor.local_host_name"]
+                        .state}</mwc-button
+                    >
+                    <ha-icon-button
                       class="user-button"
                       icon="hass:cog"
                       @click=${this.createFlowHostName}
                     ></ha-icon-button>
                   </div>
                 </div>
-                <div @click=${this.showLocalIpInfo} style="text-align: center;">
+                <div style="text-align: center;" @click=${this.showLocalIpInfo}>
                   <div class="aisInfoRow">Lokalny adres IP</div>
                   <div class="aisInfoRow">
-                    <mwc-button>[[aisLocalIP]]</mwc-button>
+                    <mwc-button
+                      >${this.hass.states["sensor.internal_ip_address"]
+                        .state}</mwc-button
+                    >
                   </div>
                 </div>
                 <div
@@ -76,7 +69,11 @@ class HaConfigAisDomControl extends PolymerElement {
                 >
                   <div class="aisInfoRow">Prędkość połączenia WiFi</div>
                   <div class="aisInfoRow">
-                    <mwc-button>[[aisWiFiSpeed]]</mwc-button>
+                    <mwc-button
+                      >${this.hass.states[
+                        "sensor.ais_wifi_service_current_network_info"
+                      ].state}</mwc-button
+                    >
                   </div>
                 </div>
               </div>
@@ -99,46 +96,34 @@ class HaConfigAisDomControl extends PolymerElement {
     `;
   }
 
-  static get properties() {
-    return {
-      hass: Object,
-      isWide: Boolean,
-      showAdvanced: Boolean,
-      aisLocalHostName: {
-        type: String,
-        computed: "_computeAisLocalHostName(hass)",
-      },
-
-      aisLocalIP: {
-        type: String,
-        computed: "_computeAisLocalIP(hass)",
-      },
-
-      aisWiFiSpeed: {
-        type: String,
-        computed: "_computeAisWiFiSpeed(hass)",
-      },
-      _config: Object,
-      _names: Object,
-      _entities: Array,
-      _cacheConfig: Object,
-    };
-  }
-
-  computeClasses(isWide) {
-    return isWide ? "content" : "content narrow";
-  }
-
-  _computeAisLocalHostName(hass) {
-    return hass.states["sensor.local_host_name"].state;
-  }
-
-  _computeAisLocalIP(hass) {
-    return hass.states["sensor.internal_ip_address"].state;
-  }
-
-  _computeAisWiFiSpeed(hass) {
-    return hass.states["sensor.ais_wifi_service_current_network_info"].state;
+  static get styles(): CSSResultArray {
+    return [
+      haStyle,
+      css`
+        .content {
+          padding-bottom: 32px;
+        }
+        .border {
+          margin: 32px auto 0;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+          max-width: 1040px;
+        }
+        .narrow .border {
+          max-width: 640px;
+        }
+        div.aisInfoRow {
+          display: inline-block;
+        }
+        .center-container {
+          @apply --layout-vertical;
+          @apply --layout-center-center;
+          height: 70px;
+        }
+        ha-icon-button {
+          vertical-align: middle;
+        }
+      `,
+    ];
   }
 
   showWiFiGroup() {
@@ -191,32 +176,10 @@ class HaConfigAisDomControl extends PolymerElement {
         this._continueFlow(result.flow_id);
       });
   }
-
-  ready() {
-    super.ready();
-    const entities = processConfigEntities([
-      "sensor.ais_wifi_service_current_network_info",
-    ]);
-
-    const _entities = [];
-    const _names = {};
-    for (const entity of entities) {
-      _entities.push(entity.entity);
-      if (entity.name) {
-        _names[entity.entity] = entity.name;
-      }
-    }
-
-    this.setProperties({
-      _cacheConfig: {
-        cacheKey: _entities.join(),
-        hoursToShow: 24,
-        refresh: 0,
-      },
-      _entities,
-      _names,
-    });
-  }
 }
 
-customElements.define("ha-config-ais-dom-config-wifi", HaConfigAisDomControl);
+declare global {
+  interface HTMLElementTagNameMap {
+    "ha-config-ais-dom-config-wifi": HaConfigAisDomConfigWifi;
+  }
+}
