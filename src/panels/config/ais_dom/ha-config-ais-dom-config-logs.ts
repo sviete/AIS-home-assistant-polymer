@@ -333,8 +333,8 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                         <paper-item item-name="SQLite (file)"
                           >SQLite (file)</paper-item
                         >
-                        <paper-item item-name="MariaDB (local)"
-                          >MariaDB (local)</paper-item
+                        <paper-item item-name="PostgreSQL (local)"
+                          >PostgreSQL (local)</paper-item
                         >
                         <paper-item item-name="MariaDB">MariaDB</paper-item>
                         <paper-item item-name="MySQL">MySQL</paper-item>
@@ -365,8 +365,8 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                       `
                     : html``}
 
-                  <!-- MariaDB (local) -->
-                  ${this.dbEngine === "MariaDB (local)"
+                  <!-- PostgreSQL (local) -->
+                  ${this.dbEngine === "PostgreSQL (local)"
                     ? html`
                         <div class="card-content">
                           Żeby utrzymać system w dobrej kondycji, codziennie
