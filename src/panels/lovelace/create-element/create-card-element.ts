@@ -73,6 +73,7 @@ const LAZY_LOAD_TYPES = {
   "ais-now-playing-poster": () =>
     import("../cards/hui-ais-now-playing-poster-card"),
   "ais-light": () => import("../cards/hui-ais-light-card"),
+  "ais-videoring": () => import("../cards/hui-ais-videoring-card"),
   calendar: () => import("../cards/hui-calendar-card"),
   logbook: () => import("../cards/hui-logbook-card"),
 };

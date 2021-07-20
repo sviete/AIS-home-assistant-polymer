@@ -112,6 +112,7 @@
     "idb-keyval": "^5.0.5",
     "intl-messageformat": "^9.6.16",
     "js-yaml": "^4.1.0",
+    "jssip": "^3.8.0",
     "leaflet": "^1.7.1",
     "leaflet-draw": "^1.0.4",
     "lit": "^2.0.0-rc.2",
