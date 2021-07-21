@@ -135,6 +135,16 @@ class AisVideoRingCard extends HTMLElement {
       console.log("AIS Error: " + e.cause + " " + e.response);
     });
 
+    this.aisSipDoorRing.on("newMessage", function (data) {
+      console.log("AIS SIP Door Ring newMessage");
+      console.log("AIS Message: " + data);
+    });
+
+    this.aisSipDoorRing.on("sipEvent", function (data) {
+      console.log("AIS SIP Door Ring sipEvent");
+      console.log("AIS Event: " + data);
+    });
+
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const videoRingCard = this;
 
