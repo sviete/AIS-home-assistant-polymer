@@ -93,29 +93,52 @@ class AisVideoRingCard extends HTMLElement {
   }
 
   notYetInitialized() {
-    return !this.aisSipPhone && this.config;
+    return !this.aisSipDoorRing && this.config;
   }
 
   initJsSIPIfNecessary(hass) {
     const socket = new JsSIP.WebSocketInterface(
       this.config.sip_settings.sip_wss_url
     );
+
     const configuration = {
       sockets: [socket],
       uri: `sip:${this.config.sip_settings.sip_username}@${this.config.sip_settings.sip_server}`,
+      authorizationUser: `${this.config.sip_settings.sip_username}`,
+      register: true,
+      noAnswerTimeout: 60,
+      displayName: "AIS",
       password: this.config.sip_settings.sip_password,
     };
-    this.aisSipPhone = new JsSIP.UA(configuration);
+    this.aisSipDoorRing = new JsSIP.UA(configuration);
 
     const callOptions = { mediaConstraints: { audio: true, video: false } }; // only audio calls
 
-    this.aisSipPhone.on("registered", () =>
-      console.log("AIS SIP Phone registered with SIP Server")
+    this.aisSipDoorRing.on("registered", () =>
+      console.log("AIS SIP Door Ring registered with SIP Server")
     );
+
+    this.aisSipDoorRing.on("connected", function (e) {
+      console.log("AIS SIP Door Ring connected ");
+    });
+
+    this.aisSipDoorRing.on("disconnected", function (e) {
+      console.log("AIS SIP Door Ring disconnected");
+    });
+
+    this.aisSipDoorRing.on("unregistered", function (e) {
+      console.log("AIS SIP Door Ring unregistered");
+    });
+
+    this.aisSipDoorRing.on("registrationFailed", function (e) {
+      console.log("AIS SIP Door Ring registrationFailed");
+      console.log("AIS Error: " + e.cause + " " + e.response);
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const videoRingCard = this;
-    this.aisSipPhone.on("newRTCSession", function (data) {
+
+    this.aisSipDoorRing.on("newRTCSession", function (data) {
       const session = data.session;
 
       if (session.direction === "incoming") {
@@ -161,7 +184,7 @@ class AisVideoRingCard extends HTMLElement {
     });
 
     // start the phone
-    this.aisSipPhone.start();
+    this.aisSipDoorRing.start();
   }
 
   initCameraView(hass) {
@@ -196,7 +219,7 @@ class AisVideoRingCard extends HTMLElement {
       15000
     );
 
-    if (!this.aisSipPhone) return false;
+    if (!this.aisSipDoorRing) return false;
     const old_access_token = this.access_token;
     const new_access_token =
       hass.states[this.config.camera_entity].attributes.access_token;
