@@ -148,9 +148,8 @@ export class HaMediaPlayerBrowse extends LitElement {
       return html``;
     }
 
-    const currentItem = this._mediaPlayerItems[
-      this._mediaPlayerItems.length - 1
-    ];
+    const currentItem =
+      this._mediaPlayerItems[this._mediaPlayerItems.length - 1];
 
     // check if we are in AIS gallery folder -> media-source://media_source/galeria/.
     const aisGallery =
