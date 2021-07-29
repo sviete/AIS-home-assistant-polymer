@@ -157,6 +157,7 @@ class HaMfaModuleSetupFlow extends LitElement {
           --markdown-svg-color: black;
           display: block;
           margin: 0 auto;
+          text-align: center;
         }
         ha-markdown a {
           color: var(--primary-color);

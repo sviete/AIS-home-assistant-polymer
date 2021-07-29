@@ -303,7 +303,8 @@
         "entries_not_found": "No logbook entries found.",
         "by": "by",
         "by_service": "by service",
-        "show_trace": "Show trace",
+        "show_trace": "[%key:ui::panel::config::automation::editor::show_trace%]",
+        "retrieval_error": "Error during logbook entry retrieval",
         "messages": {
           "was_away": "was detected away",
           "was_at_state": "was detected at {state}",
@@ -1155,7 +1156,7 @@
           "section": {
             "validation": {
               "heading": "Configuration validation",
-              "introduction": "Validate your configuration if you recently made some changes to your configuration and want to make sure that it is all valid",
+              "introduction": "Validate your configuration if you recently made some changes to your configuration and want to make sure that it is all valid.",
               "check_config": "Check configuration",
               "valid": "Configuration valid!",
               "invalid": "Configuration invalid"
@@ -1307,6 +1308,7 @@
               "introduction": "Triggers are what starts the processing of an automation rule. It is possible to specify multiple triggers for the same rule. Once a trigger starts, Home Assistant will validate the conditions, if any, and call the action.",
               "learn_more": "Learn more about triggers",
               "add": "Add trigger",
+              "id": "Trigger ID (used by the trigger condition)",
               "duplicate": "Duplicate",
               "delete": "[%key:ui::panel::mailbox::delete_button%]",
               "delete_confirm": "Are you sure you want to delete this?",
@@ -1474,6 +1476,11 @@
                     "sun": "Sunday"
                   }
                 },
+                "trigger": {
+                  "label": "Trigger",
+                  "no_triggers": "No triggers available",
+                  "id": "Trigger Id"
+                },
                 "zone": {
                   "label": "[%key:ui::panel::config::automation::editor::triggers::type::zone::label%]",
                   "entity": "[%key:ui::panel::config::automation::editor::triggers::type::zone::entity%]",
@@ -1633,6 +1640,7 @@
             "show_info": "Show info about script",
             "run_script": "Run script",
             "edit_script": "Edit script",
+            "dev_script": "Debug script",
             "headers": {
               "name": "Name"
             },
@@ -1646,6 +1654,7 @@
             "id_already_exists_save_error": "You can't save this script because the ID is not unique, pick another ID or leave it blank to automatically generate one.",
             "id_already_exists": "This ID already exists",
             "introduction": "Use scripts to run a sequence of actions.",
+            "show_trace": "[%key:ui::panel::config::automation::editor::show_trace%]",
             "header": "Script: {name}",
             "default_name": "New Script",
             "modes": {
@@ -2120,7 +2129,7 @@
           "confirm_new": "Do you want to set up {integration}?",
           "add_integration": "Add integration",
           "no_integrations": "Seems like you don't have any integrations configured yet. Click on the button below to add your first integration!",
-          "note_about_integrations": "Not all integrations can be configured via the UI yet.",
+          "note_about_integrations": "No integrations matched your search, the integration you want to set up might not be available to set up via the UI yet.",
           "note_about_website_reference": "More are available on the ",
           "home_assistant_website": "Home Assistant website",
           "configure": "Configure",
@@ -2642,7 +2651,9 @@
             "home_id": "Home ID",
             "close": "Close",
             "add_node": "Add Node",
-            "remove_node": "Remove Node"
+            "remove_node": "Remove Node",
+            "reconfigure_server": "Re-configure Server",
+            "heal_network": "Heal Network"
           },
           "dashboard": {
             "header": "Manage your Z-Wave Network",
@@ -2723,6 +2734,18 @@
             "in_progress": "The device is being interviewed. This may take some time.",
             "interview_failed": "The device interview failed. Additional information may be available in the logs.",
             "interview_complete": "Device interview complete."
+          },
+          "heal_network": {
+            "title": "Heal your Z-Wave Network",
+            "introduction": "Start a network heal on your Z-Wave network. A network heal will cause all devices to re-calculate their routes back to the controller and is recommended if you have recently moved devices or your controller.",
+            "traffic_warning": "The healing process generates a large amount of traffic on the Z-Wave network. This may cause devices to respond slowly (or not at all) while the heal is in progress.",
+            "start_heal": "Start Healing",
+            "in_progress": "Network healing is in progress. This will take some time.",
+            "run_in_background": "You can close this dialog and the network healing will continue in the background.",
+            "stop_heal": "Stop Healing",
+            "healing_complete": "Network healing is complete.",
+            "healing_failed": "Healing failed. Additional information may be available in the logs.",
+            "healing_cancelled": "Network healing has been cancelled."
           },
           "logs": {
             "title": "Z-Wave JS Logs",
@@ -3695,7 +3718,16 @@
           "description": "Alternatively you can restore from a previous snapshot.",
           "in_progress": "Restore in progress",
           "show_log": "Show full log",
-          "hide_log": "Hide full log"
+          "hide_log": "Hide full log",
+          "full_snapshot": "[%key:supervisor::snapshot::full_snapshot%]",
+          "partial_snapshot": "[%key:supervisor::snapshot::partial_snapshot%]",
+          "type": "[%key:supervisor::snapshot::type%]",
+          "select_type": "[%key:supervisor::snapshot::select_type%]",
+          "folders": "[%key:supervisor::snapshot::folders%]",
+          "addons": "[%key:supervisor::snapshot::addons%]",
+          "password_protection": "[%key:supervisor::snapshot::password_protection%]",
+          "password": "[%key:supervisor::snapshot::password%]",
+          "confirm_password": "[%key:supervisor::snapshot::confirm_password%]"
         },
         "ais-restore-backup": {
           "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
@@ -3956,7 +3988,7 @@
       "faq_link": "[%key:ui::panel::my::faq_link%]",
       "error": "[%key:ui::panel::my::error%]",
       "error_addon_not_found": "Add-on not found",
-      "error_addon_not_started": "The requested add-on are not running. Please start it first",
+      "error_addon_not_started": "The requested add-on is not running. Please start it first",
       "error_addon_not_installed": "The requested add-on is not installed. Please install it first",
       "error_addon_no_ingress": "The requested add-on does not support ingress"
     },
@@ -4067,9 +4099,11 @@
       "addons": "Add-ons",
       "folders": "Folders",
       "password": "Snapshot password",
+      "confirm_password": "Confirm Snapshot password",
       "password_protection": "Password protection",
       "password_protected": "password protected",
       "enter_password": "Please enter a password.",
+      "passwords_not_matching": "The passwords does not match",
       "folder": {
         "homeassistant": "Home Assistant configuration",
         "ssl": "SSL",
@@ -4123,6 +4157,14 @@
         "create_snapshot": "Create a snapshot of {name} before updating",
         "updating": "Updating {name} to version {version}",
         "snapshotting": "Creating snapshot of {name}"
+      },
+      "hardware": {
+        "title": "Hardware",
+        "search": "Search hardware",
+        "subsystem": "Subsystem",
+        "id": "ID",
+        "attributes": "Attributes",
+        "device_path": "Device path"
       }
     }
   }

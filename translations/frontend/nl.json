@@ -318,6 +318,14 @@
             "no_addons": "Je hebt nog geen add-ons geïnstalleerd. Ga naar de add-on store om te beginnen!"
         },
         "dialog": {
+            "hardware": {
+                "attributes": "Attributen",
+                "device_path": "Apparaatpad",
+                "id": "ID",
+                "search": "Zoek hardware",
+                "subsystem": "Subsysteem",
+                "title": "Hardware"
+            },
             "network": {
                 "connected_to": "Verbonden met {ssid}",
                 "dhcp": "DHCP",
@@ -368,6 +376,8 @@
             "error": "Er is een onbekende fout opgetreden",
             "error_addon_no_ingress": "De gevraagde add-on ondersteunt geen ingress",
             "error_addon_not_found": "Invoegtoepassing niet gevonden",
+            "error_addon_not_installed": "De gevraagde add-on is niet geïnstalleerd. Gelieve deze eerst te installeren",
+            "error_addon_not_started": "De gevraagde add-on is niet actief. Start deze a.u.b. eerst",
             "faq_link": "My Home Assistant FAQ",
             "not_supported": "Deze redirect wordt niet ondersteund door uw Home Assistant instantie. Controleer de {link} voor de ondersteunde redirects en de versie waarin ze zijn geïntroduceerd."
         },
@@ -380,6 +390,7 @@
         "snapshot": {
             "addons": "Invoegtoepassingen",
             "available_snapshots": "Beschikbare snapshots",
+            "confirm_password": "Bevestig Snapshot-wachtwoord",
             "could_not_create": "Kon geen snapshot maken",
             "create": "Maak",
             "create_blocked_not_running": "Het maken van een snapshot is nu niet mogelijk omdat het systeem in {state} staat.",
@@ -407,6 +418,7 @@
             "password": "Snapshot wachtwoord",
             "password_protected": "beveiligd met wachtwoord",
             "password_protection": "Wachtwoord bescherming",
+            "passwords_not_matching": "De wachtwoorden komen niet overeen",
             "security": "Beveiliging",
             "select_type": "Selecteer wat u wilt herstellen",
             "selected": "{number} geselecteerd",
@@ -808,6 +820,7 @@
                     "was_unplugged": "is niet aangesloten",
                     "was_unsafe": "was onveilig"
                 },
+                "retrieval_error": "Fout tijdens het ophalen van de logboekregel",
                 "show_trace": "Tracering weergeven"
             },
             "media-browser": {
@@ -929,9 +942,9 @@
         },
         "dialogs": {
             "config_entry_system_options": {
-                "enable_new_entities_description": "Indien uitgeschakeld, worden nieuwe entiteiten van {integration} niet automatisch aan Home Assistant toegevoegd.",
+                "enable_new_entities_description": "Of nieuw ontdekte apparaten voor {integration} automatisch moeten worden toegevoegd.",
                 "enable_new_entities_label": "Voeg nieuwe entiteiten automatisch toe",
-                "enable_polling_description": "Of Home Assistant automatisch moet pollen voor updates voor {integration} entiteiten",
+                "enable_polling_description": "Of Home Assistant automatisch moet pollen voor {integration} entiteiten updates.",
                 "enable_polling_label": "Schakel polling voor updates in.",
                 "restart_home_assistant": "U moet Home Assistant opnieuw starten om uw wijzigingen door te voeren.",
                 "title": "Systeeminstellingen voor {integration}",
@@ -970,7 +983,7 @@
                 },
                 "faq": "documentatie",
                 "info_customize": "U kunt sommige attributen overschrijven in de {customize_link} sectie.",
-                "no_unique_id": "Deze entiteit (\" {entity_id} \") heeft geen unieke ID, daarom kunnen de instellingen ervan niet worden beheerd vanuit de gebruikersinterface. Zie de {faq_link} voor meer details.",
+                "no_unique_id": "Deze entiteit (\"{entity_id}\") heeft geen unieke ID, daarom kunnen de instellingen ervan niet worden beheerd vanuit de gebruikersinterface. Zie de {faq_link} voor meer details.",
                 "related": "Gerelateerd",
                 "settings": "instellingen"
             },
@@ -1500,6 +1513,11 @@
                                         "wed": "woensdag"
                                     }
                                 },
+                                "trigger": {
+                                    "id": "Trigger Id",
+                                    "label": "Trigger",
+                                    "no_triggers": "Geen triggers beschikbaar"
+                                },
                                 "zone": {
                                     "entity": "Entiteit met locatie",
                                     "label": "Zone",
@@ -1543,6 +1561,7 @@
                             "delete_confirm": "Weet je zeker dat je dit item wilt verwijderen?",
                             "duplicate": "Dupliceren",
                             "header": "",
+                            "id": "Trigger-ID (gebruikt door de triggervoorwaarde)",
                             "introduction": "Triggers starten de verwerking van een automatiseringsregel. Het is mogelijk om meerdere triggers voor dezelfde regel op te geven. Zodra een trigger start, valideert Home Assistant de eventuele voorwaarden en roept hij de actie aan.",
                             "learn_more": "Meer informatie over triggers",
                             "name": "Trigger",
@@ -2076,7 +2095,8 @@
                     "scripts": "Scripts",
                     "unknown_error": "Onbekende fout",
                     "unnamed_device": "Naamloos apparaat",
-                    "update": "Bijwerken"
+                    "update": "Bijwerken",
+                    "update_device_error": "Bijwerken van het apparaat mislukt"
                 },
                 "entities": {
                     "caption": "Entiteiten",
@@ -2209,6 +2229,7 @@
                         "depends_on_cloud": "Cloud afhankelijk",
                         "device_unavailable": "Apparaat niet beschikbaar",
                         "devices": "{count} {count, plural,\n  one {apparaat}\n  other {apparaten}\n}",
+                        "disable_error": "In- of uitschakelen van de integratie mislukt",
                         "disable_restart_confirm": "Start Home Assistant opnieuw op om het uitzetten van deze integratie te voltooien",
                         "disable": {
                             "disable_confirm": "Weet je zeker dat je deze configuratie wilt uitschakelen? Al diens apparaten en entiteiten zullen worden uitgeschakeld.",
@@ -2304,7 +2325,7 @@
                     "none": "Er is nog niets geconfigureerd",
                     "none_found": "Geen integraties gevonden",
                     "none_found_detail": "Pas uw zoekcriteria aan.",
-                    "note_about_integrations": "Nog niet alle integraties kunnen via de UI worden geconfigureerd.",
+                    "note_about_integrations": "Er kwamen geen integraties overeen met uw zoekopdracht. De integratie die u wilt instellen, is mogelijk nog niet beschikbaar om via de gebruikersinterface in te stellen.",
                     "note_about_website_reference": "Meer zijn beschikbaar op de ",
                     "reconfigure": "Herconfigureer",
                     "rename_dialog": "Bewerk de naam van dit configuratie item",
@@ -2649,10 +2670,12 @@
                         },
                         "save_script": "Script opslaan",
                         "sequence": "Reeks",
-                        "sequence_sentence": "De reeks van acties in dit script."
+                        "sequence_sentence": "De reeks van acties in dit script.",
+                        "show_trace": "Tracering weergeven"
                     },
                     "picker": {
                         "add_script": "Voeg script toe",
+                        "dev_script": "Debug script",
                         "duplicate": "Dupliceer",
                         "duplicate_script": "Script dupliceren",
                         "edit_script": "Bewerk script",
@@ -2947,9 +2970,11 @@
                     "common": {
                         "add_node": "Knooppunt toevoegen",
                         "close": "Sluiten",
+                        "heal_network": "Herstel netwerk",
                         "home_id": "Home ID",
                         "network": "Netwerk",
                         "node_id": "Knooppunt-ID",
+                        "reconfigure_server": "Herconfigureer server",
                         "remove_node": "Knooppunt verwijderen"
                     },
                     "dashboard": {
@@ -2971,6 +2996,18 @@
                         "node_ready": "Knooppunt gereed",
                         "node_status": "Knooppuntstatus",
                         "zwave_info": "Z-Wave info"
+                    },
+                    "heal_network": {
+                        "healing_cancelled": "Netwerkherstel is geannuleerd.",
+                        "healing_complete": "Netwerkherstel is compleet.",
+                        "healing_failed": "Herstellen mislukt. Aanvullende informatie is mogelijk beschikbaar in de logboeken.",
+                        "in_progress": "Netwerkherstel wordt uitgevoerd. Dit zal eveen duren.",
+                        "introduction": "Start een netwerkherstel op uw Z-Wave netwerk. Een netwerkherstel zorgt ervoor dat alle apparaten hun routes naar de controller opnieuw berekenen en wordt aanbevolen als je recent apparaten of uw controller hebt verplaatst.",
+                        "run_in_background": "U kunt dit dialoogvenster sluiten en het netwerkherstel zal voortzetten op de achtergrond.",
+                        "start_heal": "Start herstellen",
+                        "stop_heal": "Stop herstellen",
+                        "title": "Herstel uw Z-Wave netwerk",
+                        "traffic_warning": "Het herstelproces genereert een grote hoeveelheid verkeer op het Z-wave netwerk. Dit kan ertoe leiden dat apparaten traag reageren (of helemaal niet) als het herstel wordt uitgevoerd."
                     },
                     "logs": {
                         "log_level": "Log niveau",
@@ -3133,7 +3170,7 @@
                         "available_events": "Beschikbare gebeurtenissen",
                         "count_listeners": " ({count} luisteraars)",
                         "data": "Gebeurtenis data (YAML, optioneel)",
-                        "description": "Start een evenement op de Home Assistant-gebeurtenisbus",
+                        "description": "Vermeld een gebeurtenis in de gebeurtenisbus.",
                         "documentation": "Gebeurtenissen documentatie",
                         "event_fired": "Gebeurtenis {name} uitgevoerd",
                         "fire_event": "Gebeurtenis uitvoeren",
@@ -3877,10 +3914,19 @@
                 "intro": "Ben je klaar om je huis wakker te maken, je privacy terug te winnen en deel te nemen aan een wereldwijde gemeenschap van knutselaars?",
                 "next": "Volgende",
                 "restore": {
+                    "addons": "Invoegtoepassingen",
+                    "confirm_password": "Bevestig Snapshot-wachtwoord",
                     "description": "Je kunt ook herstellen vanaf een eerdere snapshot.",
+                    "folders": "Mappen",
+                    "full_snapshot": "Volledige snapshot",
                     "hide_log": "Verberg volledig logboek",
                     "in_progress": "Herstel in uitvoering",
-                    "show_log": "Volledig logboek weergeven"
+                    "partial_snapshot": "Gedeeltelijke snapshot",
+                    "password": "Snapshot wachtwoord",
+                    "password_protection": "Wachtwoord bescherming",
+                    "select_type": "Selecteer wat u wilt herstellen",
+                    "show_log": "Volledig logboek weergeven",
+                    "type": "Snapshot type"
                 },
                 "user": {
                     "create_account": "Account aanmaken",

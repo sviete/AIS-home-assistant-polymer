@@ -205,7 +205,7 @@
                     }
                 },
                 "changelog": "Lista zmian",
-                "cpu_usage": "Zużycie procesora przez dodatek",
+                "cpu_usage": "Użycie procesora przez dodatek",
                 "hostname": "Nazwa hosta",
                 "install": "zainstaluj",
                 "new_update_available": "{name} {version} jest dostępna",
@@ -239,7 +239,7 @@
                     "enable": "Włącz tryb ochrony",
                     "title": "Ostrzeżenie: Tryb ochrony jest wyłączony!"
                 },
-                "ram_usage": "Zużycie pamięci przez dodatek",
+                "ram_usage": "Użycie pamięci przez dodatek",
                 "rebuild": "przeinstaluj",
                 "restart": "uruchom ponownie",
                 "start": "uruchom",
@@ -318,6 +318,14 @@
             "no_addons": "Nie masz jeszcze zainstalowanych żadnych dodatków. Przejdź do sklepu z dodatkami, aby rozpocząć!"
         },
         "dialog": {
+            "hardware": {
+                "attributes": "Atrybuty",
+                "device_path": "Ścieżka urządzenia",
+                "id": "Identyfikator",
+                "search": "Wyszukaj sprzęt",
+                "subsystem": "Podsystem",
+                "title": "Sprzęt"
+            },
             "network": {
                 "connected_to": "Połączono z {ssid}",
                 "dhcp": "DHCP",
@@ -368,6 +376,8 @@
             "error": "Wystąpił nieznany błąd",
             "error_addon_no_ingress": "Żądany dodatek nie obsługuje osadzania",
             "error_addon_not_found": "Nie znaleziono dodatku",
+            "error_addon_not_installed": "Żądany dodatek nie jest zainstalowany. Najpierw go zainstaluj.",
+            "error_addon_not_started": "Żądany dodatek nie jest uruchomiony. Proszę najpierw go uruchomić.",
             "faq_link": "Mój Home Assistant - często zadawane pytania",
             "not_supported": "To przekierowanie nie jest obsługiwane przez Twoją instancję Home Assistanta. Sprawdź {link} aby znaleźć obsługiwane przekierowania i wersję, w której zostały wprowadzone."
         },
@@ -380,6 +390,7 @@
         "snapshot": {
             "addons": "Dodatki",
             "available_snapshots": "Dostępne snapshoty",
+            "confirm_password": "Potwierdź hasło snapshota",
             "could_not_create": "Nie udało się utworzyć snapshota",
             "create": "Utwórz",
             "create_blocked_not_running": "Tworzenie snapshota nie jest teraz możliwe, ponieważ system jest w {state}.",
@@ -407,6 +418,7 @@
             "password": "Hasło snapshota",
             "password_protected": "chroniony hasłem",
             "password_protection": "Ochrona hasłem",
+            "passwords_not_matching": "Hasła nie są takie same",
             "security": "Bezpieczeństwo",
             "select_type": "Wybierz, co przywrócić",
             "selected": "wybrano {number}",
@@ -421,8 +433,8 @@
         },
         "system": {
             "core": {
-                "cpu_usage": "Zużycie procesora przez HA Core",
-                "ram_usage": "Zużycie pamięci przez HA Core"
+                "cpu_usage": "Użycie procesora przez HA Core",
+                "ram_usage": "Użycie pamięci przez HA Core"
             },
             "host": {
                 "change": "Zmień",
@@ -457,7 +469,7 @@
                 "beta_release_items": "Obejmuje to wersje beta dla:",
                 "beta_warning": "Wersje beta są przeznaczone dla testerów i wczesnych użytkowników i mogą zawierać niestabilne zmiany w kodzie",
                 "channel": "Kanał",
-                "cpu_usage": "Zużycie procesora przez Supervisora",
+                "cpu_usage": "Użycie procesora przez Supervisora",
                 "failed_to_reload": "Nie udało się wczytać ponownie Supervisora",
                 "failed_to_set_option": "Nie udało się ustawić opcji Supervisora",
                 "failed_to_update": "Nie udało się zaktualizować Supervisora",
@@ -465,7 +477,7 @@
                 "join_beta_description": "Pobieraj aktualizacje beta dla Home Assistanta (RC), Supervisora i hosta",
                 "leave_beta_action": "Opuść kanał beta",
                 "leave_beta_description": "Pobieraj stabilne aktualizacje dla Home Assistanta, Supervisora i hosta",
-                "ram_usage": "Zużycie pamięci przez Supervisora",
+                "ram_usage": "Użycie pamięci przez Supervisora",
                 "reload_supervisor": "Wczytaj ponownie",
                 "search": "Szukaj",
                 "share_diagnostics": "Udostępnij dane diagnostyczne",
@@ -808,6 +820,7 @@
                     "was_unplugged": "nastąpiło odłączenie",
                     "was_unsafe": "wykryto zagrożenie"
                 },
+                "retrieval_error": "Błąd podczas pobierania wpisów z dziennika",
                 "show_trace": "Pokaż ślad"
             },
             "media-browser": {
@@ -929,8 +942,11 @@
         },
         "dialogs": {
             "config_entry_system_options": {
-                "enable_new_entities_description": "Jeśli wyłączone, nowo wykryte encje integracji {integration} nie będą automatycznie dodawane do Asystenta domowego.",
+                "enable_new_entities_description": "Jeśli nowo odkryte urządzenia dla integracji {integration} powinny zostać dodane automatycznie.",
                 "enable_new_entities_label": "Włącz dodawanie nowych encji.",
+                "enable_polling_description": "Czy Home Assistant powinien automatycznie odpytywać encje {integration} w poszukiwaniu aktualizacji.",
+                "enable_polling_label": "Włącz odpytywanie o aktualizacje.",
+                "restart_home_assistant": "Aby zmiany zostały wprowadzone, musisz ponownie uruchomić Home Assistanta.",
                 "title": "Opcje systemowe dla {integration}",
                 "update": "Aktualizuj"
             },
@@ -2073,7 +2089,8 @@
                     "scripts": "Skrypty",
                     "unknown_error": "Nieznany błąd",
                     "unnamed_device": "Nienazwane urządzenie",
-                    "update": "Aktualizuj"
+                    "update": "Aktualizuj",
+                    "update_device_error": "Aktualizacja urządzenia nie powiodła się"
                 },
                 "entities": {
                     "caption": "Rejestr encji",
@@ -2206,6 +2223,7 @@
                         "depends_on_cloud": "Zależny od chmury",
                         "device_unavailable": "Urządzenie niedostępne",
                         "devices": "{count} {count, plural,\n  one {urządzenie}\n  few {urządzenia}\n  many {urządzeń}\n  other {urządzeń}\n}",
+                        "disable_error": "Nie udało się włączyć lub wyłączyć integracji",
                         "disable_restart_confirm": "Zrestartuj Home Assistanta, aby zakończyć wyłączanie tej integracji",
                         "disable": {
                             "disable_confirm": "Czy na pewno chcesz wyłączyć ten wpis w konfiguracji? Jego urządzenia i instancje zostaną wyłączone.",
@@ -2217,6 +2235,7 @@
                             },
                             "disabled_cause": "Wyłączone przez {cause}."
                         },
+                        "disabled_polling": "Automatyczne odpytywanie o zaktualizowane dane jest wyłączone",
                         "documentation": "Dokumentacja",
                         "enable_restart_confirm": "Uruchom ponownie Home Assistanta, aby dokończyć uruchamianie tej integracji",
                         "entities": "{count} {count, plural,\n  one {encja}\n  few {encje}\n  many {encji}\n  other {encji}\n}",
@@ -2300,7 +2319,7 @@
                     "none": "Nic jeszcze nie zostało skonfigurowane",
                     "none_found": "Nie znaleziono integracji",
                     "none_found_detail": "Dostosuj kryteria wyszukiwania.",
-                    "note_about_integrations": "Jeszcze nie wszystkie integracje można skonfigurować za pomocą interfejsu użytkownika.",
+                    "note_about_integrations": "Żadne integracje nie pasują do Twojego wyszukiwania. Integracja, którą chcesz skonfigurować, może być jeszcze niedostępna do skonfigurowania za pomocą interfejsu użytkownika.",
                     "note_about_website_reference": "Więcej jest dostępnych na stronie integracji ",
                     "reconfigure": "Zmień konfigurację",
                     "rename_dialog": "Edytuj nazwę tego wpisu konfiguracji",
@@ -2999,9 +3018,11 @@
                     "common": {
                         "add_node": "Dodaj węzeł",
                         "close": "Zamknij",
+                        "heal_network": "Uzdrawiaj sieć",
                         "home_id": "Identyfikator domu",
                         "network": "Sieć",
                         "node_id": "Identyfikator węzła",
+                        "reconfigure_server": "Ponownie skonfiguruj serwer",
                         "remove_node": "Usuń węzeł"
                     },
                     "dashboard": {
@@ -3023,6 +3044,18 @@
                         "node_ready": "gotowy",
                         "node_status": "Stan węzła",
                         "zwave_info": "Informacje Z-Wave"
+                    },
+                    "heal_network": {
+                        "healing_cancelled": "Uzdrawianie sieci zostało anulowane.",
+                        "healing_complete": "Uzdrawianie sieci zostało zakończone.",
+                        "healing_failed": "Uzdrawianie nie powiodło się. Dodatkowe informacje mogą być dostępne w logach.",
+                        "in_progress": "Trwa uzdrawianie sieci. To zajmie trochę czasu.",
+                        "introduction": "Rozpocznij uzdrawianie sieci Z-Wave. Uzdrawianie sieci spowoduje, że wszystkie urządzenia ponownie obliczą swoje trasy z powrotem do kontrolera i jest zalecane, jeśli niedawno przeniesiono urządzenia lub kontroler.",
+                        "run_in_background": "Możesz zamknąć to okno, a uzdrawianie sieci będzie kontynuowane w tle.",
+                        "start_heal": "Rozpocznij uzdrawianie",
+                        "stop_heal": "Zatrzymaj uzdrawianie",
+                        "title": "Uzdrawianie sieci Z-Wave",
+                        "traffic_warning": "Proces uzdrawiania generuje duży ruch w sieci Z-Wave. Może to spowodować, że urządzenia będą reagować powoli (lub wcale) podczas trwania uzdrawiania."
                     },
                     "logs": {
                         "log_level": "Poziom loga",
@@ -4016,10 +4049,19 @@
                 "finish": "Zakończ",
                 "intro": "Czy jesteś gotowy, aby ożywić swój dom, odzyskać prywatność i dołączyć do społeczności fanów automatyki domowej?",
                 "restore": {
+                    "addons": "Dodatki",
+                    "confirm_password": "Potwierdź hasło snapshota",
                     "description": "Alternatywnie możesz przywrócić z poprzedniej migawki.",
+                    "folders": "Foldery",
+                    "full_snapshot": "Pełny snapshot",
                     "hide_log": "Ukryj cały log",
                     "in_progress": "Trwa przywracanie",
-                    "show_log": "Pokaż cały log"
+                    "partial_snapshot": "Częściowy snapshot",
+                    "password": "Hasło snapshota",
+                    "password_protection": "Ochrona hasłem",
+                    "select_type": "Wybierz, co przywrócić",
+                    "show_log": "Pokaż cały log",
+                    "type": "Typ snapshota"
                 },
                 "user": {
                     "create_account": "Utwórz konto",

@@ -200,7 +200,7 @@
                         "manager": "Manager"
                     },
                     "stage": {
-                        "description": "Add-ons können sich in einer von drei Phasen befinden:\n\n{icon_stable} **Stable**: Dies sind Add-ons, die bereits vollständig sind und Updates erhalten.\n\n{icon_experimental} **Experimentell**: Diese können Fehler enthalten und unvollendet sein.\n\n{icon_deprecated} **Veraltet**: Diese Add-ons erhalten keine Updates mehr.",
+                        "description": "Add-ons können sich in einer von drei Phasen befinden:\n\n{icon_stable} **Stabil**: Dies sind Add-ons, die bereits vollständig sind und Updates erhalten.\n\n{icon_experimental} **Experimentell**: Diese können Fehler enthalten und unvollendet sein.\n\n{icon_deprecated} **Veraltet**: Diese Add-ons erhalten keine Updates mehr.",
                         "title": "Add-on Phase"
                     }
                 },
@@ -235,7 +235,7 @@
                     }
                 },
                 "protection_mode": {
-                    "content": "Der Schutzmodus für dieses Add-on ist deaktiviert! Dadurch erhält das Add-on vollen Zugriff auf das gesamte System, was Sicherheitsrisiken mit sich bringt und dein System bei unsachgemäßer Verwendung beschädigen kann. Deaktiviere den Schutzmodus nur, wenn du die Quelle dieses Add-ons kennst, dieses benötigst UND vertraust.",
+                    "content": "Der Schutzmodus für dieses Add-on ist deaktiviert! Dadurch erhält das Add-on vollen Zugriff auf das gesamte System, was Sicherheitsrisiken mit sich bringt und dein System bei unsachgemäßer Verwendung beschädigen kann. Deaktiviere den Schutzmodus nur, wenn du dieses Add-on benötigst und die Quelle dieses Add-ons kennst UND ihr vertraust.",
                     "enable": "Gesicherten Modus einschalten",
                     "title": "Warnung: Der gesicherte Modus ist deaktiviert!"
                 },
@@ -314,10 +314,18 @@
             "addon_new_version": "Neue Version verfügbar",
             "addon_running": "Add-on wird ausgeführt",
             "addon_stopped": "Add-on ist gestoppt",
-            "addons": "Add-ons",
+            "addons": "Installierte Add-ons",
             "no_addons": "Du hast noch keine Add-ons installiert. Gehe zum Add-on Store, um loszulegen!"
         },
         "dialog": {
+            "hardware": {
+                "attributes": "Attribute",
+                "device_path": "Gerätepfad",
+                "id": "ID",
+                "search": "Hardware suchen",
+                "subsystem": "Subsystem",
+                "title": "Hardware"
+            },
             "network": {
                 "connected_to": "Verbunden mit {ssid}",
                 "dhcp": "DHCP",
@@ -368,6 +376,8 @@
             "error": "Ein unbekannter Fehler ist aufgetreten.",
             "error_addon_no_ingress": "Das angeforderte Add-on unterstützt keinen Ingress",
             "error_addon_not_found": "Add-on nicht gefunden",
+            "error_addon_not_installed": "Das angeforderte Add-on ist nicht installiert. Bitte installiere es zuerst",
+            "error_addon_not_started": "Das angeforderte Add-on läuft nicht. Bitte starte es zuerst",
             "faq_link": "Häufig gestellten Fragen zu Home Assistant",
             "not_supported": "Diese Weiterleitung wird von deiner Home Assistant-Instanz nicht unterstützt. Überprüfe den {link} auf die unterstützten Weiterleitungen und die Version, in der sie eingeführt wurden."
         },
@@ -380,13 +390,19 @@
         "snapshot": {
             "addons": "Add-ons",
             "available_snapshots": "Verfügbare Datensicherungen",
+            "confirm_password": "Snapshot-Passwort bestätigen",
             "could_not_create": "Datensicherung konnte nicht erstellt werden",
             "create": "Erstellen",
             "create_blocked_not_running": "Das Erstellen eines Snapshots ist derzeit nicht möglich, da sich das System im Zustand {state} befindet.",
             "create_snapshot": "Datensicherung erstellen",
             "created": "Erstellt",
+            "delete_selected": "Ausgewählten Snapshot löschen",
+            "delete_snapshot_confirm": "löschen",
+            "delete_snapshot_text": "Möchtest du {number} {number, plural,\n  one {den Snapshot}\n other {die Snapshots}\n} löschen?",
+            "delete_snapshot_title": "Snapshot löschen",
             "description": "Datensicherungen ermöglichen dir das leichte Speichern und Wiederherstellen von allen Daten aus Home Assistant.",
             "enter_password": "Bitte Passwort eingeben.",
+            "failed_to_delete": "Löschen fehlgeschlagen",
             "folder": {
                 "addons/local": "Lokale Add-ons",
                 "homeassistant": "Home Assistant-Konfiguration",
@@ -396,14 +412,17 @@
             },
             "folders": "Ordner",
             "full_snapshot": "Vollständige Datensicherung",
-            "name": "Name",
+            "name": "Snapshot-Name",
             "no_snapshots": "Du hast bisher keine Datensicherungen erstellt.",
             "partial_snapshot": "Selektive Datensicherung",
-            "password": "Passwort",
+            "password": "Snapshot-Passwort",
             "password_protected": "Passwort geschützt",
             "password_protection": "Passwortschutz",
+            "passwords_not_matching": "Passwörter stimmen nicht überein",
             "security": "Sicherheit",
-            "type": "Typ",
+            "select_type": "Wähle aus, was wiederhergestellt werden soll",
+            "selected": "{number} ausgewählt",
+            "type": "Snapshot-Typ",
             "upload_snapshot": "Datensicherung hochladen"
         },
         "store": {
@@ -458,7 +477,7 @@
                 "join_beta_description": "Erhalte Beta-Updates für Home Assistant (RCs), Supervisor und Host",
                 "leave_beta_action": "Beta-Kanal verlassen",
                 "leave_beta_description": "Erhalte stabile Updates für Home Assistant, Supervisor und Host",
-                "ram_usage": "Arbeitsspeicherbedarf von Supervisor",
+                "ram_usage": "Arbeitsspeicherbedarf des Supervisors",
                 "reload_supervisor": "Supervisor neu laden",
                 "search": "Suche",
                 "share_diagnostics": "Diagnose teilen",
@@ -720,6 +739,9 @@
                 "no_match": "Keine übereinstimmende Bereiche gefunden",
                 "show_areas": "Bereiche anzeigen"
             },
+            "attributes": {
+                "expansion_header": "Attribute"
+            },
             "blueprint-picker": {
                 "add_user": "Benutzer hinzufügen",
                 "remove_user": "Benutzer entfernen",
@@ -798,6 +820,7 @@
                     "was_unplugged": "wurde ausgesteckt",
                     "was_unsafe": "war unsicher"
                 },
+                "retrieval_error": "Fehler beim Abrufen von Logbucheinträgen",
                 "show_trace": "Trace anzeigen"
             },
             "media-browser": {
@@ -919,8 +942,11 @@
         },
         "dialogs": {
             "config_entry_system_options": {
-                "enable_new_entities_description": "Wenn deaktiviert werden neu erkannte Entitäten für {integration} nicht automatisch zu Home Assistant hinzugefügt.",
+                "enable_new_entities_description": "Wenn aktiviert werden neu erkannte Entitäten für {integration} automatisch zu Home Assistant hinzugefügt.",
                 "enable_new_entities_label": "Neu hinzugefügte Entitäten aktivieren.",
+                "enable_polling_description": "Ob Home Assistant automatisch {integration} Entitäten nach Updates abfragen soll.",
+                "enable_polling_label": "Aktiviere Polling für Updates.",
+                "restart_home_assistant": "Du musst Home Assistant neu starten, damit deine Änderungen wirksam werden.",
                 "title": "Einstellungen für {integration}",
                 "update": "Aktualisieren"
             },
@@ -1487,6 +1513,11 @@
                                         "wed": "Mittwoch"
                                     }
                                 },
+                                "trigger": {
+                                    "id": "Trigger-ID",
+                                    "label": "Trigger",
+                                    "no_triggers": "Keine Trigger verfügbar"
+                                },
                                 "zone": {
                                     "entity": "Entität mit Standort",
                                     "label": "Zone",
@@ -1530,6 +1561,7 @@
                             "delete_confirm": "Möchtest du das wirklich löschen?",
                             "duplicate": "Duplizieren",
                             "header": "Auslöser",
+                            "id": "Trigger-ID (wird von der Triggerbedingung verwendet)",
                             "introduction": "Auslöser starten automatisierte Abläufe. Es ist möglich, mehrere Auslöser für dieselbe Abfolge zu definieren. Wenn ein Auslöser aktiviert wird, prüft Home Assistant die Bedingungen, sofern vorhanden, und führt die Aktion aus.",
                             "learn_more": "Erfahre mehr über Auslöser",
                             "name": "Auslöser",
@@ -1719,6 +1751,7 @@
                             "title": "Alexa"
                         },
                         "connected": "Verbunden",
+                        "connecting": "Verbinde...",
                         "connection_status": "Cloud-Verbindungsstatus",
                         "fetching_subscription": "Abo wird abgerufen ...",
                         "google": {
@@ -2062,7 +2095,8 @@
                     "scripts": "Skripte",
                     "unknown_error": "Unbekannter Fehler",
                     "unnamed_device": "Unbenanntes Gerät",
-                    "update": "Aktualisieren"
+                    "update": "Aktualisieren",
+                    "update_device_error": "Aktualisieren des Geräts fehlgeschlagen"
                 },
                 "entities": {
                     "caption": "Entitäten",
@@ -2195,6 +2229,7 @@
                         "depends_on_cloud": "Abhängig von der Cloud",
                         "device_unavailable": "Gerät nicht verfügbar",
                         "devices": "{count} {count, plural,\n one {Gerät}\n other {Geräte}\n}",
+                        "disable_error": "Aktivieren oder Deaktivieren der Integration fehlgeschlagen",
                         "disable_restart_confirm": "Home Assistant neu starten, um das Deaktivieren dieser Integration abzuschließen",
                         "disable": {
                             "disable_confirm": "Möchtest du diesen Konfigurationseintrag wirklich deaktivieren? Die Geräte und Entitäten werden deaktiviert.",
@@ -2206,6 +2241,7 @@
                             },
                             "disabled_cause": "Deaktiviert durch {cause}."
                         },
+                        "disabled_polling": "Automatisches Abfragen nach aktualisierten Daten deaktiviert",
                         "documentation": "Dokumentation",
                         "enable_restart_confirm": "Home Assistant neu starten, um das Aktivieren dieser Integration abzuschließen",
                         "entities": "{count} {count, plural,\none {Entität}\nother {Entitäten}\n}",
@@ -2289,7 +2325,7 @@
                     "none": "Noch nichts konfiguriert",
                     "none_found": "Keine Integrationen gefunden",
                     "none_found_detail": "Passe deine Suchkriterien an.",
-                    "note_about_integrations": "Nicht alle Integrationen können über die Benutzeroberfläche konfiguriert werden.",
+                    "note_about_integrations": "Es wurden keine Integrationen für deine Suche gefunden. Möglicherweise ist die Integration, die du einrichten möchtest, noch nicht zum Einrichten über die Benutzeroberfläche verfügbar.",
                     "note_about_website_reference": "Weitere Informationen findest du auf der ",
                     "reconfigure": "Neu konfigurieren",
                     "rename_dialog": "Bearbeite den Namen dieses Konfigurationseintrags",
@@ -2634,10 +2670,12 @@
                         },
                         "save_script": "Skript speichern",
                         "sequence": "Sequenz",
-                        "sequence_sentence": "Die Abfolge der Aktionen dieses Skripts."
+                        "sequence_sentence": "Die Abfolge der Aktionen dieses Skripts.",
+                        "show_trace": "Trace anzeigen"
                     },
                     "picker": {
                         "add_script": "Neues Skript erstellen",
+                        "dev_script": "Debug-Skript",
                         "duplicate": "Duplizieren",
                         "duplicate_script": "Skript duplizieren",
                         "edit_script": "Skript bearbeiten",
@@ -2932,9 +2970,11 @@
                     "common": {
                         "add_node": "Knoten hinzufügen",
                         "close": "Schließen",
+                        "heal_network": "Netzwerk heilen",
                         "home_id": "Heim-ID",
                         "network": "Netzwerk",
                         "node_id": "Knoten-ID",
+                        "reconfigure_server": "Server neu konfigurieren",
                         "remove_node": "Knoten entfernen"
                     },
                     "dashboard": {
@@ -2957,8 +2997,21 @@
                         "node_status": "Node Status",
                         "zwave_info": "Z-Wave Info"
                     },
+                    "heal_network": {
+                        "healing_cancelled": "Die Netzwerkheilung wurde abgebrochen.",
+                        "healing_complete": "Die Netzwerkheilung ist abgeschlossen.",
+                        "healing_failed": "Heilung fehlgeschlagen. Zusätzliche Informationen könnten in den Protokollen verfügbar sein.",
+                        "in_progress": "Die Netzwerkheilung ist im Gange. Dies wird einige Zeit in Anspruch nehmen.",
+                        "introduction": "Startet einen Netzwerk-Heal im Z-Wave-Netzwerk. Ein Netzwerk-Heal veranlasst alle Geräte, ihre Routen zurück zum Controller neu zu berechnen und wird empfohlen, wenn kürzlich Geräte oder Controller verschoben wurden.",
+                        "run_in_background": "Dieser Dialog kann geschlossen werden und die Netzwerkheilung wird im Hintergrund fortgesetzt.",
+                        "start_heal": "Starten der Heilung",
+                        "stop_heal": "Stoppen der Heilung",
+                        "title": "Heile dein Z-Wave-Netzwerk",
+                        "traffic_warning": "Der Heilungsprozess erzeugt eine große Menge an Datenverkehr im Z-Wave-Netzwerk. Dies kann dazu führen, dass Geräte langsam (oder gar nicht) reagieren, während der Heilungsprozess läuft."
+                    },
                     "logs": {
                         "log_level": "Protokollstufe",
+                        "log_level_changed": "Log Level geändert auf: {level}",
                         "subscribed_to_logs": "Abonniert Z-Wave JS-Protokollnachrichten ...",
                         "title": "Z-Wave JS Protokolle"
                     },
@@ -3861,10 +3914,19 @@
                 "intro": "Sind Sie bereit, dein Zuhause zu wecken, Ihre Privatsphäre zurückzugewinnen und einer weltweiten Gemeinschaft von Tüftlern beizutreten?",
                 "next": "Weiter",
                 "restore": {
+                    "addons": "Add-ons",
+                    "confirm_password": "Snapshot-Passwort bestätigen",
                     "description": "Alternativ kannst du von einem vorherigen Snapshot wiederherstellen.",
+                    "folders": "Ordner",
+                    "full_snapshot": "Vollständige Datensicherung",
                     "hide_log": "Vollständiges Protokoll ausblenden",
                     "in_progress": "Wiederherstellung im Gange",
-                    "show_log": "Vollständiges Protokoll anzeigen"
+                    "partial_snapshot": "Selektive Datensicherung",
+                    "password": "Snapshot-Passwort",
+                    "password_protection": "Passwortschutz",
+                    "select_type": "Wähle aus, was wiederhergestellt werden soll",
+                    "show_log": "Vollständiges Protokoll anzeigen",
+                    "type": "Snapshot-Typ"
                 },
                 "user": {
                     "create_account": "Benutzerkonto anlegen",
