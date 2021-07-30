@@ -19,6 +19,15 @@ import { fetchStatistics, Statistics } from "../../../data/history";
 
 @customElement("hui-statistics-graph-card")
 export class HuiStatisticsGraphCard extends LitElement implements LovelaceCard {
+  public static async getConfigElement() {
+    await import("../editor/config-elements/hui-statistics-graph-card-editor");
+    return document.createElement("hui-statistics-graph-card-editor");
+  }
+
+  public static getStubConfig(): StatisticsGraphCardConfig {
+    return { type: "statistics-graph", entities: [] };
+  }
+
   @property({ attribute: false }) public hass?: HomeAssistant;
 
   @state() private _statistics?: Statistics;
@@ -146,7 +155,10 @@ export class HuiStatisticsGraphCard extends LitElement implements LovelaceCard {
       return;
     }
     const startDate = new Date();
-    startDate.setHours(-24 * (this._config!.days_to_show || 30));
+    startDate.setTime(
+      startDate.getTime() -
+        1000 * 60 * 60 * (24 * (this._config!.days_to_show || 30) + 1)
+    );
     this._fetching = true;
     try {
       this._statistics = await fetchStatistics(

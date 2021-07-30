@@ -16,6 +16,7 @@ import { customElement, property, state } from "lit/decorators";
 import { getColorByIndex } from "../../common/color/colors";
 import { isComponentLoaded } from "../../common/config/is_component_loaded";
 import { computeStateName } from "../../common/entity/compute_state_name";
+import { numberFormatToLocale } from "../../common/string/format_number";
 import {
   Statistics,
   statisticsHaveType,
@@ -119,7 +120,7 @@ class StatisticsChart extends LitElement {
                 : {},
           },
           time: {
-            tooltipFormat: "datetimeseconds",
+            tooltipFormat: "datetime",
           },
         },
         y: {
@@ -157,6 +158,8 @@ class StatisticsChart extends LitElement {
           hitRadius: 5,
         },
       },
+      // @ts-expect-error
+      locale: numberFormatToLocale(this.hass.locale),
     };
   }
 
@@ -267,7 +270,12 @@ class StatisticsChart extends LitElement {
       stats.forEach((stat) => {
         const dataValues: Array<number | null> = [];
         statTypes.forEach((type) => {
-          const val = stat[type];
+          let val: number | null;
+          if (type === "sum") {
+            val = stat.state;
+          } else {
+            val = stat[type];
+          }
           dataValues.push(val !== null ? Math.round(val * 100) / 100 : null);
         });
         const date = new Date(stat.start);
