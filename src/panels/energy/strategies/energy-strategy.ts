@@ -49,8 +49,8 @@ export class EnergyStrategy {
     // Only include if we have a grid source.
     if (hasGrid) {
       view.cards!.push({
-        title: "Electricity",
-        type: "energy-summary-graph",
+        title: "Energy usage",
+        type: "energy-usage-graph",
         prefs: energyPrefs,
       });
     }
@@ -64,11 +64,10 @@ export class EnergyStrategy {
       });
     }
 
-    // Only include if we have a grid.
-    if (hasGrid) {
+    if (hasGrid || hasSolar) {
       view.cards!.push({
-        title: "Costs",
-        type: "energy-costs-table",
+        title: "Sources",
+        type: "energy-sources-table",
         prefs: energyPrefs,
       });
     }
@@ -85,7 +84,8 @@ export class EnergyStrategy {
     // Only include if we have a grid.
     if (hasGrid) {
       view.cards!.push({
-        type: "energy-usage",
+        title: "Energy distribution",
+        type: "energy-distribution",
         prefs: energyPrefs,
         view_layout: { position: "sidebar" },
       });
@@ -108,12 +108,6 @@ export class EnergyStrategy {
         view_layout: { position: "sidebar" },
       });
     }
-
-    view.cards!.push({
-      type: "energy-summary",
-      prefs: energyPrefs,
-      view_layout: { position: "sidebar" },
-    });
 
     return view;
   }
