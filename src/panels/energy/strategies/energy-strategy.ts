@@ -1,4 +1,8 @@
-import { EnergyPreferences, getEnergyPreferences } from "../../../data/energy";
+import {
+  EnergyPreferences,
+  getEnergyPreferences,
+  GridSourceTypeEnergyPreference,
+} from "../../../data/energy";
 import { LovelaceViewConfig } from "../../../data/lovelace";
 import { LovelaceViewStrategy } from "../../lovelace/strategies/get-strategy";
 
@@ -39,9 +43,10 @@ export class EnergyStrategy {
 
     view.type = "sidebar";
 
-    const hasGrid = energyPrefs.energy_sources.some(
+    const hasGrid = energyPrefs.energy_sources.find(
       (source) => source.type === "grid"
-    );
+    ) as GridSourceTypeEnergyPreference;
+    const hasReturn = hasGrid && hasGrid.flow_to.length;
     const hasSolar = energyPrefs.energy_sources.some(
       (source) => source.type === "solar"
     );
@@ -64,23 +69,6 @@ export class EnergyStrategy {
       });
     }
 
-    if (hasGrid || hasSolar) {
-      view.cards!.push({
-        title: "Sources",
-        type: "energy-sources-table",
-        prefs: energyPrefs,
-      });
-    }
-
-    // Only include if we have at least 1 device in the config.
-    if (energyPrefs.device_consumption.length) {
-      view.cards!.push({
-        title: "Monitor individual devices",
-        type: "energy-devices-graph",
-        prefs: energyPrefs,
-      });
-    }
-
     // Only include if we have a grid.
     if (hasGrid) {
       view.cards!.push({
@@ -88,6 +76,14 @@ export class EnergyStrategy {
         type: "energy-distribution",
         prefs: energyPrefs,
         view_layout: { position: "sidebar" },
+      });
+    }
+
+    if (hasGrid || hasSolar) {
+      view.cards!.push({
+        title: "Sources",
+        type: "energy-sources-table",
+        prefs: energyPrefs,
       });
     }
 
@@ -100,12 +96,30 @@ export class EnergyStrategy {
       });
     }
 
+    // Only include if we have a grid source & return.
+    if (hasReturn) {
+      view.cards!.push({
+        type: "energy-grid-neutrality-gauge",
+        prefs: energyPrefs,
+        view_layout: { position: "sidebar" },
+      });
+    }
+
     // Only include if we have a grid
     if (hasGrid) {
       view.cards!.push({
         type: "energy-carbon-consumed-gauge",
         prefs: energyPrefs,
         view_layout: { position: "sidebar" },
+      });
+    }
+
+    // Only include if we have at least 1 device in the config.
+    if (energyPrefs.device_consumption.length) {
+      view.cards!.push({
+        title: "Monitor individual devices",
+        type: "energy-devices-graph",
+        prefs: energyPrefs,
       });
     }
 
