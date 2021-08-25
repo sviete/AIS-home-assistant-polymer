@@ -274,9 +274,9 @@ class AisVideoRingCard extends HTMLElement {
   }
 
   isVisible(el) {
-    // if (!el) {
-    //   return false;
-    // }
+    if (!el) {
+      return false;
+    }
     if (!el.offsetParent && el.offsetWidth === 0 && el.offsetHeight === 0) {
       return false;
     }

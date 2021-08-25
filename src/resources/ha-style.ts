@@ -82,6 +82,14 @@ documentContainer.innerHTML = `<custom-style>
       --state-climate-dry-color: #efbd07;
       --state-climate-idle-color: #8a8a8a;
 
+      /* energy */
+      --energy-grid-consumption-color: #126a9a;
+      --energy-grid-return-color: #673ab7;
+      --energy-solar-color: #ff9800;
+      --energy-non-fossil-color: #0f9d58;
+
+      --rgb-energy-solar-color: 255, 152, 0;
+
       /*
         Paper-styles color.html dependency is stripped on build.
         When a default paper-style color is used, it needs to be copied
@@ -119,6 +127,12 @@ documentContainer.innerHTML = `<custom-style>
       --rgb-secondary-text-color: 114, 114, 114;
       --rgb-text-primary-color: 255, 255, 255;
       --rgb-card-background-color: 255, 255, 255;
+
+      /* Vaadin typography */
+      --material-h6-font-size: 1.25rem;
+      --material-small-font-size: 0.875rem;
+      --material-caption-font-size: 0.75rem;
+      --material-button-font-size: 0.875rem;
 
       ${Object.entries(derivedStyles)
         .map(([key, value]) => `--${key}: ${value};`)
