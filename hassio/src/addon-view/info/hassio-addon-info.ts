@@ -987,7 +987,7 @@ class HassioAddonInfo extends LitElement {
       supervisor: this.supervisor,
       name: this.addon.name,
       version: this.addon.version_latest,
-      snapshotParams: {
+      backupParams: {
         name: `addon_${this.addon.slug}_${this.addon.version}`,
         addons: [this.addon.slug],
         homeassistant: false,
@@ -1149,6 +1149,7 @@ class HassioAddonInfo extends LitElement {
           margin-bottom: 16px;
         }
         img.logo {
+          max-width: 100%;
           max-height: 60px;
           margin: 16px 0;
           display: block;
@@ -1158,10 +1159,10 @@ class HassioAddonInfo extends LitElement {
           display: flex;
         }
         ha-svg-icon.running {
-          color: var(--paper-green-400);
+          color: var(--success-color);
         }
         ha-svg-icon.stopped {
-          color: var(--google-red-300);
+          color: var(--error-color);
         }
         ha-call-api-button {
           font-weight: 500;
