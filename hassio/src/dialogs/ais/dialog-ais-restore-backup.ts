@@ -1,13 +1,13 @@
 import { mdiClose } from "@mdi/js";
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
-import {property, customElement} from 'lit/decorators';
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { property, customElement } from "lit/decorators";
 import "@material/mwc-button";
 import { fireEvent } from "../../../../src/common/dom/fire_event";
 import "../../../../src/components/ha-header-bar";
 import { HassDialog } from "../../../../src/dialogs/make-dialog-manager";
 import { haStyleDialog } from "../../../../src/resources/styles";
 import type { HomeAssistant } from "../../../../src/types";
-import "../../components/hassio-upload-snapshot";
+import "../../components/hassio-upload-backup";
 import { AisRestoreBackupDialogParams } from "./show-ais-dialog-restore-backup";
 import { LocalizeFunc } from "../../../../src/common/translations/localize";
 import { PolymerChangedEvent } from "../../../../src/polymer-types";
@@ -33,8 +33,10 @@ export const onboardAisRestoreBackupStep = (params: {
   );
 
 @customElement("dialog-ais-restore-backup")
-export class DialogAisRestoreBackup extends LitElement
-  implements HassDialog<AisRestoreBackupDialogParams> {
+export class DialogAisRestoreBackup
+  extends LitElement
+  implements HassDialog<AisRestoreBackupDialogParams>
+{
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property() public localize!: LocalizeFunc;
@@ -90,9 +92,7 @@ export class DialogAisRestoreBackup extends LitElement
             </mwc-icon-button>
           </ha-header-bar>
         </div>
-        <p>
-          Jeśli zabezpieczyłeś konfigurację hasłem to je podaj:
-        </p>
+        <p>Jeśli zabezpieczyłeś konfigurację hasłem to je podaj:</p>
         <paper-input
           name="backup_password"
           label="Password"
@@ -102,26 +102,12 @@ export class DialogAisRestoreBackup extends LitElement
           .disabled=${this._loading}
         ></paper-input>
 
-        ${this._infoMsg
-          ? html`
-              <p class="info">
-                ${this._infoMsg}
-              </p>
-            `
-          : ""}
-        ${this._errorMsg
-          ? html`
-              <p class="error">
-                ${this._errorMsg}
-              </p>
-            `
-          : ""}
+        ${this._infoMsg ? html` <p class="info">${this._infoMsg}</p> ` : ""}
+        ${this._errorMsg ? html` <p class="error">${this._errorMsg}</p> ` : ""}
         ${this._logMsg
           ? html`
               <ha-expansion-panel header="Full log: ">
-                <div class="fullLog">
-                  ${this._logMsg}
-                </div>
+                <div class="fullLog">${this._logMsg}</div>
               </ha-expansion-panel>
             `
           : ""}
