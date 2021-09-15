@@ -2750,7 +2750,7 @@
           "description": "Manage your IoT and Audio gateway"
         },
         "ais_dom_devices": {
-          "caption": "Configuration of AIS home Devices",
+          "caption": "Configuration of Wifi devices",
           "description": "Manage your devices with AIS dom software"
         },
         "ais_dom_zigbee": {

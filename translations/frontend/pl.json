@@ -2367,7 +2367,7 @@
                     "description": "Zarządzaj swoją bramką IoT i Audio"
                 },
                 "ais_dom_devices": {
-                    "caption": "Konfiguracja Urządzeń AIS dom",
+                    "caption": "Konfiguracja Urządzeń Wifi",
                     "description": "Zarządzaj swoimi urządzeniami z oprogramowaniem AIS dom"
                 },
                 "ais_dom_zigbee": {
