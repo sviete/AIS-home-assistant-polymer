@@ -3,13 +3,13 @@ import "../../components/ha-menu-button";
 import "@material/mwc-button";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
 import "@polymer/paper-input/paper-input";
+import { property, customElement } from "lit/decorators";
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { HomeAssistant } from "../../types";
 import "../../components/ha-card";
 import "../../resources/ha-style";
 import "../config/ha-config-section";
 import { CustomPanelInfo } from "../../data/panel_custom";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
-import { property, customElement } from "lit/decorators";
 
 @customElement("ha-panel-aishelp")
 class HaPanelAishelp extends LitElement {
@@ -31,9 +31,8 @@ class HaPanelAishelp extends LitElement {
 
   protected firstUpdated() {
     this.aisLocalIP = this.hass.states["sensor.internal_ip_address"].state;
-    this.aisSecureAndroidId = this.hass.states[
-      "sensor.ais_secure_android_id_dom"
-    ].state;
+    this.aisSecureAndroidId =
+      this.hass.states["sensor.ais_secure_android_id_dom"].state;
     this.remoteConnectedInfo =
       "https://" + this.aisSecureAndroidId + ".paczka.pro";
 

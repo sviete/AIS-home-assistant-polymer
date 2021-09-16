@@ -1,8 +1,11 @@
+import "@material/mwc-list/mwc-list-item";
+import "../../../components/ha-button-menu";
 import "../../lovelace/entity-rows/hui-timer-entity-row";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
+import { mdiDotsVertical } from "@mdi/js";
 import { HomeAssistant } from "../../../types";
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
@@ -10,6 +13,10 @@ import "../../../resources/ha-style";
 import "./ha-config-ais-dom-dashboard";
 import "./ais-webhooks";
 import "../../../components/ha-switch";
+import {
+  HaAisFileDialogParams,
+  showAisFileDialog,
+} from "../../../dialogs/ais-files/show-dialog-ais-file";
 
 @customElement("ha-config-ais-dom-config-remote")
 class HaConfigAisDomControl extends LitElement {
@@ -67,6 +74,21 @@ class HaConfigAisDomControl extends LitElement {
 
     return html`
       <hass-subpage header="Konfiguracja bramki AIS dom">
+        ${this.hass.states["input_boolean.ais_remote_access"].state === "on"
+          ? html`
+              <ha-button-menu corner="BOTTOM_START" slot="toolbar-icon">
+                <mwc-icon-button slot="trigger" alt="menu">
+                  <ha-svg-icon .path=${mdiDotsVertical}></ha-svg-icon>
+                </mwc-icon-button>
+                <mwc-list-item @click=${this._openCloudflareFileConfig}>
+                  Edit Cloudflare configuration.yaml
+                </mwc-list-item>
+                <mwc-list-item @click=${this._restartTunnelService}>
+                  Restart tunnel sevice
+                </mwc-list-item>
+              </ha-button-menu>
+            `
+          : ` `}
         <div>
           <ha-config-section>
             <span slot="header">Zdalny dostęp</span>
@@ -142,6 +164,27 @@ class HaConfigAisDomControl extends LitElement {
         </div>
       </hass-subpage>
     `;
+  }
+
+  private async _openCloudflareFileConfig() {
+    const filePath =
+      "/data/data/pl.sviete.dom/files/home/.cloudflared/config.yaml";
+    const file = await this.hass.callApi<string>("POST", "ais_file/read", {
+      filePath: filePath,
+    });
+    const fileParams: HaAisFileDialogParams = {
+      dialogTitle: "Cloudflare configuration.yaml",
+      filePath: filePath,
+      fileBody: file,
+      readonly: false,
+    };
+    showAisFileDialog(this, fileParams);
+  }
+
+  private async _restartTunnelService() {
+    this.hass.callService("ais_shell_command", "restart_pm2_service", {
+      service: "tunnel",
+    });
   }
 
   static get styles(): CSSResultGroup[] {
