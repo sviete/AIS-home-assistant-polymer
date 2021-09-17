@@ -81,7 +81,7 @@ class HaConfigAisDomControl extends LitElement {
                   <ha-svg-icon .path=${mdiDotsVertical}></ha-svg-icon>
                 </mwc-icon-button>
                 <mwc-list-item @click=${this._openCloudflareFileConfig}>
-                  Edit Cloudflare configuration.yaml
+                  Cloudflare config.yaml
                 </mwc-list-item>
                 <mwc-list-item @click=${this._restartTunnelService}>
                   Restart tunnel sevice
@@ -173,10 +173,10 @@ class HaConfigAisDomControl extends LitElement {
       filePath: filePath,
     });
     const fileParams: HaAisFileDialogParams = {
-      dialogTitle: "Cloudflare configuration.yaml",
+      dialogTitle: "Cloudflare config.yaml",
       filePath: filePath,
       fileBody: file,
-      readonly: false,
+      readonly: true,
     };
     showAisFileDialog(this, fileParams);
   }
