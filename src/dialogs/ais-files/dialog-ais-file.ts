@@ -15,13 +15,17 @@ import "../../components/ha-code-editor";
 @customElement("dialog-ais-file")
 class AisFileDialog
   extends LitElement
-  implements HassDialog<HaAisFileDialogParams> {
+  implements HassDialog<HaAisFileDialogParams>
+{
   public hass!: HomeAssistant;
 
   @property() private _params?: HaAisFileDialogParams;
 
+  @property() private readonly = false;
+
   public showDialog(params: HaAisFileDialogParams): void {
     this._params = params;
+    this.readonly = params.readonly;
   }
 
   public closeDialog() {
@@ -45,24 +49,36 @@ class AisFileDialog
         .heading=${createCloseHeading(this.hass, this._params.dialogTitle)}
       >
         <div class="container">
-          <textarea
-            spellcheck="false"
-            class="lineTextArea"
-            .value=${fileBody}
-          ></textarea>
-
-          <div class="saveButton">
-            <mwc-button @click=${this._handleSave}> SAVE </mwc-button>
-          </div>
+          ${this.readonly
+            ? html` <textarea
+                spellcheck="false"
+                class="lineTextArea"
+                .value=${fileBody}
+                readonly
+              ></textarea>`
+            : html`
+                <textarea
+                  spellcheck="false"
+                  class="lineTextArea"
+                  .value=${fileBody}
+                ></textarea>
+              `}
+          ${!this._params.readonly
+            ? html` <div class="saveButton">
+                <mwc-button @click=${this._handleSave}> SAVE </mwc-button>
+              </div>`
+            : ``}
         </div>
       </ha-dialog>
     `;
   }
 
   private _handleSave(_ev) {
-    const fileBody = (this.shadowRoot!.querySelector(
-      "textarea.lineTextArea"
-    ) as HTMLInputElement).value;
+    const fileBody = (
+      this.shadowRoot!.querySelector(
+        "textarea.lineTextArea"
+      ) as HTMLInputElement
+    ).value;
     this.hass.callApi<string>("POST", "ais_file/write", {
       filePath: this._params!.filePath,
       fileBody: fileBody,
