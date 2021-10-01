@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import { createHassioSession } from "../../src/data/hassio/ingress";
 
-describe("Create hassio session", function () {
+describe("Create hassio session", () => {
   const hass = {
     config: { version: "1.0.0" },
     callApi: async function () {
@@ -9,7 +9,7 @@ describe("Create hassio session", function () {
     },
   };
 
-  it("Test create session without HTTPS", async function () {
+  it("Test create session without HTTPS", async () => {
     // @ts-ignore
     global.document = {};
     // @ts-ignore
@@ -22,7 +22,7 @@ describe("Create hassio session", function () {
       "ingress_session=fhdsu73rh3io4h8f3irhjel8ousafehf8f3yh;path=/api/hassio_ingress/;SameSite=Strict"
     );
   });
-  it("Test create session with HTTPS", async function () {
+  it("Test create session with HTTPS", async () => {
     // @ts-ignore
     global.document = {};
     // @ts-ignore
@@ -41,7 +41,7 @@ describe("Create hassio session", function () {
     // @ts-ignore
     global.location = {};
   });
-  it("Test fail to create", async function () {
+  it("Test fail to create", async () => {
     const createSessionPromise = createHassioSession({
       // @ts-ignore
       callApi: async function () {

@@ -6,6 +6,7 @@ import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import "../../../../../components/ha-card";
 import "../../../../../components/ha-code-editor";
+import { mdiDotsVertical } from "@mdi/js";
 import { getConfigEntries } from "../../../../../data/config_entries";
 import { showOptionsFlowDialog } from "../../../../../dialogs/config-flow/show-dialog-options-flow";
 import "../../../../../layouts/hass-subpage";
@@ -16,7 +17,6 @@ import {
   showAisFileDialog,
   HaAisFileDialogParams,
 } from "../../../../../dialogs/ais-files/show-dialog-ais-file";
-import { mdiDotsVertical } from "@mdi/js";
 
 @customElement("mqtt-config-panel")
 class HaPanelDevMqtt extends LitElement {
@@ -64,13 +64,13 @@ class HaPanelDevMqtt extends LitElement {
           </ha-card>
 
           <ha-card
-            header="${this.hass.localize(
+            header=${this.hass.localize(
               "ui.panel.config.mqtt.description_publish"
-            )}"
+            )}
           >
             <div class="card-content">
               <paper-input
-                label="${this.hass.localize("ui.panel.config.mqtt.topic")}"
+                label=${this.hass.localize("ui.panel.config.mqtt.topic")}
                 .value=${this.topic}
                 @value-changed=${this._handleTopic}
               ></paper-input>
@@ -78,7 +78,7 @@ class HaPanelDevMqtt extends LitElement {
               <p>${this.hass.localize("ui.panel.config.mqtt.payload")}</p>
               <ha-code-editor
                 mode="jinja2"
-                .value="${this.payload}"
+                .value=${this.payload}
                 @value-changed=${this._handlePayload}
               ></ha-code-editor>
             </div>
