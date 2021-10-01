@@ -1,7 +1,7 @@
 import { assert } from "chai";
 
-import { featureClassNames } from "../../../src/common/entity/feature_class_names";
 import { HassEntity } from "home-assistant-js-websocket";
+import { featureClassNames } from "../../../src/common/entity/feature_class_names";
 
 describe("featureClassNames", () => {
   const classNames = {
