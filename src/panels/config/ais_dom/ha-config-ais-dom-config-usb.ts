@@ -10,9 +10,14 @@ import "./ha-config-ais-dom-dashboard";
 import "../../../components/paper-time-input";
 import "../../../components/ha-button-menu";
 import "@material/mwc-list/mwc-list-item";
+import {
+  mdiZigbee,
+  mdiZWave,
+  mdiAccountVoiceOff,
+  mdiAccountVoice,
+} from "@mdi/js";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
-import { mdiZigbee, mdiZWave, mdiVoiceOff, mdiAccountVoice } from "@mdi/js";
 import { handleFetchPromise } from "../../../util/hass-call-api";
 
 export interface aisUsbSettingsInfo {
@@ -145,7 +150,7 @@ class HaConfigAisDomConfigUsb extends LitElement {
                         Powiadomienia głosowe o urządzeniach USB
                         <ha-svg-icon
                           slot="icon"
-                          path=${mdiVoiceOff}
+                          path=${mdiAccountVoiceOff}
                         ></ha-svg-icon>
                       </h2>
                       Jeśl chcesz, żeby asystent powiadamiał komunikatem
