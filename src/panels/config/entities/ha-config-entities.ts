@@ -595,7 +595,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
                 <ha-svg-icon .path=${mdiFilterVariant}></ha-svg-icon>
               </mwc-icon-button>
               <mwc-list-item
-                @request-selected="${this._showDisabledChanged}"
+                @request-selected=${this._showDisabledChanged}
                 graphic="control"
                 .selected=${this._showDisabled}
               >
@@ -608,7 +608,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
                 )}
               </mwc-list-item>
               <mwc-list-item
-                @request-selected="${this._showRestoredChanged}"
+                @request-selected=${this._showRestoredChanged}
                 graphic="control"
                 .selected=${this._showUnavailable}
               >
@@ -621,7 +621,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
                 )}
               </mwc-list-item>
               <mwc-list-item
-                @request-selected="${this._showReadOnlyChanged}"
+                @request-selected=${this._showReadOnlyChanged}
                 graphic="control"
                 .selected=${this._showReadOnly}
               >

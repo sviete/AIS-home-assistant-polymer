@@ -63,9 +63,12 @@ class PanelDeveloperTools extends LitElement {
                 "ui.panel.developer-tools.tabs.events.title"
               )}
             </paper-tab>
-            <paper-tab page-name="console">
-              Konsola
+            <paper-tab page-name="statistics">
+              ${this.hass.localize(
+                "ui.panel.developer-tools.tabs.statistics.title"
+              )}
             </paper-tab>
+            <paper-tab page-name="console"> Terminal </paper-tab>
           </ha-tabs>
         </app-header>
         <developer-tools-router

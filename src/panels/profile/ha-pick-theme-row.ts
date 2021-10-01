@@ -51,10 +51,10 @@ export class HaPickThemeRow extends LitElement {
             ? this.hass.localize("ui.panel.profile.themes.error_no_theme")
             : "No theme"}
           <a
-            href="${documentationUrl(
+            href=${documentationUrl(
               this.hass,
               "/integrations/frontend/#defining-themes"
-            )}"
+            )}
             target="_blank"
             rel="noreferrer"
           >
