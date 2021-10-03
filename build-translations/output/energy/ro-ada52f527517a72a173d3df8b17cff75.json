@@ -1,0 +1,8 @@
+{
+  "ui.panel.energy.setup.next": "Next",
+  "ui.panel.energy.setup.back": "Back",
+  "ui.panel.energy.setup.done": "Show me my energy dashboard!",
+  "ui.panel.energy.charts.stat_house_energy_meter": "Total energy consumption",
+  "ui.panel.energy.charts.solar": "Solar",
+  "ui.panel.energy.charts.by_device": "Consumption by device"
+}

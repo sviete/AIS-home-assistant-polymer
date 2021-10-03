@@ -1,0 +1,73 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "TRANSLATED",
+        "next": "TRANSLATED",
+        "finish": "TRANSLATED",
+        "user": {
+          "intro": "TRANSLATED",
+          "required_field": "TRANSLATED",
+          "data": {
+            "name": "TRANSLATED",
+            "username": "TRANSLATED",
+            "password": "TRANSLATED",
+            "password_confirm": "TRANSLATED"
+          },
+          "create_account": "TRANSLATED",
+          "error": {
+            "required_fields": "TRANSLATED",
+            "password_not_match": "TRANSLATED"
+          }
+        },
+        "core-config": {
+          "intro": "TRANSLATED",
+          "intro_location": "TRANSLATED",
+          "intro_location_detect": "TRANSLATED",
+          "location_name": "TRANSLATED",
+          "location_name_default": "TRANSLATED",
+          "button_detect": "TRANSLATED",
+          "finish": "TRANSLATED"
+        },
+        "integration": {
+          "intro": "TRANSLATED",
+          "more_integrations": "TRANSLATED",
+          "finish": "TRANSLATED"
+        },
+        "analytics": { "finish": "TRANSLATED" },
+        "restore": {
+          "description": "TRANSLATED",
+          "in_progress": "TRANSLATED",
+          "show_log": "TRANSLATED",
+          "hide_log": "TRANSLATED",
+          "full_snapshot": "TRANSLATED",
+          "partial_snapshot": "TRANSLATED",
+          "type": "TRANSLATED",
+          "select_type": "TRANSLATED",
+          "folders": "TRANSLATED",
+          "addons": "TRANSLATED",
+          "password_protection": "TRANSLATED",
+          "password": "TRANSLATED",
+          "confirm_password": "TRANSLATED"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "TRANSLATED",
+          "ais_restore_intro_step1": "TRANSLATED",
+          "ais_restore_intro_step2": "TRANSLATED",
+          "ais_restore_intro_step3": "TRANSLATED",
+          "ais_restore_ok_info_step1": "TRANSLATED",
+          "ais_restore_button": "TRANSLATED",
+          "ais_login": "TRANSLATED",
+          "ais_logout": "TRANSLATED"
+        },
+        "mob-integration": {
+          "h1": "TRANSLATED",
+          "intro": "TRANSLATED",
+          "mob_benefits": "TRANSLATED",
+          "other_mob_apps": "TRANSLATED",
+          "finish": "TRANSLATED"
+        }
+      }
+    }
+  }
+}

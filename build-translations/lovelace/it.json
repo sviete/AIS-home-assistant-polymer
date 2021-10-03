@@ -1,0 +1,477 @@
+{
+  "ui": {
+    "panel": {
+      "lovelace": {
+        "cards": {
+          "confirm_delete": "Sei sicuro di voler cancellare questa scheda?",
+          "actions": {
+            "action_confirmation": "Sei sicuro di voler eseguire l'azione \"{action}\"?",
+            "no_entity_more_info": "Nessuna entità fornita per la finestra di dialogo con ulteriori informazioni",
+            "no_entity_toggle": "Nessuna entità fornita per attivare / disattivare",
+            "no_navigation_path": "Nessun percorso di navigazione specificato",
+            "no_url": "Nessun URL da aprire specificato",
+            "no_service": "Nessun servizio da eseguire specificato"
+          },
+          "empty_state": {
+            "title": "Benvenuto a casa",
+            "no_devices": "Questa pagina ti consente di controllare i tuoi dispositivi, tuttavia sembra che tu non abbia ancora configurato uno. Vai alla pagina delle integrazioni per iniziare.",
+            "go_to_integrations_page": "Vai alla pagina delle integrazioni."
+          },
+          "entities": { "never_triggered": "Mai attivato" },
+          "shopping-list": {
+            "checked_items": "Elementi selezionati",
+            "clear_items": "Cancella gli elementi selezionati",
+            "add_item": "Aggiungi elemento",
+            "reorder_items": "Riordina elementi",
+            "drag_and_drop": "Trascina e rilascia"
+          },
+          "picture-elements": {
+            "hold": "Tenere premuto:",
+            "tap": "Tocca:",
+            "navigate_to": "Vai a {location}",
+            "url": "Aprire la finestra per {url_path}",
+            "toggle": "Commuta {name}",
+            "call_service": "Chiama il servizio {name}",
+            "more_info": "Mostra ulteriori informazioni: {name}"
+          },
+          "safe-mode": {
+            "header": "Modalità provvisoria attivata",
+            "description": "Home Assistant ha riscontrato problemi durante il caricamento della configurazione ed è ora in esecuzione in modalità provvisoria. Dai un'occhiata al log degli errori per vedere cosa è andato storto."
+          },
+          "starting": {
+            "description": "Home Assistant sta per avviarsi, attendere prego..."
+          }
+        },
+        "unused_entities": {
+          "title": "Entità non utilizzate",
+          "available_entities": "Queste sono le entità che hai a disposizione, ma non sono ancora nella tua interfaccia utente di Lovelace.",
+          "select_to_add": "Selezionare le entità che si desidera aggiungere a una vista, quindi fare clic sul pulsante Aggiungi scheda.",
+          "entity": "Entità",
+          "entity_id": "ID entità",
+          "domain": "Dominio",
+          "last_changed": "Ultima modifica",
+          "search": "Cerca entità",
+          "no_data": "Trovate entità non utilizzate"
+        },
+        "add_entities": {
+          "yaml_unsupported": "Non è possibile utilizzare questa funzione quando si utilizza l'Interfaccia Utente di Lovelace in modalità YAML.",
+          "generated_unsupported": "Questa funzione può essere utilizzata solo dopo aver preso il controllo dell'interfaccia utente di Lovelace.",
+          "saving_failed": "Salvataggio della configurazione dell'interfaccia utente di Lovelace non riuscito."
+        },
+        "views": {
+          "confirm_delete": "Eliminare vista?",
+          "confirm_delete_text": "Sei sicuro di voler eliminare la tua vista ''{name}''?",
+          "confirm_delete_existing_cards": "L'eliminazione di questa vista rimuoverà anche le schede",
+          "confirm_delete_existing_cards_text": "Sei sicuro di voler eliminare la tua vista ''{name}''? La vista contiene {number} schede che sarranno eliminate. Questa azione non può essere annullata."
+        },
+        "menu": {
+          "configure_ui": "Modifica Plancia",
+          "help": "Aiuto",
+          "start_conversation": "Inizia la conversazione",
+          "reload_resources": "Ricarica le risorse",
+          "exit_edit_mode": "Esci dalla modalità di modifica dell'Interfaccia Utente",
+          "close": "Chiudi"
+        },
+        "reload_resources": {
+          "refresh_header": "Vuoi aggiornare?",
+          "refresh_body": "È necessario aggiornare la pagina per completare il ricaricamento, si desidera aggiornare ora?"
+        },
+        "editor": {
+          "header": "Modifica dell'interfaccia utente",
+          "menu": {
+            "open": "Apri il menu dell'interfaccia utente di Lovelace",
+            "raw_editor": "Editor di Configurazione testuale",
+            "manage_dashboards": "Gestisci le plance",
+            "manage_resources": "Gestisci le risorse"
+          },
+          "common": {
+            "edit": "Modifica",
+            "clear": "Cancella",
+            "add": "Aggiungi",
+            "none": "Nessuno"
+          },
+          "raw_editor": {
+            "header": "Modifica Configurazione",
+            "save": "Salva",
+            "unsaved_changes": "Modifiche non salvate",
+            "saved": "Salvato",
+            "reload": "Ricarica",
+            "lovelace_changed": "La configurazione di Lovelace è stata aggiornata, vuoi caricare la configurazione aggiornata nell'editor e perdere le modifiche attuali?",
+            "confirm_remove_config_title": "Sei sicuro di voler rimuovere la tua configurazione dell'Interfaccia Utente di Lovelace?",
+            "confirm_remove_config_text": "Genereremo automaticamente le tue viste dell'Interfaccia utente di Lovelace con le tue aree e dispositivi se rimuovi la tua configurazione dell'interfaccia utente di Lovelace.",
+            "confirm_unsaved_changes": "Hai delle modifiche non salvate, sei sicuro di voler uscire?",
+            "confirm_unsaved_comments": "La tua configurazione potrebbe contenere dei commenti, questi non saranno salvati. Vuoi continuare?",
+            "error_parse_yaml": "Impossibile analizzare YAML: {error}",
+            "error_invalid_config": "La tua configurazione non è valida: {error}",
+            "error_save_yaml": "Impossibile salvare YAML: {error}",
+            "error_remove": "Impossibile rimuovere la configurazione: {error}",
+            "resources_moved": "Le risorse non dovrebbero più essere aggiunte alla configurazione di Lovelace ma possono essere aggiunte nel pannello di configurazione di Lovelace."
+          },
+          "edit_lovelace": {
+            "header": "Titolo della tua interfaccia utente di Lovelace",
+            "explanation": "Questo titolo è mostrato sopra tutte le tue viste nell'Interfaccia Utente di Lovelace.",
+            "edit_title": "Modifica titolo",
+            "title": "Titolo"
+          },
+          "edit_view": {
+            "header": "Visualizza configurazione",
+            "header_name": "{name} Visualizza configurazione",
+            "add": "Aggiungi vista",
+            "edit": "Modifica vista",
+            "delete": "Cancella vista",
+            "move_left": "Sposta la vista a sinistra",
+            "move_right": "Sposta la vista a destra",
+            "tab_settings": "Impostazioni",
+            "tab_badges": "Distintivi",
+            "tab_visibility": "Visibilità",
+            "visibility": {
+              "select_users": "Selezionare quali utenti dovrebbero vedere questa vista nella navigazione"
+            },
+            "type": "View type",
+            "types": {
+              "masonry": "Masonry (default)",
+              "sidebar": "Sidebar",
+              "panel": "Panel (1 card)"
+            }
+          },
+          "edit_badges": {
+            "panel_mode": "Questi badge non verranno visualizzati perché questa vista è in \"Modalità pannello\"."
+          },
+          "edit_card": {
+            "header": "Configurazione della scheda",
+            "typed_header": "{type} Configurazione Scheda",
+            "pick_card": "Quale scheda vorresti aggiungere?",
+            "pick_card_view_title": "Quale scheda vorresti aggiungere alla tua vista {name}?",
+            "toggle_editor": "Attiva / disattiva l'editor",
+            "unsaved_changes": "Sono state apportate modifiche non salvate",
+            "confirm_cancel": "Sei sicuro di voler annullare?",
+            "show_visual_editor": "Mostra Editor Visivo",
+            "show_code_editor": "Mostra Editor di Codice",
+            "add": "Aggiungi scheda",
+            "edit": "Modifica",
+            "clear": "Cancella",
+            "delete": "Elimina scheda",
+            "duplicate": "Duplica scheda",
+            "move": "Sposta in Visualizza",
+            "move_before": "Sposta la scheda prima",
+            "move_after": "Sposta la scheda dopo",
+            "options": "Altre opzioni",
+            "search_cards": "Cerca schede"
+          },
+          "move_card": {
+            "header": "Scegli una vista in cui spostare la scheda"
+          },
+          "select_view": {
+            "header": "Scegli una vista",
+            "dashboard_label": "Plancia"
+          },
+          "suggest_card": {
+            "header": "Abbiamo creato un suggerimento per te",
+            "create_own": "Scegliere una scheda diversa",
+            "add": "Aggiungi all'interfaccia utente di Lovelace"
+          },
+          "save_config": {
+            "header": "Prendi il controllo della tua interfaccia utente di Lovelace",
+            "para": "Questa plancia è attualmente gestita da Home Assistant. E' aggiornata automaticamente quando nuove entità o componenti dell'Interfaccia Utente Lovelace diventano disponibili. Se si assume il controllo, questa plancia non verrà più aggiornata automaticamente. È sempre possibile creare una nuova plancia in configurazione con cui esperimentare.",
+            "para_sure": "Sei sicuro di voler prendere il controllo della tua interfaccia utente?",
+            "yaml_mode": "Questa plancia sta utilizzando la modalità YAML, il che significa che non è possibile modificare la configurazione di Lovelace dall'Interfaccia Utente. Se volete gestire questa plancia dall'Interfaccia Utente, rimuovere 'mode: yaml' dalla configurazione di Lovelace in 'configuration.yaml'.",
+            "yaml_control": "Per assumere il controllo in modalità YAML, creare un file YAML con il nome specificato nella tua configurazione per questa plancia, o il predefinito 'ui-lovelace.yaml'.",
+            "yaml_config": "Per aiutarti a iniziare qui c'è la configurazione attuale di questa plancia:",
+            "empty_config": "Iniziare con una plancia vuota",
+            "close": "Chiudi",
+            "save": "Prendere il controllo",
+            "cancel": "Rinuncia"
+          },
+          "migrate": {
+            "header": "Configurazione incompatibile",
+            "para_no_id": "Questo elemento non ha un ID. Aggiungi un ID a questo elemento in 'ui-lovelace.yaml'.",
+            "para_migrate": "Home Assistant può aggiungere automaticamente gli ID a tutte le tue schede e viste in maniera automatica premendo il pulsante \"Migra Configurazione\".",
+            "migrate": "Esporta Configurazione"
+          },
+          "action-editor": {
+            "navigation_path": "Percorso di navigazione",
+            "url_path": "Percorso URL",
+            "actions": {
+              "default_action": "Azione predefinita",
+              "call-service": "Chiama il Servizio",
+              "more-info": "Ulteriori informazioni",
+              "toggle": "Commuta",
+              "navigate": "Vai a",
+              "url": "URL",
+              "none": "Nessuna Azione"
+            }
+          },
+          "card": {
+            "alarm-panel": {
+              "name": "Pannello di Allarme",
+              "available_states": "Stati disponibili",
+              "description": "La scheda del Pannello di Allarme consente di attivare e disattivare le tue integrazioni del pannello di controllo allarme."
+            },
+            "calendar": {
+              "name": "Calendario",
+              "description": "La scheda Calendario mostra un calendario che include le visualizzazioni per giorno, settimana ed elenco",
+              "inital_view": "Vista iniziale",
+              "calendar_entities": "Entità Calendario",
+              "views": {
+                "dayGridMonth": "Mese",
+                "dayGridDay": "Giorno",
+                "listWeek": "Elenco"
+              }
+            },
+            "conditional": {
+              "name": "Condizionale",
+              "description": "La scheda Condizionale visualizza un'altra scheda in base agli stati dell'entità.",
+              "conditions": "Condizioni",
+              "card": "Scheda",
+              "state_equal": "Stato è uguale a",
+              "state_not_equal": "Stato non è uguale a",
+              "current_state": "attuale",
+              "condition_explanation": "La scheda sarà mostrata quando TUTTE le seguenti condizioni saranno soddisfatte.",
+              "change_type": "Cambia tipo"
+            },
+            "config": { "required": "Richiesto", "optional": "Facoltativo" },
+            "entities": {
+              "name": "Entità",
+              "show_header_toggle": "Mostrare l'interruttore dell'intestazione?",
+              "toggle": "Attiva/disattiva entità.",
+              "description": "La scheda Entità è il tipo di scheda più comune. Raggruppa gli elementi in elenchi.",
+              "special_row": "riga speciale",
+              "edit_special_row": "Visualizza i dettagli di questa riga facendo clic sul pulsante di modifica",
+              "entity_row_editor": "Editor di riga dell'entità",
+              "secondary_info_values": {
+                "none": "Nessuna informazione secondaria",
+                "entity-id": "ID Entità",
+                "last-changed": "Ultima modifica",
+                "last-triggered": "Ultima attivazione",
+                "position": "Posizione",
+                "tilt-position": "Posizione di inclinazione",
+                "brightness": "Luminosità",
+                "last-updated": "Ultimo aggiornamento"
+              },
+              "entity_row": {
+                "divider": "Divisore",
+                "call-service": "Chiama il Servizio",
+                "section": "Sezione",
+                "weblink": "Collegamento Web",
+                "attribute": "Attributo",
+                "buttons": "Pulsanti",
+                "conditional": "Condizionale",
+                "cast": "Cast",
+                "button": "Pulsante"
+              }
+            },
+            "entity": {
+              "name": "Entità",
+              "description": "La scheda Entità offre una rapida panoramica dello stato dell'entità."
+            },
+            "button": {
+              "name": "Pulsante",
+              "description": "La scheda Pulsante consente di aggiungere pulsanti per eseguire attività.",
+              "default_action_help": "L'azione predefinita dipende dalle capacità dell'entità, verrà attivata o disattivata o verrà visualizzata la finestra di dialogo con ulteriori informazioni."
+            },
+            "entity-filter": {
+              "name": "Filtro Entità",
+              "description": "La scheda Filtro Entità consente di definire un elenco di entità che si desidera monitorare quando sono solamente in un determinato stato."
+            },
+            "gauge": {
+              "name": "Indicatore",
+              "needle_gauge": "Display as needle gauge?",
+              "severity": {
+                "define": "Definire l'intensità?",
+                "green": "Verde",
+                "red": "Rosso",
+                "yellow": "Giallo"
+              },
+              "description": "La scheda Indicatore è una scheda di base che consente di visualizzare i dati di un sensore."
+            },
+            "glance": {
+              "name": "Vista",
+              "columns": "Colonne",
+              "description": "La scheda Occhiata è utile per raggruppare più sensori in una panoramica compatta."
+            },
+            "grid": {
+              "name": "Griglia",
+              "description": "La scheda Griglia consente di mostrare più schede in una griglia.",
+              "columns": "Colonne",
+              "square": "Visualizza le schede come quadrati"
+            },
+            "logbook": {
+              "name": "Registro",
+              "description": "La scheda Registro mostra un elenco di eventi per le entità."
+            },
+            "history-graph": {
+              "name": "Grafico Storico",
+              "description": "La scheda Grafico Storico consente di visualizzare un grafico per ciascuna delle entità elencate."
+            },
+            "statistics-graph": {
+              "name": "Statistics Graph",
+              "description": "The Statistics Graph card allows you to display a graph of the statistics for each of the entities listed."
+            },
+            "horizontal-stack": {
+              "name": "Pila orizzontale",
+              "description": "La scheda Pila Orizzontale consente di raggruppare insieme più schede, in modo che siano sempre l'una accanto all'altra nello spazio di una colonna."
+            },
+            "humidifier": {
+              "name": "Umidificatore",
+              "description": "La scheda Umidificatore fornisce il controllo della tua entità umidificatore. Ti consente di modificare l'umidità e la modalità di funzionamento dell'entità."
+            },
+            "iframe": {
+              "name": "Pagina Web",
+              "description": "La scheda Pagina Web consente di incorporare la tua pagina web preferita direttamente in Home Assistant."
+            },
+            "light": {
+              "name": "Luce",
+              "description": "La scheda Luce consente di modificare la luminosità della luce."
+            },
+            "generic": {
+              "aspect_ratio": "Proporzioni",
+              "attribute": "Attributo",
+              "camera_image": "Entità Fotocamera",
+              "camera_view": "Vista fotocamera",
+              "double_tap_action": "Azione doppio tocco",
+              "entities": "Molte Entità",
+              "entity": "Singola Entità",
+              "hold_action": "Azione tocco prolungato",
+              "hours_to_show": "Ore da mostrare",
+              "days_to_show": "Days to Show",
+              "icon": "Icona",
+              "icon_height": "Altezza icona",
+              "image": "Percorso immagine",
+              "maximum": "Massimo",
+              "manual": "Manuale",
+              "manual_description": "Devi aggiungere una scheda personalizzata o vuoi semplicemente scrivere manualmente il file in YAML?",
+              "minimum": "Minimo",
+              "name": "Nome",
+              "refresh_interval": "Intervallo di aggiornamento",
+              "show_icon": "Mostrare l'icona?",
+              "show_name": "Mostrare il nome?",
+              "show_state": "Mostrare lo stato?",
+              "tap_action": "Azione tocco",
+              "title": "Titolo",
+              "theme": "Tema",
+              "no_theme": "Nessun tema",
+              "unit": "Unità",
+              "url": "URL",
+              "state": "Stato",
+              "secondary_info_attribute": "Attributo informazioni secondarie",
+              "search": "Ricerca",
+              "state_color": "Colorare le icone in base allo stato?"
+            },
+            "map": {
+              "name": "Mappa",
+              "geo_location_sources": "Fonti di geolocalizzazione",
+              "dark_mode": "Modalità scura?",
+              "default_zoom": "Ingrandimento predefinito",
+              "hours_to_show": "Ore da mostrare",
+              "source": "Fonte",
+              "description": "La scheda Mappa che permette di visualizzare le entità su una mappa."
+            },
+            "markdown": {
+              "name": "Markdown",
+              "content": "Contenuto",
+              "description": "La scheda Markdown viene utilizzata per eseguire il rendering di testo scritto in linguaggio Markdown per una gradevole formattazione della visualizzazione."
+            },
+            "media-control": {
+              "name": "Controllo dei media",
+              "description": "La scheda Controllo Multimediale viene utilizzata per visualizzare le entità del lettore multimediale su un'interfaccia con controlli di facile utilizzo."
+            },
+            "picture": {
+              "name": "Immagine",
+              "description": "La scheda Immagine consente di impostare un'immagine da utilizzare per la navigazione su vari percorsi nell'interfaccia o per chiamare un servizio."
+            },
+            "picture-elements": {
+              "name": "Elementi immagine",
+              "description": "La scheda Elementi Immagine è uno dei tipi di schede più versatili. Le schede consentono di posizionare icone o testo (e anche servizi!) su un'immagine basata su coordinate."
+            },
+            "picture-entity": {
+              "name": "Entità immagine",
+              "description": "La scheda Entità Immagine visualizza un'entità sotto forma di immagine. Oltre ad immagini da URL, può anche mostrare l'immagine delle entità fotocamera."
+            },
+            "picture-glance": {
+              "name": "Sguardo d'Immagine",
+              "description": "La scheda Sguardo d'Immagine mostra un'immagine e gli stati di entità corrispondenti come icona. Le entità sul lato destro consentono di attivare o disattivare le azioni, altre mostrano la finestra di dialogo con più informazioni.",
+              "state_entity": "Stato Entità"
+            },
+            "plant-status": {
+              "name": "Stato della Pianta",
+              "description": "La scheda dello Stato della Pianta è per tutti gli adorabili botanici là fuori."
+            },
+            "sensor": {
+              "name": "Sensore",
+              "show_more_detail": "Mostra ulteriori dettagli",
+              "graph_type": "Tipo di grafico",
+              "description": "La scheda Sensore offre una rapida panoramica dello stato dei sensori con un grafico opzionale per visualizzare il cambiamento nel tempo."
+            },
+            "shopping-list": {
+              "name": "Lista della spesa",
+              "description": "La scheda Lista della Spesa consente di aggiungere, modificare, selezionare e cancellare gli articoli dalla tua lista della spesa.",
+              "integration_not_loaded": "Questa carta richiede l'integrazione \"shopping_list\" per essere configurata."
+            },
+            "thermostat": {
+              "name": "Termostato",
+              "description": "La scheda Termostato fornisce il controllo della tua entità climatica, consentendo di modificare la temperatura e la modalità dell'entità."
+            },
+            "vertical-stack": {
+              "name": "Pila verticale",
+              "description": "La scheda Pila Verticale consente di raggruppare più schede in modo che si trovino sempre nella stessa colonna."
+            },
+            "weather-forecast": {
+              "name": "Previsioni del tempo",
+              "description": "La scheda Previsioni Meteo mostra le condizioni meteorologiche. Molto utili da includere nelle interfacce che le persone visualizzano sulla parete.",
+              "show_forecast": "Mostra Previsioni"
+            }
+          },
+          "view": {
+            "panel_mode": {
+              "warning_multiple_cards": "Questa vista contiene più di una scheda, ma una vista a pannello può mostrare solo una scheda.",
+              "description": "Questo renderizza la prima scheda a tutta larghezza. Le altre schede in questa vista e i badge non verranno renderizzati.",
+              "title": "Modalità pannello?"
+            }
+          },
+          "cardpicker": {
+            "no_description": "Nessuna descrizione disponibile.",
+            "custom_card": "Personalizzato",
+            "domain": "Dominio",
+            "entity": "Entità",
+            "by_entity": "Per Entità",
+            "by_card": "Per Scheda"
+          },
+          "header-footer": {
+            "header": "Intestazione",
+            "footer": "Piè di pagina",
+            "choose_header_footer": "Scegli un {type}",
+            "types": {
+              "graph": { "name": "Grafico" },
+              "picture": { "name": "Immagine" },
+              "buttons": { "name": "Pulsanti" }
+            }
+          },
+          "sub-element-editor": {
+            "types": {
+              "header": "Editor intestazione",
+              "footer": "Editor piè di pagina",
+              "row": "Editor di riga dell'entità"
+            }
+          }
+        },
+        "warning": {
+          "attribute_not_found": "Attributo {attribute} non disponibile in: {entity}",
+          "entity_not_found": "Entità non disponibile: {entity}",
+          "entity_non_numeric": "L'entità non è numerica: {entity}",
+          "entity_unavailable": "L'entità non è attualmente disponibile: {entity}",
+          "starting": "Home Assistant si sta avviando, non tutto potrebbe essere subito disponibile"
+        },
+        "changed_toast": {
+          "message": "La configurazione dell'Interfaccia Utente di Lovelace per questa plancia è stata aggiornata, ricaricare per vedere le modifiche?"
+        },
+        "components": {
+          "timestamp-display": {
+            "invalid": "Marca temporale non valida",
+            "invalid_format": "Formato di visualizzazione non valido"
+          }
+        },
+        "reload_lovelace": "Ricarica l'Interfaccia Utente"
+      }
+    }
+  }
+}

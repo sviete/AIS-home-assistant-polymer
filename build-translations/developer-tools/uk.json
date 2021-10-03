@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Події",
+            "description": "Викликати подію через шину подій",
+            "documentation": "Документація подій",
+            "type": "Тип події",
+            "data": "Дані події в форматі YAML (необов'язково)",
+            "fire_event": "Викликати подію",
+            "event_fired": "Подія {type} викликана",
+            "available_events": "Доступні події",
+            "count_listeners": " ({count} слухачів)",
+            "listen_to_events": "Прослуховування подій",
+            "listening_to": "Прослухувати",
+            "subscribe_to": "Подія, на яку підписатися",
+            "start_listening": "Почати прослуховування",
+            "stop_listening": "Припинити прослуховування",
+            "alert_event_type": "Тип події — обов'язкове поле",
+            "notification_event_fired": "Подія {type} успішно викликана!"
+          },
+          "services": {
+            "title": "Служби",
+            "description": "Тут Ви можете викликати будь-яку службу Home Assistant зі списку доступних.",
+            "call_service": "Викликати службу",
+            "column_parameter": "Параметр",
+            "column_description": "Опис",
+            "column_example": "Приклад",
+            "fill_example_data": "Заповнити даними з прикладу",
+            "yaml_mode": "Go to YAML mode",
+            "ui_mode": "Go to UI mode",
+            "yaml_parameters": "Parameters only available in YAML mode",
+            "all_parameters": "All available parameters",
+            "accepts_target": "This service accepts a target, for example: `entity_id: light.bed_light`",
+            "no_template_ui_support": "The UI does not support templates, you can still use the YAML editor."
+          },
+          "states": {
+            "title": "Стани",
+            "description1": "Тут Ви можете вручну змінити стан пристрою в Home Assistant.",
+            "description2": "Змінений стан не буде синхронізовано з пристроєм.",
+            "entity": "Об'єкт",
+            "state": "Статус",
+            "attributes": "Атрибути",
+            "state_attributes": "Атрибути стану в форматі YAML (необов'язково)",
+            "set_state": "Встановити стан",
+            "current_entities": "Поточні сутності",
+            "filter_entities": "Фільтрувати сутності",
+            "filter_states": "Фільтрувати стани",
+            "filter_attributes": "Фільтрувати атрибути",
+            "no_entities": "Немає сутностей",
+            "more_info": "Більше інформації",
+            "alert_entity_field": "Об'єкт є обов'язковим полем",
+            "last_updated": "Останнє оновлення",
+            "last_changed": "Востаннє змінено",
+            "copy_id": "Copy ID to clipboard"
+          },
+          "templates": {
+            "title": "Шаблони",
+            "description": "Тут Ви можете протестувати поведінку шаблонів. В Home Assistant використовується шаблонизатор Jinja2 з деякими спеціальними розширеннями.",
+            "editor": "Редактор шаблонів",
+            "reset": "Повернутися до демонстраційного шаблону",
+            "result_type": "Тип результату",
+            "jinja_documentation": "Дізнайтеся більше про шаблонізатор Jinja2",
+            "template_extensions": "Розширення шаблонів Home Assistant",
+            "unknown_error_template": "Невідома помилка при візуалізації шаблону.",
+            "time": "Цей шаблон оновлюється на початку кожної хвилини.",
+            "all_listeners": "Цей шаблон відстежує всі події зміни стану.",
+            "no_listeners": "Цей шаблон не відстежує ніяких подій і не буде оновлюватися автоматично.",
+            "listeners": "Цей шаблон відстежує такі події зміни стану:",
+            "entity": "Об'єкт",
+            "domain": "Домен"
+          }
+        }
+      }
+    }
+  }
+}

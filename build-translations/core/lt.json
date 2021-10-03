@@ -1,0 +1,880 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "Kalendorius",
+    "config": "Konfigūracija",
+    "states": "Valdymas",
+    "map": "Žemėlapis",
+    "logbook": "Veiksmų žurnalas",
+    "history": "Istorija",
+    "mailbox": "Pašto dėžutė",
+    "shopping_list": "Pirkinių sąrašas",
+    "developer_tools": "Kūrėjo įrankiai",
+    "media_browser": "Media Browser",
+    "profile": "Vartotojo profilis"
+  },
+  "state": {
+    "default": {
+      "on": "Įjungta",
+      "off": "Išjungta",
+      "unknown": "Nežinoma",
+      "unavailable": "(nepasiekiamas)"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "Išjungta", "on": "Įjungta", "auto": "Auto" },
+      "preset_mode": {
+        "none": "None",
+        "eco": "Eko",
+        "away": "Išvykęs",
+        "boost": "Padidinti",
+        "comfort": "Komfortas",
+        "home": "Namai",
+        "sleep": "Miegoti",
+        "activity": "Veikla"
+      },
+      "hvac_action": {
+        "off": "Išjungta",
+        "heating": "Šildymas",
+        "cooling": "Aušinimas",
+        "drying": "Džiovinimas",
+        "idle": "Laukimo režimas",
+        "fan": "Ventiliatorius"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "Normal",
+        "eco": "Eco",
+        "away": "Away",
+        "boost": "Boost",
+        "comfort": "Comfort",
+        "home": "Home",
+        "sleep": "Miego",
+        "auto": "Automatinis",
+        "baby": "Kūdikio"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "Nžn",
+      "unavailable": "Nežin",
+      "error": "Klaida",
+      "entity_not_found": "Objektas nerastas"
+    },
+    "alarm_control_panel": {
+      "armed": "Užrakinta",
+      "disarmed": "Atrakinta",
+      "armed_home": "Užrakinta",
+      "armed_away": "Užrakinta",
+      "armed_night": "Užrakinta",
+      "armed_custom_bypass": "Užrakinta",
+      "pending": "Pend",
+      "arming": "Užrakinama",
+      "disarming": "Atrakinti",
+      "triggered": "Trig"
+    },
+    "device_tracker": { "home": "Namai", "not_home": "Išvykęs" },
+    "person": { "home": "Namai", "not_home": "Išvykęs" }
+  },
+  "groups": {
+    "owner": "Savininkas",
+    "system-admin": "Administratoriai",
+    "system-users": "Vartotojai",
+    "system-read-only": "Tik skaitymo privilegija"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "Vartotojas",
+      "integration": "Integration",
+      "config_entry": "Config entry",
+      "device": "Įrenginys"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "Ar norite likti prisijungę?",
+      "decline": "Ne",
+      "confirm": "Taip"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "Kodas",
+        "clear_code": "Išvalyti",
+        "disarm": "Disarm",
+        "arm_home": "Arm home",
+        "arm_away": "Arm away",
+        "arm_night": "Naktinė apsauga",
+        "arm_custom_bypass": "Individualizuotas apėjimas"
+      },
+      "automation": {
+        "last_triggered": "Last triggered",
+        "trigger": "Run Actions"
+      },
+      "camera": { "not_available": "Vaizdas negalimas" },
+      "climate": {
+        "currently": "Šiuo metu",
+        "on_off": "Įjungta / išjungta",
+        "target_temperature": "Target temperature",
+        "target_temperature_entity": "{name} target temperature",
+        "target_temperature_mode": "{name} target temperature {mode}",
+        "current_temperature": "{name} current temperature",
+        "heating": "{name} heating",
+        "cooling": "{name} cooling",
+        "high": "high",
+        "low": "low",
+        "target_humidity": "Target humidity",
+        "operation": "Operation",
+        "fan_mode": "Fan mode",
+        "swing_mode": "Swing mode",
+        "preset_mode": "Preset",
+        "away_mode": "Away mode",
+        "aux_heat": "Aux heat"
+      },
+      "counter": {
+        "actions": {
+          "increment": "padidinti",
+          "decrement": "pamažinti",
+          "reset": "atstatyti"
+        }
+      },
+      "cover": { "position": "Padėtis", "tilt_position": "Pakreipimo padėtis" },
+      "fan": {
+        "speed": "Greitis",
+        "preset_mode": "Preset Mode",
+        "oscillate": "Oscillate",
+        "direction": "Kryptis",
+        "forward": "Forward",
+        "reverse": "Reverse"
+      },
+      "humidifier": {
+        "humidity": "Target humidity",
+        "mode": "Režimas",
+        "target_humidity_entity": "{name} target humidity",
+        "on_entity": "{name} on"
+      },
+      "light": {
+        "brightness": "Ryškumas",
+        "color_temperature": "Spalvos temperatūra",
+        "white_value": "Baltas ryškumas",
+        "color_brightness": "Color brightness",
+        "cold_white_value": "Cold white brightness",
+        "warm_white_value": "Warm white brightness",
+        "effect": "Effect"
+      },
+      "lock": { "code": "Code", "lock": "Užrakinti", "unlock": "Atrakinti" },
+      "media_player": {
+        "source": "Šaltinis",
+        "sound_mode": "Garso režimas",
+        "browse_media": "Browse media",
+        "turn_on": "Įjungti",
+        "turn_off": "Išjungti",
+        "media_play": "Paleisti",
+        "media_play_pause": "Paleisti/pristabdyti",
+        "media_next_track": "Next",
+        "media_previous_track": "Previous",
+        "text_to_speak": "Tekstas, kurį reikia kalbėti"
+      },
+      "persistent_notification": { "dismiss": "Atmesti" },
+      "scene": { "activate": "Suaktyvinti" },
+      "script": {
+        "run": "Run",
+        "cancel": "Cancel",
+        "cancel_multiple": "Cancel {number}"
+      },
+      "service": { "run": "Paleisti" },
+      "timer": {
+        "actions": {
+          "start": "pradėti",
+          "pause": "sustabdyti",
+          "cancel": "atšaukti",
+          "finish": "užbaigti"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "Tęsti valymą",
+          "return_to_base": "Return to dock",
+          "start_cleaning": "Pradėti valymą",
+          "turn_on": "Įjungti",
+          "turn_off": "Išjungti"
+        }
+      },
+      "water_heater": {
+        "currently": "Currently",
+        "on_off": "On / off",
+        "target_temperature": "Target temperature",
+        "operation": "Operation",
+        "away_mode": "Away mode"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "Atmosferos slėgis",
+          "humidity": "Santykinė oro drėgmė",
+          "temperature": "Temperatūra",
+          "visibility": "Matomumas",
+          "wind_speed": "Vėjo greitis",
+          "precipitation": "Krituliai"
+        },
+        "cardinal_direction": {
+          "e": "R",
+          "ene": "ENE",
+          "ese": "ESE",
+          "n": "Š",
+          "ne": "ŠR",
+          "nne": "NNE",
+          "nw": "ŠV",
+          "nnw": "NNW",
+          "s": "P",
+          "se": "PR",
+          "sse": "SSE",
+          "ssw": "SSW",
+          "sw": "PV",
+          "w": "V",
+          "wnw": "WNW",
+          "wsw": "WSW"
+        },
+        "day": "Day",
+        "night": "Night",
+        "forecast": "Prognozė",
+        "high": "Aukštas",
+        "low": "Žemas"
+      }
+    },
+    "common": {
+      "and": "and",
+      "continue": "Tęsti",
+      "previous": "Ankstesnis",
+      "loading": "Pakrovimas",
+      "refresh": "Atnaujinti",
+      "cancel": "Atšaukti",
+      "delete": "Ištrinti",
+      "remove": "Pašalinti",
+      "enable": "Įgalinti",
+      "disable": "Išjungti",
+      "close": "Uždaryti",
+      "leave": "Palikti",
+      "stay": "Likti",
+      "next": "Kitas",
+      "back": "Atgal",
+      "undo": "Atšaukti",
+      "save": "Išsaugoti",
+      "rename": "Pervardyti",
+      "yes": "Taip",
+      "no": "Ne",
+      "not_now": "Ne dabar",
+      "skip": "Praleisti",
+      "menu": "Meniu",
+      "overflow_menu": "Overflow menu",
+      "successfully_saved": "Sėkmingai išsaugota",
+      "successfully_deleted": "Sėkmingai ištrinta",
+      "error_required": "Privaloma",
+      "copied": "Nukopijuota",
+      "copied_clipboard": "Copied to clipboard"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "No logbook entries found.",
+        "by": "by",
+        "by_service": "pagal paslaugą",
+        "show_trace": "Show trace",
+        "retrieval_error": "Error during logbook entry retrieval",
+        "messages": {
+          "was_away": "buvo toli",
+          "was_at_state": "buvo {state}",
+          "rose": "pakilo",
+          "set": "nustatyti",
+          "was_low": "buvo mažas",
+          "was_normal": "buvo normalu",
+          "was_connected": "buvo prijungta",
+          "was_disconnected": "buvo atjungta",
+          "was_opened": "buvo atidaryta",
+          "was_closed": "buvo uždaryta",
+          "is_opening": "atidaroma",
+          "is_closing": "uždaroma",
+          "was_unlocked": "buvo atrakinta",
+          "was_locked": "buvo užrakinta",
+          "was_plugged_in": "buvo prijungtas",
+          "was_unplugged": "buvo atjungtas",
+          "was_at_home": "buvo namie",
+          "was_unsafe": "buvo nesaugus",
+          "was_safe": "buvo saugus",
+          "detected_device_class": "aptikta {device_class}",
+          "cleared_device_class": "išvalyta ({device_class} neaptikta)",
+          "turned_off": "Išjungta",
+          "turned_on": "įjungta",
+          "changed_to_state": "pakeista į {state}",
+          "became_unavailable": "tapo neprieinama"
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "Entity",
+          "clear": "Clear",
+          "no_match": "Nerasta atitinkančių objektų",
+          "show_entities": "Show entities"
+        },
+        "entity-attribute-picker": {
+          "attribute": "Attribute",
+          "show_attributes": "Show attributes"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "Expand this area into the separate devices and entities that it contains. After expanding, it will not update the devices and entities when the area changes.",
+        "expand_device_id": "Expand this device into the separate entities that it contains. After expanding, it will not update the entities when the device changes.",
+        "remove_area_id": "Pašalinti sritį",
+        "remove_device_id": "Pašalinti įrenginį",
+        "remove_entity_id": "Pašalinti objektą",
+        "add_area_id": "Pasirinkite sritį",
+        "add_device_id": "Pasirinkite įrenginį",
+        "add_entity_id": "Pasirinkite objektą"
+      },
+      "user-picker": {
+        "no_user": "Nėra vartotojo",
+        "add_user": "Pridėti naudotoją",
+        "remove_user": "Pašalinti vartotoją"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Pasirinkite techninį planą",
+        "add_user": "Pridėti vartotoją",
+        "remove_user": "Pašalinti vartotoją"
+      },
+      "device-picker": {
+        "clear": "Clear",
+        "toggle": "Toggle",
+        "show_devices": "Rodyti įrenginius",
+        "no_devices": "Neturite jokių įrenginių",
+        "no_match": "Nerasta atitinkančių įrenginių",
+        "device": "Įrenginys",
+        "no_area": "Nėra srities"
+      },
+      "area-picker": {
+        "clear": "Clear",
+        "show_areas": "Show areas",
+        "area": "Sritis",
+        "add_new": "Pridėti naują sritį...",
+        "no_areas": "Neturite jokių sričių",
+        "no_match": "Nerasta atitinkančių sričių",
+        "add_dialog": {
+          "title": "Add new area",
+          "text": "Įveskite naujos srities pavadinimą.",
+          "name": "Name",
+          "add": "Add",
+          "failed_create_area": "Nepavyko sukurti srities."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "Add-on",
+        "error": {
+          "no_supervisor": {
+            "title": "No Supervisor",
+            "description": "No Supervisor found, so add-ons could not be loaded."
+          },
+          "fetch_addons": {
+            "title": "Error fetching add-ons",
+            "description": "Fetching add-ons returned an error."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "Filter by entity",
+        "filter_by_device": "Filtruoti pagal įrenginį",
+        "filter_by_area": "Filtruoti pagal sritį",
+        "filtered_by_entity": "entity: {entity_name}",
+        "filtered_by_device": "įrenginys: {device_name}",
+        "filtered_by_area": "sritis: {area_name}"
+      },
+      "picture-upload": {
+        "label": "Paveikslėlis",
+        "unsupported_format": "Nepalaikomas formatas, prašome pasirinkti JPEG, PNG arba GIF atvaizdą."
+      },
+      "date-range-picker": {
+        "start_date": "Pradžios data",
+        "end_date": "Pabaigos data",
+        "select": "Pasirinkite",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Niekada",
+        "just_now": "Just now",
+        "duration": {
+          "second": "{count} {count, plural,\n  one {sekundė}\n  other {sekundės}\n}",
+          "minute": "{count} {count, plural,\n  one {minutė}\n  other {minutės}\n}",
+          "hour": "{count} {count, plural,\n  one {valanda}\n  other {valandos}\n}",
+          "day": "{count} {count, plural,\n  one {diena}\n  other {dienos}\n}",
+          "week": "{count} {count, plural,\n  one {savaitė}\n  other {savaitės}\n}"
+        },
+        "past_duration": {
+          "second": "{count} {count, plural,\n  one {second}\n  other {seconds}\n} ago",
+          "minute": "{count} {count, plural,\n  one {minute}\n  other {minutes}\n} ago",
+          "hour": "{count} {count, plural,\n  one {hour}\n  other {hours}\n} ago",
+          "day": "{count} {count, plural,\n  one {day}\n  other {days}\n} ago",
+          "week": "{count} {count, plural,\n  one {week}\n  other {weeks}\n} ago"
+        },
+        "future_duration": {
+          "second": "In {count} {count, plural,\n  one {second}\n  other {seconds}\n}",
+          "minute": "In {count} {count, plural,\n  one {minute}\n  other {minutes}\n}",
+          "hour": "In {count} {count, plural,\n  one {hour}\n  other {hours}\n}",
+          "day": "In {count} {count, plural,\n  one {day}\n  other {days}\n}",
+          "week": "In {count} {count, plural,\n  one {week}\n  other {weeks}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "History integration disabled",
+        "loading_history": "Įkeliama būsenos retrospektyva...",
+        "no_history_found": "Būsenos istorija nerasta."
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "Service" },
+      "service-control": {
+        "required": "This field is required",
+        "target": "Targets",
+        "target_description": "What should this service use as targeted areas, devices or entities.",
+        "service_data": "Service data",
+        "integration_doc": "Integracijos dokumentacija"
+      },
+      "related-items": {
+        "no_related_found": "No related items found.",
+        "integration": "Integration",
+        "device": "Įrenginys",
+        "area": "Sritis",
+        "entity": "Related entities",
+        "group": "Part of the following groups",
+        "scene": "Part of the following scenes",
+        "script": "Part of the following scripts",
+        "automation": "Part of the following automations"
+      },
+      "data-table": {
+        "search": "Search",
+        "no-data": "Nėra duomenų",
+        "filtering_by": "Filtering by",
+        "hidden": "{number} paslėpta",
+        "clear": "Išvalyti"
+      },
+      "media-browser": {
+        "pick": "Pick",
+        "play": "Play",
+        "play-media": "Play Media",
+        "pick-media": "Pick Media",
+        "no_items": "No items",
+        "choose_player": "Choose Player",
+        "media-player-browser": "Media Player Browser",
+        "web-browser": "Web Browser",
+        "media_player": "Media Player",
+        "audio_not_supported": "Your browser does not support the audio element.",
+        "video_not_supported": "Your browser does not support the video element.",
+        "media_not_supported": "The Browser Media Player does not support this type of media",
+        "media_browsing_error": "Media Browsing Error",
+        "learn_adding_local_media": "Learn more about adding media in the {documentation}.",
+        "local_media_files": "Place your video, audio and image files in the media directory to be able to browse and play them in the browser or on supported media players.",
+        "documentation": "dokumentacija",
+        "no_local_media_found": "No local media found",
+        "no_media_folder": "It looks like you have not yet created a media directory.",
+        "setup_local_help": "Check the {documentation} on how to setup local media.",
+        "class": {
+          "album": "Albumas",
+          "app": "Programėlė",
+          "artist": "Atlikėjas",
+          "channel": "Kanalas",
+          "composer": "Kompozitorius",
+          "contributing_artist": "Prisidedantis atlikėjas",
+          "directory": "Biblioteka",
+          "episode": "Serija",
+          "game": "Game",
+          "genre": "Žanras",
+          "image": "Image",
+          "movie": "Filmas",
+          "music": "Muzika",
+          "playlist": "Grojaraštis",
+          "podcast": "Podkastas",
+          "season": "Sezonas",
+          "track": "Track",
+          "tv_show": "Televizijos laida",
+          "url": "URL",
+          "video": "Vaizdo įrašas"
+        }
+      },
+      "calendar": { "my_calendars": "My Calendars", "today": "Today" },
+      "attributes": { "expansion_header": "Atributai" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "{domain}",
+            "core": "Location & customizations",
+            "group": "Groups, group entities, and notify services",
+            "automation": "Automations",
+            "script": "Scripts",
+            "scene": "Scenes",
+            "person": "People",
+            "zone": "Zones",
+            "input_boolean": "Input booleans",
+            "input_text": "Input texts",
+            "input_number": "Input numbers",
+            "input_datetime": "Input date times",
+            "input_select": "Input selects",
+            "template": "Template entities",
+            "universal": "Universal media player entities",
+            "rest": "Rest entities and notify services",
+            "command_line": "Command line entities",
+            "filter": "Filter entities",
+            "statistics": "Statistics entities",
+            "generic": "Generic IP camera entities",
+            "generic_thermostat": "Generic thermostat entities",
+            "homekit": "HomeKit",
+            "min_max": "Min/max entities",
+            "history_stats": "History stats entities",
+            "trend": "Trend entities",
+            "ping": "Ping binary sensor entities",
+            "filesize": "File size entities",
+            "telegram": "Telegram notify services",
+            "smtp": "SMTP notify services",
+            "mqtt": "Manually configured MQTT entities",
+            "rpi_gpio": "Raspberry Pi GPIO entities"
+          },
+          "server_control": {
+            "perform_action": "{action} serveris",
+            "restart": "Paleisti iš naujo",
+            "stop": "Sustabdyti"
+          },
+          "types": {
+            "reload": "Perkrauti",
+            "navigation": "Navigate",
+            "server_control": "Serveris"
+          },
+          "navigation": {
+            "logs": "Įvykių žurnalai",
+            "automation": "Automatizacijos",
+            "script": "Skriptai",
+            "integrations": "Integracijos",
+            "areas": "Sritys",
+            "scene": "Scenos",
+            "helpers": "Pagelbikliai",
+            "tag": "Tags",
+            "person": "Žmonės",
+            "devices": "Įrenginiai",
+            "entities": "Objectai",
+            "energy": "Energy",
+            "lovelace": "Lovelace ataskaitų sritis",
+            "core": "Bendra",
+            "zone": "Zonos",
+            "users": "Vartotojai",
+            "info": "Informacija",
+            "customize": "Tinkinimas",
+            "blueprint": "Techniniai planai",
+            "server_control": "Serverio valdikliai",
+            "navigate_to": "Pereiti į {panel}"
+          }
+        },
+        "filter_placeholder": "Objekto filtras"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant nieko neišgirdo",
+        "found": "I found the following for you:",
+        "error": "Oi, įvyko klaida",
+        "how_can_i_help": "Kuo galiu padėti?",
+        "label": "Įveskite klausimą ir paspauskite „Enter“",
+        "label_voice": "Type and press 'Enter' or tap the microphone to speak"
+      },
+      "generic": {
+        "cancel": "Cancel",
+        "ok": "OK",
+        "default_confirmation_title": "Are you sure?",
+        "close": "uždaryti"
+      },
+      "image_cropper": { "crop": "Apkarpyti" },
+      "more_info_control": {
+        "dismiss": "Atsisakyti dialogo",
+        "settings": "Subjekto nustatymai",
+        "edit": "Edit entity",
+        "details": "Išsami informacija",
+        "history": "Istorija",
+        "last_changed": "Paskutinį kartą pakeista",
+        "last_updated": "Paskutinį kartą atnaujinta",
+        "script": {
+          "last_action": "Paskutinis veiksmas",
+          "last_triggered": "Last triggered"
+        },
+        "sun": {
+          "elevation": "Aukštis",
+          "rising": "Kyla",
+          "setting": "Nustatymas"
+        },
+        "updater": { "title": "Atnaujinimo instrukcijos" },
+        "remote": { "activity": "Dabartinė veikla" },
+        "restored": {
+          "not_provided": "This entity is currently unavailable and is an orphan to a removed, changed or dysfunctional integration or device.",
+          "remove_intro": "If the entity is no longer in use, you can clean it up by removing it.",
+          "remove_action": "Remove entity",
+          "confirm_remove_title": "Remove entity?",
+          "confirm_remove_text": "Are you sure you want to remove this entity?"
+        },
+        "vacuum": {
+          "status": "Būsena",
+          "commands": "Vacuum cleaner commands:",
+          "fan_speed": "Ventiliatoriaus greitis",
+          "start": "Pradėti",
+          "pause": "Pristabdyti",
+          "stop": "Sustabdyti",
+          "clean_spot": "Clean spot",
+          "locate": "Surasti",
+          "return_home": "Grįžti namo",
+          "start_pause": "Pradėti/Pristabdyti"
+        },
+        "person": { "create_zone": "Create zone from current location" },
+        "cover": {
+          "open_cover": "Open cover",
+          "close_cover": "Close cover",
+          "open_tilt_cover": "Open cover tilt",
+          "close_tile_cover": "Close cover tilt",
+          "stop_cover": "Stop cover from moving"
+        }
+      },
+      "entity_registry": {
+        "settings": "Nustatymai",
+        "control": "Control",
+        "related": "Related",
+        "dismiss": "Atmesti",
+        "no_unique_id": "This entity (\"{entity_id}\") does not have a unique ID, therefore its settings cannot be managed from the UI. See the {faq_link} for more detail.",
+        "faq": "dokumentacija",
+        "info_customize": "You can overwrite some attributes in the {customize_link} section.",
+        "customize_link": "entity customizations",
+        "editor": {
+          "name": "Pavadinimas",
+          "icon": "Icon",
+          "icon_error": "Icons should be in the format 'prefix:iconname', e.g. 'mdi:home'",
+          "entity_id": "Entity ID",
+          "unavailable": "This entity is not currently available.",
+          "enabled_label": "Enable entity",
+          "enabled_cause": "Disabled by {cause}.",
+          "device_disabled": "Šio objekto įrenginys išjungtas.",
+          "open_device_settings": "Atidaryti įrenginio nustatymus",
+          "enabled_description": "Disabled entities will not be added to Home Assistant.",
+          "enabled_delay_confirm": "The enabled entities will be added to Home Assistant in {delay} seconds",
+          "enabled_restart_confirm": "Restart Home Assistant to finish enabling the entities",
+          "delete": "Delete",
+          "confirm_delete": "Are you sure you want to delete this entry?",
+          "update": "Update",
+          "note": "Note: This might not work yet with all integrations.",
+          "advanced": "Advanced settings",
+          "area": "Set entity area only",
+          "area_note": "By default the entities of a device are in the same area as the device. If you change the area of this entity, it will no longer follow the area of the device.",
+          "follow_device_area": "Follow device area",
+          "change_device_area": "Change device area"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "The {platform} integration is not loaded. Please add it to your configuration either by adding 'default_config:' or ''{platform}:''.",
+        "yaml_not_editable": "The settings of this entity cannot be edited from the UI. Only entities set up from the UI are configurable from the UI.",
+        "required_error_msg": "This field is required",
+        "generic": { "name": "Name", "icon": "Icon" },
+        "input_datetime": {
+          "date": "Date",
+          "time": "Time",
+          "datetime": "Date and time",
+          "mode": "What do you want to input"
+        },
+        "input_text": {
+          "min": "Minimum length",
+          "max": "Maximum length",
+          "mode": "Display mode",
+          "text": "Text",
+          "password": "Password",
+          "pattern": "Regex pattern for client-side validation"
+        },
+        "input_number": {
+          "min": "Minimum value",
+          "max": "Maximum value",
+          "mode": "Display mode",
+          "box": "Input field",
+          "slider": "Slider",
+          "step": "Žingsnio dydis",
+          "unit_of_measurement": "Matavimo vienetai"
+        },
+        "input_select": {
+          "options": "Parinktys",
+          "add_option": "Pridėti parinktį",
+          "no_options": "There are no options yet.",
+          "add": "Pridėti"
+        },
+        "counter": {
+          "minimum": "Mažiausia reikšmė",
+          "maximum": "Didžiausia reiikšmė",
+          "initial": "Pradinė reikšmė",
+          "restore": "Atkurkite paskutinę žinomą reikšmę paleidus „Home Assistant“",
+          "step": "Žingsnio dydis"
+        },
+        "timer": { "duration": "Trukmė" }
+      },
+      "options_flow": {
+        "form": { "header": "Parinktys" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "Parinktys sėkmingai išsaugotos." }
+      },
+      "config_entry_system_options": {
+        "title": "System Options for {integration}",
+        "enable_new_entities_label": "Enable newly added entities.",
+        "enable_new_entities_description": "If newly discovered devices for {integration} should be automatically added.",
+        "enable_polling_label": "Enable polling for updates.",
+        "enable_polling_description": "If Home Assistant should automatically poll {integration} entities for updates.",
+        "restart_home_assistant": "Kad pakeitimai įsigaliotų, turite iš naujo paleisti Home Assistant.",
+        "update": "Atnaujinti"
+      },
+      "zha_reconfigure_device": {
+        "heading": "Reconfiguring device",
+        "configuring_alt": "Konfigūruojama",
+        "introduction": "Reconfigure a device on your Zigbee network. Use this feature if your device is not functioning correctly.",
+        "battery_device_warning": "You will need to wake battery powered devices before starting the reconfiguration process. Refer to your device's manual for instructions on how to wake the device.",
+        "run_in_background": "Galite uždaryti šį dialogo langą ir perkonfigūravimas bus tęsiamas fone.",
+        "start_reconfiguration": "Pradėti perkonfigūravimą",
+        "in_progress": "Įrenginys perkonfigūruojamas. Tai gali užtrukti.",
+        "configuration_failed": "Įrenginio perkonfigūravimas nepavyko. Žurnaluose gali būti papildomos informacijos.",
+        "configuration_complete": "Įrenginio perkonfigūravimas baigtas.",
+        "button_show": "Rodyti išsamią informaciją",
+        "button_hide": "Slėpti išsamią informaciją",
+        "cluster_header": "Cluster",
+        "bind_header": "Binding",
+        "reporting_header": "Ataskaitos",
+        "attribute": "Atributas",
+        "min_max_change": "min/max/change"
+      },
+      "zha_device_info": {
+        "manuf": "sukūrė {manufacturer}",
+        "no_area": "Nėra srities",
+        "device_signature": "Zigbee device signature",
+        "device_children": "Zigbee device children",
+        "buttons": {
+          "add": "Add Devices via this device",
+          "remove": "Remove Device",
+          "clusters": "Manage Clusters",
+          "reconfigure": "Reconfigure Device",
+          "zigbee_information": "Zigbee device signature",
+          "device_children": "Peržiūrėti vaikus",
+          "view_in_visualization": "View in Visualization"
+        },
+        "services": {
+          "reconfigure": "Reconfigure ZHA device (heal device). Use this if you are having issues with the device. If the device in question is a battery powered device please ensure it is awake and accepting commands when you use this service.",
+          "updateDeviceName": "Set a custom name for this device in the device registry.",
+          "remove": "Remove a device from the Zigbee network.",
+          "zigbee_information": "View the Zigbee information for the device."
+        },
+        "confirmations": {
+          "remove": "Ar jūs tikrai norite pašalinti įrenginį?"
+        },
+        "quirk": "Quirk",
+        "last_seen": "Paskutinį kartą matyta",
+        "power_source": "Power Source",
+        "unknown": "Nežinoma",
+        "zha_device_card": { "device_name_placeholder": "Change device name" }
+      },
+      "domain_toggler": {
+        "title": "Toggle Domains",
+        "reset_entities": "Reset Entities"
+      },
+      "mqtt_device_debug_info": {
+        "title": "{device} debug info",
+        "deserialize": "Attempt to parse MQTT messages as JSON",
+        "entities": "Entities",
+        "no_entities": "No entities",
+        "no_triggers": "No triggers",
+        "payload_display": "Payload display",
+        "recent_messages": "{n} most recently received message(s)",
+        "show_as_yaml": "Show as YAML",
+        "triggers": "Triggers"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\n  one {sekundė}\n  other {sekundės}\n}",
+      "minute": "{count} {count, plural,\n  one {minutė}\n  other {minutės}\n}",
+      "hour": "{count} {count, plural,\n  one {valanda}\n  other {valandos}\n}",
+      "day": "{count} {count, plural,\n  one {diena}\n  other {dienos}\n}",
+      "week": "{count} {count, plural,\n  one {savaitė}\n  other {savaitės}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "No type provided.",
+        "error_detected": "Configuration errors detected",
+        "editor_not_available": "No visual editor available for type \"{type}\".",
+        "editor_not_supported": "Visual editor is not supported for this configuration",
+        "edit_in_yaml_supported": "You can still edit your config in YAML.",
+        "key_missing": "Required key \"{key}\" is missing.",
+        "key_not_expected": "Key \"{key}\" is not expected or not supported by the visual editor.",
+        "key_wrong_type": "The provided value for \"{key}\" is not supported by the visual editor. We support ({type_correct}) but received ({type_wrong}).",
+        "no_template_editor_support": "Templates not supported in visual editor"
+      },
+      "supervisor": {
+        "title": "Could not load the Supervisor panel!",
+        "wait": "If you just started, make sure you have given the Supervisor enough time to start.",
+        "ask": "Prašyti pagalbos",
+        "reboot": "Try a reboot of the host",
+        "observer": "Check the Observer",
+        "system_health": "Check System Health"
+      }
+    },
+    "login-form": {
+      "password": "Slaptažodis",
+      "remember": "Prisiminti",
+      "log_in": "Prisijungti"
+    },
+    "notification_drawer": {
+      "click_to_configure": "Spustelėkite mygtuką, kad sukonfigūruotumėte {entity}",
+      "empty": "Pranešimų nėra",
+      "title": "Pranešimai",
+      "close": "Uždaryti",
+      "dismiss_all": "Atmesti viską"
+    },
+    "notification_toast": {
+      "service_call_failed": "Failed to call service {service}.",
+      "connection_lost": "Nutrūko ryšys. Jungiamasi iš naujo...",
+      "started": "Home Assistant startavo",
+      "starting": "Home Assistant kraunasi. Visos funkcijos bus prieinamos kai bus baigtas užkrovimas.",
+      "wrapping_up_startup": "Wrapping up startup, not everything will be available until it is finished.",
+      "integration_starting": "Starting {integration}, not everything will be available until it is finished.",
+      "triggered": "Triggered {name}",
+      "dismiss": "Atmesti"
+    },
+    "sidebar": {
+      "external_app_configuration": "App Configuration",
+      "sidebar_toggle": "Sidebar Toggle",
+      "done": "Done"
+    },
+    "panel": {
+      "error": {
+        "go_back": "Grįžti atgal",
+        "supervisor": {
+          "ask": "Prašyti pagalbos",
+          "system_health": "Patikrinti sistemos būklę"
+        }
+      },
+      "history": { "ranges": { "today": "Šiandien", "yesterday": "Vakar" } },
+      "logbook": { "ranges": { "today": "Šiandien" } }
+    }
+  }
+}

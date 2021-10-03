@@ -1,0 +1,477 @@
+{
+  "ui": {
+    "panel": {
+      "lovelace": {
+        "cards": {
+          "confirm_delete": "Ali ste prepričani, da želite izbrisati to kartico?",
+          "actions": {
+            "action_confirmation": "Ali ste prepričani, da želite izvesti akcijo \" {action} \"?",
+            "no_entity_more_info": "No entity provided for more info dialog",
+            "no_entity_toggle": "No entity provided to toggle",
+            "no_navigation_path": "No navigation path specified",
+            "no_url": "Ni URL-ja za odpiranje izbranega",
+            "no_service": "No service to run specified"
+          },
+          "empty_state": {
+            "title": "Dobrodošli Doma",
+            "no_devices": "Ta stran vam omogoča nadzor nad napravami, vendar je videti, da še niste nastavili nobenih naprav. Pojdite na stran za integracije, da začnete.",
+            "go_to_integrations_page": "Pojdite na stran za integracije."
+          },
+          "entities": { "never_triggered": "Nikoli sprožen" },
+          "shopping-list": {
+            "checked_items": "Označeni predmeti",
+            "clear_items": "Počisti označene elemente",
+            "add_item": "Dodaj element",
+            "reorder_items": "Prerazporedite elemente",
+            "drag_and_drop": "Povleci in spusti"
+          },
+          "picture-elements": {
+            "hold": "Pridržite:",
+            "tap": "Tapnite:",
+            "navigate_to": "Pojdite na {location}",
+            "url": "Odprite okno za {url_path}",
+            "toggle": "Preklopi {name}",
+            "call_service": "Kličite storitev {name}",
+            "more_info": "Pokaži več informacij: {name}"
+          },
+          "safe-mode": {
+            "header": "Aktiviran varni način",
+            "description": "Home Assistant je med nalaganjem konfiguracije naletel na težave in zdaj deluje v varnem načinu. Oglejte si dnevnik napak in preverite kaj je šlo narobe."
+          },
+          "starting": {
+            "description": "Home Assistant se zaganja, prosimo počakajte ..."
+          }
+        },
+        "unused_entities": {
+          "title": "Neuporabljene entitete",
+          "available_entities": "To so entitete, ki so vam na voljo, vendar še niso v uporabniškem vmesniku Lovelace.",
+          "select_to_add": "Izberite entitete, ki jih želite dodati na kartico, in nato kliknite gumb Dodaj kartico.",
+          "entity": "Subjekt",
+          "entity_id": "ID entitete",
+          "domain": "Domena",
+          "last_changed": "Zadnja sprememba",
+          "search": "Iskanje entitet",
+          "no_data": "Najdenih ni bilo neuporabljenih entitet"
+        },
+        "add_entities": {
+          "yaml_unsupported": "Te funkcije ne morete uporabljati, če uporabniški vmesnik Lovelace uporabljate v načinu YAML.",
+          "generated_unsupported": "To funkcijo lahko uporabite le, ko ste prevzeli nadzor nad uporabniškim vmesnikom Lovelace.",
+          "saving_failed": "Shranjevanje konfiguracije uporabniškega vmesnika Lovelace ni uspelo."
+        },
+        "views": {
+          "confirm_delete": "Želite izbrisati pogled?",
+          "confirm_delete_text": "Ali ste prepričani, da želite izbrisati pogled ''{name}'' ?",
+          "confirm_delete_existing_cards": "Če izbrišete ta pogled, boste odstranili tudi kartice",
+          "confirm_delete_existing_cards_text": "Ali ste prepričani, da želite izbrisati svoj ''{name}'' pogled? Pogled vsebuje {number} kartice, ki bodo izbrisane. Tega ukrepa ni mogoče razveljaviti."
+        },
+        "menu": {
+          "configure_ui": "Uredi nadzorno ploščo",
+          "help": "Pomoč",
+          "start_conversation": "Začni pogovor",
+          "reload_resources": "Ponovno naloži vire",
+          "exit_edit_mode": "Zapustite način urejanja iz uporabniškega vmesnika",
+          "close": "Zapri"
+        },
+        "reload_resources": {
+          "refresh_header": "Ali želite osvežiti?",
+          "refresh_body": "Če želite dokončati ponovno nalaganje, morate osvežiti stran. Ali jo želite zdaj osvežiti?"
+        },
+        "editor": {
+          "header": "Uredi UI",
+          "menu": {
+            "open": "Odprite meni uporabniškega vmesnika Lovelace",
+            "raw_editor": "\"Surovi\" urejevalnik konfiguracije",
+            "manage_dashboards": "Manage dashboards",
+            "manage_resources": "Manage resources"
+          },
+          "common": {
+            "edit": "Uredi",
+            "clear": "Počisti",
+            "add": "Dodaj",
+            "none": "Noben"
+          },
+          "raw_editor": {
+            "header": "Uredi konfiguracijo",
+            "save": "Shrani",
+            "unsaved_changes": "Neshranjene spremembe",
+            "saved": "Shranjeno",
+            "reload": "Reload",
+            "lovelace_changed": "The Lovelace config was updated, do you want to load the updated config in the editor and lose your current changes?",
+            "confirm_remove_config_title": "Ali ste prepričani, da želite odstraniti konfiguracijo uporabniškega vmesnika Lovelace?",
+            "confirm_remove_config_text": "Če odstranite konfiguracijo uporabniškega vmesnika Lovelace, bodo prikazi za uporabniški vmesnik Lovelace z vašimi območji in napravami samodejno ustvarjeni.",
+            "confirm_unsaved_changes": "Imate neshranjene spremembe, ali ste prepričani, da želite zapreti?",
+            "confirm_unsaved_comments": "Vaša konfiguracija vsebuje komentarje, ki ne bodo shranjeni. Ali želite nadaljevati?",
+            "error_parse_yaml": "Ni mogoče razčleniti YAML: {error}",
+            "error_invalid_config": "Vaša konfiguracija ni veljavna: {error}",
+            "error_save_yaml": "YAML-a ni mogoče shraniti: {error}",
+            "error_remove": "Konfiguracije ni mogoče odstraniti: {error}",
+            "resources_moved": "Virov ne bi smeli več dodajati v konfiguracijo Lovelace, lahko pa jih dodate na konfiguracijski plošči Lovelace."
+          },
+          "edit_lovelace": {
+            "header": "Naslov vašega uporabniškega vmesnika Lovelace",
+            "explanation": "Ta naslov je prikazan predvsem nad vašimi pogledi v uporabniškem vmesniku Lovelace.",
+            "edit_title": "Uredi naslov",
+            "title": "Naslov"
+          },
+          "edit_view": {
+            "header": "Prikaži konfiguracijo",
+            "header_name": "{name} Prikaži konfiguracijo",
+            "add": "Dodaj pogled",
+            "edit": "Uredi pogled",
+            "delete": "Izbriši pogled",
+            "move_left": "Premakni pogled levo",
+            "move_right": "Premakni pogled desno",
+            "tab_settings": "Nastavitve",
+            "tab_badges": "Značke",
+            "tab_visibility": "Vidljivost",
+            "visibility": {
+              "select_users": "Izberite, kateri uporabniki bi morali videti ta pogled v navigaciji"
+            },
+            "type": "View type",
+            "types": {
+              "masonry": "Masonry (default)",
+              "sidebar": "Sidebar",
+              "panel": "Panel (1 card)"
+            }
+          },
+          "edit_badges": {
+            "panel_mode": "Te značke ne bodo prikazane, ker je ta pogled v načinu \"Panel Mode\"."
+          },
+          "edit_card": {
+            "header": "Nastavitve kartice",
+            "typed_header": "{type} Konfiguracija kartice",
+            "pick_card": "Katero kartico želite dodati?",
+            "pick_card_view_title": "Katero kartico želite dodati v pogled {name}?",
+            "toggle_editor": "Preklop na urejevalnik",
+            "unsaved_changes": "Imate neshranjene spremembe",
+            "confirm_cancel": "Ali ste prepričani, da želite preklicati?",
+            "show_visual_editor": "Pokaži vizualni urejevalnik",
+            "show_code_editor": "Pokaži urejevalnik kode",
+            "add": "Dodaj kartico",
+            "edit": "Uredi",
+            "clear": "Počisti",
+            "delete": "Izbriši kartico",
+            "duplicate": "Podvoji kartico",
+            "move": "Premakni v pogled",
+            "move_before": "Premakni kartico pred",
+            "move_after": "Premakni kartico za",
+            "options": "Več možnosti",
+            "search_cards": "Poišči kartice"
+          },
+          "move_card": {
+            "header": "Izberite pogled, na katerega želite premakniti kartico"
+          },
+          "select_view": {
+            "header": "Izberite pogled",
+            "dashboard_label": "Nadzorna plošča"
+          },
+          "suggest_card": {
+            "header": "Za vas smo ustvarili predlog",
+            "create_own": "Izberite drugačno karto",
+            "add": "Dodaj v uporabniški vmesnik Lovelace"
+          },
+          "save_config": {
+            "header": "Prevzemite nadzor nad lovelace vmesnikom",
+            "para": "To nadzorno ploščo trenutno vzdržuje Home Assistant. Samodejno se posodobi, ko bodo na voljo nove entitete ali komponente Lovelace UI. Če prevzamete nadzor, se ta nadzorna plošča ne bo več samodejno posodabljala. Vedno lahko ustvarite novo nadzorno ploščo v konfiguraciji, s katero se lahko igrate.",
+            "para_sure": "Ali ste prepričani, da želite prevzeti nadzor nad vašim vmesnikom?",
+            "yaml_mode": "Za to nadzorno ploščo uporabljate način YAML, kar pomeni, da ne morete spremeniti konfiguracije Lovelace iz uporabniškega vmesnika. Če želite upravljati to nadzorno ploščo iz uporabniškega vmesnika, iz konfiguracije Lovelace v 'config.yaml.' Odstranite 'mode: yaml'.",
+            "yaml_control": "Če želite prevzeti nadzor v načinu YAML, ustvarite datoteko YAML z imenom, ki ste ga določili v konfiguraciji za to nadzorno ploščo, ali privzeto 'ui-lovelace.yaml'.",
+            "yaml_config": "Za začetek vam lahko pomaga trenutne nastavitve te nadzorne plošče:",
+            "empty_config": "Začnite s prazno nadzorno ploščo",
+            "close": "Zapri",
+            "save": "Prevzemite nadzor",
+            "cancel": "Pozabi"
+          },
+          "migrate": {
+            "header": "Nastavitve so nezdružljiva",
+            "para_no_id": "Ta element nima ID-ja. Prosimo, dodajte ID tega elementa v 'ui-lovelace.yaml'.",
+            "para_migrate": "Home Assistant lahko samodejno doda ID na vse vaše kartice in poglede s pritiskom na gumb »Preseli konfiguracijo«.",
+            "migrate": "Selitev konfiguracije"
+          },
+          "action-editor": {
+            "navigation_path": "Navigacijska pot",
+            "url_path": "Pot URL-ja",
+            "actions": {
+              "default_action": "Privzeto dejanje",
+              "call-service": "Klicna storitev",
+              "more-info": "Več informacij",
+              "toggle": "Preklop",
+              "navigate": "Navigacija",
+              "url": "URL",
+              "none": "Brez akcije"
+            }
+          },
+          "card": {
+            "alarm-panel": {
+              "name": "Alarmna plošča",
+              "available_states": "Stanja na voljo",
+              "description": "Kartica alarm panel vam omogoča, da vklopite in razorožite vaše integracije alarmov."
+            },
+            "calendar": {
+              "name": "Koledar",
+              "description": "Kartica Koledar prikazuje koledar, ki vključuje poglede dneva, tedna in seznama",
+              "inital_view": "Začetni prikaz",
+              "calendar_entities": "Entitete koledarja",
+              "views": {
+                "dayGridMonth": "Mesec",
+                "dayGridDay": "Dan",
+                "listWeek": "Seznam"
+              }
+            },
+            "conditional": {
+              "name": "Pogojno",
+              "description": "Pogojna kartica prikazuje drugo kartico, ki temelji na stanjih entitet.",
+              "conditions": "Pogoji",
+              "card": "Kartica",
+              "state_equal": "Stanje je enako",
+              "state_not_equal": "Stanje ni enako",
+              "current_state": "trenutno",
+              "condition_explanation": "Kartica bo prikazana, ko so izpolnjeni VSI pogoji spodaj.",
+              "change_type": "Spremeni tip"
+            },
+            "config": { "required": "Obvezno", "optional": "Neobvezno" },
+            "entities": {
+              "name": "Subjekti",
+              "show_header_toggle": "Pokaži preklop glave?",
+              "toggle": "Preklopi entitete.",
+              "description": "Kartica entitet je najpogostejša vrsta kartice. Predmete združuje v sezname.",
+              "special_row": "posebna vrstica",
+              "edit_special_row": "Podrobnosti te vrstice si oglejte s klikom na gumb za urejanje",
+              "entity_row_editor": "Urejevalnik vrstic entitete",
+              "secondary_info_values": {
+                "none": "Ni sekundarnih informacij",
+                "entity-id": "ID entitete",
+                "last-changed": "Zadnja sprememba",
+                "last-triggered": "Zadnjič sproženo",
+                "position": "Položaj",
+                "tilt-position": "Položaj nagiba",
+                "brightness": "Svetlost",
+                "last-updated": "Zadnja posodobitev"
+              },
+              "entity_row": {
+                "divider": "Razdelilnik",
+                "call-service": "Kliči Storitev",
+                "section": "Sekcija",
+                "weblink": "Spletna povezava",
+                "attribute": "Atribut",
+                "buttons": "Gumbi",
+                "conditional": "Pogojno",
+                "cast": "Zasedba",
+                "button": "Gumb"
+              }
+            },
+            "entity": {
+              "name": "Entiteta",
+              "description": "Kartica vam omogoča hiter pregled stanja vaše entitete."
+            },
+            "button": {
+              "name": "Gumb",
+              "description": "Gumbna kartica vam omogoča, da dodate gumbe za opravljanje nalog.",
+              "default_action_help": "Privzeto dejanje je odvisno od zmožnosti entitete. Ali se bo preklopila, ali pa bo prikazanih več podatkov."
+            },
+            "entity-filter": {
+              "name": "Filter entitet",
+              "description": "Kartica filter entitet vam omogoča, da določite seznam entitet, ki jih želite slediti samo, če so v določenem stanju."
+            },
+            "gauge": {
+              "name": "Merilnik",
+              "needle_gauge": "Display as needle gauge?",
+              "severity": {
+                "define": "Določi resnost?",
+                "green": "Zelena",
+                "red": "Rdeča",
+                "yellow": "Rumena"
+              },
+              "description": "Gauge kartica je osnovna kartica, ki omogoča vizualno videnje podatkov senzorjev."
+            },
+            "glance": {
+              "name": "Pregled",
+              "columns": "Stolpci",
+              "description": "Kartica Glance je uporabna za združevanje več senzorjev v kompaktnem pregledu."
+            },
+            "grid": {
+              "name": "Mreža",
+              "description": "Kartica Mreža omogoča prikaz več kartic v mreži.",
+              "columns": "Stolpci",
+              "square": "Render cards as squares"
+            },
+            "logbook": {
+              "name": "Dnevnik",
+              "description": "Na kartici Dnevnik je prikazan seznam dogodkov za entitete."
+            },
+            "history-graph": {
+              "name": "Graf zgodovine",
+              "description": "Kartica Zgodovinski grafikon omogoča prikaz grafa za vsako od naštetih entitet."
+            },
+            "statistics-graph": {
+              "name": "Statistics Graph",
+              "description": "The Statistics Graph card allows you to display a graph of the statistics for each of the entities listed."
+            },
+            "horizontal-stack": {
+              "name": "Vodoravni sklad",
+              "description": "Kartica Horizontal stack vam omogoča, da skupaj zložite več kart, tako da vedno stojijo drug poleg drugega v razmaku enega stolpca."
+            },
+            "humidifier": {
+              "name": "Vlažilec",
+              "description": "Kartica \"humidifier\" omogoča nadzor nad vašo vlažilno enoto. Omogoča vam, da spremenite vlažnost in način dela entitete."
+            },
+            "iframe": {
+              "name": "Spletna stran",
+              "description": "Kartica webpage vam omogoča, da svojo najljubšo spletno stran vdelate Home Assistant."
+            },
+            "light": {
+              "name": "Luči",
+              "description": "Kartica Light omogoča spreminjanje svetlosti luči."
+            },
+            "generic": {
+              "aspect_ratio": "Razmerje Med Širino In Višino",
+              "attribute": "Atribut",
+              "camera_image": "Subjekt kamere",
+              "camera_view": "Pogled kamere",
+              "double_tap_action": "Dejanje dvojnega dotika",
+              "entities": "Subjekti",
+              "entity": "Subjekt",
+              "hold_action": "dejanje pridržanja",
+              "hours_to_show": "število ur za prikaz",
+              "days_to_show": "Days to Show",
+              "icon": "Ikona",
+              "icon_height": "Višina ikone",
+              "image": "Pot slike",
+              "maximum": "Največ",
+              "manual": "Ročno",
+              "manual_description": "Morate dodati kartico po meri ali samo želite ročno napisati yaml?",
+              "minimum": "Najmanj",
+              "name": "Ime",
+              "refresh_interval": "Interval osveževanja",
+              "show_icon": "Prikaži ikono?",
+              "show_name": "Prikaži ime?",
+              "show_state": "Prikaži stanje?",
+              "tap_action": "Dejanje dotika",
+              "title": "Naslov",
+              "theme": "Tema",
+              "no_theme": "Brez teme",
+              "unit": "Enota",
+              "url": "URL",
+              "state": "Stanje",
+              "secondary_info_attribute": "Atributi sekundarnih informacij",
+              "search": "Iskanje",
+              "state_color": "Barvne ikone glede na stanje?"
+            },
+            "map": {
+              "name": "Zemljevid",
+              "geo_location_sources": "Geolokacijski viri",
+              "dark_mode": "Temni način?",
+              "default_zoom": "Privzeta povečava",
+              "hours_to_show": "število ur za prikaz",
+              "source": "Vir",
+              "description": "Kartica Map omogoča prikazovanje entitet na zemljevidu."
+            },
+            "markdown": {
+              "name": "Markdown",
+              "content": "Vsebina",
+              "description": "Kartica Markdown se uporablja za upodabljanje označb."
+            },
+            "media-control": {
+              "name": "Nadzor predvajalnika",
+              "description": "Kartica Media Control se uporablja za prikaz entitet predvajalnika na vmesniku s preprostimi kontrolniki."
+            },
+            "picture": {
+              "name": "Slika",
+              "description": "Picture card omogoča nastavitev slike za navigacijo do različnih poti v vašem vmesniku ali za klicanje storitve."
+            },
+            "picture-elements": {
+              "name": "Slikovni elementi",
+              "description": "Kartica Picture Elements je ena najbolj vsestranskih vrst kartic. Kartica omogoča pozicioniranje ikon ali besedila in celo storitev! Na sliki, ki temelji na koordinatah."
+            },
+            "picture-entity": {
+              "name": "Slika",
+              "description": "Kartica Slika prikazuje entiteto v obliki slike. Namesto slik z URL-ja lahko prikaže tudi sliko kamer."
+            },
+            "picture-glance": {
+              "name": "Pogled slike",
+              "description": "Kartica Picture Glance prikazuje sliko in ustrezna stanja entitete kot ikono. Subjekti na desni strani omogočajo preklopna dejanja, drugi pa prikazujejo pogovorno okno z več informacijami.",
+              "state_entity": "Entiteta stanja"
+            },
+            "plant-status": {
+              "name": "Stanje rastline",
+              "description": "Kartica stanje rastlin je za vse botanike tam zunaj."
+            },
+            "sensor": {
+              "name": "Senzor",
+              "show_more_detail": "Pokaži več podrobnosti",
+              "graph_type": "Vrsta grafikona",
+              "description": "Kartica Sensor vam omogoča hiter pregled stanja vaših senzorjev z izbirnim grafom, s katerim lahko prikažete spremembe skozi čas."
+            },
+            "shopping-list": {
+              "name": "Nakupovalni seznam",
+              "description": "Kartica nakupovalni seznam omogoča dodajanje, urejanje in brisanje elementov s seznama nakupov.",
+              "integration_not_loaded": "Ta kartica zahteva nastavitev integracije `shopping_list`."
+            },
+            "thermostat": {
+              "name": "Termostat",
+              "description": "Kartica Termostat omogoča nadzor nad vašo klimatsko enoto. Omogoča spreminjanje temperature in načina dela."
+            },
+            "vertical-stack": {
+              "name": "Navpični sklad",
+              "description": "Kartica Vertical Stack vam omogoča, da združite več kartic, tako da vedno sedijo v istem stolpcu."
+            },
+            "weather-forecast": {
+              "name": "Vremenska napoved",
+              "description": "Kartica Weather Forecast prikazuje vreme. Zelo koristno za vključiti na vmesnike, ki jih ljudje prikažejo na steni.",
+              "show_forecast": "Pokaži napoved"
+            }
+          },
+          "view": {
+            "panel_mode": {
+              "warning_multiple_cards": "Ta pogled vsebuje več kartic, na plošči je lahko prikazana največ ena kartica.",
+              "description": "To prikaže prvo kartico v polni širini. Ostale kartice v tem pogledu in značke ne bodo prikazane.",
+              "title": "Način panel?"
+            }
+          },
+          "cardpicker": {
+            "no_description": "Opis ni na voljo.",
+            "custom_card": "Po meri",
+            "domain": "Domena",
+            "entity": "Entiteta",
+            "by_entity": "Po entiteti",
+            "by_card": "Po kartici"
+          },
+          "header-footer": {
+            "header": "Glava",
+            "footer": "Noga",
+            "choose_header_footer": "Izberite {type}",
+            "types": {
+              "graph": { "name": "Graf" },
+              "picture": { "name": "Slika" },
+              "buttons": { "name": "Gumbi" }
+            }
+          },
+          "sub-element-editor": {
+            "types": {
+              "header": "Urejevalnik glave",
+              "footer": "Urejevalnik noge",
+              "row": "Urejevalnik vrstic entitete"
+            }
+          }
+        },
+        "warning": {
+          "attribute_not_found": "Atribut {attribute} ni na voljo v: {entity}",
+          "entity_not_found": "Entiteta ni na voljo: {entity}",
+          "entity_non_numeric": "Entiteta je neštevilska: {entity}",
+          "entity_unavailable": "{entity} trenutno ni na voljo",
+          "starting": "Home Assistant se zaganja, morda še ni vse na voljo"
+        },
+        "changed_toast": {
+          "message": "Nastavitve uporabniškega vmesnika Lovelace za to nadzorno ploščo so bile posodobljene. Če želite videti spremembe, jo osvežite."
+        },
+        "components": {
+          "timestamp-display": {
+            "invalid": "Invalid timestamp",
+            "invalid_format": "Neveljavna oblika prikaza"
+          }
+        },
+        "reload_lovelace": "Ponovno naloži uporabniški vmesnik"
+      }
+    }
+  }
+}

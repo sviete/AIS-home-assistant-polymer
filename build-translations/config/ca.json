@@ -1,0 +1,1962 @@
+{
+  "ui": {
+    "panel": {
+      "config": {
+        "header": "Configuració de Home Assistant",
+        "introduction": "Aquí pots configurar Home Assistant i els teus components. Encara no és possible configurar-ho tot des de la interfície d'usuari, però hi estem treballant.",
+        "advanced_mode": {
+          "hint_enable": "Falten opcions de configuració? Activa el mode avançat",
+          "link_profile_page": "la teva pàgina de perfil"
+        },
+        "common": {
+          "editor": {
+            "confirm_unsaved": "Hi han canvis no desats. Segur que vols sortir?"
+          }
+        },
+        "areas": {
+          "caption": "Àrees",
+          "description": "Agrupa dispositius i entitats en àrees",
+          "data_table": {
+            "area": "Àrea",
+            "devices": "Dispositius",
+            "entities": "Entitats"
+          },
+          "picker": {
+            "header": "Àrees",
+            "introduction": "Les àrees s'utilitzen per organitzar la situació dels dispositius. Aquesta informació serà utilitzada per Home Assistant per ajudar-te a organitzar millor la teva interfície, els permisos i les integracions amb d'altres sistemes.",
+            "introduction2": "Per col·locar dispositius en una àrea, utilitza l'enllaç de sota per anar a la pàgina d'integracions i, a continuació, fes clic a una integració configurada per accedir a les targetes del dispositiu.",
+            "integrations_page": "Pàgina d'integracions",
+            "no_areas": "Sembla que encara no tens cap àrea configurada.",
+            "create_area": "Crea àrea"
+          },
+          "editor": {
+            "default_name": "Nova àrea",
+            "delete": "Elimina",
+            "update": "Actualitza",
+            "create": "Crea",
+            "name": "Nom",
+            "name_required": "Nom obligatori",
+            "area_id": "ID d'àrea",
+            "unknown_error": "Error desconegut",
+            "linked_entities_caption": "Entitats",
+            "no_linked_entities": "No hi ha entitats vinculades amb aquesta àrea."
+          },
+          "delete": {
+            "confirmation_title": "Estàs segur que vols eliminar aquesta àrea?",
+            "confirmation_text": "Tots els dispositius d'aquesta àrea quedaran sense assignar."
+          }
+        },
+        "tag": {
+          "caption": "Etiquetes",
+          "description": "Dispara automatitzacions quan una etiqueta NFC, un codi QR, etc; s'escanegi",
+          "learn_more": "Més informació sobre les etiquetes",
+          "no_tags": "Sense etiquetes",
+          "add_tag": "Afegeix etiqueta",
+          "write": "Escriu",
+          "edit": "Edita",
+          "never_scanned": "Mai escanejat",
+          "create_automation": "Crea una automatització amb una etiqueta",
+          "confirm_remove_title": "Elimina l'etiqueta?",
+          "confirm_remove": "Estàs segur que vols eliminar l'etiqueta {tag}?",
+          "automation_title": "S'escanegi l'etiqueta {name}",
+          "headers": { "name": "Nom", "last_scanned": "Últim escaneig" },
+          "detail": {
+            "new_tag": "Nova etiqueta",
+            "name": "Nom",
+            "description": "Descripció",
+            "tag_id": "ID de l'etiqueta",
+            "tag_id_placeholder": "Autogenerat si es deixa buit",
+            "delete": "Elimina",
+            "update": "Actualitza",
+            "create": "Crea",
+            "create_and_write": "Crea i escriu",
+            "usage": "Una etiqueta pot disparar una automatització quan és escanejada, pots utilitzar etiquetes NFC, codis QR o qualsevol altre tipus d'etiqueta. Utilitza {companion_link} per escriure aquesta etiqueta a una etiqueta NFC programable o bé crea un codi QR.",
+            "companion_apps": "aplicacions de companion"
+          }
+        },
+        "energy": {
+          "caption": "Energy",
+          "description": "Monitor your energy production and consumption",
+          "grid": {
+            "title": "Electricity grid",
+            "sub": "Configure the amount of energy that you consume from the grid and, if you produce energy, give back to the grid. This allows Home Assistant to track your whole home energy usage.",
+            "learn_more": "More information on how to get started.",
+            "flow_dialog": {
+              "from": {
+                "header": "Configure grid consumption",
+                "paragraph": "Grid consumption is the energy that flows from the energy grid to your home.",
+                "energy_stat": "Consumed Energy (kWh)",
+                "cost_para": "Select how Home Assistant should keep track of the costs of the consumed energy.",
+                "no_cost": "Do not track costs",
+                "cost_stat": "Use an entity tracking the total costs",
+                "cost_stat_input": "Total Costs Entity",
+                "cost_entity": "Use an entity with current price",
+                "cost_entity_input": "Entity with the current price",
+                "cost_number": "Use a static price",
+                "cost_number_input": "Price per kWh",
+                "cost_number_suffix": "{currency}/kWh"
+              },
+              "to": {
+                "header": "Configure grid production",
+                "paragraph": "Grid production is the energy that flows from your solar panels to the grid.",
+                "energy_stat": "Energy returned to the grid (kWh)",
+                "cost_para": "Do you get money back when you return energy to the grid?",
+                "no_cost": "I do not get money back",
+                "cost_stat": "Use an entity tracking the total recieved money",
+                "cost_stat_input": "Total Compensation Entity",
+                "cost_entity": "Use an entity with current rate",
+                "cost_entity_input": "Entity with the current rate",
+                "cost_number": "Use a static rate",
+                "cost_number_input": "Rate per kWh",
+                "cost_number_suffix": "{currency}/kWh"
+              }
+            }
+          },
+          "solar": {
+            "title": "Solar Panels",
+            "sub": "Let Home Assistant monitor your solar panels and give you insight on their performance.",
+            "learn_more": "More information on how to get started.",
+            "stat_production": "Your solar energy production",
+            "stat_return_to_grid": "Solar energy returned to the grid",
+            "stat_predicted_production": "Prediction of your solar energy production"
+          },
+          "device_consumption": {
+            "title": "Individual devices",
+            "sub": "Tracking the energy usage of individual devices allows Home Assistant to break down your energy usage by device.",
+            "learn_more": "More information on how to get started.",
+            "add_stat": "Pick entity to track energy of",
+            "selected_stat": "Tracking energy for",
+            "dialog": {
+              "selected_stat_intro": "Select the entity that represents the device energy usage."
+            }
+          }
+        },
+        "helpers": {
+          "caption": "Ajudants",
+          "description": "Elements útils per a construir automatitzacions",
+          "types": {
+            "input_text": "Text",
+            "input_number": "Número",
+            "input_select": "Desplegable",
+            "input_boolean": "Interruptor",
+            "input_datetime": "Data i/o hora",
+            "counter": "Comptador",
+            "timer": "Temporitzador"
+          },
+          "picker": {
+            "headers": {
+              "name": "Nom",
+              "entity_id": "ID de l'entitat",
+              "type": "Tipus",
+              "editable": "Editable"
+            },
+            "add_helper": "Afegeix ajudant",
+            "no_helpers": "Sembla que encara no tens ajudants."
+          },
+          "dialog": {
+            "create": "Crea",
+            "add_helper": "Afegeix ajudant",
+            "add_platform": "Afegeix {platform}"
+          }
+        },
+        "core": {
+          "caption": "General",
+          "description": "Sistema d'unitats, ubicació, zona horària i altres paràmetres generals",
+          "section": {
+            "core": {
+              "header": "Configuració general",
+              "introduction": "Sabem que canviar la configuració pot ser un procés molest. Aquesta secció intenta facilitar-te una mica més la vida.",
+              "core_config": {
+                "edit_requires_storage": "L'editor està desactivat ja que la configuració es troba a configuration.yaml.",
+                "location_name": "Nom de la instal·lació de Home Assistant",
+                "latitude": "Latitud",
+                "longitude": "Longitud",
+                "elevation": "Altitud",
+                "elevation_meters": "metres",
+                "time_zone": "Zona horària",
+                "unit_system": "Sistema d'unitats",
+                "unit_system_imperial": "Imperial",
+                "unit_system_metric": "Mètric",
+                "imperial_example": "Fahrenheit, lliures",
+                "metric_example": "Celsius, quilograms",
+                "find_currency_value": "Find your value",
+                "save_button": "Desa",
+                "external_url": "URL extern",
+                "internal_url": "URL intern",
+                "currency": "Currency"
+              },
+              "analytics": {
+                "documentation": "Abans d'activar això, revisa't la documentació d'anàlisi a {link}, per entendre el què s'enviarà i com s'emmagatzemarà.",
+                "header": "Dades analítiques",
+                "instance_id": "ID de la instància: {huuid}",
+                "introduction": "Comparteix informació de la teva instal·lació per ajudar a millorar Home Assistant i ajudar-nos a convèncer als fabricants perquè afegeixin control local i funcions centrades en la privadesa.",
+                "learn_more": "Com processem les teves dades",
+                "needs_base": "Has d'habilitar l'anàlisi bàsica perquè aquesta opció estigui disponible",
+                "preference": {
+                  "base": {
+                    "description": "ID de la instància, versió i tipus d'instal·lació.",
+                    "title": "Anàlisi bàsica"
+                  },
+                  "diagnostics": {
+                    "description": "Comparteix informes d'error quan es produeixin errors inesperats.",
+                    "title": "Diagnòstics"
+                  },
+                  "statistics": {
+                    "description": "Nombre total d'entitats utilitzades, usuaris i altres elements.",
+                    "title": "Estadístiques d’ús"
+                  },
+                  "usage_supervisor": {
+                    "description": "Noms, versions i funcionalitats.",
+                    "title": "Integracions i complements utilitzats"
+                  },
+                  "usage": {
+                    "description": "Noms i informació de versió.",
+                    "title": "Integracions utilitzades"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "info": {
+          "caption": "Informació",
+          "copy_raw": "Text en brut",
+          "copy_github": "Per GitHub",
+          "description": "Versió, estat del sistema i enllaços a la documentació",
+          "home_assistant_logo": "Logotip de Home Assistant",
+          "path_configuration": "Ruta al fitxer configuration.yaml: {path}",
+          "developed_by": "Desenvolupat per un munt de gent fantàstica.",
+          "license": "Publicat amb la llicència Apache 2.0",
+          "source": "Font:",
+          "server": "servidor",
+          "frontend": "frontend-ui",
+          "built_using": "Creat utilitzant",
+          "icons_by": "Icones de",
+          "frontend_version": "Versió de la interfície web d'usuari: {version} - {type}",
+          "custom_uis": "Interfícies d'usuari personalitzades:",
+          "system_health_error": "El component Estat del Sistema no està configurat. Afegeix 'system_health:' a configuration.yaml",
+          "integrations": "Integracions",
+          "documentation": "Documentació",
+          "issues": "Problemes",
+          "setup_time": "Temps de configuració",
+          "system_health": {
+            "manage": "Gestiona",
+            "more_info": "més informació"
+          }
+        },
+        "logs": {
+          "caption": "Registres",
+          "description": "Consulta els registres de Home Assistant",
+          "details": "Detalls del registre ({level})",
+          "load_full_log": "Carrega el registre complet de Home Assistant",
+          "loading_log": "Carregant registre d'errors...",
+          "no_errors": "No s'ha informat de cap error",
+          "no_issues": "No hi ha registres nous!",
+          "clear": "Esborra",
+          "refresh": "Actualitza",
+          "multiple_messages": "missatge produit per primera vegada a les {time}, apareix {counter} vegades",
+          "level": {
+            "critical": "CRÍTIC",
+            "error": "ERROR",
+            "warning": "ALERTA",
+            "info": "INFO",
+            "debug": "DEPURACIÓ"
+          },
+          "custom_integration": "integració personalitzada",
+          "error_from_custom_integration": "Aquest error té origen en una integració personalitzada."
+        },
+        "lovelace": {
+          "caption": "Panells Lovelace",
+          "description": "Crea conjunts de panells personalitzats per controlar la teva casa",
+          "dashboards": {
+            "default_dashboard": "Aquest és el panell per defecte",
+            "caption": "Panells",
+            "conf_mode": {
+              "yaml": "Fitxer YAML",
+              "storage": "Controlat per la IU"
+            },
+            "picker": {
+              "headers": {
+                "title": "Títol",
+                "conf_mode": "Mètode de configuració",
+                "default": "Per defecte",
+                "require_admin": "Només administrador",
+                "sidebar": "Mostra a la barra lateral",
+                "filename": "Nom del fitxer"
+              },
+              "open": "Obrir",
+              "add_dashboard": "Afegeix panell"
+            },
+            "confirm_delete": "Estàs segur que vols eliminar aquest panell?",
+            "cant_edit_yaml": "Els panells Lovelace definits en YAML no poden ser editats des de la interfñicie d'usuari. Edita'ls des de 'configuration.yaml'.",
+            "cant_edit_default": "El panell Lovelace estàndard no pot ser editat des de la interfície d'usuari. El pots amagar configurant-ne un altre com a panell per defecte.",
+            "detail": {
+              "edit_dashboard": "Edita el panell",
+              "new_dashboard": "Afegeix un nou panell",
+              "dismiss": "Tanca",
+              "show_sidebar": "Mostra a la barra lateral",
+              "icon": "Icona",
+              "title": "Títol",
+              "title_required": "El títol és necessari.",
+              "url": "URL",
+              "url_error_msg": "L'URL no pot contenir espais o caràcters especials, excepte _ i -",
+              "require_admin": "Només administrador",
+              "delete": "Elimina",
+              "update": "Actualitza",
+              "create": "Crea",
+              "set_default": "Estableix-lo com a predeterminat en aquest dispositiu",
+              "remove_default": "Elimina'l com a predeterminat en aquest dispositiu"
+            }
+          },
+          "resources": {
+            "caption": "Recursos",
+            "types": {
+              "css": "Fitxer d'estils",
+              "html": "HTML (obsolet)",
+              "js": "Fitxer JavaScript (obsolet)",
+              "module": "Mòdul JavaScript"
+            },
+            "picker": {
+              "headers": { "url": "URL", "type": "Tipus" },
+              "no_resources": "Sense recursos",
+              "add_resource": "Afegeix recurs"
+            },
+            "confirm_delete": "Estàs segur que vols eliminar aquest recurs?",
+            "refresh_header": "Vols actualitzar?",
+            "refresh_body": "Has d'actualitzar la pàgina per completar l'eliminació. Vols actualitzar-la ara?",
+            "cant_edit_yaml": "Estàs utilitzant Lovelace en mode YAML per tant no pots gestionar els recursos des de la interfície d'usuari. Els pots gestionar des del fitxer 'configuration.yaml'.",
+            "detail": {
+              "new_resource": "Afegeix nou recurs",
+              "dismiss": "Tanca",
+              "warning_header": "Vés amb compte!",
+              "warning_text": "Afegir recursos pot ser perillós, assegura't de conèixer i confiar en el seu origen. Els recursos fraudulents poden perjudicar greument el teu sistema.",
+              "url": "URL",
+              "url_error_msg": "L'URL és un camp obligatori",
+              "type": "Tipus de recurs",
+              "delete": "Elimina",
+              "update": "Actualitza",
+              "create": "Crea"
+            }
+          }
+        },
+        "server_control": {
+          "caption": "Controls del servidor",
+          "description": "Reinicia o atura el servidor de Home Assistant",
+          "section": {
+            "validation": {
+              "heading": "Validació de la configuració",
+              "introduction": "Valida la configuració si recentment n'has fet algun canvi i vols assegurar-te de que sigui vàlida.",
+              "check_config": "Comprova la configuració",
+              "valid": "Configuració vàlida!",
+              "invalid": "Configuració invàlida"
+            },
+            "reloading": {
+              "heading": "Torna a carregar les configuracions YAML",
+              "introduction": "Algunes parts de Home Assistant es poden actualitzar sense necessitat reiniciar-lo. Si prems actualitza s'esborrarà la configuració YAML actual i se'n carregarà la nova.",
+              "reload": "{domain}",
+              "core": "Ubicació i personalitzacions",
+              "group": "Grups, grups d'entitats i serveis de notificació",
+              "automation": "Automatitzacions",
+              "script": "Programes (scripts)",
+              "scene": "Escenes",
+              "person": "Persones",
+              "zone": "Zones",
+              "input_boolean": "Entrades booleanes",
+              "input_text": "Entrades de text",
+              "input_number": "Entrades numèriques",
+              "input_datetime": "Entrades de data i hora",
+              "input_select": "Entrades de selecció",
+              "template": "Entitats de plantilla",
+              "universal": "Entitats del reproductor universal",
+              "rest": "Entitats i serveis de notificació rest",
+              "command_line": "Entitats de línia de comandes",
+              "filter": "Entitats de filtre",
+              "statistics": "Entitats d'estadístiques",
+              "generic": "Entitats genèriques de càmera IP",
+              "generic_thermostat": "Entitats genèriques de termòstat",
+              "homekit": "HomeKit",
+              "min_max": "Entitats min/max",
+              "history_stats": "Entitats d'estadístiques històriques",
+              "trend": "Entitats de tendència",
+              "ping": "Entitats de sensors binaris de ping",
+              "filesize": "Entitats de mida de fitxer",
+              "telegram": "Serveis de notificació de Telegram",
+              "smtp": "Serveis de notificació SMTP",
+              "mqtt": "Entitats MQTT configurades manualment",
+              "rpi_gpio": "Entitats GPIO de la Raspberry Pi"
+            },
+            "server_management": {
+              "heading": "Gestió del servidor",
+              "introduction": "Controla el teu servidor de Home Assistant... des de Home Assistant.",
+              "restart": "Reinicia",
+              "confirm_restart": "Segur que vols reiniciar Home Assistant?",
+              "stop": "Atura",
+              "confirm_stop": "Segur que vols aturar Home Assistant?"
+            }
+          }
+        },
+        "customize": {
+          "caption": "Personalització",
+          "description": "Personalitza les entitats",
+          "picker": {
+            "header": "Personalitzacions",
+            "introduction": "Personalitza els atributs de les entitats al teu gust. Les personalitzacions afegides/modificades apareixeran immediatament, les que s'hagin eliminat tindran efecte quan l'entitat s'actualitzi.",
+            "documentation": "Documentació de personalització"
+          },
+          "warning": {
+            "include_sentence": "Sembla que la teva configuració a configuration.yaml no",
+            "include_link": "inclou customize.yaml",
+            "not_applied": "Els canvis realitzats aquí es desen, però no s'aplicaran fins que es torni a carregar la configuració, tret que la inclusió estigui present."
+          },
+          "attributes_customize": "Els atributs següents ja s'han definit a customize.yaml",
+          "attributes_outside": "Els atributs següents es configuren des de fora del fitxer customize.yaml",
+          "different_include": "Possiblement a través d'un domini o una altra inclusió diferent.",
+          "attributes_set": "Els següents atributs d'entitat s'estableixen programàticament.",
+          "attributes_override": "Si vols, pots substituir-los.",
+          "attributes_not_set": "Els atributs següents no s'han configurat. Els pots configurar, si vols.",
+          "pick_attribute": "Selecciona un atribut per substituir-lo"
+        },
+        "automation": {
+          "caption": "Automatització",
+          "description": "Crea regles de comportament personalitzades per a casa teva",
+          "picker": {
+            "header": "Editor d'automatitzacions",
+            "introduction": "L'editor d'automatitzacions et permet crear i editar automatitzacions. Vés a l'enllaç de sota per veure'n les instruccions i assegurar-te que has configurat Home Assistant correctament.",
+            "learn_more": "Més informació sobre les automatitzacions",
+            "pick_automation": "Selecciona l'automatització a editar",
+            "no_automations": "No s'ha pogut trobar cap automatització",
+            "add_automation": "Afegeix automatització",
+            "only_editable": "Només es poden editar les automatitzacions definides al fitxer automations.yaml.",
+            "dev_only_editable": "Només es poden depurar les automatitzacions que tinguin un identificador únic.",
+            "edit_automation": "Edita automatització",
+            "dev_automation": "Depurar automatització",
+            "show_info_automation": "Mostra informació sobre l'automatització",
+            "delete_automation": "Elimina l'automatització",
+            "delete_confirm": "Estàs segur que vols eliminar aquesta automatització?",
+            "duplicate_automation": "Duplica l'automatització",
+            "duplicate": "Duplica",
+            "headers": { "name": "Nom" }
+          },
+          "dialog_new": {
+            "header": "Creació d'una nova automatització",
+            "how": "Com vols crear la nova automatització?",
+            "blueprint": { "use_blueprint": "Utilitza un blueprint" },
+            "thingtalk": {
+              "header": "Descriu l'automatització que vols crear",
+              "intro": "I intentarem crear-la per tu. Per exemple: \"Turn the light on when I leave\".",
+              "input_label": "Què vols que faci aquesta automatització?",
+              "create": "Crea"
+            },
+            "start_empty": "Comença amb una automatització buida"
+          },
+          "editor": {
+            "enable_disable": "Activa/desactiva automatització",
+            "show_trace": "Mostra la traça",
+            "introduction": "Utilitza les automatitzacions per donar vida a casa teva.",
+            "default_name": "Nova automatització",
+            "load_error_not_editable": "Només les automatitzacions a automations.yaml són editables.",
+            "load_error_unknown": "Error en carregar l'automatització ({err_no}).",
+            "save": "Desa",
+            "unsaved_confirm": "Hi ha canvis no desats. Segur que vols sortir?",
+            "alias": "Nom",
+            "move_up": "Mou amunt",
+            "move_down": "Mou avall",
+            "description": {
+              "label": "Descripció",
+              "placeholder": "Descripció opcional"
+            },
+            "blueprint": {
+              "header": "Blueprint",
+              "blueprint_to_use": "Blueprint a utilitzar",
+              "no_blueprints": "No tens blueprints",
+              "no_inputs": "Aquest blueprint no té entrades."
+            },
+            "modes": {
+              "label": "Mode",
+              "description": "El mode controla què passa quan es dispara l'automatització i encara hi ha accions d'un disparament anterior executant-se. Consulta {documentation_link} per a més informació.",
+              "documentation": "documentació d'automatització",
+              "single": "Individual (per defecte)",
+              "restart": "Reinici",
+              "queued": "Afegeix al final",
+              "parallel": "Paral·lel"
+            },
+            "max": {
+              "queued": "Longitud de la cua",
+              "parallel": "Nombre màxim d'execucions paral·leles"
+            },
+            "edit_yaml": "Edita en YAML",
+            "edit_ui": "Edita amb l'editor visual",
+            "copy_to_clipboard": "Copia al porta-retalls",
+            "triggers": {
+              "name": "Disparador",
+              "header": "Disparadors",
+              "introduction": "Els disparadors són les regles que fan que s'executi una automatització. Pots definir més d'un disparador per a cada automatització. Una vegada salti un disparador, Home Assistant validarà les condicions (si n'hi ha) i finalment cridarà l'acció.",
+              "learn_more": "Més informació sobre els activadors",
+              "add": "Afegeix disparador",
+              "id": "ID del disparador (utilitzat per la condició de disparador)",
+              "duplicate": "Duplica",
+              "delete": "Elimina",
+              "delete_confirm": "Segur que vols eliminar-ho?",
+              "unsupported_platform": "Plataforma no compatible amb l'editor visual: {platform}",
+              "type_select": "Tipus de disparador",
+              "type": {
+                "device": {
+                  "label": "Dispositiu",
+                  "trigger": "Disparador",
+                  "extra_fields": {
+                    "above": "A sobre",
+                    "below": "A sota",
+                    "for": "Durada",
+                    "zone": "Zona"
+                  }
+                },
+                "event": {
+                  "label": "Esdeveniment",
+                  "event_type": "Tipus d'esdeveniment",
+                  "event_data": "Dades de l'esdeveniment",
+                  "context_users": "Limita-ho als esdeveniments disparats per",
+                  "context_user_picked": "Esdeveniment cridat per usuari",
+                  "context_user_pick": "Selecciona usuari"
+                },
+                "geo_location": {
+                  "label": "Geolocalització",
+                  "source": "Font",
+                  "zone": "Zona",
+                  "event": "Esdeveniment:",
+                  "enter": "Entra",
+                  "leave": "Surt"
+                },
+                "state": {
+                  "label": "Estat",
+                  "attribute": "Atribut (opcional)",
+                  "from": "Des de",
+                  "for": "Durant",
+                  "to": "A"
+                },
+                "homeassistant": {
+                  "label": "Home Assistant",
+                  "event": "Esdeveniment:",
+                  "start": "Inici",
+                  "shutdown": "Aturada"
+                },
+                "mqtt": {
+                  "label": "MQTT",
+                  "topic": "Topic",
+                  "payload": "Dades/payload (opcional)"
+                },
+                "numeric_state": {
+                  "label": "Estat numèric",
+                  "above": "Per sobre de",
+                  "below": "Per sota de",
+                  "value_template": "Plantilla de valor (opcional)"
+                },
+                "sun": {
+                  "label": "Sol",
+                  "event": "Esdeveniment:",
+                  "sunrise": "a l'Alba",
+                  "sunset": "al Capvespre",
+                  "offset": "Òfset (opcional)"
+                },
+                "tag": { "label": "Etiqueta" },
+                "template": {
+                  "label": "Plantilla",
+                  "value_template": "Plantilla de valor"
+                },
+                "time": {
+                  "type_value": "Temps fix",
+                  "type_input": "Valor d'un ajudant de data/hora",
+                  "label": "Temporal",
+                  "at": "A les"
+                },
+                "time_pattern": {
+                  "label": "Patró temporal",
+                  "hours": "Hores",
+                  "minutes": "Minuts",
+                  "seconds": "Segons"
+                },
+                "webhook": {
+                  "label": "Webhook",
+                  "webhook_id": "ID de Webhook"
+                },
+                "zone": {
+                  "label": "Zona",
+                  "entity": "Entitat amb ubicació",
+                  "zone": "Zona",
+                  "event": "Esdeveniment:",
+                  "enter": "Entra",
+                  "leave": "Surt"
+                }
+              }
+            },
+            "conditions": {
+              "name": "Condició",
+              "header": "Condicions",
+              "introduction": "Les condicions són opcionals i impedeixen que s'executi l'automatització tret de que totes elles se satisfacin.",
+              "learn_more": "Més informació sobre les condicions",
+              "add": "Afegir condició",
+              "duplicate": "Duplica",
+              "delete": "Elimina",
+              "delete_confirm": "Segur que vols eliminar-ho?",
+              "unsupported_condition": "Condició no compatible amb l'editor visual: {condition}",
+              "type_select": "Tipus de condició",
+              "type": {
+                "and": { "label": "I (AND lògic)" },
+                "device": {
+                  "label": "Dispositiu",
+                  "condition": "Condició",
+                  "extra_fields": {
+                    "above": "A sobre",
+                    "below": "A sota",
+                    "for": "Durada",
+                    "hvac_mode": "Mode HVAC",
+                    "preset_mode": "Mode predefinit"
+                  }
+                },
+                "not": { "label": "No" },
+                "numeric_state": {
+                  "label": "Estat numèric",
+                  "above": "Per sobre de",
+                  "below": "Per sota de",
+                  "value_template": "Plantilla de valor (opcional)"
+                },
+                "or": { "label": "O (OR lògic)" },
+                "state": { "label": "Estat", "state": "Estat" },
+                "sun": {
+                  "label": "Sol",
+                  "before": "Abans:",
+                  "after": "Després:",
+                  "before_offset": "Òfset anterior (opcional)",
+                  "after_offset": "Òfset posterior (opcional)",
+                  "sunrise": "Alba",
+                  "sunset": "Capvespre"
+                },
+                "template": {
+                  "label": "Plantilla",
+                  "value_template": "Plantilla de valor"
+                },
+                "time": {
+                  "type_value": "Temps fix",
+                  "type_input": "Valor d'un ajudant de data/hora",
+                  "label": "Temporal",
+                  "after": "Després",
+                  "before": "Abans",
+                  "weekdays": {
+                    "mon": "Dilluns",
+                    "tue": "Dimarts",
+                    "wed": "Dimecres",
+                    "thu": "Dijous",
+                    "fri": "Divendres",
+                    "sat": "Dissabte",
+                    "sun": "Diumenge"
+                  }
+                },
+                "trigger": {
+                  "label": "Disparador",
+                  "no_triggers": "No hi ha disparadors disponibles",
+                  "id": "ID del disparador"
+                },
+                "zone": {
+                  "label": "Zona",
+                  "entity": "Entitat amb ubicació",
+                  "zone": "Zona"
+                }
+              }
+            },
+            "actions": {
+              "name": "Acció",
+              "header": "Accions",
+              "introduction": "Les accions són allò que farà Home Assistant quan es dispari l'automatització.",
+              "learn_more": "Més informació sobre les accions",
+              "add": "Afegir acció",
+              "duplicate": "Duplica",
+              "delete": "Elimina",
+              "delete_confirm": "Segur que vols eliminar-ho?",
+              "unsupported_action": "Acció no compatible amb l'editor visual: {action}",
+              "type_select": "Tipus d'acció",
+              "type": {
+                "service": { "label": "Crida servei" },
+                "delay": { "label": "Retard", "delay": "Retard" },
+                "wait_template": {
+                  "label": "Espera",
+                  "wait_template": "Plantilla d'espera",
+                  "timeout": "Temps màxim d'espera (opcional)",
+                  "continue_timeout": "Continua amb temps d'espera"
+                },
+                "wait_for_trigger": {
+                  "label": "Espera disparador",
+                  "timeout": "Temps màxim d'espera (opcional)",
+                  "continue_timeout": "Continua amb temps d'espera"
+                },
+                "condition": { "label": "Condició" },
+                "event": {
+                  "label": "Disparar esdeveniment",
+                  "event": "Esdeveniment:",
+                  "service_data": "Dades del servei"
+                },
+                "device_id": {
+                  "label": "Dispositiu",
+                  "action": "Acció",
+                  "extra_fields": {
+                    "code": "Codi",
+                    "message": "Missatge",
+                    "title": "Títol",
+                    "position": "Posició",
+                    "mode": "Mode",
+                    "humidity": "Humitat",
+                    "value": "Valor",
+                    "brightness_pct": "Brillantor",
+                    "flash": "Flaix"
+                  }
+                },
+                "scene": { "label": "Activa escena" },
+                "repeat": {
+                  "label": "Repeteix",
+                  "type_select": "Tipus de repetició",
+                  "type": {
+                    "count": { "label": "Comptador" },
+                    "while": {
+                      "label": "Mentre",
+                      "conditions": "Condicions de \"Mentre\""
+                    },
+                    "until": {
+                      "label": "Fins que",
+                      "conditions": "Condicions de \"Fins que\""
+                    }
+                  },
+                  "sequence": "Accions"
+                },
+                "choose": {
+                  "label": "Tria",
+                  "default": "Accions per defecte",
+                  "option": "Opció {number}",
+                  "add_option": "Afegeix opció",
+                  "remove_option": "Elimina opció",
+                  "conditions": "Condicions",
+                  "sequence": "Accions"
+                }
+              }
+            }
+          },
+          "thingtalk": {
+            "create": "Crea automatització",
+            "task_selection": {
+              "header": "Creació d'una nova automatització",
+              "introduction": "Escriu a continuació el que hauria de fer l'automatització i intentarem convertir-ho en una automatització de Home Assistant.",
+              "language_note": "Nota: ara per are només s'admet en anglès",
+              "for_example": "Per exemple:",
+              "error_empty": "Introdueix alguna ordre o prem a omet.",
+              "error_unsupported": "No hem pogut crear una automatització per a això (encara?)."
+            },
+            "link_devices": {
+              "header": "Genial! Ara hem d'enllaçar alguns dispositius",
+              "ambiguous_entities": "Un o més dispositius tenen més d'una entitat coincident. Escull la que vulguis utilitzar.",
+              "unknown_placeholder": "Marcador desconegut"
+            }
+          }
+        },
+        "blueprint": {
+          "caption": "Blueprints",
+          "description": "Gestiona els blueprints",
+          "overview": {
+            "header": "Editor de blueprints",
+            "introduction": "La configuració dels blueprints et permet importar-ne i gestionar-los.",
+            "learn_more": "Més informació sobre l'ús dels blueprints",
+            "headers": {
+              "name": "Nom",
+              "domain": "Domini",
+              "file_name": "Nom del fitxer"
+            },
+            "confirm_delete_header": "Eliminar aquest blueprint?",
+            "confirm_delete_text": "Segur que vols eliminar aquest blueprint?",
+            "add_blueprint": "Importa blueprint",
+            "use_blueprint": "Crea automatització",
+            "delete_blueprint": "Elimina blueprint",
+            "share_blueprint": "Comparteix blueprint",
+            "share_blueprint_no_url": "No s'ha pogut compartir el blueprint: no hi ha cap URL origen",
+            "discover_more": "Descobreix més blueprints"
+          },
+          "add": {
+            "header": "Importa un blueprint nou",
+            "import_header": "Blueprint \"{name}\"",
+            "import_introduction_link": "Pots importar blueprints d'altres usuaris des de Github i des dels {community_link}. Introdueix, a sota,  l'URL del blueprint.",
+            "community_forums": "fòrums de la comunitat",
+            "url": "URL del blueprint",
+            "raw_blueprint": "Contingut del blueprint",
+            "importing": "Carregant blueprint...",
+            "import_btn": "Vista prèvia del blueprint",
+            "saving": "Important blueprint...",
+            "save_btn": "Importa blueprint",
+            "error_no_url": "Introdueix l'URL del blueprint.",
+            "unsupported_blueprint": "Aquest blueprint no és compatible",
+            "file_name": "Directori del blueprint"
+          }
+        },
+        "script": {
+          "caption": "Programes (scripts)",
+          "description": "Executa una seqüència d'accions",
+          "picker": {
+            "header": "Editor de scripts",
+            "introduction": "L'editor de scripts et permet crear i editar scripts. Vés a l'enllaç de sota per veure'n les instruccions i assegurar-te que has configurat Home Assistant correctament.",
+            "learn_more": "Més informació sobre els scripts",
+            "no_scripts": "No s'ha pogut trobar cap script",
+            "add_script": "Afegeix script",
+            "show_info": "Mostra informació sobre l'script",
+            "run_script": "Executa l'script",
+            "edit_script": "Edita l'script",
+            "dev_script": "Depura script",
+            "headers": { "name": "Nom" },
+            "duplicate_script": "Duplica l'script",
+            "duplicate": "Duplica"
+          },
+          "editor": {
+            "alias": "Nom",
+            "icon": "Icona",
+            "id": "ID de l'entitat",
+            "id_already_exists_save_error": "No pots desar aquest script perquè l'ID no és únic, tria'n un altre o deixa-ho en blanc perquè se'n generi un automàticament.",
+            "id_already_exists": "Aquest ID ja existeix",
+            "introduction": "Utilitza els scripts per executar una seqüència d'accions.",
+            "show_trace": "Mostra la traça",
+            "header": "Script: {name}",
+            "default_name": "Nou script",
+            "modes": {
+              "label": "Mode",
+              "description": "El mode controla què passa quan s'invoca l'script mentre encara s'està executant a causa d'invocacions anteriors. Consulta {documentation_link} per a més informació.",
+              "documentation": "documentació de scripts",
+              "single": "Individual (per defecte)",
+              "restart": "Reinici",
+              "queued": "Afegeix al final",
+              "parallel": "Paral·lel"
+            },
+            "max": {
+              "queued": "Longitud de la cua",
+              "parallel": "Nombre màxim d'execucions paral·leles"
+            },
+            "load_error_not_editable": "Només es poden editar els scripts del fitxer scripts.yaml.",
+            "delete_confirm": "Estàs segur que vols eliminar aquest script?",
+            "delete_script": "Elimina l'script",
+            "save_script": "Desa l'script",
+            "sequence": "Seqüència",
+            "sequence_sentence": "Seqüència d'accions de l'script.",
+            "link_available_actions": "Més informació sobre les accions disponibles."
+          }
+        },
+        "scene": {
+          "caption": "Escenes",
+          "description": "Captura els estats dels dispositius i recorda'ls més tard",
+          "activated": "Escena {name} activada.",
+          "picker": {
+            "header": "Editor d'escenes",
+            "introduction": "L'editor d'escenes et permet crear i editar escenes. Vés a l'enllaç de sota per veure'n les instruccions i assegurar-te que has configurat Home Assistant correctament.",
+            "learn_more": "Més informació sobre les escenes",
+            "pick_scene": "Selecciona l'escena a editar",
+            "no_scenes": "No s'ha pogut trobar cap escena",
+            "add_scene": "Afegeix escena",
+            "only_editable": "Només es poden editar les escenes definides al fitxer scenes.yaml.",
+            "edit_scene": "Edita escena",
+            "show_info_scene": "Mostra informació sobre l'escena",
+            "delete_scene": "Elimina l'escena",
+            "delete_confirm": "Estàs segur que vols eliminar aquesta escena?",
+            "duplicate_scene": "Duplica escena",
+            "duplicate": "Duplica",
+            "headers": { "name": "Nom" }
+          },
+          "editor": {
+            "introduction": "Utilitza les escenes per donar més vida a casa teva.",
+            "default_name": "Nova escena",
+            "load_error_not_editable": "Només es poden editar les escenes del fitxer scenes.yaml.",
+            "load_error_unknown": "Error en carregar l'escena ({err_no}).",
+            "save": "Desa",
+            "unsaved_confirm": "Hi han canvis no desats. Segur que vols sortir?",
+            "name": "Nom",
+            "icon": "Icona",
+            "devices": {
+              "header": "Dispositius",
+              "introduction": "Afegeix els dispositius que vols incloure a l'escena. Configura tots els dispositius en els estats que es corresponguin amb aquesta escena.",
+              "add": "Afegeix un dispositiu",
+              "delete": "Elimina el dispositiu"
+            },
+            "entities": {
+              "header": "Entitats",
+              "introduction": "Les entitats que no pertanyen a un dispositiu es poden configurar aquí.",
+              "without_device": "Entitats sense dispositiu",
+              "device_entities": "Si afegeixes una entitat que pertany a un dispositiu, s'afegirà el dispositiu.",
+              "add": "Afegeix una entitat",
+              "delete": "Elimina l'entitat"
+            }
+          }
+        },
+        "cloud": {
+          "description_login": "Sessió iniciada com a {email}",
+          "description_not_login": "No has iniciat sessió",
+          "description_features": "Controla la casa quan siguis fora i integra-hi Alexa i Google Assistant",
+          "login": {
+            "title": "Inici de sessió des del núvol (Cloud)",
+            "introduction": "Home Assistant Cloud t'ofereix una connexió remota i segura amb la teva instància mentre siguis fora de casa. També et permet connectar-te amb els serveis disponibles al núvol: Amazon Alexa i Google Assistant.",
+            "introduction2": "Aquest servei està gestionat pel nostre soci ",
+            "introduction2a": ", una empresa fundada pels creadors de Home Assistant i Hass.io.",
+            "introduction3": "Home Assistant Cloud és un servei de subscripció amb una prova gratuïta d'un mes. No és necessària la informació de pagament.",
+            "learn_more_link": "Més informació sobre Home Assistant Cloud",
+            "dismiss": "Omet",
+            "sign_in": "Inicia sessió",
+            "email": "Correu electrònic",
+            "email_error_msg": "Correu electrònic invàlid",
+            "password": "Contrasenya",
+            "password_error_msg": "La contrasenya han de tenir un mínim de 8 caràcters",
+            "forgot_password": "Has oblidat la contrasenya?",
+            "start_trial": "Inicia la prova gratuïta d'1 mes",
+            "trial_info": "No és necessària la informació de pagament",
+            "alert_password_change_required": "Has de canviar la teva contrasenya abans d'iniciar sessió.",
+            "alert_email_confirm_necessary": "Has de confirmar el teu correu electrònic abans d'iniciar sessió."
+          },
+          "forgot_password": {
+            "title": "Oblit de la contrasenya",
+            "subtitle": "Has oblidat la teva contrasenya",
+            "instructions": "Introdueix el teu correu electrònic i t'enviarem un enllaç per restablir la contrasenya.",
+            "email": "Correu electrònic",
+            "email_error_msg": "Correu electrònic invàlid",
+            "send_reset_email": "Envia correu electrònic de restabliment",
+            "check_your_email": "Consulta el correu electrònic per obtenir instruccions sobre com restablir la teva contrasenya."
+          },
+          "register": {
+            "title": "Registre del compte",
+            "headline": "Inicia la prova gratuïta",
+            "information": "Crea un compte per iniciar la prova gratuïta d'un mes amb Home Assistant Cloud. No és necessària la informació de pagament.",
+            "information2": "La prova et donarà accés a tots els avantatges de Home Assistant Cloud, inclosos:",
+            "feature_remote_control": "Control de Home Assistant fora de casa",
+            "feature_google_home": "Integració amb Google Assistant",
+            "feature_amazon_alexa": "Integració amb Amazon Alexa",
+            "feature_webhook_apps": "Fàcil integració amb aplicacions basades an webhook com OwnTracks",
+            "information3": "Aquest servei està gestionat pel nostre soci ",
+            "information3a": ", una empresa fundada pels creadors de Home Assistant i Hass.io.",
+            "information4": "En registrar un compte, acceptes els termes i condicions següents.",
+            "link_terms_conditions": "Termes i condicions",
+            "link_privacy_policy": "Política de privacitat",
+            "create_account": "Crear compte",
+            "email_address": "Correu electrònic",
+            "email_error_msg": "Correu electrònic invàlid",
+            "password": "Contrasenya",
+            "password_error_msg": "La contrasenya han de tenir un mínim de 8 caràcters",
+            "start_trial": "Inicia la prova",
+            "resend_confirm_email": "Reenvia el correu de confirmació",
+            "account_created": "Compte creat! Consulta el correu electrònic per obtenir instruccions sobre com activar el compte."
+          },
+          "account": {
+            "thank_you_note": "Gràcies per formar part de Home Assistant Cloud. És gràcies a persones com tu que podem oferir una experiència domòtica excel·lent per a tothom.",
+            "nabu_casa_account": "Compte Nabu Casa",
+            "connection_status": "Estat de connexió amb Cloud",
+            "manage_account": "Gestió del compte",
+            "sign_out": "Tanca sessió",
+            "integrations": "Integracions",
+            "integrations_introduction": "Les integracions per Home Assistant Cloud et permeten connectar-vos a d'altres serveis al núvol sense haver d'exposar la teva instància de Home Assistant públicament a Internet.",
+            "integrations_introduction2": "Consulta el lloc web per ",
+            "integrations_link_all_features": "totes les funcions disponibles",
+            "connected": "Connectat",
+            "connecting": "Connectant...",
+            "not_connected": "No connectat",
+            "fetching_subscription": "Obtenint subscripció...",
+            "tts": {
+              "title": "Text a veu",
+              "info": "Afegeix personalitat a casa teva a mitjançant l'ús dels nostres serveis de text a veu. Pots utilitzar-los en automatitzacions i scripts a través del servei {service}.",
+              "default_language": "Idioma predeterminat a utilitzar",
+              "male": "Home",
+              "female": "Dona",
+              "try": "Prova-ho",
+              "dialog": {
+                "header": "Prova el text a veu",
+                "example_message": "Hola {name}, pots reproduir qualsevol text en els reproductors multimèdia compatibles!",
+                "target": "Objectiu",
+                "target_browser": "Navegador",
+                "play": "Reprodueix"
+              }
+            },
+            "remote": {
+              "title": "Control remot",
+              "connected": "Connectat",
+              "not_connected": "No connectat",
+              "reconnecting": "Reconnecting",
+              "access_is_being_prepared": "S'està preparant el control remot. T'avisarem quan estigui a punt.",
+              "info": "Home Assistant Cloud t'ofereix una connexió remota i segura amb la teva instància mentre siguis fora de casa",
+              "instance_is_available": "La teva instància està disponible a",
+              "instance_will_be_available": "La teva instància estarà disponible a",
+              "remote_enabled": {
+                "caption": "Connexió automàtica",
+                "description": "Activa aquesta opció per assegurar-te que la teva instància de Home Assistant sempre sigui accessible de forma remota."
+              },
+              "link_learn_how_it_works": "Informació sobre com funciona",
+              "certificate_info": "Informació del certificat"
+            },
+            "alexa": {
+              "title": "Alexa",
+              "info": "Amb la integració d'Alexa per Home Assistant Cloud podràs controlar tots els dispositius de Home Assistant a través dels dispositius compatibles amb Alexa.",
+              "enable_ha_skill": "Activa l'auxiliar de Home Assistant per Alexa",
+              "config_documentation": "Documentació de configuració",
+              "enable_state_reporting": "Activa els informes d'estat",
+              "info_state_reporting": "Si actives els informes d'estat, Home Assistant enviarà a Amazon tots els canvis d'estat de les entitats exposades. Això et permetrà veure els últims estats a l'aplicació Alexa i utilitzar-los per crear rutines.",
+              "sync_entities": "Sincronitza entitats amb Amazon",
+              "manage_entities": "Gestió d'entitats",
+              "sync_entities_error": "No s'han pogut sincronitzar les entitats:",
+              "state_reporting_error": "No s'ha pogut {enable_disable} l'informe d'estat.",
+              "enable": "activa",
+              "disable": "desactiva"
+            },
+            "google": {
+              "title": "Google Assistant",
+              "info": "Amb la integració de Google Assistant per Home Assistant Cloud podràs controlar tots els dispositius de Home Assistant a través dels dispositius compatibles amb Google Assistant.",
+              "enable_ha_skill": "Activa Home Assistant Cloud per Google Assistant",
+              "config_documentation": "Documentació de configuració",
+              "enable_state_reporting": "Activa els informes d'estat",
+              "info_state_reporting": "Si actives els informes d'estat, Home Assistant enviarà a Google tots els canvis d'estat de les entitats exposades. Això et permetrà veure els últims estats a l'aplicació de Google.",
+              "security_devices": "Dispositius de seguretat",
+              "enter_pin_info": "Introdueix un PIN per interactuar amb dispositius de seguretat. Aquests dispositius són, per exemple, portes, garatges o panys. Se't demanarà que introdueixis o diguis aquest PIN quan interactuïs amb aquests dispositius mitjançant Google Assistant.",
+              "devices_pin": "PIN dels dispositius de seguretat",
+              "enter_pin_hint": "Introdueix un PIN per utilitzar dispositius de seguretat",
+              "sync_entities": "Sincronitza les entitats amb Google",
+              "sync_entities_404_message": "No s'han pogut sincronitzar les entitats amb Google, digues \"Hey Google, sincronitza els meus dispositius\" per sincronitzar-les.",
+              "manage_entities": "Gestió d'entitats",
+              "enter_pin_error": "No s'ha pogut desar el PIN:",
+              "not_configured_title": "Google Assistant no està activat",
+              "not_configured_text": "Abans de poder fer servir Google Assistant, has d'activar Home Assistant Cloud per a Google Assistant a l'aplicació de Google Home."
+            },
+            "webhooks": {
+              "title": "Webhooks",
+              "info": "Qualsevol cosa que estigui configurada per disparar-se a través d'un webhook pot disposar d'un URL accessible públicament que permet retornar-li dades a Home Assistant des de qualsevol lloc i sense exposar la teva instància a Internet.",
+              "no_hooks_yet": "Sembla que encara no tens cap webhook. Comença configurant una ",
+              "no_hooks_yet_link_integration": "integració basada en webhook",
+              "no_hooks_yet2": "o bé creant una",
+              "no_hooks_yet_link_automation": "automatització de webhook",
+              "link_learn_more": "Més informació sobre la creació d'automatizacions basats en webhook.",
+              "loading": "Carregant...",
+              "manage": "Gestiona",
+              "disable_hook_error_msg": "No s'ha pogut desactivar el webhook:"
+            }
+          },
+          "alexa": {
+            "title": "Alexa",
+            "banner": "L'edició de quines entitats estan exposades a través de la IU està desactivada perquè hi ha filtres d'entitats configurats a configuration.yaml.",
+            "exposed_entities": "Entitats exposades",
+            "not_exposed_entities": "Entitats no exposades",
+            "manage_domains": "Gestiona dominis",
+            "expose_entity": "Exposa l'entitat",
+            "dont_expose_entity": "No exposis l'entitat",
+            "follow_domain": "Segueix domini",
+            "exposed": "{selected} exposat",
+            "not_exposed": "{selected} no exposat",
+            "expose": "Exposa a Alexa"
+          },
+          "dialog_certificate": {
+            "certificate_information": "Informació del certificat",
+            "certificate_expiration_date": "Data de caducitat del certificat:",
+            "will_be_auto_renewed": "es renovarà automàticament",
+            "fingerprint": "Empremta del certificat:",
+            "close": "Tanca"
+          },
+          "google": {
+            "title": "Google Assistant",
+            "expose": "Exposa a Google Assistant",
+            "disable_2FA": "Desactiva l'autenticació en dos passos",
+            "banner": "L'edició de quines entitats estan exposades a través de la IU està desactivada perquè hi ha filtres d'entitats configurats a configuration.yaml.",
+            "exposed_entities": "Entitats exposades",
+            "not_exposed_entities": "Entitats no exposades",
+            "manage_domains": "Gestiona dominis",
+            "expose_entity": "Exposa l'entitat",
+            "dont_expose_entity": "No exposis l'entitat",
+            "follow_domain": "Segueix domini",
+            "exposed": "{selected} exposat",
+            "not_exposed": "{selected} no exposat",
+            "sync_to_google": "Sincronitzant els canvis amb Google."
+          },
+          "dialog_cloudhook": {
+            "webhook_for": "Webhook per {name}",
+            "available_at": "El webhook està disponible a l'URL següent:",
+            "managed_by_integration": "Aquest webhook està gestionat per una integració i no es pot desactivar.",
+            "info_disable_webhook": "Si ja no vols fer servir aquest webhook, pots",
+            "link_disable_webhook": "desactiva-lo",
+            "view_documentation": "Mostra la documentació",
+            "close": "Tanca",
+            "confirm_disable": "Estàs segur que vols desactivar aquest webhook?",
+            "copied_to_clipboard": "Copiat al porta-retalls"
+          }
+        },
+        "devices": {
+          "add_prompt": "Encara no s'han afegit {name} mitjançant aquest dispositiu. Pots afegir-ne fent clic al botó + a sobre.",
+          "caption": "Dispositius",
+          "description": "Gestiona els dispositius configurats",
+          "device_info": "Informació del dispositiu",
+          "unnamed_device": "Dispositiu sense nom",
+          "unknown_error": "Error desconegut",
+          "name": "Nom",
+          "update": "Actualitza",
+          "no_devices": "No hi ha dispositius",
+          "enabled_label": "Activa dispositiu",
+          "enabled_cause": "El dispositiu està desactivat per {cause}.",
+          "disabled_by": {
+            "user": "Usuari",
+            "integration": "Integració",
+            "config_entry": "Entrada de configuració"
+          },
+          "enabled_description": "Els dispositius desactivats no es mostraran i les entitats que hi pertanyin es desactivaran i no s'afegiran a Home Assistant.",
+          "automation": {
+            "automations": "Automatitzacions",
+            "no_automations": "No hi ha automatitzacions",
+            "unknown_automation": "Automatització desconeguda",
+            "create": "Crea una automatització amb el dispositiu",
+            "create_disable": "No es pot crear una automatització amb dispositius desactivats",
+            "triggers": {
+              "caption": "Feu alguna cosa quan...",
+              "no_triggers": "Sense disparadors",
+              "unknown_trigger": "Disparador desconegut"
+            },
+            "conditions": {
+              "caption": "Només fer alguna cosa si...",
+              "no_conditions": "Sense condicions",
+              "unknown_condition": "Condició desconeguda"
+            },
+            "actions": {
+              "caption": "Quan es dispara alguna cosa...",
+              "no_actions": "Sense accions",
+              "unknown_action": "Acció desconeguda"
+            },
+            "no_device_automations": "No hi ha automatitzacions disponibles per a aquest dispositiu."
+          },
+          "script": {
+            "scripts": "Scripts",
+            "no_scripts": "No hi ha scripts",
+            "create": "Crea un programa (script) amb el dispositiu",
+            "create_disable": "No es pot crear un script amb dispositius desactivats"
+          },
+          "scene": {
+            "scenes": "Escenes",
+            "no_scenes": "No hi ha escenes",
+            "create": "Crea una escena amb el dispositiu",
+            "create_disable": "No es pot crear una escena amb dispositius desactivats"
+          },
+          "cant_edit": "Només pots editar els elements creats a la interfície d'usuari (UI).",
+          "device_not_found": "Dispositiu no trobat.",
+          "entities": {
+            "entities": "Entitats",
+            "add_entities_lovelace": "Afegeix a Lovelace",
+            "none": "Aquest dispositiu no té entitats",
+            "hide_disabled": "Amaga desactivades",
+            "disabled_entities": "+{count} {count, plural,\n  one {entitat desabilitada}\n  other {entitats desabilitades}\n}"
+          },
+          "scripts": "Programes (scripts)",
+          "scenes": "Escenes",
+          "confirm_rename_entity_ids": "Vols, també, canviar el nom dels ID's de les entitats?",
+          "confirm_rename_entity_ids_warning": "Això no canviarà cap configuració (com automatitzacions, scripts, escenes, panells) que estigui utilitzant aquestes entitats. Les hauràs d'actualitzar tu mateix per utilitzar els nous identificadors.",
+          "confirm_disable_config_entry": "No hi ha més dispositius per a l'entrada de configuració {entry_name}. En comptes, vols desactivar l'entrada de configuració?",
+          "update_device_error": "No s'ha pogut actualitzar el dispositiu",
+          "disabled": "Desactivat",
+          "data_table": {
+            "device": "Dispositiu",
+            "manufacturer": "Fabricant",
+            "model": "Model",
+            "area": "Àrea",
+            "integration": "Integració",
+            "battery": "Bateria",
+            "no_devices": "Sense dispositius"
+          },
+          "delete": "Elimina",
+          "confirm_delete": "Estàs segur que vols eliminar aquest dispositiu?",
+          "picker": {
+            "search": "Cerca dispositius",
+            "filter": {
+              "filter": "Filtre",
+              "show_disabled": "Mostra dispositius desactivats",
+              "hidden_devices": "{number} {number, plural,\n  one {dispositiu amagat}\n  other {dispositius amagats}\n}",
+              "show_all": "Mostra-ho tot"
+            }
+          }
+        },
+        "entities": {
+          "caption": "Entitats",
+          "description": "Gestiona les entitats conegudes",
+          "picker": {
+            "header": "Entitats",
+            "introduction": "Home Assistant manté un registre de totes les entitats que ha detectat alguna vegada les quals tenen una identificació única. Cadascuna d'aquestes entitats té un identificador, ID, assignat que està reservat només per a ella.",
+            "introduction2": "Utilitza el registre d'entitats per canviar el nom, canviar l'ID o eliminar l'entrada de Home Assistant.",
+            "search": "Cerca entitats",
+            "filter": {
+              "filter": "Filtre",
+              "show_disabled": "Mostra entitats desactivades",
+              "show_unavailable": "Mostra entitats no disponibles",
+              "show_readonly": "Mostra entitats de només lectura",
+              "hidden_entities": "{number} {number, plural,\n  one {entitat amagada}\n  other {entitats amagades}\n}",
+              "show_all": "Mostra-ho tot"
+            },
+            "status": {
+              "restored": "Restaurades",
+              "unavailable": "No disponible/s",
+              "disabled": "Desactivada/es",
+              "readonly": "Només lectura",
+              "ok": "D'acord"
+            },
+            "headers": {
+              "name": "Nom",
+              "entity_id": "ID de l'entitat",
+              "integration": "Integració",
+              "area": "Àrea",
+              "status": "Estat"
+            },
+            "selected": "{number} seleccionada/es",
+            "enable_selected": {
+              "button": "Activa seleccionada/es",
+              "confirm_title": "Vols activar {number} {number, plural,\n  one {entitat}\n  other {entitats}\n}?",
+              "confirm_text": "Això farà que tornin a estar disponibles a Home Assistant si estan desactivades."
+            },
+            "disable_selected": {
+              "button": "Desactiva seleccionada/es",
+              "confirm_title": "Vols desactivar {number} {number, plural,\n  one {entitat}\n  other {entitats}\n}?",
+              "confirm_text": "Les entitats desactivades no s'afegiran a Home Assistant."
+            },
+            "remove_selected": {
+              "button": "Elimina seleccionada/es",
+              "confirm_title": "Vols eliminar {number} {number, plural,\n  one {entitat}\n  other {entitats}\n}?",
+              "confirm_partly_title": "Només {number} {number, plural,\n  one {entitat seleccionada pot ser eliminada}\n  other {entitats seleccionades poden ser eliminades}\n}.",
+              "confirm_text": "Hauries d'eliminar aquestes entitats de les configuracions de Lovelace i de les automatitzacions que les continguin.",
+              "confirm_partly_text": "Només pots eliminar {removable} de les {selected} entitats seleccionades. Les entitats només es poden eliminar quan la integració ja no les està proporcionant.\nA vegades pot ser que hagis de reiniciar Home Assistant per poder eliminar les entitats d'una antiga integració eliminada. Segur que vols eliminar les entitats?"
+            }
+          }
+        },
+        "person": {
+          "caption": "Persones",
+          "description": "Gestiona les persones a qui Home Assistant fa seguiment",
+          "introduction": "Aquí pots definir cada persona d'interès en Home Assistant.",
+          "note_about_persons_configured_in_yaml": "Nota: les persones configurades mitjançant configuration.yaml no es poden editar des de la IU.",
+          "learn_more": "Obté més informació sobre persones",
+          "no_persons_created_yet": "Sembla que encara no has creat cap persona.",
+          "create_person": "Crea persona",
+          "add_person": "Afegeix persona",
+          "confirm_delete": "Estàs segur que vols eliminar aquesta persona?",
+          "confirm_delete2": "Tots els dispositius vinculats a aquesta persona quedaran sense assignar.",
+          "person_not_found_title": "Persona no trobada",
+          "person_not_found": "No s'ha pogut trobar la persona que vols editar.",
+          "detail": {
+            "new_person": "Persona nova",
+            "name": "Nom",
+            "name_error_msg": "El nom és necessari",
+            "linked_user": "Usuari enllaçat",
+            "device_tracker_intro": "Selecciona els dispositius que pertanyen a aquesta persona.",
+            "no_device_tracker_available_intro": "Quan tinguis dispositius que indiquen presència de persones, podràs assignar-los a una persona. Pots afegir el primer dispositiu afegint una integració de detecció de presència des de la pàgina d'integracions.",
+            "link_presence_detection_integrations": "Integracions de detecció de presència",
+            "link_integrations_page": "Pàgina d'integracions",
+            "device_tracker_picked": "Seguint dispositiu",
+            "device_tracker_pick": "Tria un dispositiu per fer-li el seguiment",
+            "delete": "Elimina",
+            "create": "Crea",
+            "update": "Actualitza",
+            "confirm_delete_user": "Estàs segur que vols eliminar el compte d'usuari de {name}? Encara li podràs fer seguiment, però no podrà tornar a iniciar sessió.",
+            "admin": "Administrador",
+            "allow_login": "Permet l'inici de sessió de la persona"
+          }
+        },
+        "zone": {
+          "caption": "Zones",
+          "description": "Gestiona les zones en les quals vols fer seguiment de persones",
+          "introduction": "Les zones et permeten definir certes regions del planeta. Quan una persona es trobi dins d'una zona, l'estat prendrà el nom d'aquesta zona. També es poden utilitzar com a disparadors o condicions durant la creació d'automatitzacions.",
+          "no_zones_created_yet": "Sembla que encara no has creat cap zona.",
+          "create_zone": "Crea zona",
+          "add_zone": "Afegeix zona",
+          "confirm_delete": "Estàs segur que vols eliminar aquesta zona?",
+          "configured_in_yaml": "Les zones configurades mitjançant configuration.yaml no es poden editar des de la IU.",
+          "edit_home_zone": "El radi de la zona principal (casa) encara no pot ser editat des del \"frontend\". Arrossega el mercador del mapa per moure la zona principal.",
+          "edit_home_zone_narrow": "El radi de la zona principal (casa) encara no es pot editar des del \"frontend\". Sí que pots canviar-ne la ubicació des de la configuració general.",
+          "go_to_core_config": "Anar a la configuració general?",
+          "home_zone_core_config": "La ubicació de la zona principal (casa) és pot canviar des de la pàgina de configuració general. El radi d'aquesta zona encara no es pot editar des d'aquí. Vols anar a la configuració general?",
+          "detail": {
+            "new_zone": "Zona nova",
+            "name": "Nom",
+            "icon": "Icona",
+            "icon_error_msg": "La icona ha de tenir el format \"prefix:nom_icona\", per exemple: \"mdi:home\"",
+            "radius": "Radi",
+            "latitude": "Latitud",
+            "longitude": "Longitud",
+            "passive": "Passiva",
+            "passive_note": "Les zones passives estan amagades i no s'utilitzen com a ubicacions per a dispositius rastrejables. Però són utils per a la creació d'automatitzacions.",
+            "required_error_msg": "Aquest camp és obligatori",
+            "delete": "Elimina",
+            "create": "Crea",
+            "update": "Actualitza"
+          }
+        },
+        "integrations": {
+          "caption": "Integracions",
+          "description": "Gestiona les integracions amb serveis o dispositius",
+          "integration": "integració",
+          "discovered": "Descobertes",
+          "attention": "Cal atenció",
+          "configured": "Configurades",
+          "new": "Configura una nova integració",
+          "confirm_new": "Vols configurar {integration}?",
+          "add_integration": "Afegeix integració",
+          "no_integrations": "Sembla que encara no tens cap integració configurada. Prem al botó de sota per afegir la teva primera integració!",
+          "note_about_integrations": "No s'ha trobat cap integració que coincident, és possible que la integració encara no estigui disponible per configurar-se a través de la interfície d'usuari.",
+          "note_about_website_reference": "En pots trobar més al ",
+          "home_assistant_website": "lloc web de Home Assistant",
+          "configure": "Configurar",
+          "reconfigure": "Reconfigura",
+          "none": "Encara no hi ha res configurat",
+          "none_found": "No s'han trobat integracions",
+          "none_found_detail": "Ajusta els paràmetres de cerca.",
+          "integration_not_found": "No s'ha trobat la integració.",
+          "details": "Detalls de la integració",
+          "rename_dialog": "Edita el nom de l'entrada de configuració",
+          "rename_input_label": "Nom de l'entrada",
+          "search": "Cerca integracions",
+          "disable": {
+            "show_disabled": "Mostra integracions desactivades",
+            "disabled_integrations": "{number} desactivada/es",
+            "show": "Mostra",
+            "hide_disabled": "Amaga integracions desactivades"
+          },
+          "ignore": {
+            "ignore": "Ignora",
+            "confirm_ignore_title": "Ignorar descobriment de {name}?",
+            "confirm_ignore": "Estàs segur que no vols configurar aquesta integració? Pots desfer-ho fent clic a 'Mostra les integracions ignorades' al menú de la part superior dreta.",
+            "show_ignored": "Mostra les integracions ignorades",
+            "ignored": "Ignorada",
+            "confirm_delete_ignore_title": "Vols deixar d'ignorar {name}?",
+            "confirm_delete_ignore": "Això farà que quan la integració es descobreixi torni a aparèixer a les integracions descobertes. Pot ser que tardi una estona o es necessiti reiniciar.",
+            "stop_ignore": "Deixa d'ignorar",
+            "hide_ignored": "Amaga les integracions ignorades"
+          },
+          "config_entry": {
+            "devices": "{count} {count, plural,\n  one {dispositiu}\n  other {dispositius}\n}",
+            "entities": "{count} {count, plural,\n  one {entitat}\n  other {entitats}\n}",
+            "services": "{count} {count, plural,\n  one {servei}\n  other {serveis}\n}",
+            "rename": "Canvia el nom",
+            "configure": "Configura",
+            "system_options": "Opcions de sistema",
+            "documentation": "Documentació",
+            "delete": "Elimina",
+            "delete_confirm": "Estàs segur que vols eliminar aquesta integració?",
+            "reload": "Torna a carregar",
+            "restart_confirm": "Reinicia Home Assistant per acabar d'eliminar aquesta integració",
+            "reload_confirm": "La integració s'ha tornat a carregar",
+            "reload_restart_confirm": "Reinicia Home Assistant per acabar de carregar aquesta integració",
+            "disable_restart_confirm": "Reinicia Home Assistant per acabar de desactivar aquesta integració",
+            "enable_restart_confirm": "Reinicia Home Assistant per acabar d'activar aquesta integració",
+            "disable_error": "S'ha produït un error en activar o desactivar la integració",
+            "manuf": "de {manufacturer}",
+            "hub": "Connectat a través de",
+            "firmware": "Firmware: {version}",
+            "unnamed_entry": "Entrada sense nom",
+            "device_unavailable": "Dispositiu no disponible",
+            "entity_unavailable": "Entitat no disponible",
+            "area": "A {area}",
+            "no_area": "Sense àrea",
+            "not_loaded": "No carregada",
+            "check_the_logs": "Comprova els registres",
+            "disable": {
+              "disabled": "Desactivada",
+              "disabled_cause": "Desactivada per {cause}",
+              "disabled_by": {
+                "user": "usuari",
+                "integration": "integració",
+                "device": "dispositiu"
+              },
+              "disable_confirm": "Estàs segur que vols desactivar aquesta entrada de configuració? Els seus dispositius i entitats es desactivaran."
+            },
+            "provided_by_custom_integration": "Proporcionada per una integració personalitzada",
+            "depends_on_cloud": "Depèn del núvol",
+            "disabled_polling": "Sondeig automàtic per l'obtenció de dades actualitzades desactivat",
+            "state": {
+              "loaded": "Carregada",
+              "setup_error": "No s'ha pogut configurar",
+              "migration_error": "Error de migració",
+              "setup_retry": "S'està tornant a provar de configurar",
+              "not_loaded": "No carregada",
+              "failed_unload": "No s'ha pogut desactivar"
+            },
+            "logs": "registres",
+            "options": "Opcions"
+          },
+          "config_flow": {
+            "aborted": "Avortat",
+            "close": "Tanca",
+            "dismiss": "Omet el diàleg",
+            "finish": "Finalitza",
+            "submit": "Envia",
+            "next": "Següent",
+            "not_all_required_fields": "No s'han omplert tots els camps obligatoris.",
+            "error_saving_area": "Error desant àrea: {error}",
+            "created_config": "S'ha creat configuració per a {name}.",
+            "external_step": {
+              "description": "Aquest pas requereix que visitis un lloc web extern per completar-lo.",
+              "open_site": "Vés al lloc web"
+            },
+            "pick_flow_step": {
+              "title": "N'hem descobert aquests, vols configurar-los?",
+              "new_flow": "No, configura una altra instància de {integration}"
+            },
+            "loading": {
+              "loading_flow": "Please wait while {integration} is being setup",
+              "loading_step": "Loading next step for {integration}",
+              "fallback_title": "the integration"
+            },
+            "error": "Error",
+            "could_not_load": "El flux de dades de configuració no s'ha pogut carregar",
+            "not_loaded": "No s'ha pogut carregar la integració, prova de reiniciar Home Assistant.",
+            "loading_first_time": "Espera mentre s'instal·la la integració"
+          }
+        },
+        "users": {
+          "caption": "Usuaris",
+          "description": "Gestiona els comptes d'usuari de Home Assistant",
+          "users_privileges_note": "El grup d'usuaris encara no està del tot acabat. L'usuari no podrà administrar la instància a través de la interfície d'usuari. Encara estem verificant tots els punts de l'API de gestió per assegurar-nos que limiten correctament l'accés als administradors.",
+          "picker": {
+            "headers": {
+              "name": "Nom de visualització",
+              "username": "Nom d'usuari",
+              "group": "Grup",
+              "system": "Generat pel sistema",
+              "is_active": "Actiu",
+              "is_owner": "Propietari"
+            },
+            "add_user": "Afegeix usuari"
+          },
+          "editor": {
+            "caption": "Mostra usuari",
+            "name": "Nom de visualització",
+            "username": "Nom d'usuari",
+            "change_password": "Canviar contrasenya",
+            "new_password": "Nova contrasenya",
+            "password_changed": "La contrasenya s'ha canviat correctament",
+            "activate_user": "Activar usuari",
+            "deactivate_user": "Desactivar usuari",
+            "delete_user": "Eliminar usuari",
+            "update_user": "Actualitza",
+            "id": "ID",
+            "owner": "Propietari",
+            "admin": "Administrador",
+            "group": "Grup",
+            "active": "Actiu",
+            "system_generated": "Generat pel sistema",
+            "system_generated_users_not_removable": "No es poden eliminar usuaris generats pel sistema.",
+            "system_generated_users_not_editable": "No es poden actualitzar usuaris generats pel sistema.",
+            "unnamed_user": "Usuari sense nom",
+            "confirm_user_deletion": "Estàs segur que vols eliminar {name}?",
+            "active_tooltip": "Controla si l'usuari pot iniciar sessió"
+          },
+          "add_user": {
+            "caption": "Afegir usuari",
+            "password": "Contrasenya",
+            "password_confirm": "Confirma la contrasenya",
+            "password_not_match": "Les contrasenyes no coincideixen",
+            "create": "Crear"
+          }
+        },
+        "mqtt": {
+          "title": "MQTT",
+          "description_publish": "Publicació d'un paquet",
+          "topic": "tòpic",
+          "payload": "Dades/missatge (plantilla permesa)",
+          "publish": "Publica",
+          "description_listen": "Escolta d'un tòpic",
+          "listening_to": "Escoltant a",
+          "subscribe_to": "Tòpic al qual subscriure's",
+          "start_listening": "Comença a escoltar",
+          "stop_listening": "Deixa d'escoltar",
+          "message_received": "Missatge {id} rebut a {topic} a les {time}:",
+          "button": "Configura"
+        },
+        "ozw": {
+          "common": {
+            "zwave": "Z-Wave",
+            "node_id": "ID del node",
+            "ozw_instance": "Instància OpenZWave",
+            "instance": "Instància",
+            "controller": "Controlador",
+            "network": "Xarxa",
+            "wakeup_instructions": "Instruccions en despertar",
+            "query_stage": "Fase de consulta"
+          },
+          "device_info": {
+            "zwave_info": "Informació Z-Wave",
+            "stage": "Fase",
+            "node_failed": "Ha fallat el node"
+          },
+          "node_query_stages": {
+            "protocolinfo": "Obtenint funcions Z-Wave bàsiques del controlador d'aquest node",
+            "probe": "Comprovant si el node està despert",
+            "wakeup": "Configurant el suport per a cues de despertar i missatges",
+            "manufacturerspecific1": "Obtenint fabricant i codis ID de producte del node",
+            "nodeinfo": "Obtenint classes de comandes compatibles del node",
+            "nodeplusinfo": "Obtenint informació Z-Wave+ del node",
+            "manufacturerspecific2": "Obtenint fabricant i codis ID de producte addicionals del node",
+            "versions": "Obtenint informació de programari i versions de classes de comandes",
+            "instances": "Obtenint detalls sobre instàncies i canals compatibles amb el dispositiu",
+            "static": "Obtenint valors estàtics del dispositiu",
+            "cacheload": "Carregant informació del fitxer de memòria cau d'OpenZWave. Els nodes amb bateria romandran en aquesta fase fins que es despertin.",
+            "associations": "Actualitzant de grups d'associacions i membres",
+            "neighbors": "Obtenint llista de nodes veïns",
+            "session": "Obtenint valors inusualment canviants del node",
+            "dynamic": "Obtenint valors usualment canviants del node",
+            "configuration": "Obtenint valors de configuració del node",
+            "complete": "Procés de consulta completat"
+          },
+          "refresh_node": {
+            "button": "Actualitza node",
+            "title": "Informació d'actualització del node",
+            "complete": "Actualització del node completada",
+            "description": "Això farà que OpenZWave torni a consultar el node i n'actualitzi les classes de comandes, funcions i valors.",
+            "battery_note": "Si el node funciona amb bateria, assegura't de que estigui actiu abans de continuar",
+            "wakeup_header": "Instruccions per despertar de",
+            "wakeup_instructions_source": "Les instruccions per despertar provenen de la base de dades de dispositius de la comunitat OpenZWave.",
+            "start_refresh_button": "Inicia l'actualització",
+            "refreshing_description": "Actualitzant la informació del node...",
+            "node_status": "Estat del node",
+            "step": "Pas"
+          },
+          "network_status": {
+            "online": "En línia",
+            "offline": "Fora de línia",
+            "starting": "Iniciant",
+            "unknown": "Desconegut",
+            "details": {
+              "driverallnodesqueried": "S'han cosultat tots els nodes",
+              "driverallnodesqueriedsomedead": "S'han consultat tots els nodes. Se n'han trobat alguns morts",
+              "driverawakenodesqueries": "S'han cosultat tots els nodes desperts",
+              "driverremoved": "El controlador s'ha eliminat",
+              "driverreset": "El controlador s'ha restablert",
+              "driverfailed": "No s'ha pogut connectar amb el controlador Z-Wave",
+              "driverready": "Iniciant el controlador Z-Wave",
+              "ready": "A punt per connectar-se",
+              "stopped": "OpenZWave aturat",
+              "started": "Connectat a MQTT",
+              "starting": "Connectant a MQTT",
+              "offline": "OZWDaemon fora de línia"
+            }
+          },
+          "navigation": {
+            "select_instance": "Selecciona instància",
+            "network": "Xarxa",
+            "nodes": "Nodes",
+            "node": { "dashboard": "Panell", "config": "Configuració" }
+          },
+          "select_instance": {
+            "header": "Selecciona una instància d'OpenZWave",
+            "introduction": "Tens més d'una instància d'OpenZWave en funcionament. Quina instància vols gestionar?",
+            "none_found": "No s'ha pogut trobar cap instància d'OpenZWave. Si creus que això és incorrecte, comprova les configuracions d'OpenZWave i MQTT i assegurat que Home Assistant pugui comunicar-se amb el teu broker MQTT."
+          },
+          "network": {
+            "header": "Gestió de la xarxa",
+            "introduction": "Gestiona les funcions de tota la xarxa.",
+            "node_count": "{count} nodes"
+          },
+          "nodes_table": {
+            "id": "ID",
+            "manufacturer": "Fabricant",
+            "model": "Model",
+            "query_stage": "Fase de consulta",
+            "zwave_plus": "Z-Wave Plus",
+            "failed": "Ha fallat"
+          },
+          "node": {
+            "button": "Detalls del node",
+            "not_found": "No s'ha trobat el node"
+          },
+          "node_config": {
+            "header": "Configuració de node",
+            "introduction": "Gestiona els paràmetres de configuració d'un node Z-Wave.",
+            "help_source": "El projecte OpenZWave proporciona les descripcions dels paràmetres de configuració i els textos d'ajuda.",
+            "wakeup_help": "Els nodes amb bateria han d'estar desperts per canviar-ne la seva configuració. Si el node no està despert, OpenZWave intentarà actualitzar la configuració la propera vegada que es desperti, que podria passar algunes hores (o dies) més tard. Segueix els següents passos per despertar el dispositiu ara:"
+          },
+          "node_metadata": { "product_manual": "Manual del producte" },
+          "services": {
+            "add_node": "Afegeix node",
+            "remove_node": "Elimina node",
+            "cancel_command": "Cancel·la ordre"
+          },
+          "button": "Configura"
+        },
+        "zha": {
+          "common": {
+            "clusters": "Clústers",
+            "manufacturer_code_override": "Substitució del codi de fabricant",
+            "value": "Valor"
+          },
+          "configuration_page": {
+            "shortcuts_title": "Dreceres",
+            "update_button": "Actualitza la configuració",
+            "zha_options": {
+              "default_light_transition": "Temps de transició predeterminat (segons)",
+              "enable_identify_on_join": "Activa l'efecte d'identificació quan els dispositius s'uneixin a la xarxa",
+              "title": "Opcions globals"
+            }
+          },
+          "add_device_page": {
+            "spinner": "S'estan cercant dispositius ZHA Zigbee...",
+            "pairing_mode": "Assegura't que els dispositiu estiguin en mode vinculació. Consulta les instruccions del dispositiu per saber com fer-ho.",
+            "discovered_text": "Els dispositius apareixeran aquí un cop descoberts.",
+            "no_devices_found": "No s'han trobat dispositius, assegura't que estiguin en mode vinculació i manten-los desperts mentre s'estiguin descobrint.",
+            "search_again": "Torna a cercar"
+          },
+          "add_device": "Afegeix dispositiu",
+          "clusters": {
+            "header": "Clústers",
+            "help_cluster_dropdown": "Selecciona un clúster per visualitzar-ne els atributs i comandes.",
+            "introduction": "Els clústers són els blocs de construcció per dotar Zigbee de funcionalitat. Separen la funcionalitat en unitats lògiques. N'hi ha de tipus client i servidor; estan formats per atributs i comandes (ordres)."
+          },
+          "cluster_attributes": {
+            "header": "Atributs clúster",
+            "introduction": "Consulta i edita els atributs del clúster.",
+            "attributes_of_cluster": "Atributs del clúster seleccionat",
+            "get_zigbee_attribute": "Obtenir l'atribut Zigbee",
+            "set_zigbee_attribute": "Estableix l'atribut Zigbee",
+            "help_attribute_dropdown": "Selecciona un atribut per visualitzar-ne o definiu-ne el valor.",
+            "help_get_zigbee_attribute": "Obté el valor de l'atribut seleccionat.",
+            "help_set_zigbee_attribute": "Estableix el valor d'atribut pel clúster especificat a l'entitat especificada."
+          },
+          "cluster_commands": {
+            "header": "Comandes clúster",
+            "introduction": "Veure i emetre comandes clúster.",
+            "commands_of_cluster": "Comandes del clúster seleccionat",
+            "issue_zigbee_command": "Emet la comanda Zigbee",
+            "help_command_dropdown": "Selecciona una comanda per interactuar-hi."
+          },
+          "device_pairing_card": {
+            "PAIRED": "Dispositiu trobat",
+            "PAIRED_status_text": "Iniciant consulta",
+            "INTERVIEW_COMPLETE": "Consulta completada",
+            "INTERVIEW_COMPLETE_status_text": "Configurant",
+            "CONFIGURED": "Configuració completada",
+            "CONFIGURED_status_text": "Inicialitzant",
+            "INITIALIZED": "Inicialització completada",
+            "INITIALIZED_status_text": "El dispositiu està llest per a utilitzar-se"
+          },
+          "network": { "caption": "Xarxa" },
+          "groups": {
+            "add_group": "Afegeix grup",
+            "caption": "Grups",
+            "groups": "Grups",
+            "group_id": "ID del grup",
+            "members": "Membres",
+            "group_info": "Informació del grup",
+            "group_details": "Detalls del grup Zigbee seleccionat.",
+            "group_not_found": "No s'ha trobat el grup.",
+            "add_members": "Afegeix membres",
+            "remove_members": "Elimina membres",
+            "removing_members": "Eliminant membres",
+            "create_group_details": "Introdueix els detalls necessaris per crear un nou grup Zigbee",
+            "group_name_placeholder": "Nom del grup",
+            "create_group": "Domòtica Zigbee (ZHA) - Creació de grups",
+            "create": "Crea grup",
+            "creating_group": "Creant grup"
+          },
+          "visualization": {
+            "header": "Visualització de xarxa",
+            "caption": "Visualització",
+            "highlight_label": "Ressalta els dispositius",
+            "zoom_label": "Amplia al dispositiu",
+            "auto_zoom": "Zoom automàtic",
+            "refresh_topology": "Actualitza la topologia"
+          },
+          "group_binding": {
+            "header": "Vinculació de grups",
+            "introduction": "Vincula i desvincula grups.",
+            "group_picker_label": "Grups vinculables",
+            "group_picker_help": "Selecciona un grup per emetre una comanda de vinculació.",
+            "cluster_selection_help": "Selecciona clústers per vincular-los al grup seleccionat.",
+            "bind_button_label": "Vincula grup",
+            "unbind_button_label": "Desvincula grup",
+            "bind_button_help": "Vincula el grup seleccionat als clústers de dispositius seleccionats.",
+            "unbind_button_help": "Desvincula el grup seleccionat dels clústers de dispositius seleccionats."
+          },
+          "button": "Configura"
+        },
+        "zwave": {
+          "description": "Gestiona la teva xarxa Z-Wave",
+          "learn_more": "Més informació sobre Z-Wave",
+          "common": {
+            "value": "Valor",
+            "instance": "Instància",
+            "index": "Índex",
+            "unknown": "desconegut",
+            "wakeup_interval": "Interval per despertar-se"
+          },
+          "migration": {
+            "ozw": {
+              "header": "Migra a OpenZWave",
+              "introduction": "Aquest assistent t'ajudarà a fer la migració des de la integració Z-Wave estàndard a la integració d'OpenZWave, actualment en versió beta."
+            }
+          },
+          "network_management": {
+            "header": "Gestió de la xarxa Z-Wave",
+            "introduction": "Executa ordres a la xarxa Z-Wave. No es rebrà cap resposta si la majoria de les ordres han tingut èxit, però pots consultar el registre OZW."
+          },
+          "node_management": {
+            "header": "Gestió de nodes Z-Wave",
+            "introduction": "Executa ordres Z-Wave que afecten un sol node. Tria un node per veure la llista d'ordres/comandes disponibles.",
+            "nodes": "Nodes",
+            "nodes_hint": "Selecciona un node per visualitzar-ne les seves opcions",
+            "entities": "Entitats d'aquest node",
+            "entity_info": "Informació de l'entitat",
+            "exclude_entity": "Exclou aquesta entitat de Home Assistant",
+            "pooling_intensity": "Intensitat de sondeig",
+            "node_protection": "Protecció de node",
+            "protection": "Protecció",
+            "set_protection": "Estableix protecció",
+            "node_group_associations": "Associacions de grup de nodes",
+            "group": "Grup",
+            "node_to_control": "Node a controlar",
+            "nodes_in_group": "Altres nodes en aquest grup:",
+            "max_associations": "Associacions màximes:",
+            "add_to_group": "Afegeix a grup",
+            "remove_from_group": "Elimina de grup",
+            "remove_broadcast": "Elimina la difusió/broadcast"
+          },
+          "ozw_log": {
+            "header": "Registre d'OZW",
+            "introduction": "Consulta el registre. 0 és el mínim (carrega el registre complet) i 1000 és el màxim. La càrrega mostrarà un registre estàtic i la cua s'actualitzarà automàticament amb l'últim número de línies especificat.",
+            "last_log_lines": "Nombre d'últimes línies de registre",
+            "load": "Carrega",
+            "tail": "Cua"
+          },
+          "network_status": {
+            "network_stopped": "Xarxa Z-Wave aturada",
+            "network_starting": "Iniciant xarxa Z-Wave...",
+            "network_starting_note": "Això pot trigar una estona en funció de la mida de la teva xarxa.",
+            "network_started": "Xarxa Z-Wave iniciada",
+            "network_started_note_some_queried": "S'han consultat els nodes desperts. Els nodes adormits es consultaran quan es despertin.",
+            "network_started_note_all_queried": "S'han consultat tots els nodes."
+          },
+          "node_config": {
+            "header": "Opcions de configuració del node",
+            "seconds": "segons",
+            "set_wakeup": "Estableix l'interval per despertar-se",
+            "config_parameter": "Paràmetre de configuració",
+            "config_value": "Valor de configuració",
+            "true": "Cert",
+            "false": "Fals",
+            "set_config_parameter": "Defineix el paràmetre de configuració"
+          },
+          "values": { "header": "Valors dels node" },
+          "services": {
+            "start_network": "Inicia la xarxa",
+            "stop_network": "Atura la xarxa",
+            "heal_network": "Guareix la xarxa",
+            "test_network": "Prova la xarxa",
+            "soft_reset": "Reinici suau",
+            "save_config": "Desa la configuració",
+            "add_node_secure": "Afegeix node amb seguretat",
+            "add_node": "Afegeix node",
+            "remove_node": "Elimina node",
+            "cancel_command": "Cancel·lar ordre",
+            "refresh_node": "Actualitza node",
+            "remove_failed_node": "Elimina node fallit",
+            "replace_failed_node": "Substitueix node fallit",
+            "print_node": "Imprimeix node",
+            "heal_node": "Guareix node",
+            "test_node": "Prova node",
+            "node_info": "Informació de node",
+            "refresh_entity": "Actualitza l'entitat"
+          },
+          "button": "Configura"
+        },
+        "ais_dom_config": {
+          "header": "Configure AIS Home Gateway",
+          "introduction": "Here it is possible to configure your AIS Home Gateway. Not everything is possible to configure from the UI yet, but we're working on it."
+        },
+        "ais_dom": {
+          "caption": " AIS Home Gateway Settings",
+          "description": "Manage your IoT and Audio gateway"
+        },
+        "ais_dom_devices": {
+          "caption": "Configuration of AIS home Devices",
+          "description": "Manage your devices with AIS dom software"
+        },
+        "ais_dom_zigbee": {
+          "caption": "Configuration of AIS Zigbee",
+          "description": "Manage your zigbee devices"
+        },
+        "ais_dom_zwave": {
+          "caption": "Configuration of AIS ZWave",
+          "description": "Manage your ZWave devices"
+        },
+        "ais_dom_config_update": {
+          "caption": "Gateway software",
+          "description": "System update, backup and synchronization with the Integrator Portal"
+        },
+        "ais_dom_config_wifi": {
+          "caption": "WiFi network",
+          "description": "WiFi connection settings"
+        },
+        "ais_dom_config_display": {
+          "caption": "Screen",
+          "description": "Screen Settings"
+        },
+        "ais_dom_config_tts": {
+          "caption": "The assistant voice",
+          "description": "Voice assistant settings"
+        },
+        "ais_dom_config_night": {
+          "caption": "Night mode",
+          "description": "Set the hours when the assistant should be quieter"
+        },
+        "ais_dom_config_logs": {
+          "caption": "Logs and recorder",
+          "description": "Configuration of logs and DB recorder"
+        },
+        "ais_dom_config_remote": {
+          "caption": "Remote control",
+          "description": "Configuration of remote access to the gateway"
+        },
+        "ais_dom_config_usb": {
+          "caption": "USB devices",
+          "description": "Support for USB devices"
+        },
+        "ais_dom_config_power": {
+          "caption": "Stop the Gate",
+          "description": "Restart or turn off the gate"
+        },
+        "zwave_js": {
+          "navigation": { "network": "Xarxa", "logs": "Registres" },
+          "common": {
+            "network": "Xarxa",
+            "node_id": "ID del node",
+            "home_id": "ID principal",
+            "source": "Source",
+            "close": "Tanca",
+            "add_node": "Afegeix node",
+            "remove_node": "Elimina node",
+            "reconfigure_server": "Torna a configurar el servidor",
+            "heal_network": "Guareix la xarxa"
+          },
+          "dashboard": {
+            "header": "Gestiona la teva xarxa Z-Wave",
+            "introduction": "Gestiona la teva xarxa i nodes Z-Wave",
+            "driver_version": "Versió del controlador",
+            "server_version": "Versió del servidor",
+            "home_id": "ID principal",
+            "nodes_ready": "Nodes preparats",
+            "dump_debug": "Baixa un fitxer de buidatge de la xarxa per ajudar-te a diagnosticar problemes",
+            "dump_dead_nodes_title": "Alguns dels teus nodes estan morts",
+            "dump_dead_nodes_text": "Alguns dels nodes no han respost i s'han donat com a morts. Aquests no s'exportaran completament.",
+            "dump_not_ready_title": "Encara no tots els nodes estan preparats",
+            "dump_not_ready_text": "Si fas una exportació mentre tots els nodes no estan preparats, pots perdre dades útils. Deixa més temps perque la xarxa consulti tots els nodes. Vols seguir amb el procés?",
+            "dump_not_ready_confirm": "Baixa"
+          },
+          "device_info": {
+            "zwave_info": "Informació Z-Wave",
+            "node_status": "Estat del node",
+            "node_ready": "Node preparat",
+            "device_config": "Configura dispositiu",
+            "reinterview_device": "Re-interview Device",
+            "heal_node": "Heal Node",
+            "remove_failed": "Remove Failed Device"
+          },
+          "node_config": {
+            "header": "Configuració de dispositiu Z-Wave",
+            "introduction": "Gestiona i ajusta els paràmetres de configuració específics del dispositiu (node) seleccionat",
+            "attribution": "Els paràmetres de configuració i descripcions del dispositiu els proporcionen {device_database}",
+            "zwave_js_device_database": "Base de dades de dispositiu Z-Wave JS",
+            "battery_device_notice": "Els dispositius amb bateria han d'estar desperts per actualitzar-ne la configuració. Consulta el manual del dispositiu per saber com despertar-lo.",
+            "parameter_is_read_only": "Aquest paràmetre de només lectura.",
+            "error_device_not_found": "Dispositiu no trobat",
+            "set_param_accepted": "El paràmetre s'ha actualitzat.",
+            "set_param_queued": "El canvi de paràmetre s'ha posat en espera i s'actualitzarà quan es desperti el dispositiu.",
+            "set_param_error": "S'ha produït un error.",
+            "parameter": "Parameter"
+          },
+          "node_status": {
+            "unknown": "Desconegut",
+            "asleep": "Adormit",
+            "awake": "Despert",
+            "dead": "Mort",
+            "alive": "Viu"
+          },
+          "network_status": {
+            "connected": "Connectat",
+            "connecting": "Connectant",
+            "unknown": "Desconegut"
+          },
+          "add_node": {
+            "title": "Afegeix un node Z-Wave",
+            "introduction": "Aquest assistent et guiarà perquè afegeixis un node a la teva xarxa Z-Wave.",
+            "use_secure_inclusion": "Utilitza la inclusió segura",
+            "secure_inclusion_warning": "Els dispositius segurs necessiten una amplada de banda més gran; si tens molts dispositius segurs pot ser que la xarxa Z-Wave vagi més lenta. Et recomanem que utilitzis la inclusió segura només en dispositius que realment ho necessitin com ara panys i controls de portes.",
+            "start_inclusion": "Inicia la inclusió",
+            "start_secure_inclusion": "Inicia la inclusió segura",
+            "cancel_inclusion": "Cancel·la la inclusió",
+            "controller_in_inclusion_mode": "El controlador Z-Wave ara està en mode d'inclusió.",
+            "follow_device_instructions": "Segueix les instruccions del teu dispositiu per activar la vinculació al dispositiu.",
+            "inclusion_failed": "No s'ha pogut afegir el node. Consulta els registres per a més informació.",
+            "inclusion_finished": "S'ha afegit el node.",
+            "view_device": "Mostra el dispositiu",
+            "interview_started": "S'està consultant el dispositiu. Això pot trigar una estona.",
+            "interview_failed": "Ha fallat la consulta del dispositiu. Pots trobar informació addicional als registres."
+          },
+          "remove_node": {
+            "title": "Elimina un node Z-Wave",
+            "introduction": "Elimina un node de la xarxa Z-Wave i suprimeix el dispositiu i entitats associades de Home Assistant.",
+            "start_exclusion": "Inicia l'exclusió",
+            "cancel_exclusion": "Cancel·la l'exclusió",
+            "controller_in_exclusion_mode": "El controlador Z-Wave ara està en mode d'exclusió.",
+            "follow_device_instructions": "Segueix les instruccions del teu dispositiu per activar l'exclusió al dispositiu.",
+            "exclusion_failed": "No s'ha pogut eliminar el node. Consulta els registres per a més informació.",
+            "exclusion_finished": "El node {id} s'ha eliminat de la teva xarxa Z-Wave."
+          },
+          "remove_failed_node": {
+            "title": "Remove a Failed Z-Wave Device",
+            "introduction": "Remove a failed device from your Z-Wave network. Use this if you are unable to exclude a device normally because it is broken.",
+            "remove_device": "Remove Device",
+            "in_progress": "The device removal is in progress.",
+            "removal_finished": "Node {id} has been removed from your Z-Wave network.",
+            "removal_failed": "The device could not be removed from your Z-Wave network."
+          },
+          "reinterview_node": {
+            "title": "Torna a consultar un dispositiu Z-Wave",
+            "introduction": "Torna a consultar un dispositiu de la xarxa Zigbee. Fes-ho si el dispositiu no funciona correctament.",
+            "battery_device_warning": "Hauràs de despertar els dispositius amb bateria abans d'iniciar el procés de consulta. Fes un cop d'ull al manual del dispositiu per saber com despertar-lo.",
+            "run_in_background": "Pots tancar aquest diàleg, la consulta continuarà en segon pla.",
+            "start_reinterview": "Torna a iniciar consulta",
+            "in_progress": "S'està consultant el dispositiu. Això pot trigar una estona.",
+            "interview_failed": "Ha fallat la consulta del dispositiu. Pots trobar informació addicional als registres.",
+            "interview_complete": "Consulta del dispositiu completada."
+          },
+          "heal_network": {
+            "title": "Guareix la xarxa Z-Wave",
+            "introduction": "Inicia una guarició de la teva xarxa Z-Wave. La guarició de xarxa farà que tots els dispositius tornin a calcular les seves rutes cap al controlador. Es recomana si recentment has canviat o mogut dispositius o el controlador.",
+            "traffic_warning": "El procés de guarició genera una gran quantitat de trànsit a la xarxa Z-Wave. Això pot fer que els dispositius responguin lentament (o gens) mentre la guarició està en procés.",
+            "start_heal": "Comença la guarició",
+            "in_progress": "La guarició de la xarxa està en curs. Trigarà una estona.",
+            "run_in_background": "Pots tancar aquest diàleg, la guarició de la xarxa continuarà en segon pla.",
+            "stop_heal": "Atura la guarició",
+            "healing_complete": "La guarició de la xarxa s'ha completat.",
+            "healing_failed": "La guarició ha fallat. Pots trobar informació addicional als registres.",
+            "healing_cancelled": "La guarició de la xarxa s'ha cancel·lat."
+          },
+          "heal_node": {
+            "title": "Heal a Z-Wave Device",
+            "introduction": "Tell {device} to update its routes back to the controller. This can help with communication issues if you have recently moved the device or your controller.",
+            "traffic_warning": "The healing process generates a large amount of traffic on the Z-Wave network. This may cause devices to respond slowly (or not at all) while the heal is in progress.",
+            "start_heal": "Heal Device",
+            "healing_failed": "{device} could not be healed.",
+            "healing_failed_check_logs": "Additional information may be available in the logs.",
+            "healing_complete": "{device} has been healed.",
+            "in_progress": "{device} healing is in progress.",
+            "network_heal_in_progress": "A Z-Wave network heal is already in progress. Please wait for it to finish before healing an individual device."
+          },
+          "logs": {
+            "title": "Registres de Z-Wave JS",
+            "log_level": "Nivell dels registres",
+            "subscribed_to_logs": "Subscrit a missatges de registre Z-Wave JS...",
+            "log_level_changed": "Nivell de registre canviat a: {level}"
+          },
+          "button": "Configura"
+        },
+        "filtering": {
+          "clear": "Esborra",
+          "filtering_by": "Filtratge per",
+          "show": "Mostra"
+        },
+        "hassio": { "button": "Configura" },
+        "integration_panel_move": {
+          "link_integration_page": "pàgina d'integracions",
+          "missing_zha": "Trobes a faltar el panell de configuració de ZHA? S'ha traslladat a l'entrada ZHA de la {integrations_page}.",
+          "missing_zwave": "Trobes a faltar el panell de configuració de Z-Wave? S'ha traslladat a l'entrada Z-Wave de la {integrations_page}."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "אירועים",
+            "description": "יריית אירוע במערכת",
+            "documentation": "תיעוד אירועים",
+            "type": "סוג אירוע",
+            "data": "נתוני אירוע (YAML, אופציונלי)",
+            "fire_event": "שגר אירוע",
+            "event_fired": "אירוע {name} נורה",
+            "available_events": "אירועים זמינים",
+            "count_listeners": "({count} מאזינים)",
+            "listen_to_events": "האזן לאירועים",
+            "listening_to": "מאזין ל",
+            "subscribe_to": "אירוע להירשם אליו",
+            "start_listening": "התחל להאזין",
+            "stop_listening": "עצור האזנה",
+            "alert_event_type": "סוג האירוע הוא שדה חובה",
+            "notification_event_fired": "האירוע {type} הופעל בהצלחה!"
+          },
+          "services": {
+            "title": "שירותים",
+            "description": "כלי הפיתוח של השירותים מאפשר לך לקרוא לכל שירות ב Home Assistant.",
+            "call_service": "קריאה לשירות",
+            "column_parameter": "פרמטר",
+            "column_description": "תיאור",
+            "column_example": "דוגמא",
+            "fill_example_data": "מלא נתונים לדוגמה",
+            "yaml_mode": "עבור למצב YAML",
+            "ui_mode": "עבור למצב ממשק משתמש",
+            "yaml_parameters": "פרמטרים זמינים במצב YAML בלבד",
+            "all_parameters": "כל הפרמטרים הזמינים",
+            "accepts_target": "שירות זה מקבל יעד, לדוגמה: 'entity_id: light.bed_light'",
+            "no_template_ui_support": "ממשק המשתמש אינו תומך בתבניות, עדיין תוכל להשתמש בעורך ה YAML."
+          },
+          "states": {
+            "title": "מצבים",
+            "description1": "הגדר את ייצוג המצב הנוכחי של ישות במסגרת Assistant Home.",
+            "description2": "אם הישות שייכת להתקן, לא תהיה תקשורת ממשית עם התקן זה.",
+            "entity": "ישות",
+            "state": "מצב",
+            "attributes": "תכונות",
+            "state_attributes": "תכונות מצב (YAML, אופציונלי)",
+            "set_state": "קבע מצב",
+            "current_entities": "ישויות נוכחיות",
+            "filter_entities": "סנן ישויות",
+            "filter_states": "סנן מצבים",
+            "filter_attributes": "סנן תכונות",
+            "no_entities": "אין ישויות",
+            "more_info": "מידע נוסף",
+            "alert_entity_field": "ישות היא שדה חובה",
+            "last_updated": "עודכן לאחרונה",
+            "last_changed": "שינוי אחרון",
+            "copy_id": "העתק מזהה ללוח"
+          },
+          "templates": {
+            "title": "תבניות",
+            "description": "Templates are rendered using the Jinja2 template engine with some Home Assistant specific extensions.",
+            "editor": "Template editor",
+            "reset": "איפוס לתבנית הדגמה",
+            "result_type": "סוג תוצאה",
+            "jinja_documentation": "Jinja2 template documentation",
+            "template_extensions": "Home Assistant template extensions",
+            "unknown_error_template": "Unknown error rendering template",
+            "time": "תבנית זו מתעדכנת בתחילת כל דקה.",
+            "all_listeners": "תבנית זו מאזינה לכל האירועים שהשתנו על ידי המצב.",
+            "no_listeners": "תבנית זו אינה מאזינה לאירועים כלשהם ולא תתעדכן באופן אוטומטי.",
+            "listeners": "תבנית זו מאזינה לאירועים הבאים שהשתנו במצב:",
+            "entity": "ישות",
+            "domain": "תחום"
+          }
+        }
+      }
+    }
+  }
+}

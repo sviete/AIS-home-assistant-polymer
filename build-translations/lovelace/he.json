@@ -1,0 +1,473 @@
+{
+  "ui": {
+    "panel": {
+      "lovelace": {
+        "cards": {
+          "confirm_delete": "האם אתה בטוח שברצונך למחוק את הכרטיס הזה?",
+          "actions": {
+            "action_confirmation": "האם אתה בטוח שברצונך להריץ את \"{action}\"?",
+            "no_entity_more_info": "לא סופקה ישות עבור תיבת דו שיח של מידע נוסף",
+            "no_entity_toggle": "אין ישות שניתנה להחלפה",
+            "no_navigation_path": "לא צוין נתיב ניווט",
+            "no_url": "לא צוין כתובת אתר לפתיחה",
+            "no_service": "לא צוין שירות להרצה"
+          },
+          "empty_state": {
+            "title": "ברוך הבא הביתה",
+            "no_devices": "דף זה מאפשר לך לשלוט במכשירים שלך, אולם נראה שעדיין לא הגדרת התקנים. עבור לדף שילובים כדי להתחיל.",
+            "go_to_integrations_page": "עבור לדף השילובים."
+          },
+          "entities": { "never_triggered": "מעולם לא הופעל" },
+          "shopping-list": {
+            "checked_items": "פריטים מסומנים",
+            "clear_items": "נקה פריטים מסומנים",
+            "add_item": "הוסף פריט",
+            "reorder_items": "סדר מחדש פריטים",
+            "drag_and_drop": "גרור ושחרר"
+          },
+          "picture-elements": {
+            "hold": "החזק:",
+            "tap": "הקש:",
+            "navigate_to": "נווט אל {location}",
+            "url": "פתח חלון ל- {url_path}",
+            "toggle": "החלף מצב {name}",
+            "call_service": "קריאה לשירות {name}",
+            "more_info": "הצג מידע נוסף: {name}"
+          },
+          "safe-mode": {
+            "header": "מצב בטוח מופעל",
+            "description": "Home Assistant נתקל בבעיות בעת טעינת התצורה שלך וכעת הוא פועל במצב בטוח. עיין ביומן השגיאות כדי לראות מה השתבש."
+          },
+          "starting": { "description": "Home Assistant בעלייה. אנא המתן..." }
+        },
+        "unused_entities": {
+          "title": "ישויות שאינן בשימוש",
+          "available_entities": "אלה הן הישויות הזמינות, אך עדיין אינן בממשק המשתמש של Lovelace.",
+          "select_to_add": "בחר את הישויות שברצונך להוסיף לכרטיס ולחץ על כפתור הוסף כרטיס.",
+          "entity": "ישות",
+          "entity_id": "מזהה ישות",
+          "domain": "תחום",
+          "last_changed": "שונה לאחרונה",
+          "search": "חיפוש ישויות",
+          "no_data": "לא נמצאו ישויות שאינן בשימוש"
+        },
+        "add_entities": {
+          "yaml_unsupported": "אינך יכול להשתמש בפונקציה זו כשמשתמשים בממשק המשתמש של Lovelace במצב YAML.",
+          "generated_unsupported": "אתה יכול להשתמש בפונקציה זו רק לאחר שהשתלטת על ממשק המשתמש של Lovelace.",
+          "saving_failed": "שמירת תצורת ממשק המשתמש של Lovelace נכשלה."
+        },
+        "views": {
+          "confirm_delete": "למחוק תצוגה?",
+          "confirm_delete_text": "האם בוודאות ברצונך למחוק את התצוגה \"{name}\"?",
+          "confirm_delete_existing_cards": "מחיקת תצוגה זו תסיר גם את הכרטיסים",
+          "confirm_delete_existing_cards_text": "האם אתה בטוח שברצונך למחוק את התצוגה '' {name} '' שלך? התצוגה כוללת {number} כרטיסים שיימחקו. לא ניתן לבטל פעולה זו."
+        },
+        "menu": {
+          "configure_ui": "ערוך לוח בקרה",
+          "help": "עזרה",
+          "start_conversation": "התחל שיחה",
+          "reload_resources": "רענן משאבים",
+          "exit_edit_mode": "צא ממצב עריכה של ממשק המשתמש",
+          "close": "סגור"
+        },
+        "reload_resources": {
+          "refresh_header": "האם אתה רוצה לרענן?",
+          "refresh_body": "עליך לרענן את הדף כדי להשלים את הטעינה מחדש. האם ברצונך לרענן כעת?"
+        },
+        "editor": {
+          "header": "ערוך UI",
+          "menu": {
+            "open": "פתיחת תפריט ממשק המשתמש Lovelace",
+            "raw_editor": "עורך תצורה גולמית",
+            "manage_dashboards": "נהל לוחות מחוונים",
+            "manage_resources": "נהל משאבים"
+          },
+          "common": {
+            "edit": "ערוך",
+            "clear": "נקה",
+            "add": "הוסף",
+            "none": "ללא"
+          },
+          "raw_editor": {
+            "header": "עריכת תצורה",
+            "save": "שמור",
+            "unsaved_changes": "שינויים שלא נשמרו",
+            "saved": "נשמר",
+            "reload": "טען מחדש",
+            "lovelace_changed": "התצורה של Lovelace עודכנה, האם ברצונך לטעון את התצורה המעודכנת בעורך ולאבד את השינויים הנוכחיים שלך?",
+            "confirm_remove_config_title": "האם אתה בטוח שברצונך להסיר את תצורת ממשק המשתמש של Lovelace?",
+            "confirm_remove_config_text": "אנו ניצור אוטומטית את תצוגות ממשק המשתמש של Lovelace עם האזורים והמכשירים שלך אם תסיר את קונפיגורציית ממשק המשתמש שלך ב- Lovelace.",
+            "confirm_unsaved_changes": "יש לך שינויים שלא נשמרו, אתה בטוח שברצונך לצאת?",
+            "confirm_unsaved_comments": "ייתכן שהתצורה שלך מכילה הערות, הערות אלה לא יישמרו. האם ברצונך להמשיך?",
+            "error_parse_yaml": "לא ניתן לנתח את ה-YAML: {error}",
+            "error_invalid_config": "התצורה שלך אינה חוקית: {error}",
+            "error_save_yaml": "אין אפשרות לשמור את ה-YAML: {error}",
+            "error_remove": "לא ניתן להסיר את התצורה: {error}",
+            "resources_moved": "אין להוסיף עוד משאבים לתצורת Lovelace אך ניתן להוסיף אותם בלוח התצורה של Lovelace."
+          },
+          "edit_lovelace": {
+            "header": "כותרת ממשק ה- Lovelace שלך",
+            "explanation": "כותרת זו מוצגת מעל לכל התצוגות שלך בממשק המשתמש של Lovelace.",
+            "edit_title": "ערוך כותרת",
+            "title": "כותרת"
+          },
+          "edit_view": {
+            "header": "הצג תצורה",
+            "header_name": "הצג את תצורת {name}",
+            "add": "הוסף תצוגה",
+            "edit": "ערוך תצוגה",
+            "delete": "מחק תצוגה",
+            "move_left": "הזז את התצוגה שמאלה",
+            "move_right": "הזז את התצוגה ימינה",
+            "tab_settings": "הגדרות",
+            "tab_badges": "תגים",
+            "tab_visibility": "ניראות",
+            "visibility": {
+              "select_users": "בחר אילו משתמשים צריכים לראות תצוגה זו בתפריט"
+            },
+            "type": "View type",
+            "types": {
+              "masonry": "Masonry (default)",
+              "sidebar": "Sidebar",
+              "panel": "Panel (1 card)"
+            }
+          },
+          "edit_badges": {
+            "panel_mode": "תגים אלה לא יוצגו מאחר שתצוגה זו נמצאת במצב \"לוח\"."
+          },
+          "edit_card": {
+            "header": "תצורת כרטיסייה",
+            "typed_header": "תצורת כרטיס {type}",
+            "pick_card": "איזה כרטיס ברצונך להוסיף?",
+            "pick_card_view_title": "איזה כרטיס ברצונך להוסיף לתצוגת {name}?",
+            "toggle_editor": "עורך בורר מצבים",
+            "unsaved_changes": "יש לך שינויים שלא נשמרו",
+            "confirm_cancel": "האם אתה בטוח שברצונך לבטל?",
+            "show_visual_editor": "הצג עורך ויזואלי",
+            "show_code_editor": "הצג עורך קוד",
+            "add": "הוסף כרטיסייה",
+            "edit": "ערוך",
+            "clear": "נקה",
+            "delete": "מחק כרטיס",
+            "duplicate": "שכפל כרטיס",
+            "move": "עבור לתצוגה",
+            "move_before": "העבר כרטיס לפני",
+            "move_after": "העבר כרטיס אחרי",
+            "options": "אפשרויות נוספות",
+            "search_cards": "כרטיסי חיפוש"
+          },
+          "move_card": { "header": "בחר תצוגה שאליה להעביר את הכרטיס" },
+          "select_view": {
+            "header": "בחר תצוגה",
+            "dashboard_label": "לוח בקרה"
+          },
+          "suggest_card": {
+            "header": "יצרנו הצעה עבורך",
+            "create_own": "בחר כרטיס אחר",
+            "add": "הוסף לממשק המשתמש של Lovelace"
+          },
+          "save_config": {
+            "header": "קח שליטה על Lovelace ממשק המשתמש שלך",
+            "para": "לוח המחוונים הזה מתוחזק כעת על ידי Home Assistant. זה מתעדכן אוטומטית כאשר ישויות חדשות או רכיבי ממשק משתמש Lovelace זמינים. אם אתה לוקח שליטה, לוח המחוונים הזה כבר לא יעודכן אוטומטית. אתה תמיד יכול ליצור לוח מחוונים חדש בתצורה כדי לשחק איתו.",
+            "para_sure": "האם אתה בטוח שאתה רוצה לקחת שליטה על ממשק המשתמש?",
+            "yaml_mode": "אתה משתמש במצב YAML עבור לוח מחוונים זה ולכן אין באפשרותך לשנות את קונפיגורצית Lovelace מממשק המשתמש. אם ברצונך לנהל לוח מחוונים זה מממשק המשתמש, הסר 'mode: yaml' מתצורת Loverlace ב 'configuration.yaml.'.",
+            "yaml_control": "כדי לקבל שליטה במצב YAML, צור קובץ YAML עם השם שציינת ב-config עבור לוח מחוונים זה, או ברירת המחדל  'ui-lovelace.yaml'.",
+            "yaml_config": "כדי לעזור לך להתחיל הנה התצורה הנוכחית של לוח מחוונים זה:",
+            "empty_config": "התחל עם לוח בקרה ריק",
+            "close": "סגור",
+            "save": "קח שליטה",
+            "cancel": "לא משנה"
+          },
+          "migrate": {
+            "header": "תצורה אינה תואמת",
+            "para_no_id": "האלמנט הנוכחי לא מכיל מזהה יחודיי. בבקשה הוסף מזהה יחודי לאלמט זה בקובץ 'ui-lovelace.yaml'.",
+            "para_migrate": "Home Assistant יכול להוסיף מזהים לכל הכרטיסים והתצוגות שלך באופן אוטומטי עבורך על ידי לחיצה על לחצן 'העבר תצורה'.",
+            "migrate": "העבר תצורה"
+          },
+          "action-editor": {
+            "navigation_path": "נתיב ניווט",
+            "url_path": "נתיב כתובת URL",
+            "actions": {
+              "default_action": "פעולת ברירת מחדל",
+              "call-service": "הפעל שירות",
+              "more-info": "מידע נוסף",
+              "toggle": "החלף מצב",
+              "navigate": "נווט",
+              "url": "כתובת אתר",
+              "none": "אין פעולה"
+            }
+          },
+          "card": {
+            "alarm-panel": {
+              "name": "לוח אזעקה",
+              "available_states": "מצבים זמינים",
+              "description": "הכרטיס של לוח האזעקה מאפשר לך לדרוך ולנטרל את שילובי לוח הבקרה של האזעקה."
+            },
+            "calendar": {
+              "name": "לוח שנה",
+              "description": "כרטיס לוח השנה מציג לוח שנה הכולל תצוגות יום, שבוע ורשימה",
+              "inital_view": "תצוגה ראשונית",
+              "calendar_entities": "ישויות לוח שנה",
+              "views": {
+                "dayGridMonth": "חודש",
+                "dayGridDay": "יום",
+                "listWeek": "רשימה"
+              }
+            },
+            "conditional": {
+              "name": "מותנה",
+              "description": "הכרטיס המותנה מציג כרטיס נוסף המבוסס על מצבי ישויות.",
+              "conditions": "תנאים",
+              "card": "כרטיס",
+              "state_equal": "כאשר המצב (State) שווה ל",
+              "state_not_equal": "כאשר המצב (State) אינו שווה ל",
+              "current_state": "נוכחי",
+              "condition_explanation": "הכרטיס יוצג כאשר מתקיימים *כל* התנאים להלן.",
+              "change_type": "שנה סוג"
+            },
+            "config": { "required": "חובה", "optional": "אופציונאלי" },
+            "entities": {
+              "name": "ישויות",
+              "show_header_toggle": "הצג שינוי מצב כותרת?",
+              "toggle": "החלף מצב ישויות.",
+              "description": "כרטיס היישויות הוא סוג הכרטיס הנפוץ ביותר. הוא מקבץ ישויות יחד לרשימות.",
+              "special_row": "שורה מיוחדת",
+              "edit_special_row": "הצג את הפרטים של שורה זו על ידי לחיצה על לחצן העריכה",
+              "entity_row_editor": "עורך שורת ישות",
+              "secondary_info_values": {
+                "none": "אין מידע משני",
+                "entity-id": "מזהה ישות",
+                "last-changed": "שונה לאחרונה",
+                "last-triggered": "הופעל לאחרונה",
+                "position": "מיקום",
+                "tilt-position": "הטה מיקום",
+                "brightness": "בהירות",
+                "last-updated": "עדכון אחרון"
+              },
+              "entity_row": {
+                "divider": "מפריד",
+                "call-service": "הפעל שירות",
+                "section": "מקטע",
+                "weblink": "קישור",
+                "attribute": "שדה",
+                "buttons": "כפתורים",
+                "conditional": "מותנה",
+                "cast": "Cast",
+                "button": "כפתור"
+              }
+            },
+            "entity": {
+              "name": "ישות",
+              "description": "כרטיס היישות מעניק לך סקירה מהירה של מצב היישות שלך."
+            },
+            "button": {
+              "name": "כפתור",
+              "description": "כרטיס ה־Button מאפשר להוסיף כפתורים לביצוע משימות.",
+              "default_action_help": "פעולת ברירת המחדל תלויה ביכולות הישות, היא תוחלף או שתוצג תיבת הדו שיח של מידע נוסף."
+            },
+            "entity-filter": {
+              "name": "Entity Filter",
+              "description": "כרטיס ה־Entity Filter מאפשר לך להגדיר רשימה של ישויות שאתה רוצה לעקוב אחריהן רק במצב מסוים."
+            },
+            "gauge": {
+              "name": "Gauge",
+              "needle_gauge": "Display as needle gauge?",
+              "severity": {
+                "define": "הגדר חומרה?",
+                "green": "ירוק",
+                "red": "אדום",
+                "yellow": "צהוב"
+              },
+              "description": "כרטיס ה Gauge הוא כרטיס בסיסי המאפשר לראות חזותית נתוני חיישן."
+            },
+            "glance": {
+              "name": "Glance",
+              "columns": "עמודות",
+              "description": "כרטיס ה־Glance שימושי עבור קיבוץ מספר חיישנים לסקירה קומפקטית."
+            },
+            "grid": {
+              "name": "רשת",
+              "description": "כרטיס הרשת מאפשר לך להציג כרטיסים מרובים ברשת.",
+              "columns": "עמודות",
+              "square": "הצג כרטיסים כריבועים"
+            },
+            "logbook": {
+              "name": "יומן רישום",
+              "description": "כרטיס יומן הרישום מציג רשימה של אירועים עבור ישויות."
+            },
+            "history-graph": {
+              "name": "גרף ההיסטוריה",
+              "description": "הכרטיס History Graph מאפשר לך להציג גרף עבור כל אחת מהישויות המפורטות."
+            },
+            "statistics-graph": {
+              "name": "Statistics Graph",
+              "description": "The Statistics Graph card allows you to display a graph of the statistics for each of the entities listed."
+            },
+            "horizontal-stack": {
+              "name": "עימוד אופקי",
+              "description": "כרטיס הערימה האופקית מאפשר לכם לערום יחד מספר כרטיסים, כך שהם תמיד יושבים אחד ליד השני במרחב של טור אחד."
+            },
+            "humidifier": {
+              "name": "מכשיר אדים",
+              "description": "כרטיס מכשיר אדים מעניק שליטה על ישות מכשיר האדים שלך ומאפשר לך לשנות את הלחות והמצב של הישות."
+            },
+            "iframe": {
+              "name": "דף אינטרנט",
+              "description": "כרטיס דף האינטרנט מאפשר לך להטביע את דף האינטרנט המועדף עליך ישירות לתוך Home Assistant."
+            },
+            "light": {
+              "name": "תאורה",
+              "description": "כרטיס האור מאפשר לך לשנות את בהירות האור."
+            },
+            "generic": {
+              "aspect_ratio": "יחס תצוגה",
+              "attribute": "שדה",
+              "camera_image": "ישות מצלמה",
+              "camera_view": "תצוגת מצלמה",
+              "double_tap_action": "פעולת הקשה כפולה",
+              "entities": "ישויות",
+              "entity": "ישות",
+              "hold_action": "פעולת החזקה",
+              "hours_to_show": "שעות להצגה",
+              "days_to_show": "Days to Show",
+              "icon": "סמל",
+              "icon_height": "גובה אייקון",
+              "image": "נתיב תמונה",
+              "maximum": "מקסימום",
+              "manual": "ידני",
+              "manual_description": "צריך להוסיף כרטיס מותאם אישית או רק רוצה לכתוב באופן ידני את YAML?",
+              "minimum": "מינימום",
+              "name": "שם",
+              "refresh_interval": "מרווח זמן לרענון",
+              "show_icon": "הצג סמל?",
+              "show_name": "להציג שם?",
+              "show_state": "הצג מצב?",
+              "tap_action": "פעולת הקשה",
+              "title": "כותרת",
+              "theme": "ערכת נושא",
+              "no_theme": "אין ערכת נושא",
+              "unit": "יחידה",
+              "url": "כתובת אתר",
+              "state": "מצב",
+              "secondary_info_attribute": "שדה מידע משני",
+              "search": "חיפוש",
+              "state_color": "צבע סמלילים על סמך מצב?"
+            },
+            "map": {
+              "name": "מפה",
+              "geo_location_sources": "מקורות מיקום גאוגרפי",
+              "dark_mode": "מצב כהה?",
+              "default_zoom": "זום התחלתי",
+              "hours_to_show": "שעות להצגה",
+              "source": "מקור",
+              "description": "כרטיס המפה המאפשר להציג ישויות במפה."
+            },
+            "markdown": {
+              "name": "Markdown",
+              "content": "תוכן",
+              "description": "כרטיס ה- Markdown משמש להצגת ה- Markdown."
+            },
+            "media-control": {
+              "name": "שליטה במדיה",
+              "description": "כרטיס בקרת המדיה משמש להצגת ישויות נגני מדיה בממשק עם פקדים קלים לשימוש."
+            },
+            "picture": {
+              "name": "תמונה",
+              "description": "כרטיס התמונה מאפשר לך להגדיר תמונה שתשמש לניווט ליעדים שונים בממשק שלך או לקריאה לשירות."
+            },
+            "picture-elements": {
+              "name": "Picture Elements",
+              "description": "כרטיס Picture Elements הוא אחד מסוגי הכרטיסים המגוונים ביותר. הכרטיסים מאפשרים למקם סמלים או טקסט ואפילו שירותים! על תמונה המבוססת על קואורדינטות."
+            },
+            "picture-entity": {
+              "name": "Picture Entity",
+              "description": "כרטיס Picture Entity מציג יישות בצורה של תמונה. במקום תמונות מכתובת URL, זה יכול גם להציג את התמונה של ישויות מצלמה."
+            },
+            "picture-glance": {
+              "name": "Picture Glance",
+              "description": "הכרטיס מבט מהיר על תמונה מציג תמונה ואת מצבי הישות המתאימים כסמל. הישויות בצד ימין מאפשרות פעולות דו מצביות, אחרות מציגות את תיבת הדו שיח של מידע נוסף.",
+              "state_entity": "ישות מצב"
+            },
+            "plant-status": {
+              "name": "מצב הצמח",
+              "description": "כרטיס סטטוס הצמח מיועד לכל הבוטנאים המקסימים שיש שם."
+            },
+            "sensor": {
+              "name": "חיישן",
+              "show_more_detail": "הצג פרטים נוספים",
+              "graph_type": "סוג גרף",
+              "description": "כרטיס החיישן מעניק לך סקירה מהירה של מצב החיישנים שלך באמצעות גרף אופציונלי להמחשת שינוי לאורך זמן."
+            },
+            "shopping-list": {
+              "name": "רשימת קניות",
+              "description": "כרטיס רשימת הקניות מאפשר לך להוסיף, לערוך, לבצע הוצאה ולנקות פריטים מרשימת הקניות שלך.",
+              "integration_not_loaded": "כרטיס זה דורש את הגדרת האינטגרציה 'shopping_list'."
+            },
+            "thermostat": {
+              "name": "וסת חום",
+              "description": "כרטיס וסת החום נותן שליטה על ישות האקלים שלך. מאפשר לך לשנות את הטמפרטורה ואת המצב של הישות."
+            },
+            "vertical-stack": {
+              "name": "עימוד אנכי",
+              "description": "כרטיס המחסנית האנכית מאפשר לך לקבץ כרטיסים מרובים כך שהם תמיד יושבים באותה עמודה."
+            },
+            "weather-forecast": {
+              "name": "תחזית מזג האוויר",
+              "description": "כרטיס תחזית מזג האוויר מציג את מזג האוויר. מאוד שימושי לכלול בממשקים שאנשים מציגים על הקיר.",
+              "show_forecast": "הצג תחזית"
+            }
+          },
+          "view": {
+            "panel_mode": {
+              "warning_multiple_cards": "תצוגה זו מכילה יותר מכרטיס אחד, אך בתצוגת פאנל ניתן להציג כרטיס אחד בלבד.",
+              "description": "פעולה זו מעבדת את הכרטיס הראשון ברוחב מלא. כרטיסים אחרים בתצוגה זו, כמו גם תגים לא יעובדו.",
+              "title": "מצב לוח?"
+            }
+          },
+          "cardpicker": {
+            "no_description": "אין תיאור זמין",
+            "custom_card": "מותאם אישית",
+            "domain": "תחום",
+            "entity": "ישות",
+            "by_entity": "לפי ישות",
+            "by_card": "לפי כרטיס"
+          },
+          "header-footer": {
+            "header": "כותרת עליונה",
+            "footer": "כותרת תחתונה",
+            "choose_header_footer": "בחר {type}",
+            "types": {
+              "graph": { "name": "גרף" },
+              "picture": { "name": "תמונה" },
+              "buttons": { "name": "כפתורים" }
+            }
+          },
+          "sub-element-editor": {
+            "types": {
+              "header": "עורך כותרת עליונה",
+              "footer": "עורך כותרת תחתונה",
+              "row": "עורך שורות ישות"
+            }
+          }
+        },
+        "warning": {
+          "attribute_not_found": "השדה {attribute} אינו זמין ב־{entity}",
+          "entity_not_found": "הישות אינה זמינה: {entity}",
+          "entity_non_numeric": "הישות אינה מספרית: {entity}",
+          "entity_unavailable": "הישות אינה זמינה כרגע: {entity}",
+          "starting": "Home Assistant בעלייה, ייתכן שלא הכל יהיה זמין"
+        },
+        "changed_toast": {
+          "message": "תצורת ממשק המשתמש Lovelace עבור לוח בקרה זה עודכנה. האם לרענן כדי לראות את השינויים?"
+        },
+        "components": {
+          "timestamp-display": {
+            "invalid": "תאריך זמן לא חוקי",
+            "invalid_format": "פורמט תצוגה לא חוקי"
+          }
+        },
+        "reload_lovelace": "טען מחדש את ממשק המשתמש"
+      }
+    }
+  }
+}

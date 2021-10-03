@@ -1,0 +1,76 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "هل أنت مستعد لإيقاظ منزلك واستعادة خصوصيتك والانضمام إلى مجتمع عالمي من اللاعبين؟",
+        "next": "التالى",
+        "finish": "انتهى",
+        "user": {
+          "intro": "لنبدأ بإنشاء حساب مستخدم.",
+          "required_field": "مطلوب",
+          "data": {
+            "name": "الاسم",
+            "username": "المستخدم",
+            "password": "كلمه السر",
+            "password_confirm": "تأكيد كلمة السر"
+          },
+          "create_account": "إنشاء حساب",
+          "error": {
+            "required_fields": "املأ جميع الحقول المطلوبة",
+            "password_not_match": "كلمة السر غير مطابقة"
+          }
+        },
+        "core-config": {
+          "intro": "مرحبًا {name} ، مرحبًا بك في Home Assistant. ماذا تريد تسمية منزلك؟",
+          "intro_location": "نود أن نعرف أين تعيش. ستساعد هذه المعلومات في عرض المعلومات وإعداد الأتمتة القائمة على الشمس. لا يتم ابدا مشاركة هذه البيانات خارج الشبكة الخاصة بك.",
+          "intro_location_detect": "يمكننا مساعدتك في ملء هذه المعلومات عن طريق تقديم طلب لمرة واحدة إلى خدمة خارجية.",
+          "location_name": "اسم تثبيت Home Assistant الخاص بك",
+          "location_name_default": "المنزل ",
+          "button_detect": "كشف",
+          "finish": "التالى"
+        },
+        "integration": {
+          "intro": "يتم تمثيل الأجهزة والخدمات في Home Assistant كتكاملات. يمكنك إعدادها الآن ، أو القيام بذلك لاحقًا من شاشة التكوين.",
+          "more_integrations": "المزيد",
+          "finish": "إنهاء"
+        },
+        "analytics": {
+          "finish": "التالى",
+          "intro": "شارك التحليلات من المثيل الخاص بك. ستكون هذه البيانات متاحة للجمهور على {link}"
+        },
+        "restore": {
+          "description": "Alternatively you can restore from a previous snapshot.",
+          "in_progress": "Restore in progress",
+          "show_log": "Show full log",
+          "hide_log": "Hide full log",
+          "full_snapshot": "Full snapshot",
+          "partial_snapshot": "Partial snapshot",
+          "type": "Snapshot type",
+          "select_type": "Select what to restore",
+          "folders": "Folders",
+          "addons": "Add-ons",
+          "password_protection": "Password protection",
+          "password": "Snapshot password",
+          "confirm_password": "Confirm Snapshot password"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Jste připraveni oživit svůj domov, zachovat si své soukromí a připojit se k celosvětové komunitě tvůrců?",
+        "next": "Další",
+        "finish": "Dokončit",
+        "user": {
+          "intro": "Začněme tím, že vytvoříme uživatelský účet.",
+          "required_field": "Povinné",
+          "data": {
+            "name": "Jméno",
+            "username": "Uživatelské jméno",
+            "password": "Heslo",
+            "password_confirm": "Potvrzení hesla"
+          },
+          "create_account": "Vytvořit účet",
+          "error": {
+            "required_fields": "Vyplňte všechna povinná pole",
+            "password_not_match": "Hesla se neshodují"
+          }
+        },
+        "core-config": {
+          "intro": "Dobrý den, {name} , vítejte v Home Assistant. Jak byste chtěli pojmenovat svůj domov?",
+          "intro_location": "Rádi bychom věděli, kde žijete. Tyto informace pomohou při zobrazování informací a určování přesné polohy slunce. Tato data nejsou nikdy sdílena mimo vaši síť.",
+          "intro_location_detect": "Můžeme vám pomoci vyplnit tyto informace jednorázovým požadavkem na externí službu.",
+          "location_name": "Název vaší instalace Home Assistant",
+          "location_name_default": "Domov",
+          "button_detect": "Rozpoznat",
+          "finish": "Další"
+        },
+        "integration": {
+          "intro": "Zařízení a služby jsou v Home Assistant reprezentovány jako integrace. Ty můžete nastavit nyní nebo později v nastavení.",
+          "more_integrations": "Více",
+          "finish": "Dokončit"
+        },
+        "analytics": {
+          "finish": "Další",
+          "intro": "Sdílejte analytiku ze své instance. Tato data budou veřejně dostupná na {link}"
+        },
+        "restore": {
+          "description": "Případně můžete Home Assistant obnovit z poslední zálohy.",
+          "in_progress": "Probíhá obnovení",
+          "show_log": "Zobrazit celý log",
+          "hide_log": "Skrýt celý log",
+          "full_snapshot": "Úplná záloha",
+          "partial_snapshot": "Částečná záloha",
+          "type": "Typ zálohy",
+          "select_type": "Vyberte, co chcete obnovit",
+          "folders": "Složky",
+          "addons": "Doplňky",
+          "password_protection": "Ochrana heslem",
+          "password": "Heslo zálohy",
+          "confirm_password": "Potvrďte heslo zálohy"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

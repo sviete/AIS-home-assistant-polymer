@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Eventos",
+            "description": "Dispare um evento no barramento de eventos.",
+            "documentation": "Documentação de eventos.",
+            "type": "Tipo de evento",
+            "data": "Dados do evento (YAML, opcional)",
+            "fire_event": "Disparar Evento",
+            "event_fired": "Evento {name} disparado",
+            "available_events": "Eventos Disponíveis",
+            "count_listeners": " ({count} ouvintes)",
+            "listen_to_events": "Ouvir eventos",
+            "listening_to": "Ouvindo",
+            "subscribe_to": "Evento para se inscrever",
+            "start_listening": "Começar a ouvir",
+            "stop_listening": "Parar de ouvir",
+            "alert_event_type": "O tipo de evento é um campo obrigatório",
+            "notification_event_fired": "Evento {type} disparado com sucesso!"
+          },
+          "services": {
+            "title": "Serviços",
+            "description": "A ferramenta do desenvolvedor de serviço permite inciar qualquer serviço disponível no Home Assistant.",
+            "call_service": "Iniciar Serviço",
+            "column_parameter": "Parâmetro",
+            "column_description": "Descrição",
+            "column_example": "Exemplo",
+            "fill_example_data": "Preencher dados de exemplo",
+            "yaml_mode": "Ir para o modo YAML",
+            "ui_mode": "Ir para o modo UI",
+            "yaml_parameters": "Parametros apenas disponíveis no modo YAML",
+            "all_parameters": "Todos os parâmetros disponíveis",
+            "accepts_target": "This service accepts a target, for example: `entity_id: light.bed_light`",
+            "no_template_ui_support": "The UI does not support templates, you can still use the YAML editor."
+          },
+          "states": {
+            "title": "Estado",
+            "description1": "Definir a representação de um dispositivo no Home Assistant.",
+            "description2": "Isso não se comunicará com o dispositivo real.",
+            "entity": "Entidade",
+            "state": "Estado",
+            "attributes": "Atributos",
+            "state_attributes": "Atributos de estado (YAML, opcional)",
+            "set_state": "Definir Estado",
+            "current_entities": "Entidades atuais",
+            "filter_entities": "Filtro de entidades",
+            "filter_states": "Filtro de estados",
+            "filter_attributes": "Filtro de atributos",
+            "no_entities": "Nenhuma entidade",
+            "more_info": "Mais informações",
+            "alert_entity_field": "Entidade é um campo obrigatório",
+            "last_updated": "Última atualização",
+            "last_changed": "Última alteração",
+            "copy_id": "Copiar para a Área de Transferência"
+          },
+          "templates": {
+            "title": "Modelo",
+            "description": "Os templates são renderizados usando o Jinja2 com algumas extensões específicas do Home Assistant.",
+            "editor": "Editor de templates",
+            "reset": "Redefinir para modelo de demonstração",
+            "result_type": "Tipo de resultado",
+            "jinja_documentation": "Documentação do template Jinja2",
+            "template_extensions": "Extensões de template do Home Assistant",
+            "unknown_error_template": "Erro desconhecido ao renderizar template",
+            "time": "Este modelo atualiza ao início de cada minuto",
+            "all_listeners": "Este modelo ouve os seguintes eventos de mudança de estado:",
+            "no_listeners": "Este modelo não monitoriza nenhum evento e não será atualizado automaticamente.",
+            "listeners": "Este modelo ouve os seguintes eventos de mudança de estado:",
+            "entity": "Entidade",
+            "domain": "Domínio"
+          }
+        }
+      }
+    }
+  }
+}

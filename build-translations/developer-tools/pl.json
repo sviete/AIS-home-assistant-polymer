@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Zdarzenia",
+            "description": "Wywołaj zdarzenie na szynie zdarzeń.",
+            "documentation": "Dokumentacja zdarzeń.",
+            "type": "Typ zdarzenia",
+            "data": "Dane zdarzenia (YAML, opcjonalnie)",
+            "fire_event": "Wywołaj zdarzenie",
+            "event_fired": "Zdarzenie {name} wywołane",
+            "available_events": "Dostępne zdarzenia",
+            "count_listeners": " ({count} słuchaczy)",
+            "listen_to_events": "Nasłuch zdarzeń",
+            "listening_to": "Nasłuchiwanie...",
+            "subscribe_to": "Zdarzenie do zasubskrybowania",
+            "start_listening": "Rozpocznij nasłuch",
+            "stop_listening": "Zatrzymaj nasłuch",
+            "alert_event_type": "Typ zdarzenia jest polem obowiązkowym",
+            "notification_event_fired": "Udało się wywołać zdarzenie {type}!"
+          },
+          "services": {
+            "title": "Usługi",
+            "description": "Narzędzie deweloperskie Usługi pozwala na wywołanie dowolnej dostępnej usługi.",
+            "call_service": "Wywołaj usługę",
+            "column_parameter": "Parametr",
+            "column_description": "Opis",
+            "column_example": "Przykład",
+            "fill_example_data": "Wypełnij przykładowymi danymi",
+            "yaml_mode": "Przejdź do trybu YAML",
+            "ui_mode": "Przejdź do trybu interfejsu użytkownika",
+            "yaml_parameters": "Parametry dostępne tylko w trybie YAML",
+            "all_parameters": "Wszystkie dostępne parametry",
+            "accepts_target": "Ta usługa akceptuje cel, na przykład: `entity_id: light.bed_light`",
+            "no_template_ui_support": "Interfejs użytkownika nie obsługuje szablonów, nadal możesz używać edytora YAML."
+          },
+          "states": {
+            "title": "Stany",
+            "description1": "Ustaw aktualne stany encji urządzeń Asystenta domowego.",
+            "description2": "Jeśli encja należy do urządzenia, nie nastąpi żadna komunikacja z urządzeniem.",
+            "entity": "Encja",
+            "state": "Stan",
+            "attributes": "Atrybuty",
+            "state_attributes": "Atrybuty stanu (YAML, opcjonalnie)",
+            "set_state": "Ustaw stan",
+            "current_entities": "Bieżące encje",
+            "filter_entities": "Filtr encji",
+            "filter_states": "Filtr stanów",
+            "filter_attributes": "filtr atrybutów",
+            "no_entities": "Brak encji",
+            "more_info": "Więcej informacji",
+            "alert_entity_field": "Encja jest polem obowiązkowym",
+            "last_updated": "Ostatnio zaktualizowano",
+            "last_changed": "Ostatnia zmiana",
+            "copy_id": "Skopiuj ID do schowka"
+          },
+          "templates": {
+            "title": "Szablon",
+            "description": "Szablony są renderowane przy użyciu silnika szablonów Jinja2 z kilkoma specyficznymi rozszerzeniami Home Assistanta.",
+            "editor": "Edytor szablonów",
+            "reset": "Zresetuj do szablonu demonstracyjnego",
+            "result_type": "Rodzaj wyniku",
+            "jinja_documentation": "Dokumentacja szablonów Jinja2",
+            "template_extensions": "Rozszerzenia szablonów Home Assistanta",
+            "unknown_error_template": "Nieznany błąd podczas renderowania szablonu",
+            "time": "Ten szablon aktualizuje się z rozpoczęciem każdej minuty.",
+            "all_listeners": "Ten szablon nasłuchuje wszystkich zdarzeń zmiany stanu.",
+            "no_listeners": "Ten szablon nie nasłuchuje żadnych zdarzeń i nie zostanie zaktualizowany automatycznie.",
+            "listeners": "Ten szablon nasłuchuje następujących zdarzeń zmiany stanu:",
+            "entity": "Encja",
+            "domain": "Domena"
+          }
+        }
+      }
+    }
+  }
+}

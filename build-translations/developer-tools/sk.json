@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Udalosti",
+            "description": "Spustite udalosť na zbernicu udalostí.",
+            "documentation": "Dokumentácia udalostí.",
+            "type": "Typ udalosti",
+            "data": "Údaje o udalosti (YAML, voliteľné)",
+            "fire_event": "Odpáliť udalosť",
+            "event_fired": "Udalosť {name} sa spustila",
+            "available_events": "Dostupné udalosti",
+            "count_listeners": " ({count} poslucháčov)",
+            "listen_to_events": "Počúvanie udalostí",
+            "listening_to": "Počúvanie",
+            "subscribe_to": "Udalosť na ktorú čakať",
+            "start_listening": "Začať počúvať",
+            "stop_listening": "Zastaviť počúvanie",
+            "alert_event_type": "Typ udalosti je povinné pole",
+            "notification_event_fired": "Udalosť {type} úspešne spustená!"
+          },
+          "services": {
+            "title": "Služby",
+            "description": "Vývojársky nástroj vám umožňuje zavolať akúkoľvek dostupnú službu v Home Assistant.",
+            "call_service": "Zavolať službu",
+            "column_parameter": "Parameter",
+            "column_description": "Popis",
+            "column_example": "Príklad",
+            "fill_example_data": "Vyplniť vzorové údaje",
+            "yaml_mode": "Prejdite do režimu YAML",
+            "ui_mode": "Prejdite do režimu používateľského rozhrania",
+            "yaml_parameters": "Parametre dostupné len v móde YAML",
+            "all_parameters": "Všetky dostupné parametre",
+            "accepts_target": "Príklad použitia tejto služby: `entity_id: light.bed_light`",
+            "no_template_ui_support": "The UI does not support templates, you can still use the YAML editor."
+          },
+          "states": {
+            "title": "Stavy",
+            "description1": "Nastavte zobrazenie zariadenia v Home Assistant",
+            "description2": "Toto nebude komunikovať so skutočným zariadením.",
+            "entity": "Entita",
+            "state": "Stav",
+            "attributes": "Atribúty",
+            "state_attributes": "Atribúty stavu (YAML, voliteľné)",
+            "set_state": "Nastaviť stav",
+            "current_entities": "Aktuálne entity",
+            "filter_entities": "Filtrovať entity",
+            "filter_states": "Filtrovať stavy",
+            "filter_attributes": "Filtrovať atribúty",
+            "no_entities": "No entities",
+            "more_info": "Viac informácií",
+            "alert_entity_field": "Entity is a mandatory field",
+            "last_updated": "Posledná aktualizácia",
+            "last_changed": "Posledná zmena",
+            "copy_id": "Kopírovať ID do schránky"
+          },
+          "templates": {
+            "title": "Šablóny",
+            "description": "Šablóny sa vykresľujú pomocou nástroja šablóny Jinja2 s niektorými špecifickými rozšíreniami  pre Home Assistant.",
+            "editor": "Editor šablóna",
+            "reset": "Reset to demo template",
+            "result_type": "Typ výsledku",
+            "jinja_documentation": "Jinja2 template documentation",
+            "template_extensions": "Rozšírenia šablóny Home Assistant",
+            "unknown_error_template": "Unknown error rendering template",
+            "time": "Táto šablóna sa aktualizuje na začiatku každej minúty.",
+            "all_listeners": "Táto šablóna počúva všetky udalosti zmenené stavom.",
+            "no_listeners": "Táto šablóna nepočúva žiadne udalosti a nebude sa automaticky aktualizovať.",
+            "listeners": "Táto šablóna počúva nasledujúce udalosti zmenené stavom:",
+            "entity": "Entita",
+            "domain": "Doména"
+          }
+        }
+      }
+    }
+  }
+}

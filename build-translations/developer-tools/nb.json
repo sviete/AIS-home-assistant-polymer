@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Hendelser",
+            "description": "Send ut en hendelse på hendelsesbussen",
+            "documentation": "Dokumentasjon for hendelser",
+            "type": "Hendelse type",
+            "data": "Hendelsedata (YAML, valgfritt)",
+            "fire_event": "Utfør hendelse",
+            "event_fired": "Hendelse {name} utført",
+            "available_events": "Tilgjengelige hendelser",
+            "count_listeners": " ({count} lyttere)",
+            "listen_to_events": "Lytt til hendelser",
+            "listening_to": "Lytte til",
+            "subscribe_to": "Hendelse for å abonnere på",
+            "start_listening": "Begynn å lytte",
+            "stop_listening": "Stopp lytting",
+            "alert_event_type": "Hendelsetype er et obligatorisk felt",
+            "notification_event_fired": "Arrangementet {type} vellykket!"
+          },
+          "services": {
+            "title": "Tjenester",
+            "description": "Tjenesteutviklingsverktøyet lar deg tilkalle alle tilgjengelige tjenester i Home Assistant.",
+            "call_service": "Tilkall tjeneste",
+            "column_parameter": "Parameter",
+            "column_description": "Beskrivelse",
+            "column_example": "Eksempel",
+            "fill_example_data": "Fyll ut eksempeldata",
+            "yaml_mode": "Gå til YAML-modus",
+            "ui_mode": "Gå til UI-modus",
+            "yaml_parameters": "Parameter er bare tilgjengelig i YAML-modus",
+            "all_parameters": "Alle tilgjengelige parametere",
+            "accepts_target": "Denne tjenesten godtar et mål, for eksempel: `entity_id: light.bed_light`",
+            "no_template_ui_support": "Brukergrensesnittet støtter ikke maler, du kan fortsatt bruke YAML-redigereren."
+          },
+          "states": {
+            "title": "Tilstander",
+            "description1": "Angi gjeldende tilstandsrepresentasjon for en entitet i Home Assistant.",
+            "description2": "Hvis entiteten tilhører en enhet, vil det ikke være noen faktisk kommunikasjon med den enheten.",
+            "entity": "Entitet",
+            "state": "Tilstand",
+            "attributes": "Attributter",
+            "state_attributes": "Tilstandsattributter (YAML, valgfritt)",
+            "set_state": "Sett tilstand",
+            "current_entities": "Gjeldende entiteter",
+            "filter_entities": "Filtrere entiteter",
+            "filter_states": "Filtrere tilstander",
+            "filter_attributes": "Filtrere attributter",
+            "no_entities": "Ingen entiteter",
+            "more_info": "Mer info",
+            "alert_entity_field": "Entitet er et obligatorisk felt",
+            "last_updated": "Sist oppdatert",
+            "last_changed": "Sist endret",
+            "copy_id": "Kopier ID til utklippstavlen"
+          },
+          "templates": {
+            "title": "Mal",
+            "description": "Maler blir rendret ved hjelp av Jinja2-malmotoren med noen spesifikke utvidelser for Home Assistant.",
+            "editor": "Maleditor",
+            "reset": "Tilbakestill til demomal",
+            "result_type": "Resultat type",
+            "jinja_documentation": "Jinja2 mal dokumentasjon",
+            "template_extensions": "Mal utvidelser for Home Assistant",
+            "unknown_error_template": "Ukjent feil ved rendring av mal",
+            "time": "Denne malen oppdateres i begynnelsen av hvert minutt",
+            "all_listeners": "Denne malen lytter etter alle tilstand endret hendelser.",
+            "no_listeners": "Denne malen lytter ikke etter noen hendelser og oppdateres ikke automatisk.",
+            "listeners": "Denne malen lytter etter følgende tilstand endret hendelser:",
+            "entity": "Entitet",
+            "domain": "Domene"
+          }
+        }
+      }
+    }
+  }
+}

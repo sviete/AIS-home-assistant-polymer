@@ -1,0 +1,477 @@
+{
+  "ui": {
+    "panel": {
+      "lovelace": {
+        "cards": {
+          "confirm_delete": "Opravdu chcete tuto kartu smazat?",
+          "actions": {
+            "action_confirmation": "Opravdu chcete provést akci \"{action}\"?",
+            "no_entity_more_info": "Pro dialog s dalšími informacemi není poskytnuta žádná entita",
+            "no_entity_toggle": "K přepnutí není poskytnuta žádná entita",
+            "no_navigation_path": "Není zadána žádná navigační cesta",
+            "no_url": "Není zadána žádná adresa URL k otevření",
+            "no_service": "Není zadána žádná služba pro spuštění"
+          },
+          "empty_state": {
+            "title": "Vítejte doma",
+            "no_devices": "Tato stránka umožňuje ovládat vaše zařízení; zdá se však, že ještě nemáte žádné zařízení nastavené. Nejprve tedy přejděte na stránku integrace.",
+            "go_to_integrations_page": "Přejděte na stránku integrace."
+          },
+          "entities": { "never_triggered": "Nikdy nespuštěno" },
+          "shopping-list": {
+            "checked_items": "Označené položky",
+            "clear_items": "Vymazat označené položky",
+            "add_item": "Přidat položku",
+            "reorder_items": "Změnit pořadí položek",
+            "drag_and_drop": "Přetáhnout"
+          },
+          "picture-elements": {
+            "hold": "Podržte:",
+            "tap": "Klepněte:",
+            "navigate_to": "Přejděte na {location}",
+            "url": "Otevřít okno adresy {url_path}",
+            "toggle": "Přepnout {name}",
+            "call_service": "Zavolat službu {name}",
+            "more_info": "Zobrazit více informací: {name}"
+          },
+          "safe-mode": {
+            "header": "Nouzový režim aktivován",
+            "description": "Home Assistant se při načítání konfigurace setkal s problémy a nyní běží v nouzovém režimu. Podívejte se do protokolu chyb a zjistěte, co se pokazilo."
+          },
+          "starting": {
+            "description": "Home Assistant se spouští, čekejte prosím..."
+          }
+        },
+        "unused_entities": {
+          "title": "Nepoužité entity",
+          "available_entities": "Toto jsou entity, které máte k dispozici, ale dosud nejsou ve vašem uživatelském rozhraní Lovelace.",
+          "select_to_add": "Vyberte entity, které chcete přidat do karty, a poté klikněte na tlačítko přidat kartu.",
+          "entity": "Entita",
+          "entity_id": "ID entity",
+          "domain": "Doména",
+          "last_changed": "Naposledy změněno",
+          "search": "Hledat entitu",
+          "no_data": "Nebyly nalezeny žádné nepoužívané entity"
+        },
+        "add_entities": {
+          "yaml_unsupported": "Tuto funkci nemůžete použít, když používáte Lovelace v režimu YAML.",
+          "generated_unsupported": "Tuto funkci můžete použít, pouze pokud jste převzali kontrolu nad Lovelace.",
+          "saving_failed": "Uložení nastavení Lovelace se nezdařilo."
+        },
+        "views": {
+          "confirm_delete": "Odstranit zobrazení?",
+          "confirm_delete_text": "Opravdu chcete smazat pohled ''{name}''?",
+          "confirm_delete_existing_cards": "Odstraněním tohoto pohledu dojde také k odebrání karet",
+          "confirm_delete_existing_cards_text": "Opravdu chcete smazat pohled ''{name}''? Pohled obsahuje {number} karty, které budou smazány. Tuto akci nelze vrátit zpět."
+        },
+        "menu": {
+          "configure_ui": "Upravit ovládací panel",
+          "help": "Nápověda",
+          "start_conversation": "Zahájit konverzaci",
+          "reload_resources": "Nově načíst zdroje",
+          "exit_edit_mode": "Ukončit režim úprav uživatelského rozhraní",
+          "close": "Zavřít"
+        },
+        "reload_resources": {
+          "refresh_header": "Chcete aktualizovat stránku?",
+          "refresh_body": "Chcete-li dokončit nové načtení, musíte stránku onovit. Chcete ji nyní obnovit?"
+        },
+        "editor": {
+          "header": "Upravit UI",
+          "menu": {
+            "open": "Otevřít Lovelace menu",
+            "raw_editor": "Editor kódu nastavení",
+            "manage_dashboards": "Správa ovládacích panelů",
+            "manage_resources": "Správa zdrojů"
+          },
+          "common": {
+            "edit": "Upravit",
+            "clear": "Vymazat",
+            "add": "Přidat",
+            "none": "Žádný"
+          },
+          "raw_editor": {
+            "header": "Upravit nastavení",
+            "save": "Uložit",
+            "unsaved_changes": "Neuložené změny",
+            "saved": "Uloženo",
+            "reload": "Nově načíst",
+            "lovelace_changed": "Konfigurace Lovelace byla aktualizována, chcete načíst aktualizovanou konfiguraci do editoru a přijít o aktuální změny?",
+            "confirm_remove_config_title": "Opravdu chcete odstranit nastavení uživatelského rozhraní Lovelace?",
+            "confirm_remove_config_text": "Pokud odeberete nastavení uživatelského rozhraní Lovelace, automaticky vygenerujeme pohledy Lovelace s vašimi oblastmi a zařízeními.",
+            "confirm_unsaved_changes": "Máte neuložené změny. Opravdu chcete odejít?",
+            "confirm_unsaved_comments": "Vaše konfigurace obsahuje komentáře, které se neuloží. Chcete pokračovat?",
+            "error_parse_yaml": "Chyba při parsování YAML: {error}",
+            "error_invalid_config": "Vaše konfigurace není platná: {error}",
+            "error_save_yaml": "Nelze uložit YAML: {error}",
+            "error_remove": "Nelze odstranit nastavení: {error}",
+            "resources_moved": "Zdroje by již neměly být přidávány do konfigurace Lovelace, ale mohou být přidávány v panelu nastavení Lovelace."
+          },
+          "edit_lovelace": {
+            "header": "Název vašeho uživatelského rozhraní Lovelace",
+            "explanation": "Tento název je zobrazen nad všemi vašimi zobrazeními v Lovelace.",
+            "edit_title": "Upravit titulek",
+            "title": "Název"
+          },
+          "edit_view": {
+            "header": "Zobrazit nastavení",
+            "header_name": "Zobrazit nastavení {name}",
+            "add": "Přidat pohled",
+            "edit": "Upravit pohled",
+            "delete": "Odstranit pohled",
+            "move_left": "Posunout pohled doleva",
+            "move_right": "Posunout pohled doprava",
+            "tab_settings": "Nastavení",
+            "tab_badges": "Odznaky",
+            "tab_visibility": "Viditelnost",
+            "visibility": {
+              "select_users": "Vyberte, kteří uživatelé by měli vidět tento pohled v navigaci"
+            },
+            "type": "View type",
+            "types": {
+              "masonry": "Masonry (default)",
+              "sidebar": "Sidebar",
+              "panel": "Panel (1 card)"
+            }
+          },
+          "edit_badges": {
+            "panel_mode": "Tyto odznaky se nebudou zobrazovat, protože pohled má nastaven režim \"Panel\"."
+          },
+          "edit_card": {
+            "header": "Nastavení karty",
+            "typed_header": "Nastavení karty {type}",
+            "pick_card": "Kterou kartu chcete přidat?",
+            "pick_card_view_title": "Kterou kartu byste chtěli přidat do svého {name} pohledu?",
+            "toggle_editor": "Přepnout Editor",
+            "unsaved_changes": "Změny nejsou uloženy",
+            "confirm_cancel": "Opravdu chcete zahodit změny?",
+            "show_visual_editor": "Zobrazit vizuální editor",
+            "show_code_editor": "Zobrazit editor kódu",
+            "add": "Přidat kartu",
+            "edit": "Upravit",
+            "clear": "Vymazat",
+            "delete": "Smazat kartu",
+            "duplicate": "Duplikovat kartu",
+            "move": "Přesunout",
+            "move_before": "Posunout kartu před",
+            "move_after": "Posunout kartu za",
+            "options": "Více možností",
+            "search_cards": "Hledat karty"
+          },
+          "move_card": {
+            "header": "Vyberte pohled, do kterého chcete kartu přesunout"
+          },
+          "select_view": {
+            "header": "Vyberte pohled",
+            "dashboard_label": "Ovládací panel"
+          },
+          "suggest_card": {
+            "header": "Vytvořili jsme pro vás návrh",
+            "create_own": "Vytvořit vlastní",
+            "add": "Přidat do Lovelance"
+          },
+          "save_config": {
+            "header": "Převzít kontrolu nad vaší Lovelace UI",
+            "para": "Tento ovládací panel momentálně spravuje Home Assistant. Je automaticky aktualizován při přidání nové entity nebo Lovelace komponenty. Pokud převezmete kontrolu, nebudeme již provádět změny automaticky za vás. Vždy si můžete vytvořit nový ovládací panel na hraní.",
+            "para_sure": "Opravdu chcete převzít kontrolu nad uživalským rozhraním ?",
+            "yaml_mode": "Používáte režim YAML, což znamená, že nemůžete změnit nastavení Lovelace z uživatelského rozhraní. Pokud chcete měnit Lovelace z uživatelského rozhraní, odstraňte \"mode: yaml\" z vašeho nastavení Lovelace v \"configuration.yaml\".",
+            "yaml_control": "Chcete-li převzít kontrolu v režimu YAML, vytvořte soubor YAML s názvem, který jste uvedli ve svém nastavení pro tento ovládací panel, nebo výchozí \"ui-lovelace.yaml\".",
+            "yaml_config": "Abyste mohli snadněji začít, zde je aktuální nastavení tohoto ovládacího panelu:",
+            "empty_config": "Začít s prázdným ovládacím panel",
+            "close": "Zavřít",
+            "save": "Převzít kontrolu",
+            "cancel": "Zahodit změnu"
+          },
+          "migrate": {
+            "header": "Nastavení není kompatibilní",
+            "para_no_id": "Tento prvek nemá ID. Přidejte k tomuto prvku ID v 'ui-lovelace.yaml'.",
+            "para_migrate": "Home Assistant může automaticky přidat ID ke všem vašim kartám a pohledům stisknutím tlačítka \"Migrovat nastavení\".",
+            "migrate": "Migrovat nastavení"
+          },
+          "action-editor": {
+            "navigation_path": "Cesta stránky",
+            "url_path": "Cesta URL",
+            "actions": {
+              "default_action": "Výchozí akce",
+              "call-service": "Zavolání služby",
+              "more-info": "Více informací",
+              "toggle": "Přepínač",
+              "navigate": "Přechod na jinou stránku",
+              "url": "URL adresa",
+              "none": "Žádná akce"
+            }
+          },
+          "card": {
+            "alarm-panel": {
+              "name": "Ovládací panel alarmu",
+              "available_states": "Dostupné režimy",
+              "description": "Karta Ovládací panel alarmu umožňuje aktivovat či deaktivovat alarm integrací zabezpečovacích systémů."
+            },
+            "calendar": {
+              "name": "Kalendář",
+              "description": "Karta Kalendář zobrazuje kalendář včetně zobrazení dnů, týdnů a seznamů",
+              "inital_view": "Výchozí pohled",
+              "calendar_entities": "Entity kalendáře",
+              "views": {
+                "dayGridMonth": "Měsíc",
+                "dayGridDay": "Den",
+                "listWeek": "Seznam"
+              }
+            },
+            "conditional": {
+              "name": "Podmínka",
+              "description": "Podmínková karta zobrazuje další kartu na základě stavu entity.",
+              "conditions": "Podmínky",
+              "card": "Karta",
+              "state_equal": "Stav se rovná",
+              "state_not_equal": "Stav se nerovná",
+              "current_state": "současné",
+              "condition_explanation": "Karta se zobrazí, když jsou splněny VŠECHNY níže uvedené podmínky.",
+              "change_type": "Změnit typ"
+            },
+            "config": { "required": "Povinné", "optional": "Volitelné" },
+            "entities": {
+              "name": "Entity",
+              "show_header_toggle": "Zobrazit přepínač záhlaví?",
+              "toggle": "Přepnout entity.",
+              "description": "Karta Entity je nejběžnějším typem karty. Seskupuje položky do seznamů.",
+              "special_row": "speciální řádek",
+              "edit_special_row": "Použijte tlačítko Upravit k zobrazení podrobností tohoto řádku",
+              "entity_row_editor": "Editor řádku entity",
+              "secondary_info_values": {
+                "none": "Žádné doplňující informace",
+                "entity-id": "ID entity",
+                "last-changed": "Naposledy změněno",
+                "last-triggered": "Naposledy spuštěno",
+                "position": "Pozice",
+                "tilt-position": "Náklon",
+                "brightness": "Jas",
+                "last-updated": "Naposledy aktualizováno"
+              },
+              "entity_row": {
+                "divider": "Oddělovač",
+                "call-service": "Volání služby",
+                "section": "Sekce",
+                "weblink": "Webový odkaz",
+                "attribute": "Atribut",
+                "buttons": "Tlačítka",
+                "conditional": "Podmínka",
+                "cast": "Cast",
+                "button": "Tlačítko"
+              }
+            },
+            "entity": {
+              "name": "Entita",
+              "description": "Karta Entity vám poskytuje rychlý přehled o stavu vaší entity."
+            },
+            "button": {
+              "name": "Tlačítko",
+              "description": "Karta Tlačítko umožňuje přidat tlačítka k provádění úkolů.",
+              "default_action_help": "Výchozí akce závisí na vlastnostech entity - bude buď přepnuta, nebo se zobrazí další informace."
+            },
+            "entity-filter": {
+              "name": "Filtr entit",
+              "description": "Karta Filtr entit umožňuje definovat seznam entit, které chcete sledovat pouze v určitém stavu."
+            },
+            "gauge": {
+              "name": "Ručičkový ukazatel",
+              "needle_gauge": "Display as needle gauge?",
+              "severity": {
+                "define": "Definovat závažnost?",
+                "green": "Zelená",
+                "red": "Červená",
+                "yellow": "Žlutá"
+              },
+              "description": "Karta Ručičkový ukazatel je základní karta pro vizuální zobrazení hodnoty senzoru."
+            },
+            "glance": {
+              "name": "Rychlý náhled",
+              "columns": "Sloupce",
+              "description": "Karta Náhled je užitečná pro seskupení více senzorů v kompaktním přehledu."
+            },
+            "grid": {
+              "name": "Mřížka",
+              "description": "Karta Mřížka umožňuje zobrazit více karet v mřížce.",
+              "columns": "Sloupce",
+              "square": "Vykreslit karty jako čtverce"
+            },
+            "logbook": {
+              "name": "Záznamy",
+              "description": "Karta Záznamy zobrazuje seznam událostí entit."
+            },
+            "history-graph": {
+              "name": "Graf historie",
+              "description": "Karta Graf historie umožňuje zobrazit graf pro každou z uvedených entit."
+            },
+            "statistics-graph": {
+              "name": "Statistics Graph",
+              "description": "The Statistics Graph card allows you to display a graph of the statistics for each of the entities listed."
+            },
+            "horizontal-stack": {
+              "name": "Horizontální uskupení",
+              "description": "Karta Horizontální Stack umožňuje seskupovat více karet tak, že jsou vždy zobrazeny vedle sebe v prostoru šířky jednoho sloupce."
+            },
+            "humidifier": {
+              "name": "Zvlhčovač",
+              "description": "Karta zvlhčovače poskytuje kontrolu nad vaší entitou zvlhčovače. Umožní vám změnit vlhkost a režim entity."
+            },
+            "iframe": {
+              "name": "Webová stránka",
+              "description": "Karta Webová stránka umožňuje vložit oblíbenou webovou stránku přímo do Home Assistanta."
+            },
+            "light": {
+              "name": "Světlo",
+              "description": "Karta Světlo umožňuje změnit jas světla."
+            },
+            "generic": {
+              "aspect_ratio": "Poměr stran",
+              "attribute": "Atribut",
+              "camera_image": "Entita kamery",
+              "camera_view": "Zobrazení kamery",
+              "double_tap_action": "Akce při dvojitém poklepání",
+              "entities": "Entity",
+              "entity": "Entita",
+              "hold_action": "Akce při podržení",
+              "hours_to_show": "Hodin k zobrazení",
+              "days_to_show": "Days to Show",
+              "icon": "Ikona",
+              "icon_height": "Výška ikony",
+              "image": "Cesta obrázku",
+              "maximum": "Maximum",
+              "manual": "Manuální",
+              "manual_description": "Potřebujete přidat vlastní kartu nebo jen chcete ručně zapsat YAML?",
+              "minimum": "Minimum",
+              "name": "Název",
+              "refresh_interval": "Interval obnovení",
+              "show_icon": "Zobrazit ikonu?",
+              "show_name": "Zobrazit název?",
+              "show_state": "Zobrazit stav?",
+              "tap_action": "Akce při stisknutí",
+              "title": "Název",
+              "theme": "Motiv",
+              "no_theme": "Žádný motiv",
+              "unit": "Jednotka",
+              "url": "URL adresa",
+              "state": "Stav",
+              "secondary_info_attribute": "Sekundární informační atribut",
+              "search": "Hledat",
+              "state_color": "Barevné ikony dle stavu?"
+            },
+            "map": {
+              "name": "Mapa",
+              "geo_location_sources": "Zdroje geolokace",
+              "dark_mode": "Tmavý režim?",
+              "default_zoom": "Výchozí zvětšení",
+              "hours_to_show": "Hodin k zobrazení",
+              "source": "Zdroj",
+              "description": "Karta Mapa umožňuje zobrazit entity na mapě."
+            },
+            "markdown": {
+              "name": "Markdown",
+              "content": "Obsah",
+              "description": "Karta Markdown se používá k vykreslení Markdown."
+            },
+            "media-control": {
+              "name": "Řízení médií",
+              "description": "Karta Media Control se používá k zobrazení entit přehrávače médií na rozhraní se snadno použitelnými ovládacími prvky."
+            },
+            "picture": {
+              "name": "Obrázek",
+              "description": "Karta Obrázek vám umožňuje nastavit obrázek, který se použije pro navigaci na různá místa v rozhraní nebo pro volání služby."
+            },
+            "picture-elements": {
+              "name": "Obrázkové elementy",
+              "description": "Karta Obrázkové elementy je jednou z nejvšestrannějších typů karet. Karta umožňuje umisťovat ikony, text nebo dokonce služby pomocí souřadnic do obrázku."
+            },
+            "picture-entity": {
+              "name": "Obrazková entita",
+              "description": "Karta Obrázková entita zobrazuje entitu ve formě obrázku. Namísto obrázků z adresy URL může také zobrazit obrázek entit kamery."
+            },
+            "picture-glance": {
+              "name": "Obrázkový náhled",
+              "description": "Karta Obrázkový náhled zobrazuje obrázek a odpovídající stav entity jako ikonu. Entity na pravé straně umožňují přepínání, jiné zobrazují dialogové okno s více informacemi.",
+              "state_entity": "Stav entity"
+            },
+            "plant-status": {
+              "name": "Stav rostliny",
+              "description": "Karta Stav rostliny je pro všechny naše úžasné botaniky."
+            },
+            "sensor": {
+              "name": "Senzor",
+              "show_more_detail": "Zobrazit více podrobností",
+              "graph_type": "Typ grafu",
+              "description": "Karta Sensor poskytuje rychlý přehled o stavu senzorů s volitelným grafem pro vizualizaci změn v průběhu času."
+            },
+            "shopping-list": {
+              "name": "Nákupní seznam",
+              "description": "Karta Nákupní seznam umožňuje přidávat, upravovat, odškrtávat a mazat položky z nákupního seznamu.",
+              "integration_not_loaded": "Tato karta vyžaduje integraci `shopping_list`."
+            },
+            "thermostat": {
+              "name": "Termostat",
+              "description": "Karta Termostat poskytuje kontrolu nad vaší klimatickou entitou. Umožňuje změnit teplotu a režim entity."
+            },
+            "vertical-stack": {
+              "name": "Svislá sada",
+              "description": "Karta Vertical Stack umožňuje seskupovat více karet tak, že jsou vždy zobrazeny ve stejném sloupci."
+            },
+            "weather-forecast": {
+              "name": "Předpověď počasí",
+              "description": "Karta Předpověď počasí zobrazuje počasí. Velmi užitečná pro použití v rozhraní, které lidé zobrazují na zdi.",
+              "show_forecast": "Zobrazit předpověď"
+            }
+          },
+          "view": {
+            "panel_mode": {
+              "warning_multiple_cards": "Toto zobrazení obsahuje více než jednu kartu, ale v panelovém zobrazení může zobrazovat pouze 1 kartu.",
+              "description": "První karta bude zobrazena v plné šířce. Ostatní karty nebo odznaky nebudou v tomto pohledu vůbec zobrazeny.",
+              "title": "Režim panelu?"
+            }
+          },
+          "cardpicker": {
+            "no_description": "Žádný popis není k dispozici.",
+            "custom_card": "Vlastní",
+            "domain": "Doména",
+            "entity": "Entita",
+            "by_entity": "Podle entity",
+            "by_card": "Podle karty"
+          },
+          "header-footer": {
+            "header": "Záhlaví",
+            "footer": "Zápatí",
+            "choose_header_footer": "Vyberte {type}",
+            "types": {
+              "graph": { "name": "Graf" },
+              "picture": { "name": "Obrázek" },
+              "buttons": { "name": "Tlačítka" }
+            }
+          },
+          "sub-element-editor": {
+            "types": {
+              "header": "Editor záhlaví",
+              "footer": "Editor zápatí",
+              "row": "Editor řádku entity"
+            }
+          }
+        },
+        "warning": {
+          "attribute_not_found": "Atribut {attribute} není k dispozici v: {entity}",
+          "entity_not_found": "Entita není k dispozici: {entity}",
+          "entity_non_numeric": "Entita není číselná: {entity}",
+          "entity_unavailable": "Entita není aktuálně dostupná: {entity}",
+          "starting": "Home Assistant se spouští, vše ještě nemusí být dostupné"
+        },
+        "changed_toast": {
+          "message": "Nastavení Lovelace pro tento ovládací panel bylo aktualizováno. Chcete obnovit stránku?"
+        },
+        "components": {
+          "timestamp-display": {
+            "invalid": "Neplatný čas",
+            "invalid_format": "Neplatný formát zobrazení"
+          }
+        },
+        "reload_lovelace": "Nově načíst Lovelace"
+      }
+    }
+  }
+}

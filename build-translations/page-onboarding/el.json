@@ -1,0 +1,73 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Είστε έτοιμοι να ξυπνήσετε το σπίτι σας, να διεκδικήσετε την ιδιωτικότητά σας και να συμμετάσχετε σε μια παγκόσμια κοινότητα μαστροχαλαστών;",
+        "next": "Next",
+        "finish": "Finish",
+        "user": {
+          "intro": "Ας ξεκινήσουμε δημιουργώντας ένα λογαριασμό χρήστη.",
+          "required_field": "Υποχρεωτικό",
+          "data": {
+            "name": "Όνομα",
+            "username": "Όνομα χρήστη",
+            "password": "Κωδικός",
+            "password_confirm": "Επιβεβαίωση Κωδικού"
+          },
+          "create_account": "Δημιουργία Λογαριασμού",
+          "error": {
+            "required_fields": "Συμπληρώστε όλα τα υποχρεωτικά πεδία",
+            "password_not_match": "Οι κωδικοί πρόσβασης δεν ταιριάζουν"
+          }
+        },
+        "core-config": {
+          "intro": "Γεια σου {name}, καλώς ήρθες στο Home Assistant. Πώς θα ήθελες να αναφέρεσαι στο σπίτι σου;",
+          "intro_location": "Θα θέλαμε να μάθουμε πού ζεις. Αυτές οι πληροφορίες θα βοηθήσουν στην προβολή πληροφοριών και στη ρύθμιση αυτοματισμών που βασίζονται στη θέση ηλίου. Αυτά τα δεδομένα δεν μοιράζονται ποτέ εκτός του δικτύου σας.",
+          "intro_location_detect": "Μπορούμε να σε βοηθήσουμε να συμπληρώσεις αυτές τις πληροφορίες, κάνοντας μια εφάπαξ αίτηση σε μια εξωτερική υπηρεσία.",
+          "location_name": "Όνομα της εγκατάστασης σας του Home Assistant",
+          "location_name_default": "Σπίτι",
+          "button_detect": "Ανίχνευση",
+          "finish": "Επόμενο"
+        },
+        "integration": {
+          "intro": "Οι συσκευές και οι υπηρεσίες εκπροσωπούνται στο Home Assistant ως ενσωματώσεις. Μπορείτε να τα ρυθμίσετε τώρα ή αργότερα από την οθόνη διαμόρφωσης.",
+          "more_integrations": "Περισσότερα",
+          "finish": "Τέλος"
+        },
+        "analytics": { "finish": "Next" },
+        "restore": {
+          "description": "Εναλλακτικά, μπορείτε να κάνετε επαναφορά από ένα προηγούμενο στιγμιότυπο.",
+          "in_progress": "Επαναφορά σε εξέλιξη",
+          "show_log": "Εμφάνιση πλήρους αρχείου καταγραφής",
+          "hide_log": "Απόκρυψη πλήρους αρχείου καταγραφής",
+          "full_snapshot": "Full snapshot",
+          "partial_snapshot": "Partial snapshot",
+          "type": "Snapshot type",
+          "select_type": "Select what to restore",
+          "folders": "Folders",
+          "addons": "Add-ons",
+          "password_protection": "Password protection",
+          "password": "Snapshot password",
+          "confirm_password": "Confirm Snapshot password"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

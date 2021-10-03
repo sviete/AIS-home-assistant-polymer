@@ -1,0 +1,73 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Чи готові Ви розбудити свій будинок, повернути свою конфіденційність і приєднатися до всесвітньої спільноти?",
+        "next": "Next",
+        "finish": "Finish",
+        "user": {
+          "intro": "Почнемо зі створення облікового запису користувача.",
+          "required_field": "Обов'язкове поле",
+          "data": {
+            "name": "Ім'я",
+            "username": "Ім'я користувача",
+            "password": "Пароль",
+            "password_confirm": "Підтвердити пароль"
+          },
+          "create_account": "Створити обліковий запис",
+          "error": {
+            "required_fields": "Заповніть усі необхідні поля",
+            "password_not_match": "Паролі не збігаються"
+          }
+        },
+        "core-config": {
+          "intro": "Привіт, {name}, Ласкаво просимо до Home Assistant. Як би ви хотіли назвати свій дім?",
+          "intro_location": "Ми хотіли б знати, де ви живете. Це допоможе нам правильно відображати інформацію і дозволить вам налаштовувати автоматизації на основі даних про світанок і захід сонця. Ці дані ніколи не будуть передані за межі локальної мережі.",
+          "intro_location_detect": "Ми можемо допомогти вам заповнити цю інформацію, зробивши одноразовий запит до зовнішньої служби.",
+          "location_name": "Назва інсталяції Home Assistant",
+          "location_name_default": "Головна",
+          "button_detect": "Виявити",
+          "finish": "Далі"
+        },
+        "integration": {
+          "intro": "Пристрої та служби представлені в Home Assistant як інтеграції. Ви можете їх налаштувати зараз або зробити це пізніше в розділі налаштувань.",
+          "more_integrations": "Більше",
+          "finish": "Завершити"
+        },
+        "analytics": { "finish": "Next" },
+        "restore": {
+          "description": "Відновлення попереднього стану з образу файлової системи (snapshot)",
+          "in_progress": "Триває відновлення",
+          "show_log": "Показати повний журнал",
+          "hide_log": "Приховати повний журнал",
+          "full_snapshot": "Full snapshot",
+          "partial_snapshot": "Partial snapshot",
+          "type": "Snapshot type",
+          "select_type": "Select what to restore",
+          "folders": "Folders",
+          "addons": "Add-ons",
+          "password_protection": "Password protection",
+          "password": "Snapshot password",
+          "confirm_password": "Confirm Snapshot password"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

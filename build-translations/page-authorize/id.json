@@ -1,0 +1,158 @@
+{
+  "ui": {
+    "panel": {
+      "page-authorize": {
+        "initializing": "Inisialisasi",
+        "authorizing_client": "Anda akan memberi akses {clientId} ke instans Home Assistant Anda.",
+        "logging_in_to_with": "Masuk ke **{locationName}** dengan **{authProviderName}**.",
+        "logging_in_with": "Masuk dengan **{authProviderName}**.",
+        "pick_auth_provider": "Atau masuk dengan",
+        "abort_intro": "Proses masuk dibatalkan",
+        "form": {
+          "working": "Mohon tunggu",
+          "unknown_error": "Ada yang salah",
+          "next": "Berikutnya",
+          "start_over": "Mulai dari awal",
+          "error": "Kesalahan: {error}",
+          "providers": {
+            "command_line": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Nama Pengguna",
+                    "password": "Kata Sandi"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Kode Autentikasi Dua Faktor" },
+                  "description": "Buka ** {mfa_module_name} ** pada perangkat Anda untuk melihat kode autentikasi dua faktor Anda dan memverifikasi identitas Anda:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Nama pengguna atau sandi tidak valid",
+                "invalid_code": "Kode autentikasi tidak valid"
+              },
+              "abort": {
+                "login_expired": "Sesi kedaluwarsa, harap masuk lagi."
+              }
+            },
+            "homeassistant": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Nama Pengguna",
+                    "password": "Kata Sandi"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Kode Autentikasi Dua Faktor" },
+                  "description": "Buka ** {mfa_module_name} ** pada perangkat Anda untuk melihat kode autentikasi dua faktor Anda dan memverifikasi identitas Anda:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Nama pengguna atau sandi tidak valid",
+                "invalid_code": "Kode autentikasi tidak valid"
+              },
+              "abort": {
+                "login_expired": "Sesi kedaluwarsa, harap masuk lagi."
+              }
+            },
+            "legacy_api_password": {
+              "step": {
+                "init": {
+                  "data": { "password": "Kata Sandi API" },
+                  "description": "Masukkan kata sandi API di konfigurasi HTTP Anda:"
+                },
+                "mfa": {
+                  "data": { "code": "Kode Autentikasi Dua Faktor" },
+                  "description": "Buka ** {mfa_module_name} ** pada perangkat Anda untuk melihat kode autentikasi dua faktor Anda dan memverifikasi identitas Anda:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Kata sandi API tidak valid",
+                "invalid_code": "Kode autentikasi tidak valid"
+              },
+              "abort": {
+                "no_api_password_set": "Anda tidak memiliki kata sandi API yang dikonfigurasi.",
+                "login_expired": "Sesi kedaluwarsa, harap masuk lagi."
+              }
+            },
+            "trusted_networks": {
+              "step": {
+                "init": {
+                  "data": { "user": "Pengguna" },
+                  "description": "Pilih pengguna yang diinginkan untuk masuk:"
+                }
+              },
+              "abort": { "not_allowed": "Komputer Anda tidak diperbolehkan." }
+            },
+            "ais_demo": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (demo)",
+                    "password": "Password (demo)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_admin": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (admin)",
+                    "password": "Password (admin)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_cloud": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username",
+                    "password": "Password",
+                    "gate_id": "Gate ID"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

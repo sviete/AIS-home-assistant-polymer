@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Eventos",
+            "description": "Disparar un evento en el bus de eventos.",
+            "documentation": "Documentación de eventos",
+            "type": "Tipo de evento",
+            "data": "Datos del evento (YAML, opcional)",
+            "fire_event": "Lanzar evento",
+            "event_fired": "Evento {name} disparado",
+            "available_events": "Eventos disponibles",
+            "count_listeners": " ({count} oyentes)",
+            "listen_to_events": "Escuchar eventos",
+            "listening_to": "Escuchando",
+            "subscribe_to": "Evento al que suscribirse",
+            "start_listening": "Empezar a escuchar",
+            "stop_listening": "Dejar de escuchar",
+            "alert_event_type": "El tipo de evento es un campo obligatorio.",
+            "notification_event_fired": "¡Evento {type} disparado con éxito!"
+          },
+          "services": {
+            "title": "Servicios",
+            "description": "La herramienta de desarrollo de servicios te permite llamar a cualquier servicio disponible en Home Assistant.",
+            "call_service": "Llamar servicio",
+            "column_parameter": "Parámetro",
+            "column_description": "Descripción",
+            "column_example": "Ejemplo",
+            "fill_example_data": "Rellenar datos de ejemplo",
+            "yaml_mode": "Ir al modo YAML",
+            "ui_mode": "Ir al modo IU",
+            "yaml_parameters": "Parámetros solo disponibles en modo YAML",
+            "all_parameters": "Todos los parámetros disponibles",
+            "accepts_target": "Este servicio acepta un objetivo, por ejemplo: `entity_id: light.luz_dormitorio`",
+            "no_template_ui_support": "La interfaz de usuario no admite plantillas, pero puedes utilizar el editor YAML."
+          },
+          "states": {
+            "title": "Estados",
+            "description1": "Establece la representación del estado actual de una entidad dentro de Home Assistant.",
+            "description2": "Si la entidad pertenece a un dispositivo, no habrá comunicación real con ese dispositivo.",
+            "entity": "Entidad",
+            "state": "Estado",
+            "attributes": "Atributos",
+            "state_attributes": "Atributos de estado (YAML, opcional)",
+            "set_state": "Establecer estado",
+            "current_entities": "Entidades actuales",
+            "filter_entities": "Filtrar entidades",
+            "filter_states": "Filtrar estados",
+            "filter_attributes": "Filtrar atributos",
+            "no_entities": "Sin entidades",
+            "more_info": "Más Información",
+            "alert_entity_field": "Entidad es un campo obligatorio",
+            "last_updated": "Última actualización",
+            "last_changed": "Último cambio",
+            "copy_id": "Copiar ID al portapapeles"
+          },
+          "templates": {
+            "title": "Plantillas",
+            "description": "Las plantillas se muestran utilizando el motor de plantillas Jinja2 con algunas extensiones específicas de Home Assistant.",
+            "editor": "Editor de plantillas",
+            "reset": "Restablecer la plantilla de demostración",
+            "result_type": "Tipo de resultado",
+            "jinja_documentation": "Documentación de plantilla Jinja2",
+            "template_extensions": "Extensiones de plantilla de Home Assistant",
+            "unknown_error_template": "Error desconocido al mostrar la plantilla",
+            "time": "Esta plantilla se actualiza al comienzo de cada minuto.",
+            "all_listeners": "Esta plantilla escucha todos los eventos de cambio de estado.",
+            "no_listeners": "Esta plantilla no escucha ningún evento y no se actualizará automáticamente.",
+            "listeners": "Esta plantilla escucha los siguientes eventos de cambio de estado:",
+            "entity": "Entidad",
+            "domain": "Dominio"
+          }
+        }
+      }
+    }
+  }
+}

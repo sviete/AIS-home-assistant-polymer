@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Gebeurtenissen",
+            "description": "Vermeld een gebeurtenis in de gebeurtenisbus.",
+            "documentation": "Gebeurtenissen documentatie",
+            "type": "Type gebeurtenis",
+            "data": "Gebeurtenis data (YAML, optioneel)",
+            "fire_event": "Gebeurtenis uitvoeren",
+            "event_fired": "Gebeurtenis {name} uitgevoerd",
+            "available_events": "Beschikbare gebeurtenissen",
+            "count_listeners": " ({count} luisteraars)",
+            "listen_to_events": "Luisteren naar gebeurtenissen",
+            "listening_to": "Luisteren naar",
+            "subscribe_to": "Gebeurtenis om op te abonneren",
+            "start_listening": "Begin te luisteren",
+            "stop_listening": "Stop met luisteren",
+            "alert_event_type": "Het type gebeurtenis is een verplicht veld",
+            "notification_event_fired": "Gebeurtenis {type} met succes uitgevoerd!"
+          },
+          "services": {
+            "title": "Services",
+            "description": "Met het service ontwikkelhulpmiddel kunt je elke beschikbare service in Home Assistant aanroepen.",
+            "call_service": "Aanroepen service",
+            "column_parameter": "Parameter",
+            "column_description": "Beschrijving",
+            "column_example": "Voorbeeld",
+            "fill_example_data": "Voorbeeldgegeven invullen",
+            "yaml_mode": "Ga naar YAML mode",
+            "ui_mode": "Ga naar UI modus",
+            "yaml_parameters": "Parameters alleen beschikbaar in YAML mode",
+            "all_parameters": "Alle beschikbare parameters",
+            "accepts_target": "Deze service accepteert een doel, bijvoorbeeld: `entity_id: light.bed_light`",
+            "no_template_ui_support": "De UI ondersteunt geen sjablonen, u kunt nog steeds de YAML editor gebruiken."
+          },
+          "states": {
+            "title": "Toestanden",
+            "description1": "Stelt de weergave van een entiteit in Home Assistant in.",
+            "description2": "Als de entiteit tot een apparaat behoort, dan is er geen daadwerkelijke communicatie met dat apparaat.",
+            "entity": "Entiteit",
+            "state": "Toestand",
+            "attributes": "Attributen",
+            "state_attributes": "Status attributen (YAML, optioneel)",
+            "set_state": "Definieer toestand",
+            "current_entities": "Huidige entiteiten",
+            "filter_entities": "Filter entiteiten",
+            "filter_states": "Filter toestanden",
+            "filter_attributes": "Filter attributen",
+            "no_entities": "Geen entiteiten",
+            "more_info": "Meer informatie",
+            "alert_entity_field": "Entiteit is een verplicht veld",
+            "last_updated": "Laatst bijgewerkt",
+            "last_changed": "Laatst gewijzigd",
+            "copy_id": "Kopieer ID naar klembord"
+          },
+          "templates": {
+            "title": "Sjablonen",
+            "description": "Sjablonen worden weergegeven met de Jinja2-sjabloonediter samen met enkele extensies van Home Assistant.",
+            "editor": "Sjabloonediter",
+            "reset": "Resetten naar demosjabloon",
+            "result_type": "Resultaattype",
+            "jinja_documentation": "Jinja2-sjabloondocumentatie",
+            "template_extensions": "Home Assistant sjabloon extensies",
+            "unknown_error_template": "Onbekende fout bij weergave sjabloon",
+            "time": "Deze template wordt elke 60 seconden bijgewerkt na de laatste statuswijziging.",
+            "all_listeners": "Deze template luistert naar alle gebeurtenissen met gewijzigde status.",
+            "no_listeners": "Deze template luistert niet naar gebeurtenissen met statuswijziging en wordt niet automatisch bijgewerkt.",
+            "listeners": "Deze template luistert naar de volgende gebeurtenissen met gewijzigde status:",
+            "entity": "Entiteit",
+            "domain": "Domein"
+          }
+        }
+      }
+    }
+  }
+}

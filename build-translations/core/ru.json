@@ -1,0 +1,898 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "Календарь",
+    "config": "Настройки",
+    "states": "Обзор",
+    "map": "Карта",
+    "logbook": "Журнал событий",
+    "history": "История",
+    "mailbox": "Почтовый ящик",
+    "shopping_list": "Список покупок",
+    "developer_tools": "Панель разработчика",
+    "media_browser": "Браузер мультимедиа",
+    "profile": "Профиль"
+  },
+  "state": {
+    "default": {
+      "on": "Включено",
+      "off": "Выключено",
+      "unknown": "Неизвестно",
+      "unavailable": "Недоступно"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "Выкл", "on": "Вкл", "auto": "Авто" },
+      "preset_mode": {
+        "none": "Не выбран",
+        "eco": "Экономия",
+        "away": "Не дома",
+        "boost": "Турбо",
+        "comfort": "Комфорт",
+        "home": "Дома",
+        "sleep": "Ночь",
+        "activity": "Активность"
+      },
+      "hvac_action": {
+        "off": "Выключено",
+        "heating": "Обогрев",
+        "cooling": "Охлаждение",
+        "drying": "Осушение",
+        "idle": "Бездействие",
+        "fan": "Вентиляция"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "Нормальный",
+        "eco": "Эко",
+        "away": "Не дома",
+        "boost": "Турбо",
+        "comfort": "Комфорт",
+        "home": "Дома",
+        "sleep": "Ночь",
+        "auto": "Авто",
+        "baby": "Ребенок"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "Неизв.",
+      "unavailable": "Недоступно",
+      "error": "Ошибка",
+      "entity_not_found": "Объект не найден"
+    },
+    "alarm_control_panel": {
+      "armed": "Охрана",
+      "disarmed": "Снято с охраны",
+      "armed_home": "Охрана",
+      "armed_away": "Охрана",
+      "armed_night": "Охрана",
+      "armed_custom_bypass": "Охрана",
+      "pending": "Ожидание",
+      "arming": "Постановка на охрану",
+      "disarming": "Снятие с охраны",
+      "triggered": "Тревога"
+    },
+    "device_tracker": { "home": "Дома", "not_home": "Не дома" },
+    "person": { "home": "Дома", "not_home": "Не дома" }
+  },
+  "groups": {
+    "owner": "Владелец",
+    "system-admin": "Администраторы",
+    "system-users": "Пользователи",
+    "system-read-only": "Системные пользователи"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "пользователем",
+      "integration": "интеграцией",
+      "config_entry": "конфигурацией",
+      "device": "Устройство"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "Запомнить меня на этом устройстве?",
+      "decline": "Нет",
+      "confirm": "Да"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "Код",
+        "clear_code": "Сброс",
+        "disarm": "Снять с охраны",
+        "arm_home": "Охрана (дома)",
+        "arm_away": "Охрана (не дома)",
+        "arm_night": "Охрана (ночь)",
+        "arm_custom_bypass": "Охрана с исключениями"
+      },
+      "automation": {
+        "last_triggered": "Последний запуск",
+        "trigger": "Запустить действия"
+      },
+      "camera": { "not_available": "Изображение не доступно" },
+      "climate": {
+        "currently": "Сейчас",
+        "on_off": "Вкл / Выкл",
+        "target_temperature": "Заданная температура",
+        "target_temperature_entity": "Заданная температура {name}",
+        "target_temperature_mode": "Заданная температура {name} в режиме {mode}",
+        "current_temperature": "Текущая температура {name}",
+        "heating": "Обогрев {name}",
+        "cooling": "Охлаждение {name}",
+        "high": "высокий",
+        "low": "низкий",
+        "target_humidity": "Заданная влажность",
+        "operation": "Режим работы",
+        "fan_mode": "Режим вентиляции",
+        "swing_mode": "Режим качания воздушных шторок",
+        "preset_mode": "Пресет",
+        "away_mode": "Режим \"не дома\"",
+        "aux_heat": "Дополнительный нагрев"
+      },
+      "counter": {
+        "actions": {
+          "increment": "прибавлять",
+          "decrement": "убавлять",
+          "reset": "сбросить"
+        }
+      },
+      "cover": { "position": "Положение", "tilt_position": "Наклон" },
+      "fan": {
+        "speed": "Скорость",
+        "preset_mode": "Предустановленный режим",
+        "oscillate": "Колебания",
+        "direction": "Направление",
+        "forward": "Вперед",
+        "reverse": "Задний ход"
+      },
+      "humidifier": {
+        "humidity": "Заданная влажность",
+        "mode": "Режим",
+        "target_humidity_entity": "{name} заданная влажность",
+        "on_entity": "{name} включено"
+      },
+      "light": {
+        "brightness": "Яркость",
+        "color_temperature": "Цветовая температура",
+        "white_value": "Яркость белого",
+        "color_brightness": "Яркость цвета",
+        "cold_white_value": "Яркость холодного белого",
+        "warm_white_value": "Яркость теплого белого",
+        "effect": "Эффект"
+      },
+      "lock": { "code": "Код", "lock": "Закрыть", "unlock": "Открыть" },
+      "media_player": {
+        "source": "Источник",
+        "sound_mode": "Режим звука",
+        "browse_media": "Просмотр медиа",
+        "turn_on": "Включить",
+        "turn_off": "Выключить",
+        "media_play": "Воспроизведение",
+        "media_play_pause": "Воспроизведение / пауза",
+        "media_next_track": "Следующий",
+        "media_previous_track": "Предыдущий",
+        "text_to_speak": "Воспроизвести текст"
+      },
+      "persistent_notification": { "dismiss": "Закрыть" },
+      "scene": { "activate": "Активировать" },
+      "script": {
+        "run": "Запустить",
+        "cancel": "Отменить",
+        "cancel_multiple": "Отменить {number}"
+      },
+      "service": { "run": "Запустить" },
+      "timer": {
+        "actions": {
+          "start": "Запуск",
+          "pause": "Пауза",
+          "cancel": "Отмена",
+          "finish": "Готово"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "Продолжить уборку",
+          "return_to_base": "Вернуть к док-станции",
+          "start_cleaning": "Начать уборку",
+          "turn_on": "Включить",
+          "turn_off": "Выключить"
+        }
+      },
+      "water_heater": {
+        "currently": "Сейчас",
+        "on_off": "Вкл / Выкл",
+        "target_temperature": "Заданная температура",
+        "operation": "Режим работы",
+        "away_mode": "Режим \"не дома\""
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "Давление",
+          "humidity": "Влажность",
+          "temperature": "Температура",
+          "visibility": "Видимость",
+          "wind_speed": "Ветер",
+          "precipitation": "Осадки"
+        },
+        "cardinal_direction": {
+          "e": "В",
+          "ene": "ВСВ",
+          "ese": "ВЮВ",
+          "n": "С",
+          "ne": "СВ",
+          "nne": "ССВ",
+          "nw": "СЗ",
+          "nnw": "ССЗ",
+          "s": "Ю",
+          "se": "ЮВ",
+          "sse": "ЮЮВ",
+          "ssw": "ЮЮЗ",
+          "sw": "ЮЗ",
+          "w": "З",
+          "wnw": "ЗСЗ",
+          "wsw": "ЗЮЗ"
+        },
+        "day": "День",
+        "night": "Ночь",
+        "forecast": "Прогноз",
+        "high": "Днём",
+        "low": "Ночью"
+      }
+    },
+    "common": {
+      "and": "и",
+      "continue": "Продолжить",
+      "previous": "Назад",
+      "loading": "Загрузка",
+      "refresh": "Обновить",
+      "cancel": "Отменить",
+      "delete": "Удалить",
+      "remove": "Удалить",
+      "enable": "Активировать",
+      "disable": "Деактивировать",
+      "close": "Закрыть",
+      "leave": "Выйти",
+      "stay": "Остаться",
+      "next": "Далее",
+      "back": "Назад",
+      "undo": "Отменить",
+      "save": "Сохранить",
+      "rename": "Переименовать",
+      "yes": "Да",
+      "no": "Нет",
+      "not_now": "Не сейчас",
+      "skip": "Пропустить",
+      "menu": "Меню",
+      "overflow_menu": "Выпадающее меню",
+      "successfully_saved": "Успешно сохранено",
+      "successfully_deleted": "Успешно удалено",
+      "error_required": "Обязательное поле",
+      "copied": "Скопировано",
+      "copied_clipboard": "Скопировано в буфер обмена"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "В журнале нет записей.",
+        "by": "- инициатор:",
+        "by_service": "службой",
+        "show_trace": "Показать трассировку",
+        "retrieval_error": "Ошибка при получении записи в журнале событий",
+        "messages": {
+          "was_away": "не дома",
+          "was_at_state": "{state}",
+          "rose": "всходит",
+          "set": "заходит",
+          "was_low": "регистрирует низкий заряд",
+          "was_normal": "регистрирует нормальный заряд",
+          "was_connected": "подключается",
+          "was_disconnected": "отключается",
+          "was_opened": "Открыто",
+          "was_closed": "Закрыто",
+          "is_opening": "открывается",
+          "is_closing": "закрывается",
+          "was_unlocked": "разблокируется",
+          "was_locked": "блокируется",
+          "was_plugged_in": "подключается",
+          "was_unplugged": "отключается",
+          "was_at_home": "дома",
+          "was_unsafe": "не регистрирует безопасность",
+          "was_safe": "регистрирует безопасность",
+          "detected_device_class": "обнаруживает {device_class}",
+          "cleared_device_class": "не обнаруживает {device_class}",
+          "turned_off": "выключается",
+          "turned_on": "включается",
+          "changed_to_state": "изменяет состояние на \"{state}\"",
+          "became_unavailable": "изменяет состояние на \"Недоступно\""
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "Объект",
+          "clear": "Очистить",
+          "no_match": "Подходящих объектов не найдено",
+          "show_entities": "Показать объекты"
+        },
+        "entity-attribute-picker": {
+          "attribute": "Атрибут",
+          "show_attributes": "Показать атрибуты"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "Разделить это помещение на отдельные дочерние устройства и объекты. После разделения устройства и объекты не будут обновляться при изменении помещения.",
+        "expand_device_id": "Разделить это устройство на отдельные дочерние объекты. После разделения объекты не будут обновляться при изменении устройства.",
+        "remove_area_id": "Удалить помещение",
+        "remove_device_id": "Удалить устройство",
+        "remove_entity_id": "Удалить объект",
+        "add_area_id": "Выбрать помещение",
+        "add_device_id": "Выбрать устройство",
+        "add_entity_id": "Выбрать объект"
+      },
+      "user-picker": {
+        "no_user": "Нет пользователя",
+        "add_user": "Добавить пользователя",
+        "remove_user": "Удалить пользователя"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Выберите проект",
+        "add_user": "Добавить пользователя",
+        "remove_user": "Удалить пользователя"
+      },
+      "device-picker": {
+        "clear": "Очистить",
+        "toggle": "Переключить",
+        "show_devices": "Показать устройства",
+        "no_devices": "Не найдено ни одного устройства",
+        "no_match": "Подходящих устройств не найдено",
+        "device": "Устройство",
+        "no_area": "Не указано"
+      },
+      "area-picker": {
+        "clear": "Очистить",
+        "show_areas": "Показать помещения",
+        "area": "Помещение",
+        "add_new": "Добавить помещение...",
+        "no_areas": "Не найдено ни одного помещения",
+        "no_match": "Подходящих помещений не найдено",
+        "add_dialog": {
+          "title": "Добавить помещение",
+          "text": "Введите название нового помещения.",
+          "name": "Название",
+          "add": "Добавить",
+          "failed_create_area": "Не удалось создать помещение."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "Дополнение",
+        "error": {
+          "no_supervisor": {
+            "title": "Отсутствует Supervisor",
+            "description": "Supervisor не найден, поэтому не удалось загрузить дополнения."
+          },
+          "fetch_addons": {
+            "title": "Ошибка при загрузке дополнений",
+            "description": "При загрузке дополнений возникла ошибка."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "Фильтр по объектам",
+        "filter_by_device": "Фильтр по устройствам",
+        "filter_by_area": "Фильтр по помещениям",
+        "filtered_by_entity": "объекту: {entity_name}",
+        "filtered_by_device": "устройству: {device_name}",
+        "filtered_by_area": "помещению: {area_name}"
+      },
+      "picture-upload": {
+        "label": "Изображение",
+        "unsupported_format": "Неподдерживаемый формат. Выберите изображение в формате JPEG, PNG или GIF."
+      },
+      "date-range-picker": {
+        "start_date": "С даты",
+        "end_date": "До даты",
+        "select": "Выбрать",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Никогда",
+        "just_now": "Сейчас",
+        "duration": {
+          "second": "{count} {count, plural,\n  one {секунда}\n  few {секунды}\n  many {секунд}\n  other {секунд}\n}",
+          "minute": "{count} {count, plural,\n  one {минута}\n  few {минуты}\n  many {минут}\n  other {минут}\n}",
+          "hour": "{count} {count, plural,\n  one {час}\n  few {часа}\n  many {часов}\n  other {часов}\n}",
+          "day": "{count} {count, plural,\n  one {день}\n  few {дня}\n  many {дней}\n  other {дней}\n}",
+          "week": "{count} {count, plural,\n  one {неделя}\n  few {недели}\n  many {недель}\n  other {недель}\n}"
+        },
+        "past_duration": {
+          "second": "{count} {count, plural,\n  one {секунду}\n  few {секунды}\n  many {секунд}\n  other {секунд}\n} назад",
+          "minute": "{count} {count, plural,\n  one {минуту}\n  few {минуты}\n  many {минут}\n  other {минут}\n} назад",
+          "hour": "{count} {count, plural,\n  one {час}\n  few {часа}\n  many {часов}\n  other {часов}\n} назад",
+          "day": "{count} {count, plural,\n  one {день}\n  few {дня}\n  many {дней}\n  other {дней}\n} назад",
+          "week": "{count} {count, plural,\n  one {неделю}\n  few {недели}\n  many {недель}\n  other {недель}\n} назад"
+        },
+        "future_duration": {
+          "second": "Через {count} {count, plural,\n  one {секунду}\n  few {секунды}\n  many {секунд}\n  other {секунд}\n}",
+          "minute": "Через {count} {count, plural,\n  one {минуту}\n  few {минуты}\n  many {минут}\n  other {минут}\n}",
+          "hour": "Через {count} {count, plural,\n  one {час}\n  few {часа}\n  many {часов}\n  other {часов}\n}",
+          "day": "Через {count} {count, plural,\n  one {день}\n  few {дня}\n  many {дней}\n  other {дней}\n}",
+          "week": "Через {count} {count, plural,\n  one {неделю}\n  few {недели}\n  many {недель}\n  other {недель}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "Интеграция \"History\" отключена",
+        "loading_history": "Загрузка истории...",
+        "no_history_found": "История не найдена."
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "Служба" },
+      "service-control": {
+        "required": "Обязательное поле",
+        "target": "Цели",
+        "target_description": "Помещения, устройства или объекты, которые следует использовать в качестве целевых для этой службы.",
+        "service_data": "Данные службы",
+        "integration_doc": "Документация по интеграции"
+      },
+      "related-items": {
+        "no_related_found": "Не найдено связей с другими элементами.",
+        "integration": "Интеграция",
+        "device": "Устройство",
+        "area": "Помещение",
+        "entity": "Связанные объекты",
+        "group": "Используется в группах",
+        "scene": "Используется в сценах",
+        "script": "Используется в скриптах",
+        "automation": "Используется в автоматизациях"
+      },
+      "data-table": {
+        "search": "Поиск",
+        "no-data": "Нет данных",
+        "filtering_by": "Отфильтровано по принадлежности к",
+        "hidden": "Скрыто: {number}",
+        "clear": "Очистить"
+      },
+      "media-browser": {
+        "pick": "Выбрать",
+        "play": "Воспроизведение",
+        "play-media": "Воспроизведение Медиа",
+        "pick-media": "Выбрать Медиа",
+        "no_items": "Нет элементов",
+        "choose_player": "Выбор медиаплеера",
+        "media-player-browser": "Браузер мультимедиа",
+        "web-browser": "Веб-браузер",
+        "media_player": "Медиаплеер",
+        "audio_not_supported": "Ваш браузер не поддерживает аудио.",
+        "video_not_supported": "Ваш браузер не поддерживает видео.",
+        "media_not_supported": "Этот тип мультимедиа не поддерживается.",
+        "media_browsing_error": "Ошибка просмотра мультимедиа",
+        "learn_adding_local_media": "Подробнее о добавлении мультимедиа читайте в {documentation}.",
+        "local_media_files": "Поместите видео, аудио и графические файлы в каталог мультимедиа, чтобы иметь возможность просматривать и воспроизводить их в браузере или на поддерживаемых медиаплеерах.",
+        "documentation": "документации",
+        "no_local_media_found": "В локальном хранилище медиафайлы не найдены.",
+        "no_media_folder": "Похоже, что Вы еще не создали каталог мультимедиа.",
+        "setup_local_help": "О том, как добавить медиафайлы в локальное хранилище, Вы можете узнать в {documentation}.",
+        "class": {
+          "album": "Альбом",
+          "app": "Приложение",
+          "artist": "Исполнитель",
+          "channel": "Канал",
+          "composer": "Композитор",
+          "contributing_artist": "Соисполнитель",
+          "directory": "Библиотека",
+          "episode": "Эпизод",
+          "game": "Игра",
+          "genre": "Жанр",
+          "image": "Изображение",
+          "movie": "Фильм",
+          "music": "Музыка",
+          "playlist": "Плейлист",
+          "podcast": "Подкаст",
+          "season": "Сезон",
+          "track": "Трек",
+          "tv_show": "Сериалы",
+          "url": "URL-адрес",
+          "video": "Видео"
+        }
+      },
+      "calendar": { "my_calendars": "Мои календари", "today": "Сегодня" },
+      "attributes": { "expansion_header": "Атрибуты" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "{domain}",
+            "core": "Местоположение и кастомизация",
+            "group": "Группы, объекты групп и службы уведомлений",
+            "automation": "Автоматизации",
+            "script": "Скрипты",
+            "scene": "Сцены",
+            "person": "Люди",
+            "zone": "Зоны",
+            "input_boolean": "Вспомогательные переключатели",
+            "input_text": "Вспомогательные элементы ввода текста",
+            "input_number": "Вспомогательные элементы ввода чисел",
+            "input_datetime": "Вспомогательные элементы ввода даты и времени",
+            "input_select": "Вспомогательные выпадающие списки",
+            "template": "Объекты шаблонов",
+            "universal": "Объекты интеграции \"Universal Media Player\"",
+            "rest": "Объекты и службы уведомлений интеграции \"REST\"",
+            "command_line": "Объекты интеграции \"Command Line\"",
+            "filter": "Объекты интеграции \"Filter\"",
+            "statistics": "Объекты интеграции \"Statistics\"",
+            "generic": "Объекты интеграции \"Generic IP Camera\"",
+            "generic_thermostat": "Объекты интеграции \"Generic Thermostat\"",
+            "homekit": "HomeKit",
+            "min_max": "Объекты интеграции \"Min/Max\"",
+            "history_stats": "Объекты интеграции \"History Stats\"",
+            "trend": "Объекты интеграции \"Trend\"",
+            "ping": "Объекты интеграции \"Ping (ICMP)\"",
+            "filesize": "Объекты интеграции \"File Size\"",
+            "telegram": "Службы уведомлений Telegram",
+            "smtp": "Службы уведомлений SMTP",
+            "mqtt": "Объекты интеграции \"MQTT\", настроенные вручную",
+            "rpi_gpio": "Объекты интеграции \"Raspberry Pi GPIO\""
+          },
+          "server_control": {
+            "perform_action": "{action} сервер",
+            "restart": "Перезапустить",
+            "stop": "Остановить"
+          },
+          "types": {
+            "reload": "Перезагрузить",
+            "navigation": "Навигация",
+            "server_control": "Сервер"
+          },
+          "navigation": {
+            "logs": "Журнал сервера",
+            "automation": "Автоматизации",
+            "script": "Скрипты",
+            "integrations": "Интеграции",
+            "areas": "Помещения",
+            "scene": "Сцены",
+            "helpers": "Вспомогательное",
+            "tag": "Метки",
+            "person": "Люди",
+            "devices": "Устройства",
+            "entities": "Объекты",
+            "energy": "Energy",
+            "lovelace": "Панели Lovelace",
+            "core": "Общие",
+            "zone": "Зоны",
+            "users": "Пользователи",
+            "info": "О системе",
+            "customize": "Кастомизация",
+            "blueprint": "Проекты",
+            "server_control": "Сервер",
+            "navigate_to": "Открыть \"{panel}\""
+          }
+        },
+        "filter_placeholder": "Фильтр объектов"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant ничего не услышал",
+        "found": "Я нашел для Вас следующее:",
+        "error": "К сожалению, произошла ошибка",
+        "how_can_i_help": "Чем могу помочь?",
+        "label": "Введите вопрос и нажмите 'Enter'",
+        "label_voice": "Введите текст и нажмите 'Enter' или нажмите на значок микрофона, чтобы говорить"
+      },
+      "generic": {
+        "cancel": "Отмена",
+        "ok": "ОК",
+        "default_confirmation_title": "Вы уверены?",
+        "close": "Закрыть"
+      },
+      "image_cropper": { "crop": "Обрезать" },
+      "more_info_control": {
+        "dismiss": "Закрыть диалог",
+        "settings": "Настройки объекта",
+        "edit": "Изменить объект",
+        "details": "Свойства",
+        "history": "История",
+        "last_changed": "Последнее изменение",
+        "last_updated": "Последнее обновление",
+        "script": {
+          "last_action": "Последнее действие",
+          "last_triggered": "Последний запуск"
+        },
+        "sun": {
+          "elevation": "Высота над горизонтом",
+          "rising": "Восход",
+          "setting": "Заход"
+        },
+        "updater": { "title": "Инструкция по обновлению" },
+        "remote": { "activity": "Текущая активность" },
+        "restored": {
+          "not_provided": "Этот объект в настоящее время недоступен. Его родительская интеграция или устройство удалены, изменены либо неисправны.",
+          "remove_intro": "Если объект больше не используется, Вы можете удалить его.",
+          "remove_action": "Удалить объект",
+          "confirm_remove_title": "Удалить объект?",
+          "confirm_remove_text": "Вы уверены, что хотите удалить этот объект?"
+        },
+        "vacuum": {
+          "status": "Состояние",
+          "commands": "Команды:",
+          "fan_speed": "Мощность всасывания",
+          "start": "Запуск",
+          "pause": "Пауза",
+          "stop": "Остановить",
+          "clean_spot": "Местная уборка",
+          "locate": "Найти",
+          "return_home": "Вернуть к док-станции",
+          "start_pause": "Запуск/Пауза"
+        },
+        "person": { "create_zone": "Создать зону из текущего местоположения" },
+        "cover": {
+          "open_cover": "Открыть",
+          "close_cover": "Закрыть",
+          "open_tilt_cover": "Открыть",
+          "close_tile_cover": "Закрыть",
+          "stop_cover": "Остановить"
+        }
+      },
+      "entity_registry": {
+        "settings": "Настройки",
+        "control": "Управление",
+        "related": "Зависимости",
+        "dismiss": "Отклонить",
+        "no_unique_id": "У этого объекта (\"{entity_id}\") нет уникального идентификатора, поэтому его настройками нельзя управлять из пользовательского интерфейса. Ознакомьтесь с {faq_link} для получения более подробной информации.",
+        "faq": "документацией",
+        "info_customize": "Вы можете перезаписать некоторые атрибуты в разделе {customize_link}.",
+        "customize_link": "кастомизация",
+        "editor": {
+          "name": "Название",
+          "icon": "Значок",
+          "icon_error": "Параметр должен быть в формате 'prefix:iconname' (например: 'mdi:home')",
+          "entity_id": "ID объекта",
+          "unavailable": "Этот объект в настоящее время недоступен.",
+          "enabled_label": "Активировать объект",
+          "enabled_cause": "Деактивировано {cause}.",
+          "device_disabled": "Родительское устройство этого объекта деактивировано.",
+          "open_device_settings": "Открыть настройки устройства",
+          "enabled_description": "Деактивированные объекты не будут доступны в Home Assistant.",
+          "enabled_delay_confirm": "Объекты будут добавлены в Home Assistant через {delay} секунд",
+          "enabled_restart_confirm": "Перезапустите Home Assistant, чтобы завершить изменение объектов",
+          "delete": "Удалить",
+          "confirm_delete": "Вы уверены, что хотите удалить эту запись?",
+          "update": "Обновить",
+          "note": "(может работать не со всеми интеграциями)",
+          "advanced": "Дополнительные настройки",
+          "area": "Задать помещение для этого объекта",
+          "area_note": "По умолчанию объекты устройства находятся в том же помещении, что и устройство. Если Вы измените помещение для этого объекта, он больше не будет наследовать настройки помещения устройства.",
+          "follow_device_area": "Получить настройки помещения от устройства",
+          "change_device_area": "Изменить помещение для устройства"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "Интеграция {platform} не загружена. Добавьте в YAML-конфигурацию 'default_config:' или ''{platform}:''.",
+        "yaml_not_editable": "Настройки этого объекта нельзя изменить из пользовательского интерфейса. Настраиваться из пользовательского интерфейса могут только те объекты, которые были созданы в нём.",
+        "required_error_msg": "Обязательное поле",
+        "generic": { "name": "Название", "icon": "Значок" },
+        "input_datetime": {
+          "date": "Дата",
+          "time": "Время",
+          "datetime": "Дата и время",
+          "mode": "Режим отображения"
+        },
+        "input_text": {
+          "min": "Минимальная длина",
+          "max": "Максимальная длина",
+          "mode": "Режим отображения",
+          "text": "Текст",
+          "password": "Пароль",
+          "pattern": "Шаблон регулярного выражения для проверки на стороне клиента"
+        },
+        "input_number": {
+          "min": "Минимальное значение",
+          "max": "Максимальное значение",
+          "mode": "Режим отображения",
+          "box": "Поле ввода",
+          "slider": "Слайдер",
+          "step": "Шаг слайдера",
+          "unit_of_measurement": "Единица измерения"
+        },
+        "input_select": {
+          "options": "Варианты",
+          "add_option": "Добавить вариант",
+          "no_options": "Добавьте доступные для выбора варианты.",
+          "add": "Добавить"
+        },
+        "counter": {
+          "minimum": "Минимальное значение",
+          "maximum": "Максимальное значение",
+          "initial": "Начальное значение",
+          "restore": "Восстанавливать последнее известное значение при запуске Home Assistant",
+          "step": "Шаг"
+        },
+        "timer": { "duration": "Продолжительность" }
+      },
+      "options_flow": {
+        "form": { "header": "Настройки" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "Параметры успешно сохранены." }
+      },
+      "config_entry_system_options": {
+        "title": "{integration}",
+        "enable_new_entities_label": "Добавлять новые объекты",
+        "enable_new_entities_description": "Home Assistant будет автоматически добавлять новые обнаруженные устройства {integration}",
+        "enable_polling_label": "Включить опрос для получения обновлений",
+        "enable_polling_description": "Home Assistant будет автоматически опрашивать объекты {integration} для получения обновлений",
+        "restart_home_assistant": "Чтобы изменения вступили в силу, нужно перезапустить Home Assistant.",
+        "update": "Обновить"
+      },
+      "zha_reconfigure_device": {
+        "heading": "Перенастройка устройства",
+        "configuring_alt": "Настройка",
+        "introduction": "Повторная настройка устройства в Вашей сети Zigbee. Используйте эту функцию, если устройство работает некорректно.",
+        "battery_device_warning": "Перед повторной настройкой устройства с батарейным питанием необходимо вывести из спящего режима. О том, как это сделать, Вы можете узнать из инструкций к Вашему устройству.",
+        "run_in_background": "Вы можете закрыть это диалоговое окно, настройка продолжится в фоновом режиме.",
+        "start_reconfiguration": "Начать повторную настройку",
+        "in_progress": "Устройство настраивается, это может занять некоторое время.",
+        "configuration_failed": "Не удалось перенастроить устройство. Дополнительная информация может быть получена в журналах.",
+        "configuration_complete": "Настройка устройства завершена",
+        "button_show": "Подробнее",
+        "button_hide": "Скрыть подробности",
+        "cluster_header": "Кластер",
+        "bind_header": "Привязка",
+        "reporting_header": "Получение отчёта",
+        "attribute": "Атрибут",
+        "min_max_change": "мин/макс/изменение"
+      },
+      "zha_device_info": {
+        "manuf": "{manufacturer}",
+        "no_area": "Не указано",
+        "device_signature": "Подпись устройства Zigbee",
+        "device_children": "Дочерние устройства Zigbee",
+        "buttons": {
+          "add": "Добавить устройства через это устройство",
+          "remove": "Удалить устройство",
+          "clusters": "Управление кластерами",
+          "reconfigure": "Перенастроить устройство",
+          "zigbee_information": "Подпись устройства Zigbee",
+          "device_children": "Дочерние устройства",
+          "view_in_visualization": "Просмотреть на схеме визуализации сети"
+        },
+        "services": {
+          "reconfigure": "Перенастройка устройства ZHA. Используйте эту службу, если у Вас есть проблемы с устройством. Если рассматриваемое устройство работает от батареи, пожалуйста, убедитесь, что оно не находится в режиме сна и принимает команды, когда вы запускаете эту службу.",
+          "updateDeviceName": "Укажите название для этого устройства в реестре устройств.",
+          "remove": "Удалить устройство из сети Zigbee.",
+          "zigbee_information": "Просмотр информации о Zigbee устройстве."
+        },
+        "confirmations": {
+          "remove": "Вы уверены, что хотите удалить это устройство?"
+        },
+        "quirk": "Нестандартный обработчик",
+        "last_seen": "Устройство было в сети",
+        "power_source": "Источник питания",
+        "unknown": "Неизвестно",
+        "zha_device_card": { "device_name_placeholder": "Название" }
+      },
+      "domain_toggler": {
+        "title": "Управление доменами",
+        "reset_entities": "Сброс настроек"
+      },
+      "mqtt_device_debug_info": {
+        "title": "Отладочная информация устройства {device}",
+        "deserialize": "Разбирать сообщения в формате JSON",
+        "entities": "Объекты",
+        "no_entities": "Нет объектов",
+        "no_triggers": "Нет триггеров",
+        "payload_display": "Содержание сообщений",
+        "recent_messages": "{n} последних полученных сообщений",
+        "show_as_yaml": "Показывать сообщения в формате YAML",
+        "triggers": "Триггеры"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\n  one {секунда}\n  few {секунды}\n  many {секунд}\n  other {секунд}\n}",
+      "minute": "{count} {count, plural,\n  one {минута}\n  few {минуты}\n  many {минут}\n  other {минут}\n}",
+      "hour": "{count} {count, plural,\n  one {час}\n  few {часа}\n  many {часов}\n  other {часов}\n}",
+      "day": "{count} {count, plural,\n  one {день}\n  few {дня}\n  many {дней}\n  other {дней}\n}",
+      "week": "{count} {count, plural,\n  one {неделя}\n  few {недели}\n  many {недель}\n  other {недель}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "Тип не указан.",
+        "error_detected": "Обнаружены ошибки конфигурации",
+        "editor_not_available": "Для типа \"{type}\" нет визуального редактора.",
+        "editor_not_supported": "Визуальный редактор не поддерживается для этой конфигурации",
+        "edit_in_yaml_supported": "Вы все ещё можете редактировать свою конфигурацию в YAML.",
+        "key_missing": "Требуемый ключ \"{key}\" отсутствует.",
+        "key_not_expected": "Ключ \"{key}\" не ожидается или не поддерживается визуальным редактором.",
+        "key_wrong_type": "Предоставленное значение для \"{key}\" не поддерживается визуальным редактором. Поддерживается: ({type_correct}), получено: ({type_wrong}).",
+        "no_template_editor_support": "В форме ввода шаблоны не поддерживаются"
+      },
+      "supervisor": {
+        "title": "Не удалось загрузить панель Supervisor!",
+        "wait": "Убедитесь, что у Supervisor было достаточно времени для запуска.",
+        "ask": "Обратитесь за помощью",
+        "reboot": "Попробуйте перезагрузить хост",
+        "observer": "Проверьте Observer",
+        "system_health": "Проверьте статус системы"
+      }
+    },
+    "login-form": {
+      "password": "Пароль",
+      "remember": "Запомнить",
+      "log_in": "Вход"
+    },
+    "notification_drawer": {
+      "click_to_configure": "Нажмите кнопку, чтобы настроить {entity}",
+      "empty": "Нет уведомлений",
+      "title": "Уведомления",
+      "close": "Закрыть",
+      "dismiss_all": "Очистить уведомления"
+    },
+    "notification_toast": {
+      "service_call_failed": "Не удалось вызвать службу {service}.",
+      "connection_lost": "Соединение потеряно. Повторное подключение...",
+      "started": "Home Assistant работает!",
+      "starting": "Home Assistant запускается, пока что не всё может быть доступно.",
+      "wrapping_up_startup": "Завершение запуска, пока что не всё может быть доступно.",
+      "integration_starting": "{integration} запускается, пока что не всё может быть доступно.",
+      "triggered": "Сработало от {name}",
+      "dismiss": "Закрыть"
+    },
+    "sidebar": {
+      "external_app_configuration": "Настройки приложения",
+      "sidebar_toggle": "Переключатель в боковой панели",
+      "done": "Готово"
+    },
+    "panel": {
+      "error": {
+        "go_back": "Вернуться",
+        "supervisor": {
+          "ask": "Обратитесь за помощью",
+          "observer": "Проверить Observer",
+          "reboot": "Попробуйте перезагрузить хост",
+          "system_health": "Проверить статус системы",
+          "title": "Не удалось загрузить панель Supervisor!",
+          "wait": "Убедитесь, что у Supervisor было достаточно времени для запуска."
+        }
+      },
+      "history": {
+        "ranges": {
+          "last_week": "Прошедшая неделя",
+          "this_week": "Эта неделя",
+          "today": "Сегодня",
+          "yesterday": "Вчера"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "Прошедшая неделя",
+          "this_week": "Эта неделя",
+          "today": "Сегодня",
+          "yesterday": "Вчера"
+        }
+      }
+    }
+  }
+}

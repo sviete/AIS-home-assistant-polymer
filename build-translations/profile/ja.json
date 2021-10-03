@@ -1,0 +1,144 @@
+{
+  "ui": {
+    "panel": {
+      "profile": {
+        "current_user": "現在、 {fullName}としてログインしています。",
+        "is_owner": "あなたは所有者です。",
+        "logout": "ログアウト",
+        "logout_title": "ログアウトしますか?",
+        "logout_text": "ログアウトしてもよろしいですか？",
+        "force_narrow": {
+          "header": "サイドバーを常に非表示にする",
+          "description": "これにより、モバイルエクスペリエンスと同様に、サイドバーがデフォルトで非表示になります。"
+        },
+        "customize_sidebar": {
+          "header": "サイドバーから順序を変更し、アイテムを非表示にする",
+          "description": "サイドバーのヘッダーを長押しして編集モードを有効にすることもできます。",
+          "button": "編集"
+        },
+        "vibrate": {
+          "header": "バイブレーション機能",
+          "description": "デバイスを制御するときに、このデバイスのバイブレーションを有効または無効にします。"
+        },
+        "enable_shortcuts": {
+          "header": "キーボード ショートカット",
+          "description": "UI でさまざまな操作を実行するためのキーボード ショートカットを有効または無効にします。"
+        },
+        "suspend": {
+          "header": "接続を自動的に閉じる",
+          "description": "5分間非表示にした後、サーバーへの接続を閉じる必要がありますか？"
+        },
+        "push_notifications": {
+          "header": "プッシュ通知",
+          "description": "このデバイスに通知を送信します。",
+          "error_load_platform": "notify.html5を設定",
+          "error_use_https": "Frontend で SSL を有効になっている必要があります。",
+          "push_notifications": "プッシュ通知",
+          "link_promo": "もっと見る",
+          "add_device_prompt": {
+            "title": "このデバイスは何を呼び出す必要がありますか?",
+            "input_label": "デバイス名"
+          }
+        },
+        "language": {
+          "header": "言語",
+          "link_promo": "翻訳を助ける",
+          "dropdown_label": "言語"
+        },
+        "number_format": {
+          "header": "数値の書式",
+          "dropdown_label": "数値の書式",
+          "description": "数値の書式を選択します。",
+          "formats": {
+            "language": "自動 (言語設定を使用)",
+            "system": "システムロケールを使用する",
+            "comma_decimal": "1,234,567.89",
+            "decimal_comma": "1.234.567,89",
+            "space_comma": "1 234 567,89",
+            "none": "なし"
+          }
+        },
+        "time_format": {
+          "header": "時間形式",
+          "dropdown_label": "時間形式",
+          "description": "時刻のフォーマットを選択します。",
+          "formats": {
+            "12": "12時間（AM / PM）",
+            "24": "24時間",
+            "language": "自動 (言語設定を使用)",
+            "system": "システムロケールを使用する"
+          }
+        },
+        "themes": {
+          "header": "テーマ",
+          "error_no_theme": "利用可能なテーマはありません。",
+          "link_promo": "テーマの情報をもっと見る。",
+          "dropdown_label": "テーマ",
+          "dark_mode": { "auto": "自動", "light": "明るい", "dark": "暗い" },
+          "primary_color": "プライマリーの色",
+          "accent_color": "アクセントの色",
+          "reset": "リセット"
+        },
+        "dashboard": {
+          "header": "ダッシュボード",
+          "description": "このデバイスのデフォルトのダッシュボードを選択してください。",
+          "dropdown_label": "ダッシュボード"
+        },
+        "change_password": {
+          "header": "パスワードの変更",
+          "current_password": "現在のパスワード",
+          "new_password": "新しいパスワード",
+          "confirm_new_password": "新しいパスワードの確認",
+          "error_required": "必須",
+          "submit": "送信",
+          "error_new_mismatch": "入力された新しいパスワードが一致しません",
+          "error_new_is_old": "新しいパスワードは現在のパスワードと異なる必要があります",
+          "success": "パスワードが正常に変更されました"
+        },
+        "mfa": {
+          "header": "多要素認証モジュール",
+          "disable": "無効",
+          "enable": "有効",
+          "confirm_disable": "{name}を無効にしてもよろしいですか？"
+        },
+        "mfa_setup": {
+          "title_aborted": "中止されました",
+          "title_success": "成功！",
+          "step_done": "{step}セットアップが完了しました",
+          "close": "閉じる",
+          "submit": "送信"
+        },
+        "advanced_mode": {
+          "title": "高度モード",
+          "description": "高度な機能のロックを解除します。",
+          "link_promo": "もっと見る"
+        },
+        "refresh_tokens": {
+          "header": "トークンを更新",
+          "description": "各更新トークンはログインセッションを表します。ログアウトをクリックすると、更新トークンが自動的に削除されます。現在、次の更新トークンがアカウントでアクティブになっています。",
+          "token_title": "{clientId}トークンを更新",
+          "created_at": "{日付} に作成されました",
+          "last_used": "最後に{location}から{date}使用",
+          "not_used": "一度も使用されていない",
+          "confirm_delete": "{name} の更新トークンを削除しますか?",
+          "delete_failed": "更新トークンを削除できませんでした。",
+          "current_token_tooltip": "現在の更新トークンを削除できません"
+        },
+        "long_lived_access_tokens": {
+          "header": "長期間有効なアクセストークン",
+          "description": "スクリプトがホーム アシスタント インスタンスと対話できるように、長期間使用できるアクセス トークンを作成します。各トークンは作成から10年間有効です。次の長期アクセス トークンは現在アクティブです。",
+          "learn_auth_requests": "認証された要求を作成する方法について説明します。",
+          "created": "{日付} に作成されました",
+          "confirm_delete": "{name} のアクセス トークンを削除しますか?",
+          "delete_failed": "アクセス トークンを削除できませんでした。",
+          "create": "トークンの作成",
+          "create_failed": "アクセス トークンを作成できませんでした。",
+          "name": "名前",
+          "prompt_name": "名前？",
+          "prompt_copy_token": "アクセス トークンをコピーします。再び表示されません。",
+          "empty_state": "長期間使用されるアクセス トークンはまだありません。"
+        }
+      }
+    }
+  }
+}

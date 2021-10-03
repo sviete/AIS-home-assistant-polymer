@@ -1,0 +1,148 @@
+{
+  "ui": {
+    "panel": {
+      "profile": {
+        "current_user": "Þú ert skráð(ur) inn sem {fullName}.",
+        "is_owner": "Þú ert eigandi.",
+        "logout": "Skrá út",
+        "logout_title": "Skrá út?",
+        "logout_text": "Are you sure you want to log out?",
+        "force_narrow": {
+          "header": "Alltaf fela hliðarstikuna",
+          "description": "Þetta mun fela hliðarstikuna með sambærilegum hætti og á snjalltækum."
+        },
+        "customize_sidebar": {
+          "header": "Change the order and hide items from the sidebar",
+          "description": "You can also press and hold the header of the sidebar to activate edit mode.",
+          "button": "Breyta"
+        },
+        "vibrate": {
+          "header": "Titra",
+          "description": "Kveikja eða slökkva á titringi í þessu tæki þegar þú stjórnar tækjum."
+        },
+        "enable_shortcuts": {
+          "header": "Flýtilyklar",
+          "description": "Enable or disable keyboard shortcuts for performing various actions in the UI."
+        },
+        "suspend": {
+          "header": "Loka tengingu sjálfkrafa",
+          "description": "Ættum við að loka tengingunni við þjóninn eftir að hafa verið falin í 5 mínútur?"
+        },
+        "push_notifications": {
+          "header": "Ýta út tilkynningum",
+          "description": "Senda tilkynningar í þetta tæki.",
+          "error_load_platform": "Stilla notify.html5.",
+          "error_use_https": "Krefst þess að SSL sé virkt á vef.",
+          "push_notifications": "Ýta út tilkynningum",
+          "link_promo": "Læra meira",
+          "add_device_prompt": {
+            "title": "What should this device be called?",
+            "input_label": "Device name"
+          }
+        },
+        "language": {
+          "header": "Tungumál",
+          "link_promo": "Hjálpa við að þýða",
+          "dropdown_label": "Tungumál"
+        },
+        "number_format": {
+          "header": "Number Format",
+          "dropdown_label": "Number format",
+          "description": "Choose how numbers are formatted.",
+          "formats": {
+            "language": "Auto (use language setting)",
+            "system": "Use system locale",
+            "comma_decimal": "1,234,567.89",
+            "decimal_comma": "1.234.567,89",
+            "space_comma": "1 234 567,89",
+            "none": "None"
+          }
+        },
+        "time_format": {
+          "header": "Time Format",
+          "dropdown_label": "Time format",
+          "description": "Choose how times are formatted.",
+          "formats": {
+            "12": "12 hours (AM/PM)",
+            "24": "24 hours",
+            "language": "Auto (use language setting)",
+            "system": "Use system locale"
+          }
+        },
+        "themes": {
+          "header": "Þema",
+          "error_no_theme": "Engar þemu í boði.",
+          "link_promo": "Lærðu um þemu",
+          "dropdown_label": "Þema",
+          "dark_mode": {
+            "auto": "Sjálfvirkt",
+            "light": "Light",
+            "dark": "Dark"
+          },
+          "primary_color": "Primary color",
+          "accent_color": "Accent color",
+          "reset": "Endurstilla"
+        },
+        "dashboard": {
+          "header": "Mælaborð",
+          "description": "Pick a default dashboard for this device.",
+          "dropdown_label": "Mælaborð"
+        },
+        "change_password": {
+          "header": "Breyta lykilorði",
+          "current_password": "Núverandi lykilorð",
+          "new_password": "Nýtt lykilorð",
+          "confirm_new_password": "Staðfesta nýtt lykilorð",
+          "error_required": "Skilyrt",
+          "submit": "Senda",
+          "error_new_mismatch": "Innslegin lykilorð eru ekki eins",
+          "error_new_is_old": "Nýja lykilorðið verður að vera annað en núverandi lykilorð",
+          "success": "Lykilorði breytt"
+        },
+        "mfa": {
+          "header": "Fjölþátta auðkenningareiningar",
+          "disable": "Afvirkja",
+          "enable": "Virkja",
+          "confirm_disable": "Ertu viss um að þú viljir afvirkja {name} ?"
+        },
+        "mfa_setup": {
+          "title_aborted": "Hætt var við",
+          "title_success": "Tókst!",
+          "step_done": "Uppsetningu lokið fyrir {step}",
+          "close": "Loka",
+          "submit": "Senda"
+        },
+        "advanced_mode": {
+          "title": "Advanced Mode",
+          "description": "Unlocks advanced features.",
+          "link_promo": "Læra meira"
+        },
+        "refresh_tokens": {
+          "header": "Uppfæra tóka",
+          "description": "Each refresh token represents a login session. Refresh tokens will be automatically removed when you click log out. The following refresh tokens are currently active for your account.",
+          "token_title": "Uppfæra tóka fyrir {clientId}",
+          "created_at": "Búið til þann {date}",
+          "last_used": "Síðast notaður þann {date} frá {location}",
+          "not_used": "Hefur aldrei verið notaður",
+          "confirm_delete": "Are you sure you want to delete the refresh token for {name}?",
+          "delete_failed": "Ekki tókst að eyða endurnýjunartókanum.",
+          "current_token_tooltip": "Unable to delete current refresh token"
+        },
+        "long_lived_access_tokens": {
+          "header": "Langlífir aðgangstókar",
+          "description": "Stofna langlífa aðgangstóka sem leyfa skriftum að eiga samskipti við Home Assitant uppsetninguna. Hver tóki er gildur í 10 ár frá stofnun. Eftirfarandi langlífu tókar eru virkir.",
+          "learn_auth_requests": "Lærðu hvernig á að útbúa auðkenndar beiðnir.",
+          "created": "Created {date}",
+          "confirm_delete": "Ertu viss um að þú viljir eyða aðgangstóka fyrir {name}?",
+          "delete_failed": "Ekki tókst að eyða aðgangstókanum.",
+          "create": "Búa til tóka",
+          "create_failed": "Ekki tókst að stofna aðganstóka.",
+          "name": "Nafn",
+          "prompt_name": "Nafn?",
+          "prompt_copy_token": "Afritaðu aðgangstókann þinn en hann verður ekki birtur aftur.",
+          "empty_state": "Þú ert ekki með neina langlífa aðgangstóka sem stendur."
+        }
+      }
+    }
+  }
+}

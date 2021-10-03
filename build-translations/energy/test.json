@@ -1,0 +1,18 @@
+{
+  "ui": {
+    "panel": {
+      "energy": {
+        "setup": {
+          "next": "TRANSLATED",
+          "back": "TRANSLATED",
+          "done": "TRANSLATED"
+        },
+        "charts": {
+          "stat_house_energy_meter": "TRANSLATED",
+          "solar": "TRANSLATED",
+          "by_device": "TRANSLATED"
+        }
+      }
+    }
+  }
+}

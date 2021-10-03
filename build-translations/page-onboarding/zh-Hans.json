@@ -1,0 +1,76 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "准备好唤醒你的家、找回你的隐私，并加入世界级的极客社区了吗？",
+        "next": "下一步",
+        "finish": "完成",
+        "user": {
+          "intro": "让我们从创建用户帐户开始吧。",
+          "required_field": "必填",
+          "data": {
+            "name": "姓名",
+            "username": "用户名",
+            "password": "密码",
+            "password_confirm": "确认密码"
+          },
+          "create_account": "创建帐户",
+          "error": {
+            "required_fields": "请填写所有必填字段",
+            "password_not_match": "密码不匹配"
+          }
+        },
+        "core-config": {
+          "intro": "{name}，您好！欢迎来到 Home Assistant。您想怎样命名您的家呢？",
+          "intro_location": "我们想知道您住在哪里。这将用于显示资讯以及设置基于太阳的自动化。此数据永远不会在您的网络以外共享。",
+          "intro_location_detect": "我们可以通过向外部服务发出一个一次性请求来帮助您填写此信息。",
+          "location_name": "Home Assistant 安装的名称",
+          "location_name_default": "我的家",
+          "button_detect": "自动检测",
+          "finish": "下一步"
+        },
+        "integration": {
+          "intro": "设备和服务在 Home Assistant 中表示为集成。您可以立即设置它们，也可以稍后在配置屏幕进行设置。",
+          "more_integrations": "更多",
+          "finish": "完成"
+        },
+        "analytics": {
+          "finish": "下一步",
+          "intro": "共享实例的分析。此数据将在 {link} 公开。"
+        },
+        "restore": {
+          "description": "或者，您也可以从以前的快照还原。",
+          "in_progress": "正在还原",
+          "show_log": "显示完整日志",
+          "hide_log": "隐藏完整日志",
+          "full_snapshot": "完整快照",
+          "partial_snapshot": "部分快照",
+          "type": "类型",
+          "select_type": "请选择要还原的内容",
+          "folders": "文件夹",
+          "addons": "加载项",
+          "password_protection": "密码保护",
+          "password": "密码",
+          "confirm_password": "确认快照密码"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

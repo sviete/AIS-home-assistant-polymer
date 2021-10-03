@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Olaylar",
+            "description": "Olay veri yolunda bir olay tetikleyin.",
+            "documentation": "Olaylar Dökümantasyonu.",
+            "type": "Olay Türü",
+            "data": "Olay Verileri (YAML, isteğe bağlı)",
+            "fire_event": "Olayı Çalıştır",
+            "event_fired": "{name} etkinliği tetiklendi",
+            "available_events": "Mevcut Etkinlikler",
+            "count_listeners": " ({count} dinleyiciler)",
+            "listen_to_events": "Olayları dinleyin",
+            "listening_to": "Dinliyorum",
+            "subscribe_to": "Abone olunacak olay",
+            "start_listening": "Dinlemeye başla",
+            "stop_listening": "Dinlemeyi bırak",
+            "alert_event_type": "Olay türü zorunlu bir alandır",
+            "notification_event_fired": "{type} etkinliği başarıyla başlatıldı!"
+          },
+          "services": {
+            "title": "Servisler",
+            "description": "Servisler geliştirici araçı, Home Assistant'taki mevcut tüm hizmetleri aramanızı sağlar.",
+            "call_service": "Servisi Çağır",
+            "column_parameter": "Parametre",
+            "column_description": "Açıklama",
+            "column_example": "Örnek",
+            "fill_example_data": "Örnek Verileri Doldur",
+            "yaml_mode": "YAML moduna git",
+            "ui_mode": "UI moduna git",
+            "yaml_parameters": "Parametreler yalnızca YAML modunda kullanılabilir",
+            "all_parameters": "Mevcut tüm parametreler",
+            "accepts_target": "Bu hizmet bir hedefi kabul eder, örneğin: 'entity_id: light.bed_light'",
+            "no_template_ui_support": "Kullanıcı arayüzü şablonları desteklemiyor, yine de YAML düzenleyicisini kullanabilirsiniz."
+          },
+          "states": {
+            "title": "Durumlar",
+            "description1": "Home Assistant içersindeki bir cihazın görünümü ayarlayın.",
+            "description2": "Bu, gerçek cihaz ile iletişim kurmayacaktır.",
+            "entity": "Varlık",
+            "state": "Durum",
+            "attributes": "Nitelikler",
+            "state_attributes": "Durum nitelikleri (YAML, isteğe bağlı)",
+            "set_state": "Durumu Ayarla",
+            "current_entities": "Mevcut varlıklar",
+            "filter_entities": "Varlıkları filtrele",
+            "filter_states": "Durumları filtrele",
+            "filter_attributes": "Nitelikleri filtrele",
+            "no_entities": "Varlık yok",
+            "more_info": "Daha fazla bilgi",
+            "alert_entity_field": "Varlık zorunlu bir alandır",
+            "last_updated": "Son Güncelleme",
+            "last_changed": "Son değişiklik",
+            "copy_id": "Kimliği panoya kopyala"
+          },
+          "templates": {
+            "title": "Taslak",
+            "description": "Taslaklar Jinja2 taslak motoru ve bazı Home Assistant eklentileri ile görüntülenmektedir.",
+            "editor": "Taslak düzenleyicisi",
+            "reset": "Demo şablonuna sıfırla",
+            "result_type": "Sonuç türü",
+            "jinja_documentation": "Jinja2 taslak dökümantasyonu",
+            "template_extensions": "Home Assistant taslak eklentileri",
+            "unknown_error_template": "Bilinmeyen taslak gösterim hatası",
+            "time": "Bu şablon her dakika güncellenir.",
+            "all_listeners": "Bu şablon, tüm durum değiştirilmiş olayları dinler.",
+            "no_listeners": "Bu şablon herhangi bir olayı dinlemez ve otomatik olarak güncelleştirilmeyecektir.",
+            "listeners": "Bu şablon, takip edilen durumu değişen olayları dinler:",
+            "entity": "Varlık",
+            "domain": "Alan adı"
+          }
+        }
+      }
+    }
+  }
+}
