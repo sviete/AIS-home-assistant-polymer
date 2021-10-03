@@ -1,0 +1,1952 @@
+{
+  "ui": {
+    "panel": {
+      "config": {
+        "header": "Home Assistant'ı yapılandır",
+        "introduction": "Buradan bileşenlerinizi ve Home Assistant'ınızı yapılandırabilirsiniz. Herşeyi kullanıcı arayüzü ile ayarlamak henüz mümkün değil fakat üzerinde çalışıyoruz",
+        "advanced_mode": {
+          "hint_enable": "Yapılandırma seçenekleri eksik mi? Gelişmiş modu etkinleştirin",
+          "link_profile_page": "profil sayfanız"
+        },
+        "common": {
+          "editor": {
+            "confirm_unsaved": "Kaydedilmemiş değişiklikleriniz var. Çıkmak istediğinize emin misiniz?"
+          }
+        },
+        "areas": {
+          "caption": "Alanlar",
+          "description": "Cihazları ve varlıkları alanlar halinde gruplayın",
+          "data_table": {
+            "area": "Alan",
+            "devices": "Cihazlar",
+            "entities": "Entities"
+          },
+          "picker": {
+            "header": "Alanlar",
+            "introduction": "Alanlar, cihazların nerede bulunduğunu düzenlemek için kullanılır. Bu bilgiler, Ev Asistanı'nda arayüzünüzü, izinlerinizi ve diğer sistemlerle entegrasyonlarınızı düzenlemenize yardımcı olmak için kullanılacaktır.",
+            "introduction2": "Cihazları bir alana yerleştirmek için entegrasyon sayfasına gitmek için aşağıdaki bağlantıyı kullanın ve ardından cihaz kartlarına ulaşmak için yapılandırılmış bir entegrasyonu tıklayın.",
+            "integrations_page": "Entegrasyon sayfası",
+            "no_areas": "Henüz hiçbir alan yok gibi görünüyor.",
+            "create_area": "Alan Oluştur"
+          },
+          "editor": {
+            "default_name": "Alan Ekle",
+            "delete": "Sil",
+            "update": "Güncelle",
+            "create": "Oluştur",
+            "name": "Ad",
+            "name_required": "Isim gereklidir",
+            "area_id": "Alan Kimliği",
+            "unknown_error": "Bilinmeyen hata",
+            "linked_entities_caption": "Entities",
+            "no_linked_entities": "There are no entities linked to this area."
+          },
+          "delete": {
+            "confirmation_title": "Bu alanı silmek istediğinizden emin misiniz?",
+            "confirmation_text": "Bu alana ait tüm cihazlar atanmamış olur."
+          }
+        },
+        "tag": {
+          "caption": "Etiketler",
+          "description": "Etiketleri yönetin",
+          "learn_more": "Etiketler hakkında daha fazla bilgi edinin",
+          "no_tags": "Etiket yok",
+          "add_tag": "Etiket ekleyin",
+          "write": "Yazmak",
+          "edit": "Düzenle",
+          "never_scanned": "Asla taranmadı",
+          "create_automation": "Etiket ile otomasyon oluşturun",
+          "confirm_remove_title": "Etiketi kaldır?",
+          "confirm_remove": "{tag} etiketini kaldırmak istediğinizden emin misiniz?",
+          "automation_title": "{name} etiketi tarandı",
+          "headers": { "name": "Ad", "last_scanned": "Son taranmış" },
+          "detail": {
+            "new_tag": "Yeni etiket",
+            "name": "Ad",
+            "description": "Açıklama",
+            "tag_id": "Etiket kimliği",
+            "tag_id_placeholder": "Boş bırakıldığında otomatik olarak oluşturuldu",
+            "delete": "Sil",
+            "update": "Güncelle",
+            "create": "Oluştur",
+            "create_and_write": "Oluştur ve Yaz",
+            "usage": "Bir etiket tarandığında bir otomasyonu tetikleyebilir, NFC etiketlerini, QR kodlarını veya diğer herhangi bir etiketi kullanabilirsiniz. Bu etiketi programlanabilir bir NFC etiketine yazmak için {companion_link} kullanın veya aşağıda bir QR kodu oluşturun.",
+            "companion_apps": "tamamlayıcı uygulamalar"
+          }
+        },
+        "energy": {
+          "caption": "Energy",
+          "description": "Monitor your energy production and consumption",
+          "grid": {
+            "title": "Electricity grid",
+            "sub": "Configure the amount of energy that you consume from the grid and, if you produce energy, give back to the grid. This allows Home Assistant to track your whole home energy usage.",
+            "learn_more": "More information on how to get started.",
+            "flow_dialog": {
+              "from": {
+                "header": "Configure grid consumption",
+                "paragraph": "Grid consumption is the energy that flows from the energy grid to your home.",
+                "energy_stat": "Consumed Energy (kWh)",
+                "cost_para": "Select how Home Assistant should keep track of the costs of the consumed energy.",
+                "no_cost": "Do not track costs",
+                "cost_stat": "Use an entity tracking the total costs",
+                "cost_stat_input": "Total Costs Entity",
+                "cost_entity": "Use an entity with current price",
+                "cost_entity_input": "Entity with the current price",
+                "cost_number": "Use a static price",
+                "cost_number_input": "Price per kWh",
+                "cost_number_suffix": "{currency}/kWh"
+              },
+              "to": {
+                "header": "Configure grid production",
+                "paragraph": "Grid production is the energy that flows from your solar panels to the grid.",
+                "energy_stat": "Energy returned to the grid (kWh)",
+                "cost_para": "Do you get money back when you return energy to the grid?",
+                "no_cost": "I do not get money back",
+                "cost_stat": "Use an entity tracking the total recieved money",
+                "cost_stat_input": "Total Compensation Entity",
+                "cost_entity": "Use an entity with current rate",
+                "cost_entity_input": "Entity with the current rate",
+                "cost_number": "Use a static rate",
+                "cost_number_input": "Rate per kWh",
+                "cost_number_suffix": "{currency}/kWh"
+              }
+            }
+          },
+          "solar": {
+            "title": "Solar Panels",
+            "sub": "Let Home Assistant monitor your solar panels and give you insight on their performance.",
+            "learn_more": "More information on how to get started.",
+            "stat_production": "Your solar energy production",
+            "stat_return_to_grid": "Solar energy returned to the grid",
+            "stat_predicted_production": "Prediction of your solar energy production"
+          },
+          "device_consumption": {
+            "title": "Individual devices",
+            "sub": "Tracking the energy usage of individual devices allows Home Assistant to break down your energy usage by device.",
+            "learn_more": "More information on how to get started.",
+            "add_stat": "Pick entity to track energy of",
+            "selected_stat": "Tracking energy for",
+            "dialog": {
+              "selected_stat_intro": "Select the entity that represents the device energy usage."
+            }
+          }
+        },
+        "helpers": {
+          "caption": "Yardımcılar",
+          "description": "Otomasyon oluşturmaya yardımcı olan öğeler",
+          "types": {
+            "input_text": "Metin",
+            "input_number": "Numara",
+            "input_select": "Açılır",
+            "input_boolean": "Geçiş",
+            "input_datetime": "Tarih ve/veya saat",
+            "counter": "Sayaç",
+            "timer": "Zamanlayıcı"
+          },
+          "picker": {
+            "headers": {
+              "name": "Ad",
+              "entity_id": "Varlık kimliği",
+              "type": "Tip",
+              "editable": "Düzenlenebilir"
+            },
+            "add_helper": "Yardımcı ekle",
+            "no_helpers": "Henüz hiç yardımcınız yok gibi görünüyor!"
+          },
+          "dialog": {
+            "create": "Oluştur",
+            "add_helper": "Yardımcı ekle",
+            "add_platform": "{platform} ekle"
+          }
+        },
+        "core": {
+          "caption": "Genel",
+          "description": "Birim sistemi, konum, saat dilimi ve diğer genel parametreler",
+          "section": {
+            "core": {
+              "header": "Genel Yapılandırma",
+              "introduction": "Yapılandırmanızı değiştirmek, yorucu bir işlem olabilir. Biliyoruz. Bu bölüm hayatınızı biraz daha kolay hale getirmeye çalışacaktır.",
+              "core_config": {
+                "edit_requires_storage": "Konfigürasyon configuration.yaml'de depolandığı için düzenleyici devre dışı bırakıldı.",
+                "location_name": "Home Assistant kurulumunuzun adı",
+                "latitude": "Enlem",
+                "longitude": "Boylam",
+                "elevation": "Yükseklik",
+                "elevation_meters": "metre",
+                "time_zone": "Saat dilimi",
+                "unit_system": "Birim Sistemi",
+                "unit_system_imperial": "Imperial",
+                "unit_system_metric": "Metrik",
+                "imperial_example": "Fahrenheit, pound",
+                "metric_example": "Santigrat, kilogram",
+                "find_currency_value": "Find your value",
+                "save_button": "Kaydet",
+                "external_url": "Harici bağlantı URL'si",
+                "internal_url": "Dahili bağlantı URL'si",
+                "currency": "Currency"
+              },
+              "analytics": {
+                "documentation": "Bunu etkinleştirmeden önce, ne gönderdiğinizi ve nasıl depolandığını anlamak için {link} analiz belgeleri sayfasını ziyaret ettiğinizden emin olun.",
+                "header": "İstatistikler",
+                "instance_id": "Örnek Kimliği: {huuid}",
+                "introduction": "Örneğinizden analizleri paylaşın. {link} adresinde herkese açık olacak",
+                "needs_base": "Bu seçeneğin kullanılabilir olması için temel analizleri etkinleştirmeniz gerekir",
+                "preference": {
+                  "base": {
+                    "description": "Bu, örnek kimliği, sürüm ve yükleme türünü içerir",
+                    "title": "Temel analiz"
+                  },
+                  "diagnostics": {
+                    "description": "Kilitlenme raporlarını ve teşhis bilgilerini paylaşın",
+                    "title": "Tanılama"
+                  },
+                  "statistics": {
+                    "description": "Bu, belgelere tam listeyle bakmak için yüklemenizdeki öğelerin sayısını içerir",
+                    "title": "Kullanım istatistikleri"
+                  },
+                  "usage_supervisor": {
+                    "description": "Bu, entegrasyonlarınızın ve eklentilerinizin adlarını ve yeteneklerini içerir",
+                    "title": "Kullanılan entegrasyonlar ve eklentiler"
+                  },
+                  "usage": {
+                    "description": "Bu, entegrasyonlarınızın adlarını içerir",
+                    "title": "Kullanılan entegrasyonlar"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "info": {
+          "caption": "Bilgi",
+          "copy_raw": "Ham Metin",
+          "copy_github": "GitHub için",
+          "description": "Ev Asistanı yüklemeniz hakkındaki bilgileri görüntüleyin",
+          "home_assistant_logo": "Home Assistant Logosu",
+          "path_configuration": "configuration.yaml lokasyonu: {path}",
+          "developed_by": "Bir sürü harika insan tarafından geliştirildi.",
+          "license": "Apache 2.0 lisansı altında yayınlandı",
+          "source": "Kaynak:",
+          "server": "sunucu",
+          "frontend": "ön uç-ui",
+          "built_using": "Kullanılan oluşturma",
+          "icons_by": "Simgelerin orijni",
+          "frontend_version": "Ön uç versiyonu: {version} - {type}",
+          "custom_uis": "Özel kullanıcı arayüzleri:",
+          "system_health_error": "Sistem Sağlığı bileşeni yüklü değil. configuration.yaml içine 'system_health:' ekleyin",
+          "integrations": "Entegrasyonlar",
+          "documentation": "Belgeleri",
+          "issues": "Sorunlar",
+          "setup_time": "Setup time",
+          "system_health": {
+            "manage": "Yönet",
+            "more_info": "daha fazla bilgi"
+          }
+        },
+        "logs": {
+          "caption": "Günlükler",
+          "description": "Home Assistant günlüklerini görüntüle",
+          "details": "Günlük Ayrıntıları ( {level} )",
+          "load_full_log": "Tam Home Assistant Günlüğünü Yükle",
+          "loading_log": "Hata günlüğü yükleniyor ...",
+          "no_errors": "Herhangi bir hata rapor edilmiştir.",
+          "no_issues": "Yeni bir sorun yok!",
+          "clear": "Temizle",
+          "refresh": "Yenile",
+          "multiple_messages": "ileti ilk önce {time} meydana geldi ve {counter} kez gösterildi",
+          "level": {
+            "critical": "CRITICAL",
+            "error": "ERROR",
+            "warning": "WARNING",
+            "info": "INFO",
+            "debug": "DEBUG"
+          },
+          "custom_integration": "custom integration",
+          "error_from_custom_integration": "This error originated from a custom integration."
+        },
+        "lovelace": {
+          "caption": "Lovelace Kontrol Panelleri",
+          "description": "Evinizi kontrol etmek için özelleştirilmiş kart setleri oluşturun",
+          "dashboards": {
+            "default_dashboard": "Bu varsayılan kontrol paneli",
+            "caption": "Kontrol panelleri",
+            "conf_mode": { "yaml": "YAML dosyası", "storage": "UI kontrollü" },
+            "picker": {
+              "headers": {
+                "title": "Başlık",
+                "conf_mode": "Yapılandırma yöntemi",
+                "default": "Varsayılan",
+                "require_admin": "Yalnızca yönetici",
+                "sidebar": "Kenar çubuğunda göster",
+                "filename": "Dosya adı"
+              },
+              "open": "Açık",
+              "add_dashboard": "Kontrol paneli ekle"
+            },
+            "confirm_delete": "Bu kontrol panelini silmek istediğinizden emin misiniz?",
+            "cant_edit_yaml": "YAML'de tanımlanan kontrol panelleri kullanıcı arayüzünden düzenlenemez. Configuration.yaml dosyasından değiştirin.",
+            "cant_edit_default": "Standart Lovelace kontrol paneli kullanıcı arayüzünden düzenlenemez. Varsayılan olarak başka bir kontrol paneli ayarlayarak gizleyebilirsiniz.",
+            "detail": {
+              "edit_dashboard": "Kontrol paneli düzenle",
+              "new_dashboard": "Yeni kontrol paneli ekle",
+              "dismiss": "Kapat",
+              "show_sidebar": "Kenar çubuğunda göster",
+              "icon": "Simge",
+              "title": "Başlık",
+              "title_required": "Başlık gerekli.",
+              "url": "URL",
+              "url_error_msg": "URL bir - içermeli ve _ ve - hariç boşluk veya özel karakter içeremez",
+              "require_admin": "Yalnızca yönetici",
+              "delete": "Sil",
+              "update": "Güncelle",
+              "create": "Oluştur",
+              "set_default": "Bu cihazda varsayılan olarak ayarla",
+              "remove_default": "Bu cihazda varsayılan olarak kaldır"
+            }
+          },
+          "resources": {
+            "caption": "Kaynaklar",
+            "types": {
+              "css": "Stil",
+              "html": "HTML (kullanımdan kaldırıldı)",
+              "js": "JavaScript Dosyası (kullanımdan kaldırıldı)",
+              "module": "JavaScript Modülü"
+            },
+            "picker": {
+              "headers": { "url": "URL", "type": "Tip" },
+              "no_resources": "Kaynak yok",
+              "add_resource": "Kaynak ekle"
+            },
+            "confirm_delete": "Bu kaynağı silmek istediğinizden emin misiniz?",
+            "refresh_header": "Yenilemek istiyor musunuz?",
+            "refresh_body": "Kaldırma işlemini tamamlamak için sayfayı yenilemeniz gerekir. Şimdi yenilemek istiyor musunuz?",
+            "cant_edit_yaml": "Lovelace'ı YAML modunda kullanıyorsunuz, bu nedenle kaynaklarınızı kullanıcı arayüzü üzerinden yönetemezsiniz. Onları configuration.yaml dosyasında yönetin.",
+            "detail": {
+              "new_resource": "Yeni kaynak ekle",
+              "dismiss": "Kapat",
+              "warning_header": "Dikkatli olun!",
+              "warning_text": "Kaynak eklemek tehlikeli olabilir, kaynağın kaynağını bildiğinizden ve onlara güvendiğinizden emin olun. Kötü kaynaklar sisteminize ciddi şekilde zarar verebilir.",
+              "url": "URL",
+              "url_error_msg": "URL zorunlu bir alandır",
+              "type": "Kaynak tipi",
+              "delete": "Sil",
+              "update": "Güncelle",
+              "create": "Oluştur"
+            }
+          }
+        },
+        "server_control": {
+          "caption": "Sunucu Kontrolleri",
+          "description": "Home Assistant sunucusunu yeniden başlatın veya durdurun.",
+          "section": {
+            "validation": {
+              "heading": "Yapılandırma doğrulaması",
+              "introduction": "Yapılandırmanızda yakın bir zamanda değişiklikler yaptıysanız ve tümünün geçerli olduğundan emin olmak istiyorsanız yapılandırmanızı doğrulayın",
+              "check_config": "Yapılandırmayı kontrol et",
+              "valid": "Yapılandırma geçerli!",
+              "invalid": "Yapılandırma geçersiz"
+            },
+            "reloading": {
+              "heading": "YAML yapılandırması yeniden yükleniyor",
+              "introduction": "Home Assistant'ın bazı bölümleri, yeniden başlatma gerektirmeden yeniden yüklenebilir. Yeniden yüklemeye basmak, mevcut YAML yapılandırmasını kaldıracak ve yenisini yükleyecektir.",
+              "reload": "{domain}",
+              "core": "Konum ve özelleştirmeler",
+              "group": "Grupları, grup varlıklarını ve grup bildirim hizmetleri",
+              "automation": "Otomasyonlar",
+              "script": "Senaryolar",
+              "scene": "Sahneler",
+              "person": "Kişiler",
+              "zone": "Bölgeler",
+              "input_boolean": "Mantıksal veri tipleri",
+              "input_text": "Giriş metinleri",
+              "input_number": "Giriş numaraları",
+              "input_datetime": "Giriş tarih ve zaman",
+              "input_select": "Giriş seçenekleri",
+              "template": "Şablon varlıkları",
+              "universal": "Evrensel medya oynatıcı varlıkları",
+              "rest": "Rest varlıkları ve hizmetleri bilgilendirin",
+              "command_line": "Komut satırı varlıkları",
+              "filter": "Filtre varlıkları",
+              "statistics": "İstatistik varlıkları",
+              "generic": "Genel IP kamera varlıkları",
+              "generic_thermostat": "Genel termostat varlıkları",
+              "homekit": "HomeKit",
+              "min_max": "Min/max varlıkları",
+              "history_stats": "Geçmiş istatistikleri varlıkları",
+              "trend": "Trend varlıkları",
+              "ping": "Ping ikili sensör varlıkları",
+              "filesize": "Dosya boyutu varlıkları",
+              "telegram": "Telgraf bilgilendirme hizmetleri",
+              "smtp": "SMTP bilgilendirme hizmetleri",
+              "mqtt": "Manuel olarak yapılandırılmış MQTT varlıkları",
+              "rpi_gpio": "Raspberry Pi GPIO varlıkları"
+            },
+            "server_management": {
+              "heading": "Sunucu yönetimi",
+              "introduction": "Home Assistant sunucunuzu kontrol edin... Home Assistant üzerinden",
+              "restart": "Yeniden başlat",
+              "confirm_restart": "Home Assistant'ı yeniden başlatmak istediğinizden emin misiniz?",
+              "stop": "Durdur",
+              "confirm_stop": "Home Assistant'ı durdurmak istediğinizden emin misin?"
+            }
+          }
+        },
+        "customize": {
+          "caption": "Özelleştirme",
+          "description": "Varlıklarınızı kişiselleştirin",
+          "picker": {
+            "header": "Özelleştirmeler",
+            "introduction": "Varlık özniteliklerinde ince ayar yapın. Eklenen / düzenlenen özelleştirmeler hemen yürürlüğe girecektir. Varlık güncellendiğinde kaldırılan özelleştirmeler geçerli olacaktır.",
+            "documentation": "Özelleştirme belgeleri"
+          },
+          "warning": {
+            "include_sentence": "Yapılandırmanız Configuration.yaml düzgün bir şekilde görünmüyor",
+            "include_link": "customize.yaml dahil et",
+            "not_applied": "Burada yapılan değişiklikler buna yazılır, ancak dahil edilmediği sürece bir yapılandırma yeniden yüklemesinden sonra uygulanmayacaktır."
+          },
+          "attributes_customize": "Aşağıdaki öznitelikler zaten customize.yaml içinde ayarlanır",
+          "attributes_outside": "Aşağıdaki öznitelikler customize.yaml dışından özelleştirilmiştir",
+          "different_include": "Muhtemelen bir alan adı, bir glob ya da farklı bir içerik yoluyla.",
+          "attributes_set": "Varlığın aşağıdaki öznitelikleri programlı olarak ayarlanır.",
+          "attributes_override": "İsterseniz bunları geçersiz kılabilirsin.",
+          "attributes_not_set": "Aşağıdaki öznitelikler ayarlanmadı. İstersen ayarla.",
+          "pick_attribute": "Geçersiz kılmak için bir özellik seçin"
+        },
+        "automation": {
+          "caption": "Otomasyon",
+          "description": "Eviniz için özel davranış kuralları oluşturun",
+          "picker": {
+            "header": "Otomasyon Düzenleyici",
+            "introduction": "Otomasyon editörü, otomasyonlar oluşturmanıza ve düzenlemenize izin verir. Home Assistant'ı doğru yapılandırdığınızdan emin olmak için lütfen aşağıdaki bağlantıyı takip edin.",
+            "learn_more": "Otomasyonlar hakkında daha fazla bilgi edinin",
+            "pick_automation": "Düzenlemek için otomasyon seçin",
+            "no_automations": "Herhangi bir otomasyon bulamadık",
+            "add_automation": "Otomasyon ekle",
+            "only_editable": "Yalnızca automations.yaml dosyasında tanımlanan otomasyonlar düzenlenebilir.",
+            "dev_only_editable": "Yalnızca automations.yaml'de tanımlanan otomasyonlarda hata ayıklama yapılabilir.",
+            "edit_automation": "Otomasyonu düzenle",
+            "dev_automation": "Hata ayıklama otomasyonu",
+            "show_info_automation": "Otomasyon hakkında bilgi göster",
+            "delete_automation": "Otomasyonu sil",
+            "delete_confirm": "Bu otomasyonu silmek istediğinizden emin misiniz?",
+            "duplicate_automation": "Otomasyonu çiftleme",
+            "duplicate": "Çiftleme",
+            "headers": { "name": "Ad" }
+          },
+          "dialog_new": {
+            "header": "Yeni bir otomasyon oluşturun",
+            "how": "Yeni otomasyonunuzu nasıl oluşturmak istersiniz?",
+            "blueprint": { "use_blueprint": "Bir taslak kullanın" },
+            "thingtalk": {
+              "header": "Oluşturmak istediğiniz otomasyonu tanımlayın",
+              "intro": "Ve biz sizin için oluşturmak için çalışacağız. Örneğin: Ben çıkarken ışıkları kapatın.",
+              "input_label": "Bu otomasyon ne yapmalı?",
+              "create": "Oluştur"
+            },
+            "start_empty": "Boş bir otomasyonla başlayın"
+          },
+          "editor": {
+            "enable_disable": "Otomasyonu etkinleştirme / devre dışı bırakma",
+            "show_trace": "İzi göster",
+            "introduction": "Evinizi canlandırmak için otomasyonları kullanın",
+            "default_name": "Yeni Otomasyon",
+            "load_error_not_editable": "Yalnızca automations.yaml içindeki otomasyonlar düzenlenebilir.",
+            "load_error_unknown": "Otomasyon yüklenirken hata oluştu ( {err_no} ).",
+            "save": "Kaydet",
+            "unsaved_confirm": "Kaydedilmemiş değişiklikleriniz var. Çıkmak istediğinize emin misiniz?",
+            "alias": "İsim",
+            "move_up": "Yukarı Taşı",
+            "move_down": "Aşağı taşı",
+            "description": {
+              "label": "Açıklama",
+              "placeholder": "İsteğe bağlı açıklama"
+            },
+            "blueprint": {
+              "header": "Taslak",
+              "blueprint_to_use": "Kullanılacak taslak",
+              "no_blueprints": "Hiç taslağın yok.",
+              "no_inputs": "Bu taslağın herhangi bir girdisi yok."
+            },
+            "modes": {
+              "label": "Mod",
+              "description": "Mod, eylemler önceki bir tetikleyiciden çalışmaya devam ederken otomasyon tetiklendiğinde ne olacağını kontrol eder. Daha fazla bilgi için {documentation_link} bakın.",
+              "documentation": "otomasyon belgeleri",
+              "single": "Tek (varsayılan)",
+              "restart": "Yeniden başlat",
+              "queued": "Kuyrukta",
+              "parallel": "Paralel"
+            },
+            "max": {
+              "queued": "Kuyruk uzunluğu",
+              "parallel": "Maksimum paralel çalışma sayısı"
+            },
+            "edit_yaml": "YAML'de düzenle",
+            "edit_ui": "Görsel düzenleyicide düzenle",
+            "copy_to_clipboard": "Panoya kopyala",
+            "triggers": {
+              "name": "Tetik",
+              "header": "Tetikleyiciler",
+              "introduction": "Tetikleyiciler, bir otomasyon kuralının işlenmesini başlatan şeydir. Aynı kural için birden çok tetikleyici belirtmek mümkündür. Bir tetikleyici başladıktan sonra, Home Assistant varsa koşulları doğrular ve eylemi çağırır.",
+              "learn_more": "Tetikleyiciler hakkında daha fazla bilgi edinin",
+              "add": "Tetikleyici ekle",
+              "id": "Trigger ID (used by the trigger condition)",
+              "duplicate": "Yedekle",
+              "delete": "Sil",
+              "delete_confirm": "Bunu silmek istediğinizden emin misiniz?",
+              "unsupported_platform": "Platform için görsel düzenleyici desteği yok: {platform}",
+              "type_select": "Tetikleyici tipi",
+              "type": {
+                "device": {
+                  "label": "Cihaz",
+                  "trigger": "tetik",
+                  "extra_fields": {
+                    "above": "Üzerinde",
+                    "below": "Altında",
+                    "for": "Süre",
+                    "zone": "Bölge"
+                  }
+                },
+                "event": {
+                  "label": "Olay:",
+                  "event_type": "Olay Türü",
+                  "event_data": "Etkinlik Verisi",
+                  "context_users": "Tarafından tetiklenen olaylarla sınırla",
+                  "context_user_picked": "Kullanıcı tarafından tetiklenmiş olay",
+                  "context_user_pick": "Kullanıcı Ekle"
+                },
+                "geo_location": {
+                  "label": "Konum",
+                  "source": "Kaynak",
+                  "zone": "Bölge",
+                  "event": "Olay:",
+                  "enter": "Girince",
+                  "leave": "Ayrıl"
+                },
+                "state": {
+                  "label": "Durum",
+                  "attribute": "Öznitelik (İsteğe bağlı)",
+                  "from": "Kaynak",
+                  "for": "Süre",
+                  "to": "Hedef"
+                },
+                "homeassistant": {
+                  "label": "Home Assistant",
+                  "event": "Olay:",
+                  "start": "Başlat",
+                  "shutdown": "Kapat"
+                },
+                "mqtt": {
+                  "label": "MQTT",
+                  "topic": "Konu",
+                  "payload": "Yük (isteğe bağlı)"
+                },
+                "numeric_state": {
+                  "label": "Sayısal durum",
+                  "above": "Üzerinde",
+                  "below": "Altında",
+                  "value_template": "Değer şablonu (isteğe bağlı)"
+                },
+                "sun": {
+                  "label": "Güneş",
+                  "event": "Olay:",
+                  "sunrise": "Gün Doğumu",
+                  "sunset": "Gün Batımı",
+                  "offset": "Ofset (isteğe bağlı)"
+                },
+                "tag": { "label": "Etiket" },
+                "template": {
+                  "label": "Taslak",
+                  "value_template": "Değer taslak"
+                },
+                "time": {
+                  "type_value": "Sabit zaman",
+                  "type_input": "Tarih / saat yardımcısının değeri",
+                  "label": "zaman",
+                  "at": "Saat"
+                },
+                "time_pattern": {
+                  "label": "Zaman Deseni",
+                  "hours": "Saat",
+                  "minutes": "Dakika",
+                  "seconds": "Saniye"
+                },
+                "webhook": {
+                  "label": "Webhook",
+                  "webhook_id": "Webhook Kimliği"
+                },
+                "zone": {
+                  "label": "Bölge",
+                  "entity": "Konumu olan varlık",
+                  "zone": "Bölge",
+                  "event": "Olay:",
+                  "enter": "Girince",
+                  "leave": "Ayrıl"
+                }
+              }
+            },
+            "conditions": {
+              "name": "Şart",
+              "header": "Koşullar",
+              "introduction": "Koşullar isteğe bağlıdır ve tüm koşullar yerine getirilmediği sürece otomasyonun çalışmasını engeller.",
+              "learn_more": "Koşullar hakkında daha fazla bilgi edinin",
+              "add": "Koşul ekle",
+              "duplicate": "Kopya",
+              "delete": "Sil",
+              "delete_confirm": "Silmek istediğinizden emin misiniz?",
+              "unsupported_condition": "Koşul için görsel düzenleyici desteği yok: {condition}",
+              "type_select": "Koşul türü",
+              "type": {
+                "and": { "label": "Ve" },
+                "device": {
+                  "label": "Cihaz",
+                  "condition": "Şart",
+                  "extra_fields": {
+                    "above": "Üzerinde",
+                    "below": "Altında",
+                    "for": "Süre",
+                    "hvac_mode": "HVAC modu",
+                    "preset_mode": "Ön ayar modu"
+                  }
+                },
+                "not": { "label": "Değil" },
+                "numeric_state": {
+                  "label": "Sayısal durum",
+                  "above": "Üzerinde",
+                  "below": "Altında",
+                  "value_template": "Değer şablonu (isteğe bağlı)"
+                },
+                "or": { "label": "Veya" },
+                "state": { "label": "Durum", "state": "Durum" },
+                "sun": {
+                  "label": "Güneş",
+                  "before": "Önce:",
+                  "after": "Sonra:",
+                  "before_offset": "Ofsetten önce (isteğe bağlı)",
+                  "after_offset": "Ofsetten sonra (isteğe bağlı)",
+                  "sunrise": "Gün Doğumu",
+                  "sunset": "Gün Batımı"
+                },
+                "template": {
+                  "label": "Şablon",
+                  "value_template": "Değer şablonu"
+                },
+                "time": {
+                  "type_value": "Sabit zaman",
+                  "type_input": "Tarih / saat yardımcısının değeri",
+                  "label": "Zaman",
+                  "after": "Sonra",
+                  "before": "Önce",
+                  "weekdays": {
+                    "mon": "Pazartesi",
+                    "tue": "Salı",
+                    "wed": "Çarşamba",
+                    "thu": "Perşembe",
+                    "fri": "Cuma",
+                    "sat": "Cumartesi",
+                    "sun": "Pazar"
+                  }
+                },
+                "trigger": {
+                  "label": "Trigger",
+                  "no_triggers": "No triggers available",
+                  "id": "Trigger ID"
+                },
+                "zone": {
+                  "label": "Bölge",
+                  "entity": "Konumlu girdi",
+                  "zone": "Bölge"
+                }
+              }
+            },
+            "actions": {
+              "name": "Aksiyon",
+              "header": "Aksiyonlar",
+              "introduction": "İşlemler, otomasyon tetiklendiğinde Home Assistant'ın yapacağı işlemlerdir.",
+              "learn_more": "İşlemler hakkında daha fazla bilgi edinin",
+              "add": "İşlem ekle",
+              "duplicate": "Kopya",
+              "delete": "Sil",
+              "delete_confirm": "Silmek istediğinize emin misiniz?",
+              "unsupported_action": "Eylem için görsel düzenleyici desteği yok: {action}",
+              "type_select": "Aksiyon türü",
+              "type": {
+                "service": { "label": "Servisi Çağır" },
+                "delay": { "label": "Bekleme", "delay": "Gecikme" },
+                "wait_template": {
+                  "label": "Bekle",
+                  "wait_template": "Bekleme taslak",
+                  "timeout": "Zaman aşımı (isteğe bağlı)",
+                  "continue_timeout": "Zaman aşımına devam et"
+                },
+                "wait_for_trigger": {
+                  "label": "Tetikleyiciyi bekleyin",
+                  "timeout": "Zaman aşımı (isteğe bağlı)",
+                  "continue_timeout": "zaman aşımına devam et"
+                },
+                "condition": { "label": "Durum" },
+                "event": {
+                  "label": "Olayı Çalıştır",
+                  "event": "Olay:",
+                  "service_data": "Hizmet Verisi"
+                },
+                "device_id": {
+                  "label": "Cihaz",
+                  "action": "Aksiyon",
+                  "extra_fields": {
+                    "code": "Kod",
+                    "message": "İleti",
+                    "title": "Başlık",
+                    "position": "Konum",
+                    "mode": "Mod",
+                    "humidity": "Nem",
+                    "value": "Değer",
+                    "brightness_pct": "Parlaklık",
+                    "flash": "Flaş"
+                  }
+                },
+                "scene": { "label": "Sahneyi etkinleştir" },
+                "repeat": {
+                  "label": "Tekrar",
+                  "type_select": "Tekrar tipi",
+                  "type": {
+                    "count": { "label": "Sayısı" },
+                    "while": {
+                      "label": "Süre",
+                      "conditions": "Koşullara kadar"
+                    },
+                    "until": {
+                      "label": "Kadar",
+                      "conditions": "Koşullara kadar"
+                    }
+                  },
+                  "sequence": "Aksiyonlar"
+                },
+                "choose": {
+                  "label": "Seç",
+                  "default": "Varsayılan eylemler",
+                  "option": "Seçenek {number}",
+                  "add_option": "Seçenek ekle",
+                  "remove_option": "Seçeneği kaldır",
+                  "conditions": "Koşullar",
+                  "sequence": "Aksiyonlar"
+                }
+              }
+            }
+          },
+          "thingtalk": {
+            "create": "Otomasyon oluşturun",
+            "task_selection": {
+              "header": "Yeni bir otomasyon oluşturun",
+              "introduction": "Aşağıya bu otomasyonun ne yapması gerektiğini yazın ve biz onu bir Ev Asistanı otomasyonuna dönüştürmeye çalışacağız.",
+              "language_note": "Not: Şimdilik yalnızca İngilizce desteklenmektedir.",
+              "for_example": "Örneğin:",
+              "error_empty": "Bir komut girin veya atla'ya dokunun.",
+              "error_unsupported": "Bunun için bir otomasyon oluşturamadık (henüz?)."
+            },
+            "link_devices": {
+              "header": "Harika! Şimdi bazı cihazları bağlamamız gerekiyor",
+              "ambiguous_entities": "Bir veya daha fazla aygıtın birden fazla eşleşen varlığı vardır, lütfen kullanmak istediğinizi seçin.",
+              "unknown_placeholder": "Bilinmeyen yer tutucu"
+            }
+          }
+        },
+        "blueprint": {
+          "caption": "Taslaklar",
+          "description": "Taslakları yönetin",
+          "overview": {
+            "header": "Taslak Düzenleyici",
+            "introduction": "Taslak düzenleyici, taslakları oluşturmanıza ve düzenlemenize olanak tanır.",
+            "learn_more": "Taslaklar hakkında daha fazla bilgi edinin",
+            "headers": {
+              "name": "Ad",
+              "domain": "Alan adı",
+              "file_name": "Dosya adı"
+            },
+            "confirm_delete_header": "Bu taslak silinsin mi?",
+            "confirm_delete_text": "Bu taslağı silmek istediğinizden emin misiniz?",
+            "add_blueprint": "Taslak ekle",
+            "use_blueprint": "Otomasyon oluşturun",
+            "delete_blueprint": "Taslağı sil",
+            "share_blueprint": "Taslağı paylaş",
+            "share_blueprint_no_url": "Taslak paylaşılamıyor: kaynak url yok",
+            "discover_more": "Daha Fazla Taslak Keşfedin"
+          },
+          "add": {
+            "header": "Taslağı içeri aktar",
+            "import_header": "Taslak \"{name}\"",
+            "import_introduction_link": "Diğer kullanıcıların taslaklarını Github ve {community_link} den içe aktarabilirsiniz. Planın URL'sini aşağıya girin.",
+            "community_forums": "topluluk forumları",
+            "url": "Taslağın URL'si",
+            "raw_blueprint": "Taslak içeriği",
+            "importing": "Taslak içe aktarılıyor...",
+            "import_btn": "Taslağı içe aktar",
+            "saving": "Taslak kaydediliyor...",
+            "save_btn": "Taslağı kaydet",
+            "error_no_url": "Lütfen taslağın URL'sini girin.",
+            "unsupported_blueprint": "Bu taslak desteklenmiyor",
+            "file_name": "Taslak Yolu"
+          }
+        },
+        "script": {
+          "caption": "Senaryo",
+          "description": "Bir dizi eylemi gerçekleştirin",
+          "picker": {
+            "header": "Komut Dosyası Düzenleyicisi",
+            "introduction": "Senaryo düzenleyici, senaryo oluşturmanıza ve düzenlemenize olanak tanır. Home Assistant'ı doğru şekilde yapılandırdığınızdan emin olmak için talimatları okumak için lütfen aşağıdaki bağlantıyı izleyin.",
+            "learn_more": "Senaryolar hakkında daha fazla bilgi edinin",
+            "no_scripts": "Herhangi bir senaryo bulamadık.",
+            "add_script": "Senaryo ekle",
+            "show_info": "Komut dosyası hakkında bilgi göster",
+            "run_script": "Senaryoyu çalıştır",
+            "edit_script": "Komut dosyasını düzenle",
+            "dev_script": "Debug script",
+            "headers": { "name": "Ad" },
+            "duplicate_script": "Senaryoyu Çoğalt",
+            "duplicate": "Çoğaltma"
+          },
+          "editor": {
+            "alias": "Ad",
+            "icon": "Simge",
+            "id": "Varlık kimliği",
+            "id_already_exists_save_error": "Kimlik benzersiz olmadığından bu komut dosyasını kaydedemezsiniz, başka bir kimlik seçin veya otomatik olarak bir tane oluşturmak için boş bırakın.",
+            "id_already_exists": "Bu ID zaten var",
+            "introduction": "Bir dizi eylemi çalıştırmak için komut dosyalarını kullanın.",
+            "show_trace": "Show trace",
+            "header": "Senaryo: {name}",
+            "default_name": "Yeni Senaryo",
+            "modes": {
+              "label": "Mod",
+              "description": "Mod, komut dosyası çağrıldığı zaman ne olacağını denetler ve bir veya daha fazla önceki çağrılardan çalışmaya devam eder. Daha fazla bilgi için {documentation_link} kontrol edin.",
+              "documentation": "komut dosyası belgeleri",
+              "single": "Tek (varsayılan)",
+              "restart": "Yeniden başlat",
+              "queued": "Kuyrukta",
+              "parallel": "Paralel"
+            },
+            "max": {
+              "queued": "Kuyruk uzunluğu",
+              "parallel": "Maksimum paralel çalışma sayısı"
+            },
+            "load_error_not_editable": "Yalnızca scripts.yaml içindeki senaryolar düzenlenebilir.",
+            "delete_confirm": "Bu senaryoyu silmek istediğinizden emin misiniz?",
+            "delete_script": "Komut dosyasını sil",
+            "save_script": "Senaryoyu kaydet",
+            "sequence": "Sıra",
+            "sequence_sentence": "Bu komut dosyasının eylem sırası.",
+            "link_available_actions": "Kullanılabilir aksiyonlar hakkında daha fazla bilgi edinin."
+          }
+        },
+        "scene": {
+          "caption": "Sahneler",
+          "description": "Aygıt durumlarını yakalayın ve daha sonra kolayca geri çağırın",
+          "activated": "Etkin sahne {name} .",
+          "picker": {
+            "header": "Sahne Düzenleyicisi",
+            "introduction": "Sahne düzenleyici, sahneler oluşturmanıza ve düzenlemenize olanak sağlar. Home Assistant'ı doğru yapılandırdığınızdan emin olmak ve talimatları okumak için lütfen aşağıdaki bağlantıyı izleyin.",
+            "learn_more": "Sahneler hakkında daha fazla bilgi edinin",
+            "pick_scene": "Düzenlenecek sahneyi seç",
+            "no_scenes": "Herhangi bir sahne bulamadık",
+            "add_scene": "Sahne ekle",
+            "only_editable": "Sadece scenes.yaml içinde belirlenmiş sahneler düzenlenebilinir.",
+            "edit_scene": "Sahneyi düzenle",
+            "show_info_scene": "Sahne hakkında bilgi göster",
+            "delete_scene": "Sahneyi sil",
+            "delete_confirm": "Bu sahneyi silmek istediğinize emin misiniz?",
+            "duplicate_scene": "Duplicate scene",
+            "duplicate": "Duplicate",
+            "headers": { "name": "Ad" }
+          },
+          "editor": {
+            "introduction": "Evinizi canlandırmak için sahneleri kullanın.",
+            "default_name": "Yeni Sahne",
+            "load_error_not_editable": "Sadece scenes.yaml içindeki sahneler düzenlenebilinir.",
+            "load_error_unknown": "Sahne yüklenirken hata oluştu ( {err_no} ).",
+            "save": "Kaydet",
+            "unsaved_confirm": "Kaydedilmemiş değişiklikleriniz mevcut. Ayrılmak istediğinden emin misin?",
+            "name": "Ad",
+            "icon": "Simge",
+            "devices": {
+              "header": "Cihazlar",
+              "introduction": "Sahnenize dahil edilmesini istediğiniz cihazları ekleyin. Tüm aygıtları bu sahne için istediğiniz duruma ayarlayın.",
+              "add": "Cihaz ekle",
+              "delete": "Cihazı sil"
+            },
+            "entities": {
+              "header": "Varlıklar",
+              "introduction": "Bir cihaza ait olmayan varlıklar buradan ayarlanabilir.",
+              "without_device": "Cihazı olmayan varlıklar",
+              "device_entities": "Bir aygıta ait bir varlık eklerseniz, aygıt eklenecektir.",
+              "add": "Varlık ekle",
+              "delete": "Varlığı sil"
+            }
+          }
+        },
+        "cloud": {
+          "description_login": "{email} olarak oturum açtınız",
+          "description_not_login": "Oturum açmadınız",
+          "description_features": "Dışarıdayken evi kontrol edin ve Alexa ve Google Assistant ile entegre edin",
+          "login": {
+            "title": "Cloud girişi",
+            "introduction": "Home Assistant Cloud, evden uzaktayken örneğinize güvenli bir uzaktan bağlantı sağlar. Ayrıca diğer bulut hizmetlerine bağlanmanıza olanak tanır: Amazon Alexa ve Google Assistant.",
+            "introduction2": "Bu hizmet ortağımız tarafından yürütülmektedir ",
+            "introduction2a": " tarafından verilmektedir, Home Assistant ve Hass.io kurucuları tarafından kurulan bir şirket.",
+            "introduction3": "Home Assistant Cloud, bir aylık ücretsiz deneme sürümüne sahip bir abonelik hizmetidir. Ödeme bilgisi gerekmez.",
+            "learn_more_link": "Home Assistant Cloud hakkında daha fazla bilgi edin",
+            "dismiss": "Kapat",
+            "sign_in": "Oturum Aç",
+            "email": "E-posta",
+            "email_error_msg": "Geçersiz e-posta",
+            "password": "Parola",
+            "password_error_msg": "Parolalar en az 8 karakterdir",
+            "forgot_password": "Parolanızı mı unuttunuz?",
+            "start_trial": "1 aylık ücretsiz deneme sürümünüzü başlatın.",
+            "trial_info": "Ödeme bilgisi gerekmez",
+            "alert_password_change_required": "Giriş yapmadan önce parolanızı değiştirmeniz gerekiyor.",
+            "alert_email_confirm_necessary": "Giriş yapmadan önce e-postanızı onaylamanız gerekiyor."
+          },
+          "forgot_password": {
+            "title": "Parolayı unuttum",
+            "subtitle": "Parolayı unuttum",
+            "instructions": "E-posta adresinizi girin, size şifrenizi sıfırlamanız için bir bağlantı gönderelim.",
+            "email": "E-posta",
+            "email_error_msg": "Geçersiz e-posta",
+            "send_reset_email": "Sıfırlama e-postası gönder",
+            "check_your_email": "Parolanızı nasıl sıfırlayacağınıza ilişkin talimatlar için e-postanızı kontrol edin."
+          },
+          "register": {
+            "title": "Hesap Aç",
+            "headline": "Ücretsiz denemenizi başlatın",
+            "information": "Home Assistant Cloud ile bir aylık ücretsiz denemenizi başlatmak için bir hesap oluşturun. Ödeme bilgisi gerekmez.",
+            "information2": "Deneme, aşağıdakiler de dahil olmak üzere Home Assistant Cloud'un tüm avantajlarına erişmenizi sağlayacaktır:",
+            "feature_remote_control": "Evden Uzakta Home Assistant'ı kontrol et",
+            "feature_google_home": "Google Asistan ile entegrasyon",
+            "feature_amazon_alexa": "Amazon Alexa ile entegrasyon",
+            "feature_webhook_apps": "OwnTracks gibi webhook tabanlı uygulamalarla kolay entegrasyon",
+            "information3": "Bu hizmet ortağımız ",
+            "information3a": " tarafından verilmektedir, Home Assistant ve Hass.io kurucuları tarafından kurulan bir şirket.",
+            "information4": "Bir hesap kaydederek aşağıdaki şartlar ve koşulları kabul etmiş olursunuz.",
+            "link_terms_conditions": "Şartlar ve koşullar",
+            "link_privacy_policy": "Gizlilik Politikası",
+            "create_account": "Hesap Oluştur",
+            "email_address": "E-posta adresi",
+            "email_error_msg": "Geçersiz e-posta",
+            "password": "Parola",
+            "password_error_msg": "Parolalar en az 8 karakterdir",
+            "start_trial": "Deneme sürümünü başlat",
+            "resend_confirm_email": "Doğrulama epostasını yeniden gönder",
+            "account_created": "Hesap oluşturuldu! Hesabınızı nasıl etkinleştireceğinize ilişkin talimatlar için e-postanızı kontrol edin."
+          },
+          "account": {
+            "thank_you_note": "Home Assistant Cloud'un bir parçası olduğunuz için teşekkür ederiz. Sizin gibi insanlar sayesinde herkes için harika bir ev otomasyonu deneyimi yaşayabiliyoruz. Teşekkür ederim!",
+            "nabu_casa_account": "Nabu Casa Hesabı",
+            "connection_status": "Cloud bağlantı durumu",
+            "manage_account": "Hesabı yönet",
+            "sign_out": "oturumu Kapat",
+            "integrations": "Entegrasyonlar",
+            "integrations_introduction": "Home Assistant Cloud için entegrasyonlar, Home Assistant örneğinizi internette herkese açık bir şekilde ifşa etmek zorunda kalmadan buluttaki hizmetlere bağlanmanıza olanak tanır.",
+            "integrations_introduction2": "İçin web sitesine bakın",
+            "integrations_link_all_features": " tüm mevcut özellikler",
+            "connected": "Bağlı",
+            "connecting": "Connecting...",
+            "not_connected": "Bağlı değil",
+            "fetching_subscription": "Abonelik alınıyor…",
+            "tts": {
+              "title": "Metinden Konuşmaya",
+              "info": "Metinden Konuşmaya hizmetlerimizi kullanarak sizinle konuşmasını sağlayarak evinize kişilik katın. Bunu, {service} hizmetini kullanarak otomasyonlarda ve komut dosyalarında kullanabilirsiniz.",
+              "default_language": "Kullanılacak varsayılan dil",
+              "male": "Erkek",
+              "female": "Kadın",
+              "try": "Deneyin",
+              "dialog": {
+                "header": "Metinden Konuşmaya Deneyin",
+                "example_message": "Merhaba {name} , desteklenen herhangi bir medya oynatıcıda herhangi bir metni seslendirebilirsiniz!",
+                "target": "Hedef",
+                "target_browser": "Tarayıcı",
+                "play": "Oynat"
+              }
+            },
+            "remote": {
+              "title": "Uzaktan kulanım",
+              "connected": "Connected",
+              "not_connected": "Not Connected",
+              "reconnecting": "Reconnecting",
+              "access_is_being_prepared": "Uzaktan erişim hazırlanıyor. Hazır olduğunda sizi bilgilendireceğiz.",
+              "info": "Home Assistant Cloud, evinizden uzakta olduğunuzda örneğinize güvenli bir uzaktan bağlantı sağlar.",
+              "instance_is_available": "Örneğiniz uygun",
+              "instance_will_be_available": "Örneğiniz uygun olacak",
+              "remote_enabled": {
+                "caption": "Automatically connect",
+                "description": "Enable this option to make sure that your Home Assistant instance is always remotely accessible."
+              },
+              "link_learn_how_it_works": "Nasıl çalıştığını öğrenin",
+              "certificate_info": "Sertifika bilgileri"
+            },
+            "alexa": {
+              "title": "Alexa",
+              "info": "Home Assistant Cloud için Alexa entegrasyonu ile, tüm Home Assistant cihazlarınızı herhangi bir Alexa özellikli cihaz üzerinden kontrol edebilirsiniz.",
+              "enable_ha_skill": "Home Assistant Alexa yeteneğini etkinleştir",
+              "config_documentation": "Yapılandırma belgeleri",
+              "enable_state_reporting": "Durum Raporlamasını Etkinleştir",
+              "info_state_reporting": "Durum raporlamayı etkinleştirirseniz, Home Assistant sergilenmis varlıkların tüm durum değişikliklerini Amazon'a gönderir. Bu, Alexa uygulamasında her zaman en son durumları görmenizi ve rutin oluşturmak için durum değişikliklerini kullanmanızı sağlar.",
+              "sync_entities": "Varlıkları Amazon ile Senkronize Etme",
+              "manage_entities": "Varlıkları Yönetin",
+              "sync_entities_error": "Varlıklar senkronize edilemedi:",
+              "state_reporting_error": "Durum {enable_disable} rapor edilemiyor.",
+              "enable": "Etkinleştir",
+              "disable": "Devre dışı bırak"
+            },
+            "google": {
+              "title": "Google Assistant",
+              "info": "Home Assistant Cloud için Google Assistant entegrasyonu ile, tüm Home Assistant cihazlarınızı herhangi bir Google Asistan özellikli cihaz üzerinden kontrol edebilirsiniz.",
+              "enable_ha_skill": "Google Assistant'ta Home Assistant özelliğini etkinleştir",
+              "config_documentation": "Yapılandırma belgeleri",
+              "enable_state_reporting": "Durum Raporlamasını Etkinleştir",
+              "info_state_reporting": "Durum raporlamayı etkinleştirirseniz, Home Assistant sergilenmis varlıkların tüm durum değişikliklerini Google'e gönderir. Bu, Google Home uygulamasında her zaman en son durumları görmenizi ve rutin oluşturmak için durum değişikliklerini kullanmanızı sağlar.",
+              "security_devices": "Güvenlik Cihazları",
+              "enter_pin_info": "Güvenlik cihazlarıyla etkileşim kurmak için lütfen bir PIN girin. Güvenlik cihazları kapılar, garaj kapıları ve kilitlerdir. Google Asistan aracılığıyla bu tür cihazlarla etkileşim kurduğunuzda bu PIN kodunu söylemeniz / girmeniz istenecektir.",
+              "devices_pin": "Güvenlik Cihazları PIN'i",
+              "enter_pin_hint": "Güvenlik cihazlarını kullanmak için bir PIN girin",
+              "sync_entities": "Varlıkları Google ile Senkronize Et",
+              "sync_entities_404_message": "Varlıklarınız Google ile senkronize edilemedi, varlıklarınızı senkronize etmesi için Google'dan 'Hey Google, cihazlarımı senkronize et' isteyin.",
+              "manage_entities": "Varlıkları Yönetin",
+              "enter_pin_error": "PIN kaydedilemiyor:",
+              "not_configured_title": "Google Assistant aktive edilmedi",
+              "not_configured_text": "Google Assistant'ı kullanmadan önce, Google Home uygulamasından Home Assistant Cloud özelliğini etkinleştirmeniz gerekir."
+            },
+            "webhooks": {
+              "title": "Webhooks",
+              "info": "Bir webhook tarafından tetiklenecek şekilde yapılandırılan her şeye, örneğinizi internete maruz bırakmadan herhangi bir yerden Home Assistant'a geri göndermenize izin vermek için herkese açık bir URL verilebilir.",
+              "no_hooks_yet": "Görünüşe göre henüz webhooks'un yok. Bir tane yapılandırarak başlayın",
+              "no_hooks_yet_link_integration": "webhook tabanlı entegrasyon",
+              "no_hooks_yet2": " veya bir oluşturarak ",
+              "no_hooks_yet_link_automation": "webhook otomasyonu",
+              "link_learn_more": "Webhook destekli otomasyonlar oluşturma hakkında daha fazla bilgi edinin.",
+              "loading": "Yükleniyor ...",
+              "manage": "Yönet",
+              "disable_hook_error_msg": "Webhook devre dışı bırakılamadı:"
+            }
+          },
+          "alexa": {
+            "title": "Alexa",
+            "banner": "Configuration.yaml'de varlık filtrelerini yapılandırdığınız için bu kullanıcı arabirimi aracılığıyla hangi varlıkların kullanıma sunulacağını düzenleme devre dışı bırakıldı.",
+            "exposed_entities": "Sergilenmis varlıklar",
+            "not_exposed_entities": "Sergilenmemiş varlıklar",
+            "manage_domains": "Etki alanlarını yönetme",
+            "expose_entity": "Varlığı açığa çıkarın",
+            "dont_expose_entity": "Varlığı açığa çıkarma",
+            "follow_domain": "Etki alanını takip et",
+            "exposed": "{selected} maruz kaldı",
+            "not_exposed": "{selected} açıkta değil",
+            "expose": "Alexa'ya sergile"
+          },
+          "dialog_certificate": {
+            "certificate_information": "Sertifika bilgileri",
+            "certificate_expiration_date": "Sertifikanın son kullanma tarihi",
+            "will_be_auto_renewed": "otomatik olarak yenilenecektir",
+            "fingerprint": "Sertifika parmak izi:",
+            "close": "Kapat"
+          },
+          "google": {
+            "title": "Google Assistant",
+            "expose": "Google Assistant'a sergile",
+            "disable_2FA": "İki faktörlü kimlik doğrulamayı devre dışı bırak",
+            "banner": "Configuration.yaml'de varlık filtrelerini yapılandırdığınız için bu kullanıcı arabirimi aracılığıyla hangi varlıkların kullanıma sunulacağını düzenleme devre dışı bırakıldı.",
+            "exposed_entities": "Sergilenmis varlıklar",
+            "not_exposed_entities": "Sergilenmemiş varlıklar",
+            "manage_domains": "Etki alanlarını yönetme",
+            "expose_entity": "Varlığı açığa çıkarın",
+            "dont_expose_entity": "Varlığı açığa çıkarma",
+            "follow_domain": "Etki alanını takip et",
+            "exposed": "{selected} maruz kaldı",
+            "not_exposed": "{selected} açıkta değil",
+            "sync_to_google": "Değişiklikler Google ile senkronize ediliyor"
+          },
+          "dialog_cloudhook": {
+            "webhook_for": "{name} için Webhook",
+            "available_at": "Webhook aşağıdaki URL'de kullanılabilir:",
+            "managed_by_integration": "Bu webhook bir entegrasyon tarafından yönetilir ve devre dışı bırakılamaz.",
+            "info_disable_webhook": "Artık bu web hook kullanmak istiyorsanız,",
+            "link_disable_webhook": "devre dışı bırak",
+            "view_documentation": "Belgeleri görüntüle",
+            "close": "Kapat",
+            "confirm_disable": "Bu webhook devre dışı bırakmak istediğinizden emin misiniz?",
+            "copied_to_clipboard": "Panoya kopyalandı"
+          }
+        },
+        "devices": {
+          "add_prompt": "Bu aygıt kullanılarak henüz {name} eklenmedi. Yukarıdaki + butonuna tıklayarak bir tane ekleyebilirsiniz.",
+          "caption": "Cihazlar",
+          "description": "Yapılandırılmış aygıtları yönetme",
+          "device_info": "Cihaz bilgisi",
+          "unnamed_device": "Adsız cihaz",
+          "unknown_error": "Bilinmeyen hata",
+          "name": "Ad",
+          "update": "Güncelle",
+          "no_devices": "Cihaz yok",
+          "enabled_label": "Cihazı etkinleştir",
+          "enabled_cause": "Cihaz {cause} tarafından devre dışı bırakıldı.",
+          "disabled_by": {
+            "user": "Kullanıcı",
+            "integration": "Entegrasyon",
+            "config_entry": "Yapılandırma girişi"
+          },
+          "enabled_description": "Devre dışı bırakılan cihazlar gösterilmeyecek ve cihaza ait varlıklar devre dışı bırakılacak ve Home Assistant'a eklenmeyecek.",
+          "automation": {
+            "automations": "Otomasyonlar",
+            "no_automations": "Otomasyon yok",
+            "unknown_automation": "Bilinmeyen otomasyon",
+            "create": "Cihazla otomasyon oluşturun",
+            "create_disable": "Devre dışı bırakılan cihazla otomasyon oluşturulamaz",
+            "triggers": {
+              "caption": "Aşağıdaki durumlarda bir şeyler yap...",
+              "no_triggers": "Tetikleyici yok",
+              "unknown_trigger": "Bilinmeyen tetikleyici"
+            },
+            "conditions": {
+              "caption": "Sadece bir şey yapmak eğer ...",
+              "no_conditions": "Koşul yok",
+              "unknown_condition": "Bilinmeyen durum"
+            },
+            "actions": {
+              "caption": "Bir şey tetiklendiğinde...",
+              "no_actions": "Eylem yok",
+              "unknown_action": "Bilinmeyen eylem"
+            },
+            "no_device_automations": "Bu cihaz için kullanılabilir otomasyon yok."
+          },
+          "script": {
+            "scripts": "Komut dosyaları",
+            "no_scripts": "Komut dosyası yok",
+            "create": "Aygıtla sahne oluşturma",
+            "create_disable": "Devre dışı bırakılmış cihazla komut dosyası oluşturulamaz"
+          },
+          "scene": {
+            "scenes": "Sahneler",
+            "no_scenes": "Sahne yok",
+            "create": "Aygıtla sahne oluşturma",
+            "create_disable": "Devre dışı bırakılmış aygıtla sahne oluşturulamaz"
+          },
+          "cant_edit": "Yalnızca kullanıcı arayüzünde oluşturulan öğeleri düzenleyebilirsiniz.",
+          "device_not_found": "Cihaz bulunamadı.",
+          "entities": {
+            "entities": "Varlıkları",
+            "add_entities_lovelace": "Tüm cihaz varlıklarını Lovelace kullanıcı arayüzüne ekle",
+            "none": "Bu cihazın varlığı yok",
+            "hide_disabled": "Devre dışı olanları gizle",
+            "disabled_entities": "+{count} {count, plural,\n  one {engelli varlık}\n  other {engelli varlıklar}\n}"
+          },
+          "scripts": "Komut dosyaları",
+          "scenes": "Sahneler",
+          "confirm_rename_entity_ids": "Varlıklarınızın varlık kimliklerini de yeniden adlandırmak istiyor musunuz?",
+          "confirm_rename_entity_ids_warning": "Bu, şu anda bu varlıkları kullanan herhangi bir yapılandırmayı (otomasyonlar, komut dosyaları, sahneler, kontrol panelleri gibi) değiştirmeyecektir! Yeni varlık kimliklerini kullanmak için bunları kendiniz güncellemeniz gerekecek!",
+          "confirm_disable_config_entry": "Yapılandırma girişi {entry_name} için başka cihaz yok, bunun yerine yapılandırma girişini devre dışı bırakmak ister misiniz?",
+          "update_device_error": "Updating the device failed",
+          "disabled": "Devre dışı",
+          "data_table": {
+            "device": "Cihaz",
+            "manufacturer": "Üretici",
+            "model": "Model",
+            "area": "Alan",
+            "integration": "Entegrasyon",
+            "battery": "Pil",
+            "no_devices": "Cihaz yok"
+          },
+          "delete": "Sil",
+          "confirm_delete": "Bu cihazı silmek istediğinizden emin misiniz?",
+          "picker": {
+            "search": "Cihazları ara",
+            "filter": {
+              "filter": "Filtre",
+              "show_disabled": "Devre dışı bırakılan aygıtları göster",
+              "hidden_devices": "{number} gizli {number, plural,\n  one {device}\n  other {devices}\n}",
+              "show_all": "Tümünü göster"
+            }
+          }
+        },
+        "entities": {
+          "caption": "Varlıklar",
+          "description": "Bilinen tüm varlıklara genel bakış.",
+          "picker": {
+            "header": "Varlıklar",
+            "introduction": "Home Assistant, benzersiz bir şekilde tanımlanabilen gördüğü her varlığın kaydını tutar. Bu varlıkların her biri, sadece bu varlık için ayrılmış olacak bir varlık kimliğine sahip olacaktır.",
+            "introduction2": "Adı geçersiz kılmak, varlık kimliğini değiştirmek veya girişi Ev Yardımcısı'ndan kaldırmak için varlık kayıt defterini kullanın.",
+            "search": "Varlıkları ara",
+            "filter": {
+              "filter": "filtre",
+              "show_disabled": "Devre dışı bırakılan varlıkları göster",
+              "show_unavailable": "Kullanılamayan varlıkları göster",
+              "show_readonly": "Salt okunur varlıkları göster",
+              "hidden_entities": "{number} gizli {number, plural,\n  one {varlık}\n  other {varlıklar}\n}",
+              "show_all": "Tümünü göster"
+            },
+            "status": {
+              "restored": "Eski haline getirildi",
+              "unavailable": "Kullanım dışı",
+              "disabled": "Devre dışı",
+              "readonly": "Salt okunur",
+              "ok": "Tamam"
+            },
+            "headers": {
+              "name": "Ad",
+              "entity_id": "Varlık kimliği",
+              "integration": "Entegrasyon",
+              "area": "Alan",
+              "status": "durum"
+            },
+            "selected": "{number} seçildi",
+            "enable_selected": {
+              "button": "Seçilenleri etkinleştir",
+              "confirm_title": "etkinleştirmek istiyor musunuz {number} {number, plural,\n  one {varlık}\n  other {varlıklar}\n}?",
+              "confirm_text": "Bu, artık devre dışı bırakılırsa, onları Home Assistant 'nda yeniden kullanılabilir hale getirecektir."
+            },
+            "disable_selected": {
+              "button": "Seçilenleri devre dışı bırak",
+              "confirm_title": "devre dışı bırakmak istiyor musunuz {number} {number, plural,\n  one {varlık}\n  other {varlıklar}\n}?",
+              "confirm_text": "Devre dışı bırakılan varlıklar Home Assistant'a eklenmeyecek."
+            },
+            "remove_selected": {
+              "button": "Seçilenleri kaldır",
+              "confirm_title": "Kaldırmak istiyormusunuz {number} {number, plural,\n  one {varlık}\n  other {varlıklar}\n}?",
+              "confirm_partly_title": "Sadece {number} {number, plural,\n  one {seçilen varlık}\n  other {seçilen varlıklar}\n} kaldırılabilir.",
+              "confirm_text": "Bu varlıkları içeriyorsa, bunları Lovelace yapılandırmanız ve otomasyonlarınızdan kaldırmalısınız.",
+              "confirm_partly_text": "Yalnızca seçili {selected} varlıkları {removable} kaldırabilirsiniz. Varlıklar yalnızca entegrasyon özelliklerini sağlamadığında kaldırılabilir. Bazen, kaldırılan bir entegrasyondaki varlıkları kaldırabilmeniz için önce Home Assistant'ı yeniden başlatmanız gerekir. Çıkarılabilir varlıkları kaldırmak istediğinizden emin misiniz?"
+            }
+          }
+        },
+        "person": {
+          "caption": "Kişiler",
+          "description": "Home Assistant'ın izlediği kişileri yönetin.",
+          "introduction": "Burada Home Assistant ile ilgili her kişiyi tanımlayabilirsiniz.",
+          "note_about_persons_configured_in_yaml": "Not: configuration.yaml aracılığıyla yapılandırılan kişiler UI aracılığıyla düzenlenemez.",
+          "learn_more": "İnsanlar hakkında daha fazla bilgi edinin",
+          "no_persons_created_yet": "Henüz herhangi bir kişi oluşturmadığın gibi görünüyor.",
+          "create_person": "Kişi Oluştur",
+          "add_person": "Kişi ekle",
+          "confirm_delete": "Bu kişiyi silmek istediğinizden emin misiniz?",
+          "confirm_delete2": "Bu kişiye ait tüm cihazlar atanmamış olur.",
+          "person_not_found_title": "Kişi Bulunamadı",
+          "person_not_found": "Düzenlemeye çalıştığınız kişiyi bulamadık.",
+          "detail": {
+            "new_person": "Yeni kişi",
+            "name": "Ad",
+            "name_error_msg": "Isim gereklidir",
+            "linked_user": "Bağlantılı Kullanıcı",
+            "device_tracker_intro": "Bu kişiye ait cihazları seçin.",
+            "no_device_tracker_available_intro": "Bir kişinin varlığını gösteren aygıtlarınız olduğunda, bunları buradaki bir kişiye atayabilirsiniz. Entegrasyonlar sayfasından bir varlık algılama entegrasyonu ekleyerek ilk cihazınızı ekleyebilirsiniz.",
+            "link_presence_detection_integrations": "Varlık Tespit Entegrasyonları",
+            "link_integrations_page": "Entegrasyon sayfası",
+            "device_tracker_picked": "Cihazı Takip Et",
+            "device_tracker_pick": "İzlenecek cihazı seçin",
+            "delete": "Sil",
+            "create": "Oluştur",
+            "update": "Güncelle",
+            "confirm_delete_user": "{name} için kullanıcı hesabını silmek istediğinizden emin misiniz? Kullanıcıyı izlemeye devam edebilirsiniz, ancak kişi artık oturum açamaz.",
+            "admin": "Yönetici",
+            "allow_login": "Kişinin oturum açmasına izin ver"
+          }
+        },
+        "zone": {
+          "caption": "Bölgeler",
+          "description": "Kişileri izlemek istediğiniz bölgeleri yönetin.",
+          "introduction": "Bölgeler, dünyadaki belirli bölgeleri belirtmenize izin verir. Bir kişi bir bölge içindeyse, durumunu bölgenin isminden alır. Bölgeler, otomasyon kurulumlarında tetikleyici veya koşul olarak da kullanılabilir.",
+          "no_zones_created_yet": "Görünüşe göre henüz herhangi bir bölge oluşturmadınız.",
+          "create_zone": "Bölge Oluştur",
+          "add_zone": "Bölge Ekle",
+          "confirm_delete": "Bu bölgeyi silmek istediğinizden emin misiniz?",
+          "configured_in_yaml": "Configuration.yaml aracılığıyla yapılandırılan bölgeler kullanıcı arayüzü aracılığıyla düzenlenemez.",
+          "edit_home_zone": "Ev bölgenizin yarıçapı henüz arayüzden düzenlenemedi. Ev bölgeniz için işaretçiyi haritada sürükleyin.",
+          "edit_home_zone_narrow": "Ana bölgenin yarıçapı henüz ön uçtan düzenlenemez. Konum, genel konfigürasyondan değiştirilebilir.",
+          "go_to_core_config": "Genel yapılandırmaya gidilsin mi?",
+          "home_zone_core_config": "Ana bölgenizin konumu genel yapılandırma sayfasından düzenlenebilir. Ana bölgenin yarıçapı henüz arayüzden düzenlenemez. Genel yapılandırmaya gitmek ister misiniz?",
+          "detail": {
+            "new_zone": "Yeni Bölge",
+            "name": "Ad",
+            "icon": "Simge",
+            "icon_error_msg": "Simge, '' prefix:iconname' '' biçiminde olmalıdır, örneğin: '' mdi:home' ''",
+            "radius": "Yarıçap",
+            "latitude": "Enlem",
+            "longitude": "Boylam",
+            "passive": "Pasif",
+            "passive_note": "Pasif bölgeler arayüzde gizlenir ve aygıt izleyicileri için konum olarak kullanılmaz. Bu, sadece otomasyon için kullanmak istiyorsanız yararlıdır.",
+            "required_error_msg": "Bu alan gereklidir",
+            "delete": "Sil",
+            "create": "Oluştur",
+            "update": "Güncelle"
+          }
+        },
+        "integrations": {
+          "caption": "Entegrasyonlar",
+          "description": "Bağlı aygıtları ve hizmetleri yönetin",
+          "integration": "Entegrasyon",
+          "discovered": "Bulundu",
+          "attention": "Bu alan gereklidir",
+          "configured": "Yapılandırıldı",
+          "new": "Yeni bir entegrasyon kur",
+          "confirm_new": "{integration} kurmak istiyor musunuz?",
+          "add_integration": "Entegrasyon ekle",
+          "no_integrations": "Henüz yapılandırılmış herhangi bir entegrasyonunuz yok gibi görünüyor. İlk entegrasyonunuzu eklemek için aşağıdaki düğmeyi tıklayın!",
+          "note_about_integrations": "Tüm entegrasyonlar henüz kullanıcı arayüzü üzerinden yapılandırılmiyor",
+          "note_about_website_reference": "Daha fazlası için",
+          "home_assistant_website": "Home Assistant web sitesi",
+          "configure": "Yapılandır",
+          "reconfigure": "Yeniden Yapılandır",
+          "none": "Henüz hiçbir şey yapılandırılmamış",
+          "none_found": "Hiçbir entegrasyon bulunamadı",
+          "none_found_detail": "Arama ölçütlerinizi ayarlayın.",
+          "integration_not_found": "Entegrasyon bulunamadı.",
+          "details": "Entegrasyon detayları",
+          "rename_dialog": "Bu yapılandırma girişinin adını düzenleyin",
+          "rename_input_label": "Varlık adı",
+          "search": "Entegrasyon ara",
+          "disable": {
+            "show_disabled": "Devre dışı bırakılan entegrasyonları göster",
+            "disabled_integrations": "{number} devre dışı bırakıldı",
+            "show": "Göster",
+            "hide_disabled": "Devre dışı bırakılan entegrasyonları gizle"
+          },
+          "ignore": {
+            "ignore": "Yoksay",
+            "confirm_ignore_title": "{name} keşfini yoksay?",
+            "confirm_ignore": "Bu entegrasyonu ayarlamak istemediğinizden emin misiniz? Sağ üstteki taşma menüsünde 'Yok sayılan entegrasyonları göster'i tıklayarak bunu geri alabilirsiniz.",
+            "show_ignored": "Yok sayılan entegrasyonları göster",
+            "ignored": "Yok Sayılan",
+            "confirm_delete_ignore_title": "{name} yoksaymayı bırak?",
+            "confirm_delete_ignore": "Bu, entegrasyonun keşfedildiğinde keşfedilen entegrasyonlarınızda tekrar görünmesini sağlayacaktır. Bu, yeniden başlatma gerektirebilir veya biraz zaman alabilir.",
+            "stop_ignore": "Yoksaymayı bırak",
+            "hide_ignored": "Yok sayılan entegrasyonları gizle"
+          },
+          "config_entry": {
+            "devices": "{count} {count, plural,\n  one {cihaz}\n  other {cihazlar}\n}",
+            "entities": "{count} {count, plural,\n  one {varlık}\n  other {varlıklar}\n}",
+            "services": "{count} {count, plural,\n  one {hizmet}\n  other {hizmetler}\n}",
+            "rename": "Yeniden adlandır",
+            "configure": "Configure",
+            "system_options": "Sistem seçenekleri",
+            "documentation": "Dökümanlar",
+            "delete": "Sil",
+            "delete_confirm": "Bu entegrasyonu silmek istediğinizden emin misiniz?",
+            "reload": "Tekrar yükle",
+            "restart_confirm": "Bu entegrasyonu kaldırmaya devam etmek için Home Assistant'ı yeniden başlatın",
+            "reload_confirm": "Entegrasyon yeniden yüklendi",
+            "reload_restart_confirm": "Bu entegrasyonu yeniden yüklemeyi bitirmek için Home Assistant'ı yeniden başlatın",
+            "disable_restart_confirm": "Bu entegrasyonu devre dışı bırakmayı tamamlamak için Home Assistant'ı yeniden başlatın",
+            "enable_restart_confirm": "Bu entegrasyonu etkinleştirmeyi tamamlamak için Home Assistant'ı yeniden başlatın",
+            "disable_error": "Enabling or disabling of the integration failed",
+            "manuf": "üretici: {manufacturer}",
+            "hub": "Şununla bağlı:",
+            "firmware": "Aygıt yazılımı: {version}",
+            "unnamed_entry": "Adsız giriş",
+            "device_unavailable": "Cihaz kullanılamıyor",
+            "entity_unavailable": "Varlık kullanılamıyor",
+            "area": "{area} içinde",
+            "no_area": "Alan Yok",
+            "not_loaded": "Yüklenmedi, {logs_link} öğesini denetleyin",
+            "check_the_logs": "Günlükleri kontrol edin",
+            "disable": {
+              "disabled": "Devre dışı",
+              "disabled_cause": "{cause} tarafından devre dışı bırakıldı",
+              "disabled_by": {
+                "user": "kullanıcı",
+                "integration": "entegrasyon",
+                "device": "cihaz"
+              },
+              "disable_confirm": "Bu yapılandırma girişini devre dışı bırakmak istediğinizden emin misiniz? Cihazları ve varlıkları devre dışı bırakılacak."
+            },
+            "provided_by_custom_integration": "Provided by a custom integration",
+            "depends_on_cloud": "Depends on the cloud",
+            "disabled_polling": "Automatic polling for updated data disabled",
+            "state": {
+              "loaded": "Yüklendi",
+              "setup_error": "Kurulum başarısız oldu",
+              "migration_error": "Taşıma hatası",
+              "setup_retry": "Retrying setup",
+              "not_loaded": "Yüklenmedi",
+              "failed_unload": "Kaldırılamadı"
+            },
+            "logs": "Günlükler",
+            "options": "Seçenekler"
+          },
+          "config_flow": {
+            "aborted": "İptal edildi",
+            "close": "Kapat",
+            "dismiss": "İletişim kutusunu kapat",
+            "finish": "Bitir",
+            "submit": "Gönder",
+            "next": "Next",
+            "not_all_required_fields": "Gerekli alanların tümü doldurulmamış.",
+            "error_saving_area": "Alan kayıt etme hatası: {error}",
+            "created_config": "{name} için ayar oluşturuldu.",
+            "external_step": {
+              "description": "Bu adım, tamamlanması için harici bir web sitesini ziyaret etmenizi gerektirir.",
+              "open_site": "Web sitesini aç"
+            },
+            "pick_flow_step": {
+              "title": "Bunları keşfettik, kurmak ister misin?",
+              "new_flow": "Hayır, {integration} öğesinin başka bir örneğini ayarlama"
+            },
+            "loading": {
+              "loading_flow": "Please wait while {integration} is being setup",
+              "loading_step": "Loading next step for {integration}",
+              "fallback_title": "the integration"
+            },
+            "error": "Hata",
+            "could_not_load": "Yapılandırma akışı yüklenemedi",
+            "not_loaded": "Bu entegrasyon yüklenemedi, Home Assistant'ı yeniden başlatmayı deneyin.",
+            "loading_first_time": "Lütfen entegrasyonun yüklenmesini bekleyin"
+          }
+        },
+        "users": {
+          "caption": "Kullanıcılar",
+          "description": "Home Assistant kullanıcı hesaplarını yönetin",
+          "users_privileges_note": "Kullanıcı grubu özelliği devam eden bir çalışmadır. Kullanıcı örneği Kullanıcı Arabirimi üzerinden yönetemez. Yöneticilere erişimi doğru şekilde sınırlandırdığından emin olmak için tüm yönetim API uç noktalarını denetlemeye devam ediyoruz.",
+          "picker": {
+            "headers": {
+              "name": "Ekran adı",
+              "username": "Kullanıcı Adı",
+              "group": "Grup",
+              "system": "Sistem tarafından oluşturuldu",
+              "is_active": "Etkin",
+              "is_owner": "Sahibi"
+            },
+            "add_user": "Kullanıcı Ekle"
+          },
+          "editor": {
+            "caption": "Kullanıcıyı görüntüle",
+            "name": "Ekran adı",
+            "username": "Kullanıcı Adı",
+            "change_password": "Parolayı değiştir",
+            "new_password": "Yeni Parola",
+            "password_changed": "Parola başarıyla değiştirildi",
+            "activate_user": "Kullanıcıyı etkinleştir",
+            "deactivate_user": "Kullanıcıyı devre dışı bırak",
+            "delete_user": "Kullanıcıyı sil",
+            "update_user": "Güncelle",
+            "id": "İD",
+            "owner": "Sahibi",
+            "admin": "Yönetici",
+            "group": "grup",
+            "active": "Aktif",
+            "system_generated": "Sistem tarafından oluşturuldu",
+            "system_generated_users_not_removable": "Sistem tarafından oluşturulan kullanıcılar kaldırılamıyor.",
+            "system_generated_users_not_editable": "Sistem tarafından oluşturulan kullanıcılar güncellenemiyor.",
+            "unnamed_user": "Adsız Kullanıcı",
+            "confirm_user_deletion": "{name} silmek istediğinizden emin misiniz?",
+            "active_tooltip": "Kullanıcının oturum açıp açamayacağını kontrol eder"
+          },
+          "add_user": {
+            "caption": "Kullanıcı Ekle",
+            "password": "Parola",
+            "password_confirm": "Parolayı Onayla",
+            "password_not_match": "Parolalar eşleşmiyor",
+            "create": "Oluştur"
+          }
+        },
+        "mqtt": {
+          "title": "MQTT",
+          "description_publish": "Bir paket yayınla",
+          "topic": "konu",
+          "payload": "Yük (şablona izin verilir)",
+          "publish": "Yayınla",
+          "description_listen": "Bir konuyu dinle",
+          "listening_to": "Dinliyorum",
+          "subscribe_to": "Abone olunacak konu",
+          "start_listening": "Dinlemeye başla",
+          "stop_listening": "Dinlemeyi bırak",
+          "message_received": "{topic} konulu mesaj {id}, {time} tarihinde alındı.",
+          "button": "Yapılandır"
+        },
+        "ozw": {
+          "common": {
+            "zwave": "Z-Wave",
+            "node_id": "Düğüm Kimliği",
+            "ozw_instance": "OpenZWave Örneği",
+            "instance": "Örnek",
+            "controller": "Denetleyici",
+            "network": "Ağ",
+            "wakeup_instructions": "Uyandırma Talimatları",
+            "query_stage": "Sorgu Aşaması"
+          },
+          "device_info": {
+            "zwave_info": "Z-Wave Bilgisi",
+            "stage": "Sahne",
+            "node_failed": "Düğüm Başarısız"
+          },
+          "node_query_stages": {
+            "protocolinfo": "Bu düğümün temel Z-Dalga özelliklerini denetleyiciden alma",
+            "probe": "Düğümün uyanık/canlı olup olmadığını kontrol etme",
+            "wakeup": "Uyandırma kuyrukları ve iletileri için destek ayarlama",
+            "manufacturerspecific1": "Düğümden üretici ve ürün kimlik kodları alma",
+            "nodeinfo": "Düğümden desteklenen komut sınıfları alma",
+            "nodeplusinfo": "Düğümden Z-Wave + bilgilerinin alınması",
+            "manufacturerspecific2": "Düğümden ek üretici ve ürün kimlik kodları alma",
+            "versions": "Aygıt yazılımı ve komut sınıfı sürümleri hakkında bilgi edinme",
+            "instances": "Aygıtın hangi örnekleri veya kanalları desteklediği hakkında ayrıntılı bilgi edinme",
+            "static": "Cihazdan statik değerler elde etme",
+            "cacheload": "OpenZWave önbellek dosyasından bilgi yükleme. Pil düğümleri, düğüm uyanana kadar bu aşamada kalır.",
+            "associations": "Dernek gruplarını ve üyelikleri yenileme",
+            "neighbors": "Düğümün komşularının listesini alma",
+            "session": "Düğümden seyrek değişen değerler elde etme",
+            "dynamic": "Düğümden sık sık değişen değerler elde etme",
+            "configuration": "Düğümden yapılandırma değerleri alma",
+            "complete": "Mülakat süreci tamamlandı"
+          },
+          "refresh_node": {
+            "button": "Düğümü Yenile",
+            "title": "Düğüm Bilgilerini Yenile",
+            "complete": "Düğüm Yenileme Tamamlandı",
+            "description": "Bu, OpenZWave'e bir düğümü yeniden görüşmesini ve düğümün komut sınıflarını, yeteneklerini ve değerlerini güncelleştirmesini söyler.",
+            "battery_note": "Düğüm pille çalışıyorsa, devam etmeden önce onu uyandırdığından emin olun",
+            "wakeup_header": "Için Uyandırma Talimatları",
+            "wakeup_instructions_source": "Uyandırma yönergeleri OpenZWave topluluk aygıt veritabanından temin edilir.",
+            "start_refresh_button": "Yenile'yi Başlat",
+            "refreshing_description": "Düğüm bilgileri yenileniyor ...",
+            "node_status": "Düğüm Durumu",
+            "step": "Adım"
+          },
+          "network_status": {
+            "online": "Çevrimiçi",
+            "offline": "Çevrimdışı",
+            "starting": "Başlatılıyor",
+            "unknown": "Bilinmeyen",
+            "details": {
+              "driverallnodesqueried": "Tüm düğümler sorgulandı",
+              "driverallnodesqueriedsomedead": "Tüm düğümler sorgulandı. Bazı düğümler ölü bulundu",
+              "driverawakenodesqueries": "Tüm uyanık düğümler sorgulandı",
+              "driverremoved": "Sürücü kaldırıldı",
+              "driverreset": "Sürücü sıfırlandı",
+              "driverfailed": "Z-Wave denetleyicisine bağlanılamadı",
+              "driverready": "Z-Wave denetleyicisi başlatılıyor",
+              "ready": "Bağlanmaya hazır",
+              "stopped": "OpenZWave durduruldu",
+              "started": "MQTT'ye bağlandı",
+              "starting": "MQTT'ye bağlanıyor",
+              "offline": "OZWDaemon çevrimdışı"
+            }
+          },
+          "navigation": {
+            "select_instance": "Örnek Seçin",
+            "network": "Ağ",
+            "nodes": "Düğümler",
+            "node": { "dashboard": "Gösterge Paneli", "config": "Yapılandırma" }
+          },
+          "select_instance": {
+            "header": "OpenZWave Örneği Seçin",
+            "introduction": "Çalışan birden fazla OpenZWave örneğiniz var. Hangi örneği yönetmek istersiniz?",
+            "none_found": "OpenZWave örneği bulamadık. Bunun yanlış olduğuna inanıyorsanız, OpenZWave ve MQTT kurulumlarınızı kontrol edin ve Home Assistant'ın MQTT aracınız ile iletişim kurabildiğinden emin olun."
+          },
+          "network": {
+            "header": "Ağ yönetimi",
+            "introduction": "Ağ genelindeki işlevleri yönetin.",
+            "node_count": "{count} düğümleri"
+          },
+          "nodes_table": {
+            "id": "İD",
+            "manufacturer": "Üretici",
+            "model": "Model",
+            "query_stage": "Sorgu Aşaması",
+            "zwave_plus": "Z-Wave Plus",
+            "failed": "Başarısız oldu"
+          },
+          "node": {
+            "button": "Düğüm Ayrıntıları",
+            "not_found": "Düğüm bulunamadı"
+          },
+          "node_config": {
+            "header": "Düğüm Yapılandırması",
+            "introduction": "Bir Z-Wave düğümü için farklı yapılandırma parametrelerini yönetin.",
+            "help_source": "Yapılandırma parametresi açıklamaları ve yardım metni OpenZWave projesi tarafından sağlanır.",
+            "wakeup_help": "Pille çalışan nodlar, yapılandırmalarını değiştirmek için uyanık olmalıdır. Nodlar uyanık değilse OpenZWave, bir sonraki uyanışında düğümün yapılandırmasını güncellemeye çalışacaktır, bu birkaç saat (veya gün) sonra olabilir. Cihazınızı uyandırmak için şu adımları izleyin:"
+          },
+          "node_metadata": { "product_manual": "Ürün kılavuzu" },
+          "services": {
+            "add_node": "Düğüm Ekle",
+            "remove_node": "Düğümü Kaldır",
+            "cancel_command": "Komutu İptal Et"
+          },
+          "button": "Yapılandır"
+        },
+        "zha": {
+          "common": {
+            "clusters": "Kümeler",
+            "manufacturer_code_override": "Üretici Kodu Geçersiz Kılma",
+            "value": "Değer"
+          },
+          "configuration_page": {
+            "shortcuts_title": "Shortcuts",
+            "update_button": "Update Configuration"
+          },
+          "add_device_page": {
+            "spinner": "ZHA Zigbee cihazları aranıyor ...",
+            "pairing_mode": "Cihazlarınızın eşleme modunda olduğundan emin olun. Bunun nasıl yapılacağı konusunda cihazınızın talimatlarını kontrol edin.",
+            "discovered_text": "Cihazlar keşfedildikten sonra burada görünecektir.",
+            "no_devices_found": "Hiçbir cihaz bulunamadı, eşleştirme modunda olduklarından emin olun ve çalışırken çalışırken onları uyanık tutun.",
+            "search_again": "Yeniden Ara"
+          },
+          "add_device": "Cihaz Ekle",
+          "clusters": {
+            "header": "Kümeler",
+            "help_cluster_dropdown": "Öznitelikleri ve komutları görüntülemek için bir küme seçin.",
+            "introduction": "Kümeler, Zigbee işlevselliğinin yapı taşlarıdır. İşlevselliği mantıksal birimlere ayırırlar. Özniteliklerden ve komutlardan oluşan istemci ve sunucu türleri vardır."
+          },
+          "cluster_attributes": {
+            "header": "Küme Öznitelikleri",
+            "introduction": "Küme özniteliklerini görüntüleyin ve düzenleyin.",
+            "attributes_of_cluster": "Seçili kümenin öznitelikleri",
+            "get_zigbee_attribute": "Zigbee Özelliğini al",
+            "set_zigbee_attribute": "Zigbee Özniteliğini Ayarla",
+            "help_attribute_dropdown": "Değerini görüntülemek veya ayarlamak için bir öznitelik seçin.",
+            "help_get_zigbee_attribute": "Seçili öznitelik için değer alın.",
+            "help_set_zigbee_attribute": "Belirtilen varlık üzerinde belirtilen küme için öznitelik değerini ayarlayın."
+          },
+          "cluster_commands": {
+            "header": "Küme Komutları",
+            "introduction": "Küme komutlarını görüntüleyin ve yayınlayın.",
+            "commands_of_cluster": "Seçili kümenin komutları",
+            "issue_zigbee_command": "Sorunlu Zigbee Komutu",
+            "help_command_dropdown": "Etkileşim için bir komut seçin."
+          },
+          "device_pairing_card": {
+            "PAIRED": "Cihaz Bulundu",
+            "PAIRED_status_text": "Görüşme Başlatılıyor",
+            "INTERVIEW_COMPLETE": "Görüşme Tamamlandı",
+            "INTERVIEW_COMPLETE_status_text": "Yapılandırılıyor",
+            "CONFIGURED": "Yapılandırma Tamamlandı",
+            "CONFIGURED_status_text": "Başlatılıyor",
+            "INITIALIZED": "Başlatma Tamamlandı",
+            "INITIALIZED_status_text": "Cihaz kullanıma hazır"
+          },
+          "network": { "caption": "Ağ" },
+          "groups": {
+            "add_group": "Grup Ekle",
+            "caption": "Gruplar",
+            "groups": "Gruplar",
+            "group_id": "Grup kimliği",
+            "members": "Üyeler",
+            "group_info": "Grup Bilgisi",
+            "group_details": "İşte seçilen Zigbee grubu için tüm detaylar.",
+            "group_not_found": "Grup bulunamadı!",
+            "add_members": "Üye ekle",
+            "remove_members": "Üyeleri Kaldır",
+            "removing_members": "Üyeleri Kaldırma",
+            "create_group_details": "Yeni bir zigbee grubu oluşturmak için gerekli ayrıntıları girin",
+            "group_name_placeholder": "Grup Adı",
+            "create_group": "Zigbee Ev Otomasyonu - Grup Oluştur",
+            "create": "Grup oluştur",
+            "creating_group": "Grup Oluşturma"
+          },
+          "visualization": {
+            "header": "Ağ Görselleştirme",
+            "caption": "Görselleştirme",
+            "highlight_label": "Cihazları Vurgula",
+            "zoom_label": "Cihaza Yakınlaştır",
+            "auto_zoom": "Otomatik Yakınlaştırma",
+            "refresh_topology": "Topolojiyi Yenile"
+          },
+          "group_binding": {
+            "header": "Grup Bağlama",
+            "introduction": "Grupları bağlama ve çözme.",
+            "group_picker_label": "Bağlanabilir Gruplar",
+            "group_picker_help": "Bağlama komutu vermek için bir grup seçin.",
+            "cluster_selection_help": "Seçili gruba bağlaşacak kümeleri seçin.",
+            "bind_button_label": "Grupla",
+            "unbind_button_label": "Grubu Çöz",
+            "bind_button_help": "Seçilen grubu seçilen aygıt kümelerine bağlayın.",
+            "unbind_button_help": "Seçilen grubu seçilen aygıt kümelerinden ayırın."
+          },
+          "button": "Yapılandır"
+        },
+        "zwave": {
+          "description": "Z-Wave ağınızı yönetin",
+          "learn_more": "Z-Wave hakkında daha fazla bilgi edinin",
+          "common": {
+            "value": "Değer",
+            "instance": "Örnek",
+            "index": "Indeks",
+            "unknown": "Bilinmeyen",
+            "wakeup_interval": "Uyanma Aralığı"
+          },
+          "migration": {
+            "ozw": {
+              "header": "OpenZWave'e geçiş yapın",
+              "introduction": "Bu sihirbaz, eski Z-Wave entegrasyonundan şu anda beta sürümünde olan OpenZWave entegrasyonuna geçmenize yardımcı olacaktır."
+            }
+          },
+          "network_management": {
+            "header": "Z-Wave Ağ Yönetimi",
+            "introduction": "Z-Dalga ağını etkileyen komutları çalıştırın. Çoğu komutun başarılı olup olmadığı hakkında geri bildirim almazsınız, ancak öğrenmek için OZW Günlüğü'ne göz atabilirsiniz."
+          },
+          "node_management": {
+            "header": "Z-Wave Düğümü Yönetimi",
+            "introduction": "Tek bir düğümü etkileyen Z-Wave komutlarını çalıştırın. Kullanılabilir komutların listesini görmek için bir düğüm seçin.",
+            "nodes": "Düğümler",
+            "nodes_hint": "Düğüm başına seçenekleri görüntülemek için düğümü seçin",
+            "entities": "Bu düğümün varlıkları",
+            "entity_info": "Varlık Bilgileri",
+            "exclude_entity": "Bu varlığı Home Assistant'dan hariç tut",
+            "pooling_intensity": "Yoklama yoğunluğu",
+            "node_protection": "Düğüm koruması",
+            "protection": "Koruma",
+            "set_protection": "Korumayı Ayarla",
+            "node_group_associations": "Düğüm grubu ilişkileri",
+            "group": "Grup",
+            "node_to_control": "Kontrol edilecek düğüm",
+            "nodes_in_group": "Bu gruptaki diğer Düğümler:",
+            "max_associations": "Maksimum ilişkiler:",
+            "add_to_group": "Gruba ekle",
+            "remove_from_group": "Gruptan Kaldır",
+            "remove_broadcast": "Yayını Kaldır"
+          },
+          "ozw_log": {
+            "header": "OZW Günlüğü",
+            "introduction": "Günlüğü görüntüleyin. 0 minimum (yükler tüm günlük) ve 1000 maksimum. Yük statik bir günlük gösterir ve kuyruk günlüğün son belirtilen satır sayısı ile otomatik güncelleştirme gösterir.",
+            "last_log_lines": "Son günlük satırı sayısı",
+            "load": "Yük",
+            "tail": "Kuyruk"
+          },
+          "network_status": {
+            "network_stopped": "Z-Wave Ağı Durduruldu",
+            "network_starting": "Z-Wave Ağı başlatılıyor ...",
+            "network_starting_note": "Bu, ağınızın boyutuna bağlı olarak biraz zaman alabilir.",
+            "network_started": "Z-Wave Ağı Başlatıldı",
+            "network_started_note_some_queried": "Uyanık düğümler sorgulandı. Uyuyan düğümler uyandıklarında sorgulanacaktır.",
+            "network_started_note_all_queried": "Tüm düğümler sorgulandı."
+          },
+          "node_config": {
+            "header": "Düğüm Yapılandırma Seçenekleri",
+            "seconds": "Saniye",
+            "set_wakeup": "Uyanma Aralığını Ayarlama",
+            "config_parameter": "Yapılandırma Parametresi",
+            "config_value": "Yapılandırma Değeri",
+            "true": "Doğru",
+            "false": "Yanlış",
+            "set_config_parameter": "Yapılandırma parametresini belirle"
+          },
+          "values": { "header": "Düğüm Değerleri" },
+          "services": {
+            "start_network": "Ağı Başlat",
+            "stop_network": "Ağı Durdur",
+            "heal_network": "Ağı İyileştir",
+            "test_network": "Test Ağı",
+            "soft_reset": "Yumuşak Sıfırlama",
+            "save_config": "Yapılandırmayı Kaydet",
+            "add_node_secure": "Güvenli Düğüm Ekle",
+            "add_node": "Düğüm Ekle",
+            "remove_node": "Düğümü Kaldır",
+            "cancel_command": "Komutu İptal Et",
+            "refresh_node": "Düğümü Yenile",
+            "remove_failed_node": "Başarısız Düğümü Kaldır",
+            "replace_failed_node": "Başarısız Düğümü Değiştir",
+            "print_node": "Düğümü Yazdır",
+            "heal_node": "Düğümü İyileştir",
+            "test_node": "Test Düğümü",
+            "node_info": "Düğüm Bilgileri",
+            "refresh_entity": "Varlığı Yenile"
+          },
+          "button": "Yapılandır"
+        },
+        "ais_dom_config": {
+          "header": "Configure AIS Home Gateway",
+          "introduction": "Here it is possible to configure your AIS Home Gateway. Not everything is possible to configure from the UI yet, but we're working on it."
+        },
+        "ais_dom": {
+          "caption": " AIS Home Gateway Settings",
+          "description": "Manage your IoT and Audio gateway"
+        },
+        "ais_dom_devices": {
+          "caption": "Configuration of AIS home Devices",
+          "description": "Manage your devices with AIS dom software"
+        },
+        "ais_dom_zigbee": {
+          "caption": "Configuration of AIS Zigbee",
+          "description": "Manage your zigbee devices"
+        },
+        "ais_dom_zwave": {
+          "caption": "Configuration of AIS ZWave",
+          "description": "Manage your ZWave devices"
+        },
+        "ais_dom_config_update": {
+          "caption": "Gateway software",
+          "description": "System update, backup and synchronization with the Integrator Portal"
+        },
+        "ais_dom_config_wifi": {
+          "caption": "WiFi network",
+          "description": "WiFi connection settings"
+        },
+        "ais_dom_config_display": {
+          "caption": "Screen",
+          "description": "Screen Settings"
+        },
+        "ais_dom_config_tts": {
+          "caption": "The assistant voice",
+          "description": "Voice assistant settings"
+        },
+        "ais_dom_config_night": {
+          "caption": "Night mode",
+          "description": "Set the hours when the assistant should be quieter"
+        },
+        "ais_dom_config_logs": {
+          "caption": "Logs and recorder",
+          "description": "Configuration of logs and DB recorder"
+        },
+        "ais_dom_config_remote": {
+          "caption": "Remote control",
+          "description": "Configuration of remote access to the gateway"
+        },
+        "ais_dom_config_usb": {
+          "caption": "USB devices",
+          "description": "Support for USB devices"
+        },
+        "ais_dom_config_power": {
+          "caption": "Stop the Gate",
+          "description": "Restart or turn off the gate"
+        },
+        "zwave_js": {
+          "navigation": { "network": "Ağ", "logs": "Logs" },
+          "common": {
+            "network": "Ağ",
+            "node_id": "Düğüm Kimliği",
+            "home_id": "Ev kimliği",
+            "source": "Source",
+            "close": "Kapat",
+            "add_node": "Düğüm Ekle",
+            "remove_node": "Düğümü Kaldır",
+            "reconfigure_server": "Re-configure Server",
+            "heal_network": "Heal Network"
+          },
+          "dashboard": {
+            "header": "Z-Wave Ağınızı Yönetin",
+            "introduction": "Z-Wave ağınızı ve Z-Wave düğümlerinizi yönetin",
+            "driver_version": "Sürücü Sürümü",
+            "server_version": "Sunucu Sürümü",
+            "home_id": "Ev kimliği",
+            "nodes_ready": "Düğümler hazır",
+            "dump_debug": "Sorunları tanılamaya yardımcı olmak için ağınızın dökümünün karşıdan yükle",
+            "dump_dead_nodes_title": "Düğümlerinizden bazıları öldü",
+            "dump_dead_nodes_text": "Düğümlerinizden bazıları yanıt vermedi ve öldüğü varsayılıyor. Bunlar tamamen ihraç edilmeyecek.",
+            "dump_not_ready_title": "Henüz tüm düğümler hazır değil",
+            "dump_not_ready_text": "Tüm düğümler hazır değilken bir dışa aktarma oluşturursanız, gerekli verileri kaçırabilirsiniz. Ağınıza tüm düğümleri sorgulaması için biraz zaman tanıyın. Çöplükle devam etmek istiyor musun?",
+            "dump_not_ready_confirm": "İndir"
+          },
+          "device_info": {
+            "zwave_info": "Z-Wave Bilgisi",
+            "node_status": "Düğüm Durumu",
+            "node_ready": "Düğüm Hazır",
+            "device_config": "Cihazı Yapılandır",
+            "reinterview_device": "Re-interview Device",
+            "heal_node": "Heal Node",
+            "remove_failed": "Remove Failed Device"
+          },
+          "node_config": {
+            "header": "Z-Wave Cihaz Yapılandırması",
+            "introduction": "Seçilen cihaz için cihaza (düğüm) özel yapılandırma parametrelerini yönetin ve ayarlayın",
+            "attribution": "Cihaz yapılandırma parametreleri ve açıklamaları {device_database}",
+            "zwave_js_device_database": "Z-Wave JS Cihaz Veritabanı",
+            "battery_device_notice": "Yapılandırmalarını güncellemek için pil cihazlarının uyanık olması gerekir. Cihazı nasıl uyandıracağınıza ilişkin talimatlar için lütfen cihazınızın kılavuzuna bakın.",
+            "parameter_is_read_only": "Bu parametre salt okunurdur.",
+            "error_device_not_found": "Cihaz bulunamadı",
+            "set_param_accepted": "The parameter has been updated.",
+            "set_param_queued": "The parameter change has been queued, and will be updated when the device wakes up.",
+            "set_param_error": "An error occurred.",
+            "parameter": "Parameter"
+          },
+          "node_status": {
+            "unknown": "Bilinmeyen",
+            "asleep": "Uykuda",
+            "awake": "Uyanık",
+            "dead": "Ölü",
+            "alive": "Canlı"
+          },
+          "network_status": {
+            "connected": "Bağlı",
+            "connecting": "Bağlanıyor",
+            "unknown": "Bilinmeyen"
+          },
+          "add_node": {
+            "title": "Bir Z-Wave Düğümü Ekleyin",
+            "introduction": "Bu sihirbaz, Z-Wave ağınıza bir düğüm eklerken size yol gösterecektir.",
+            "use_secure_inclusion": "Güvenli dahil etme kullanın",
+            "secure_inclusion_warning": "Güvenli cihazlar ek bant genişliği gerektirir; çok fazla güvenli cihaz Z-Wave ağınızı yavaşlatabilir. Yalnızca kilitler veya garaj kapısı açıcılar gibi bunu gerektiren cihazlar için güvenli dahil etme kullanmanızı öneririz.",
+            "start_inclusion": "Dahil Etmeye Başlayın",
+            "start_secure_inclusion": "Güvenli Dahil Etmeyi Başlatın",
+            "cancel_inclusion": "Dahil Etmeyi İptal Et",
+            "controller_in_inclusion_mode": "Z-Wave kontrol cihazınız artık dahil etme modunda.",
+            "follow_device_instructions": "Cihazda eşleştirmeyi tetiklemek için cihazınızla birlikte gelen talimatları izleyin.",
+            "inclusion_failed": "Düğüm eklenemedi. Daha fazla bilgi için lütfen günlükleri kontrol edin.",
+            "inclusion_finished": "Düğüm eklendi. Düğümün arka planda kurulumunu tamamladığımızda tüm varlıkların görünmesi birkaç dakika sürebilir.",
+            "view_device": "Cihazı Görüntüle",
+            "interview_started": "The device is being interviewed. This may take some time.",
+            "interview_failed": "The device interview failed. Additional information may be available in the logs."
+          },
+          "remove_node": {
+            "title": "Bir Z-Wave Düğümünü Kaldırma",
+            "introduction": "Z-Wave ağınızdan bir düğümü kaldırın ve ilişkili cihazı ve varlıkları Home Assistant'tan kaldırın.",
+            "start_exclusion": "Hariç Tutmayı Başlat",
+            "cancel_exclusion": "Hariç Tutmayı İptal Et",
+            "controller_in_exclusion_mode": "Z-Wave denetleyiciniz artık dışlama modunda.",
+            "follow_device_instructions": "Cihazda hariç tutmayı tetiklemek için cihazınızla birlikte gelen talimatları izleyin.",
+            "exclusion_failed": "Düğüm kaldırılamadı. Daha fazla bilgi için lütfen günlükleri kontrol edin.",
+            "exclusion_finished": "{id} düğümü, Z-Wave ağınızdan kaldırıldı."
+          },
+          "remove_failed_node": {
+            "title": "Remove a Failed Z-Wave Device",
+            "introduction": "Remove a failed device from your Z-Wave network. Use this if you are unable to exclude a device normally because it is broken.",
+            "remove_device": "Remove Device",
+            "in_progress": "The device removal is in progress.",
+            "removal_finished": "Node {id} has been removed from your Z-Wave network.",
+            "removal_failed": "The device could not be removed from your Z-Wave network."
+          },
+          "reinterview_node": {
+            "title": "Re-interview a Z-Wave Device",
+            "introduction": "Re-interview a device on your Z-Wave network. Use this feature if your device has missing or incorrect functionality.",
+            "battery_device_warning": "You will need to wake battery powered devices before starting the re-interview. Refer to your device's manual for instructions on how to wake the device.",
+            "run_in_background": "You can close this dialog and the interview will continue in the background.",
+            "start_reinterview": "Start Re-interview",
+            "in_progress": "The device is being interviewed. This may take some time.",
+            "interview_failed": "The device interview failed. Additional information may be available in the logs.",
+            "interview_complete": "Device interview complete."
+          },
+          "heal_network": {
+            "title": "Heal your Z-Wave Network",
+            "introduction": "Start a network heal on your Z-Wave network. A network heal will cause all devices to re-calculate their routes back to the controller and is recommended if you have recently moved devices or your controller.",
+            "traffic_warning": "The healing process generates a large amount of traffic on the Z-Wave network. This may cause devices to respond slowly (or not at all) while the heal is in progress.",
+            "start_heal": "Start Healing",
+            "in_progress": "Network healing is in progress. This will take some time.",
+            "run_in_background": "You can close this dialog and the network healing will continue in the background.",
+            "stop_heal": "Stop Healing",
+            "healing_complete": "Network healing is complete.",
+            "healing_failed": "Healing failed. Additional information may be available in the logs.",
+            "healing_cancelled": "Network healing has been cancelled."
+          },
+          "heal_node": {
+            "title": "Heal a Z-Wave Device",
+            "introduction": "Tell {device} to update its routes back to the controller. This can help with communication issues if you have recently moved the device or your controller.",
+            "traffic_warning": "The healing process generates a large amount of traffic on the Z-Wave network. This may cause devices to respond slowly (or not at all) while the heal is in progress.",
+            "start_heal": "Heal Device",
+            "healing_failed": "{device} could not be healed.",
+            "healing_failed_check_logs": "Additional information may be available in the logs.",
+            "healing_complete": "{device} has been healed.",
+            "in_progress": "{device} healing is in progress.",
+            "network_heal_in_progress": "A Z-Wave network heal is already in progress. Please wait for it to finish before healing an individual device."
+          },
+          "logs": {
+            "title": "Z-Wave JS Logs",
+            "log_level": "Log Level",
+            "subscribed_to_logs": "Subscribed to Z-Wave JS Log Messages...",
+            "log_level_changed": "Log Level changed to: {level}"
+          },
+          "button": "Yapılandır"
+        },
+        "filtering": {
+          "clear": "Temizle",
+          "filtering_by": "Filtreleme ölçütü",
+          "show": "Göster"
+        },
+        "integration_panel_move": {
+          "link_integration_page": "entegrasyonlar sayfası",
+          "missing_zha": "ZHA yapılandırma paneli eksik mi? {integrations_page} üzerindeki ZHA girişine taşındı.",
+          "missing_zwave": "Z-Wave yapılandırma paneli eksik mi? {integrations_page} üzerindeki Z-Wave girişine taşındı."
+        }
+      }
+    }
+  }
+}

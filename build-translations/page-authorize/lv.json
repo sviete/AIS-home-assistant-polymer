@@ -1,0 +1,152 @@
+{
+  "ui": {
+    "panel": {
+      "page-authorize": {
+        "initializing": "Inicializēšana",
+        "authorizing_client": "Jūs gatavojaties piešķirt {clientId} piekļuvi jūsu Home Assistant.",
+        "logging_in_to_with": "Pieteikšanās **{locationName}**, izmantojot **{authProviderName}**.",
+        "logging_in_with": "Pieteikšanās ar **{authProviderName}**.",
+        "pick_auth_provider": "Vai arī piesakaties, izmantojot",
+        "abort_intro": "Pieteikšanās pārtraukta",
+        "form": {
+          "working": "Lūdzu uzgaidiet",
+          "unknown_error": "Kaut kas nogāja greizi",
+          "next": "Tālāk",
+          "start_over": "Sākt no jauna",
+          "error": "Kļūda: {error}",
+          "providers": {
+            "command_line": {
+              "step": {
+                "init": {
+                  "data": { "username": "Lietotājvārds", "password": "Parole" }
+                },
+                "mfa": {
+                  "data": { "code": "Divpakāpju autorizācijas kods" },
+                  "description": "Atveriet **{mfa_module_name}** savā ierīcē, lai skatītu divu faktoru autentifikācijas kodu un verificētu savu identitāti:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Nederīgs lietotājvārds vai parole",
+                "invalid_code": "Nepareizs autorizācijas kods"
+              },
+              "abort": {
+                "login_expired": "Sesija ir beigusies, lūdzu, ielogojaties vēlreiz."
+              }
+            },
+            "homeassistant": {
+              "step": {
+                "init": {
+                  "data": { "username": "Lietotājvārds", "password": "Parole" }
+                },
+                "mfa": {
+                  "data": { "code": "Divu faktoru autentifikācijas kods" },
+                  "description": "Atveriet **{mfa_module_name}** savā ierīcē, lai skatītu divu faktoru autentifikācijas kodu un verificētu savu identitāti:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Nederīgs lietotājvārds vai parole",
+                "invalid_code": "Nederīgs autentifikācijas kods"
+              },
+              "abort": {
+                "login_expired": "Sesija beidzās, lūdzu, piesakieties vēlreiz."
+              }
+            },
+            "legacy_api_password": {
+              "step": {
+                "init": {
+                  "data": { "password": "API parole" },
+                  "description": "Lūdzu, ievadiet API paroli savā HTTP konfigurācijā:"
+                },
+                "mfa": {
+                  "data": { "code": "Divu faktoru autentifikācijas kods" },
+                  "description": "Atveriet **{mfa_module_name}** savā ierīcē, lai skatītu divu faktoru autentifikācijas kodu un verificētu savu identitāti:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Nederīga API parole",
+                "invalid_code": "Nederīgs autentifikācijas kods"
+              },
+              "abort": {
+                "no_api_password_set": "Jums nav konfigurēta API parole.",
+                "login_expired": "Sesija beigusies. Lūdzu, piesakaties vēlreiz."
+              }
+            },
+            "trusted_networks": {
+              "step": {
+                "init": {
+                  "data": { "user": "Lietotājs" },
+                  "description": "Lūdzu, atlasiet lietotāju, kuru vēlaties pieteikties kā:"
+                }
+              },
+              "abort": { "not_allowed": "Jūsu dators nav atļauto sarakstā." }
+            },
+            "ais_demo": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (demo)",
+                    "password": "Password (demo)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_admin": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (admin)",
+                    "password": "Password (admin)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_cloud": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username",
+                    "password": "Password",
+                    "gate_id": "Gate ID"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Você está pronto para despertar sua casa, recuperar sua privacidade e se juntar a uma comunidade mundial de consertadores?",
+        "next": "Próximo",
+        "finish": "Terminar",
+        "user": {
+          "intro": "Vamos começar criando uma conta de usuário.",
+          "required_field": "Obrigatório",
+          "data": {
+            "name": "Nome",
+            "username": "Usuário",
+            "password": "Senha",
+            "password_confirm": "Confirme a Senha"
+          },
+          "create_account": "Criar Conta",
+          "error": {
+            "required_fields": "Preencha todos os campos obrigatórios",
+            "password_not_match": "As senhas não coincidem"
+          }
+        },
+        "core-config": {
+          "intro": "Olá {name}, seja bem-vindo ao Home Assistant. Como você gostaria de nomear sua casa?",
+          "intro_location": "Nós gostaríamos de saber onde você mora. Essa informação ajudará na exibição de informações e na configuração de automações baseadas no sol. Esses dados nunca são compartilhados fora da sua rede.",
+          "intro_location_detect": "Podemos ajudá-lo a preencher essas informações fazendo uma solicitação única para um serviço externo.",
+          "location_name": "Nome da instalação do Home Assistant",
+          "location_name_default": "Casa",
+          "button_detect": "Detectar",
+          "finish": "Próximo"
+        },
+        "integration": {
+          "intro": "Dispositivos e serviços são representados no Home Assistant como integrações. Você pode configurá-los agora ou fazê-lo mais tarde na tela de configuração.",
+          "more_integrations": "Mais",
+          "finish": "Terminar"
+        },
+        "analytics": { "finish": "Próximo" },
+        "restore": {
+          "description": "Em alternativa, pode restaurar a partir de um snapshot anterior.",
+          "in_progress": "Restauração em andamento",
+          "show_log": "Mostrar registo completo",
+          "hide_log": "Ocultar registo completo",
+          "full_snapshot": "Full snapshot",
+          "partial_snapshot": "Partial snapshot",
+          "type": "Snapshot type",
+          "select_type": "Select what to restore",
+          "folders": "Folders",
+          "addons": "Add-ons",
+          "password_protection": "Password protection",
+          "password": "Snapshot password",
+          "confirm_password": "Confirm Snapshot password"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

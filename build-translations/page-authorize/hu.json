@@ -1,0 +1,152 @@
+{
+  "ui": {
+    "panel": {
+      "page-authorize": {
+        "initializing": "Inicializálás",
+        "authorizing_client": "Éppen a {clientId} számára készülsz hozzáférést biztosítani a Home Assistant példányodhoz.",
+        "logging_in_to_with": "Bejelentkezés a következőhöz: ** {locationName} ** a ** {authProviderName} ** szolgáltatással.",
+        "logging_in_with": "Bejelentkezés **{authProviderName}** használatával.",
+        "pick_auth_provider": "Vagy válassz a következő bejelentkezési módok közül",
+        "abort_intro": "Bejelentkezés megszakítva",
+        "form": {
+          "working": "Kérlek várj",
+          "unknown_error": "Valami hiba történt",
+          "next": "Tovább",
+          "start_over": "Újrakezdés",
+          "error": "Hiba: {error}",
+          "providers": {
+            "command_line": {
+              "step": {
+                "init": {
+                  "data": { "username": "Felhasználónév", "password": "Jelszó" }
+                },
+                "mfa": {
+                  "data": { "code": "Kétfaktoros Hitelesítési Kód" },
+                  "description": "Nyisd meg a(z) **{mfa_module_name}** applikációt az eszközödön, hogy megtekintsd a kétfaktoros hitelesítési kódodat a személyazonosságod ellenőrzéséhez."
+                }
+              },
+              "error": {
+                "invalid_auth": "Érvénytelen felhasználónév vagy jelszó",
+                "invalid_code": "Érvénytelen hitelesítési kód"
+              },
+              "abort": {
+                "login_expired": "A munkamenet lejárt, kérlek, jelentkezz be újra."
+              }
+            },
+            "homeassistant": {
+              "step": {
+                "init": {
+                  "data": { "username": "Felhasználónév", "password": "Jelszó" }
+                },
+                "mfa": {
+                  "data": { "code": "Kétfaktoros Hitelesítési Kód" },
+                  "description": "Nyisd meg a(z) **{mfa_module_name}** applikációt az eszközödön, hogy megtekintsd a kétfaktoros hitelesítési kódodat a személyazonosságod ellenőrzéséhez."
+                }
+              },
+              "error": {
+                "invalid_auth": "Érvénytelen felhasználónév vagy jelszó",
+                "invalid_code": "Érvénytelen hitelesítési kód"
+              },
+              "abort": {
+                "login_expired": "A munkamenet lejárt, kérlek, jelentkezz be újra."
+              }
+            },
+            "legacy_api_password": {
+              "step": {
+                "init": {
+                  "data": { "password": "API Jelszó" },
+                  "description": "Kérlek, add meg az API jelszót a http konfigurációban:"
+                },
+                "mfa": {
+                  "data": { "code": "Kétfaktoros Hitelesítési Kód" },
+                  "description": "Nyisd meg a(z) **{mfa_module_name}** applikációt az eszközödön, hogy megtekintsd a kétfaktoros hitelesítési kódodat a személyazonosságod ellenőrzéséhez."
+                }
+              },
+              "error": {
+                "invalid_auth": "Érvénytelen API jelszó",
+                "invalid_code": "Érvénytelen hitelesítési kód"
+              },
+              "abort": {
+                "no_api_password_set": "Nincs megadva API jelszó a konfigurációban.",
+                "login_expired": "A munkamenet lejárt, kérlek, jelentkezz be újra."
+              }
+            },
+            "trusted_networks": {
+              "step": {
+                "init": {
+                  "data": { "user": "Felhasználó" },
+                  "description": "Kérlek, válassz egy felhasználót a bejelentkezéshez:"
+                }
+              },
+              "abort": { "not_allowed": "A számítógéped nem engedélyezett." }
+            },
+            "ais_demo": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (demo)",
+                    "password": "Password (demo)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_admin": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (admin)",
+                    "password": "Password (admin)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_cloud": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username",
+                    "password": "Password",
+                    "gate_id": "Gate ID"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Události",
+            "description": "Spustit událost na sběrnici událostí.",
+            "documentation": "Dokumentace událostí.",
+            "type": "Typ události",
+            "data": "Data události (YAML, volitelné)",
+            "fire_event": "Spustit událost",
+            "event_fired": "Událost {name} spuštěna!",
+            "available_events": "Dostupné události",
+            "count_listeners": " ({count} posluchačů)",
+            "listen_to_events": "Naslouchat událostem",
+            "listening_to": "Naslouchám",
+            "subscribe_to": "Téma k odběru",
+            "start_listening": "Začít naslouchat",
+            "stop_listening": "Přestat naslouchat",
+            "alert_event_type": "Typ události je povinné pole",
+            "notification_event_fired": "Událost {type} úspěšně spuštěna!"
+          },
+          "services": {
+            "title": "Služby",
+            "description": "Vývojářský nástroj pro služby umožňuje zavolat jakoukoli dostupnou službu v Home Assistant",
+            "call_service": "Zavolat službu",
+            "column_parameter": "Parametr",
+            "column_description": "Popis",
+            "column_example": "Příklad",
+            "fill_example_data": "Vyplnit ukázková data",
+            "yaml_mode": "Přejít do režimu YAML",
+            "ui_mode": "Přejít do režimu uživatelského rozhraní",
+            "yaml_parameters": "Parametry jsou dostupné pouze v režimu YAML",
+            "all_parameters": "Všechny dostupné parametry",
+            "accepts_target": "Tato služba přijímá cíl, například: `entity_id: light.bed_light`",
+            "no_template_ui_support": "Uživatelské rozhraní nepodporuje šablony, stále můžete použít editor YAML."
+          },
+          "states": {
+            "title": "Stavy",
+            "description1": "Nastavte stav zařízení v Home Assistant.",
+            "description2": "Pokud entita patří k zařízení, neprobíhá s tímto zařízením žádná skutečná komunikace.",
+            "entity": "Entita",
+            "state": "Stav",
+            "attributes": "Atributy",
+            "state_attributes": "Atributy stavu (YAML, volitelné)",
+            "set_state": "Nastavit stav",
+            "current_entities": "Současné entity",
+            "filter_entities": "Filtrovat entity",
+            "filter_states": "Filtrovat stavy",
+            "filter_attributes": "Filtrovat atributy",
+            "no_entities": "Žádné entity",
+            "more_info": "Více informací",
+            "alert_entity_field": "Entita je povinné pole",
+            "last_updated": "Poslední aktualizace",
+            "last_changed": "Naposledy změněno",
+            "copy_id": "Zkopírovat ID do schránky"
+          },
+          "templates": {
+            "title": "Šablony",
+            "description": "Šablony jsou vykreslovány pomocí šablonovacího systému Jinja2 s některými specifickými rozšířeními pro Home Assistant.",
+            "editor": "Editor šablon",
+            "reset": "Obnovit ukázkovou šablonu",
+            "result_type": "Typ výsledku",
+            "jinja_documentation": "Dokumentace šablon Jinja2",
+            "template_extensions": "Rozšíření šablony Home Assistant",
+            "unknown_error_template": "Neznámá chyba při vykreslení šablony",
+            "time": "Tato šablona se aktualizuje na začátku každé minuty.",
+            "all_listeners": "Tato šablona naslouchá všem změnám stavu.",
+            "no_listeners": "Tato šablona nenaslouchá žádným událostem a nebude automaticky aktualizována.",
+            "listeners": "Tato šablona naslouchá následujícím změnám stavu:",
+            "entity": "Entita",
+            "domain": "Doména"
+          }
+        }
+      }
+    }
+  }
+}

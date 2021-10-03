@@ -1,0 +1,73 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Vai esat gatavs pamodināt savu māju, atgūt savu konfidencialitāti un pievienoties pasaules mēroga kopienai?",
+        "next": "Next",
+        "finish": "Finish",
+        "user": {
+          "intro": "Sāksim ar lietotāja konta izveidi.",
+          "required_field": "Obligāts",
+          "data": {
+            "name": "Vārds",
+            "username": "Lietotājvārds",
+            "password": "Parole",
+            "password_confirm": "Apstipriniet paroli"
+          },
+          "create_account": "Izveidot kontu",
+          "error": {
+            "required_fields": "Aizpildiet visus obligātos laukus",
+            "password_not_match": "Paroles nesakrīt"
+          }
+        },
+        "core-config": {
+          "intro": "Sveiki {name}! Laipni lūdzam Home Assistant. Kā jūs vēlētos nosaukt savas mājas?",
+          "intro_location": "Mēs gribētu zināt, kur tu dzīvo. Šī informācija palīdzēs parādīt informāciju un iestatīt uz saules bāzes balstītas automātikas. Šie dati nekad netiek koplietoti ārpus jūsu tīkla.",
+          "intro_location_detect": "Mēs varam palīdzēt jums aizpildīt šo informāciju, iesniedzot vienreizēju pieprasījumu ārējam pakalpojumam.",
+          "location_name": "Name of your Home Assistant installation",
+          "location_name_default": "Mājas",
+          "button_detect": "Noteikt",
+          "finish": "Tālāk"
+        },
+        "integration": {
+          "intro": "Home Assistant ierīces un pakalpojumi tiek parādītas kā integrācijas. Tos var iestatīt tūlīt vai izdarīt vēlāk konfigurācijas ekrānā.",
+          "more_integrations": "Vairāk",
+          "finish": "Pabeigt"
+        },
+        "analytics": { "finish": "Next" },
+        "restore": {
+          "description": "Alternatively you can restore from a previous snapshot.",
+          "in_progress": "Restore in progress",
+          "show_log": "Show full log",
+          "hide_log": "Hide full log",
+          "full_snapshot": "Full snapshot",
+          "partial_snapshot": "Partial snapshot",
+          "type": "Snapshot type",
+          "select_type": "Select what to restore",
+          "folders": "Folders",
+          "addons": "Add-ons",
+          "password_protection": "Password protection",
+          "password": "Snapshot password",
+          "confirm_password": "Confirm Snapshot password"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

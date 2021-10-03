@@ -1,0 +1,12 @@
+{
+  "ui": {
+    "panel": {
+      "mailbox": {
+        "empty": "Nemáte žiadne správy",
+        "playback_title": "Prehrávanie správ",
+        "delete_prompt": "Vymazať túto správu?",
+        "delete_button": "Vymazať"
+      }
+    }
+  }
+}

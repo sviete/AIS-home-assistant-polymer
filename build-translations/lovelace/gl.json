@@ -1,0 +1,473 @@
+{
+  "ui": {
+    "panel": {
+      "lovelace": {
+        "cards": {
+          "confirm_delete": "Seguro que queres eliminar esta tarxeta?",
+          "actions": {
+            "action_confirmation": "Are you sure you want to run action \"{action}\"?",
+            "no_entity_more_info": "No entity provided for more info dialog",
+            "no_entity_toggle": "No entity provided to toggle",
+            "no_navigation_path": "No navigation path specified",
+            "no_url": "No URL to open specified",
+            "no_service": "No service to run specified"
+          },
+          "empty_state": {
+            "title": "Welcome Home",
+            "no_devices": "This page allows you to control your devices, however it looks like you have no devices set up yet. Head to the integrations page to get started.",
+            "go_to_integrations_page": "Go to the integrations page."
+          },
+          "entities": { "never_triggered": "Never triggered" },
+          "shopping-list": {
+            "checked_items": "Checked items",
+            "clear_items": "Clear checked items",
+            "add_item": "Add item",
+            "reorder_items": "Reorder items",
+            "drag_and_drop": "Drag and drop"
+          },
+          "picture-elements": {
+            "hold": "Hold:",
+            "tap": "Tap:",
+            "navigate_to": "Navigate to {location}",
+            "url": "Open window to {url_path}",
+            "toggle": "Toggle {name}",
+            "call_service": "Call service {name}",
+            "more_info": "Amosar máis información: {name}"
+          },
+          "safe-mode": {
+            "header": "Safe Mode Activated",
+            "description": "Home Assistant ran into trouble while loading your configuration and is now running in safe mode. Take a look at the error log to see what went wrong."
+          },
+          "starting": {
+            "description": "Home Assistant is starting, please wait..."
+          }
+        },
+        "unused_entities": {
+          "title": "Unused entities",
+          "available_entities": "These are the entities that you have available, but are not in your Lovelace UI yet.",
+          "select_to_add": "Selecciona as entidades que queres engadir a unha tarxeta e logo fai clic no botón Engadir tarxeta.",
+          "entity": "Entity",
+          "entity_id": "Entity ID",
+          "domain": "Domain",
+          "last_changed": "Last Changed",
+          "search": "Search entities",
+          "no_data": "No unused entities found"
+        },
+        "add_entities": {
+          "yaml_unsupported": "You cannot use this function when using Lovelace UI in YAML mode.",
+          "generated_unsupported": "You can only use this function when you have taken control of the Lovelace UI.",
+          "saving_failed": "Saving Lovelace UI configuration failed."
+        },
+        "views": {
+          "confirm_delete": "Delete view?",
+          "confirm_delete_text": "Are you sure you want to delete your ''{name}'' view?",
+          "confirm_delete_existing_cards": "Se eliminas esta vista, tamén se eliminarán as tarxetas",
+          "confirm_delete_existing_cards_text": "Seguro que queres eliminar a túa vista '' {name} ''? A vista contén {number} tarxetas que se eliminarán. Esta acción non se pode desfacer."
+        },
+        "menu": {
+          "configure_ui": "Edit Dashboard",
+          "help": "Help",
+          "start_conversation": "Start conversation",
+          "reload_resources": "Reload resources",
+          "exit_edit_mode": "Exit UI edit mode",
+          "close": "Close"
+        },
+        "reload_resources": {
+          "refresh_header": "Do you want to refresh?",
+          "refresh_body": "You have to refresh the page to complete the reload. Do you want to refresh now?"
+        },
+        "editor": {
+          "header": "Edit UI",
+          "menu": {
+            "open": "Open Lovelace UI menu",
+            "raw_editor": "Raw configuration editor",
+            "manage_dashboards": "Xestionar paneis",
+            "manage_resources": "Xestionar recursos"
+          },
+          "common": {
+            "edit": "Edit",
+            "clear": "Clear",
+            "add": "Add",
+            "none": "None"
+          },
+          "raw_editor": {
+            "header": "Edit Configuration",
+            "save": "Save",
+            "unsaved_changes": "Unsaved changes",
+            "saved": "Saved",
+            "reload": "Recargar",
+            "lovelace_changed": "Actualizouse a configuración de Lovelace, queres cargar a configuración actualizada no editor e perder os cambios actuais?",
+            "confirm_remove_config_title": "Are you sure you want to remove your Lovelace UI configuration?",
+            "confirm_remove_config_text": "We will automatically generate your Lovelace UI views with your areas and devices if you remove your Lovelace UI configuration.",
+            "confirm_unsaved_changes": "You have unsaved changes, are you sure you want to exit?",
+            "confirm_unsaved_comments": "Your configuration might contains comment(s), these will not be saved. Do you want to continue?",
+            "error_parse_yaml": "Unable to parse YAML: {error}",
+            "error_invalid_config": "Your configuration is not valid: {error}",
+            "error_save_yaml": "Unable to save YAML: {error}",
+            "error_remove": "Unable to remove configuration: {error}",
+            "resources_moved": "Resources should no longer be added to the Lovelace configuration but can be added in the Lovelace config panel."
+          },
+          "edit_lovelace": {
+            "header": "Title of your Lovelace UI",
+            "explanation": "This title is shown above all your views in the Lovelace UI.",
+            "edit_title": "Edit title",
+            "title": "Title"
+          },
+          "edit_view": {
+            "header": "View Configuration",
+            "header_name": "{name} View Configuration",
+            "add": "Add view",
+            "edit": "Edit view",
+            "delete": "Delete view",
+            "move_left": "Move view left",
+            "move_right": "Move view right",
+            "tab_settings": "Settings",
+            "tab_badges": "Badges",
+            "tab_visibility": "Visibility",
+            "visibility": {
+              "select_users": "Select which users should see this view in the navigation"
+            },
+            "type": "View type",
+            "types": {
+              "masonry": "Masonry (default)",
+              "sidebar": "Sidebar",
+              "panel": "Panel (1 card)"
+            }
+          },
+          "edit_badges": {
+            "panel_mode": "Estas insignias non se amosarán porque esta vista está en \"modo de panel\"."
+          },
+          "edit_card": {
+            "header": "Configuración da tarxeta",
+            "typed_header": "Configuración da tarxeta {type}",
+            "pick_card": "Que tarxeta lle gustaría engadir?",
+            "pick_card_view_title": "Que tarxeta lle gustaría engadir á súa {name} ?",
+            "toggle_editor": "Toggle Editor",
+            "unsaved_changes": "You have unsaved changes",
+            "confirm_cancel": "Are you sure you want to cancel?",
+            "show_visual_editor": "Amosar editor visual",
+            "show_code_editor": "Amosar editor de código",
+            "add": "Engadir tarxeta",
+            "edit": "Edit",
+            "clear": "Clear",
+            "delete": "Eliminar tarxeta",
+            "duplicate": "Duplicar tarxeta",
+            "move": "Move to view",
+            "move_before": "Mover a tarxeta antes",
+            "move_after": "Mover a tarxeta despois",
+            "options": "More options",
+            "search_cards": "Buscar tarxetas"
+          },
+          "move_card": { "header": "Escolle unha vista á que mover a tarxeta" },
+          "select_view": {
+            "header": "Choose a view",
+            "dashboard_label": "Dashboard"
+          },
+          "suggest_card": {
+            "header": "We created a suggestion for you",
+            "create_own": "Escolle unha tarxeta diferente",
+            "add": "Add to Lovelace UI"
+          },
+          "save_config": {
+            "header": "Take control of your Lovelace UI",
+            "para": "This dashboard is currently being maintained by Home Assistant. It is automatically updated when new entities or Lovelace UI components become available. If you take control, this dashboard will no longer be automatically updated. You can always create a new dashboard in configuration to play around with.",
+            "para_sure": "Are you sure you want to take control of your user interface?",
+            "yaml_mode": "You are using YAML mode for this dashboard, which means you cannot change your Lovelace config from the UI. If you want to manage this dashboard from the UI, remove 'mode: yaml' from your Lovelace configuration in 'configuration.yaml.'.",
+            "yaml_control": "To take control in YAML mode, create a YAML file with the name you specified in your config for this dashboard, or the default 'ui-lovelace.yaml'.",
+            "yaml_config": "To help you start here is the current config of this dashboard:",
+            "empty_config": "Start with an empty dashboard",
+            "close": "Close",
+            "save": "Take control"
+          },
+          "migrate": {
+            "header": "Configuration Incompatible",
+            "para_no_id": "This element doesn't have an ID. Please add an ID to this element in 'ui-lovelace.yaml'.",
+            "para_migrate": "Home Assistant pode engadir identificacións a todas as súas tarxetas e vistas automaticamente premendo o botón \"Migrar configuración\".",
+            "migrate": "Migrate configuration"
+          },
+          "action-editor": {
+            "navigation_path": "Navigation Path",
+            "url_path": "URL Path",
+            "actions": {
+              "default_action": "Default Action",
+              "call-service": "Call Service",
+              "more-info": "More Info",
+              "toggle": "Toggle",
+              "navigate": "Navigate",
+              "url": "URL",
+              "none": "No Action"
+            }
+          },
+          "card": {
+            "alarm-panel": {
+              "name": "Alarm Panel",
+              "available_states": "Available States",
+              "description": "A tarxeta Panel de alarma permíte armar e desarmar as integracións do seu panel de control de alarma."
+            },
+            "calendar": {
+              "name": "Calendar",
+              "description": "A tarxeta Calendario mostra un calendario que inclúe vistas de día, semana e lista",
+              "inital_view": "Initial View",
+              "calendar_entities": "Calendar Entities",
+              "views": {
+                "dayGridMonth": "Mes",
+                "dayGridDay": "Día",
+                "listWeek": "List"
+              }
+            },
+            "conditional": {
+              "name": "Conditional",
+              "description": "A tarxeta Condicional mostra outra tarxeta en función dos estados da entidade.",
+              "conditions": "Conditions",
+              "card": "Tarxeta",
+              "state_equal": "State is equal to",
+              "state_not_equal": "State is not equal to",
+              "current_state": "current",
+              "condition_explanation": "A tarxeta amosarase cando se cumpran TODAS as seguintes condicións.",
+              "change_type": "Change type"
+            },
+            "config": { "required": "Required", "optional": "Optional" },
+            "entities": {
+              "name": "Entities",
+              "show_header_toggle": "Queres amosar o interruptor na cabeceira?",
+              "toggle": "Toggle entities.",
+              "description": "A tarxeta de entidades é o tipo de tarxeta máis común. Agrupa elementos en listas.",
+              "special_row": "special row",
+              "edit_special_row": "View the details of this row by clicking the edit button",
+              "entity_row_editor": "Entity Row Editor",
+              "secondary_info_values": {
+                "none": "No Secondary Info",
+                "entity-id": "Entity ID",
+                "last-changed": "Last Changed",
+                "last-triggered": "Last Triggered",
+                "position": "Position",
+                "tilt-position": "Tilt Position",
+                "brightness": "Brightness",
+                "last-updated": "Last Updated"
+              },
+              "entity_row": {
+                "divider": "Divider",
+                "call-service": "Call Service",
+                "section": "Section",
+                "weblink": "Web Link",
+                "attribute": "Attribute",
+                "buttons": "Buttons",
+                "conditional": "Conditional",
+                "cast": "Cast",
+                "button": "Button"
+              }
+            },
+            "entity": {
+              "name": "Entity",
+              "description": "A tarxeta Entidade ofrécelle unha rápida visión xeral do estado da súa entidade."
+            },
+            "button": {
+              "name": "Button",
+              "description": "A tarxeta Botón permite engadir botóns para realizar tarefas.",
+              "default_action_help": "A acción predeterminada depende das capacidades da entidade, cambiará ou amosará o diálogo de máis información."
+            },
+            "entity-filter": {
+              "name": "Entity Filter",
+              "description": "A tarxeta Filtro de entidades permíte definir unha lista de entidades das que só desexa realizar un seguimento cando se atopa nun determinado estado."
+            },
+            "gauge": {
+              "name": "Gauge",
+              "needle_gauge": "Display as needle gauge?",
+              "severity": {
+                "define": "Define Severity?",
+                "green": "Green",
+                "red": "Red",
+                "yellow": "Yellow"
+              },
+              "description": "A tarxeta Indicator é unha tarxeta básica que permite ver visualmente os datos do sensor."
+            },
+            "glance": {
+              "name": "Glance",
+              "columns": "Columns",
+              "description": "A tarxeta Ollada é útil para agrupar varios sensores nunha visión xeral compacta."
+            },
+            "grid": {
+              "name": "Cuadrícula",
+              "description": "A tarxeta Cuadrícula permítelle amosar varias tarxetas nunha grella.",
+              "columns": "Columnas",
+              "square": "Representar as tarxetas como cadrados"
+            },
+            "logbook": {
+              "name": "Logbook",
+              "description": "A tarxeta Rexistro mostra unha lista de eventos das entidades."
+            },
+            "history-graph": {
+              "name": "History Graph",
+              "description": "A tarxeta Historial de gráficos permítelle amosar un gráfico para cada unha das entidades listadas."
+            },
+            "statistics-graph": {
+              "name": "Statistics Graph",
+              "description": "The Statistics Graph card allows you to display a graph of the statistics for each of the entities listed."
+            },
+            "horizontal-stack": {
+              "name": "Horizontal Stack",
+              "description": "A tarxeta de Pila horizontal permite empillar varias tarxetas de xeito que sempre se senten un ao lado do outro nun espazo de columna."
+            },
+            "humidifier": {
+              "name": "Humidifier",
+              "description": "A tarxeta Humidificador ofréce o control da súa entidade de humidificador. Permite cambiar a humidade e o modo da entidade."
+            },
+            "iframe": {
+              "name": "Webpage",
+              "description": "A tarxeta de Páxina web permítelle inserir a súa páxina web favorita directamente no Asistente doméstico."
+            },
+            "light": {
+              "name": "Light",
+              "description": "A tarxeta de Luz permíte cambiar a intensidade da luz."
+            },
+            "generic": {
+              "aspect_ratio": "Aspect Ratio",
+              "attribute": "Attribute",
+              "camera_image": "Camera Entity",
+              "camera_view": "Camera View",
+              "double_tap_action": "Double Tap Action",
+              "entities": "Entities",
+              "entity": "Entity",
+              "hold_action": "Hold Action",
+              "hours_to_show": "Horas para amosar",
+              "days_to_show": "Days to Show",
+              "icon": "Icon",
+              "icon_height": "Icon Height",
+              "image": "Image Path",
+              "maximum": "Maximum",
+              "manual": "Manual",
+              "manual_description": "Necesitas engadir unha tarxeta personalizada ou só queres escribir manualmente o YAML?",
+              "minimum": "Minimum",
+              "name": "Name",
+              "refresh_interval": "Refresh Interval",
+              "show_icon": "Amosar icona?",
+              "show_name": "Amosar nome?",
+              "show_state": "Amosar estado?",
+              "tap_action": "Tap Action",
+              "title": "Title",
+              "theme": "Theme",
+              "no_theme": "No theme",
+              "unit": "Unit",
+              "url": "URL",
+              "state": "State",
+              "secondary_info_attribute": "Secondary Info Attribute",
+              "search": "Search",
+              "state_color": "Color icons based on state?"
+            },
+            "map": {
+              "name": "Map",
+              "geo_location_sources": "Geolocation Sources",
+              "dark_mode": "Dark Mode?",
+              "default_zoom": "Default Zoom",
+              "hours_to_show": "Horas para amosar",
+              "source": "Source",
+              "description": "A tarxeta de mapa que lle permite amosar funcións nun mapa."
+            },
+            "markdown": {
+              "name": "Markdown",
+              "content": "Content",
+              "description": "A tarxeta Markdown úsase para representar Markdown."
+            },
+            "media-control": {
+              "name": "Media Control",
+              "description": "A tarxeta Media Control úsase para amosar as entidades do reprodutor multimedia nunha interface con controis fáciles de usar."
+            },
+            "picture": {
+              "name": "Picture",
+              "description": "A tarxeta de Imaxe permíte configurar unha imaxe para usala para navegar por varias rutas na súa interface ou para chamar a un servizo."
+            },
+            "picture-elements": {
+              "name": "Picture Elements",
+              "description": "A tarxeta Elementos de Imaxe é un dos tipos de tarxetas máis versátiles. As tarxetas permiten colocar iconas ou texto e incluso servizos. Nunha imaxe baseada en coordenadas."
+            },
+            "picture-entity": {
+              "name": "Picture Entity",
+              "description": "A tarxeta Entidade de imaxe mostra unha entidade como imaxe. En lugar de imaxes dun URL, tamén pode amosar a imaxe das entidades da cámara."
+            },
+            "picture-glance": {
+              "name": "Picture Glance",
+              "description": "A tarxeta Ollada de imaxe mostra unha imaxe e a entidade correspondente indica como icona. As entidades do lado dereito permiten accións alternativas, outras mostran o diálogo para obter máis información.",
+              "state_entity": "State Entity"
+            },
+            "plant-status": {
+              "name": "Plant Status",
+              "description": "A tarxeta de Estado das plantas é para todos os encantadores botánicos que hai."
+            },
+            "sensor": {
+              "name": "Sensor",
+              "show_more_detail": "Amosar máis detalles",
+              "graph_type": "Graph Type",
+              "description": "A tarxeta Sensor ofrécelle unha rápida visión xeral do estado dos sensores cun gráfico opcional para visualizar os cambios co paso do tempo."
+            },
+            "shopping-list": {
+              "name": "Shopping List",
+              "description": "A tarxeta da lista da compra permíte engadir, editar, marcar e eliminar elementos da súa lista da compra.",
+              "integration_not_loaded": "Esta tarxeta precisa configurar a integración \"Lista de compras\"."
+            },
+            "thermostat": {
+              "name": "Thermostat",
+              "description": "A tarxeta de Termostato ofréce o control da súa entidade climática. Permite cambiar a temperatura e o modo da entidade."
+            },
+            "vertical-stack": {
+              "name": "Vertical Stack",
+              "description": "A tarxeta de Pila vertical permíte agrupar varias tarxetas para que sempre se sintúen na mesma columna."
+            },
+            "weather-forecast": {
+              "name": "Predición metereolóxica",
+              "description": "A tarxeta Predición metereolóxica mostra o tempo. Moi útil para incluír nas interfaces que a xente amosa na parede.",
+              "show_forecast": "Amosar predición"
+            }
+          },
+          "view": {
+            "panel_mode": {
+              "warning_multiple_cards": "Esta vista contén máis dunha tarxeta, pero unha vista de panel só pode amosar 1 tarxeta.",
+              "description": "Amosar a primeira tarxeta en ancho completo. Non se amosarán outras tarxetas nesta vista, nin insignias."
+            }
+          },
+          "cardpicker": {
+            "no_description": "No description available.",
+            "custom_card": "Custom",
+            "domain": "Domain",
+            "entity": "Entity",
+            "by_entity": "By Entity",
+            "by_card": "Por tarxeta"
+          },
+          "header-footer": {
+            "header": "Header",
+            "footer": "Footer",
+            "choose_header_footer": "Choose a {type}",
+            "types": {
+              "graph": { "name": "Graph" },
+              "picture": { "name": "Picture" },
+              "buttons": { "name": "Buttons" }
+            }
+          },
+          "sub-element-editor": {
+            "types": {
+              "header": "Header Editor",
+              "footer": "Footer Editor",
+              "row": "Entity Row Editor"
+            }
+          }
+        },
+        "warning": {
+          "attribute_not_found": "Attribute {attribute} not available in: {entity}",
+          "entity_not_found": "Entity not available: {entity}",
+          "entity_non_numeric": "Entity is non-numeric: {entity}",
+          "entity_unavailable": "Entity is currently unavailable: {entity}",
+          "starting": "Home Assistant is starting, not everything may be available yet"
+        },
+        "changed_toast": {
+          "message": "The Lovelace UI configuration for this dashboard was updated. Refresh to see changes?"
+        },
+        "components": {
+          "timestamp-display": {
+            "invalid": "Invalid timestamp",
+            "invalid_format": "Invalid display format"
+          }
+        },
+        "reload_lovelace": "Reload UI"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "ui": {
+    "panel": {
+      "mailbox": {
+        "empty": "Non hai nessun messaggio",
+        "playback_title": "Riproduzione messaggio",
+        "delete_prompt": "Eliminare questo messaggio?",
+        "delete_button": "Elimina"
+      }
+    }
+  }
+}

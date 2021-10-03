@@ -1,0 +1,158 @@
+{
+  "ui": {
+    "panel": {
+      "page-authorize": {
+        "initializing": "Նախաձեռնող",
+        "authorizing_client": "Դուք պատրաստվում եք {clientId} մուտք գործել ձեր տան օգնականի օրինակ:",
+        "logging_in_to_with": "Logging in to **{locationName}** with **{authProviderName}**.",
+        "logging_in_with": "Մուտք {authProviderName} ** {authProviderName} **-ի հետ:",
+        "pick_auth_provider": "Կամ մուտք գործել",
+        "abort_intro": "Մուտք ընդհատվել",
+        "form": {
+          "working": "Խնդրում ենք սպասել",
+          "unknown_error": "Ինչ որ բան այնպես չգնաց",
+          "next": "Next",
+          "start_over": "Start over",
+          "error": "Error: {error}",
+          "providers": {
+            "command_line": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Օգտագործողի անունը",
+                    "password": "գաղտնաբառ"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Երկու գործողությամբ նույնականացման կոդ" },
+                  "description": "Ձեր սարքի վրա բացեք{mfa_module_name}** ,․երկու գործողությամբ հաստատեք ձեր  կոդը և ինքնությունը"
+                }
+              },
+              "error": {
+                "invalid_auth": "Սխալ մուտքանուն կամ գաղտնաբառ",
+                "invalid_code": "Նույնականացման կոդը սխալ է"
+              },
+              "abort": {
+                "login_expired": "նիստն ավարտվեց,խնդրում ենք կրկին մուտք գործեք"
+              }
+            },
+            "homeassistant": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Օգտագործողի անունը",
+                    "password": "Գաղտնաբառ"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Երկու գործոնով նույնականացման կոդ" },
+                  "description": "Բացեք ** {mfa_module_name} ** սարքը , դիտեք   ձեր ծածկագիրը և  ինքնությունը, հաստատեք այն."
+                }
+              },
+              "error": {
+                "invalid_auth": "Մուտքանունը կամ գաղտնաբառը սխալ է",
+                "invalid_code": "Անվավեր նույնականացման կոդ"
+              },
+              "abort": {
+                "login_expired": "Նիստն ավարտվեց, խնդրում ենք կրկին մուտք գործեք:"
+              }
+            },
+            "legacy_api_password": {
+              "step": {
+                "init": {
+                  "data": { "password": "API գաղտնաբառ" },
+                  "description": "Խնդրում ենք մուտքագրել API գաղտնաբառը ձեր http կարգաձևում"
+                },
+                "mfa": {
+                  "data": { "code": "Երկու գործոնով նույնականացման կոդ" },
+                  "description": "Բացել **{mfa_module_name}** ցարքը, երկու գործողությամբ հաստատել նույնականացման կոդը  և  ինքնությունը"
+                }
+              },
+              "error": {
+                "invalid_auth": " API գաղտնաբառը անվավեր է",
+                "invalid_code": "Սխալ նույնականացման կոդ"
+              },
+              "abort": {
+                "no_api_password_set": "Դուք API գաղտնաբառով կարգավորումներ չունեք\n՛",
+                "login_expired": "Նիստն ավարտվեց,խնդրում ենք նորից մուտք գործել"
+              }
+            },
+            "trusted_networks": {
+              "step": {
+                "init": {
+                  "data": { "user": "Օգտագործող" },
+                  "description": "Խնդրում ենք ընտրել օգտագործողին, որպես որի ցանկանում եք մուտք գործել"
+                }
+              },
+              "abort": { "not_allowed": "Your computer is not allowed." }
+            },
+            "ais_demo": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (demo)",
+                    "password": "Password (demo)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_admin": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (admin)",
+                    "password": "Password (admin)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_cloud": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username",
+                    "password": "Password",
+                    "gate_id": "Gate ID"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

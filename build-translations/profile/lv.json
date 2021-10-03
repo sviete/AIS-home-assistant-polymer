@@ -1,0 +1,144 @@
+{
+  "ui": {
+    "panel": {
+      "profile": {
+        "current_user": "Jūs šobrīd esat pieteicies kā {fullName}.",
+        "is_owner": "Jūs esat īpašnieks.",
+        "logout": "Iziet",
+        "logout_title": "Iziet?",
+        "logout_text": "Vai tiešām vēlaties iziet?",
+        "force_narrow": {
+          "header": "Vienmēr slēpt sānjoslu",
+          "description": "Sānjosla pēc noklusējuma tiks slēpta, līdzīgi kā mobilajās ierīcēs."
+        },
+        "customize_sidebar": {
+          "header": "Mainīt secību un slēpt sānjoslas vienumus",
+          "description": "Varat arī nospiest un turēt sānjoslas galveni, lai aktivizētu rediģēšanas režīmu.",
+          "button": "Rediģēt"
+        },
+        "vibrate": {
+          "header": "Vibrācija",
+          "description": "Iespējot vai atspējot vibrāciju šajā ierīcē, kontrolējot ierīces."
+        },
+        "enable_shortcuts": {
+          "header": "Īsinājumtaustiņi",
+          "description": "Iespējojiet vai atspējojiet īsinājumtaustiņus dažādu darbību veikšanai lietotāja saskarnē."
+        },
+        "suspend": {
+          "header": "Automātiski pārtraukt savienojumu",
+          "description": "Vai pārtraukt savienojumu ar serveri pēc 5 neativitātes minūtēm?"
+        },
+        "push_notifications": {
+          "header": "Pašpiegādes paziņojumi",
+          "description": "Sūtīt paziņojumus uz šo ierīci.",
+          "error_load_platform": "Konfigurēt notify.html5.",
+          "error_use_https": "Nepieciešama SSL iespējošana priekšgalsistēmai.",
+          "push_notifications": "Pašpiegādes paziņojumi",
+          "link_promo": "Uzziniet vairāk",
+          "add_device_prompt": {
+            "title": "What should this device be called?",
+            "input_label": "Device name"
+          }
+        },
+        "language": {
+          "header": "Valoda",
+          "link_promo": "Palīdziet tulkot",
+          "dropdown_label": "Valoda"
+        },
+        "number_format": {
+          "header": "Number Format",
+          "dropdown_label": "Number format",
+          "description": "Choose how numbers are formatted.",
+          "formats": {
+            "language": "Auto (use language setting)",
+            "system": "Use system locale",
+            "comma_decimal": "1,234,567.89",
+            "decimal_comma": "1.234.567,89",
+            "space_comma": "1 234 567,89",
+            "none": "None"
+          }
+        },
+        "time_format": {
+          "header": "Time Format",
+          "dropdown_label": "Time format",
+          "description": "Choose how times are formatted.",
+          "formats": {
+            "12": "12 hours (AM/PM)",
+            "24": "24 hours",
+            "language": "Auto (use language setting)",
+            "system": "Use system locale"
+          }
+        },
+        "themes": {
+          "header": "Tēma",
+          "error_no_theme": "Nav nevienas tēmas",
+          "link_promo": "Uzziniet par tēmām",
+          "dropdown_label": "Tēma",
+          "dark_mode": { "auto": "Auto", "light": "Gaiša", "dark": "Tumša" },
+          "primary_color": "Galvenā krāsa",
+          "accent_color": "Akcenta krāsa",
+          "reset": "Atiestatīt"
+        },
+        "dashboard": {
+          "header": "Infopanelis",
+          "description": "Izvēlēties noklusējuma infopaneli šai ierīcei",
+          "dropdown_label": "Infopanelis"
+        },
+        "change_password": {
+          "header": "Mainīt paroli",
+          "current_password": "Pašreizējā parole",
+          "new_password": "Jauna parole",
+          "confirm_new_password": "Apstipriniet jauno paroli",
+          "error_required": "Obligāts",
+          "submit": "Iesniegt",
+          "error_new_mismatch": "Entered new password values do not match",
+          "error_new_is_old": "New password must be different than current password",
+          "success": "Parole veiksmīgi nomainīta"
+        },
+        "mfa": {
+          "header": "Daudzfaktoru autentifikācijas moduļi",
+          "disable": "Atspējot",
+          "enable": "Iespējot",
+          "confirm_disable": "Vai tiešām vēlaties atspējot {name}?"
+        },
+        "mfa_setup": {
+          "title_aborted": "Priekšlaikus pārtraukta",
+          "title_success": "Veiksmīgi!",
+          "step_done": "Iestatīšana ir pabeigta {step}",
+          "close": "Aizvērt",
+          "submit": "Iesniegt"
+        },
+        "advanced_mode": {
+          "title": "Detalizētais režīms",
+          "description": "Dod piekļuvi papildu funcionalitātei",
+          "link_promo": "Uzziniet vairāk"
+        },
+        "refresh_tokens": {
+          "header": "Atsvaidzināšanas pilnvaras",
+          "description": "Katra atsvaidzināšanas pilvara apzīmē pieteikšanās sesiju. Atsvaidzināšanas pilvaras tiks automātiski noņemtas, kad Jūs izrakstīsieties. Jūsu kontam šobrīd aktīvas ir sekojošas atsvaidzināšanas pilvaras.",
+          "token_title": "{clientId} atsvaidzināšanas pilnvara",
+          "created_at": "Izveidota {date}",
+          "last_used": "Pēdējo reizi izmantota {date} no {location}",
+          "not_used": "Nekad nav izmantots",
+          "confirm_delete": "Vai tiešām vēlaties dzēst piekļuves pilnvaru {name}?",
+          "delete_failed": "Neizdevās dzēst atsvaidzināšanas pilnvaru.",
+          "current_token_tooltip": "Nevar izdzēst pašreizējo atsvaidzināšanas pilnvaru"
+        },
+        "long_lived_access_tokens": {
+          "header": "Ilgtermiņa piekļuves pilnvaras",
+          "description": "Izveidojiet ilgtermiņa piekļuves pilnvaras, lai ļautu jūsu skriptiem mijiedarboties ar jūsu Home Assistant instanci. Katra pilnvara būs derīga 10 gadus pēc tās izveidošanas. Pašlaik ir aktīvas sekojošas ilgtermiņa piekļuves pilvaras.",
+          "learn_auth_requests": "Uzziniet, kā veikt autentificētus pieprasījumus.",
+          "created": "Izveidota {date}",
+          "confirm_delete": "Vai tiešām vēlaties dzēst piekļuves pilnvaru {name}?",
+          "delete_failed": "Neizdevās dzēst piekļuves pilnvaru.",
+          "create": "Izveidot pilnvaru",
+          "create_failed": "Neizdevās izveidot piekļuves pilnvaru.",
+          "name": "Nosaukums",
+          "prompt_name": "Pilnvaras nosaukums",
+          "prompt_copy_token": "Kopējiet savu piekļuves pilnvaru. Tas vairs netiks rādīts.",
+          "empty_state": "Jums vēl nav ilgtermiņa piekļuves pilnvaru."
+        }
+      }
+    }
+  }
+}

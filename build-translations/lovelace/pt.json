@@ -1,0 +1,477 @@
+{
+  "ui": {
+    "panel": {
+      "lovelace": {
+        "cards": {
+          "confirm_delete": "Tem a certeza que quer apagar este cartão?",
+          "actions": {
+            "action_confirmation": "Tem a certeza que deseja executar a ação \"{action}\"?",
+            "no_entity_more_info": "No entity provided for more info dialog",
+            "no_entity_toggle": "Nenhuma entidade fornecida para alternar",
+            "no_navigation_path": "Nenhum caminho de navegação especificado",
+            "no_url": "Nenhuma URL para abrir especificada",
+            "no_service": "Não foi especificado o serviço a executar"
+          },
+          "empty_state": {
+            "title": "Bem-vindo a casa",
+            "no_devices": "Esta página permite-lhe controlar os seus dispositivos, no entanto, parece que ainda não tem dispositivos configurados. Vá para a página de integrações para começar.",
+            "go_to_integrations_page": "Ir para a página de integrações."
+          },
+          "entities": { "never_triggered": "Nunca acionado" },
+          "shopping-list": {
+            "checked_items": "Itens marcados",
+            "clear_items": "Limpar itens marcados",
+            "add_item": "Adicionar Item",
+            "reorder_items": "Reordenar itens",
+            "drag_and_drop": "Arrastar e largar"
+          },
+          "picture-elements": {
+            "hold": "Mantenha:",
+            "tap": "Toque:",
+            "navigate_to": "Navegue até {location}",
+            "url": "Abrir janela para  {url_path}",
+            "toggle": "Alternar {name}",
+            "call_service": "Chamar o serviço {name}",
+            "more_info": "Mostrar mais informações: {name}"
+          },
+          "safe-mode": {
+            "header": "Modo de Segurança Ativada",
+            "description": "O Home Assistant teve problemas durante o carregamento da configuração e agora está em execução no modo de segurança. Dê uma vista de olhos no registro de erros para ver o que está errado."
+          },
+          "starting": {
+            "description": "Home Assistant está a inicializar, por favor aguarde..."
+          }
+        },
+        "unused_entities": {
+          "title": "Entidades não expostas",
+          "available_entities": "Estas são as entidades que tem disponíveis, mas que ainda não estão no seu Lovelace UI.",
+          "select_to_add": "Selecione as entidades que deseja adicionar a um cartão e depois clique no botão adicionar cartão.",
+          "entity": "Entidade",
+          "entity_id": "ID da Entidade",
+          "domain": "Domínio",
+          "last_changed": "Última ocorrência",
+          "search": "Procurar entidades",
+          "no_data": "Entidades não utilizadas"
+        },
+        "add_entities": {
+          "yaml_unsupported": "Não pode usar esta função enquanto utilizar o UI Lovelace no modo YAML.",
+          "generated_unsupported": "Só pode usar esta função quando tiver assumido o controlo do UI Lovelace.",
+          "saving_failed": "Falha ao salvar a configuração da interface Lovelace."
+        },
+        "views": {
+          "confirm_delete": "Eliminar vista?",
+          "confirm_delete_text": "Tem certeza de que deseja apagar a sua vista ''{name}''?",
+          "confirm_delete_existing_cards": "Eliminar esta vista vai também remover os cartões",
+          "confirm_delete_existing_cards_text": "Tem certeza de que deseja apagar a vista ''{name}''? A vista contém {number} cartões que serão apagados. Esta ação não pode ser revertida."
+        },
+        "menu": {
+          "configure_ui": "Configurar Painel",
+          "help": "Ajuda",
+          "start_conversation": "Iniciar conversa",
+          "reload_resources": "Recarregar recursos",
+          "exit_edit_mode": "Sair do modo de edição do IU",
+          "close": "Fechar"
+        },
+        "reload_resources": {
+          "refresh_header": "Deseja atualizar?",
+          "refresh_body": "É preciso atualizar a página para concluir o carregamento. Deseja atualizar agora?"
+        },
+        "editor": {
+          "header": "Editar UI",
+          "menu": {
+            "open": "Abrir menu Lovelace IU",
+            "raw_editor": "Editor de configuração do código-fonte",
+            "manage_dashboards": "Gerir Dashboards",
+            "manage_resources": "Gerir recursos"
+          },
+          "common": {
+            "edit": "Editar",
+            "clear": "Limpar",
+            "add": "Adicionar",
+            "none": "Nenhum"
+          },
+          "raw_editor": {
+            "header": "Editar Configuração",
+            "save": "Guardar",
+            "unsaved_changes": "Alterações não guardadas",
+            "saved": "Guardada",
+            "reload": "Recarregar",
+            "lovelace_changed": "A configuração do Lovelace foi actualizada, deseja carregar a configuração actualizada no editor e perder as suas alterações actuais?",
+            "confirm_remove_config_title": "Tem a certeza que deseja remover a configuração do interface de utilizador do Lovelace?",
+            "confirm_remove_config_text": "Iremos gerar automaticamente as suas vistas do Lovelace UI com as suas áreas e dispositivos se remover a sua configuração do Lovelace UI.",
+            "confirm_unsaved_changes": "Existem alterações não guardadas. De certeza de que quer sair?",
+            "confirm_unsaved_comments": "A sua configuração contém comentário(s), eles não serão salvos. Deseja continuar?",
+            "error_parse_yaml": "Não foi possível analisar o YAML: {error}",
+            "error_invalid_config": "A sua configuração não é válida: {error}",
+            "error_save_yaml": "Não é possível salvar o YAML: {error}",
+            "error_remove": "Não foi possível remover a configuração: {error}",
+            "resources_moved": "Os recursos não devem mais ser adicionados ao editor de configuração do código fonte do Lovelace, mas podem ser adicionados no painel de configuração do Lovelace."
+          },
+          "edit_lovelace": {
+            "header": "Título da sua interface do Lovelace",
+            "explanation": "Este título é mostrado acima de todas as suas vistas na interface Lovelace.",
+            "edit_title": "Editar título",
+            "title": "Título"
+          },
+          "edit_view": {
+            "header": "Ver configuração",
+            "header_name": "Configuração da Vista {name} ",
+            "add": "Acrescentar vista",
+            "edit": "Editar vista",
+            "delete": "Apagar a vista",
+            "move_left": "Mover vista para a esquerda",
+            "move_right": "Mover vista para a direita",
+            "tab_settings": "Configurações",
+            "tab_badges": "Crachás",
+            "tab_visibility": "Visibilidade",
+            "visibility": {
+              "select_users": "Selecione quais os utilizadores que devem ver esta visualização na navegação"
+            },
+            "type": "View type",
+            "types": {
+              "masonry": "Masonry (default)",
+              "sidebar": "Sidebar",
+              "panel": "Panel (1 card)"
+            }
+          },
+          "edit_badges": {
+            "panel_mode": "Estes crachás não serão exibidos porque esta vista está em \"Modo Painel\"."
+          },
+          "edit_card": {
+            "header": "Configuração do cartão",
+            "typed_header": "{type} Configuração do Cartão",
+            "pick_card": "Que cartão gostaria de adicionar?",
+            "pick_card_view_title": "Que cartão gostaria de adicionar à sua vista {name}?",
+            "toggle_editor": "Alternar Editor",
+            "unsaved_changes": "Alterações não guardadas",
+            "confirm_cancel": "Tem certeza que deseja terminar a sessão?",
+            "show_visual_editor": "Mostrar Editor Visual",
+            "show_code_editor": "Mostrar Editor de Código",
+            "add": "Adicionar Cartão",
+            "edit": "Editar",
+            "clear": "Limpar",
+            "delete": "Apagar Cartão",
+            "duplicate": "Duplicar cartão",
+            "move": "Mover para vista",
+            "move_before": "Mover cartão antes de",
+            "move_after": "Mover cartão após",
+            "options": "Mais opções",
+            "search_cards": "Procurar cartões"
+          },
+          "move_card": {
+            "header": "Escolha uma vista para mover o cartão para"
+          },
+          "select_view": {
+            "header": "Escolha uma vista",
+            "dashboard_label": "Painel de instrumentos"
+          },
+          "suggest_card": {
+            "header": "Criámos uma sugestão para si.",
+            "create_own": "Escolha um cartão diferente",
+            "add": "Adicionar à Lovelace UI"
+          },
+          "save_config": {
+            "header": "Assumir controle sobre a interface do Lovelace",
+            "para": "Por omissão o Home Assistant irá manter a sua interface de utilizador, atualizando-a sempre que uma nova entidade ou novos componentes IU Lovelace fiquem disponíveis. Se assumir o controlo, não faremos mais alterações automáticas por si. Poderá sempre criar um novo dashboard na configuração para fazer testes.",
+            "para_sure": "Tem certeza que deseja assumir o controlo sobre a interface de utilizador?",
+            "yaml_mode": "Está a usar o modo YAML para este painel, o que significa que não pode alterar a sua configuração Lovelace a partir da UI. Se quiser alterar este painel a partir da UI, remova 'mode: yaml' da configuração Lovelace em 'configuration.yaml'.",
+            "yaml_control": "Para assumir o controle no modo YAML, crie um ficheiro YAML com o nome que especificou na sua configuração para este painel de controle, ou o padrão 'ui-lovelace.yaml'.",
+            "yaml_config": "Para o ajudar a começar, aqui está a actual configuração deste dashboard:",
+            "empty_config": "Começar com um painel de instrumentos vazio",
+            "close": "Fechar",
+            "save": "Assumir o controlo",
+            "cancel": "Cancelar"
+          },
+          "migrate": {
+            "header": "Configuração Incompatível",
+            "para_no_id": "Este elemento não possui um ID. Por favor adicione um ID a este elemento em 'ui-lovelace.yaml'.",
+            "para_migrate": "Ao clicar no botão 'Migrar configuração', o Home Assistant pode adicionar IDs a todos os seus cartões e vistas automaticamente.",
+            "migrate": "Migrar a configuração"
+          },
+          "action-editor": {
+            "navigation_path": "URL de navegação",
+            "url_path": "Endereço URL",
+            "actions": {
+              "default_action": "Ação por defeito",
+              "call-service": "Chamar serviço",
+              "more-info": "Mais informações",
+              "toggle": "Alternar",
+              "navigate": "Navegar",
+              "url": "URL",
+              "none": "Nenhuma Ação"
+            }
+          },
+          "card": {
+            "alarm-panel": {
+              "name": "Painel de alarme",
+              "available_states": "Estados Disponíveis",
+              "description": "O cartão Painel de alarme permite que você arme e desarme as integrações do painel de controle de alarme."
+            },
+            "calendar": {
+              "name": "Calendário",
+              "description": "O cartão do Calendário exibe um calendário incluindo dia, semana e visualizações de lista",
+              "inital_view": "Vista Inicial",
+              "calendar_entities": "Entidades do calendário",
+              "views": {
+                "dayGridMonth": "Mês",
+                "dayGridDay": "Dia",
+                "listWeek": "Lista"
+              }
+            },
+            "conditional": {
+              "name": "Condicional",
+              "description": "O cartão Condicional exibe outro cartão com base nos estados da entidade.",
+              "conditions": "Condições",
+              "card": "Cartão",
+              "state_equal": "Estado é igual a",
+              "state_not_equal": "Estado não é igual a",
+              "current_state": "atual",
+              "condition_explanation": "O cartão será exibido quando TODAS as condições abaixo forem cumpridas.",
+              "change_type": "Alterar tipo"
+            },
+            "config": { "required": "Obrigatório", "optional": "Opcional" },
+            "entities": {
+              "name": "Entidades",
+              "show_header_toggle": "Show Header Toggle?",
+              "toggle": "Alternar entidades.",
+              "description": "O cartão de entidades é o tipo mais comum de cartão. Ele agrupa itens em listas.",
+              "special_row": "linha especial",
+              "edit_special_row": "Visualize os detalhes desta linha pressionando o botão editar",
+              "entity_row_editor": "Editor de Linha de Entidade",
+              "secondary_info_values": {
+                "none": "Sem informações secundárias",
+                "entity-id": "ID da entidade",
+                "last-changed": "Última modificação",
+                "last-triggered": "Acionado pela última vez",
+                "position": "Posição",
+                "tilt-position": "Posição de Inclinação",
+                "brightness": "Brilho",
+                "last-updated": "Última atualização"
+              },
+              "entity_row": {
+                "divider": "Divisor",
+                "call-service": "Chamar serviço",
+                "section": "Seção",
+                "weblink": "Ligação Web",
+                "attribute": "Atributo",
+                "buttons": "Botões",
+                "conditional": "Condicional",
+                "cast": "Cast",
+                "button": "Botão"
+              }
+            },
+            "entity": {
+              "name": "Entidade",
+              "description": "O cartão de entidade fornece uma visão geral rápida do estado da sua entidade."
+            },
+            "button": {
+              "name": "Botão",
+              "description": "O Cartão de Botões permite-lhe adicionar botões para realizar tarefas.",
+              "default_action_help": "A ação padrão depende dos recursos da entidade, ela será alternada ou mais informações serão mostradas."
+            },
+            "entity-filter": {
+              "name": "Filtro de entidade",
+              "description": "O cartão Filtro de entidade permite definir uma lista de entidades que você deseja rastrear apenas quando num determinado estado."
+            },
+            "gauge": {
+              "name": "Manómetro",
+              "needle_gauge": "Display as needle gauge?",
+              "severity": {
+                "define": "Definir gravidade?",
+                "green": "Verde",
+                "red": "Vermelho",
+                "yellow": "Amarelo"
+              },
+              "description": "O cartão Manómetro é um cartão básico que permite visualizar dados de um sensor em forma de manómetro."
+            },
+            "glance": {
+              "name": "Relance",
+              "columns": "Colunas",
+              "description": "O cartão Glance é útil para agrupar vários sensores numa visão geral compacta."
+            },
+            "grid": {
+              "name": "Grelha",
+              "description": "O cartão em Grelha permite mostrar vários cartões numa grelha.",
+              "columns": "Colunas",
+              "square": "Apresentar cartões quadrados"
+            },
+            "logbook": {
+              "name": "Registos",
+              "description": "O cartão dos registos mostra a lista de eventos para as entidades"
+            },
+            "history-graph": {
+              "name": "Gráfico de histórico",
+              "description": "O cartão Gráfico de histórico permite exibir um gráfico para cada uma das entidades listadas."
+            },
+            "statistics-graph": {
+              "name": "Statistics Graph",
+              "description": "The Statistics Graph card allows you to display a graph of the statistics for each of the entities listed."
+            },
+            "horizontal-stack": {
+              "name": "Agrupamento Horizontal",
+              "description": "O cartão Agrupamento Vertical permite agrupar vários cartões para que estes fiquem sempre na mesma coluna."
+            },
+            "humidifier": {
+              "name": "Humidificador",
+              "description": "O cartão Termóstato dá-lhe o controlo da sua entidade de climatização. Permitindo alterar a temperatura e o modo dessa entidade."
+            },
+            "iframe": {
+              "name": "Página Web",
+              "description": "O cartão de página da Web, permite incorporar a sua página da Web favorita diretamente no Home Assistant."
+            },
+            "light": {
+              "name": "Luz",
+              "description": "O cartão Luz permite alterar o brilho da luz."
+            },
+            "generic": {
+              "aspect_ratio": "Rácio de Proporção",
+              "attribute": "Atributo",
+              "camera_image": "Entidade de Câmera",
+              "camera_view": "Vista da Câmera",
+              "double_tap_action": "Ação de toque duplo",
+              "entities": "Entidades",
+              "entity": "Entidade",
+              "hold_action": "Ação de retenção",
+              "hours_to_show": "Horas a mostrar",
+              "days_to_show": "Days to Show",
+              "icon": "Ícone",
+              "icon_height": "Altura do ícone",
+              "image": "Endereço para imagem",
+              "maximum": "Máximo",
+              "manual": "Manual",
+              "manual_description": "Precisa de adicionar um cartão personalizado ou apenas deseja escrever manualmente o yaml?",
+              "minimum": "Mínimo",
+              "name": "Nome",
+              "refresh_interval": "Intervalo entre atualizações",
+              "show_icon": "Mostrar Ícone?",
+              "show_name": "Mostrar nome?",
+              "show_state": "Mostrar Estado?",
+              "tap_action": "Toque em Ação",
+              "title": "Título",
+              "theme": "Tema",
+              "no_theme": "Nenhum tema",
+              "unit": "Unidade",
+              "url": "Url",
+              "state": "Estado",
+              "secondary_info_attribute": "Atributo de informação secundária",
+              "search": "Procurar",
+              "state_color": "Ícones coloridos com base no estado?"
+            },
+            "map": {
+              "name": "Mapa",
+              "geo_location_sources": "Fontes de Geolocalização",
+              "dark_mode": "Modo escuro?",
+              "default_zoom": "Zoom padrão",
+              "hours_to_show": "Horas a mostrar",
+              "source": "Fonte",
+              "description": "O cartão Mapa que lhe permite exibir entidades num mapa."
+            },
+            "markdown": {
+              "name": "Markdown",
+              "content": "Conteúdo",
+              "description": "O cartão Markdown é usado para processar Markdown."
+            },
+            "media-control": {
+              "name": "Controlo multimédia",
+              "description": "O cartão Controlo multimédia é usado para exibir entidades leitor de multimédia num interface com comandos fáceis de usar."
+            },
+            "picture": {
+              "name": "Imagem",
+              "description": "O cartão de imagem permite definir uma imagem a ser usada para navegação em vários pontos na sua interface ou para chamar um serviço."
+            },
+            "picture-elements": {
+              "name": "Elementos da imagem",
+              "description": "O cartão Elementos de Imagem é um dos tipos de cartões mais versáteis. Os cartões permitem que posicione ícones ou texto e até serviços! Numa imagem baseada em coordenadas."
+            },
+            "picture-entity": {
+              "name": "Entidade de imagem",
+              "description": "A imagem cartão de entidade de imagem exibe uma entidade sob a forma de uma imagem. Em vez de imagens de URL, também pode mostrar a imagem de entidades da câmera."
+            },
+            "picture-glance": {
+              "name": "Vista sobre imagem",
+              "description": "O cartão Vista de imagem  mostra uma imagem e os estados das entidades correspondentes como um ícone. As entidades do lado direito permitem alternar ações, outras mostram a opção mais informações.",
+              "state_entity": "Estado da entidade"
+            },
+            "plant-status": {
+              "name": "Estado da planta",
+              "description": "O cartão de Estado da planta é para todos os adoráveis botânicos por aí."
+            },
+            "sensor": {
+              "name": "Sensor",
+              "show_more_detail": "Mostrar mais detalhes",
+              "graph_type": "Tipo De Gráfico",
+              "description": "O cartão Sensor dá-lhe uma visão rápida do estado dos seus sensores com um gráfico opcional para visualizar a mudança ao longo do tempo."
+            },
+            "shopping-list": {
+              "name": "Lista de compras",
+              "description": "O cartão Lista de compras permite adicionar, editar, marcar e limpar itens da sua lista de compras.",
+              "integration_not_loaded": "Este cartão requer que a integração lista de compras seja configurada."
+            },
+            "thermostat": {
+              "name": "Termóstato",
+              "description": "O cartão Termóstato dá-lhe o controle da sua entidade de climatização. Permitindo alterar a temperatura e o modo dessa entidade."
+            },
+            "vertical-stack": {
+              "name": "Agrupamento Vertical",
+              "description": "O cartão Agrupamento Vertical permite agrupar vários cartões para que estes fiquem sempre na mesma coluna."
+            },
+            "weather-forecast": {
+              "name": "Previsão do tempo",
+              "description": "O cartão Previsão do tempo exibe o tempo. Muito útil para incluir nos interfaces que coloca-mos na parede.",
+              "show_forecast": "Mostrar previsão do tempo"
+            }
+          },
+          "view": {
+            "panel_mode": {
+              "warning_multiple_cards": "Esta vista contém mais do que um cartão, mas a vista de painel só pode mostrar 1 cartão.",
+              "description": "Isto faz com que o primeiro cartão ocupe toda a vista, os outros cartões e crachás ficarão ocultos.",
+              "title": "Modo Painel?"
+            }
+          },
+          "cardpicker": {
+            "no_description": "Não há descrição disponível.",
+            "custom_card": "Personalizado",
+            "domain": "Domínio",
+            "entity": "Entidade",
+            "by_entity": "Pela Entidade",
+            "by_card": "Pelo Cartão"
+          },
+          "header-footer": {
+            "header": "Cabeçalho",
+            "footer": "Rodapé",
+            "choose_header_footer": "Escolhe um {type}",
+            "types": {
+              "graph": { "name": "Gráfico" },
+              "picture": { "name": "Imagem" },
+              "buttons": { "name": "Botões" }
+            }
+          },
+          "sub-element-editor": {
+            "types": {
+              "header": "Editor de Cabeçalho",
+              "footer": "Editor de Rodapé",
+              "row": "Editor de Linha de Entidade"
+            }
+          }
+        },
+        "warning": {
+          "attribute_not_found": "Atributo {attribute} não disponível em: {entity}",
+          "entity_not_found": "Entidade não disponível: {entity}",
+          "entity_non_numeric": "A entidade é não numérica: {entity}",
+          "entity_unavailable": "{entity} está indisponível no momento",
+          "starting": "Home Assistant está a inicializar, nem tudo está já disponível"
+        },
+        "changed_toast": {
+          "message": "A configuração do Lovelace foi atualizada para este painel, gostaria de atualizar para verificar as alterações?"
+        },
+        "components": {
+          "timestamp-display": {
+            "invalid": "Data / hora inválido",
+            "invalid_format": "Formato inválido"
+          }
+        },
+        "reload_lovelace": "Recarregar UI"
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Peristiwa",
+            "description": "Fire an event on the event bus.",
+            "documentation": "Dokumentasi Peristiwa.",
+            "type": "Jenis Peristiwa",
+            "data": "Data Peristiwa (YAML, opsional)",
+            "fire_event": "Fire Event",
+            "event_fired": "Event {name} fired",
+            "available_events": "Peristiwa yang Tersedia",
+            "count_listeners": " ({count}  listener)",
+            "listen_to_events": "Dengarkan ",
+            "listening_to": "Listening to",
+            "subscribe_to": "Event to subscribe to",
+            "start_listening": "Start listening",
+            "stop_listening": "Stop listening",
+            "alert_event_type": "Jenis peristiwa adalah bidang wajib diisi",
+            "notification_event_fired": "Event {type} successfully fired!"
+          },
+          "services": {
+            "title": "Layanan",
+            "description": "Alat pengembang untuk layanan memungkinkan Anda memanggil layanan apa pun yang tersedia di Home Assistant.",
+            "call_service": "Panggil Layanan",
+            "column_parameter": "Parameter",
+            "column_description": "Deskripsi",
+            "column_example": "Contoh",
+            "fill_example_data": "Isi dengan Data Contoh",
+            "yaml_mode": "Masuk ke mode YAML",
+            "ui_mode": "Masuk ke mode antarmuka",
+            "yaml_parameters": "Parameter hanya tersedia dalam mode YAML",
+            "all_parameters": "Semua parameter yang tersedia",
+            "accepts_target": "Layanan ini menerima target, misalnya: 'entity_id: light.bed_light'",
+            "no_template_ui_support": "Antarmuka tidak mendukung templat, Anda masih dapat menggunakan editor YAML."
+          },
+          "states": {
+            "title": "Status",
+            "description1": "Set the current state representation of an entity within Home Assistant.",
+            "description2": "Ini tidak akan berkomunikasi dengan perangkat yang sebenarnya.",
+            "entity": "Entitas",
+            "state": "Status",
+            "attributes": "Atribut",
+            "state_attributes": "Atribut status (YAML, opsional)",
+            "set_state": "Setel Status",
+            "current_entities": "Entitas saat ini",
+            "filter_entities": "Filter entitas",
+            "filter_states": "Filter status",
+            "filter_attributes": "Filter atribut",
+            "no_entities": "Tidak ada entitas",
+            "more_info": "Info Lebih Lanjut",
+            "alert_entity_field": "Entitas adalah bidang wajib",
+            "last_updated": "Terakhir diperbarui",
+            "last_changed": "Terakhir diubah",
+            "copy_id": "Salin ID ke papan klip"
+          },
+          "templates": {
+            "title": "Templat",
+            "description": "Template dirender menggunakan mesin templat Jinja2 dengan beberapa ekstensi khusus Home Assistant.",
+            "editor": "Editor templat",
+            "reset": "Setel ulang ke template demo",
+            "result_type": "Jenis hasil",
+            "jinja_documentation": "Dokumentasi templat Jinja2",
+            "template_extensions": "Ekstensi templat Home Assistant",
+            "unknown_error_template": "Kesalahan tidak diketahui saat merender templat",
+            "time": "Templat ini diperbarui pada awal setiap menit.",
+            "all_listeners": "This template listens for all state changed events.",
+            "no_listeners": "Templat ini tidak mendengarkan peristiwa apa pun dan tidak akan diperbarui secara otomatis.",
+            "listeners": "This template listens for the following state changed events:",
+            "entity": "Entitas",
+            "domain": "Domain"
+          }
+        }
+      }
+    }
+  }
+}

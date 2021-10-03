@@ -1,0 +1,898 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "Kalendár",
+    "config": "Nastavenia",
+    "states": "Prehľad",
+    "map": "Mapa",
+    "logbook": "Denník",
+    "history": "História",
+    "mailbox": "Poštová schránka",
+    "shopping_list": "Nákupný zoznam",
+    "developer_tools": "Vývojárske nástroje",
+    "media_browser": "Prehliadač médií",
+    "profile": "Profil"
+  },
+  "state": {
+    "default": {
+      "on": "Zapnutý",
+      "off": "Vypnutý",
+      "unknown": "Neznámy",
+      "unavailable": "Nedostupný"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "Neaktívny", "on": "Aktívny", "auto": "Automatika" },
+      "preset_mode": {
+        "none": "Žiadny",
+        "eco": "Eko",
+        "away": "Preč",
+        "boost": "Turbo",
+        "comfort": "Komfort",
+        "home": "Doma",
+        "sleep": "Pohotovostný režim",
+        "activity": "Aktívny"
+      },
+      "hvac_action": {
+        "off": "Vypnutý",
+        "heating": "Kúrenie",
+        "cooling": "Chladenie",
+        "drying": "Sušenie",
+        "idle": "Nečinný",
+        "fan": "Ventilátor"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "Normal",
+        "eco": "Útlm",
+        "away": "Preč",
+        "boost": "Boost",
+        "comfort": "Komfort",
+        "home": "Home",
+        "sleep": "Sleep",
+        "auto": "Auto",
+        "baby": "Baby"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "Nezn",
+      "unavailable": "Nedost",
+      "error": "Chyba",
+      "entity_not_found": "Entita nebola nájdená"
+    },
+    "alarm_control_panel": {
+      "armed": "Zakód",
+      "disarmed": "Odkód",
+      "armed_home": "Zakód",
+      "armed_away": "Zakód",
+      "armed_night": "Zakód",
+      "armed_custom_bypass": "Zakód",
+      "pending": "Čaká",
+      "arming": "Aktivácia",
+      "disarming": "Deakt",
+      "triggered": "Alarm"
+    },
+    "device_tracker": { "home": "Doma", "not_home": "Preč" },
+    "person": { "home": "Doma", "not_home": "Preč" }
+  },
+  "groups": {
+    "owner": "Vlastník",
+    "system-admin": "Správcovia",
+    "system-users": "Používatelia",
+    "system-read-only": "Používatelia len na čítanie"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "Používateľ",
+      "integration": "integrácia",
+      "config_entry": "Položka konfigurácie",
+      "device": "Zariadenie"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "Chcete tieto prihlasovacie údaje uložiť?",
+      "decline": "Nie",
+      "confirm": "Áno"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "Kód",
+        "clear_code": "Zrušiť",
+        "disarm": "Odkódovať",
+        "arm_home": "Zakódovať doma",
+        "arm_away": "Zakódovať odchod",
+        "arm_night": "Zakódovať na noc",
+        "arm_custom_bypass": "Prispôsobené vylúčenie"
+      },
+      "automation": {
+        "last_triggered": "Naposledy spustené",
+        "trigger": "Spustiť akcie"
+      },
+      "camera": { "not_available": "Obrázok nie je k dispozícii" },
+      "climate": {
+        "currently": "Aktuálne",
+        "on_off": "Zapnúť / vypnúť",
+        "target_temperature": "Cieľová teplota",
+        "target_temperature_entity": "{name} cieľová teplota",
+        "target_temperature_mode": "{name} cieľová teplota {mode}",
+        "current_temperature": "{name} current temperature",
+        "heating": "{name} kúrenie",
+        "cooling": "{name} chladenie",
+        "high": "vysoká",
+        "low": "nízka",
+        "target_humidity": "Cieľová vlhkosť",
+        "operation": "Prevádzka",
+        "fan_mode": "Režim ventilátora",
+        "swing_mode": "Vejárový režim",
+        "preset_mode": "Predvoľba",
+        "away_mode": "Režim neprítomnosti",
+        "aux_heat": "Prídavné kúrenie"
+      },
+      "counter": {
+        "actions": {
+          "increment": "prírastok",
+          "decrement": "úbytok",
+          "reset": "resetovať"
+        }
+      },
+      "cover": { "position": "Poloha", "tilt_position": "Poloha sklonu" },
+      "fan": {
+        "speed": "Rýchlosť",
+        "preset_mode": "Prednastavený Režim",
+        "oscillate": "Pohyblivý smer",
+        "direction": "Smer",
+        "forward": "Dopredu",
+        "reverse": "Reverzný"
+      },
+      "humidifier": {
+        "humidity": "Cieľová vlhkosť",
+        "mode": "Režim",
+        "target_humidity_entity": "{name} target humidity",
+        "on_entity": "{name} on"
+      },
+      "light": {
+        "brightness": "Jas",
+        "color_temperature": "Teplota farby",
+        "white_value": "Hodnota bielej",
+        "color_brightness": "Jas farby",
+        "cold_white_value": "Cold white brightness",
+        "warm_white_value": "Warm white brightness",
+        "effect": "Efekt"
+      },
+      "lock": { "code": "Kód", "lock": "Zamknúť", "unlock": "Odomknúť" },
+      "media_player": {
+        "source": "Zdroj",
+        "sound_mode": "Režim zvuku",
+        "browse_media": "Browse media",
+        "turn_on": "Turn on",
+        "turn_off": "Turn off",
+        "media_play": "Play",
+        "media_play_pause": "Play/pause",
+        "media_next_track": "Next",
+        "media_previous_track": "Previous",
+        "text_to_speak": "Text, ktorý chcete hovoriť"
+      },
+      "persistent_notification": { "dismiss": "Zrušiť" },
+      "scene": { "activate": "Aktivovať" },
+      "script": {
+        "run": "Spustiť",
+        "cancel": "Zrušiť",
+        "cancel_multiple": "Cancel {number}"
+      },
+      "service": { "run": "Spustiť" },
+      "timer": {
+        "actions": {
+          "start": "Štart",
+          "pause": "Pozastaviť",
+          "cancel": "Zrušiť",
+          "finish": "Dokončiť"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "Pokračovať v čistení",
+          "return_to_base": "Návrat do doku",
+          "start_cleaning": "Začať čistenie",
+          "turn_on": "Zapnúť",
+          "turn_off": "Vypnúť"
+        }
+      },
+      "water_heater": {
+        "currently": "Aktuálne",
+        "on_off": "Zapnúť / vypnúť",
+        "target_temperature": "Cieľová teplota",
+        "operation": "V prevádzke",
+        "away_mode": "Režim neprítomnosti"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "Tlak vzduchu",
+          "humidity": "Vlhkosť",
+          "temperature": "Teplota",
+          "visibility": "Viditeľnosť",
+          "wind_speed": "Rýchlosť vetra",
+          "precipitation": "zrážky"
+        },
+        "cardinal_direction": {
+          "e": "V",
+          "ene": "VSV",
+          "ese": "VJV",
+          "n": "S",
+          "ne": "SV",
+          "nne": "SSV",
+          "nw": "SZ",
+          "nnw": "SSZ",
+          "s": "J",
+          "se": "JV",
+          "sse": "JJV",
+          "ssw": "JJZ",
+          "sw": "JZ",
+          "w": "Z",
+          "wnw": "ZSZ",
+          "wsw": "ZJZ"
+        },
+        "day": "Deň",
+        "night": "Noc",
+        "forecast": "Predpoveď",
+        "high": "High",
+        "low": "Low"
+      }
+    },
+    "common": {
+      "and": "a",
+      "continue": "Pokračovať",
+      "previous": "Previous",
+      "loading": "Načítava sa",
+      "refresh": "Obnoviť",
+      "cancel": "Zrušiť",
+      "delete": "Odstrániť",
+      "remove": "Odstrániť",
+      "enable": "Povoliť",
+      "disable": "Zakázať",
+      "close": "Zavrieť",
+      "leave": "Opustiť",
+      "stay": "Zostať",
+      "next": "Ďalej",
+      "back": "Späť",
+      "undo": "Vrátiť späť",
+      "save": "Uložiť",
+      "rename": "Premenovať",
+      "yes": "Áno",
+      "no": "Nie",
+      "not_now": "Teraz nie",
+      "skip": "Skip",
+      "menu": "Menu",
+      "overflow_menu": "Overflow menu",
+      "successfully_saved": "Úspešne uložené",
+      "successfully_deleted": "Úspešne odstránené",
+      "error_required": "Required",
+      "copied": "Skopírované",
+      "copied_clipboard": "Skopírované do schránky"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "Nenašli sa žiadne záznamy v denníku.",
+        "by": "by",
+        "by_service": "službou",
+        "show_trace": "Zobraziť cestu",
+        "retrieval_error": "Error during logbook entry retrieval",
+        "messages": {
+          "was_away": "bol preč",
+          "was_at_state": "bol zistený v {state}",
+          "rose": "rose",
+          "set": "set",
+          "was_low": "was low",
+          "was_normal": "was normal",
+          "was_connected": "bol pripojený",
+          "was_disconnected": "bol odpojený",
+          "was_opened": "boli otvorené",
+          "was_closed": "boli zavreté",
+          "is_opening": "sa otvára",
+          "is_closing": "sa zatvára",
+          "was_unlocked": "bol odomknutý",
+          "was_locked": "bol zamknutý",
+          "was_plugged_in": "bol zapojený",
+          "was_unplugged": "bol odpojený",
+          "was_at_home": "bol doma",
+          "was_unsafe": "was unsafe",
+          "was_safe": "was safe",
+          "detected_device_class": "detected {device_class}",
+          "cleared_device_class": "cleared (no {device_class} detected)",
+          "turned_off": "vypnuté",
+          "turned_on": "zapnuté",
+          "changed_to_state": "zmenené na {state}",
+          "became_unavailable": "sa stal nedostupným"
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "Entita",
+          "clear": "Vyčistiť",
+          "no_match": "Nenašli sa žiadne zodpovedajúce entity",
+          "show_entities": "Zobraziť entity"
+        },
+        "entity-attribute-picker": {
+          "attribute": "Atribút",
+          "show_attributes": "Zobraziť atribúty"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "Rozbaliť túto oblasť na samostatné zariadenia a entity, ktoré obsahuje. Po rozbalení sa nebudú pri zmene oblasti aktualizovať zariadenia a entity.",
+        "expand_device_id": "Rozbaliť toto zariadenie na samostatné entity, ktoré obsahuje. Po rozbalení sa nebudú pri zmene zariadenia aktualizovať entity.",
+        "remove_area_id": "Odstrániť oblasť",
+        "remove_device_id": "Odstrániť zariadenie",
+        "remove_entity_id": "Odstrániť entitu",
+        "add_area_id": "Vybrať oblasť",
+        "add_device_id": "Vybrať zariadenie",
+        "add_entity_id": "Vybrať entitu"
+      },
+      "user-picker": {
+        "no_user": "No user",
+        "add_user": "Add user",
+        "remove_user": "Remove user"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Vyberte plán",
+        "add_user": "Pridať používateľa",
+        "remove_user": "Odstrániť používateľa"
+      },
+      "device-picker": {
+        "clear": "Vyčistiť",
+        "toggle": "Prepínač",
+        "show_devices": "Zobraziť zariadenia",
+        "no_devices": "Nemáte žiadne zariadenia",
+        "no_match": "Nenašli sa žiadne zodpovedajúce zariadenia",
+        "device": "Zariadenie",
+        "no_area": "Žiadna oblasť"
+      },
+      "area-picker": {
+        "clear": "Vyčistiť",
+        "show_areas": "Zobraziť oblasti",
+        "area": "Oblasť",
+        "add_new": "Pridať novú oblasť ...",
+        "no_areas": "Nemáte definované žiadne oblasti",
+        "no_match": "Nenašli sa žiadne zodpovedajúce oblasti",
+        "add_dialog": {
+          "title": "Pridať novú oblasť",
+          "text": "Zadajte názov novej oblasti.",
+          "name": "Názov",
+          "add": "Pridať",
+          "failed_create_area": "Nepodarilo sa vytvoriť oblasť."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "Doplnok",
+        "error": {
+          "no_supervisor": {
+            "title": "Žiadny supervízor",
+            "description": "Nenašiel sa žiadny supervízor, takže doplnky sa nepodarilo načítať."
+          },
+          "fetch_addons": {
+            "title": "Chyba pri načítaní doplnkov",
+            "description": "Doplnky sa nenačítali kvôli chybe."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "Filter by entity",
+        "filter_by_device": "Filter by device",
+        "filter_by_area": "Filter by area",
+        "filtered_by_entity": "entity: {entity_name}",
+        "filtered_by_device": "device: {device_name}",
+        "filtered_by_area": "area: {area_name}"
+      },
+      "picture-upload": {
+        "label": "Obrázok",
+        "unsupported_format": "Nepodporovaný formát, vyberte obrázok JPEG, PNG alebo GIF."
+      },
+      "date-range-picker": {
+        "start_date": "Dátum začiatku",
+        "end_date": "Dátum konca",
+        "select": "Výber",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Nikdy",
+        "just_now": "Just now",
+        "duration": {
+          "second": "{count} {count, plural,\none {sekunda}\nother {sekúnd}\n}",
+          "minute": "{count} {count, plural,\none {minúta}\nother {minút}\n}",
+          "hour": "{count} {count, plural,\n  one {hodina}\n  other {hodiny}\n}",
+          "day": "{count} {count, plural,\none {deň}\nother {dní}\n}",
+          "week": "{count} {count, plural,\none {týždeň}\nother {týždne}\n}"
+        },
+        "past_duration": {
+          "second": "Pred {count} {count, plural,\none {sekundou}\nother {sekundami}\n}",
+          "minute": "Pred {count} {count, plural,\none {minútou}\nother {minútami}\n}",
+          "hour": "Pred {count} {count, plural,\n  one {hodinou}\n  other {hodinami}\n}",
+          "day": "Pred {count} {count, plural,\none {dňom}\nother {dňami}\n}",
+          "week": "Pred {count} {count, plural,\none {týždňom}\nother {týždňami}\n}"
+        },
+        "future_duration": {
+          "second": "In {count} {count, plural,\n  one {second}\n  other {seconds}\n}",
+          "minute": "In {count} {count, plural,\n  one {minute}\n  other {minutes}\n}",
+          "hour": "In {count} {count, plural,\n  one {hour}\n  other {hours}\n}",
+          "day": "Za {count} {count, plural,\n  one {deň}\n  other {dní}\n}",
+          "week": "Za {count} {count, plural,\n  one {týždeň}\n  other {týždňov}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "Integrácia histórie je deaktivovaná",
+        "loading_history": "Načítavam históriu stavov",
+        "no_history_found": "Nenašla sa žiadna história stavov"
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "Služba" },
+      "service-control": {
+        "required": "Toto pole je povinné",
+        "target": "Ciele",
+        "target_description": "Čo by mala táto služba používať ako cieľové oblasti, zariadenia alebo entity.",
+        "service_data": "Dáta služby",
+        "integration_doc": "Integration documentation"
+      },
+      "related-items": {
+        "no_related_found": "Nenašli sa žiadne súvisiace položky.",
+        "integration": "Integrácia",
+        "device": "Zariadenie",
+        "area": "Oblasť",
+        "entity": "Súvisiace entity",
+        "group": "Súčasťou nasledujúcich skupín",
+        "scene": "Súčasťou nasledujúcich scén",
+        "script": "Súčasťou nasledujúcich skriptov",
+        "automation": "Súčasťou nasledujúcich automatizácií"
+      },
+      "data-table": {
+        "search": "Hľadať",
+        "no-data": "Žiadne údaje",
+        "filtering_by": "Filtrovanie podľa",
+        "hidden": "{number} skryté",
+        "clear": "Vyčistiť"
+      },
+      "media-browser": {
+        "pick": "Pick",
+        "play": "Play",
+        "play-media": "Prehrať médiá",
+        "pick-media": "Vybrať médiá",
+        "no_items": "Žiadne položky",
+        "choose_player": "Vyberte prehrávač",
+        "media-player-browser": "Prehliadač prehrávača médií",
+        "web-browser": "Webový prehliadač",
+        "media_player": "Prehrávač médií",
+        "audio_not_supported": "Váš prehliadač nepodporuje zvukový prvok.",
+        "video_not_supported": "Váš prehliadač nepodporuje video prvok.",
+        "media_not_supported": "Prehrávač médií prehliadača nepodporuje tento typ médií",
+        "media_browsing_error": "Chyba prehľadávania médií",
+        "learn_adding_local_media": "Ďalšie informácie o pridávaní médií nájdete v dokumentácii {documentation}.",
+        "local_media_files": "Umiestnite videosúbory, zvukové a obrazové súbory do mediálneho adresára, aby ste ich mohli prehľadávať a prehrávať v prehliadači alebo v podporovaných prehrávačoch médií.",
+        "documentation": "dokumentácia",
+        "no_local_media_found": "Nenašli sa žiadne lokálne médiá",
+        "no_media_folder": "Zdá sa, že ste ešte nevytvorili adresár médií.",
+        "setup_local_help": "Informácie o nastavení lokálnych médií nájdete v dokumentácii {documentation}.",
+        "class": {
+          "album": "Album",
+          "app": "App",
+          "artist": "Umelec",
+          "channel": "Kanál",
+          "composer": "Skladateľ",
+          "contributing_artist": "Prispievajúci umelec",
+          "directory": "Knižnica",
+          "episode": "Epizóda",
+          "game": "Hra",
+          "genre": "Žáner",
+          "image": "Obrázok",
+          "movie": "Film",
+          "music": "Hudba",
+          "playlist": "Zoznam k prehratiu",
+          "podcast": "Podcast",
+          "season": "Sezóna",
+          "track": "Sledovať",
+          "tv_show": "Televízna relácia",
+          "url": "URL",
+          "video": "Video"
+        }
+      },
+      "calendar": { "my_calendars": "Moje kalendáre", "today": "Dnes" },
+      "attributes": { "expansion_header": "Atribúty" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "{domain}",
+            "core": "Location & customizations",
+            "group": "Groups, group entities, and notify services",
+            "automation": "Znova načítať automatizácie",
+            "script": "Znova načítať skripty",
+            "scene": "Znova načítať scény",
+            "person": "Znova načítať osoby",
+            "zone": "Znova načítať zóny",
+            "input_boolean": "Znova načítať pomocníkov - prepínače",
+            "input_text": "Input texts",
+            "input_number": "Input numbers",
+            "input_datetime": "Input date times",
+            "input_select": "Znova načítať pomocníkov - výbery",
+            "template": "Template entities",
+            "universal": "Universal media player entities",
+            "rest": "Rest entities and notify services",
+            "command_line": "Znova načítať Command line entity",
+            "filter": "Filter entities",
+            "statistics": "Statistics entities",
+            "generic": "Generic IP camera entities",
+            "generic_thermostat": "Generic thermostat entities",
+            "homekit": "HomeKit",
+            "min_max": "Min/max entities",
+            "history_stats": "History stats entities",
+            "trend": "Trend entities",
+            "ping": "Ping binary sensor entities",
+            "filesize": "File size entities",
+            "telegram": "Znova načítať notifikačné služby telegram",
+            "smtp": "Znova načítať notifikačné služby SMTP",
+            "mqtt": "Znova načítať MQTT entity",
+            "rpi_gpio": "Znova načítať Raspberry Pi GPIO entity"
+          },
+          "server_control": {
+            "perform_action": "{action} server",
+            "restart": "Restart",
+            "stop": "Stop"
+          },
+          "types": {
+            "reload": "Znova načítať",
+            "navigation": "Navigovať",
+            "server_control": "Server"
+          },
+          "navigation": {
+            "logs": "Denníky",
+            "automation": "Automatizácie",
+            "script": "Skripty",
+            "integrations": "Integrácie",
+            "areas": "Oblasti",
+            "scene": "Scény",
+            "helpers": "Pomocníci",
+            "tag": "Značky",
+            "person": "Ľudia",
+            "devices": "Zariadenia",
+            "entities": "Entity",
+            "energy": "Energy",
+            "lovelace": "Lovelace Prehľady",
+            "core": "Všeobecné",
+            "zone": "Zóny",
+            "users": "Používatelia",
+            "info": "Info",
+            "customize": "Prispôsobenia",
+            "blueprint": "Plán",
+            "server_control": "Ovládacie prvky servera",
+            "navigate_to": "Prejsť na {panel}"
+          }
+        },
+        "filter_placeholder": "Filter entít"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant did not hear anything",
+        "found": "I found the following for you:",
+        "error": "Oops, an error has occurred",
+        "how_can_i_help": "How can I help?",
+        "label": "Zadajte otázku a stlačte \"Enter\"",
+        "label_voice": "Zadajte a stlačte \"Enter\" alebo kliknite na mikrofón pre hlasové ovládanie"
+      },
+      "generic": {
+        "cancel": "Zrušiť",
+        "ok": "OK",
+        "default_confirmation_title": "Ste si istý?",
+        "close": "zavrieť"
+      },
+      "image_cropper": { "crop": "Orezať" },
+      "more_info_control": {
+        "dismiss": "Zrušiť dialógové okno",
+        "settings": "Nastavenie entity",
+        "edit": "Upraviť entitu",
+        "details": "Podrobnosti",
+        "history": "História",
+        "last_changed": "Last changed",
+        "last_updated": "Posledná aktualizácia",
+        "script": {
+          "last_action": "Posledná akcia",
+          "last_triggered": "Naposledy spustené"
+        },
+        "sun": {
+          "elevation": "Výška nad horizontom",
+          "rising": "Vychádzajúce",
+          "setting": "Zapadajúce"
+        },
+        "updater": { "title": "Pokyny pre aktualizáciu" },
+        "remote": { "activity": "Aktuálne entity" },
+        "restored": {
+          "not_provided": "Táto entita je momentálne nedostupná a je pozostatkom po odstránenej, zmenenej  alebo nefunkčnej integrácii alebo zariadení.",
+          "remove_intro": "Ak sa entita už nepoužíva, môžete ju odstrániť.",
+          "remove_action": "Odstrániť entitu",
+          "confirm_remove_title": "Odstrániť entitu?",
+          "confirm_remove_text": "Naozaj chcete odstrániť túto entitu?"
+        },
+        "vacuum": {
+          "status": "Stav",
+          "commands": "Príkazy vysávača:",
+          "fan_speed": "Rýchlosť ventilátora",
+          "start": "Štart",
+          "pause": "Pozastaviť",
+          "stop": "Zastaviť",
+          "clean_spot": "Clean spot",
+          "locate": "lokalizovať",
+          "return_home": "Návrat domov",
+          "start_pause": "Štart/pauza"
+        },
+        "person": { "create_zone": "Vytvoriť zónu z aktuálnej polohy" },
+        "cover": {
+          "open_cover": "Otvoriť rolety",
+          "close_cover": "Zavrieť rolety",
+          "open_tilt_cover": "Otvoriť sklon krytu",
+          "close_tile_cover": "Zavrieť sklon krytu",
+          "stop_cover": "Zastaviť rolety v pohybe"
+        }
+      },
+      "entity_registry": {
+        "settings": "Nastavenia",
+        "control": "Ovládanie",
+        "related": "Súvisiace",
+        "dismiss": "Zrušiť",
+        "no_unique_id": "Táto entita (\"{entity_id}\") nemá jedinečné ID, preto jej nastavenia nie je možné spravovať z používateľského rozhrania. Viac podrobností nájdete na {faq_link}.",
+        "faq": "dokumentácia",
+        "info_customize": "Niektoré atribúty môžete prepísať v sekcii {customize_link}.",
+        "customize_link": "prispôsobenia entít",
+        "editor": {
+          "name": "Názov",
+          "icon": "Ikona",
+          "icon_error": "Ikony by mali byť vo formáte 'prefix:iconname', napr 'mdi:home'",
+          "entity_id": "Entity ID",
+          "unavailable": "Táto entita nie je momentálne k dispozícii.",
+          "enabled_label": "Povoliť entitu",
+          "enabled_cause": "Zakázané {cause}",
+          "device_disabled": "Zariadenie tejto entity je vypnuté.",
+          "open_device_settings": "Otvoriť nastavenia zariadenia",
+          "enabled_description": "Zakázané entity nebudú pridané do Home Assistanta",
+          "enabled_delay_confirm": "Povolené entity budú do Home Assistant pridané o {delay} sekúnd",
+          "enabled_restart_confirm": "Reštartovať Home Assistant a dokončiť povolenie entít",
+          "delete": "VYMAZAŤ",
+          "confirm_delete": "Naozaj chcete odstrániť túto entitu?",
+          "update": "AKTUALIZOVAŤ",
+          "note": "Poznámka: Toto nemusí zatiaľ fungovať so všetkými integráciami.",
+          "advanced": "Rozšírené nastavenia",
+          "area": "Nastaviť iba oblasť entity",
+          "area_note": "Predvolene sú entity zariadenia v rovnakej oblasti ako zariadenie. Ak zmeníte oblasť tejto entity, nebude už sledovať oblasť zariadenia.",
+          "follow_device_area": "Sledovať oblasť zariadenia",
+          "change_device_area": "Zmeniť oblasť zariadenia"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "Integrácia {platform} sa nenačítala. Pridajte ju do svojej konfigurácie buď pridaním 'default_config:' alebo ''{platform}:''.",
+        "yaml_not_editable": "Nastavenia tejto entity nie je možné upravovať z UI. Iba entity nastavené z UI sú konfigurovateľné z UI.",
+        "required_error_msg": "Toto pole je povinné",
+        "generic": { "name": "Názov", "icon": "Ikona" },
+        "input_datetime": {
+          "date": "Dátum",
+          "time": "Čas",
+          "datetime": "Dátum a čas",
+          "mode": "Čo chcete zadať"
+        },
+        "input_text": {
+          "min": "Minimálna dĺžka",
+          "max": "Maximálna dĺžka",
+          "mode": "Režim zobrazenia",
+          "text": "Text",
+          "password": "Heslo",
+          "pattern": "Vzor regexu na overenie na strane klienta"
+        },
+        "input_number": {
+          "min": "Minimálna hodnota",
+          "max": "Maximálna hodnota",
+          "mode": "Režim zobrazenia",
+          "box": "Vstupné pole",
+          "slider": "Slider",
+          "step": "Veľkosť kroku",
+          "unit_of_measurement": "Meracia jednotka"
+        },
+        "input_select": {
+          "options": "Možnosti",
+          "add_option": "Pridať možnosť",
+          "no_options": "Zatiaľ nie sú k dispozícii žiadne možnosti.",
+          "add": "Pridať"
+        },
+        "counter": {
+          "minimum": "Minimum value",
+          "maximum": "Maximum value",
+          "initial": "Initial value",
+          "restore": "Restore the last known value when Home Assistant starts",
+          "step": "Step size"
+        },
+        "timer": { "duration": "Duration" }
+      },
+      "options_flow": {
+        "form": { "header": "Možnosti" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "Možnosti boli úspešne uložené." }
+      },
+      "config_entry_system_options": {
+        "title": "Systémové možnosti pre {integration}",
+        "enable_new_entities_label": "Povoliť novo pridané entity.",
+        "enable_new_entities_description": "Ak je zakázaná, novoobjavené entity pre {integration} nebudú automaticky pridané do domáceho asistenta.",
+        "enable_polling_label": "Enable polling for updates.",
+        "enable_polling_description": "If Home Assistant should automatically poll {integration} entities for updates.",
+        "restart_home_assistant": "You need to restart Home Assistant for your changes to take effect.",
+        "update": "Aktualizovať"
+      },
+      "zha_reconfigure_device": {
+        "heading": "Reconfiguring device",
+        "configuring_alt": "Configuring",
+        "introduction": "Reconfigure a device on your Zigbee network. Use this feature if your device is not functioning correctly.",
+        "battery_device_warning": "You will need to wake battery powered devices before starting the reconfiguration process. Refer to your device's manual for instructions on how to wake the device.",
+        "run_in_background": "You can close this dialog and the reconfiguration will continue in the background.",
+        "start_reconfiguration": "Start Reconfiguration",
+        "in_progress": "The device is being reconfigured. This may take some time.",
+        "configuration_failed": "The device reconfiguration failed. Additional information may be available in the logs.",
+        "configuration_complete": "Device reconfiguration complete.",
+        "button_show": "Show Details",
+        "button_hide": "Hide Details",
+        "cluster_header": "Cluster",
+        "bind_header": "Binding",
+        "reporting_header": "Reporting",
+        "attribute": "Atribút",
+        "min_max_change": "min/max/change"
+      },
+      "zha_device_info": {
+        "manuf": "od {manufacturer}",
+        "no_area": "Žiadna oblasť",
+        "device_signature": "Podpis zariadenia Zigbee",
+        "device_children": "Zigbee zariadenie deti",
+        "buttons": {
+          "add": "Pridanie zariadení cez toto zariadenie",
+          "remove": "Odstrániť zariadenie",
+          "clusters": "Manage Clusters",
+          "reconfigure": "Prekonfigurovať zariadenie",
+          "zigbee_information": "Informácie o Zigbee",
+          "device_children": "Zobraziť deti",
+          "view_in_visualization": "Zobraziť vo vizualizácii"
+        },
+        "services": {
+          "reconfigure": "Znovu nakonfigurujte ZHA zariadenie (opravte zariadenie). Použite, ak máte problémy so zariadením. Ak ide o zariadenie napájané z batérie, skontrolujte, či je pri používaní tejto služby hore a či prijíma príkazy.",
+          "updateDeviceName": "Nastaviť vlastný názov pre toto zariadenie v registri zariadení.",
+          "remove": "Odstráňte zariadenie zo siete Zigbee.",
+          "zigbee_information": "Zobraziť informácie o ZigBee pre zariadenie."
+        },
+        "confirmations": { "remove": "Naozaj chcete odstrániť zariadenie?" },
+        "quirk": "Quirk",
+        "last_seen": "Naposledy videný",
+        "power_source": "Zdroj napájania",
+        "unknown": "Neznámy",
+        "zha_device_card": {
+          "device_name_placeholder": "Zmeniť názov zariadenia"
+        }
+      },
+      "domain_toggler": {
+        "title": "Toggle Domains",
+        "reset_entities": "Reset Entities"
+      },
+      "mqtt_device_debug_info": {
+        "title": "Informácie o ladení {device}",
+        "deserialize": "Pokus interpretovať správy MQTT ako JSON",
+        "entities": "Entity",
+        "no_entities": "Žiadne entity",
+        "no_triggers": "Žiadne spúšťače",
+        "payload_display": "Payload display",
+        "recent_messages": "{n} naposledy prijaté správy",
+        "show_as_yaml": "Zobraziť ako YAML",
+        "triggers": "Spúšťače"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\n  one {sekunda}\n  other {sekúnd}\n}",
+      "minute": "{count} {count, plural,\none {minúta}\nother {minút}\n}",
+      "hour": "{count} {count, plural,\n  one {hodina}\n  other {hodiny}\n}",
+      "day": "{count} {count, plural,\n  one {deň}\n  other {dní}\n}",
+      "week": "{count} {count, plural,\n  one {týždeň}\n  other {týždňov}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "Nie je uvedený žiadny typ.",
+        "error_detected": "Zistili sa chyby v konfigurácii",
+        "editor_not_available": "Pre typ \"{type}\" nie je k dispozícii žiadny vizuálny editor.",
+        "editor_not_supported": "Vizuálny editor nie je pre túto konfiguráciu podporovaný",
+        "edit_in_yaml_supported": "Stále môžete upravovať svoju konfiguráciu v YAML.",
+        "key_missing": "Chýba požadovaný kľúč \"{key}\".",
+        "key_not_expected": "Kľúč \"{key}\" sa neočakáva alebo ho vizuálny editor nepodporuje.",
+        "key_wrong_type": "Vizuálny editor nepodporuje zadanú hodnotu pre \"{key}\". Podporujeme ({type_correct}), ale dostali sme ({type_wrong}).",
+        "no_template_editor_support": "Vizuálny editor nepodporuje šablóny"
+      },
+      "supervisor": {
+        "title": "Could not load the Supervisor panel!",
+        "wait": "If you just started, make sure you have given the Supervisor enough time to start.",
+        "ask": "Ask for help",
+        "reboot": "Try a reboot of the host",
+        "observer": "Check the Observer",
+        "system_health": "Check System Health"
+      }
+    },
+    "login-form": {
+      "password": "Heslo",
+      "remember": "Zapamätať",
+      "log_in": "Prihlásiť sa"
+    },
+    "notification_drawer": {
+      "click_to_configure": "Kliknutím na tlačidlo nakonfigurujete {entity}",
+      "empty": "Žiadne upozornenia",
+      "title": "Upozornenia",
+      "close": "Zavrieť",
+      "dismiss_all": "Dismiss all"
+    },
+    "notification_toast": {
+      "service_call_failed": "Nepodarilo sa zavolať službu {service}.",
+      "connection_lost": "Prerušené spojenie. Opätovné pripájanie...",
+      "started": "Home Assistant je spustený!",
+      "starting": "Home Assistant is starting, not everything will be available until it is finished.",
+      "wrapping_up_startup": "Wrapping up startup, not everything will be available until it is finished.",
+      "integration_starting": "Starting {integration}, not everything will be available until it is finished.",
+      "triggered": "Spustené {name}",
+      "dismiss": "Dismiss"
+    },
+    "sidebar": {
+      "external_app_configuration": "Konfigurácia aplikácie",
+      "sidebar_toggle": "Prepínač bočného panela",
+      "done": "Hotovo"
+    },
+    "panel": {
+      "error": {
+        "go_back": "Vrátiť sa späť",
+        "supervisor": {
+          "ask": "Požiadať o pomoc",
+          "observer": "Skontrolujte pozorovateľa",
+          "reboot": "Skúsiť reštartovať hostiteľa",
+          "system_health": "Overiť stav systému",
+          "title": "Nepodarilo sa načítať panel supervízora!",
+          "wait": "Ak ste práve začali, uistite sa, že ste dali supervizorovi dostatok času na spustenie."
+        }
+      },
+      "history": {
+        "ranges": {
+          "last_week": "Minulý týždeň",
+          "this_week": "Tento týždeň",
+          "today": "Dnes",
+          "yesterday": "Včera"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "Minulý týždeň",
+          "this_week": "Tento týždeň",
+          "today": "Dnes",
+          "yesterday": "Včera"
+        }
+      }
+    }
+  }
+}

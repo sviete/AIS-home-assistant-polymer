@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Evenimente",
+            "description": "Fire an event on the event bus.",
+            "documentation": "Documentarea evenimentelor.",
+            "type": "Tip eveniment",
+            "data": "Date eveniment (YAML, opțional)",
+            "fire_event": "Declansare eveniment",
+            "event_fired": "Evenimentul {name} declanșat",
+            "available_events": "Evenimente disponibile",
+            "count_listeners": " ({count}  listeners)",
+            "listen_to_events": "Ascultă evenimente",
+            "listening_to": "Ascultând",
+            "subscribe_to": "Eveniment la care să vă abonați",
+            "start_listening": "Începeți să ascultați",
+            "stop_listening": "Nu mai asculta",
+            "alert_event_type": "Tipul de eveniment este un câmp obligatoriu",
+            "notification_event_fired": "Evenimentul {type} declanșat cu succes!"
+          },
+          "services": {
+            "title": "Servicii",
+            "description": "Instrumentul de serviciu dev vă permite să apelați orice serviciu disponibil în Home Assistant.",
+            "call_service": "Apelare serviciu",
+            "column_parameter": "Parametru",
+            "column_description": "Descriere",
+            "column_example": "Exemplu",
+            "fill_example_data": "Completați exemple de date",
+            "yaml_mode": "Go to YAML mode",
+            "ui_mode": "Go to UI mode",
+            "yaml_parameters": "Parameters only available in YAML mode",
+            "all_parameters": "All available parameters",
+            "accepts_target": "This service accepts a target, for example: `entity_id: light.bed_light`",
+            "no_template_ui_support": "The UI does not support templates, you can still use the YAML editor."
+          },
+          "states": {
+            "title": "Status",
+            "description1": "Setați reprezentarea unui dispozitiv în cadrul Home Assistant.",
+            "description2": "Acesta nu va comunica cu dispozitivul actual.",
+            "entity": "Entitate",
+            "state": "Stare",
+            "attributes": "Atribute",
+            "state_attributes": "Atribute stare (YAML, opțional)",
+            "set_state": "Stabilire stare",
+            "current_entities": "Entități actuale",
+            "filter_entities": "Filtrare entități",
+            "filter_states": "Filtrare stări",
+            "filter_attributes": "Filtrare atribute",
+            "no_entities": "Nicio entitate",
+            "more_info": "Mai multe informații",
+            "alert_entity_field": "Entitatea este un câmp obligatoriu",
+            "last_updated": "Ultima actualizare",
+            "last_changed": "Ultima modificare",
+            "copy_id": "Copiați ID-ul în clipboard"
+          },
+          "templates": {
+            "title": "Şablon",
+            "description": "Șabloanele sunt redate utilizând motorul de șablon Jinja2 cu unele extensii specifice Home Assistant.",
+            "editor": "Editor șabloane",
+            "reset": "Reinițializați la șablonul demo",
+            "result_type": "Tipul rezultatului",
+            "jinja_documentation": "Șablon documentație Jinja2",
+            "template_extensions": "Șabloane de extensie pentru Home Assistant",
+            "unknown_error_template": "Sa produs o eroare de randare necunoscută.",
+            "time": "Acest șablon se actualizează la începutul fiecărui minut.",
+            "all_listeners": "Acest șablon ascultă următoarele evenimente modificate de stare:",
+            "no_listeners": "Acest șablon ascultă următoarele evenimente modificate de stare:",
+            "listeners": "Acest șablon ascultă următoarele evenimente modificate de stare:",
+            "entity": "Entitate",
+            "domain": "Domeniu"
+          }
+        }
+      }
+    }
+  }
+}

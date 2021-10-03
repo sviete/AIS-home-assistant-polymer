@@ -1,0 +1,13 @@
+{
+  "ui": {
+    "panel": {
+      "custom": {
+        "external_panel": {
+          "question_trust": "Confia no painel externo {nome} em {link}?",
+          "complete_access": "Terá acesso a todos os dados no Home Assistant.",
+          "hide_message": "Verifique os documentos para o componente panel_custom para ocultar esta mensagem"
+        }
+      }
+    }
+  }
+}

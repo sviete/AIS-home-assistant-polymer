@@ -1,0 +1,73 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Are you ready to awaken your home, reclaim your privacy and join a worldwide community of tinkerers?",
+        "next": "Next",
+        "finish": "Finish",
+        "user": {
+          "intro": "Let's get started by creating a user account.",
+          "required_field": "Required",
+          "data": {
+            "name": "Name",
+            "username": "Username",
+            "password": "Password",
+            "password_confirm": "Cadarnhewch y Cyfrinair"
+          },
+          "create_account": "Create Account",
+          "error": {
+            "required_fields": "Fill in all required fields",
+            "password_not_match": "Cyfrineiriau ddim yn cyfateb"
+          }
+        },
+        "core-config": {
+          "intro": "Helo {name}, croeso i Home Assistant. Sut hoffech enwi eich tŷ?",
+          "intro_location": "Hoffem wybod ble rydych chi'n byw. Bydd y wybodaeth yn helpu i arddangos gwybodaeth a sefydlu awtomeiddiadau haul. Tydi'r data byth yn cael ei rannu thu allan i'ch rhwydwaith.",
+          "intro_location_detect": "Gallwn eich helpu i lenwi'r wybodaeth hon drwy wneud cais un-tro i wasanaeth allanol.",
+          "location_name": "Enw eich gosodiad Home Assistant",
+          "location_name_default": "Hafan",
+          "button_detect": "Canfod",
+          "finish": "Nesaf"
+        },
+        "integration": {
+          "intro": "Cynrychiolir dyfeisiau a gwasanaethau yn Home Assistant fel integreiddiadau. Gallwch eu gosod nawr, neu'n ddiweddarach o'r sgrin ffurfweddu.",
+          "more_integrations": "Mwy",
+          "finish": "Gorffen"
+        },
+        "analytics": { "finish": "Next" },
+        "restore": {
+          "description": "Alternatively you can restore from a previous snapshot.",
+          "in_progress": "Restore in progress",
+          "show_log": "Show full log",
+          "hide_log": "Hide full log",
+          "full_snapshot": "Full snapshot",
+          "partial_snapshot": "Partial snapshot",
+          "type": "Snapshot type",
+          "select_type": "Select what to restore",
+          "folders": "Folders",
+          "addons": "Add-ons",
+          "password_protection": "Password protection",
+          "password": "Snapshot password",
+          "confirm_password": "Confirm Snapshot password"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

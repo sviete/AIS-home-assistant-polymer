@@ -1,0 +1,475 @@
+{
+  "ui": {
+    "panel": {
+      "lovelace": {
+        "cards": {
+          "confirm_delete": "Är du säker på att du vill ta bort det här kortet?",
+          "actions": {
+            "action_confirmation": "Är du säker på att du vill utföra händelsen \"{action}\"?",
+            "no_entity_more_info": "Ingen entitet angiven för mer info dialog",
+            "no_entity_toggle": "Ingen entitet angiven för växla",
+            "no_navigation_path": "Ingen navigationsväg angiven",
+            "no_url": "Ingen URL att öppna angiven",
+            "no_service": "Ingen tjänst för körning har angetts"
+          },
+          "empty_state": {
+            "title": "Välkommen hem",
+            "no_devices": "På den här sidan kan du styra dina enheter, men det ser ut som om du inte har några enheter ännu. Gå till integrationssidan för att komma igång.",
+            "go_to_integrations_page": "Gå till integrationssidan."
+          },
+          "entities": { "never_triggered": "Aldrig utlöst" },
+          "shopping-list": {
+            "checked_items": "Markerade objekt",
+            "clear_items": "Rensa markerade objekt",
+            "add_item": "Lägg till objekt",
+            "reorder_items": "Ändra ordning på objekt",
+            "drag_and_drop": "Dra och släpp"
+          },
+          "picture-elements": {
+            "hold": "Håll:",
+            "tap": "Tryck:",
+            "navigate_to": "Navigera till {location}",
+            "url": "Öppna fönster till {url_path}",
+            "toggle": "Växla {name}",
+            "call_service": "Kör tjänst {name}",
+            "more_info": "Visa mer-info: {name}"
+          },
+          "safe-mode": {
+            "header": "Felsäkert läge aktiverat",
+            "description": "Home Assistant stötte på problem när din konfiguration laddades och körs nu i felsäkert läge. Ta en titt i felloggen för att se vad som gick fel."
+          },
+          "starting": {
+            "description": "Home Assistant startar, var god vänta..."
+          }
+        },
+        "unused_entities": {
+          "title": "Oanvända enheter",
+          "available_entities": "Det här är de enheter som du har tillgängliga, men som inte finns i ditt Lovelace-gränssnitt än.",
+          "select_to_add": "Välj de enheter du vill lägga till på ett kort och klicka sedan på knappen Lägg till kort.",
+          "entity": "Enhet",
+          "entity_id": "Enhets-ID",
+          "domain": "Domän",
+          "last_changed": "Senast ändrad",
+          "search": "Sök entiteter",
+          "no_data": "Inga oanvända entiteter hittades"
+        },
+        "add_entities": {
+          "yaml_unsupported": "Du kan inte använda den här funktionen när du använder Lovelace användargränssnitt i YAML-läge.",
+          "generated_unsupported": "Du kan bara använda den här funktionen när du har tagit kontroll över Lovelace UI.",
+          "saving_failed": "Det gick inte att spara Lovelace användargränssnittskonfigurationen."
+        },
+        "views": {
+          "confirm_delete": "Radera vyn?",
+          "confirm_delete_text": "Är du säker på att du vill ta bort vyn ''{name}''?",
+          "confirm_delete_existing_cards": "Om du tar bort den här vyn tas även korten bort",
+          "confirm_delete_existing_cards_text": "Vill du ta bort vyn ''{name}''? Vyn innehåller {number}-kort som ska tas bort. Det går inte att ångra den här åtgärden."
+        },
+        "menu": {
+          "configure_ui": "Redigera kontrollpanel",
+          "help": "Hjälp",
+          "start_conversation": "Starta konversation",
+          "reload_resources": "Ladda om resurser",
+          "exit_edit_mode": "Avsluta UI-redigeringsläge",
+          "close": "Stäng"
+        },
+        "reload_resources": {
+          "refresh_header": "Vill du uppdatera?",
+          "refresh_body": "Du måste uppdatera sidan för att slutföra omladdningen, vill du uppdatera nu?"
+        },
+        "editor": {
+          "header": "Ändra användargränssnittet",
+          "menu": {
+            "open": "Öppna Lovelace-menyn",
+            "raw_editor": "Rå konfigurationsredigerare",
+            "manage_dashboards": "Hantera kontrollpaneler",
+            "manage_resources": "Hantera resurser"
+          },
+          "common": {
+            "edit": "Redigera",
+            "clear": "Rensa",
+            "add": "Lägg till",
+            "none": "Ingen"
+          },
+          "raw_editor": {
+            "header": "Redigera konfiguration",
+            "save": "Spara",
+            "unsaved_changes": "Osparade ändringar",
+            "saved": "Sparad",
+            "reload": "Ladda om",
+            "lovelace_changed": "Lovelace-konfigurationen uppdaterades, vill du ladda den uppdaterade konfigurationen i redigeraren och förlora dina nuvarande ändringar?",
+            "confirm_remove_config_title": "Är du säker på att du vill ta bort din Lovelace UI konfiguration?",
+            "confirm_remove_config_text": "Vi kommer automatiskt att generera dina Lovelace UI-vyer med dina områden och enheter om du tar bort din Lovelace UI-konfiguration.",
+            "confirm_unsaved_changes": "Du har osparade ändringar. Är du säker på att du vill avsluta?",
+            "confirm_unsaved_comments": "Din konfiguration innehåller en eller flera kommentarer, dessa kommer inte att sparas. Vill du fortsätta ändå?",
+            "error_parse_yaml": "Det går inte att analysera YAML: {error}",
+            "error_invalid_config": "Din konfiguration är inte giltig: {error}",
+            "error_save_yaml": "Det gick inte att spara YAML: {error}",
+            "error_remove": "Det går inte att ta bort konfigurationen: {error}",
+            "resources_moved": "Resurser ska inte längre läggas till i Lovelace konfiguration, utan ska läggas till i Lovelace konfigurationspanel."
+          },
+          "edit_lovelace": {
+            "header": "Titel på ditt Lovelace-gränssnitt",
+            "explanation": "Den här titeln visas ovanför alla dina vyer i Lovelace UI.",
+            "edit_title": "Redigera titel",
+            "title": "Titel"
+          },
+          "edit_view": {
+            "header": "Visa konfiguration",
+            "header_name": "{name} Visa konfiguration",
+            "add": "Lägg till vy",
+            "edit": "Redigera vy",
+            "delete": "Radera vy",
+            "move_left": "Flytta vyn åt vänster",
+            "move_right": "Flytta vyn åt höger",
+            "tab_settings": "Inställningar",
+            "tab_badges": "Märken",
+            "tab_visibility": "Synlighet",
+            "visibility": {
+              "select_users": "Välj vilka användare som ska se den här vyn i navigeringen"
+            },
+            "type": "View type",
+            "types": {
+              "masonry": "Masonry (default)",
+              "sidebar": "Sidebar",
+              "panel": "Panel (1 card)"
+            }
+          },
+          "edit_badges": {
+            "panel_mode": "Dessa märken visas inte eftersom den här vyn är i \"Panelläge\"."
+          },
+          "edit_card": {
+            "header": "Kortkonfiguration",
+            "typed_header": "{type} Kortkonfiguration",
+            "pick_card": "Vilket kort vill du lägga till?",
+            "pick_card_view_title": "Vilket kort vill du lägga till i {name} -vyn?",
+            "toggle_editor": "Visa / Dölj redigerare",
+            "unsaved_changes": "Du har osparade ändringar",
+            "confirm_cancel": "Är du säker på att du vill avbryta?",
+            "show_visual_editor": "Visa visuell redigerare",
+            "show_code_editor": "Visa kodredigerare",
+            "add": "Lägg till kort",
+            "edit": "Redigera",
+            "clear": "Rensa",
+            "delete": "Ta bort kort",
+            "duplicate": "Duplicera kort",
+            "move": "Flytta till vy",
+            "move_before": "Flytta kort innan",
+            "move_after": "Flytta kort efter",
+            "options": "Fler alternativ",
+            "search_cards": "Sök kort"
+          },
+          "move_card": { "header": "Välj en vy att flytta kortet till" },
+          "select_view": {
+            "header": "Välj en vy",
+            "dashboard_label": "Instrumentpanel"
+          },
+          "suggest_card": {
+            "header": "Vi har skapat ett förslag för dig",
+            "create_own": "Välj annat kort",
+            "add": "Lägg till i Lovelace-gränsnitt"
+          },
+          "save_config": {
+            "header": "Ta kontroll över Lovelace UI",
+            "para": "Denna skärm underhålls för närvarande av Home Assistant. Den uppdateras automatiskt när nya enheter eller Lovelace UI-komponenter blir tillgängliga. Om du tar kontrollen kommer denna instrumentpanel inte längre att uppdateras automatiskt. Du kan alltid skapa en ny instrumentpanel i konfigurationen att leka runt med.",
+            "para_sure": "Är du säker på att du vill ta kontroll över ditt användargränssnitt?",
+            "yaml_mode": "Du använder YAML-läge, vilket betyder att du inte kan ändra dina Lovelace-inställning från användargränssnittet. Om du vill hantera Lovelace från användargränssnittet, ta bort 'mode: yaml' från din Lovelace-inställning i 'configuration.yaml'",
+            "yaml_control": "Om du vill ta kontroll i YAML-läge skapar du en YAML-fil med det namn du angav i konfigurationen för den här instrumentpanelen eller standard \"ui-lovelace.yaml\".",
+            "yaml_config": "För att hjälpa dig igång, så är här nuvarande inställning för denna instrumentpanel:",
+            "empty_config": "Börja med en tom instrumentpanel",
+            "close": "Stäng",
+            "save": "Ta kontroll",
+            "cancel": "Avbryt"
+          },
+          "migrate": {
+            "header": "Ogiltig konfiguration",
+            "para_no_id": "Det här elementet har inget ID. Lägg till ett ID till det här elementet i \"ui-lovelace.yaml\".",
+            "para_migrate": "Home Assistant kan automatiskt lägga till ID:n till alla dina kort och vyer genom att du klickar på \"Migrera konfiguration\".",
+            "migrate": "Migrera konfiguration"
+          },
+          "action-editor": {
+            "navigation_path": "Navigationsväg",
+            "url_path": "Sökväg till URL",
+            "actions": {
+              "default_action": "Standardåtgärd",
+              "call-service": "Anropa tjänst",
+              "more-info": "Mer information",
+              "toggle": "Växla",
+              "navigate": "Navigera",
+              "url": "URL",
+              "none": "Ingen åtgärd"
+            }
+          },
+          "card": {
+            "alarm-panel": {
+              "name": "Larmpanel",
+              "available_states": "Tillgängliga tillstånd",
+              "description": "Med larmpanelkortet kan du aktivera och avaktivera integrering av larmkontrollpanelen."
+            },
+            "calendar": {
+              "name": "Kalender",
+              "description": "Kalenderkortet visar en kalender med dag-, vecka- och listvyer",
+              "inital_view": "Ursprunglig vy",
+              "calendar_entities": "Kalenderentiteter",
+              "views": {
+                "dayGridMonth": "Månad",
+                "dayGridDay": "Dag",
+                "listWeek": "Lista"
+              }
+            },
+            "conditional": {
+              "name": "Villkorlig",
+              "description": "Villkorskortet visar ett annat kort baserat på entitetstillstånd.",
+              "conditions": "Villkor",
+              "card": "Kort",
+              "state_equal": "Tillståndet är lika med",
+              "state_not_equal": "Tillståndet är inte lika med",
+              "current_state": "nuvarande",
+              "condition_explanation": "Kortet kommer att visas när ALLA villkor nedan är uppfyllda.",
+              "change_type": "Ändra typ"
+            },
+            "config": { "required": "Krävs", "optional": "Valfri" },
+            "entities": {
+              "name": "Enheter",
+              "show_header_toggle": "Visa rubrikväljare?",
+              "toggle": "Växla entiteter.",
+              "description": "Entitetskortet är den vanligaste korttypen. Det grupperar objekt i listor.",
+              "special_row": "speciell rad",
+              "edit_special_row": "Visa detaljerna för denna rad genom att klicka på redigeringsknappen",
+              "entity_row_editor": "Enhetsradredigerare",
+              "secondary_info_values": {
+                "none": "Ingen sekundärinformation",
+                "entity-id": "Entitets-ID",
+                "last-changed": "Senast ändrad",
+                "last-triggered": "Senast utlöst",
+                "position": "Position",
+                "tilt-position": "Lutningsposition",
+                "brightness": "Ljusstyrka",
+                "last-updated": "Senast uppdaterad"
+              },
+              "entity_row": {
+                "divider": "Avdelare",
+                "call-service": "Anropa tjänst",
+                "section": "Sektion",
+                "weblink": "Webbadress",
+                "attribute": "Attribut",
+                "buttons": "Knappar",
+                "conditional": "Villkorlig",
+                "cast": "Cast",
+                "button": "Knapp"
+              }
+            },
+            "entity": {
+              "name": "Entitet",
+              "description": "Entitetskortet ger dig en snabb överblick över dina entiteters tillstånd."
+            },
+            "button": {
+              "name": "Knapp",
+              "description": "Knappkortet låter dig lägga till knappar för att utföra uppgifter.",
+              "default_action_help": "Standardåtgärden beror på enhetens funktioner, den växlas antingen eller mer information visas."
+            },
+            "entity-filter": {
+              "name": "Enhetsfilter",
+              "description": "Med enhetsfilter kortet kan du definiera en lista över enheter som du vill följa endast när de är i ett visst läge."
+            },
+            "gauge": {
+              "name": "Mätare",
+              "needle_gauge": "Display as needle gauge?",
+              "severity": {
+                "define": "Definiera allvarlighetsgrad?",
+                "green": "Grön",
+                "red": "Röd",
+                "yellow": "Gul"
+              },
+              "description": "Mätarkortet är ett grundläggande kort som möjliggör visuell visning av sensordata."
+            },
+            "glance": {
+              "name": "Blick",
+              "columns": "Kolumner",
+              "description": "Glance-kortet är användbart för att gruppera flera sensorer i en kompakt översikt."
+            },
+            "grid": {
+              "name": "Rutnät",
+              "description": "Med Grid-kortet kan du visa flera kort i ett rutnät.",
+              "columns": "Kolumner",
+              "square": "Återge kort som fyrkanter"
+            },
+            "logbook": {
+              "name": "Loggbok",
+              "description": "Loggbokskortet visar en lista över händelser för entiteter."
+            },
+            "history-graph": {
+              "name": "Historikdiagram",
+              "description": "Historikdiagramkortet låter dig att visa en graf för varje listad enhet."
+            },
+            "statistics-graph": {
+              "name": "Statistics Graph",
+              "description": "The Statistics Graph card allows you to display a graph of the statistics for each of the entities listed."
+            },
+            "horizontal-stack": {
+              "name": "Vågrät trave",
+              "description": "Med Horizontal Stack-kortet kan du stapla ihop flera kort, så att de alltid sitter bredvid varandra i utrymmet av en kolumn."
+            },
+            "humidifier": {
+              "name": "Luftfuktare",
+              "description": "Termostatkortet kontrollerar din klimatenhet så att du kan ändra luftfuktighet och läge."
+            },
+            "iframe": {
+              "name": "Webbsida",
+              "description": "Webbsidekortet låter dig bädda in din favoritwebbplats direkt i Home Assistant."
+            },
+            "light": {
+              "name": "Lampa",
+              "description": "Med ljuskortet kan du ändra ljusets ljusstyrka."
+            },
+            "generic": {
+              "aspect_ratio": "Bildförhållande",
+              "attribute": "Attribut",
+              "camera_image": "Kameraentitet",
+              "camera_view": "Kamerauppdatering",
+              "double_tap_action": "Dubbeltrycksåtgärd",
+              "entities": "Entiteter",
+              "entity": "Entitet",
+              "hold_action": "Händelse vid nedtryckt",
+              "hours_to_show": "Timmar att visa",
+              "days_to_show": "Days to Show",
+              "icon": "Ikon",
+              "icon_height": "Ikonhöjd",
+              "image": "Bildsökväg",
+              "maximum": "Maximum",
+              "manual": "Manuell",
+              "manual_description": "Behöver du lägga till ett anpassat kort eller vill du bara skriva yaml manuellt?",
+              "minimum": "Minimum",
+              "name": "Namn",
+              "refresh_interval": "Uppdateringsintervall",
+              "show_icon": "Visa ikon?",
+              "show_name": "Visa namn?",
+              "show_state": "Visa tillstånd?",
+              "tap_action": "Händelse vid klick",
+              "title": "Rubrik",
+              "theme": "Tema",
+              "no_theme": "Inget tema",
+              "unit": "Enhet",
+              "url": "URL",
+              "state": "Tillstånd",
+              "secondary_info_attribute": "Sekundär informationsattribut",
+              "search": "Sök",
+              "state_color": "Färg på ikon baserat på läge?"
+            },
+            "map": {
+              "name": "Karta",
+              "geo_location_sources": "Geografiska källor",
+              "dark_mode": "Mörkt läge?",
+              "default_zoom": "Standardzoom",
+              "hours_to_show": "Timmar att Visa",
+              "source": "Källa",
+              "description": "Kartkortet som gör att du kan visa entiteter på en karta."
+            },
+            "markdown": {
+              "name": "Markdown",
+              "content": "Innehåll",
+              "description": "Markdown-kortet används för att återge Markdown."
+            },
+            "media-control": {
+              "name": "Mediaspelare",
+              "description": "Mediakontrollkortet används för att visa mediaspelarenheter på ett gränssnitt med lättanvända kontroller."
+            },
+            "picture": {
+              "name": "Bild",
+              "description": "Bildkortet låter dig ställa in en bild som ska användas för att navigera till olika banor i ditt gränssnitt eller för att ringa en tjänst."
+            },
+            "picture-elements": {
+              "name": "Bildelement",
+              "description": "Bildlementkortet är en av de mest mångsidiga typerna av kort. Korten låter dig placera ikoner eller text och till och med tjänster! På en bild baserad på koordinater."
+            },
+            "picture-entity": {
+              "name": "Bildentitet",
+              "description": "Bildentitetskortet visar en enhet i form av en bild. I stället för bilder från URL kan den också visa bilden av kameraenheter."
+            },
+            "picture-glance": {
+              "name": "Bildblick",
+              "description": "Picture Glance-kortet visar en bild och motsvarande enhetstillstånd som en ikon. Enheterna på höger sida tillåter att växla åtgärder, andra visar dialogrutan för mer information.",
+              "state_entity": "Statusentitet"
+            },
+            "plant-status": {
+              "name": "Växtstatus",
+              "description": "Plant Status-kortet är för alla de härliga botanikerna där ute."
+            },
+            "sensor": {
+              "name": "Sensor",
+              "show_more_detail": "Visa fler detaljer",
+              "graph_type": "Typ av kurva",
+              "description": "Sensorkortet ger dig en snabb överblick över dina sensortillstånd med en valfri graf för att visualisera förändring över tid."
+            },
+            "shopping-list": {
+              "name": "Inköpslista",
+              "description": "Shopping List-kortet gör att du kan lägga till, redigera, checka av och rensa objekt från din inköpslista.",
+              "integration_not_loaded": "Detta kort kräver att \"shopping_list\" -integrationen konfigureras."
+            },
+            "thermostat": {
+              "name": "Termostat",
+              "description": "Termostatkortet kontrollerar din klimatenhet. Så att du kan ändra temperaturen och läge."
+            },
+            "vertical-stack": {
+              "name": "Vertikal trave",
+              "description": "Med Vertical Stack-kortet kan du gruppera flera kort så att de alltid sitter i samma kolumn."
+            },
+            "weather-forecast": {
+              "name": "Väderprognos",
+              "description": "Kortet Väderprognos visar vädret. Mycket användbart att inkludera på gränssnitt som man visar på väggen.",
+              "show_forecast": "Visa prognos"
+            }
+          },
+          "view": {
+            "panel_mode": {
+              "warning_multiple_cards": "Den här vyn innehåller mer än ett kort, men en panelvy kan bara visa 1 kort.",
+              "description": "Detta gör att det första kortet utnyttjar hela bredden i denna vyn.",
+              "title": "Panelläge?"
+            }
+          },
+          "cardpicker": {
+            "no_description": "Ingen beskrivning finns tillgänglig.",
+            "custom_card": "Anpassad",
+            "domain": "Domän",
+            "entity": "Entitet",
+            "by_entity": "Efter entitet",
+            "by_card": "Efter Kort"
+          },
+          "header-footer": {
+            "header": "Sidhuvud",
+            "footer": "Sidfot",
+            "choose_header_footer": "Välj en {type}",
+            "types": {
+              "graph": { "name": "Graf" },
+              "picture": { "name": "Bild" },
+              "buttons": { "name": "Knappar" }
+            }
+          },
+          "sub-element-editor": {
+            "types": {
+              "header": "Redigerare för sidhuvud",
+              "footer": "Redigerare för sidfot",
+              "row": "Redigerare för rader"
+            }
+          }
+        },
+        "warning": {
+          "attribute_not_found": "Attribut {attribute} inte tillgängligt i: {entity}",
+          "entity_not_found": "Enheten är ej tillgänglig: {entity}",
+          "entity_non_numeric": "Enheten är icke-numerisk: {entity}",
+          "entity_unavailable": "{entity} är otillgänglig",
+          "starting": "Home Assistant startar, allt är kanske inte tillgängligt ännu"
+        },
+        "changed_toast": {
+          "message": "Lovelace-konfigurationen uppdaterades, vill du ladda om?"
+        },
+        "components": {
+          "timestamp-display": {
+            "invalid": "Ogiltig tidsstämpel",
+            "invalid_format": "Ogiltigt visningsformat"
+          }
+        },
+        "reload_lovelace": "Ladda om användargränssnittet"
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "事件",
+            "description": "於事件匯流排中執行事件。",
+            "documentation": "事件文件。",
+            "type": "事件類別",
+            "data": "事件資料（YAML，選項）",
+            "fire_event": "觸發事件",
+            "event_fired": "事件 {name} 已觸發",
+            "available_events": "可用事件",
+            "count_listeners": " {count}  位監聽者）",
+            "listen_to_events": "監聽事件",
+            "listening_to": "監聽：",
+            "subscribe_to": "訂閱事件",
+            "start_listening": "開始監聽",
+            "stop_listening": "停止監聽",
+            "alert_event_type": "事件類型為必填欄位",
+            "notification_event_fired": "事件 {type} 已成功觸發！"
+          },
+          "services": {
+            "title": "服務",
+            "description": "服務開發工具允許呼叫任何 Home Assistant 中可用服務。",
+            "call_service": "執行服務",
+            "column_parameter": "參數",
+            "column_description": "說明",
+            "column_example": "範例",
+            "fill_example_data": "填寫範例資料",
+            "yaml_mode": "進入 YAML 模式",
+            "ui_mode": "進入 UI 模式",
+            "yaml_parameters": "參數僅限於 YAML 模式",
+            "all_parameters": "所有可用參數",
+            "accepts_target": "服務接受目標，例如：`entity_id: light.bed_light`",
+            "no_template_ui_support": "UI 不支援模版，但仍可使用 YAML 編輯器。"
+          },
+          "states": {
+            "title": "狀態",
+            "description1": "設定 Home Assistant 實體目前狀態。",
+            "description2": "假如實體屬於裝置，將不會與實際裝置進行通訊。",
+            "entity": "實體",
+            "state": "狀態",
+            "attributes": "屬性",
+            "state_attributes": "狀態屬性（YAML，選項）",
+            "set_state": "設定狀態",
+            "current_entities": "目前實體",
+            "filter_entities": "實體篩選器",
+            "filter_states": "狀態篩選器",
+            "filter_attributes": "屬性篩選器",
+            "no_entities": "無實體",
+            "more_info": "更多資訊",
+            "alert_entity_field": "實體為必填欄位",
+            "last_updated": "最後更新",
+            "last_changed": "上次變更",
+            "copy_id": "複製 ID 至剪貼簿"
+          },
+          "templates": {
+            "title": "模板",
+            "description": "模版使用 Jinja2 模板引擎及 Home Assistant 特殊擴充進行模板渲染。",
+            "editor": "模板編輯器",
+            "reset": "重置示範範模板",
+            "result_type": "結果類型",
+            "jinja_documentation": "Jinja2 模版文件",
+            "template_extensions": "Home Assistant 模板擴充",
+            "unknown_error_template": "未知渲染模版錯誤",
+            "time": "此模板於上次狀態變更事件後每分鐘更新一次。",
+            "all_listeners": "此模板監聽所有狀態變更事件。",
+            "no_listeners": "此模板不監聽任何狀態變更事件，將不自動更新。",
+            "listeners": "此模板監聽以下狀態變更事件：",
+            "entity": "實體",
+            "domain": "實體類群"
+          }
+        }
+      }
+    }
+  }
+}

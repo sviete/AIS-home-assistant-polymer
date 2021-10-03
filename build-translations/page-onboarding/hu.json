@@ -1,0 +1,73 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Készen állsz arra, hogy felébreszd az otthonod, visszaszerezd a magánéleted és csatlakozz egy világhálós közösséghez?",
+        "next": "Következő",
+        "finish": "Befejezés",
+        "user": {
+          "intro": "Kezdjük a felhasználói fiók létrehozásával.",
+          "required_field": "Szükséges",
+          "data": {
+            "name": "Név",
+            "username": "Felhasználónév",
+            "password": "Jelszó",
+            "password_confirm": "Jelszó megerősítése"
+          },
+          "create_account": "Fiók Létrehozása",
+          "error": {
+            "required_fields": "Töltsd ki az összes szükséges mezőt",
+            "password_not_match": "A jelszavak nem egyeznek"
+          }
+        },
+        "core-config": {
+          "intro": "Hello {name}, üdvözöl a Home Assistant. Hogyan szeretnéd elnevezni az otthonodat?",
+          "intro_location": "Szeretnénk tudni, hogy hol élsz. Ez segít az információk megjelenítésében és a nap alapú automatizálások beállításában. Ez az adat soha nem lesz megosztva a hálózatodon kívül.",
+          "intro_location_detect": "Segíthetünk neked kitölteni ezt az információt egy külső szolgáltatás egyszeri lekérdezésével.",
+          "location_name": "A Home Assistant rendszered neve",
+          "location_name_default": "Otthon",
+          "button_detect": "Észlelés",
+          "finish": "Tovább"
+        },
+        "integration": {
+          "intro": "Az eszközöket és szolgáltatásokat a Home Assistant integrációként kezeli. Beállíthatod őket most, vagy később a konfigurációs képernyőn.",
+          "more_integrations": "Több",
+          "finish": "Befejezés"
+        },
+        "analytics": { "finish": "Következő" },
+        "restore": {
+          "description": "Alternatív megoldásként visszaállíthatsz egy korábbi pillanatképet.",
+          "in_progress": "Visszaállítás folyamatban",
+          "show_log": "Teljes napló megjelenítése",
+          "hide_log": "Teljes napló elrejtése",
+          "full_snapshot": "Teljes pillanatkép",
+          "partial_snapshot": "Részleges pillanatkép",
+          "type": "Pillanatkép típus",
+          "select_type": "Válassza ki a visszaállítandó elemeket",
+          "folders": "Mappák",
+          "addons": "Kiegészítők",
+          "password_protection": "Jelszóvédelem",
+          "password": "Snapshot jelszó",
+          "confirm_password": "Erősítse meg a Pillanatkép jelszavát"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

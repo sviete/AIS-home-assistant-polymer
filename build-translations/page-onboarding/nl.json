@@ -1,0 +1,76 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Ben je klaar om je huis wakker te maken, je privacy terug te winnen en deel te nemen aan een wereldwijde gemeenschap van knutselaars?",
+        "next": "Volgende",
+        "finish": "Voltooien",
+        "user": {
+          "intro": "Laten we beginnen door een gebruikersaccount aan te maken.",
+          "required_field": "Verplicht",
+          "data": {
+            "name": "Naam",
+            "username": "Gebruikersnaam",
+            "password": "Wachtwoord",
+            "password_confirm": "Bevestig wachtwoord"
+          },
+          "create_account": "Account aanmaken",
+          "error": {
+            "required_fields": "Vul alle verplichte velden in",
+            "password_not_match": "Wachtwoorden komen niet overeen"
+          }
+        },
+        "core-config": {
+          "intro": "Hallo {name}, welkom bij Home Assistant. Welke naam wil je je huis geven?",
+          "intro_location": "We willen graag weten waar je woont. Deze informatie zal helpen bij het weergeven van informatie en het instellen van op de zon gebaseerde automatiseringen. Deze gegevens worden nooit gedeeld buiten je netwerk.",
+          "intro_location_detect": "Wij kunnen u helpen deze informatie in te vullen door eenmalig een verbinding te maken met een externe service.",
+          "location_name": "Naam van de Home Assistant installatie",
+          "location_name_default": "Huis",
+          "button_detect": "Detecteren",
+          "finish": "Volgende"
+        },
+        "integration": {
+          "intro": "Apparaten en services worden in Home Assistant weergegeven als integraties. U kunt ze nu instellen of later via het configuratiescherm.",
+          "more_integrations": "Meer",
+          "finish": "Voltooien"
+        },
+        "analytics": {
+          "finish": "Volgende",
+          "intro": "Deel de analyses van uw instantie. Deze gegevens zullen publiekelijk beschikbaar zijn op {link}"
+        },
+        "restore": {
+          "description": "Je kunt ook herstellen vanaf een eerdere snapshot.",
+          "in_progress": "Herstel in uitvoering",
+          "show_log": "Volledig logboek weergeven",
+          "hide_log": "Verberg volledig logboek",
+          "full_snapshot": "Volledige snapshot",
+          "partial_snapshot": "Gedeeltelijke snapshot",
+          "type": "Snapshot type",
+          "select_type": "Selecteer wat u wilt herstellen",
+          "folders": "Mappen",
+          "addons": "Invoegtoepassingen",
+          "password_protection": "Wachtwoord bescherming",
+          "password": "Snapshot wachtwoord",
+          "confirm_password": "Bevestig Snapshot-wachtwoord"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

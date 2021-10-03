@@ -1,0 +1,76 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "האם אתה רוצה לקחת שליטה על הבית שלך ולהצטרף לקהילה הגדולה שלנו?",
+        "next": "הבא",
+        "finish": "סיום",
+        "user": {
+          "intro": "בואו נתחיל על ידי יצירת חשבון משתמש.",
+          "required_field": "נדרש",
+          "data": {
+            "name": "שם",
+            "username": "שם משתמש",
+            "password": "סיסמה",
+            "password_confirm": "אשר סיסמה"
+          },
+          "create_account": "צור חשבון",
+          "error": {
+            "required_fields": "מלא את כל השדות הדרושים",
+            "password_not_match": "הסיסמאות אינן תואמות"
+          }
+        },
+        "core-config": {
+          "intro": "שלום {name} , ברוך הבא ל- Home Assistant. איך היית רוצה את שם הבית שלך?",
+          "intro_location": "אנחנו רוצים לדעת איפה אתה גר. מידע זה יעזור עם הצגת מידע והגדרת אוטומציה מבוססת שמש. נתונים אלה לעולם אינם משותפים מחוץ לרשת שלך.",
+          "intro_location_detect": "אנו יכולים לעזור לך למלא מידע זה על ידי ביצוע בקשה חד פעמית לשירות חיצוני.",
+          "location_name": "שם ההתקנה של Home Assistant שלך",
+          "location_name_default": "בית",
+          "button_detect": "לזהות",
+          "finish": "הבא"
+        },
+        "integration": {
+          "intro": "התקנים ושירותים מיוצגים ב- Home Assistant כאינטגרציות. באפשרותך להגדיר אותם כעת, או לעשות זאת מאוחר יותר ממסך התצורה.",
+          "more_integrations": "עוד",
+          "finish": "סיום"
+        },
+        "analytics": {
+          "finish": "הבא",
+          "intro": "שתף ניתוח מהמופע שלך. נתונים אלה יהיו זמינים לציבור בכתובת {link}"
+        },
+        "restore": {
+          "description": "לחלופין, באפשרותך לשחזר מגיבוי קודם.",
+          "in_progress": "שחזור מתבצע",
+          "show_log": "הצג יומן מלא",
+          "hide_log": "הסתר יומן מלא",
+          "full_snapshot": "גיבוי מלא",
+          "partial_snapshot": "גיבוי חלקי",
+          "type": "סוג נקודת גיבוי",
+          "select_type": "בחר מה לשחזר",
+          "folders": "תיקיות",
+          "addons": "תוספים",
+          "password_protection": "הגנה באמצעות סיסמה",
+          "password": "סיסמה",
+          "confirm_password": "אישור סיסמת גיבוי"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

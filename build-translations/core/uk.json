@@ -1,0 +1,893 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "Календар",
+    "config": "Конфігурація",
+    "states": "Огляд",
+    "map": "Мапа",
+    "logbook": "Журнал",
+    "history": "Історія",
+    "mailbox": "Поштова скринька",
+    "shopping_list": "Список покупок",
+    "developer_tools": "Інструменти для розробників",
+    "media_browser": "Переглядач мультимедіа",
+    "profile": "Профіль"
+  },
+  "state": {
+    "default": {
+      "on": "Увімкнено",
+      "off": "Вимкнено",
+      "unknown": "Невідомо",
+      "unavailable": "Недоступний"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": {
+        "off": "Вимкнено",
+        "on": "Увімкнено",
+        "auto": "Автоматичний"
+      },
+      "preset_mode": {
+        "none": "Немає",
+        "eco": "Еко",
+        "away": "Відсутній",
+        "boost": "Турбо",
+        "comfort": "Комфорт",
+        "home": "Вдома",
+        "sleep": "Сон",
+        "activity": "Діяльність"
+      },
+      "hvac_action": {
+        "off": "Вимкнено",
+        "heating": "Нагрівання",
+        "cooling": "Охолодження",
+        "drying": "Осушення",
+        "idle": "Очікування",
+        "fan": "Вентилятор"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "Нормальний",
+        "eco": "Еко",
+        "away": "Не вдома",
+        "boost": "Турбо",
+        "comfort": "Комфорт",
+        "home": "Вдома",
+        "sleep": "Сон",
+        "auto": "Автоматичний",
+        "baby": "Дитина"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "Невід",
+      "unavailable": "Недоступно",
+      "error": "Помилка",
+      "entity_not_found": "Сутність не знайдено"
+    },
+    "alarm_control_panel": {
+      "armed": "Охорона",
+      "disarmed": "Знято",
+      "armed_home": "Охорона",
+      "armed_away": "Охорона",
+      "armed_night": "Охорона",
+      "armed_custom_bypass": "Охорона",
+      "pending": "Очікування",
+      "arming": "Поставлено",
+      "disarming": "Знято",
+      "triggered": "Тривога"
+    },
+    "device_tracker": { "home": "Вдома", "not_home": "Відсутній" },
+    "person": { "home": "Вдома", "not_home": "Відсутній" }
+  },
+  "groups": {
+    "owner": "Власник",
+    "system-admin": "Адміністратори",
+    "system-users": "Користувачі",
+    "system-read-only": "Системні користувачі"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "Користувач",
+      "integration": "Інтеграція",
+      "config_entry": "Конфігурація",
+      "device": "Пристрій"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "Ви хочете зберегти цей логін?",
+      "decline": "Ні, дякую",
+      "confirm": "Зберегти логін"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "Код",
+        "clear_code": "Очистити",
+        "disarm": "Зняти з охорони",
+        "arm_home": "Поставити на охорону",
+        "arm_away": "Охорона (не вдома)",
+        "arm_night": "Нічна охорона",
+        "arm_custom_bypass": "Користувацький обхід"
+      },
+      "automation": {
+        "last_triggered": "Останній запуск",
+        "trigger": "Запуск"
+      },
+      "camera": { "not_available": "Зображення недоступне" },
+      "climate": {
+        "currently": "В даний час",
+        "on_off": "Вкл / Викл",
+        "target_temperature": "Задана температура",
+        "target_temperature_entity": "{name} задана температура",
+        "target_temperature_mode": "{name} задана температура {mode}",
+        "current_temperature": "{name} поточна температура",
+        "heating": "{name} нагрівання",
+        "cooling": "{name} охолодження",
+        "high": "високий",
+        "low": "низький",
+        "target_humidity": "Задана вологість",
+        "operation": "Режим",
+        "fan_mode": "Режим вентиляції",
+        "swing_mode": "Режим гойдання повітряних шторок",
+        "preset_mode": "Режим",
+        "away_mode": "Режим \"Не вдома\"",
+        "aux_heat": "Додатковий нагрів"
+      },
+      "counter": {
+        "actions": {
+          "increment": "збільшити",
+          "decrement": "зменшити",
+          "reset": "скинути"
+        }
+      },
+      "cover": { "position": "Положення", "tilt_position": "Положення нахилу" },
+      "fan": {
+        "speed": "Швидкість",
+        "preset_mode": "Preset Mode",
+        "oscillate": "Коливання",
+        "direction": "Напрямок",
+        "forward": "Від себе",
+        "reverse": "На себе"
+      },
+      "humidifier": {
+        "humidity": "Цільова вологість",
+        "mode": "Режим",
+        "target_humidity_entity": "{name} цільова вологість",
+        "on_entity": "{name} увімкнено"
+      },
+      "light": {
+        "brightness": "Яскравість",
+        "color_temperature": "Кольорова температура",
+        "white_value": "Значення білого",
+        "color_brightness": "Color brightness",
+        "cold_white_value": "Cold white brightness",
+        "warm_white_value": "Warm white brightness",
+        "effect": "Ефект"
+      },
+      "lock": { "code": "Код", "lock": "Блокувати", "unlock": "Розблокувати" },
+      "media_player": {
+        "source": "Джерело",
+        "sound_mode": "Режим звуку",
+        "browse_media": "Перегляд медіа",
+        "turn_on": "Увімкнути",
+        "turn_off": "Вимкнути",
+        "media_play": "Грати",
+        "media_play_pause": "Відтворення / пауза",
+        "media_next_track": "Наступний",
+        "media_previous_track": "Попередній",
+        "text_to_speak": "Текст для відтворення"
+      },
+      "persistent_notification": { "dismiss": "Відхилити" },
+      "scene": { "activate": "Активувати" },
+      "script": {
+        "run": "Run",
+        "cancel": "Скасувати",
+        "cancel_multiple": "Скасувати {number}"
+      },
+      "service": { "run": "Запустити" },
+      "timer": {
+        "actions": {
+          "start": "Запуск",
+          "pause": "Пауза",
+          "cancel": "Скасувати",
+          "finish": "Готово"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "Продовжити прибирання",
+          "return_to_base": "Повернутись на док-станцію",
+          "start_cleaning": "Почати прибирання",
+          "turn_on": "Ввімкнути",
+          "turn_off": "Вимкнути"
+        }
+      },
+      "water_heater": {
+        "currently": "В даний час",
+        "on_off": "Вкл / Викл",
+        "target_temperature": "Задана температура",
+        "operation": "Операція",
+        "away_mode": "Режим \"Не вдома\""
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "Тиск повітря",
+          "humidity": "Вологість",
+          "temperature": "Температура",
+          "visibility": "Видимість",
+          "wind_speed": "Швидкість вітру",
+          "precipitation": "Опади"
+        },
+        "cardinal_direction": {
+          "e": "E",
+          "ene": "ENE",
+          "ese": "ESE",
+          "n": "N",
+          "ne": "NE",
+          "nne": "NNE",
+          "nw": "NW",
+          "nnw": "NNW",
+          "s": "S",
+          "se": "SE",
+          "sse": "SSE",
+          "ssw": "SSW",
+          "sw": "SW",
+          "w": "W",
+          "wnw": "WNW",
+          "wsw": "WSW"
+        },
+        "day": "День",
+        "night": "Ніч",
+        "forecast": "Прогноз",
+        "high": "Високий",
+        "low": "Низький"
+      }
+    },
+    "common": {
+      "and": "і",
+      "continue": "Продовжити",
+      "previous": "Назад",
+      "loading": "Завантаження",
+      "refresh": "Оновити",
+      "cancel": "Скасувати",
+      "delete": "Видалити",
+      "remove": "Видалити",
+      "enable": "Увімкнути",
+      "disable": "Вимкнути",
+      "close": "Закрити",
+      "leave": "Вийти",
+      "stay": "Залишитись",
+      "next": "Далі",
+      "back": "Назад",
+      "undo": "Скасувати",
+      "save": "Зберегти",
+      "rename": "Перейменувати",
+      "yes": "Так",
+      "no": "Ні",
+      "not_now": "Не зараз",
+      "skip": "Пропустити",
+      "menu": "Меню",
+      "overflow_menu": "Випадаюче меню",
+      "successfully_saved": "Успішно збережено",
+      "successfully_deleted": "Успішно видалено",
+      "error_required": "Обов'язкове поле",
+      "copied": "Скопійовано",
+      "copied_clipboard": "Скопійовано в буфер обміну"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "Записів у журналі не знайдено.",
+        "by": "за",
+        "by_service": "за послугою",
+        "show_trace": "Show trace",
+        "retrieval_error": "Error during logbook entry retrieval",
+        "messages": {
+          "was_away": "був відсутній",
+          "was_at_state": "був у {state}",
+          "rose": "сходить",
+          "set": "заходить",
+          "was_low": "був низьким",
+          "was_normal": "був нормальним",
+          "was_connected": "був підключений",
+          "was_disconnected": "був відключений",
+          "was_opened": "був відкритий",
+          "was_closed": "був закритий",
+          "is_opening": "is opening",
+          "is_closing": "is closing",
+          "was_unlocked": "був розблокований",
+          "was_locked": "був заблокований",
+          "was_plugged_in": "був підключений",
+          "was_unplugged": "був відключений",
+          "was_at_home": "був вдома",
+          "was_unsafe": "було небезпечно",
+          "was_safe": "було безпечно",
+          "detected_device_class": "виявлено {device_class}",
+          "cleared_device_class": "чисто ({device_class} не виявлено)",
+          "turned_off": "вимкнено",
+          "turned_on": "ввімкнено",
+          "changed_to_state": "змінює стан на {state}",
+          "became_unavailable": "стала недоступною"
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "Сутність",
+          "clear": "Очистити",
+          "no_match": "Відповідних об'єктів не знайдено",
+          "show_entities": "Показати об'єкти"
+        },
+        "entity-attribute-picker": {
+          "attribute": "Атрибут",
+          "show_attributes": "Показати атрибути"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "Розділити це приміщення на окремі пристрої і об'єкти. Після поділу пристрої та об'єкти не будуть оновлюватися при зміні приміщення.",
+        "expand_device_id": "Розділити цей пристрій на окремі об'єкти. Після відокремлення об'єкти не будуть оновлюватися при зміні пристрою.",
+        "remove_area_id": "Видалити приміщення",
+        "remove_device_id": "Видалити пристрій",
+        "remove_entity_id": "Видалити об'єкт",
+        "add_area_id": "Вибрати приміщення",
+        "add_device_id": "Вибрати пристрій",
+        "add_entity_id": "Вибрати об'єкт"
+      },
+      "user-picker": {
+        "no_user": "Немає користувача",
+        "add_user": "Додати користувача",
+        "remove_user": "Видалити користувача"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Виберіть проект",
+        "add_user": "Додати користувача",
+        "remove_user": "Видалити користувача"
+      },
+      "device-picker": {
+        "clear": "Очистити",
+        "toggle": "Перемкнути",
+        "show_devices": "Показати пристрої",
+        "no_devices": "Не знайдено жодного пристрою",
+        "no_match": "Відповідних пристроїв не знайдено",
+        "device": "Пристрій",
+        "no_area": "Немає області"
+      },
+      "area-picker": {
+        "clear": "Очистити",
+        "show_areas": "Показати приміщення",
+        "area": "Приміщення",
+        "add_new": "Додати приміщення ...",
+        "no_areas": "Не знайдено жодного приміщення",
+        "no_match": "Відповідних приміщень не знайдено",
+        "add_dialog": {
+          "title": "Додати приміщення",
+          "text": "Введіть назву нового приміщення.",
+          "name": "Назва",
+          "add": "Додати",
+          "failed_create_area": "Не вдалося створити приміщення."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "Add-on",
+        "error": {
+          "no_supervisor": {
+            "title": "No Supervisor",
+            "description": "No Supervisor found, so add-ons could not be loaded."
+          },
+          "fetch_addons": {
+            "title": "Error fetching add-ons",
+            "description": "Fetching add-ons returned an error."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "Filter by entity",
+        "filter_by_device": "Filter by device",
+        "filter_by_area": "Filter by area",
+        "filtered_by_entity": "entity: {entity_name}",
+        "filtered_by_device": "device: {device_name}",
+        "filtered_by_area": "area: {area_name}"
+      },
+      "picture-upload": {
+        "label": "Зображення",
+        "unsupported_format": "Непідтримуваний формат, будь ласка, виберіть зображення JPEG, PNG або GIF."
+      },
+      "date-range-picker": {
+        "start_date": "Дата початку",
+        "end_date": "Дата закінчення",
+        "select": "Вибрати",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Ніколи",
+        "just_now": "Зараз",
+        "duration": {
+          "second": "{count} {count, plural,\n  one {сек.}\n  other {сек.}\n}",
+          "minute": "{count} {count, plural,\n  one {хв.}\n  other {хв.}\n}",
+          "hour": "{count} {count, plural,\n  one {год.}\n  other {год.}\n}",
+          "day": "{count} {count, plural,\n  one {д.}\n  other {д.}\n}",
+          "week": "{count} {count, plural,\n  one {тиж.}\n  other {тиж.}\n}"
+        },
+        "past_duration": {
+          "second": "{count} {count, plural,\n  one {секунду}\n  other {секунд}\n} тому",
+          "minute": "{count} {count, plural,\n  one {хвилину}\n  other {хвилин}\n} тому",
+          "hour": "{count} {count, plural,\n  one {годину}\n  other {годин}\n} тому",
+          "day": "{count} {count, plural,\n  one {день}\n  other {днів}\n} тому",
+          "week": "{count} {count, plural,\n  one {тиждень}\n  other {тижнів}\n} тому"
+        },
+        "future_duration": {
+          "second": "Через {count} {count, plural,\n  one {секунда}\n  other {секунд}\n}",
+          "minute": "Через {count} {count, plural,\n  one {хвилина}\n  other {хвилин}\n}",
+          "hour": "Через {count} {count, plural,\n  one {година}\n  other {годин}\n}",
+          "day": "Через {count} {count, plural,\n  one {день}\n  other {днів}\n}",
+          "week": "Через {count} {count, plural,\n  one {тиждень}\n  other {тижнів}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "History integration disabled",
+        "loading_history": "Завантаження історії стану ...",
+        "no_history_found": "Немає історії станів."
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "Служба" },
+      "service-control": {
+        "required": "This field is required",
+        "target": "Targets",
+        "target_description": "What should this service use as targeted areas, devices or entities.",
+        "service_data": "Service data",
+        "integration_doc": "Integration documentation"
+      },
+      "related-items": {
+        "no_related_found": "Не знайдено пов'язаних елементів",
+        "integration": "Інтеграція",
+        "device": "Пристрій",
+        "area": "Приміщення",
+        "entity": "Пов'язані сутності",
+        "group": "Використовується в групах",
+        "scene": "Використовується в сценах",
+        "script": "Використовується в скриптах",
+        "automation": "Використовується в автоматизаціях"
+      },
+      "data-table": {
+        "search": "Пошук",
+        "no-data": "Немає даних",
+        "filtering_by": "Filtering by",
+        "hidden": "{number} hidden",
+        "clear": "Clear"
+      },
+      "media-browser": {
+        "pick": "Вибрати",
+        "play": "Грати",
+        "play-media": "Відтворення медіафайлів",
+        "pick-media": "Вибір медіафайлів",
+        "no_items": "Немає елементів",
+        "choose_player": "Вибір медіапрогравача",
+        "media-player-browser": "Переглядач мультимедіа",
+        "web-browser": "Веб-браузер",
+        "media_player": "Медіапрогравач",
+        "audio_not_supported": "Ваш браузер не підтримує аудіо.",
+        "video_not_supported": "Ваш браузер не підтримує відео.",
+        "media_not_supported": "Цей тип мультимедіа не підтримується.",
+        "media_browsing_error": "Помилка перегляду мультимедіа",
+        "learn_adding_local_media": "Детальніше про додавання мультимедіа читайте в {documentation}.",
+        "local_media_files": "Розмістіть відео, аудіо та графіку в медіа-каталозі, щоб мати змогу переглядати та відтворювати їх у браузері або на підтримуваних медіапрогравачах.",
+        "documentation": "документації",
+        "no_local_media_found": "У локальному сховищі не знайдено медіафайлів.",
+        "no_media_folder": "Схоже, що Ви ще не створили каталог мультимедіа.",
+        "setup_local_help": "Про те, як додати мультимедійні файли в локальне сховище, Ви можете дізнатися в {documentation}.",
+        "class": {
+          "album": "Альбом",
+          "app": "Додаток",
+          "artist": "Виконавець",
+          "channel": "Канал",
+          "composer": "Композитор",
+          "contributing_artist": "Співвиконавець",
+          "directory": "Бібліотека",
+          "episode": "Епізод",
+          "game": "Гра",
+          "genre": "Жанр",
+          "image": "Зображення",
+          "movie": "Фільм",
+          "music": "Музика",
+          "playlist": "Список відтворення",
+          "podcast": "Подкаст",
+          "season": "Сезон",
+          "track": "Трек",
+          "tv_show": "Серіали",
+          "url": "URL-адреса",
+          "video": "Відео"
+        }
+      },
+      "calendar": { "my_calendars": "My Calendars", "today": "Today" },
+      "attributes": { "expansion_header": "Attributes" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "Перезавантажити \"{domain}\"",
+            "core": "Оновити місцезнаходження і кастомізації",
+            "group": "Перезавантажити групи",
+            "automation": "Перезавантаження автоматизації",
+            "script": "Перезавантажити скрипти",
+            "scene": "Перезавантажити сцени",
+            "person": "Перезавантажити користувачів",
+            "zone": "Перезавантажити зони",
+            "input_boolean": "Перезавантажити сутності \"Input Boolean\"",
+            "input_text": "Перезавантажити сутності \"Input Text\"",
+            "input_number": "Перезавантажити сутності \"Input Number\"",
+            "input_datetime": "Перезавантажити сутності \"Input Datetime\"",
+            "input_select": "Перезавантажити сутності \"Input Select\"",
+            "template": "Перезавантажити сутності шаблону",
+            "universal": "Перезавантажити сутності інтеграції \"Universal Media Player\"",
+            "rest": "Перезавантажити сутності і служби сповіщень інтеграції \"REST\"",
+            "command_line": "Перезавантажити сутності інтеграції \"Command Line\"",
+            "filter": "Перезавантажити сутності інтеграції \"Filter\"",
+            "statistics": "Перезавантажити сутності інтеграції \"Statistics\"",
+            "generic": "Перезавантажити сутності інтеграції \"Generic IP Camera\"",
+            "generic_thermostat": "Перезавантажити сутності інтеграції \"Generic Thermostat\"",
+            "homekit": "Перезавантажити HomeKit",
+            "min_max": "Перезавантажити сутності інтеграції \"Min / Max\"",
+            "history_stats": "Перезавантажити сутності інтеграції \"History Stats\"",
+            "trend": "Перезавантажити сутності інтеграції \"Trend\"",
+            "ping": "Перезавантажити сутності інтеграції \"Ping (ICMP)\"",
+            "filesize": "Перезавантажити сутності інтеграції \"File Size\"",
+            "telegram": "Перезавантажити служби повідомлень Telegram",
+            "smtp": "Перезавантажити служби повідомлень SMTP",
+            "mqtt": "Перезавантажити об'єкти інтеграції \"MQTT\", налаштовані вручну",
+            "rpi_gpio": "Перезавантажити об'єкти інтеграції \"Raspberry Pi GPIO\""
+          },
+          "server_control": {
+            "perform_action": "{action} сервер",
+            "restart": "Перезапустити",
+            "stop": "Зупинити"
+          },
+          "types": {
+            "reload": "Reload",
+            "navigation": "Navigate",
+            "server_control": "Server"
+          },
+          "navigation": {
+            "logs": "Журнал сервера",
+            "automation": "Автоматизації",
+            "script": "Скрипти",
+            "integrations": "Інтеграція",
+            "areas": "Реєстр приміщень",
+            "scene": "Сцени",
+            "helpers": "Помічники",
+            "tag": "Tags",
+            "person": "Особи",
+            "devices": "Пристрої",
+            "entities": "Сутності",
+            "energy": "Energy",
+            "lovelace": "Інформаційні панелі Lovelace",
+            "core": "Основні",
+            "zone": "Зони",
+            "users": "Користувачі",
+            "info": "Інформація",
+            "customize": "Кастомізація",
+            "blueprint": "Проекти",
+            "server_control": "Керування сервером",
+            "navigate_to": "Відкрити \"{panel}\""
+          }
+        },
+        "filter_placeholder": "Фільтр об'єкта"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant нічого не почув",
+        "found": "Я знайшов для вас наступне:",
+        "error": "На жаль, сталася помилка",
+        "how_can_i_help": "Як я можу допомогти?",
+        "label": "Введіть запитання та натисніть \"Enter\"",
+        "label_voice": "Введіть текст і натисніть 'Enter' або натисніть на значок мікрофона, щоб говорити"
+      },
+      "generic": {
+        "cancel": "Скасувати",
+        "ok": "ТАК",
+        "default_confirmation_title": "Ви впевнені?",
+        "close": "Закрити"
+      },
+      "image_cropper": { "crop": "Обрізати" },
+      "more_info_control": {
+        "dismiss": "Відхилити",
+        "settings": "Налаштування об'єкта",
+        "edit": "Редагувати об'єкт",
+        "details": "Деталі",
+        "history": "Історія",
+        "last_changed": "Востаннє змінено",
+        "last_updated": "Останнє оновлення",
+        "script": {
+          "last_action": "Остання дія",
+          "last_triggered": "Спрацьовано востаннє"
+        },
+        "sun": {
+          "elevation": "Висота над горизонтом",
+          "rising": "Схід сонця",
+          "setting": "Захід сонця"
+        },
+        "updater": { "title": "Інструкції по оновленню" },
+        "remote": { "activity": "Current activity" },
+        "restored": {
+          "not_provided": "Ця сутність в даний час недоступна і його батьківська інтеграція або пристрій видалені, змінені або несправні.",
+          "remove_intro": "Якщо сутність більше не використовується, її можна видалити.",
+          "remove_action": "Видалити сутність",
+          "confirm_remove_title": "Видалити сутність?",
+          "confirm_remove_text": "Ви дійсно бажаєте видалити цю сутність?"
+        },
+        "vacuum": {
+          "status": "Статус",
+          "commands": "Команди:",
+          "fan_speed": "Потужність всмоктування",
+          "start": "Прибрати",
+          "pause": "Пауза",
+          "stop": "Зупинити",
+          "clean_spot": "Очищення зони",
+          "locate": "Знайти",
+          "return_home": "Повернутись на док-станцію",
+          "start_pause": "Старт / Пауза"
+        },
+        "person": {
+          "create_zone": "Створити зону з поточного місцезнаходження"
+        },
+        "cover": {
+          "open_cover": "Відкрити",
+          "close_cover": "Закрити",
+          "open_tilt_cover": "Відкрити",
+          "close_tile_cover": "Закрити",
+          "stop_cover": "Зупинити"
+        }
+      },
+      "entity_registry": {
+        "settings": "Налаштування",
+        "control": "Керування",
+        "related": "Пов'язані",
+        "dismiss": "Відхилити",
+        "no_unique_id": "У цієї сутності ( \"{entity_id}\") немає унікального ідентифікатора, тому її налаштуваннями можна керувати з інтерфейсу користувача. Ознайомтеся з {faq_link} для отримання більш докладної інформації.",
+        "faq": "документацією",
+        "info_customize": "You can overwrite some attributes in the {customize_link} section.",
+        "customize_link": "entity customizations",
+        "editor": {
+          "name": "Назва",
+          "icon": "Значок",
+          "icon_error": "Параметр повинен бути в форматі 'prefix:iconname' (наприклад: 'mdi:home')",
+          "entity_id": "Ідентифікатор об'єкта",
+          "unavailable": "Цей об'єкт наразі недоступний.",
+          "enabled_label": "Відображати об'єкт",
+          "enabled_cause": "Ініціатор: {cause}.",
+          "device_disabled": "Батьківський пристрій цього об'єкта приховано.",
+          "open_device_settings": "Відкрити параметри пристрою",
+          "enabled_description": "Приховані об'єкти не будуть доступні в Home Assistant.",
+          "enabled_delay_confirm": "Об'єкти будуть додані в Home Assistant через {delay} секунд",
+          "enabled_restart_confirm": "Перезапустіть Home Assistant, щоб завершити редагування об'єктів",
+          "delete": "Видалити",
+          "confirm_delete": "Ви впевнені, що хочете видалити цей запис?",
+          "update": "Оновити",
+          "note": "(може працювати не з усіма інтеграціями)",
+          "advanced": "Advanced settings",
+          "area": "Set entity area only",
+          "area_note": "By default the entities of a device are in the same area as the device. If you change the area of this entity, it will no longer follow the area of the device.",
+          "follow_device_area": "Follow device area",
+          "change_device_area": "Change device area"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "Інтеграція {platform} не завантажена. Додайте в YAML-конфігурацію 'default_config:' або \"{platform}:\".",
+        "yaml_not_editable": "Не можна змінити настройки цієї сутності з інтерфейсу користувача. З інтерфейсу користувача можна настроїти лише створені в ньому об'єкти.",
+        "required_error_msg": "Це поле є обов'язковим",
+        "generic": { "name": "Назва", "icon": "Значок" },
+        "input_datetime": {
+          "date": "Дата",
+          "time": "Час",
+          "datetime": "Дата і час",
+          "mode": "Що ви хочете ввести"
+        },
+        "input_text": {
+          "min": "Мінімальна довжина",
+          "max": "Максимальна довжина",
+          "mode": "Режим відображення",
+          "text": "Текст",
+          "password": "Пароль",
+          "pattern": "Шаблон регулярного виразу для перевірки на стороні клієнта"
+        },
+        "input_number": {
+          "min": "Мінімальне значення",
+          "max": "Максимальне значення",
+          "mode": "Режим відображення",
+          "box": "Поле введення",
+          "slider": "Повзунок",
+          "step": "Розмір кроку",
+          "unit_of_measurement": "Одиниця виміру"
+        },
+        "input_select": {
+          "options": "Опції",
+          "add_option": "Додати опцію",
+          "no_options": "Опцій ще немає.",
+          "add": "Додати"
+        },
+        "counter": {
+          "minimum": "Мінімальне значення",
+          "maximum": "Максимальне значення",
+          "initial": "Початкове значення",
+          "restore": "Відновлення останнього відомого значення під час Home Assistant",
+          "step": "Розмір кроку"
+        },
+        "timer": { "duration": "Тривалість" }
+      },
+      "options_flow": {
+        "form": { "header": "Параметри" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "Параметри успішно збережені." }
+      },
+      "config_entry_system_options": {
+        "title": "Параметри системи для {integration}",
+        "enable_new_entities_label": "Додавати нові об'єкти.",
+        "enable_new_entities_description": "{integration} буде автоматично додавати в Home Assistant виявлені об'єкти",
+        "enable_polling_label": "Enable polling for updates.",
+        "enable_polling_description": "If Home Assistant should automatically poll {integration} entities for updates.",
+        "restart_home_assistant": "You need to restart Home Assistant for your changes to take effect.",
+        "update": "Оновити"
+      },
+      "zha_reconfigure_device": {
+        "heading": "Reconfiguring device",
+        "configuring_alt": "Configuring",
+        "introduction": "Reconfigure a device on your Zigbee network. Use this feature if your device is not functioning correctly.",
+        "battery_device_warning": "You will need to wake battery powered devices before starting the reconfiguration process. Refer to your device's manual for instructions on how to wake the device.",
+        "run_in_background": "You can close this dialog and the reconfiguration will continue in the background.",
+        "start_reconfiguration": "Start Reconfiguration",
+        "in_progress": "The device is being reconfigured. This may take some time.",
+        "configuration_failed": "The device reconfiguration failed. Additional information may be available in the logs.",
+        "configuration_complete": "Device reconfiguration complete.",
+        "button_show": "Show Details",
+        "button_hide": "Hide Details",
+        "cluster_header": "Cluster",
+        "bind_header": "Binding",
+        "reporting_header": "Reporting",
+        "attribute": "Attribute",
+        "min_max_change": "min/max/change"
+      },
+      "zha_device_info": {
+        "manuf": "Виробник: {manufacturer}",
+        "no_area": "Приміщення не вказано",
+        "device_signature": "Підпис пристрою Zigbee",
+        "device_children": "Zigbee device children",
+        "buttons": {
+          "add": "Додати пристрої через цей пристрій",
+          "remove": "Видалити пристрій",
+          "clusters": "Управління кластерами",
+          "reconfigure": "Переналаштувати пристрій",
+          "zigbee_information": "Інформація Zigbee",
+          "device_children": "View Children",
+          "view_in_visualization": "View in Visualization"
+        },
+        "services": {
+          "reconfigure": "Перенастроювання пристрою ZHA. Використовуйте цю службу, якщо у Вас є проблеми з пристроєм. Якщо даний пристрій працює від батареї, будь ласка, переконайтеся, що воно не знаходиться в режимі сну і приймає команди, коли ви запускаєте цю службу.",
+          "updateDeviceName": "Встановіть ім'я для цього пристрою в реєстрі пристроїв.",
+          "remove": "Видалити пристрій з мережі Zigbee.",
+          "zigbee_information": "Переглянути інформацію про пристрій Zigbee."
+        },
+        "confirmations": {
+          "remove": "Ви впевнені, що хочете вилучити пристрій?"
+        },
+        "quirk": "Нестандартний обробник",
+        "last_seen": "Пристрій був в мережі",
+        "power_source": "Джерело живлення",
+        "unknown": "Невідомо",
+        "zha_device_card": { "device_name_placeholder": "Назва" }
+      },
+      "domain_toggler": {
+        "title": "Керування доменами",
+        "reset_entities": "Скинути сутності"
+      },
+      "mqtt_device_debug_info": {
+        "title": "Інформація про налагодження {device}",
+        "deserialize": "Розібрати MQTT повідомлення як JSON",
+        "entities": "Об'єкти",
+        "no_entities": "Немає об'єктів",
+        "no_triggers": "Немає тригерів",
+        "payload_display": "Вміст повідомлень",
+        "recent_messages": "{n} останніх отриманих повідомлень",
+        "show_as_yaml": "Показати як YAML",
+        "triggers": "Тригери"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\n  one {сек.}\n  other {сек.}\n}",
+      "minute": "{count} {count, plural,\n  one {хв.}\n  other {хв.}\n}",
+      "hour": "{count} {count, plural,\n  one {год.}\n  other {год.}\n}",
+      "day": "{count} {count, plural,\n  one {д.}\n  other {д.}\n}",
+      "week": "{count} {count, plural,\n  one {тиж.}\n  other {тиж.}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "No type provided.",
+        "error_detected": "Configuration errors detected",
+        "editor_not_available": "No visual editor available for type \"{type}\".",
+        "editor_not_supported": "Visual editor is not supported for this configuration",
+        "edit_in_yaml_supported": "You can still edit your config in YAML.",
+        "key_missing": "Required key \"{key}\" is missing.",
+        "key_not_expected": "Key \"{key}\" is not expected or not supported by the visual editor.",
+        "key_wrong_type": "The provided value for \"{key}\" is not supported by the visual editor. We support ({type_correct}) but received ({type_wrong}).",
+        "no_template_editor_support": "Templates not supported in visual editor"
+      },
+      "supervisor": {
+        "title": "Could not load the Supervisor panel!",
+        "wait": "If you just started, make sure you have given the Supervisor enough time to start.",
+        "ask": "Ask for help",
+        "reboot": "Try a reboot of the host",
+        "observer": "Check the Observer",
+        "system_health": "Check System Health"
+      }
+    },
+    "login-form": {
+      "password": "Пароль",
+      "remember": "Запам'ятати",
+      "log_in": "Увійти"
+    },
+    "notification_drawer": {
+      "click_to_configure": "Натисніть кнопку, щоб налаштувати {entity}",
+      "empty": "Немає сповіщень",
+      "title": "Сповіщення",
+      "close": "Закрити",
+      "dismiss_all": "Відхилити всі"
+    },
+    "notification_toast": {
+      "service_call_failed": "Не вдалося викликати службу {service}.",
+      "connection_lost": "З'єднання втрачено. Повторне підключення ...",
+      "started": "Home Assistant запущений!",
+      "starting": "Home Assistant запускається, поки що не все може бути доступно",
+      "wrapping_up_startup": "Wrapping up startup, not everything will be available until it is finished.",
+      "integration_starting": "Starting {integration}, not everything will be available until it is finished.",
+      "triggered": "Виконано від імені {name}",
+      "dismiss": "Відхилити"
+    },
+    "sidebar": {
+      "external_app_configuration": "Конфігурація додатку",
+      "sidebar_toggle": "Перемикач в бічній панелі",
+      "done": "Готово"
+    },
+    "panel": {
+      "history": {
+        "ranges": {
+          "last_week": "Минулого тижня",
+          "this_week": "Цього тижня",
+          "today": "Сьогодні",
+          "yesterday": "Вчора"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "Минулого тижня",
+          "this_week": "Цього тижня",
+          "today": "Сьогодні",
+          "yesterday": "Вчора"
+        }
+      }
+    }
+  }
+}

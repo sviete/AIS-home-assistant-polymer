@@ -1,0 +1,477 @@
+{
+  "ui": {
+    "panel": {
+      "lovelace": {
+        "cards": {
+          "confirm_delete": "Estàs segur que vols eliminar aquesta targeta?",
+          "actions": {
+            "action_confirmation": "Estàs segur que vols executar l'acció \"{action}\"?",
+            "no_entity_more_info": "No s'ha proporcionat cap entitat per mostrar el diàleg de més informació",
+            "no_entity_toggle": "No s'ha proporcionat cap entitat a commutar",
+            "no_navigation_path": "No s'ha especificat cap ruta de navegació",
+            "no_url": "No s'ha especificat cap URL per obrir",
+            "no_service": "No s'ha especificat cap servei a executar"
+          },
+          "empty_state": {
+            "title": "Benvingut/da a casa",
+            "no_devices": "Aquesta pàgina et permet controlar els teus dispositius, però sembla que encara no en tens cap configurat. Vés a la pàgina d'integracions per a començar.",
+            "go_to_integrations_page": "Vés a la pàgina d'integracions."
+          },
+          "entities": { "never_triggered": "Mai disparada" },
+          "shopping-list": {
+            "checked_items": "Articles seleccionats",
+            "clear_items": "Esborrar els articles seleccionats",
+            "add_item": "Afegir element",
+            "reorder_items": "Reordena elements",
+            "drag_and_drop": "Arrossega i deixa anar"
+          },
+          "picture-elements": {
+            "hold": "Manté:",
+            "tap": "Tocar:",
+            "navigate_to": "Navega a {location}",
+            "url": "Obre un finestra a {url_path}",
+            "toggle": "Commuta {name}",
+            "call_service": "Crida servei {name}",
+            "more_info": "Mostra més informació: {name}"
+          },
+          "safe-mode": {
+            "header": "Mode segur activat",
+            "description": "Home Assistant ha tingut algun problema en carregar la configuració i ara s'està executant en mode segur. Mira el registre d'errors per veure què ha anat malament."
+          },
+          "starting": {
+            "description": "Home Assistant s'està iniciant, espera un moment..."
+          }
+        },
+        "unused_entities": {
+          "title": "Entitats sense utilitzar",
+          "available_entities": "Aquestes són les entitats que tens disponibles, però que no es troben a la interfície d'usuari Lovelace.",
+          "select_to_add": "Selecciona les entitats que vols afegir a una targeta i fés clic al botó d'afegir targeta.",
+          "entity": "Entitat",
+          "entity_id": "ID de l'entitat",
+          "domain": "Domini",
+          "last_changed": "Últim canvi",
+          "search": "Cerca entitats",
+          "no_data": "No s'han trobat entitats sense utilitzar"
+        },
+        "add_entities": {
+          "yaml_unsupported": "Només pots utilitzar aquesta funció si fas servir Lovelace en mode YAML.",
+          "generated_unsupported": "Només pots utilitzar aquesta funció quan tinguis el control de la IU Lovelace.",
+          "saving_failed": "S'ha produït un error en desar la configuració de la IU Lovelace."
+        },
+        "views": {
+          "confirm_delete": "Esborrar visualització?",
+          "confirm_delete_text": "Estàs segur que vols eliminar la visualització \"{name}\"?",
+          "confirm_delete_existing_cards": "Si elimines aquesta visualització, també s'eliminaran les targetes que conté",
+          "confirm_delete_existing_cards_text": "Estàs segur que vols eliminar la visualització ''{name}''? La visualització conté {number} targetes que s'eliminaran. Aquesta acció és irreversible."
+        },
+        "menu": {
+          "configure_ui": "Edita panell",
+          "help": "Ajuda",
+          "start_conversation": "Inicia conversa",
+          "reload_resources": "Actualitza recursos",
+          "exit_edit_mode": "Surt del mode d'edició d'interfície",
+          "close": "Tanca"
+        },
+        "reload_resources": {
+          "refresh_header": "Vols actualitzar?",
+          "refresh_body": "Has d'actualitzar la pàgina per completar la càrrega. Vols actualitzar-la ara?"
+        },
+        "editor": {
+          "header": "Editar la interfície d'usuari (UI)",
+          "menu": {
+            "open": "Obre el menú de Lovelace",
+            "raw_editor": "Editor de codi",
+            "manage_dashboards": "Gestiona els panells",
+            "manage_resources": "Gestiona els recursos"
+          },
+          "common": {
+            "edit": "Edita",
+            "clear": "Esborra",
+            "add": "Afegeix",
+            "none": "Cap"
+          },
+          "raw_editor": {
+            "header": "Edita la configuració",
+            "save": "Desa",
+            "unsaved_changes": "Canvis sense desar",
+            "saved": "Desat",
+            "reload": "Torna a carregar",
+            "lovelace_changed": "La configuració Lovelace s'ha actualitzat, vols tornar a carregar la nova configuració a l'editor i perdre els canvis actuals?",
+            "confirm_remove_config_title": "Estàs segur que vols eliminar la configuració de la interfície d'usuari Lovelace?",
+            "confirm_remove_config_text": "Si elimines la configuració de la interfície d'usuari Lovelace es generaran automàticament les visualitzacions de Lovelace amb les teves àrees i dispositius.",
+            "confirm_unsaved_changes": "Hi han canvis no desats. Segur que vols sortir?",
+            "confirm_unsaved_comments": "La configuració pot contenir comentaris que no es desaran. Vols continuar?",
+            "error_parse_yaml": "No es pot analitzar YAML: {error}",
+            "error_invalid_config": "La configuració no és vàlida: {error}",
+            "error_save_yaml": "No es pot desar YAML: {error}",
+            "error_remove": "No s'ha pogut eliminar la configuració: {error}",
+            "resources_moved": "Els recursos ja no s'han d'afegir a la configuració de Lovelace, però es poden afegir al tauler de configuració de Lovelace."
+          },
+          "edit_lovelace": {
+            "header": "Títol de la interfície d'usuari Lovelace",
+            "explanation": "Aquest títol es mostra a sobre de cada panell Lovelace.",
+            "edit_title": "Edita el títol",
+            "title": "Títol"
+          },
+          "edit_view": {
+            "header": "Configuració de la visualització",
+            "header_name": "Configuració de la visualització {name}",
+            "add": "Afegeix visualització",
+            "edit": "Editar visualització",
+            "delete": "Eliminar visualització",
+            "move_left": "Desplaça la visualització cap a l'esquerra",
+            "move_right": "Desplaça la visualització cap a la dreta",
+            "tab_settings": "Configuració",
+            "tab_badges": "Insígnies",
+            "tab_visibility": "Visibilitat",
+            "visibility": {
+              "select_users": "Selecciona quins usuaris podran veure aquesta visualització a la navegació"
+            },
+            "type": "View type",
+            "types": {
+              "masonry": "Masonry (default)",
+              "sidebar": "Sidebar",
+              "panel": "Panel (1 card)"
+            }
+          },
+          "edit_badges": {
+            "panel_mode": "Aquestes insígnies no es mostraran ja que aquesta visualització està en \"mode panell\""
+          },
+          "edit_card": {
+            "header": "Configuració de la targeta",
+            "typed_header": "Configuració de la targeta {type}",
+            "pick_card": "Quina targeta vols afegir?",
+            "pick_card_view_title": "Quina targeta vols afegir a la visualització {name}?",
+            "toggle_editor": "Commutar l'editor",
+            "unsaved_changes": "Hi ha canvis no desats",
+            "confirm_cancel": "Segur que vols cancel·lar?",
+            "show_visual_editor": "Mostra l'editor visual",
+            "show_code_editor": "Mostra l'editor de codi",
+            "add": "Afegir targeta",
+            "edit": "Editar",
+            "clear": "Esborra",
+            "delete": "Elimina targeta",
+            "duplicate": "Duplica targeta",
+            "move": "Moure a visualització",
+            "move_before": "Mou targeta abans",
+            "move_after": "Mou targeta després",
+            "options": "Més opcions",
+            "search_cards": "Cerca targetes"
+          },
+          "move_card": {
+            "header": "Tria una visualització on desplaçar la tarjeta"
+          },
+          "select_view": {
+            "header": "Tria una visualització",
+            "dashboard_label": "Panell"
+          },
+          "suggest_card": {
+            "header": "T'hem creat un suggeriment",
+            "create_own": "Escull una targeta diferent",
+            "add": "Afegeix a la IU Lovelace"
+          },
+          "save_config": {
+            "header": "Pren el control de la interfície d'usuari Lovelace",
+            "para": "Aquest panell Lovelace està gestionat per Home Assistant. S'actualitza automàticament quan hi ha noves entitats o nous components de Lovelace disponibles. Si prens el control, aquest panell no s'actualitzarà automàticament. Sempre pots crear un nou panell a configuració i fer-hi proves.",
+            "para_sure": "Estàs segur que vols prendre el control de la interfície d'usuari?",
+            "yaml_mode": "Estàs utilitzant el mode YAML per aquest panell, per tant no pots editar-lo des de la interfície d'usuari. Si vols poder editar-lo des de la IU, elimina 'mode: yaml' del fitxer 'configuration.yaml' en l'apartat de configuració de Lovelace.",
+            "yaml_control": "Per configurar el panell en mode YAML, crea un fitxer YAML amb el nom que hagis establert a la configuració del panell, o bé el nom per defecte 'ui-lovelace.yaml'.",
+            "yaml_config": "Per ajudar a familiaritzar-te, aquí tens la configuració actual del teu panell Lovelace:",
+            "empty_config": "Comença amb un panell buit",
+            "close": "Tanca",
+            "save": "Prendre el control",
+            "cancel": "M'ho he repensat"
+          },
+          "migrate": {
+            "header": "Configuració incompatible",
+            "para_no_id": "Aquest element no té ID. Afegeix un ID per aquest element a 'ui-lovelace.yaml'.",
+            "para_migrate": "Home Assistant pot afegir ID's a totes les targetes i visualitzacions automàticament si prems al botó 'Migrar la configuració'.",
+            "migrate": "Migrar la configuració"
+          },
+          "action-editor": {
+            "navigation_path": "Ruta de navegació",
+            "url_path": "Ruta de l'URL",
+            "actions": {
+              "default_action": "Acció per defecte",
+              "call-service": "Crida servei",
+              "more-info": "Més informació",
+              "toggle": "Commuta",
+              "navigate": "Navega",
+              "url": "URL",
+              "none": "Sense acció"
+            }
+          },
+          "card": {
+            "alarm-panel": {
+              "name": "Panell d'alarma",
+              "available_states": "Estats disponibles",
+              "description": "La targeta panell d'alarma et permet activar i desactivar les integracions d'alarma."
+            },
+            "calendar": {
+              "name": "Calendari",
+              "description": "La targeta Calendari mostra un calendari que inclou visualitzacions de dia, setmana i llista",
+              "inital_view": "Vista inicial",
+              "calendar_entities": "Entitats de calendari",
+              "views": {
+                "dayGridMonth": "Mes",
+                "dayGridDay": "Dia",
+                "listWeek": "Llista"
+              }
+            },
+            "conditional": {
+              "name": "Condicional",
+              "description": "La targeta condicional mostra una altra targeta en funció dels estats d'una entitat.",
+              "conditions": "Condicions",
+              "card": "Targeta",
+              "state_equal": "L'estat és igual a",
+              "state_not_equal": "L'estat NO és igual a",
+              "current_state": "actual",
+              "condition_explanation": "La targeta es mostrarà quan es compleixin totes les condicions següents.",
+              "change_type": "Canvia el tipus"
+            },
+            "config": { "required": "Obligatori", "optional": "Opcional" },
+            "entities": {
+              "name": "Entitats",
+              "show_header_toggle": "Mostra commutació a la capçalera?",
+              "toggle": "Commuta les entitats.",
+              "description": "La targeta entitats és la més habitual. Agrupa diferents tipus d'entitats en una llista.",
+              "special_row": "fila especial",
+              "edit_special_row": "Fes clic al botó edita per veure els detalls de la fila",
+              "entity_row_editor": "Editor de files d'entitats",
+              "secondary_info_values": {
+                "none": "Sense informació secundària",
+                "entity-id": "ID de l'entitat",
+                "last-changed": "Últim canvi",
+                "last-triggered": "Disparada per última vegada",
+                "position": "Posició",
+                "tilt-position": "Inclinació",
+                "brightness": "Brillantor",
+                "last-updated": "Última actualització"
+              },
+              "entity_row": {
+                "divider": "Divisor",
+                "call-service": "Crida servei",
+                "section": "Secció",
+                "weblink": "Enllaç web",
+                "attribute": "Atribut",
+                "buttons": "Botons",
+                "conditional": "Condicional",
+                "cast": "Obté",
+                "button": "Botó"
+              }
+            },
+            "entity": {
+              "name": "Entitat",
+              "description": "La targeta entitat mostra una visualització ràpida dels estats d'una o més entitats."
+            },
+            "button": {
+              "name": "Botó",
+              "description": "La targeta botó et permet afegir botons per realitzar diferents tasques.",
+              "default_action_help": "L'acció predeterminada depèn de les funcionalitats de l'entitat, o es commutarà o es mostrarà el diàleg de més informació."
+            },
+            "entity-filter": {
+              "name": "Filtre d'entitats",
+              "description": "La targeta filtre d'entitats et permet definir una llista d'entitats les quals vols seguir/visualitzar només quan es trobin en un cert estat."
+            },
+            "gauge": {
+              "name": "Galga",
+              "needle_gauge": "Display as needle gauge?",
+              "severity": {
+                "define": "Definir gravetat?",
+                "green": "Verd",
+                "red": "Vermell",
+                "yellow": "Groc"
+              },
+              "description": "La galga és una targeta bàsica que et permet mostrar les dades d'un sensor de manera visual."
+            },
+            "glance": {
+              "name": "Visualització",
+              "columns": "Columnes",
+              "description": "La targeta visualització és útil per agrupar diversos sensors de forma general i compacta."
+            },
+            "grid": {
+              "name": "Quadrícula",
+              "description": "La targeta quadrícula et permet mostrar diferents targetes dins d'una quadrícula.",
+              "columns": "Columnes",
+              "square": "Mostra les targetes en forma de quadrats"
+            },
+            "logbook": {
+              "name": "Diari de registre",
+              "description": "La targeta diari de registre mostra una llista d'esdeveniments de les entitats"
+            },
+            "history-graph": {
+              "name": "Gràfic històric",
+              "description": "La targeta gràfic històric et permet mostrar un gràfic per a cadascuna de les entitats establertes."
+            },
+            "statistics-graph": {
+              "name": "Statistics Graph",
+              "description": "The Statistics Graph card allows you to display a graph of the statistics for each of the entities listed."
+            },
+            "horizontal-stack": {
+              "name": "Pila horitzontal",
+              "description": "La targeta pila horizontal et permet agrupar diferents targetes, una al costat de l'altra (horizontalment), pero dins d'una única columna."
+            },
+            "humidifier": {
+              "name": "Humidificador",
+              "description": "La targeta humidificador et permet controlar una entitat de tipus humidificador. Pots canviar-ne tant la humitat com el mode."
+            },
+            "iframe": {
+              "name": "Pàgina web",
+              "description": "La targeta pàgina web et permet incrustar els teus llocs web preferits directament a Home Assistant."
+            },
+            "light": {
+              "name": "Llum",
+              "description": "La targeta llum et permet ajustar la brillantor d'una llum."
+            },
+            "generic": {
+              "aspect_ratio": "Relació d'aspecte",
+              "attribute": "Atribut",
+              "camera_image": "Entitat de càmera",
+              "camera_view": "Visualització de càmera",
+              "double_tap_action": "Acció en tocar dues vegades",
+              "entities": "Entitats",
+              "entity": "Entitat",
+              "hold_action": "Acció en mantenir",
+              "hours_to_show": "Hores a mostrar",
+              "days_to_show": "Days to Show",
+              "icon": "Icona",
+              "icon_height": "Alçada de la icona",
+              "image": "Ruta de la imatge",
+              "maximum": "Màxim",
+              "manual": "Manual",
+              "manual_description": "Afegir una targeta personalitzada o escriure el codi YAML manualment?",
+              "minimum": "Mínim",
+              "name": "Nom",
+              "refresh_interval": "Interval d'actualització",
+              "show_icon": "Mostra icona?",
+              "show_name": "Mostra nom?",
+              "show_state": "Mostra estat?",
+              "tap_action": "Acció en tocar",
+              "title": "Títol",
+              "theme": "Tema",
+              "no_theme": "Sense tema",
+              "unit": "Unitat",
+              "url": "URL",
+              "state": "Estat",
+              "secondary_info_attribute": "Atribut d'informació secundària",
+              "search": "Cerca",
+              "state_color": "Color de les icones basat en l'estat?"
+            },
+            "map": {
+              "name": "Mapa",
+              "geo_location_sources": "Fonts de geolocalització",
+              "dark_mode": "Mode fosc?",
+              "default_zoom": "Zoom predeterminat",
+              "hours_to_show": "Hores a mostrar",
+              "source": "Font",
+              "description": "La targeta mapa et permet mostrar diferents entitats sobre un mapa."
+            },
+            "markdown": {
+              "name": "Markdown",
+              "content": "Contingut",
+              "description": "La targeta Markdown s'utilitza per renderitzar llenguatge Markdown."
+            },
+            "media-control": {
+              "name": "Control multimèdia",
+              "description": "La targeta control multimèdia s'utilitza per a visualitzar i controlar de forma senzilla entitats de tipus reproductor multimèdia."
+            },
+            "picture": {
+              "name": "Imatge",
+              "description": "La targeta d'imatge et permet establir una imatge utilitzada per a navegar a diversos llocs de la interfície o tambe cridar un servei concret."
+            },
+            "picture-elements": {
+              "name": "Imatge amb elements",
+              "description": "La targeta imatge amb elements és una de les targetes més versàtils. Et permet col·locar (utilitzant coordenades) icones, text o fins i tot serveis a sobre d'una imatge!"
+            },
+            "picture-entity": {
+              "name": "Entitat d'imatge",
+              "description": "La targeta entitat d'imatge mostra una entitat en forma d'imatge. A més de mostrar imatges d'una URL, també pot mostrar les imatges d'una entitat de tipus càmera."
+            },
+            "picture-glance": {
+              "name": "Visualització d'imatge",
+              "description": "La targeta de visualització d'imatge mostra una imatge i els estats de les entitats corresponents en un icona. Les entitats de la dreta permeten accions de commutació, altres mostren el diàleg de més informació.",
+              "state_entity": "Entitat d'estat"
+            },
+            "plant-status": {
+              "name": "Condicions de planta/vegetal",
+              "description": "La targeta condicions de planta/vegetal és per a tots els amants de la botànica."
+            },
+            "sensor": {
+              "name": "Sensor",
+              "show_more_detail": "Mostra més detalls",
+              "graph_type": "Tipus de gràfic",
+              "description": "La targeta sensor mostra una visió ràpida d'un dels teus sensors. En mostra l'estat i opcionalment un gràfic amb els canvis al llarg del temps."
+            },
+            "shopping-list": {
+              "name": "Llista de compres",
+              "description": "La targeta de llista de compres et permet afegir, editar, marcar i borrar elements de la teva llista de compres.",
+              "integration_not_loaded": "Aquesta targeta necessita que la integració `shopping_list` estigui configurada."
+            },
+            "thermostat": {
+              "name": "Termòstat",
+              "description": "La targeta termòstat et permet controlar una entitat de tipus climatització. Pots canviar-ne tant la temperatura com el mode."
+            },
+            "vertical-stack": {
+              "name": "Pila vertical",
+              "description": "La targeta pila vertical et permet agrupar diferents targetes dins d'una única columna."
+            },
+            "weather-forecast": {
+              "name": "Previsió meteorològica",
+              "description": "La targeta de previsió meteorològica, és molt útil per incloure en interfícies integrades en parets.",
+              "show_forecast": "Mostra la previsió"
+            }
+          },
+          "view": {
+            "panel_mode": {
+              "warning_multiple_cards": "Aquesta visualització conté més d'una targeta, però les visualitzacions en mode panell només poden mostrar una targeta.",
+              "description": "Això renderitza la primera targeta a amplada completa. Les altres targetes i insígnies d'aquesta visualització no es renderitzaran.",
+              "title": "Mode panell?"
+            }
+          },
+          "cardpicker": {
+            "no_description": "No hi ha cap descripció disponible.",
+            "custom_card": "Personalitzada",
+            "domain": "Domini",
+            "entity": "Entitat",
+            "by_entity": "Per entitat",
+            "by_card": "Per targeta"
+          },
+          "header-footer": {
+            "header": "Capçalera",
+            "footer": "Peu de pàgina",
+            "choose_header_footer": "Tria un {type}",
+            "types": {
+              "graph": { "name": "Gràfic" },
+              "picture": { "name": "Imatge" },
+              "buttons": { "name": "Botons" }
+            }
+          },
+          "sub-element-editor": {
+            "types": {
+              "header": "Editor de capçalera",
+              "footer": "Editor de peu de pàgina",
+              "row": "Editor de fila d'entitats"
+            }
+          }
+        },
+        "warning": {
+          "attribute_not_found": "L'atribut {attribute} de {entity} no és disponible.",
+          "entity_not_found": "Entitat no disponible: {entity}",
+          "entity_non_numeric": "Entitat no numèrica: {entity}",
+          "entity_unavailable": "Entitat actualment no disponible: {entity}",
+          "starting": "Home Assistant està iniciant-se, pot ser que encara no estigui tot disponible"
+        },
+        "changed_toast": {
+          "message": "S'ha actualitzat la configuració de la IU Lovelace d'aquest panell. Vols actualitzar-lo per veure els canvis?"
+        },
+        "components": {
+          "timestamp-display": {
+            "invalid": "Marca de temps invàlida",
+            "invalid_format": "Format de visualització invàlid"
+          }
+        },
+        "reload_lovelace": "Actualiza la interfície d'usuari"
+      }
+    }
+  }
+}

@@ -1,0 +1,902 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "Calendari",
+    "config": "Configuració",
+    "states": "Visualització general",
+    "map": "Mapa",
+    "logbook": "Diari de registre",
+    "history": "Historial",
+    "mailbox": "Bústia",
+    "shopping_list": "Llista de la compra",
+    "developer_tools": "Eines per a desenvolupadors",
+    "media_browser": "Navegador multimèdia",
+    "profile": "Perfil"
+  },
+  "state": {
+    "default": {
+      "on": "On",
+      "off": "Off",
+      "unknown": "Desconegut",
+      "unavailable": "No disponible"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "Desactivat", "on": "Activat", "auto": "Automàtic" },
+      "preset_mode": {
+        "none": "Cap",
+        "eco": "Econòmic",
+        "away": "Absent",
+        "boost": "Incrementat",
+        "comfort": "Confort",
+        "home": "A casa",
+        "sleep": "Dormint",
+        "activity": "Activitat"
+      },
+      "hvac_action": {
+        "off": "Apagat",
+        "heating": "Escalfant",
+        "cooling": "Refredant",
+        "drying": "Assecant",
+        "idle": "Inactiu",
+        "fan": "Ventilació"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "Normal",
+        "eco": "Econòmic",
+        "away": "A fora",
+        "boost": "Incrementat",
+        "comfort": "Confort",
+        "home": "A casa",
+        "sleep": "Dormint",
+        "auto": "Automàtic",
+        "baby": "Nadó"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "Descon.",
+      "unavailable": "No disp.",
+      "error": "Error",
+      "entity_not_found": "Entitat no trobada"
+    },
+    "alarm_control_panel": {
+      "armed": "Activad.",
+      "disarmed": "Desacti.",
+      "armed_home": "Activad.",
+      "armed_away": "Activad.",
+      "armed_night": "Activad.",
+      "armed_custom_bypass": "Activad.",
+      "pending": "Pendent",
+      "arming": "Activan.",
+      "disarming": "Desacti.",
+      "triggered": "Dispara."
+    },
+    "device_tracker": { "home": "A casa", "not_home": "Fora" },
+    "person": { "home": "A casa", "not_home": "Fora" }
+  },
+  "groups": {
+    "owner": "Propietari",
+    "system-admin": "Administradors",
+    "system-users": "Usuaris",
+    "system-read-only": "Usuaris de només lectura"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "Usuari",
+      "integration": "Integració",
+      "config_entry": "Entrada de configuració",
+      "device": "Dispositiu"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "Vols desar aquest inici de sessió?",
+      "decline": "No",
+      "confirm": "Si"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "Codi",
+        "clear_code": "Borrar",
+        "disarm": "Desactivar",
+        "arm_home": "Activar, a casa",
+        "arm_away": "Activar, fora",
+        "arm_night": "Activar, nocturn",
+        "arm_custom_bypass": "Bypass personalitzat"
+      },
+      "automation": {
+        "last_triggered": "Última execució",
+        "trigger": "Executa accions"
+      },
+      "camera": { "not_available": "Imatge no disponible" },
+      "climate": {
+        "currently": "Actual",
+        "on_off": "On / Off",
+        "target_temperature": "Temperatura desitjada",
+        "target_temperature_entity": "Temperatura desitjada de {name}",
+        "target_temperature_mode": "Temperatura desitjada de {name} {mode}",
+        "current_temperature": "Temperatura actual de {name}",
+        "heating": "{name} escalfant",
+        "cooling": "{name} refredant",
+        "high": "alt",
+        "low": "baix",
+        "target_humidity": "Humitat desitjada",
+        "operation": "Funcionament",
+        "fan_mode": "Velocitat ventilador",
+        "swing_mode": "Mode oscil·lació",
+        "preset_mode": "Programat",
+        "away_mode": "Mode absent",
+        "aux_heat": "Calefactor auxiliar"
+      },
+      "counter": {
+        "actions": {
+          "increment": "incrementa",
+          "decrement": "decrementa",
+          "reset": "restableix"
+        }
+      },
+      "cover": { "position": "Posició", "tilt_position": "Inclinació" },
+      "fan": {
+        "speed": "Velocitat",
+        "preset_mode": "Mode predefinit",
+        "oscillate": "Oscil·lació",
+        "direction": "Direcció",
+        "forward": "Endavant",
+        "reverse": "Invers"
+      },
+      "humidifier": {
+        "humidity": "Humitat desitjada",
+        "mode": "Mode",
+        "target_humidity_entity": "Temperatura desitjada de {name}",
+        "on_entity": "{name} on"
+      },
+      "light": {
+        "brightness": "Brillantor",
+        "color_temperature": "Temperatura de color",
+        "white_value": "Brillantor de blanc",
+        "color_brightness": "Brillantor del color",
+        "cold_white_value": "Brillantor de blancs freds",
+        "warm_white_value": "Brillantor de blancs calents",
+        "effect": "Efecte"
+      },
+      "lock": { "code": "Codi", "lock": "Bloquejar", "unlock": "Desbloquejar" },
+      "media_player": {
+        "source": "Entrada",
+        "sound_mode": "Mode de so",
+        "browse_media": "Navega pels mitjans",
+        "turn_on": "Engega",
+        "turn_off": "Apaga",
+        "media_play": "Reprodueix",
+        "media_play_pause": "Reprodueix/pausa",
+        "media_next_track": "Següent",
+        "media_previous_track": "Anterior",
+        "text_to_speak": "Text a veu"
+      },
+      "persistent_notification": { "dismiss": "Omet" },
+      "scene": { "activate": "Activar" },
+      "script": {
+        "run": "Executa",
+        "cancel": "Cancel·la",
+        "cancel_multiple": "Cancel·la {number}"
+      },
+      "service": { "run": "Executa" },
+      "timer": {
+        "actions": {
+          "start": "inicia",
+          "pause": "pausa",
+          "cancel": "cancel·la",
+          "finish": "finalitza"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "Reprendre neteja",
+          "return_to_base": "Retorna a la base",
+          "start_cleaning": "Comença neteja",
+          "turn_on": "Encén",
+          "turn_off": "Apaga"
+        }
+      },
+      "water_heater": {
+        "currently": "Actual",
+        "on_off": "On / Off",
+        "target_temperature": "Temperatura desitjada",
+        "operation": "Funcionament",
+        "away_mode": "Mode fora"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "Pressió atmosfèrica",
+          "humidity": "Humitat",
+          "temperature": "Temperatura",
+          "visibility": "Visibilitat",
+          "wind_speed": "Velocitat del vent",
+          "precipitation": "Precipitació"
+        },
+        "cardinal_direction": {
+          "e": "E",
+          "ene": "ENE",
+          "ese": "ESE",
+          "n": "N",
+          "ne": "NE",
+          "nne": "NNE",
+          "nw": "NO",
+          "nnw": "NNO",
+          "s": "S",
+          "se": "SE",
+          "sse": "SSE",
+          "ssw": "SSO",
+          "sw": "SO",
+          "w": "O",
+          "wnw": "ONO",
+          "wsw": "OSO"
+        },
+        "day": "Dia",
+        "night": "Nit",
+        "forecast": "Previsió",
+        "high": "Alt",
+        "low": "Baix"
+      }
+    },
+    "common": {
+      "and": "i",
+      "continue": "Continua",
+      "previous": "Anterior",
+      "loading": "Carregant",
+      "refresh": "Actualitza",
+      "cancel": "Cancel·la",
+      "delete": "Elimina",
+      "remove": "Elimina",
+      "enable": "Activa",
+      "disable": "Desactiva",
+      "close": "Tanca",
+      "leave": "Surt",
+      "stay": "Queda't",
+      "next": "Següent",
+      "back": "Torna",
+      "undo": "Desfés",
+      "save": "Desa",
+      "rename": "Canvia el nom",
+      "yes": "Sí",
+      "no": "No",
+      "not_now": "Ara no",
+      "skip": "Omet",
+      "menu": "Menú",
+      "overflow_menu": "Menú desbordament",
+      "successfully_saved": "S'ha desat correctament",
+      "successfully_deleted": "S'ha eliminat correctament",
+      "error_required": "Obligatori",
+      "copied": "Copiat",
+      "copied_clipboard": "Copiat al porta-retalls"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "No s'han trobat entrades al registre.",
+        "by": "per",
+        "by_service": "pel servei",
+        "show_trace": "Mostra la traça",
+        "retrieval_error": "Error durant l'obtenció de l'entrada del diari de registre",
+        "messages": {
+          "was_away": "s'ha detectat fora",
+          "was_at_state": "s'ha detectat a {state}",
+          "rose": "ha sortit",
+          "set": "s'ha post",
+          "was_low": "és baix/a",
+          "was_normal": "és normal",
+          "was_connected": "s'ha connectat",
+          "was_disconnected": "s'ha desconnectat",
+          "was_opened": "s'ha obert",
+          "was_closed": "s'ha tancat",
+          "is_opening": "s'està obrint",
+          "is_closing": "s'està tancant",
+          "was_unlocked": "s'ha desbloquejat",
+          "was_locked": "s'ha bloquejat",
+          "was_plugged_in": "s'ha endollat",
+          "was_unplugged": "s'ha desendollat",
+          "was_at_home": "s'ha detectat a casa",
+          "was_unsafe": "és insegur",
+          "was_safe": "és segur",
+          "detected_device_class": "s'ha detectat {device_class}",
+          "cleared_device_class": "s'ha esborrat (no s'ha detectat cap {device_class})",
+          "turned_off": "s'ha apagat",
+          "turned_on": "s'ha engegat",
+          "changed_to_state": "ha canviat a {state}",
+          "became_unavailable": "no està disponible"
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "Entitat",
+          "clear": "Esborra",
+          "no_match": "No s'han trobat entitats coincidents",
+          "show_entities": "Mostra entitats"
+        },
+        "entity-attribute-picker": {
+          "attribute": "Atribut",
+          "show_attributes": "Mostra els atributs"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "Expandeix aquesta àrea en els dispositius i entitats que conté. Després d'expandir-la, no s'actualitzaran els dispositius i les entitats quan l'àrea canviï.",
+        "expand_device_id": "Expandeix aquest dispositiu en les entitats separades que conté. Després d'expandir-lo, no s'actualitzaran les entitats quan el dispositiu canviï.",
+        "remove_area_id": "Elimina àrea",
+        "remove_device_id": "Elimina dispositiu",
+        "remove_entity_id": "Elimina entitat",
+        "add_area_id": "Selecciona àrea",
+        "add_device_id": "Selecciona dispositiu",
+        "add_entity_id": "Selecciona entitat"
+      },
+      "user-picker": {
+        "no_user": "Cap usuari",
+        "add_user": "Afegeix usuari",
+        "remove_user": "Elimina usuari"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Selecciona un blueprint",
+        "add_user": "Afegeix usuari",
+        "remove_user": "Elimina usuari"
+      },
+      "device-picker": {
+        "clear": "Esborra",
+        "toggle": "Commuta",
+        "show_devices": "Mostra dispositius",
+        "no_devices": "No tens cap dispositiu",
+        "no_match": "No s'han trobat dispositius coincidents",
+        "device": "Dispositiu",
+        "no_area": "Sense àrees"
+      },
+      "area-picker": {
+        "clear": "Esborra",
+        "show_areas": "Mostra àrees",
+        "area": "Àrea",
+        "add_new": "Afegeix nova àrea...",
+        "no_areas": "No tens cap àrea",
+        "no_match": "No s'han trobat àrees coincidents",
+        "add_dialog": {
+          "title": "Afegeix àrea nova",
+          "text": "Introdueix el nom de la nova àrea.",
+          "name": "Nom",
+          "add": "Afegeix",
+          "failed_create_area": "No s'ha pogut crear l'àrea."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "Complement",
+        "error": {
+          "no_supervisor": {
+            "title": "Sense Supervisor",
+            "description": "No s'ha trobat cap Supervisor, per tant, no es poden carregar complements."
+          },
+          "fetch_addons": {
+            "title": "S'ha produït un error en l'obtenció dels complements",
+            "description": "L'obtenció dels complements ha retornat un error."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "Filtra per entitat",
+        "filter_by_device": "Filtra per dispositiu",
+        "filter_by_area": "Filtra per àrea",
+        "filtered_by_entity": "entitat: {entity_name}",
+        "filtered_by_device": "dispositiu: {device_name}",
+        "filtered_by_area": "àrea: {area_name}"
+      },
+      "picture-upload": {
+        "label": "Imatge",
+        "unsupported_format": "Format no compatible, tria una imatge JPEG, PNG o GIF."
+      },
+      "date-range-picker": {
+        "start_date": "Data inici",
+        "end_date": "Data final",
+        "select": "Selecciona",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Mai",
+        "just_now": "Ara mateix",
+        "duration": {
+          "second": "{count} {count, plural,\n  one {segon}\n  other {segons}\n}",
+          "minute": "{count} {count, plural,\n  one {minut}\n  other {minuts}\n}",
+          "hour": "{count} {count, plural,\n  one {hora}\n  other {hores}\n}",
+          "day": "{count} {count, plural,\n  one {dia}\n  other {dies}\n}",
+          "week": "{count} {count, plural,\n  one {setmana}\n  other {setmanes}\n}"
+        },
+        "past_duration": {
+          "second": "fa {count} {count, plural,\n  one {segon}\n  other {segons}\n}",
+          "minute": "fa {count} {count, plural,\n  one {minut}\n  other {minuts}\n}",
+          "hour": "fa {count} {count, plural,\n  one {hora}\n  other {hores}\n}",
+          "day": "fa {count} {count, plural,\n  one {dia}\n  other {dies}\n}",
+          "week": "fa {count} {count, plural,\n  one {setmana}\n  other {setmanes}\n}"
+        },
+        "future_duration": {
+          "second": "D'aquí a {count} {count, plural,\n  one {segon}\n  other {segons}\n}",
+          "minute": "D'aquí a {count} {count, plural,\n  one {minut}\n  other {minuts}\n}",
+          "hour": "D'aquí a {count} {count, plural,\n  one {hora}\n  other {hores}\n}",
+          "day": "D'aquí a {count} {count, plural,\n  one {dia}\n  other {dies}\n}",
+          "week": "D'aquí a {count} {count, plural,\n  one {setmana}\n  other {setmanes}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "Integració d'històric desactivada",
+        "loading_history": "Carregant historial d'estats...",
+        "no_history_found": "No s'ha trobat cap històric d'estats."
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "Servei" },
+      "service-control": {
+        "required": "Aquest camp és obligatori",
+        "target": "Objectius",
+        "target_description": "Àrees, dispositius o entitats objectiu d'aquesta crida de servei",
+        "service_data": "Dades del servei",
+        "integration_doc": "Documentació de la integració"
+      },
+      "related-items": {
+        "no_related_found": "No s'han trobat elements relacionats.",
+        "integration": "Integració",
+        "device": "Dispositiu",
+        "area": "Àrea",
+        "entity": "Entitats relacionades",
+        "group": "Part dels següents grups",
+        "scene": "Part de les següents escenes",
+        "script": "Part dels següents programes (scripts)",
+        "automation": "Part de les següents automatitzacions"
+      },
+      "data-table": {
+        "search": "Cerca",
+        "no-data": "No hi ha dades",
+        "filtering_by": "Filtratge per",
+        "hidden": "{number} amagat/s",
+        "clear": "Esborra"
+      },
+      "media-browser": {
+        "pick": "Escull",
+        "play": "Reprodueix",
+        "play-media": "Reprodueix mitjans",
+        "pick-media": "Tria mitjans",
+        "no_items": "Sense elements",
+        "choose_player": "Tria reproductor",
+        "media-player-browser": "Navegador multimèdia",
+        "web-browser": "Navegador web",
+        "media_player": "Reproductor multimèdia",
+        "audio_not_supported": "El teu navegador no és compatible amb l'element d'àudio.",
+        "video_not_supported": "El teu navegador no és compatible amb l'element de vídeo.",
+        "media_not_supported": "El reproductor multimèdia de navegador no és compatible amb aquest tipus de mitjà",
+        "media_browsing_error": "Error de navegació multimèdia",
+        "learn_adding_local_media": "Més informació sobre com afegir contingut multimèdia a la {documentation}.",
+        "local_media_files": "Col·loca els fitxers de vídeo, àudio i imatge al directori multimèdia i podràs navegar-hi i reproduir-los des del navegador o els reproductors multimèdia compatibles.",
+        "documentation": "documentació",
+        "no_local_media_found": "No s'ha trobat cap mitjà local",
+        "no_media_folder": "Sembla que encara no has creat cap directori multimèdia.",
+        "setup_local_help": "Consulta la {documentation} per saber com configurar el contingut multimèdia local.",
+        "class": {
+          "album": "Àlbum",
+          "app": "Aplicació",
+          "artist": "Artista",
+          "channel": "Canal",
+          "composer": "Compositor",
+          "contributing_artist": "Artista col·laborador",
+          "directory": "Biblioteca",
+          "episode": "Episodi",
+          "game": "Joc",
+          "genre": "Gènere",
+          "image": "Imatge",
+          "movie": "Pel·lícula",
+          "music": "Música",
+          "playlist": "Llista de reproducció",
+          "podcast": "Podcast",
+          "season": "Temporada",
+          "track": "Pista",
+          "tv_show": "Programa de TV",
+          "url": "URL",
+          "video": "Vídeo"
+        }
+      },
+      "calendar": { "my_calendars": "Calendaris", "today": "Avui" },
+      "attributes": { "expansion_header": "Atributs" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "{domain}",
+            "core": "Ubicació i personalitzacions",
+            "group": "Grups, grups d'entitats i serveis de notificació",
+            "automation": "Automatitzacions",
+            "script": "Programes (scripts)",
+            "scene": "Escenes",
+            "person": "Persones",
+            "zone": "Zones",
+            "input_boolean": "Entrades booleanes",
+            "input_text": "Entrades de text",
+            "input_number": "Entrades numèriques",
+            "input_datetime": "Entrades de data i hora",
+            "input_select": "Entrades de selecció",
+            "template": "Entitats de plantilla",
+            "universal": "Entitats del reproductor universal",
+            "rest": "Entitats i serveis de notificació rest",
+            "command_line": "Entitats de línia de comandes",
+            "filter": "Entitats de filtre",
+            "statistics": "Entitats d'estadístiques",
+            "generic": "Entitats genèriques de càmera IP",
+            "generic_thermostat": "Entitats genèriques de termòstat",
+            "homekit": "HomeKit",
+            "min_max": "Entitats min/max",
+            "history_stats": "Entitats d'estadístiques històriques",
+            "trend": "Entitats de tendència",
+            "ping": "Entitats de sensors binaris de ping",
+            "filesize": "Entitats de mida de fitxer",
+            "telegram": "Serveis de notificació de Telegram",
+            "smtp": "Serveis de notificació SMTP",
+            "mqtt": "Entitats MQTT configurades manualment",
+            "rpi_gpio": "Entitats GPIO de la Raspberry Pi"
+          },
+          "server_control": {
+            "perform_action": "{action} servidor",
+            "restart": "Reinicia",
+            "stop": "Atura"
+          },
+          "types": {
+            "reload": "Torna a carregar",
+            "navigation": "Navega",
+            "server_control": "Servidor"
+          },
+          "navigation": {
+            "logs": "Registres",
+            "automation": "Automatització",
+            "script": "Programes (scripts)",
+            "integrations": "Integracions",
+            "areas": "Àrees",
+            "scene": "Escenes",
+            "helpers": "Ajudants",
+            "tag": "Etiquetes",
+            "person": "Persones",
+            "devices": "Dispositius",
+            "entities": "Entitats",
+            "energy": "Energy",
+            "lovelace": "Panells Lovelace",
+            "core": "General",
+            "zone": "Zones",
+            "users": "Usuaris",
+            "info": "Informació",
+            "customize": "Personalització",
+            "blueprint": "Blueprints",
+            "server_control": "Controls del servidor",
+            "navigate_to": "Vés a {panel}"
+          }
+        },
+        "filter_placeholder": "Filtre d'entitats"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant no ha sentit res",
+        "found": "He trobat el següent:",
+        "error": "Vaja, s'ha produït un error",
+        "how_can_i_help": "Com puc ajudar-te?",
+        "label": "Escriu una pregunta i prem \"Enter\"",
+        "label_voice": "Escriu i prem \"Enter\" o toca la icona del micròfon per parlar"
+      },
+      "generic": {
+        "cancel": "Cancel·la",
+        "ok": "OK",
+        "default_confirmation_title": "Estàs segur?",
+        "close": "tanca"
+      },
+      "image_cropper": { "crop": "Retalla" },
+      "more_info_control": {
+        "dismiss": "Omet el diàleg",
+        "settings": "Configuració de l'entitat",
+        "edit": "Edita entitat",
+        "details": "Detalls",
+        "history": "Historial",
+        "last_changed": "Últim canvi",
+        "last_updated": "Última actualització",
+        "script": {
+          "last_action": "Última acció",
+          "last_triggered": "Disparat per última vegada"
+        },
+        "sun": {
+          "elevation": "Elevació",
+          "rising": "Sortint",
+          "setting": "Ponent-se"
+        },
+        "updater": { "title": "Instruccions d'actualització" },
+        "remote": { "activity": "Activitat actual" },
+        "restored": {
+          "not_provided": "Actualment aquesta entitat no està disponible, prové d'una integració o dispositiu eliminat, modificat o que no funciona.",
+          "remove_intro": "Si l'entitat ja no s'utilitza, pots borrar-la eliminant-la.",
+          "remove_action": "Elimina entitat",
+          "confirm_remove_title": "Eliminar l'entitat?",
+          "confirm_remove_text": "Estàs segur que vols eliminar aquesta entitat?"
+        },
+        "vacuum": {
+          "status": "Estat",
+          "commands": "Comandes de l'aspirador:",
+          "fan_speed": "Velocitat del ventilador",
+          "start": "Inici",
+          "pause": "Pausa",
+          "stop": "Atura",
+          "clean_spot": "Zona neta",
+          "locate": "Localitza",
+          "return_home": "Torna a casa",
+          "start_pause": "Inicia/Pausa"
+        },
+        "person": {
+          "create_zone": "Crea una zona a partir de la ubicació actual"
+        },
+        "cover": {
+          "open_cover": "Obre la coberta",
+          "close_cover": "Tanca la coberta",
+          "open_tilt_cover": "Inclinació de la coberta oberta",
+          "close_tile_cover": "Inclinació de la coberta tancada",
+          "stop_cover": "Atura el moviment de la coberta"
+        }
+      },
+      "entity_registry": {
+        "settings": "Configuració",
+        "control": "Control",
+        "related": "Relacionat",
+        "dismiss": "Omet",
+        "no_unique_id": "Aquesta entitat (\"{entity_id}\") no té un ID únic, per tant, la seva configuració no pot ser gestionada des de la interfície d'usuari. Consulta les {faq_link} per a més detalls.",
+        "faq": "documentació",
+        "info_customize": "Pots sobreescriure alguns atributs a la secció {customize_link}.",
+        "customize_link": "personalitzacions d'entitat",
+        "editor": {
+          "name": "Nom",
+          "icon": "Icona",
+          "icon_error": "Els icones han de tenir el format 'prefix:nom_icona', per exemple: 'mdi:home'",
+          "entity_id": "ID de l'entitat",
+          "unavailable": "Aquesta entitat no està disponible actualment.",
+          "enabled_label": "Activa l'entitat",
+          "enabled_cause": "Desactivada per {cause}.",
+          "device_disabled": "El dispositiu d'aquesta entitat està desactivat.",
+          "open_device_settings": "Obre la configuració del dispositiu",
+          "enabled_description": "Les entitats desactivades no s'afegiran a Home Assistant.",
+          "enabled_delay_confirm": "Les entitats activades s'afegiran a Home Assistant d'aquí a {delay} segons",
+          "enabled_restart_confirm": "Reinicia Home Assistant per acabar d'activar les entitats",
+          "delete": "Elimina",
+          "confirm_delete": "Estàs segur que vols eliminar aquesta entrada?",
+          "update": "Actualitza",
+          "note": "Nota: podria no funcionar amb alguna de les integracions.",
+          "advanced": "Configuració avançada",
+          "area": "Defineix només l'àrea de l'entitat",
+          "area_note": "De manera predeterminada, les entitats d'un dispositiu es troben a la mateixa àrea que el dispositiu. Si canvies l'àrea d'aquesta entitat, deixarà de seguir la del dispositiu.",
+          "follow_device_area": "Segueix l'àrea del dispositiu",
+          "change_device_area": "Canvia l'àrea del dispositiu"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "La integració {platform} no està carregada. Afegeix-la a la teva configuració afegint 'default_config:' o bé ''{platform}:''.",
+        "yaml_not_editable": "La configuració d'aquesta entitat no es pot editar des de la interfície d'usuari. Només es poden editar des de la interfície aquelles entitats que s'han configurat des d'ella.",
+        "required_error_msg": "Aquest camp és obligatori",
+        "generic": { "name": "Nom", "icon": "Icona" },
+        "input_datetime": {
+          "date": "Data",
+          "time": "Hora",
+          "datetime": "Data i hora",
+          "mode": "Què vols introduir"
+        },
+        "input_text": {
+          "min": "Longitud mínima",
+          "max": "Longitud màxima",
+          "mode": "Mode de visualització",
+          "text": "Text",
+          "password": "Contrasenya",
+          "pattern": "Patró Regex per a la validació de client"
+        },
+        "input_number": {
+          "min": "Valor mínim",
+          "max": "Valor màxim",
+          "mode": "Mode de visualització",
+          "box": "Camp d'entrada",
+          "slider": "Barra lliscant",
+          "step": "Mida del pas",
+          "unit_of_measurement": "Unitat de mesura"
+        },
+        "input_select": {
+          "options": "Opcions",
+          "add_option": "Afegeix opció",
+          "no_options": "Encara no hi ha opcions.",
+          "add": "Afegeix"
+        },
+        "counter": {
+          "minimum": "Valor mínim",
+          "maximum": "Valor màxim",
+          "initial": "Valor inicial",
+          "restore": "Restaura l'últim valor conegut quan Home Assistant s'iniciï.",
+          "step": "Mida del pas"
+        },
+        "timer": { "duration": "Durada" }
+      },
+      "options_flow": {
+        "form": { "header": "Opcions" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "Opcions guardades amb èxit." }
+      },
+      "config_entry_system_options": {
+        "title": "Opcions del sistema per a {integration}",
+        "enable_new_entities_label": "Activa entitats afegides recentment.",
+        "enable_new_entities_description": "Si està activat, les noves entitats descobertes per {integration} s'afegiran automàticament a Home Assistant.",
+        "enable_polling_label": "Activa el sondeig per obtenir actualitzacions.",
+        "enable_polling_description": "Si Home Assistant ha de sondejar automàticament {integration} per obtenir actualitzacions de les entitats.",
+        "restart_home_assistant": "Has de reiniciar Home Assistant per aplicar els canvis.",
+        "update": "Actualitza"
+      },
+      "zha_reconfigure_device": {
+        "heading": "S'està reconfigurant el dispositiu",
+        "configuring_alt": "Configurant",
+        "introduction": "Reconfigura un dispositiu de la xarxa Zigbee. Fes-ho si el dispositiu no funciona correctament.",
+        "battery_device_warning": "Hauràs de despertar els dispositius amb bateria abans d'iniciar el procés de reconfiguració. Consulta el manual del dispositiu per saber els passos per a despertar-lo.",
+        "run_in_background": "Pots tancar aquest diàleg, la reconfiguració continuarà en segon pla.",
+        "start_reconfiguration": "Inicia la reconfiguració",
+        "in_progress": "El dispositiu s'està reconfigurant. Això pot trigar una estona.",
+        "configuration_failed": "Ha fallat la reconfiguració del dispositiu. Pots trobar informació addicional als registres.",
+        "configuration_complete": "Reconfiguració de dispositiu completada.",
+        "button_show": "Mostra els detalls",
+        "button_hide": "Amaga els detalls",
+        "cluster_header": "Clúster",
+        "bind_header": "Vinculació",
+        "reporting_header": "Informant",
+        "attribute": "Atribut",
+        "min_max_change": "min/max/canvi"
+      },
+      "zha_device_info": {
+        "manuf": "per {manufacturer}",
+        "no_area": "Sense Àrea",
+        "device_signature": "Signatura Zigbee del dispositiu",
+        "device_children": "Dispositiu Zigbee fill",
+        "buttons": {
+          "add": "Afegeix dispositius a través d'aquest dispositiu",
+          "remove": "Eliminar dispositiu",
+          "clusters": "Gestiona clústers",
+          "reconfigure": "Reconfigurar dispositiu",
+          "zigbee_information": "Signatura Zigbee del dispositiu",
+          "device_children": "Mostra fills",
+          "view_in_visualization": "Mostra a la visualització"
+        },
+        "services": {
+          "reconfigure": "Reconfigura el dispositiu ZHA (dispositiu curatiu). Utilitza-ho si tens problemes amb el dispositiu. Si el dispositiu en qüestió està alimentat per bateria, assegura't que estigui despert i accepti ordres quan utilitzis aquest servei.",
+          "updateDeviceName": "Estableix un nom personalitzat pel dispositiu al registre de dispositius.",
+          "remove": "Elimina un dispositiu de la xarxa Zigbee.",
+          "zigbee_information": "Consulta la informació Zigbee del dispositiu."
+        },
+        "confirmations": {
+          "remove": "Estàs segur que vols eliminar el dispositiu?"
+        },
+        "quirk": "Quirk",
+        "last_seen": "Vist per últim cop",
+        "power_source": "Font d'alimentació",
+        "unknown": "Desconeguda",
+        "zha_device_card": {
+          "device_name_placeholder": "Canvia el nom del dispositiu"
+        }
+      },
+      "domain_toggler": {
+        "title": "Commutació de dominis",
+        "reset_entities": "Restableix entitats"
+      },
+      "mqtt_device_debug_info": {
+        "title": "Informació de depuració de {device}",
+        "deserialize": "Intenta analitzar els missatges MQTT com a format JSON",
+        "entities": "Entitats",
+        "no_entities": "No hi ha entitats",
+        "no_triggers": "No hi ha disparadors",
+        "payload_display": "Mostra les dades/payload",
+        "recent_messages": "{n} últim/s missatge/s rebut/s",
+        "show_as_yaml": "Mostra en YAML",
+        "triggers": "Disparadors"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\none {segon}\nother {segons}\n}",
+      "minute": "{count} {count, plural,\none {minut}\nother {minuts}\n}",
+      "hour": "{count} {count, plural,\none {hora}\nother {hores}\n}",
+      "day": "{count} {count, plural,\n  one {dia}\n  other {dies}\n}",
+      "week": "{count} {count, plural,\n  one {setmana}\n  other {setmanes}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "No s'ha proporcionat cap tipus.",
+        "error_detected": "S'han detectat errors de configuració",
+        "editor_not_available": "L'eeditor visual no està disponible per al tipus \"{type}\".",
+        "editor_not_supported": "L'editor visual no és compatible amb aquesta configuració",
+        "edit_in_yaml_supported": "Encara pots editar la configuració a YAML.",
+        "key_missing": "Falta la clau obligatòria \"{key}\".",
+        "key_not_expected": "No s'està esperant la clau \"{key}\" o no és compatible amb l'editor visual.",
+        "key_wrong_type": "L'editor visual no admet el valor proporcionat de \"{key}\". ({type_correct}) és compatible, però s'ha rebut ({type_wrong}).",
+        "no_template_editor_support": "Les plantilles no són compatibles amb l'editor visual"
+      },
+      "supervisor": {
+        "title": "No s'ha pogut carregar el panell del Supervisor!",
+        "wait": "Si acabes de començar, assegura't que has deixat passar prou temps perquè el Supervisor s'iniciï.",
+        "ask": "Sol·licita ajuda",
+        "reboot": "Intenta reiniciar l'amfitrió",
+        "observer": "Comprova l'observador",
+        "system_health": "Comprova l'estat del sistema"
+      }
+    },
+    "login-form": {
+      "password": "Contrasenya",
+      "remember": "Recordar",
+      "log_in": "Iniciar sessió"
+    },
+    "notification_drawer": {
+      "click_to_configure": "Prem el botó per configurar {entity}",
+      "empty": "No hi ha notificacions",
+      "title": "Notificacions",
+      "close": "Tanca",
+      "dismiss_all": "Omet tot"
+    },
+    "notification_toast": {
+      "service_call_failed": "Ha fallat la crida al servei {service}.",
+      "connection_lost": "Connexió perduda. Tornant a connectar...",
+      "started": "Home Assistant s'ha iniciat!",
+      "starting": "Home Assistant està iniciant-se, no estarà tot disponible fins que acabi",
+      "wrapping_up_startup": "Finalitzant l'arrencada, no estarà tot disponible fins que acabi.",
+      "integration_starting": "Iniciant {integration}, no estarà tot disponible fins que acabi.",
+      "triggered": "{name} disparat/ada",
+      "dismiss": "Omet"
+    },
+    "sidebar": {
+      "external_app_configuration": "Configuració de l'aplicació",
+      "sidebar_toggle": "Commutació de la barra lateral",
+      "done": "Fet"
+    },
+    "panel": {
+      "error": {
+        "go_back": "Torna",
+        "supervisor": {
+          "ask": "Sol·licita ajuda",
+          "observer": "Comprova l'observador",
+          "reboot": "Intenta reiniciar l'amfitrió",
+          "system_health": "Comprova l'estat del sistema",
+          "title": "No s'ha pogut carregar el panell del Supervisor!",
+          "wait": "Si acabes de començar, assegura't que has deixat passar prou temps perquè el Supervisor s'iniciï."
+        }
+      },
+      "history": {
+        "ranges": {
+          "last_week": "La setmana passada",
+          "this_week": "Aquesta setmana",
+          "today": "Avui",
+          "yesterday": "Ahir"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "La setmana passada",
+          "this_week": "Aquesta setmana",
+          "today": "Avui",
+          "yesterday": "Ahir"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,893 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "Koledar",
+    "config": "Nastavitve",
+    "states": "Pregled",
+    "map": "Zemljevid",
+    "logbook": "Dnevnik",
+    "history": "Zgodovina",
+    "mailbox": "Nabiralnik",
+    "shopping_list": "Nakupovalni seznam",
+    "developer_tools": "Orodja za razvijalce",
+    "media_browser": "Brskalnik po medijskih vsebinah",
+    "profile": "Profil"
+  },
+  "state": {
+    "default": {
+      "on": "Vključen",
+      "off": "Izključen",
+      "unknown": "Neznano",
+      "unavailable": "Ni na voljo"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": {
+        "off": "Izključen",
+        "on": "Vklopljen",
+        "auto": "Samodejno"
+      },
+      "preset_mode": {
+        "none": "Noben",
+        "eco": "Eko",
+        "away": "Odsoten",
+        "boost": "Povečanje",
+        "comfort": "Udobje",
+        "home": "Doma",
+        "sleep": "Spanje",
+        "activity": "Dejavnost"
+      },
+      "hvac_action": {
+        "off": "Izključen",
+        "heating": "Ogrevanje",
+        "cooling": "Hlajenje",
+        "drying": "Sušenje",
+        "idle": "V pripravljenosti",
+        "fan": "Ventilator"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "Normalno",
+        "eco": "Eko",
+        "away": "Odsoten",
+        "boost": "Povečanje",
+        "comfort": "Udobje",
+        "home": "Doma",
+        "sleep": "Spanje",
+        "auto": "Samodejno",
+        "baby": "Otrok"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "Neznano",
+      "unavailable": "N/A",
+      "error": "Napaka",
+      "entity_not_found": "Entiteta ni bila najdena"
+    },
+    "alarm_control_panel": {
+      "armed": "Aktiven",
+      "disarmed": "Off",
+      "armed_home": "Aktiven",
+      "armed_away": "Aktiven",
+      "armed_night": "Aktiven",
+      "armed_custom_bypass": "Aktiven",
+      "pending": "V teku",
+      "arming": "Vklapljam",
+      "disarming": "Izklopi",
+      "triggered": "Sprožen"
+    },
+    "device_tracker": { "home": "Doma", "not_home": "Odsoten" },
+    "person": { "home": "Doma", "not_home": "Odsoten" }
+  },
+  "groups": {
+    "owner": "Lastnik",
+    "system-admin": "Skrbniki",
+    "system-users": "Uporabniki",
+    "system-read-only": "Uporabniki \"samo za branje\""
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "Uporabnik",
+      "integration": "Integracija",
+      "config_entry": "Vnos konfiguracije",
+      "device": "Naprave"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "Ali želite ostati prijavljeni?",
+      "decline": "Ne",
+      "confirm": "Da"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "Koda",
+        "clear_code": "Počisti",
+        "disarm": "Izklopi",
+        "arm_home": "Vklopi doma",
+        "arm_away": "Vklopi odsoten",
+        "arm_night": "Vklopi nočni način",
+        "arm_custom_bypass": "Izjeme po meri"
+      },
+      "automation": {
+        "last_triggered": "Nazadnje sprožen",
+        "trigger": "Zaženi"
+      },
+      "camera": { "not_available": "Slika ni na voljo" },
+      "climate": {
+        "currently": "Trenutno",
+        "on_off": "Vključen / izključen",
+        "target_temperature": "Ciljna temperatura",
+        "target_temperature_entity": "{name} ciljna temperatura",
+        "target_temperature_mode": "{name} ciljna temperatura {mode}",
+        "current_temperature": "{name} trenutna temperatura",
+        "heating": "{name} ogrevanje",
+        "cooling": "{name} hlajenje",
+        "high": "visoka",
+        "low": "nizka",
+        "target_humidity": "Ciljna vlažnost",
+        "operation": "Delovanje",
+        "fan_mode": "Način ventilatorja",
+        "swing_mode": "Način Swing",
+        "preset_mode": "Prednastavitev",
+        "away_mode": "Način odsotnosti",
+        "aux_heat": "Dodatna toplota"
+      },
+      "counter": {
+        "actions": {
+          "increment": "prirastek",
+          "decrement": "pojemek",
+          "reset": "ponastavi"
+        }
+      },
+      "cover": { "position": "Položaj", "tilt_position": "Položaj nagiba" },
+      "fan": {
+        "speed": "Hitrost",
+        "preset_mode": "Preset Mode",
+        "oscillate": "Nihanje",
+        "direction": "Smer",
+        "forward": "Naprej",
+        "reverse": "Obratno"
+      },
+      "humidifier": {
+        "humidity": "Ciljna vlažnost",
+        "mode": "Način",
+        "target_humidity_entity": "{name} ciljna vlažnost",
+        "on_entity": "{name} vklopljeno"
+      },
+      "light": {
+        "brightness": "Svetlost",
+        "color_temperature": "Temperatura barve",
+        "white_value": "Bela vrednost",
+        "color_brightness": "Color brightness",
+        "cold_white_value": "Cold white brightness",
+        "warm_white_value": "Warm white brightness",
+        "effect": "Učinek"
+      },
+      "lock": { "code": "Koda", "lock": "Zakleni", "unlock": "Odkleni" },
+      "media_player": {
+        "source": "Vir",
+        "sound_mode": "Zvočni način",
+        "browse_media": "Brskaj po vsebini",
+        "turn_on": "Vklopi",
+        "turn_off": "Izklopi",
+        "media_play": "Predvajaj",
+        "media_play_pause": "Predvajanje / premor",
+        "media_next_track": "Naslednji",
+        "media_previous_track": "Prejšnji",
+        "text_to_speak": "Besedilo v govor"
+      },
+      "persistent_notification": { "dismiss": "Opusti" },
+      "scene": { "activate": "Aktiviraj" },
+      "script": {
+        "run": "Run",
+        "cancel": "Prekliči",
+        "cancel_multiple": "Prekliči {number}"
+      },
+      "service": { "run": "Poženi" },
+      "timer": {
+        "actions": {
+          "start": "Zagon",
+          "pause": "pavza",
+          "cancel": "Prekliči",
+          "finish": "Dokončaj"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "Nadaljuj s čiščenjem",
+          "return_to_base": "Vrni se na postajo",
+          "start_cleaning": "Začni čiščenje",
+          "turn_on": "Vklopite",
+          "turn_off": "Izklopite"
+        }
+      },
+      "water_heater": {
+        "currently": "Trenutno",
+        "on_off": "Vključen / izključen",
+        "target_temperature": "Ciljna temperatura",
+        "operation": "Delovanje",
+        "away_mode": "Način odsotnosti"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "Zračni tlak",
+          "humidity": "Vlažnost",
+          "temperature": "Temperatura",
+          "visibility": "Vidljivost",
+          "wind_speed": "Hitrost vetra",
+          "precipitation": "Padavine"
+        },
+        "cardinal_direction": {
+          "e": "Vzhod",
+          "ene": "Vzhodno-severovzhod",
+          "ese": "Vzhodno-jugovzhod",
+          "n": "Sever",
+          "ne": "Severovzhod",
+          "nne": "Severo-severovzhod",
+          "nw": "Severozahod",
+          "nnw": "Severo-severozahod",
+          "s": "Jug",
+          "se": "Jugovzhod",
+          "sse": "Jugo-juhovzhod",
+          "ssw": "Jugo-jugozahod",
+          "sw": "Jugozahod",
+          "w": "Zahod",
+          "wnw": "Zahod-severozahod",
+          "wsw": "Zahod-jugozahod"
+        },
+        "day": "Dan",
+        "night": "Noč",
+        "forecast": "Napoved",
+        "high": "Visoko",
+        "low": "Nizko"
+      }
+    },
+    "common": {
+      "and": "in",
+      "continue": "Nadaljuj",
+      "previous": "Prejšnji",
+      "loading": "Nalaganje",
+      "refresh": "Osveži",
+      "cancel": "Prekliči",
+      "delete": "Izbriši",
+      "remove": "Odstrani",
+      "enable": "Omogoči",
+      "disable": "Onemogoči",
+      "close": "Zapri",
+      "leave": "Zapusti",
+      "stay": "Ostani",
+      "next": "Naslednji",
+      "back": "Nazaj",
+      "undo": "Razveljavi",
+      "save": "Shrani",
+      "rename": "Preimenuj",
+      "yes": "Da",
+      "no": "Ne",
+      "not_now": "Ne zdaj",
+      "skip": "Preskoči",
+      "menu": "Meni",
+      "overflow_menu": "Prelivni meni",
+      "successfully_saved": "Shranjeno",
+      "successfully_deleted": "Uspešno odstranjeno",
+      "error_required": "Zahtevano",
+      "copied": "Kopirano",
+      "copied_clipboard": "Kopirano v odložišče"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "Ni bilo najdenih vnosov v dnevnik.",
+        "by": "od",
+        "by_service": "od storitve",
+        "show_trace": "Show trace",
+        "retrieval_error": "Error during logbook entry retrieval",
+        "messages": {
+          "was_away": "je bilo odsotno",
+          "was_at_state": "je bilo {state}",
+          "rose": "naraslo",
+          "set": "nastavljeno",
+          "was_low": "je bilo nizko",
+          "was_normal": "je bil normalno",
+          "was_connected": "je bil povezan",
+          "was_disconnected": "je bil odklopljeno",
+          "was_opened": "je bil odprt",
+          "was_closed": "je bil zaprto",
+          "is_opening": "is opening",
+          "is_closing": "is closing",
+          "was_unlocked": "je bil odklenjeno",
+          "was_locked": "je bil zaklenjeno",
+          "was_plugged_in": "je bil priključeno",
+          "was_unplugged": "je bilo izključeno",
+          "was_at_home": "je bil/-a doma",
+          "was_unsafe": "ni bilo varno",
+          "was_safe": "je bilo varno",
+          "detected_device_class": "najdeno {device_class}",
+          "cleared_device_class": "počiščeno ( {device_class} ni najdeno)",
+          "turned_off": "izklopljen",
+          "turned_on": "vklopljeno",
+          "changed_to_state": "je spremenil stanje v {state}",
+          "became_unavailable": "postal nedosegljiv"
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "Entiteta",
+          "clear": "Počisti",
+          "no_match": "Ni ustreznih entitet",
+          "show_entities": "Pokaži entitete"
+        },
+        "entity-attribute-picker": {
+          "attribute": "Atribut",
+          "show_attributes": "Pokaži atribute"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "Razširite to območje v ločene naprave in entitete, ki jih vsebuje. Po razšritivi naprave in entitete ne bodo posodobljene ob spremembi območja.",
+        "expand_device_id": "Razširite to napravo  v ločene  entitete. Po razšritivi entitete ne bodo posodobljene ob spremembi naprave.",
+        "remove_area_id": "Odstranite območje",
+        "remove_device_id": "Odstranite napravo",
+        "remove_entity_id": "Odstranite entiteto",
+        "add_area_id": "Izberite območje",
+        "add_device_id": "Izberite napravo",
+        "add_entity_id": "Izberite entiteto"
+      },
+      "user-picker": {
+        "no_user": "Brez uporabnika",
+        "add_user": "Dodaj uporabnika",
+        "remove_user": "Odstrani uporabnika"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Izberite načrt",
+        "add_user": "Dodaj uporabnika",
+        "remove_user": "Odstrani uporabnika"
+      },
+      "device-picker": {
+        "clear": "Počisti",
+        "toggle": "Preklopite",
+        "show_devices": "Pokažite naprave",
+        "no_devices": "Nimate naprav",
+        "no_match": "Ni ustreznih naprav",
+        "device": "Naprava",
+        "no_area": "Brez območja"
+      },
+      "area-picker": {
+        "clear": "Počisti",
+        "show_areas": "Prikaži območja",
+        "area": "Območje",
+        "add_new": "Dodajanje novega območja…",
+        "no_areas": "Nimate območji",
+        "no_match": "Ni ustreznih območji",
+        "add_dialog": {
+          "title": "Dodajte novo območje",
+          "text": "Vnesite ime novega območja.",
+          "name": "Ime",
+          "add": "Dodaj",
+          "failed_create_area": "Območja ni bilo mogoče ustvariti."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "Add-on",
+        "error": {
+          "no_supervisor": {
+            "title": "No Supervisor",
+            "description": "No Supervisor found, so add-ons could not be loaded."
+          },
+          "fetch_addons": {
+            "title": "Error fetching add-ons",
+            "description": "Fetching add-ons returned an error."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "Filter by entity",
+        "filter_by_device": "Filter by device",
+        "filter_by_area": "Filter by area",
+        "filtered_by_entity": "entity: {entity_name}",
+        "filtered_by_device": "device: {device_name}",
+        "filtered_by_area": "area: {area_name}"
+      },
+      "picture-upload": {
+        "label": "Slika",
+        "unsupported_format": "Nepodprta oblika, izberite sliko JPEG, PNG ali GIF."
+      },
+      "date-range-picker": {
+        "start_date": "Začetni datum",
+        "end_date": "Končni datum",
+        "select": "Izberite",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Nikoli",
+        "just_now": "Ravnokar",
+        "duration": {
+          "second": "{count} {count, plural,\none {sekunda}\nother {sekund}\n}",
+          "minute": "{count} {count, plural,\n  one {minuta}\n  other {minut}\n}",
+          "hour": "{count} {count, plural,\n  one {ura}\n  two {uri}\n  three {ure}\n  four {ure}\n  other {ur}\n}",
+          "day": "{count} {count, plural,\n  one {dan}\n  other {dni}\n}",
+          "week": "{count} {count, plural,\none {Teden}\ntwo {Tedna}\nthree {Tedne}\nfour {Tedne}\nother {Tednov}\n}"
+        },
+        "past_duration": {
+          "second": "Pred {count} {count, plural,\n  one {sekundo}\n  two {sekundama}\n  other {sekundami}\n}",
+          "minute": "Pred {count} {count, plural,\n  one {minuto}\n  two {minutama}\n  other {minutami}\n}",
+          "hour": "Pred {count} {count, plural,\n  one {uro}\n  two {urama}\n  other {urami}\n}",
+          "day": "Pred {count} {count, plural,\n  one {dnevom}\n  two {dnevoma}\n  other {dnevi}\n}",
+          "week": "Pred {count} {count, plural,\n  one {tednom}\n  two {tednoma}\n  other {tedni}\n}"
+        },
+        "future_duration": {
+          "second": "V {count} {count, plural,\n  one {sekundi}\n  other {sekundah}\n}",
+          "minute": "V {count} {count, plural,\n  one {minuti}\n  other {minutah}\n}",
+          "hour": "V {count} {count, plural,\n  one {uri}\n  other {urah}\n}",
+          "day": "V {count} {count, plural,\n  one {dnevu}\n  other {dnevih}\n}",
+          "week": "V {count} {count, plural,\n  one {tednu}\n  other {tednih}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "History integration disabled",
+        "loading_history": "Nalagam zgodovino stanj...",
+        "no_history_found": "Ni najdene zgodovine stanj."
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "Storitev" },
+      "service-control": {
+        "required": "This field is required",
+        "target": "Targets",
+        "target_description": "What should this service use as targeted areas, devices or entities.",
+        "service_data": "Service data",
+        "integration_doc": "Integration documentation"
+      },
+      "related-items": {
+        "no_related_found": "Najden ni bil noben povezan element.",
+        "integration": "Integracija",
+        "device": "Naprava",
+        "area": "Območje",
+        "entity": "Sorodne entitete",
+        "group": "Del naslednjih skupin",
+        "scene": "Del naslednjih prizorov",
+        "script": "Del naslednjih skript",
+        "automation": "Del naslednjih avtomatizacij"
+      },
+      "data-table": {
+        "search": "Iskanje",
+        "no-data": "Ni podatkov",
+        "filtering_by": "Filtering by",
+        "hidden": "{number} hidden",
+        "clear": "Clear"
+      },
+      "media-browser": {
+        "pick": "Izberi",
+        "play": "Predvajaj",
+        "play-media": "Predvajaj vsebino",
+        "pick-media": "Izberi vsebino",
+        "no_items": "Ni predmetov",
+        "choose_player": "Izberi predvajalnik",
+        "media-player-browser": "Brskalnik za medijski predvajalnik",
+        "web-browser": "Spletni brskalnik",
+        "media_player": "Medijski predvajalnik",
+        "audio_not_supported": "Vaš brskalnik ne podpira zvočnega elementa.",
+        "video_not_supported": "Vaš brskalnik ne podpira video elementa.",
+        "media_not_supported": "Predvajalnik ne podpira te vrste vsebin",
+        "media_browsing_error": "Napaka pri brskanju po vsebinah",
+        "learn_adding_local_media": "Več o dodajanju medijskih vsebin  preberite v {documentation}.",
+        "local_media_files": "V mapo medijskih vsebin dodajte video, zvočne in slikovne datoteke, ki jih lahko pregledujete ali predvajate v brskalniku oz podprtih predvajalnikih.",
+        "documentation": "dokumentacija",
+        "no_local_media_found": "Ni bilo najdenega lokalnih medijskih vsebin",
+        "no_media_folder": "Videti je, da še niste ustvarili mape medijskih vsebin",
+        "setup_local_help": "Preverite {documentation} o tem, kako nastaviti lokalni medij.",
+        "class": {
+          "album": "Album",
+          "app": "Aplikacija",
+          "artist": "Umetnik",
+          "channel": "Kanal",
+          "composer": "Skladatelj",
+          "contributing_artist": "Sodelujoči umetnik",
+          "directory": "Knjižnica",
+          "episode": "Epizoda",
+          "game": "Igra",
+          "genre": "Zvrst",
+          "image": "Slika",
+          "movie": "Film",
+          "music": "Glasba",
+          "playlist": "Seznam predvajanja",
+          "podcast": "Poddaja",
+          "season": "Sezona",
+          "track": "Vsebina",
+          "tv_show": "Televizijska oddaja",
+          "url": "URL",
+          "video": "Video"
+        }
+      },
+      "calendar": { "my_calendars": "Moji koledarji", "today": "Today" },
+      "attributes": { "expansion_header": "Lastnosti" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "Znova naloži {domain}",
+            "core": "Znova naloži lokacijo in prilagoditve",
+            "group": "Znova naloži skupine, skupinske entitete in storitve obveščanja",
+            "automation": "Znova naloži avtomatizacije",
+            "script": "Znova naloži skripte",
+            "scene": "Znova naloži scene",
+            "person": "Znova naloži osebe",
+            "zone": "Znova naloži območja",
+            "input_boolean": "Znova naloži vhodne logične vrednosti",
+            "input_text": "Znova naloži vhodna besedila",
+            "input_number": "Znova naloži vhodne številke",
+            "input_datetime": "Znova naloži vhodne datume",
+            "input_select": "Znova naloži izbor vhodov",
+            "template": "Znova naloži entitete predlog",
+            "universal": "Znova naloži entitete univerzalnega predvajalnika",
+            "rest": "Znova naloži entitete za REST in storitve obveščanja",
+            "command_line": "Znova naloži entitete ukazne vrstice",
+            "filter": "Znova naloži entitete za  filter",
+            "statistics": "Znova naloži statistične entitete",
+            "generic": "Znova naloži entitete za generične IP kamere",
+            "generic_thermostat": "Znova naloži entitete za generične termostate",
+            "homekit": "Znova naloži HomeKit",
+            "min_max": "Znova naloži entitete min/maks.",
+            "history_stats": "Znova naloži entitete statistike zgodovine",
+            "trend": "Znova naloži entitete trendov",
+            "ping": "Znova naloži entitete za pinganje binarnega senzorja.",
+            "filesize": "Znova naloži entitete za velikost datotek",
+            "telegram": "Znova naloži storitve za telegram obestila",
+            "smtp": "Znova naloži storitve za SMTP obvestila",
+            "mqtt": "Znova naloži ročno nastavljene MQTT entitete",
+            "rpi_gpio": "Znova naloži Raspberry Pi GPIO entitete"
+          },
+          "server_control": {
+            "perform_action": "{action} strežnik",
+            "restart": "Znova zaženi",
+            "stop": "Zaustavi"
+          },
+          "types": {
+            "reload": "Reload",
+            "navigation": "Navigate",
+            "server_control": "Server"
+          },
+          "navigation": {
+            "logs": "Dnevniki",
+            "automation": "Avtomatizacije",
+            "script": "Skripti",
+            "integrations": "Integracije",
+            "areas": "Območja",
+            "scene": "Scene",
+            "helpers": "Pomočniki",
+            "tag": "Tags",
+            "person": "Osebe",
+            "devices": "Naprave",
+            "entities": "Entitete",
+            "energy": "Energy",
+            "lovelace": "Nadzorne plošče Lovelace",
+            "core": "Splošno",
+            "zone": "Območja",
+            "users": "Uporabniki",
+            "info": "Informacije",
+            "customize": "Prilagoditve",
+            "blueprint": "Načrti",
+            "server_control": "Nadzor strežnika",
+            "navigate_to": "Pojdi na {panel}"
+          }
+        },
+        "filter_placeholder": "Filter entitet"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant ni slišal ničesar",
+        "found": "Za vas sem našel naslednje:",
+        "error": "Ups, prišlo je do napake",
+        "how_can_i_help": "Kako lahko pomagam?",
+        "label": "Vnesite vprašanje in pritisnite »Enter«",
+        "label_voice": "Vnesite in pritisnite »Enter« ali tapnite mikrofon in spregovorite"
+      },
+      "generic": {
+        "cancel": "Prekliči",
+        "ok": "OK",
+        "default_confirmation_title": "Ste prepričani?",
+        "close": "Zapri"
+      },
+      "image_cropper": { "crop": "Izreži" },
+      "more_info_control": {
+        "dismiss": "Opusti pogovorno okno",
+        "settings": "Nastavitve entitete",
+        "edit": "Uredi entiteto",
+        "details": "Podrobnosti",
+        "history": "Zgodovina",
+        "last_changed": "Zadnja sprememba",
+        "last_updated": "Zadnja posodobitev",
+        "script": {
+          "last_action": "Zadnje Dejanje",
+          "last_triggered": "Nazadnje sproženo"
+        },
+        "sun": {
+          "elevation": "Nadmorska višina",
+          "rising": "Naraščajoče",
+          "setting": "Nastavitve"
+        },
+        "updater": { "title": "Navodila za posodabitev" },
+        "remote": { "activity": "Current activity" },
+        "restored": {
+          "not_provided": "Ta entiteta trenutno ni na voljo in je osirotelo odstranjene, spremenjene ali nefunkcionalne integracije ali naprave.",
+          "remove_intro": "Če entiteta ni več v uporabi, jo lahko očistite tako, da jo odstranite.",
+          "remove_action": "Odstranite entiteto",
+          "confirm_remove_title": "Ali želite odstraniti entiteto?",
+          "confirm_remove_text": "Ali ste prepričani, da želite odstraniti to entiteto?"
+        },
+        "vacuum": {
+          "status": "Stanje",
+          "commands": "Ukazi sesalnika:",
+          "fan_speed": "Hitrost ventilatorja",
+          "start": "Zagon",
+          "pause": "Premor",
+          "stop": "Ustavi",
+          "clean_spot": "Očisti točko",
+          "locate": "Poiščite",
+          "return_home": "Vrni se domov",
+          "start_pause": "Začetek/Premor"
+        },
+        "person": { "create_zone": "Ustvari območje iz trenutne lokacije" },
+        "cover": {
+          "open_cover": "Odpri pokrov",
+          "close_cover": "Zapri pokrov",
+          "open_tilt_cover": "Odpri nagib pokrova",
+          "close_tile_cover": "Zapri nagib pokrova",
+          "stop_cover": "Zaustavite premikanje pokrova"
+        }
+      },
+      "entity_registry": {
+        "settings": "Nastavitve",
+        "control": "Nadzor",
+        "related": "Povezano",
+        "dismiss": "Opusti",
+        "no_unique_id": "Ta entiteta (\"{entity_id}\") nima enoličnega ID-ja, zato njenih nastavitev ni mogoče upravljati iz uporabniškega vmesnika. Za več podrobnosti glejte {faq_link} .",
+        "faq": "dokumentacija",
+        "info_customize": "You can overwrite some attributes in the {customize_link} section.",
+        "customize_link": "entity customizations",
+        "editor": {
+          "name": "Ime",
+          "icon": "Ikona",
+          "icon_error": "Ikone morajo biti v obliki 'prefix:iconname', npr. 'mid:home'",
+          "entity_id": "ID entitete",
+          "unavailable": "Ta entiteta trenutno ni na voljo.",
+          "enabled_label": "Omogoči entiteto",
+          "enabled_cause": "Onemogočeno zaradi {cause}.",
+          "device_disabled": "Naprava za to entiteto je onemogočena",
+          "open_device_settings": "Odpri nastavitve naprave",
+          "enabled_description": "Onemogočene entitete ne bodo dodane v Home Assistant.",
+          "enabled_delay_confirm": "Omogočene entitete bodo v Home Assistant dodane v {delay} sekundah",
+          "enabled_restart_confirm": "Znova zaženi Home Assistant, da dokončaš omogočanje entitet",
+          "delete": "Izbriši",
+          "confirm_delete": "Ali ste prepričani, da želite izbrisati ta vnos?",
+          "update": "Posodobi",
+          "note": "Opomba: to morda še ne deluje z vsemi integracijami.",
+          "advanced": "Advanced settings",
+          "area": "Set entity area only",
+          "area_note": "By default the entities of a device are in the same area as the device. If you change the area of this entity, it will no longer follow the area of the device.",
+          "follow_device_area": "Follow device area",
+          "change_device_area": "Spremenite območje naprave"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "Integracija {platform} ni naložena. Prosimo, dodajte ga v svojo konfiguracijo tako, da dodate 'default_config: 'ali' ' {platform} :' '.",
+        "yaml_not_editable": "Nastavitev te entitete ni mogoče urejati iz uporabniškega vmesnika. Od tam se lahko konfigurirajo samo entitete, nastavljene iz uporabniškega vmesnika.",
+        "required_error_msg": "To polje je obvezno",
+        "generic": { "name": "Ime", "icon": "Ikona" },
+        "input_datetime": {
+          "date": "Datum",
+          "time": "Čas",
+          "datetime": "Datum in čas",
+          "mode": "Kaj želite vnesti?"
+        },
+        "input_text": {
+          "min": "Najkrajša dolžina",
+          "max": "Najdaljša dolžina",
+          "mode": "Način prikaza",
+          "text": "Besedilo",
+          "password": "Geslo",
+          "pattern": "Regex vzorec za preverjanje veljavnosti na strani odjemalca"
+        },
+        "input_number": {
+          "min": "Najmanjša vrednost",
+          "max": "Najvišja vrednost",
+          "mode": "Način prikaza",
+          "box": "Vnosno polje",
+          "slider": "Drsnik",
+          "step": "Velikost koraka",
+          "unit_of_measurement": "Merska enota"
+        },
+        "input_select": {
+          "options": "Možnosti",
+          "add_option": "Dodaj možnost",
+          "no_options": "Še ni možnosti.",
+          "add": "Dodaj"
+        },
+        "counter": {
+          "minimum": "Najnižja vrednost",
+          "maximum": "Najvišja vrednost",
+          "initial": "Začetna vrednost",
+          "restore": "Obnovi zadnjo znano vrednost ob naslednjem zagonu Home Assistant",
+          "step": "Velikost koraka"
+        },
+        "timer": { "duration": "Trajanje" }
+      },
+      "options_flow": {
+        "form": { "header": "Možnosti" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "Možnosti so uspešno shranjene." }
+      },
+      "config_entry_system_options": {
+        "title": "Sistemske možnosti za {integration}",
+        "enable_new_entities_label": "Omogoči novo dodane entitete.",
+        "enable_new_entities_description": "Če je onemogočeno, novo odkrite entitete za {integration} ne bodo samodejno dodane v Home Assistant.",
+        "enable_polling_label": "Enable polling for updates.",
+        "enable_polling_description": "If Home Assistant should automatically poll {integration} entities for updates.",
+        "restart_home_assistant": "You need to restart Home Assistant for your changes to take effect.",
+        "update": "Posodobite"
+      },
+      "zha_reconfigure_device": {
+        "heading": "Reconfiguring device",
+        "configuring_alt": "Configuring",
+        "introduction": "Reconfigure a device on your Zigbee network. Use this feature if your device is not functioning correctly.",
+        "battery_device_warning": "You will need to wake battery powered devices before starting the reconfiguration process. Refer to your device's manual for instructions on how to wake the device.",
+        "run_in_background": "You can close this dialog and the reconfiguration will continue in the background.",
+        "start_reconfiguration": "Start Reconfiguration",
+        "in_progress": "The device is being reconfigured. This may take some time.",
+        "configuration_failed": "The device reconfiguration failed. Additional information may be available in the logs.",
+        "configuration_complete": "Device reconfiguration complete.",
+        "button_show": "Pokaži podrobnosti",
+        "button_hide": "Hide Details",
+        "cluster_header": "Cluster",
+        "bind_header": "Binding",
+        "reporting_header": "Reporting",
+        "attribute": "Atribut",
+        "min_max_change": "min/max/change"
+      },
+      "zha_device_info": {
+        "manuf": "naredil: {manufacturer}",
+        "no_area": "Brez območja",
+        "device_signature": "Podpis naprave Zigbee",
+        "device_children": "Zigbee device children",
+        "buttons": {
+          "add": "Dodajte naprave prek te naprave",
+          "remove": "Odstranite napravo",
+          "clusters": "Upravljanje gruč",
+          "reconfigure": "Znova konfiguriraj napravo",
+          "zigbee_information": "Podpis naprave Zigbee",
+          "device_children": "View Children",
+          "view_in_visualization": "View in Visualization"
+        },
+        "services": {
+          "reconfigure": "Znova konfiguriraj napravo ZHA (\"pozdravite\" napravo). To uporabite, če imate z njo težave. Če ta naprava deluje na baterije, se prepričajte, da je budna in sprejema ukaze pri uporabi te storitve.",
+          "updateDeviceName": "Nastavite ime po meri za to napravo v registru naprav.",
+          "remove": "Odstranite napravo iz omrežja Zigbee.",
+          "zigbee_information": "Oglejte si informacije Zigbee za to napravo."
+        },
+        "confirmations": {
+          "remove": "Ali ste prepričani, da želite odstraniti napravo?"
+        },
+        "quirk": "Posebnost",
+        "last_seen": "Nazadnje viden",
+        "power_source": "Vir napajanja",
+        "unknown": "Neznano",
+        "zha_device_card": {
+          "device_name_placeholder": "Spremenite ime naprave"
+        }
+      },
+      "domain_toggler": {
+        "title": "Preklopi domene",
+        "reset_entities": "Ponastavi entitete"
+      },
+      "mqtt_device_debug_info": {
+        "title": "{Device} debug info",
+        "deserialize": "Poskus razčlenitve sporočil MQTT kot JSON",
+        "entities": "Entitete",
+        "no_entities": "Brez entitet",
+        "no_triggers": "Brez sprožilcev",
+        "payload_display": "Prikaz koristnega tovora",
+        "recent_messages": "{n} zadnjih prejetih sporočil",
+        "show_as_yaml": "Pokaži kot YAML",
+        "triggers": "Sprožilci"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\none {sekunda}\ntwo {sekundi}\nthree {sekunde}\nfour {sekunde}\nother {sekund}\n}",
+      "minute": "{count} {count, plural,\n  one {minuta}\n  two {minuti}\n  three {minute}\n  four {minute}\n  other {minut}\n}",
+      "hour": "{count} {count, plural,\n  one {ura}\n  two {uri}\n  three {ure}\n  four {ure}\n  other {ur}\n}",
+      "day": "{count} {count, plural,\none {dan}\nother {dni}\n}",
+      "week": "{count} {count, plural,\none {Teden}\nother {Tednov}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "No type provided.",
+        "error_detected": "Configuration errors detected",
+        "editor_not_available": "No visual editor available for type \"{type}\".",
+        "editor_not_supported": "Visual editor is not supported for this configuration",
+        "edit_in_yaml_supported": "Konfiguracijo lahko še vedno urejate v YAML.",
+        "key_missing": "Manjka zahtevani ključ \"{key} \".",
+        "key_not_expected": "Key \"{key}\" is not expected or not supported by the visual editor.",
+        "key_wrong_type": "The provided value for \"{key}\" is not supported by the visual editor. We support ({type_correct}) but received ({type_wrong}).",
+        "no_template_editor_support": "Templates not supported in visual editor"
+      },
+      "supervisor": {
+        "title": "Could not load the Supervisor panel!",
+        "wait": "If you just started, make sure you have given the Supervisor enough time to start.",
+        "ask": "Ask for help",
+        "reboot": "Try a reboot of the host",
+        "observer": "Check the Observer",
+        "system_health": "Check System Health"
+      }
+    },
+    "login-form": {
+      "password": "Geslo",
+      "remember": "Zapomni si",
+      "log_in": "Prijavi se"
+    },
+    "notification_drawer": {
+      "click_to_configure": "Kliknite gumb, da konfigurirate {entity}",
+      "empty": "Ni obvestil",
+      "title": "Obvestila",
+      "close": "Zapri",
+      "dismiss_all": "Zavrzi vse"
+    },
+    "notification_toast": {
+      "service_call_failed": "Storitve ni bilo mogoče poklicati {service}.",
+      "connection_lost": "Povezava prekinjena. Vnovično vzpostavljanje povezave...",
+      "started": "Home Assistant se je zagnal!",
+      "starting": "Home Assistant se zaganja, vse ne bo na voljo, dokler se zagon ne konča.",
+      "wrapping_up_startup": "Wrapping up startup, not everything will be available until it is finished.",
+      "integration_starting": "Starting {integration}, not everything will be available until it is finished.",
+      "triggered": "Sproženo {name}",
+      "dismiss": "Opusti"
+    },
+    "sidebar": {
+      "external_app_configuration": "Nastavitve aplikacije",
+      "sidebar_toggle": "Preklop stranske vrstice",
+      "done": "Končano"
+    },
+    "panel": {
+      "history": {
+        "ranges": {
+          "last_week": "Prejšnji teden",
+          "this_week": "Ta teden",
+          "today": "Danes",
+          "yesterday": "Včeraj"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "Prejšnji teden",
+          "this_week": "Ta teden",
+          "today": "Danes",
+          "yesterday": "Včeraj"
+        }
+      }
+    }
+  }
+}

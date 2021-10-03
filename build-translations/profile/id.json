@@ -1,0 +1,148 @@
+{
+  "ui": {
+    "panel": {
+      "profile": {
+        "current_user": "Anda saat ini masuk sebagai {fullName} .",
+        "is_owner": "Anda adalah pemilik.",
+        "logout": "Keluar",
+        "logout_title": "Keluar?",
+        "logout_text": "Yakin ingin keluar?",
+        "force_narrow": {
+          "header": "Selalu sembunyikan bilah samping",
+          "description": "Ini akan menyembunyikan bilah samping secara baku, mirip dengan pengalaman seluler."
+        },
+        "customize_sidebar": {
+          "header": "Ubah urutan dan sembunyikan item dari bilah samping",
+          "description": "Anda juga dapat menekan dan menahan header bilah samping untuk mengaktifkan mode edit.",
+          "button": "Edit"
+        },
+        "vibrate": {
+          "header": "Bergetar",
+          "description": "Aktifkan atau nonaktifkan getaran pada perangkat ini saat mengontrol perangkat."
+        },
+        "enable_shortcuts": {
+          "header": "Pintasan Keyboard",
+          "description": "Aktifkan atau nonaktifkan pintasan keyboard untuk melakukan berbagai tindakan di antarmuka."
+        },
+        "suspend": {
+          "header": "Tutup koneksi secara otomatis",
+          "description": "Haruskah koneksi ke server ditutup setelah disembunyikan selama 5 menit?"
+        },
+        "push_notifications": {
+          "header": "Notifikasi Push",
+          "description": "Kirim notifikasi ke perangkat ini.",
+          "error_load_platform": "Konfigurasi notify.html5.",
+          "error_use_https": "SSL harus diaktifkan untuk antarmuka.",
+          "push_notifications": "Notifikasi push",
+          "link_promo": "Pelajari lebih lanjut",
+          "add_device_prompt": {
+            "title": "Apa nama perangkat ini?",
+            "input_label": "Nama perangkat"
+          }
+        },
+        "language": {
+          "header": "Bahasa",
+          "link_promo": "Bantu menerjemahkan",
+          "dropdown_label": "Bahasa"
+        },
+        "number_format": {
+          "header": "Format Bilangan",
+          "dropdown_label": "Format bilangan",
+          "description": "Pilih cara pemformatan bilangan",
+          "formats": {
+            "language": "Otomatis (gunakan pengaturan bahasa)",
+            "system": "Gunakan pelokalan sistem",
+            "comma_decimal": "1,234,567.89",
+            "decimal_comma": "1.234.567,89",
+            "space_comma": "1 234 567,89",
+            "none": "Tidak ada"
+          }
+        },
+        "time_format": {
+          "header": "Time Format",
+          "dropdown_label": "Time format",
+          "description": "Choose how times are formatted.",
+          "formats": {
+            "12": "12 hours (AM/PM)",
+            "24": "24 hours",
+            "language": "Auto (use language setting)",
+            "system": "Use system locale"
+          }
+        },
+        "themes": {
+          "header": "Tema",
+          "error_no_theme": "Tidak ada tema yang tersedia.",
+          "link_promo": "Pelajari tentang tema",
+          "dropdown_label": "Tema",
+          "dark_mode": {
+            "auto": "Otomatis",
+            "light": "Terang",
+            "dark": "Gelap"
+          },
+          "primary_color": "Warna primer",
+          "accent_color": "Warna aksen",
+          "reset": "Setel ulang"
+        },
+        "dashboard": {
+          "header": "Dasbor",
+          "description": "Pilih dasbor baku untuk perangkat ini.",
+          "dropdown_label": "Dasbor"
+        },
+        "change_password": {
+          "header": "Ubah Kata Sandi",
+          "current_password": "Kata Sandi Saat Ini",
+          "new_password": "Kata Sandi Baru",
+          "confirm_new_password": "Konfirmasi Kata Sandi Baru",
+          "error_required": "Wajib",
+          "submit": "Kirimkan",
+          "error_new_mismatch": "Kata sandi baru yang dimasukkan tidak sama",
+          "error_new_is_old": "Kata sandi baru harus berbeda dari kata sandi saat ini",
+          "success": "Kata sandi berhasil diubah"
+        },
+        "mfa": {
+          "header": "Modul Autentikasi Multifaktor",
+          "disable": "Nonaktifkan",
+          "enable": "Aktifkan",
+          "confirm_disable": "Yakin ingin menonaktifkan {name}?"
+        },
+        "mfa_setup": {
+          "title_aborted": "Dibatalkan",
+          "title_success": "Sukses!",
+          "step_done": "Penyiapan selesai untuk {step}",
+          "close": "Tutup",
+          "submit": "Kirimkan"
+        },
+        "advanced_mode": {
+          "title": "Mode Tingkat Lanjut",
+          "description": "Temukan fitur lanjutan.",
+          "link_promo": "Pelajari lebih lanjut"
+        },
+        "refresh_tokens": {
+          "header": "Token Baru",
+          "description": "Setiap token baru mewakili sesi login. Token baru akan dihapus secara otomatis saat Anda mengeklik keluar. Saat ini token baru berikut aktif untuk akun Anda.",
+          "token_title": "Buat token baru untuk {clientId}",
+          "created_at": "Dibuat pada {date}",
+          "last_used": "Terakhir digunakan pada {date} di {location}",
+          "not_used": "Belum pernah digunakan",
+          "confirm_delete": "Yakin ingin menghapus token baru untuk {name} ?",
+          "delete_failed": "Gagal menghapus token baru.",
+          "current_token_tooltip": "Tidak dapat menghapus token baru saat ini"
+        },
+        "long_lived_access_tokens": {
+          "header": "Token Akses yang Berumur Panjang",
+          "description": "Buat token akses yang berumur panjang untuk memungkinkan skrip Anda berinteraksi dengan Home Assistant. Setiap token akan berlaku selama 10 tahun sejak pembuatan. Berikut adalah token akses yang berumur panjang yang saat ini aktif.",
+          "learn_auth_requests": "Pelajari cara membuat permintaan yang diautentikasi.",
+          "created": "Dibuat pada {date}",
+          "confirm_delete": "Yakin ingin menghapus token akses untuk {name}?",
+          "delete_failed": "Gagal menghapus token akses.",
+          "create": "Buat Token",
+          "create_failed": "Gagal membuat token akses.",
+          "name": "Nama",
+          "prompt_name": "Beri nama token",
+          "prompt_copy_token": "Salin token akses Anda. Ini tidak akan ditampilkan lagi.",
+          "empty_state": "Anda belum memiliki token akses yang berumur panjang."
+        }
+      }
+    }
+  }
+}

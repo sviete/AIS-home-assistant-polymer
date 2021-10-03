@@ -1,0 +1,898 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "Kalender",
+    "config": "Einstellungen",
+    "states": "Übersicht",
+    "map": "Karte",
+    "logbook": "Logbuch",
+    "history": "Verlauf",
+    "mailbox": "Posteingang",
+    "shopping_list": "Einkaufsliste",
+    "developer_tools": "Entwicklerwerkzeuge",
+    "media_browser": "Medien-Browser",
+    "profile": "Profil"
+  },
+  "state": {
+    "default": {
+      "on": "An",
+      "off": "Aus",
+      "unknown": "Unbekannt",
+      "unavailable": "Nicht verfügbar"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "Aus", "on": "An", "auto": "Automatisch" },
+      "preset_mode": {
+        "none": "Keine",
+        "eco": "Sparmodus",
+        "away": "Abwesend",
+        "boost": "Maximal",
+        "comfort": "Komfort",
+        "home": "Zuhause",
+        "sleep": "Schlafen",
+        "activity": "Aktivität"
+      },
+      "hvac_action": {
+        "off": "Aus",
+        "heating": "Heizung",
+        "cooling": "Kühlung",
+        "drying": "Trocknen",
+        "idle": "Leerlauf",
+        "fan": "Ventilator"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "Normal",
+        "eco": "Eco",
+        "away": "Abwesend",
+        "boost": "Boost",
+        "comfort": "Komfort",
+        "home": "Zuhause",
+        "sleep": "Schlafen",
+        "auto": "Automatisch",
+        "baby": "Baby"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "Unbek.",
+      "unavailable": "N.v.",
+      "error": "Fehler",
+      "entity_not_found": "Entität nicht gefunden"
+    },
+    "alarm_control_panel": {
+      "armed": "Aktiv",
+      "disarmed": "Inaktiv",
+      "armed_home": "Aktiv",
+      "armed_away": "Aktiv",
+      "armed_night": "Aktiv",
+      "armed_custom_bypass": "Aktiv",
+      "pending": "Warte",
+      "arming": "Aktiv.",
+      "disarming": "Deakt.",
+      "triggered": "Ausgel."
+    },
+    "device_tracker": { "home": "Zu Hause", "not_home": "Abwes." },
+    "person": { "home": "Zu Hause", "not_home": "Abwesend" }
+  },
+  "groups": {
+    "owner": "Besitzer",
+    "system-admin": "Administratoren",
+    "system-users": "Benutzer",
+    "system-read-only": "Nur-Lesen Benutzer"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "Benutzer",
+      "integration": "Integration",
+      "config_entry": "Konfigurationseintrag",
+      "device": "Gerät"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "Möchtest du angemeldet bleiben?",
+      "decline": "Nein",
+      "confirm": "Ja"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "Code",
+        "clear_code": "Löschen",
+        "disarm": "Deaktivieren",
+        "arm_home": "Aktivieren - Zuhause",
+        "arm_away": "Aktivieren - Unterwegs",
+        "arm_night": "Aktivieren - Nacht",
+        "arm_custom_bypass": "Benutzerdefinierter Bypass"
+      },
+      "automation": {
+        "last_triggered": "Zuletzt ausgelöst",
+        "trigger": "Aktionen ausführen"
+      },
+      "camera": { "not_available": "Bild nicht verfügbar" },
+      "climate": {
+        "currently": "Aktuell",
+        "on_off": "An / aus",
+        "target_temperature": "Soll-Temperatur",
+        "target_temperature_entity": "{name} Zieltemperatur",
+        "target_temperature_mode": "{name} Zieltemperatur {mode}",
+        "current_temperature": "{name} aktuelle Temperatur",
+        "heating": "{name} Heizung",
+        "cooling": "{name} Kühlung",
+        "high": "hoch",
+        "low": "niedrig",
+        "target_humidity": "Soll-Luftfeuchtigkeit",
+        "operation": "Aktion",
+        "fan_mode": "Ventilator-Modus",
+        "swing_mode": "Schwenk-Modus",
+        "preset_mode": "Voreinstellung",
+        "away_mode": "Abwesenheitsmodus",
+        "aux_heat": "Hilfswärme"
+      },
+      "counter": {
+        "actions": {
+          "increment": "inkrementieren",
+          "decrement": "dekrementieren",
+          "reset": "zurücksetzen"
+        }
+      },
+      "cover": { "position": "Position", "tilt_position": "Kippstellung" },
+      "fan": {
+        "speed": "Geschwindigkeit",
+        "preset_mode": "Voreinstellung",
+        "oscillate": "Oszillieren",
+        "direction": "Richtung",
+        "forward": "Vorwärts",
+        "reverse": "Rückwärts"
+      },
+      "humidifier": {
+        "humidity": "Soll-Luftfeuchtigkeit",
+        "mode": "Modus",
+        "target_humidity_entity": "{name} Soll-Luftfeuchtigkeit",
+        "on_entity": "{name} eingeschaltet"
+      },
+      "light": {
+        "brightness": "Helligkeit",
+        "color_temperature": "Farbtemperatur",
+        "white_value": "Weißwert",
+        "color_brightness": "Farbhelligkeit",
+        "cold_white_value": "Kaltweiße Helligkeit",
+        "warm_white_value": "Warmweiße Helligkeit",
+        "effect": "Effekt"
+      },
+      "lock": { "code": "Code", "lock": "Verriegeln", "unlock": "Entriegeln" },
+      "media_player": {
+        "source": "Quelle",
+        "sound_mode": "Sound-Modus",
+        "browse_media": "Medien durchsuchen",
+        "turn_on": "Einschalten",
+        "turn_off": "Ausschalten",
+        "media_play": "Abspielen",
+        "media_play_pause": "Spielen/Pause",
+        "media_next_track": "Weiter",
+        "media_previous_track": "Vorheriger Titel",
+        "text_to_speak": "Text zum Sprechen"
+      },
+      "persistent_notification": { "dismiss": "Ausblenden" },
+      "scene": { "activate": "Aktivieren" },
+      "script": {
+        "run": "Ausführen",
+        "cancel": "Abbrechen",
+        "cancel_multiple": "Abbrechen {number}"
+      },
+      "service": { "run": "Ausführen" },
+      "timer": {
+        "actions": {
+          "start": "Start",
+          "pause": "Pause",
+          "cancel": "Abbrechen",
+          "finish": "Ende"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "Reinigung fortsetzen",
+          "return_to_base": "Zurück zur Dockingstation",
+          "start_cleaning": "Reinigung starten",
+          "turn_on": "Einschalten",
+          "turn_off": "Ausschalten"
+        }
+      },
+      "water_heater": {
+        "currently": "Aktuell",
+        "on_off": "An / Aus",
+        "target_temperature": "Solltemperatur",
+        "operation": "Betrieb",
+        "away_mode": "Abwesenheitsmodus"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "Luftdruck",
+          "humidity": "Luftfeuchtigkeit",
+          "temperature": "Temperatur",
+          "visibility": "Sichtweite",
+          "wind_speed": "Windgeschwindigkeit",
+          "precipitation": "Niederschlag"
+        },
+        "cardinal_direction": {
+          "e": "O",
+          "ene": "ONO",
+          "ese": "OSO",
+          "n": "N",
+          "ne": "NO",
+          "nne": "NNO",
+          "nw": "NW",
+          "nnw": "NNW",
+          "s": "S",
+          "se": "SO",
+          "sse": "SSO",
+          "ssw": "SSW",
+          "sw": "SW",
+          "w": "W",
+          "wnw": "WNW",
+          "wsw": "WSW"
+        },
+        "day": "Tag",
+        "night": "Nacht",
+        "forecast": "Prognose",
+        "high": "Hoch",
+        "low": "Niedrig"
+      }
+    },
+    "common": {
+      "and": "und",
+      "continue": "Weiter",
+      "previous": "Vorher",
+      "loading": "Laden",
+      "refresh": "Aktualisieren",
+      "cancel": "Abbrechen",
+      "delete": "Löschen",
+      "remove": "Entfernen",
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren",
+      "close": "Schließen",
+      "leave": "Verlassen",
+      "stay": "Bleiben",
+      "next": "Weiter",
+      "back": "Zurück",
+      "undo": "Rückgängig",
+      "save": "Speichern",
+      "rename": "Umbenennen",
+      "yes": "Ja",
+      "no": "Nein",
+      "not_now": "Später",
+      "skip": "Überspringen",
+      "menu": "Menü",
+      "overflow_menu": "Überlauf-Menü",
+      "successfully_saved": "Erfolgreich gespeichert",
+      "successfully_deleted": "Erfolgreich gelöscht",
+      "error_required": "Benötigt",
+      "copied": "Kopiert",
+      "copied_clipboard": "In die Zwischenablage kopiert"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "Keine Logbucheinträge gefunden.",
+        "by": "durch",
+        "by_service": "durch Service",
+        "show_trace": "Trace anzeigen",
+        "retrieval_error": "Fehler beim Abrufen von Logbucheinträgen",
+        "messages": {
+          "was_away": "wurde als abwesend erkannt",
+          "was_at_state": "wurde bei {state} erkannt",
+          "rose": "aufgegangen",
+          "set": "untergegangen",
+          "was_low": "war niedrig",
+          "was_normal": "war normal",
+          "was_connected": "wurde verbunden",
+          "was_disconnected": "wurde getrennt",
+          "was_opened": "wurde geöffnet",
+          "was_closed": "wurde geschlossen",
+          "is_opening": "wird geöffnet",
+          "is_closing": "wird geschlossen",
+          "was_unlocked": "wurde entsperrt",
+          "was_locked": "wurde gesperrt",
+          "was_plugged_in": "wurde eingesteckt",
+          "was_unplugged": "wurde ausgesteckt",
+          "was_at_home": "wurde zu Hause erkannt",
+          "was_unsafe": "war unsicher",
+          "was_safe": "war sicher",
+          "detected_device_class": "{device_class} erkannt",
+          "cleared_device_class": "zurückgesetzt (kein(e) {device_class} erkannt)",
+          "turned_off": "ausgeschaltet",
+          "turned_on": "eingeschaltet",
+          "changed_to_state": "wechselte zu {state}",
+          "became_unavailable": "nicht mehr verfügbar"
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "Entität",
+          "clear": "Löschen",
+          "no_match": "Keine übereinstimmende Entitäten gefunden",
+          "show_entities": "Entitäten anzeigen"
+        },
+        "entity-attribute-picker": {
+          "attribute": "Attribut",
+          "show_attributes": "Attribute anzeigen"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "Erweitere diesen Bereich in einzelne Geräte und Entitäten. Nach der Erweiterung werden die Geräte und Entitäten nicht aktualisiert, wenn sich der Bereich ändert.",
+        "expand_device_id": "Erweitere dieses Gerät in separate Entitäten. Nach dem Erweitern werden die Entitäten nicht aktualisiert, wenn sich das Gerät ändert.",
+        "remove_area_id": "Bereich entfernen",
+        "remove_device_id": "Gerät entfernen",
+        "remove_entity_id": "Entität entfernen",
+        "add_area_id": "Bereich auswählen",
+        "add_device_id": "Gerät auswählen",
+        "add_entity_id": "Entität auswählen"
+      },
+      "user-picker": {
+        "no_user": "Kein Benutzer",
+        "add_user": "Benutzer hinzufügen",
+        "remove_user": "Benutzer entfernen"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Wähle eine Vorlage aus",
+        "add_user": "Benutzer hinzufügen",
+        "remove_user": "Benutzer entfernen"
+      },
+      "device-picker": {
+        "clear": "Löschen",
+        "toggle": "Umschalten",
+        "show_devices": "Geräte anzeigen",
+        "no_devices": "Du hast keine Geräte",
+        "no_match": "Keine übereinstimmende Geräte gefunden",
+        "device": "Gerät",
+        "no_area": "Kein Bereich"
+      },
+      "area-picker": {
+        "clear": "Löschen",
+        "show_areas": "Bereiche anzeigen",
+        "area": "Bereich",
+        "add_new": "Neuen Bereich hinzufügen",
+        "no_areas": "Du hast keine Bereiche",
+        "no_match": "Keine übereinstimmende Bereiche gefunden",
+        "add_dialog": {
+          "title": "Neuen Bereich hinzufügen",
+          "text": "Gib den Namen des neuen Bereichs ein.",
+          "name": "Name",
+          "add": "Hinzufügen",
+          "failed_create_area": "Der Bereich konnte nicht erstellt werden."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "Add-on",
+        "error": {
+          "no_supervisor": {
+            "title": "Kein Supervisor",
+            "description": "Kein Supervisor gefunden, daher konnten Add-ons nicht geladen werden."
+          },
+          "fetch_addons": {
+            "title": "Fehler beim Abrufen der Add-ons",
+            "description": "Das Abrufen von Add-ons hat einen Fehler zurückgegeben."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "Nach Entität filtern",
+        "filter_by_device": "Nach Gerät filtern",
+        "filter_by_area": "Nach Bereich filtern",
+        "filtered_by_entity": "Entität: {entity_name}",
+        "filtered_by_device": "Gerät: {device_name}",
+        "filtered_by_area": "Bereich: {area_name}"
+      },
+      "picture-upload": {
+        "label": "Bild",
+        "unsupported_format": "Nicht unterstütztes Format, bitte wähle ein JPEG-, PNG- oder GIF-Bild."
+      },
+      "date-range-picker": {
+        "start_date": "Anfangsdatum",
+        "end_date": "Enddatum",
+        "select": "Auswählen",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Noch nie",
+        "just_now": "Gerade jetzt",
+        "duration": {
+          "second": "{count} {count, plural,\none {Sekunde}\nother {Sekunden}\n}",
+          "minute": "{count} {count, plural,\none {Minute}\nother {Minuten}\n}",
+          "hour": "{count} {count, plural,\none {Stunde}\nother {Stunden}\n}",
+          "day": "{count} {count, plural,\none {Tag}\nother {Tagen}\n}",
+          "week": "{count} {count, plural,\none {Woche}\nother {Wochen}\n}"
+        },
+        "past_duration": {
+          "second": "Vor {count} {count, plural,\n  one {Sekunde}\n  other {Sekunden}\n}",
+          "minute": "Vor {count} {count, plural,\n  one {Minute}\n  other {Minuten}\n}",
+          "hour": "Vor {count} {count, plural,\n  one {Stunde}\n  other {Stunden}\n}",
+          "day": "Vor {count} {count, plural,\n  one {Tag}\n  other {Tagen}\n}",
+          "week": "Vor {count} {count, plural,\n  one {Woche}\n  other {Wochen}\n}"
+        },
+        "future_duration": {
+          "second": "In {count} {count, plural,\n  one {Sekunde}\n  other {Sekunden}\n}",
+          "minute": "In {count} {count, plural,\n  one {Minute}\n  other {Minuten}\n}",
+          "hour": "In {count} {count, plural,\n  one {Stunde}\n  other {Stunden}\n}",
+          "day": "In {count} {count, plural,\n  one {Tag}\n  other {Tagen}\n}",
+          "week": "In {count} {count, plural,\n  one {Woche}\n  other {Wochen}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "Integration \"Historie\" deaktiviert",
+        "loading_history": "Lade Zustandsverlauf...",
+        "no_history_found": "Kein Zustandsverlauf gefunden."
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "Dienst" },
+      "service-control": {
+        "required": "Dieses Feld ist erforderlich",
+        "target": "Ziele",
+        "target_description": "Was dieser Dienst als Bereiche, Geräte oder Entitäten verwenden soll.",
+        "service_data": "Dienstdaten",
+        "integration_doc": "Integrationsdokumentation"
+      },
+      "related-items": {
+        "no_related_found": "Es wurden keine verwandten Elemente gefunden.",
+        "integration": "Integration",
+        "device": "Gerät",
+        "area": "Bereich",
+        "entity": "Verwandte Entitäten",
+        "group": "Teil der folgenden Gruppen",
+        "scene": "Teil der folgenden Szenen",
+        "script": "Teil der folgenden Skripte",
+        "automation": "Teil der folgenden Automatisierungen"
+      },
+      "data-table": {
+        "search": "Suche",
+        "no-data": "Keine Daten",
+        "filtering_by": "Filtern nach",
+        "hidden": "{number} ausgeblendet",
+        "clear": "Löschen"
+      },
+      "media-browser": {
+        "pick": "Auswählen",
+        "play": "Abspielen",
+        "play-media": "Medien abspielen",
+        "pick-media": "Medien auswählen",
+        "no_items": "Keine Einträge",
+        "choose_player": "Wähle ein Abspielgerät",
+        "media-player-browser": "Medien-Browser",
+        "web-browser": "Webbrowser",
+        "media_player": "Media Player",
+        "audio_not_supported": "Ihr Browser unterstützt das Audioelement nicht.",
+        "video_not_supported": "Ihr Browser unterstützt das Videoelement nicht.",
+        "media_not_supported": "Der Browser Media Player unterstützt diese Art von Medien nicht",
+        "media_browsing_error": "Fehler beim Durchsuchen der Medien",
+        "learn_adding_local_media": "Erfahre mehr über das Hinzufügen von Medien in der {documentation}.",
+        "local_media_files": "Platziere deine Video-, Audio- und Bilddateien im Medienverzeichnis, um sie im Browser oder auf unterstützten Mediaplayern durchsuchen und abspielen zu können.",
+        "documentation": "Dokumentation",
+        "no_local_media_found": "Keine lokalen Medien gefunden",
+        "no_media_folder": "Es sieht so aus, als hättest du noch kein Medienverzeichnis erstellt.",
+        "setup_local_help": "Lese die {documentation} über die Einrichtung lokaler Medien.",
+        "class": {
+          "album": "Album",
+          "app": "App",
+          "artist": "Künstler",
+          "channel": "Kanal",
+          "composer": "Komponist",
+          "contributing_artist": "Mitwirkender Künstler",
+          "directory": "Bibliothek",
+          "episode": "Episode",
+          "game": "Spiel",
+          "genre": "Genre",
+          "image": "Bild",
+          "movie": "Film",
+          "music": "Musik",
+          "playlist": "Wiedergabeliste",
+          "podcast": "Podcast",
+          "season": "Episode",
+          "track": "Titel",
+          "tv_show": "TV-Sendung",
+          "url": "URL",
+          "video": "Video"
+        }
+      },
+      "calendar": { "my_calendars": "Meine Kalender", "today": "Heute" },
+      "attributes": { "expansion_header": "Attribute" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "{domain}",
+            "core": "Positionsdaten & Anpassungen",
+            "group": "Gruppen, Gruppenentitäten und Benachrichtigungsservices",
+            "automation": "Automatisierungen",
+            "script": "Skripte",
+            "scene": "Szenen",
+            "person": "Personen",
+            "zone": "Zonen",
+            "input_boolean": "Eingabe-Booleans",
+            "input_text": "Eingabetexte",
+            "input_number": "Eingabenummern",
+            "input_datetime": "Eingabe-Datums- und Zeitfelder",
+            "input_select": "Eingabe-Auswahl",
+            "template": "Template-Entitäten",
+            "universal": "Universelle Media Player-Entitäten",
+            "rest": "Rest-Entitäten und Benachrichtigungsdienste",
+            "command_line": "Kommandozeilen-Entitäten",
+            "filter": "Filter-Entitäten",
+            "statistics": "Statistik-Entitäten",
+            "generic": "Allgemeine IP-Kamera Entitäten",
+            "generic_thermostat": "Generische Thermostatentitäten",
+            "homekit": "HomeKit",
+            "min_max": "Min/Max-Entitäten",
+            "history_stats": "Verlaufsstatistik-Entitäten",
+            "trend": "Trend-Entitäten",
+            "ping": "Binäre Ping-Sensorentitäten",
+            "filesize": "Dateigröße-Entitäten",
+            "telegram": "Telegram-Benachrichtigungsdienste",
+            "smtp": "SMTP-Benachrichtigungsdienste",
+            "mqtt": "Manuell konfigurierte MQTT-Entitäten",
+            "rpi_gpio": "Raspberry Pi GPIO Entitäten"
+          },
+          "server_control": {
+            "perform_action": "Server {action}",
+            "restart": "Neustarten",
+            "stop": "Stoppen"
+          },
+          "types": {
+            "reload": "Neu laden",
+            "navigation": "Navigieren",
+            "server_control": "Server"
+          },
+          "navigation": {
+            "logs": "Logs",
+            "automation": "Automatisierungen",
+            "script": "Skripte",
+            "integrations": "Integrationen",
+            "areas": "Bereiche",
+            "scene": "Szenen",
+            "helpers": "Helfer",
+            "tag": "NFC Tags",
+            "person": "Personen",
+            "devices": "Geräte",
+            "entities": "Entitäten",
+            "energy": "Energy",
+            "lovelace": "Lovelace Dashboards",
+            "core": "Allgemein",
+            "zone": "Zonen",
+            "users": "Benutzer",
+            "info": "Info",
+            "customize": "Anpassungen",
+            "blueprint": "Vorlagen",
+            "server_control": "Serversteuerung",
+            "navigate_to": "Navigiere zu {panel}"
+          }
+        },
+        "filter_placeholder": "Entitätsfilter"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant hat nichts gehört",
+        "found": "Ich habe folgendes für dich gefunden:",
+        "error": "Ups, ein Fehler ist aufgetreten.",
+        "how_can_i_help": "Wie kann ich helfen?",
+        "label": "Gib eine Frage ein und klicke auf 'Enter'.",
+        "label_voice": "Schreibe und bestätige über die Eingabetaste oder tippe auf das Mikrofon um zu sprechen"
+      },
+      "generic": {
+        "cancel": "Abbrechen",
+        "ok": "OK",
+        "default_confirmation_title": "Bist du sicher?",
+        "close": "schließen"
+      },
+      "image_cropper": { "crop": "Zuschneiden" },
+      "more_info_control": {
+        "dismiss": "Dialog ausblenden",
+        "settings": "Entitätseinstellungen",
+        "edit": "Entität bearbeiten",
+        "details": "Details",
+        "history": "Verlauf",
+        "last_changed": "Zuletzt geändert",
+        "last_updated": "Zuletzt aktualisiert",
+        "script": {
+          "last_action": "Letzte Aktion",
+          "last_triggered": "Zuletzt ausgelöst"
+        },
+        "sun": {
+          "elevation": "Höhe",
+          "rising": "Aufgang",
+          "setting": "Untergang"
+        },
+        "updater": { "title": "Update-Anweisungen" },
+        "remote": { "activity": "aktuelle Aktivität" },
+        "restored": {
+          "not_provided": "Diese Entität ist derzeit nicht verfügbar und ist verwitwet für eine entfernte, geänderte oder gestörte Integration oder ein Gerät.",
+          "remove_intro": "Wenn die Entität nicht mehr verwendet wird, können Sie sie bereinigen, indem Sie sie entfernen.",
+          "remove_action": "Entität entfernen",
+          "confirm_remove_title": "Entität entfernen?",
+          "confirm_remove_text": "Bist du dir sicher, dass du diese Entität löschen möchtest?"
+        },
+        "vacuum": {
+          "status": "Status",
+          "commands": "Staubsaugerbefehle:",
+          "fan_speed": "Lüftergeschwindigkeit",
+          "start": "Start",
+          "pause": "Pause",
+          "stop": "Stoppen",
+          "clean_spot": "Stelle säubern",
+          "locate": "Lokalisieren",
+          "return_home": "Zum Hub zurückkehren",
+          "start_pause": "Start/Pause"
+        },
+        "person": { "create_zone": "Zone vom aktuellen Standort erstellen" },
+        "cover": {
+          "open_cover": "Abdeckung öffnen",
+          "close_cover": "Abdeckung schließen",
+          "open_tilt_cover": "Abdeckung kippend öffnen",
+          "close_tile_cover": "Abdeckung kippend schließen",
+          "stop_cover": "Abdeckung anhalten"
+        }
+      },
+      "entity_registry": {
+        "settings": "Einstellungen",
+        "control": "Steuerung",
+        "related": "Verwandte",
+        "dismiss": "Ausblenden",
+        "no_unique_id": "Diese Entität (\"{entity_id}\") hat keine eindeutige ID, daher können die Einstellungen nicht über die UI verwaltet werden. Schaue in der {faq_link} nach für mehr Details.",
+        "faq": "Dokumentation",
+        "info_customize": "Du kannst einige Attribute im Abschnitt {customize_link} überschreiben.",
+        "customize_link": "Entitätsanpassungen",
+        "editor": {
+          "name": "Namen",
+          "icon": "Symbol",
+          "icon_error": "Symbole sollten das Format 'Präfix:iconname' haben, z. B. 'mdi:home'",
+          "entity_id": "Entitäts-ID",
+          "unavailable": "Diese Entität ist derzeit nicht verfügbar.",
+          "enabled_label": "Entität aktivieren",
+          "enabled_cause": "Deaktiviert durch {cause}.",
+          "device_disabled": "Das Gerät dieser Entität ist deaktiviert.",
+          "open_device_settings": "Geräteeinstellungen öffnen",
+          "enabled_description": "Deaktivierte Entitäten werden nicht zu Home Assistant hinzugefügt.",
+          "enabled_delay_confirm": "Die aktivierten Entitäten werden in {delay} Sekunden zu Home Assistant hinzugefügt",
+          "enabled_restart_confirm": "Starte Home Assistant neu, um die Aktivierung der Entitäten abzuschließen",
+          "delete": "Löschen",
+          "confirm_delete": "Möchtest du diesen Eintrag wirklich löschen?",
+          "update": "Aktualisieren",
+          "note": "Hinweis: Dies funktioniert möglicherweise noch nicht bei allen Integrationen.",
+          "advanced": "Erweiterte Einstellungen",
+          "area": "Nur Entitätsbereich festlegen",
+          "area_note": "Standardmäßig befinden sich die Entitäten eines Geräts in demselben Bereich wie das Gerät. Wenn du den Bereich dieser Entität änderst, folgt sie nicht mehr dem Bereich des Geräts.",
+          "follow_device_area": "Gerätebereich übernehmen",
+          "change_device_area": "Gerätebereich ändern"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "Die {platform}-Integration ist nicht geladen. Bitte füge sie deiner Konfiguration hinzu, indem du entweder 'default_config:' oder ''{platform}:'' einfügst.",
+        "yaml_not_editable": "Die Einstellungen dieser Entität können nicht über die Benutzeroberfläche bearbeitet werden. Nur über die Benutzeroberfläche eingerichtete Entitäten können über die Benutzeroberfläche konfiguriert werden.",
+        "required_error_msg": "Dieses Feld ist erforderlich",
+        "generic": { "name": "Name", "icon": "Symbol" },
+        "input_datetime": {
+          "date": "Datum",
+          "time": "Uhrzeit",
+          "datetime": "Datum und Uhrzeit",
+          "mode": "Was möchtest du eingeben"
+        },
+        "input_text": {
+          "min": "Minimale Länge",
+          "max": "Maximale Länge",
+          "mode": "Anzeigemodus",
+          "text": "Text",
+          "password": "Passwort",
+          "pattern": "Regex-Muster für die clientseitige Validierung"
+        },
+        "input_number": {
+          "min": "Minimaler Wert",
+          "max": "Maximaler Wert",
+          "mode": "Anzeigemodus",
+          "box": "Eingabefeld",
+          "slider": "Schieberegler",
+          "step": "Schrittgröße",
+          "unit_of_measurement": "Maßeinheit"
+        },
+        "input_select": {
+          "options": "Optionen",
+          "add_option": "Option hinzufügen",
+          "no_options": "Es gibt noch keine Optionen.",
+          "add": "Hinzufügen"
+        },
+        "counter": {
+          "minimum": "Minimaler Wert",
+          "maximum": "Maximaler Wert",
+          "initial": "Anfangswert",
+          "restore": "Den letzten bekannten Wert wiederherstellen, wenn Home Assistant startet",
+          "step": "Schrittgröße"
+        },
+        "timer": { "duration": "Dauer" }
+      },
+      "options_flow": {
+        "form": { "header": "Optionen" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "Optionen wurden erfolgreich gespeichert." }
+      },
+      "config_entry_system_options": {
+        "title": "Einstellungen für {integration}",
+        "enable_new_entities_label": "Neu hinzugefügte Entitäten aktivieren.",
+        "enable_new_entities_description": "Wenn aktiviert werden neu erkannte Entitäten für {integration} automatisch zu Home Assistant hinzugefügt.",
+        "enable_polling_label": "Aktiviere Polling für Updates.",
+        "enable_polling_description": "Ob Home Assistant automatisch {integration} Entitäten nach Updates abfragen soll.",
+        "restart_home_assistant": "Du musst Home Assistant neu starten, damit deine Änderungen wirksam werden.",
+        "update": "Aktualisieren"
+      },
+      "zha_reconfigure_device": {
+        "heading": "Gerät neu konfigurieren",
+        "configuring_alt": "Konfigurieren",
+        "introduction": "Konfigurieren Sie ein Gerät in Ihrem Zigbee-Netzwerk neu. Verwenden Sie diese Funktion, wenn Ihr Gerät nicht ordnungsgemäß funktioniert.",
+        "battery_device_warning": "Sie müssen batteriebetriebene Geräte aktivieren, bevor Sie den Neukonfigurationsvorgang starten. Anweisungen zum Aktivieren des Geräts finden Sie im Handbuch Ihres Geräts.",
+        "run_in_background": "Sie können diesen Dialog schließen und die Neukonfiguration wird im Hintergrund fortgesetzt.",
+        "start_reconfiguration": "Neukonfiguration starten",
+        "in_progress": "Das Gerät wird neu konfiguriert. Dies könnte eine Weile dauern.",
+        "configuration_failed": "Die Neukonfiguration des Geräts ist fehlgeschlagen. Weitere Informationen sind möglicherweise in den Protokollen verfügbar.",
+        "configuration_complete": "Geräteneukonfiguration abgeschlossen.",
+        "button_show": "Details anzeigen",
+        "button_hide": "Details ausblenden",
+        "cluster_header": "Cluster",
+        "bind_header": "Bindung",
+        "reporting_header": "Reporting",
+        "attribute": "Attribut",
+        "min_max_change": "min/max/change"
+      },
+      "zha_device_info": {
+        "manuf": "von {manufacturer}",
+        "no_area": "Kein Bereich",
+        "device_signature": "ZigBee-Gerätesignatur",
+        "device_children": "Zigbee-Endgeräte",
+        "buttons": {
+          "add": "Geräte über dieses Gerät hinzufügen",
+          "remove": "Gerät entfernen",
+          "clusters": "Cluster verwalten",
+          "reconfigure": "Gerät neu konfigurieren",
+          "zigbee_information": "ZigBee-Gerätesignatur",
+          "device_children": "Endgeräte anzeigen",
+          "view_in_visualization": "Visualisierung in einer Map"
+        },
+        "services": {
+          "reconfigure": "Konfiguriere das ZHA-Gerät neu (Gerät heilen). Verwende diese Option, wenn du Probleme mit dem Gerät hast. Wenn es sich bei dem fraglichen Gerät um ein batteriebetriebenes Gerät handelt, vergewissere dich, dass es wach ist und Befehle akzeptiert, wenn du diesen Dienst nutzt.",
+          "updateDeviceName": "Lege einen benutzerdefinierten Namen für dieses Gerät in der Geräteregistrierung fest.",
+          "remove": "Ein Gerät aus dem ZigBee-Netzwerk entfernen.",
+          "zigbee_information": "Zeige die ZigBee-Informationen für das Gerät an."
+        },
+        "confirmations": {
+          "remove": "Möchtest du das Gerät wirklich entfernen?"
+        },
+        "quirk": "Eigenart",
+        "last_seen": "Zuletzt gesehen",
+        "power_source": "Energiequelle",
+        "unknown": "Unbekannt",
+        "zha_device_card": { "device_name_placeholder": "Gerätename ändern" }
+      },
+      "domain_toggler": {
+        "title": "Domänen umschalten",
+        "reset_entities": "Entitäten zurücksetzen"
+      },
+      "mqtt_device_debug_info": {
+        "title": "{device} Debug-Informationen",
+        "deserialize": "Versuchen MQTT-Nachrichten als JSON zu parsen",
+        "entities": "Entitäten",
+        "no_entities": "Keine Entitäten",
+        "no_triggers": "Keine Auslöser",
+        "payload_display": "Payload anzeigen",
+        "recent_messages": "{n} zuletzt empfangene Nachricht(en)",
+        "show_as_yaml": "Als YAML anzeigen",
+        "triggers": "Auslöser"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\none {Sekunde}\nother {Sekunden}\n}",
+      "minute": "{count} {count, plural,\none {Minute}\nother {Minuten}\n}",
+      "hour": "{count} {count, plural,\none {Stunde}\nother {Stunden}\n}",
+      "day": "{count} {count, plural,\none {Tag}\nother {Tage}\n}",
+      "week": "{count} {count, plural,\none {Woche}\nother {Wochen}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "Kein Typ angegeben.",
+        "error_detected": "Konfigurationsfehler erkannt",
+        "editor_not_available": "Kein visueller Editor für Typ \"{type}\" verfügbar.",
+        "editor_not_supported": "Visueller Editor wird für diese Konfiguration nicht unterstützt.",
+        "edit_in_yaml_supported": "Du kannst deine Konfiguration weiterhin in YAML bearbeiten.",
+        "key_missing": "Erforderlicher Schlüssel \"{key}\" fehlt.",
+        "key_not_expected": "Der Schlüssel \"{key}\" wird vom visuellen Editor nicht erwartet oder nicht unterstützt.",
+        "key_wrong_type": "Der angegebene Wert für \"{key}\" wird vom visuellen Editor nicht unterstützt. Wir unterstützen ({type_correct}), haben aber ({type_wrong}) erhalten.",
+        "no_template_editor_support": "Templates werden im visuellen Editor nicht unterstützt"
+      },
+      "supervisor": {
+        "title": "Supervisor-Bedienfeld konnte nicht geladen werden!",
+        "wait": "Wenn du gerade erst hochgefahren hast, dann stelle sicher dass du dem Supervisor genug Zeit zum Starten gegeben hast.",
+        "ask": "Um Hilfe bitten",
+        "reboot": "Versuche den Host neu zu starten",
+        "observer": "Überprüfe den Observer",
+        "system_health": "Überprüfe Systemzustand"
+      }
+    },
+    "login-form": {
+      "password": "Passwort",
+      "remember": "Merken",
+      "log_in": "Anmelden"
+    },
+    "notification_drawer": {
+      "click_to_configure": "Klicke auf die Schaltfläche, um {entity} zu konfigurieren",
+      "empty": "Keine Benachrichtigungen",
+      "title": "Benachrichtigungen",
+      "close": "Schließen",
+      "dismiss_all": "Alle schließen"
+    },
+    "notification_toast": {
+      "service_call_failed": "Fehler beim Aufrufen des Diensts {service}.",
+      "connection_lost": "Verbindung getrennt. Verbinde erneut...",
+      "started": "Home Assistant wurde vollständig gestartet!",
+      "starting": "Home Assistant startet. Währenddessen ist noch nicht alles verfügbar.",
+      "wrapping_up_startup": "Startvorgang fast fertig. Währenddessen ist noch nicht alles verfügbar.",
+      "integration_starting": "Starte {integration}. Währenddessen ist noch nicht alles verfügbar.",
+      "triggered": "{name} ausgelöst",
+      "dismiss": "Ausblenden"
+    },
+    "sidebar": {
+      "external_app_configuration": "App-Konfiguration",
+      "sidebar_toggle": "Seitenleiste umschalten",
+      "done": "fertig"
+    },
+    "panel": {
+      "error": {
+        "go_back": "Zurück",
+        "supervisor": {
+          "ask": "Um Hilfe bitten",
+          "observer": "Überprüfe den Observer",
+          "reboot": "Versuche den Host neu zu starten",
+          "system_health": "Überprüfe Systemzustand",
+          "title": "Supervisor-Bedienfeld konnte nicht geladen werden!",
+          "wait": "Wenn du gerade erst hochgefahren hast, dann stelle sicher dass du den Supervisor genug Zeit zum Starten gegeben hast."
+        }
+      },
+      "history": {
+        "ranges": {
+          "last_week": "Letzte Woche",
+          "this_week": "Diese Woche",
+          "today": "Heute",
+          "yesterday": "Gestern"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "Letzte Woche",
+          "this_week": "Diese Woche",
+          "today": "Heute",
+          "yesterday": "Gestern"
+        }
+      }
+    }
+  }
+}

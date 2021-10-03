@@ -1,0 +1,892 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "التقويم",
+    "config": "الإعدادات",
+    "states": "نظرة عامة",
+    "map": "الخريطة",
+    "logbook": "السجل",
+    "history": "التاريخ",
+    "mailbox": "البريد",
+    "shopping_list": "قائمة التسوق",
+    "developer_tools": "ادوات المطورين",
+    "media_browser": "متصفح الوسائط",
+    "profile": "الملف الشخصي"
+  },
+  "state": {
+    "default": {
+      "on": "مشغل",
+      "off": "مطفئ",
+      "unknown": "غير معروف",
+      "unavailable": "غير متوفر"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "متوقف", "on": "مشغل", "auto": "تلقائي" },
+      "preset_mode": {
+        "none": "لاشيء",
+        "eco": "اقتصادي",
+        "away": "بعيد",
+        "boost": "معزز",
+        "comfort": "مريح",
+        "home": "المنزل",
+        "sleep": "نوم",
+        "activity": "الانشطة"
+      },
+      "hvac_action": {
+        "off": "متوقف",
+        "heating": "تدفئة",
+        "cooling": "تبريد",
+        "drying": "تجفيف",
+        "idle": "خامل",
+        "fan": "مروحة"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "عادي",
+        "eco": "اقتصادي",
+        "away": "بعيد",
+        "boost": "عزز",
+        "comfort": "الراحة",
+        "home": "في المنزل",
+        "sleep": "نوم",
+        "auto": "تلقائي",
+        "baby": "الطفل"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "غير معروف",
+      "unavailable": "غير متوفر",
+      "error": "خطأ",
+      "entity_not_found": "لم يتم العثور على الكيان"
+    },
+    "alarm_control_panel": {
+      "armed": "مفعل",
+      "disarmed": "غير مفعّل",
+      "armed_home": "مفعّل",
+      "armed_away": "مفعّل",
+      "armed_night": "مفعل",
+      "armed_custom_bypass": "مفعّل",
+      "pending": "معلق",
+      "arming": "جاري التفعيل",
+      "disarming": "تعطيل",
+      "triggered": "تشغيل"
+    },
+    "device_tracker": { "home": "في المنزل", "not_home": "بالخارج" },
+    "person": { "home": "في المنزل", "not_home": "خارج المنزل" }
+  },
+  "groups": {
+    "owner": "المالك",
+    "system-admin": "مسؤولين",
+    "system-users": "مستخدمين",
+    "system-read-only": "مستخدمين للعرض فقط"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "مستخدم",
+      "integration": "تكامل",
+      "config_entry": "إدخال التكوين",
+      "device": "جهاز"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "هل تريد البقاء مسجلا الدخول؟",
+      "decline": "لا",
+      "confirm": "نعم"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "الرمز",
+        "clear_code": "مسح",
+        "disarm": "تعطيل",
+        "arm_home": "تفعيل في المنزل",
+        "arm_away": "تفعيل خارج المنزل",
+        "arm_night": "تفعيل بالليل",
+        "arm_custom_bypass": "تجاوز مخصص"
+      },
+      "automation": {
+        "last_triggered": "آخر تشغيل",
+        "trigger": "تشغيل الإجراءات"
+      },
+      "camera": { "not_available": "الصورة غير متاحة" },
+      "climate": {
+        "currently": "حاليا",
+        "on_off": "إيقاف/تشغيل",
+        "target_temperature": "درجة الحرارة المستهدفة",
+        "target_temperature_entity": "{name} درجة الحرارة المستهدفة",
+        "target_temperature_mode": "{name} درجة الحرارة المستهدفة {mode}",
+        "current_temperature": "{name} درجة الحرارة الحالية",
+        "heating": "{name} تدفئة",
+        "cooling": "تبريد {name}",
+        "high": "عالي",
+        "low": "منخفض",
+        "target_humidity": "الرطوبة المستهدفة",
+        "operation": "الوضع",
+        "fan_mode": "وضع المروحة",
+        "swing_mode": "وضع الموجه",
+        "preset_mode": "الضبط المسبق",
+        "away_mode": "خارج المنزل",
+        "aux_heat": "حرارة Aux"
+      },
+      "counter": {
+        "actions": {
+          "increment": "زياده",
+          "decrement": "انقاص",
+          "reset": "اعاده تعيين"
+        }
+      },
+      "cover": { "position": "موضع", "tilt_position": "وضع الإمالة" },
+      "fan": {
+        "speed": "Snelheid",
+        "preset_mode": "وضع الضبط المسبق",
+        "oscillate": "تذبذب",
+        "direction": "Richting",
+        "forward": "أمامي",
+        "reverse": "عكس"
+      },
+      "humidifier": {
+        "humidity": "الرطوبة المستهدفة",
+        "mode": "الوضع",
+        "target_humidity_entity": "{name} الرطوبة المستهدفة",
+        "on_entity": "{name} يعمل"
+      },
+      "light": {
+        "brightness": "Helderheid",
+        "color_temperature": "Kleurtemperatuur",
+        "white_value": "سطوع الأبيض",
+        "color_brightness": "سطوع اللون",
+        "cold_white_value": "سطوع أبيض بارد",
+        "warm_white_value": "سطوع أبيض دافئ",
+        "effect": "مؤثرات"
+      },
+      "lock": { "code": "كود", "lock": "قفل", "unlock": "فتح" },
+      "media_player": {
+        "source": "المصدر",
+        "sound_mode": "وضع الصوت",
+        "browse_media": "تصفح الوسائط",
+        "turn_on": "تشغيل",
+        "turn_off": "إيقاف تشغيل",
+        "media_play": "تشغيل",
+        "media_play_pause": "تشغيل/إيقاف مؤقت",
+        "media_next_track": "التالى",
+        "media_previous_track": "السابق",
+        "text_to_speak": "النص للتحدث"
+      },
+      "persistent_notification": { "dismiss": "إخفاء" },
+      "scene": { "activate": "تفعيل" },
+      "script": {
+        "run": "Run",
+        "cancel": "إلغاء",
+        "cancel_multiple": "إلغاء {number}"
+      },
+      "service": { "run": "تشغيل" },
+      "timer": {
+        "actions": {
+          "start": "بدء",
+          "pause": "إيقاف مؤقت",
+          "cancel": "إلغاء",
+          "finish": "إنهاء"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "استئناف التنظيف",
+          "return_to_base": "العودة",
+          "start_cleaning": "بدء تنظيف",
+          "turn_on": "تشغيل",
+          "turn_off": "إيقاف"
+        }
+      },
+      "water_heater": {
+        "currently": "حاليا",
+        "on_off": "إيقاف/تشغيل",
+        "target_temperature": "درجة الحرارة المستهدفة",
+        "operation": "تشغيل",
+        "away_mode": "حالة خارج المنزل"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "الضغط الجوي",
+          "humidity": "الرطوبة",
+          "temperature": "الحرارة",
+          "visibility": "الرؤية",
+          "wind_speed": "سرعة الرياح",
+          "precipitation": "ترسب"
+        },
+        "cardinal_direction": {
+          "e": "شرق",
+          "ene": "شرق شمال شرقي",
+          "ese": "شرق جنوب شرقي",
+          "n": "شمال",
+          "ne": "شمال شرق",
+          "nne": "شمال شمال شرقي",
+          "nw": "شمال غرب",
+          "nnw": "شمال شمال غربي",
+          "s": "جنوب",
+          "se": "جنوب غرب",
+          "sse": "جنوب جنوب شرقي",
+          "ssw": "جنوب جنوب غربي",
+          "sw": "جنوب غرب",
+          "w": "غرب",
+          "wnw": "غرب شمال غربي",
+          "wsw": "غرب جنوب غربي"
+        },
+        "day": "يوم",
+        "night": "Night",
+        "forecast": "التوقعات",
+        "high": "عالي",
+        "low": "منخفض"
+      }
+    },
+    "common": {
+      "and": "و",
+      "continue": "استمر",
+      "previous": "السابق",
+      "loading": "جار التحميل",
+      "refresh": "تحديث",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "remove": "إزالة",
+      "enable": "تغعيل",
+      "disable": "تعطيل",
+      "close": "إغلاق",
+      "leave": "غادر",
+      "stay": "بقى",
+      "next": "التالى",
+      "back": "عودة",
+      "undo": "تراجع",
+      "save": "حفظ",
+      "rename": "إعادة تسمية",
+      "yes": "نعم",
+      "no": "لا",
+      "not_now": "ليس الان",
+      "skip": "تخطي",
+      "menu": "القائمه",
+      "overflow_menu": "قائمة تجاوز السعة",
+      "successfully_saved": "تم الحفظ بنجاح",
+      "successfully_deleted": "تم الحذف بنجاح",
+      "error_required": "مطلوب",
+      "copied": "Copied",
+      "copied_clipboard": "نسخت إلى الحافظة"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "لم يتم العثور على إدخالات في دفتر السجلات.",
+        "by": "by",
+        "by_service": "by service",
+        "show_trace": "عرض التتبع",
+        "retrieval_error": "خطأ أثناء استرداد إدخال السجل",
+        "messages": {
+          "was_away": "تم اكتشافه بعيدًا",
+          "was_at_state": "تم اكتشافه في {state}",
+          "rose": "وردة",
+          "set": "اضبط",
+          "was_low": "كان منخفضا",
+          "was_normal": "كان طبيعيا",
+          "was_connected": "كان متصلا",
+          "was_disconnected": "كان مفصولاً",
+          "was_opened": "كان مفتوحاً",
+          "was_closed": "كان مغلقاً",
+          "is_opening": "يفتح",
+          "is_closing": "is closing",
+          "was_unlocked": "كان غير مؤمن",
+          "was_locked": "كان مؤمناً",
+          "was_plugged_in": "كان موصلاً في",
+          "was_unplugged": "كان غير موصل",
+          "was_at_home": "تم اكتشافه في المنزل",
+          "was_unsafe": "كان غير امن",
+          "was_safe": "كان آمنا",
+          "detected_device_class": "تم الكشف عن {device_class}",
+          "cleared_device_class": "cleared (no {device_class} detected)",
+          "turned_off": "أطفئ",
+          "turned_on": "تم تشغيله",
+          "changed_to_state": "تغير إلى {state}",
+          "became_unavailable": "أصبح غير متوفر"
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "كيان",
+          "clear": "مسح",
+          "no_match": "No matching entities found",
+          "show_entities": "إظهار الكيانات"
+        },
+        "entity-attribute-picker": {
+          "attribute": "السمه",
+          "show_attributes": "إظهار السمات"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "قم بتوسيع هذه المنطقة إلى الأجهزة والكيانات المنفصلة التي تحتوي عليها. بعد التوسيع ، لن يتم تحديث الأجهزة والكيانات عندما تتغير المنطقة.",
+        "expand_device_id": "قم بتوسيع هذا الجهاز إلى الكيانات المنفصلة التي يحتوي عليها. بعد التوسيع ، لن يتم تحديث الكيانات عندما يتغير الجهاز.",
+        "remove_area_id": "إزالة المنطقة",
+        "remove_device_id": "إزالة الجهاز",
+        "remove_entity_id": "إزالة الكيان",
+        "add_area_id": "اختر منطقة",
+        "add_device_id": "اختر جهاز",
+        "add_entity_id": "اختر الكيان"
+      },
+      "user-picker": {
+        "no_user": "No user",
+        "add_user": "Add user",
+        "remove_user": "Remove user"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Select a Blueprint",
+        "add_user": "أضف مستخدم",
+        "remove_user": "إزالة مستخدم"
+      },
+      "device-picker": {
+        "clear": "مسح",
+        "toggle": "تبديل",
+        "show_devices": "عرض الأجهزة",
+        "no_devices": "ليس لديك أي أجهزة",
+        "no_match": "لم يتم العثور على أجهزة مطابقة",
+        "device": "جهاز",
+        "no_area": "لا مجال"
+      },
+      "area-picker": {
+        "clear": "مسح",
+        "show_areas": "إظهار المناطق",
+        "area": "المنطقة",
+        "add_new": "اضف منطقة جديدة...",
+        "no_areas": "ليس لديك أي مناطق",
+        "no_match": "لم يتم العثور على مناطق مطابقة",
+        "add_dialog": {
+          "title": "أضف منطقة جديدة",
+          "text": "أدخل اسم المنطقة الجديدة.",
+          "name": "الاسم",
+          "add": "إضافة",
+          "failed_create_area": "Failed to create area."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "الاضافات",
+        "error": {
+          "no_supervisor": {
+            "title": "لا supervisor",
+            "description": "لم يتم العثور على supervisor ، لذلك لا يمكن تحميل الوظائف الإضافية."
+          },
+          "fetch_addons": {
+            "title": "Error fetching add-ons",
+            "description": "Fetching add-ons returned an error."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "تصفية حسب الكيان",
+        "filter_by_device": "تصفية حسب الجهاز",
+        "filter_by_area": "تصفية حسب المنطقة",
+        "filtered_by_entity": "الكيان: {entity_name}",
+        "filtered_by_device": "الجهاز: {device_name}",
+        "filtered_by_area": "المنطقة: {area_name}"
+      },
+      "picture-upload": {
+        "label": "صورة",
+        "unsupported_format": "تنسيق غير مدعوم ، يرجى اختيار صورة JPEG أو PNG أو GIF."
+      },
+      "date-range-picker": {
+        "start_date": "تاريخ البدء",
+        "end_date": "تاريخ الإنتهاء",
+        "select": "اختر",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Nooit",
+        "just_now": "في هذة اللحظة",
+        "duration": {
+          "second": "{count} {count, plural,\none {ثانية}\nother {ثواني}\n}",
+          "minute": "{count} {count, plural,\n  one {دقيقة}\n  other {دقائق}\n}",
+          "hour": "{count} {count, plural,\none {ساعة}\nother {ساعات}\n}",
+          "day": "{count} {count, plural,\none {يوم}\nother {أيام}\n}",
+          "week": "{count} {count, plural,\none {أسبوع}\nother {أسابيع}\n}"
+        },
+        "past_duration": {
+          "second": "قبل {count} {count, plural,\n  one {ثانية}\n  other {ثواني}\n}",
+          "minute": "قبل {count} {count, plural,\n  one {دقيقة}\n  other {دقيقة}\n}",
+          "hour": "قبل {count} {count, plural,\n  one {ساعة}\n  other {ساعات}\n}",
+          "day": "قبل {count} {count, plural,\n  one {يوم}\n  other {ايام}\n}",
+          "week": "قبل {count} {count, plural,\n  one {اسبوع}\n  other {اسابيع}\n}"
+        },
+        "future_duration": {
+          "second": "In {count} {count, plural,\n  one {second}\n  other {seconds}\n}",
+          "minute": "خلال {count} {count, plural,\n  one {دقيقة}\n  other {دقيقة}\n}",
+          "hour": "In {count} {count, plural,\n  one {hour}\n  other {hours}\n}",
+          "day": "خلال {count, plural,\n  one {يوم}\n  two {يومين}\n  other {{count} يوم}\n}",
+          "week": "In {count} {count, plural,\n  one {week}\n  other {weeks}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "تم تعطيل سجل التكامل",
+        "loading_history": "جارٍ تحميل سجل الحالات ...",
+        "no_history_found": "لم يتم العثور على سجل الحالات."
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "خدمة" },
+      "service-control": {
+        "required": "This field is required",
+        "target": "الأهداف",
+        "target_description": "ما الذي يجب أن تستخدمه هذه الخدمة كمناطق أو أجهزة أو كيانات مستهدفة.",
+        "service_data": "Service data",
+        "integration_doc": "وثائق التكامل"
+      },
+      "related-items": {
+        "no_related_found": "No related items found.",
+        "integration": "تكامل",
+        "device": "جهاز",
+        "area": "المنطقة",
+        "entity": "الكيانات ذات الصلة",
+        "group": "Part of the following groups",
+        "scene": "Part of the following scenes",
+        "script": "Part of the following scripts",
+        "automation": "جزء من الأتمتة التالية"
+      },
+      "data-table": {
+        "search": "بحث",
+        "no-data": "لايوجد بيانات",
+        "filtering_by": "Filtering by",
+        "hidden": "{number} hidden",
+        "clear": "Clear"
+      },
+      "media-browser": {
+        "pick": "اختار",
+        "play": "تشغيل",
+        "play-media": "تشغيل الوسائط",
+        "pick-media": "اختر الوسائط",
+        "no_items": "لا توجد عناصر",
+        "choose_player": "Choose Player",
+        "media-player-browser": "متصفح مشغل الوسائط",
+        "web-browser": "Web Browser",
+        "media_player": "مشغل الوسائط",
+        "audio_not_supported": "متصفحك لا يدعم عنصر الصوت.",
+        "video_not_supported": "متصفحك لا يدعم عنصر الفيديو.",
+        "media_not_supported": "لا يدعم مشغل الوسائط هذا النوع من الوسائط",
+        "media_browsing_error": "خطأ في استعراض الوسائط",
+        "learn_adding_local_media": "Learn more about adding media in the {documentation}.",
+        "local_media_files": "Place your video, audio and image files in the media directory to be able to browse and play them in the browser or on supported media players.",
+        "documentation": "documentation",
+        "no_local_media_found": "No local media found",
+        "no_media_folder": "It looks like you have not yet created a media directory.",
+        "setup_local_help": "Check the {documentation} on how to setup local media.",
+        "class": {
+          "album": "البوم",
+          "app": "التطبيق",
+          "artist": "الفنان",
+          "channel": "القناة",
+          "composer": "الملحن",
+          "contributing_artist": "Contributing Artist",
+          "directory": "Library",
+          "episode": "Episode",
+          "game": "Game",
+          "genre": "Genre",
+          "image": "Image",
+          "movie": "Movie",
+          "music": "Music",
+          "playlist": "Playlist",
+          "podcast": "Podcast",
+          "season": "Season",
+          "track": "Track",
+          "tv_show": "TV Show",
+          "url": "URL",
+          "video": "Video"
+        }
+      },
+      "calendar": { "my_calendars": "التقويمات الخاصة بي", "today": "اليوم" },
+      "attributes": { "expansion_header": "سمات" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "{domain}",
+            "core": "Location & customizations",
+            "group": "Groups, group entities, and notify services",
+            "automation": "Automations",
+            "script": "Scripts",
+            "scene": "Scenes",
+            "person": "People",
+            "zone": "Zones",
+            "input_boolean": "Input booleans",
+            "input_text": "Input texts",
+            "input_number": "Input numbers",
+            "input_datetime": "Input date times",
+            "input_select": "Input selects",
+            "template": "Template entities",
+            "universal": "Universal media player entities",
+            "rest": "Rest entities and notify services",
+            "command_line": "Command line entities",
+            "filter": "Filter entities",
+            "statistics": "Statistics entities",
+            "generic": "Generic IP camera entities",
+            "generic_thermostat": "Generic thermostat entities",
+            "homekit": "HomeKit",
+            "min_max": "Min/max entities",
+            "history_stats": "History stats entities",
+            "trend": "Trend entities",
+            "ping": "Ping binary sensor entities",
+            "filesize": "File size entities",
+            "telegram": "Telegram notify services",
+            "smtp": "SMTP notify services",
+            "mqtt": "Manually configured MQTT entities",
+            "rpi_gpio": "Raspberry Pi GPIO entities"
+          },
+          "server_control": {
+            "perform_action": "{action} الخادم",
+            "restart": "Restart",
+            "stop": "Stop"
+          },
+          "types": {
+            "reload": "Reload",
+            "navigation": "Navigate",
+            "server_control": "Server"
+          },
+          "navigation": {
+            "logs": "Logs",
+            "automation": "Automations",
+            "script": "Scripts",
+            "integrations": "Integrations",
+            "areas": "Areas",
+            "scene": "Scenes",
+            "helpers": "Helpers",
+            "tag": "Tags",
+            "person": "People",
+            "devices": "Devices",
+            "entities": "Entities",
+            "energy": "Energy",
+            "lovelace": "Lovelace Dashboards",
+            "core": "General",
+            "zone": "Zones",
+            "users": "Users",
+            "info": "Info",
+            "customize": "Customizations",
+            "blueprint": "Blueprints",
+            "server_control": "Server Controls",
+            "navigate_to": "انتقل إلى {panel}"
+          }
+        },
+        "filter_placeholder": "عامل تصفية الكيان"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant لم يسمع أي شيء",
+        "found": "I found the following for you:",
+        "error": "Oops, an error has occurred",
+        "how_can_i_help": "How can I help?",
+        "label": "اكتب سؤالاً واضغط على \"إدخال\"",
+        "label_voice": "اكتب واضغط على \"إدخال\" أو انقر على الميكروفون للتحدث"
+      },
+      "generic": {
+        "cancel": "إلغاء الأمر",
+        "ok": "موافق",
+        "default_confirmation_title": "هل أنت متأكد؟",
+        "close": "إغلاق"
+      },
+      "image_cropper": { "crop": "اقتصاص" },
+      "more_info_control": {
+        "dismiss": "استبعاد الحوار",
+        "settings": "إعدادات الكيان",
+        "edit": "تحرير الكيان",
+        "details": "التفاصيل",
+        "history": "التاريخ",
+        "last_changed": "آخر تعديل",
+        "last_updated": "آخر تحديث",
+        "script": {
+          "last_action": "الإجراء الأخير",
+          "last_triggered": "آخر تشغيل"
+        },
+        "sun": { "elevation": "ارتفاع", "rising": "ارتفاع", "setting": "ضبط" },
+        "updater": { "title": "تعليمات التحديث" },
+        "remote": { "activity": "النشاط الحالي" },
+        "restored": {
+          "not_provided": "هذا الكيان غير متاح حاليًا وهو معزول عن تكامل أو جهاز تمت إزالته أو تغييره أو اختلال وظيفته.",
+          "remove_intro": "If the entity is no longer in use, you can clean it up by removing it.",
+          "remove_action": "Remove entity",
+          "confirm_remove_title": "Remove entity?",
+          "confirm_remove_text": "هل أنت متأكد أنك تريد إزالة هذا الكيان؟"
+        },
+        "vacuum": {
+          "status": "الحالة",
+          "commands": "أوامر المكنسة الكهربائية:",
+          "fan_speed": "سرعة المروحة",
+          "start": "بدء",
+          "pause": "إيقاف مؤقت",
+          "stop": "توقف",
+          "clean_spot": "بقعة نظيفة",
+          "locate": "حدد",
+          "return_home": "العودة للرئيسية",
+          "start_pause": "بدء/إيقاف مؤقت"
+        },
+        "person": { "create_zone": "إنشاء منطقة من الموقع الحالي" },
+        "cover": {
+          "open_cover": "غطاء مفتوح",
+          "close_cover": "إغلاق الغطاء",
+          "open_tilt_cover": "فتح إمالة الغطاء",
+          "close_tile_cover": "إغلاق إمالة الغطاء",
+          "stop_cover": "إيقاف الغطاء عن الحركة"
+        }
+      },
+      "entity_registry": {
+        "settings": "إعدادات",
+        "control": "تحكم",
+        "related": "ذات صلة",
+        "dismiss": "إخفاء",
+        "no_unique_id": "لا يحتوي هذا الكيان (\"{entity_id}\") على معرف فريد، ولذلك لا يمكن إدارة إعداداته من واجهة المستخدم. راجع {faq_link} لمزيد من التفاصيل.",
+        "faq": "documentation",
+        "info_customize": "يمكنك الكتابة فوق بعض السمات في قسم {customize_link} .",
+        "customize_link": "تخصيصات العنصر",
+        "editor": {
+          "name": "الاسم",
+          "icon": "أيقونة",
+          "icon_error": "يجب أن تكون الرموز بتنسيق 'prefix:iconname'، على سبيل المثال \"mdi: home\"",
+          "entity_id": "Entity ID",
+          "unavailable": "هذا الكيان غير متوفر حاليا.",
+          "enabled_label": "Enable entity",
+          "enabled_cause": "معطل بسبب {cause} .",
+          "device_disabled": "جهاز هذا الكيان معطل.",
+          "open_device_settings": "فتح إعدادات الجهاز",
+          "enabled_description": "لن تتم إضافة الكيانات المعطلة إلى Home Assistant.",
+          "enabled_delay_confirm": "ستتم إضافة الكيانات الممكّنة إلى Home Assistant في غضون {delay} ثانية",
+          "enabled_restart_confirm": "أعد تشغيل Home Assistant لإنهاء تمكين الكيانات",
+          "delete": "حذف",
+          "confirm_delete": "هل أنت متأكد أنك تريد حذف هذا الإدخال؟",
+          "update": "تحديث",
+          "note": "ملاحظة: قد لا يعمل مع كافة التكاملات بعد.",
+          "advanced": "إعدادات متقدمة",
+          "area": "حدد منطقة العنصر فقط",
+          "area_note": "بشكل افتراضي ، تكون كيانات الجهاز في نفس منطقة الجهاز. إذا قمت بتغيير منطقة هذا الكيان ، فلن يتبع بعد ذلك منطقة الجهاز.",
+          "follow_device_area": "اتبع منطقة الجهاز",
+          "change_device_area": "تغيير منطقة الجهاز"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "لم يتم تحميل تكامل {platform} . يرجى إضافته إلى التكوين الخاص بك إما عن طريق إضافة ':default_config' أو \"{platform}\".",
+        "yaml_not_editable": "لا يمكن تحرير إعدادات هذا الكيان من واجهة المستخدم. يمكن تكوين الكيانات التي تم إعدادها من واجهة المستخدم فقط من واجهة المستخدم.",
+        "required_error_msg": "هذه الخانة مطلوبه",
+        "generic": { "name": "الاسم", "icon": "أيقونة" },
+        "input_datetime": {
+          "date": "تاريخ",
+          "time": "الوقت",
+          "datetime": "التاريخ والوقت",
+          "mode": "ما الذي تريد إدخاله"
+        },
+        "input_text": {
+          "min": "الحد الأدنى للطول",
+          "max": "الحد الأقصى للطول",
+          "mode": "وضع العرض",
+          "text": "النص",
+          "password": "كلمة المرور",
+          "pattern": "نمط Regex للتحقق من جانب العميل"
+        },
+        "input_number": {
+          "min": "القيمة الدنيا",
+          "max": "القيمة القصوى",
+          "mode": "وضع العرض",
+          "box": "حقل الإدخال",
+          "slider": "شريط التمرير",
+          "step": "حجم الخطوة",
+          "unit_of_measurement": "وحدة القياس"
+        },
+        "input_select": {
+          "options": "الخيارات",
+          "add_option": "إضافة خيار",
+          "no_options": "لا توجد خيارات حتى الآن.",
+          "add": "إضافة"
+        },
+        "counter": {
+          "minimum": "القيمة الدنيا",
+          "maximum": "القيمة القصوى",
+          "initial": "القيمة الأولية",
+          "restore": "قم باستعادة آخر قيمة معروفة عند بدء تشغيل Home Assistant",
+          "step": "حجم الخطوة"
+        },
+        "timer": { "duration": "المدة" }
+      },
+      "options_flow": {
+        "form": { "header": "الخيارات" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "تم حفظ الخيارات بنجاح." }
+      },
+      "config_entry_system_options": {
+        "title": "خيارات النظام لـ {integration}",
+        "enable_new_entities_label": "تمكين الكيانات المضافة حديثًا.",
+        "enable_new_entities_description": "إذا كان يجب إضافة الأجهزة المكتشفة حديثًا لـ {integration}",
+        "enable_polling_label": "تمكين سحب التحديثات.",
+        "enable_polling_description": "إذا كان يجب على Home Assistant  تلقائيًا سحب {integration} للحصول على التحديثات.",
+        "restart_home_assistant": "تحتاج إلى إعادة تشغيل Home Assistant حتى تصبح التغييرات سارية المفعول.",
+        "update": "تحديث"
+      },
+      "zha_reconfigure_device": {
+        "heading": "إعادة تكوين الجهاز",
+        "configuring_alt": "تكوين",
+        "introduction": "أعد تكوين جهاز على شبكة Zigbee الخاصة بك. استخدم هذه الميزة إذا كان جهازك لا يعمل بشكل صحيح.",
+        "battery_device_warning": "ستحتاج إلى تنبيه او تشغيل الأجهزة التي تعمل بالبطاريات قبل بدء عملية إعادة التكوين. ارجع إلى دليل جهازك للحصول على إرشادات حول كيفية تنبيه او تشغيل الجهاز.",
+        "run_in_background": "يمكنك إغلاق هذا الحوار وستستمر إعادة التكوين في الخلفية.",
+        "start_reconfiguration": "بدء إعادة التكوين",
+        "in_progress": "يتم إعادة تكوين الجهاز. هذا قد يستغرق بعض الوقت.",
+        "configuration_failed": "فشلت إعادة تكوين الجهاز. قد تتوفر معلومات إضافية في السجلات.",
+        "configuration_complete": "اكتمال إعادة تكوين الجهاز.",
+        "button_show": "إظهار التفاصيل",
+        "button_hide": "أخف التفاصيل",
+        "cluster_header": "تجمع",
+        "bind_header": "ربط",
+        "reporting_header": "إبلاغ",
+        "attribute": "السمه",
+        "min_max_change": "min/max/change"
+      },
+      "zha_device_info": {
+        "manuf": "بواسطة {manufacturer}",
+        "no_area": "لا توجد منطقة",
+        "device_signature": "توقيع جهاز Zigbee",
+        "device_children": "Zigbee device children",
+        "buttons": {
+          "add": "أضف أجهزة عبر هذا الجهاز",
+          "remove": "إزالة الجهاز",
+          "clusters": "إدارة العناقيد",
+          "reconfigure": "إعادة تكوين الجهاز",
+          "zigbee_information": "معلومات جهاز Zigbee",
+          "device_children": "View Children",
+          "view_in_visualization": "عرض في التصور"
+        },
+        "services": {
+          "reconfigure": "إعادة تكوين جهاز ZHA (معالجة الجهاز). استخدم هذا إذا كنت تواجه مشكلات مع الجهاز. إذا كان الجهاز المعني جهازًا يعمل بالبطارية ، فيرجى التأكد من أنه مستيقظ ويقبل الأوامر عند استخدام هذه الخدمة.",
+          "updateDeviceName": "قم بتعيين اسم مخصص لهذا الجهاز في سجل الجهاز.",
+          "remove": "إزالة جهاز من شبكة Zigbee.",
+          "zigbee_information": "عرض معلومات Zigbee للجهاز."
+        },
+        "confirmations": { "remove": "هل أنت متأكد أنك تريد إزالة الجهاز؟" },
+        "quirk": "Quirk",
+        "last_seen": "اخر ظهور",
+        "power_source": "مصدر الطاقة",
+        "unknown": "غير معروف ",
+        "zha_device_card": { "device_name_placeholder": "تغيير اسم الجهاز" }
+      },
+      "domain_toggler": {
+        "title": "Toggle Domains",
+        "reset_entities": "إعادة تعيين الكيانات"
+      },
+      "mqtt_device_debug_info": {
+        "title": "{device} معلومات تصحيح الأخطاء",
+        "deserialize": "محاولة تحليل رسائل MQTT كJSON",
+        "entities": "الكيانات",
+        "no_entities": "لا توجد كيانات",
+        "no_triggers": "لا توجد محفزات",
+        "payload_display": "عرض الـPayload",
+        "recent_messages": "{n} آخر الرسائل التي تم استلامها",
+        "show_as_yaml": "إظهار كـ YAML",
+        "triggers": "محفزات"
+      }
+    },
+    "duration": {
+      "second": "{count, plural,\n  one {ثانية}\n  two {ثانيتين}\n  other {{count} ثانية}\n}",
+      "minute": "{count} {count, plural,\n  one {دقيقة}\n  other {دقائق}\n}",
+      "hour": "{count} {count, plural,\none {ساعة}\nother {ساعات}\n}",
+      "day": "{count} {count, plural,\none {يوم}\nother {أيام}\n}",
+      "week": "{count, plural,\n  one {اسبوع}\n  two {اسبوعين}\n  other {{count} اسابيع}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "لم يتم تقديم أي نوع.",
+        "error_detected": "تم الكشف عن أخطاء التكوين",
+        "editor_not_available": "لا يتوفر محرر مرئي للنوع \" {type} \".",
+        "editor_not_supported": "المحرر المرئي غير معتمد لهذا التكوين",
+        "edit_in_yaml_supported": "لا يزال بإمكانك تعديل التكوين الخاص بك في YAML.",
+        "key_missing": "المفتاح المطلوب \" {key} \" مفقود.",
+        "key_not_expected": "المفتاح \" {key} \" غير متوقع أو غير مدعوم بواسطة المحرر المرئي.",
+        "key_wrong_type": "القيمة المتوفرة ل \"{key}\" غير معتمدة من قبل المحرر المرئي. نحن ندعم ({type_correct}) ولكن تلقينا ({type_wrong}).",
+        "no_template_editor_support": "القوالب غير مدعومة في المحرر المرئي"
+      },
+      "supervisor": {
+        "title": "تعذر تحميل لوحة supervisor!",
+        "wait": "إذا كنت قد بدأت للتو ، فتأكد من منح supervisor الوقت الكافي للبدء.",
+        "ask": "اطلب المساعدة",
+        "reboot": "حاول إعادة تشغيل المضيف",
+        "observer": "تحقق من المراقب",
+        "system_health": "تحقق من صحة النظام"
+      }
+    },
+    "login-form": {
+      "password": "كلمة المرور",
+      "remember": "تذكر",
+      "log_in": "تسجيل الدخول"
+    },
+    "notification_drawer": {
+      "click_to_configure": "انقر هنا لتعديل {entity}",
+      "empty": "لاتوجد إشعارات",
+      "title": "الاشعارات",
+      "close": "إغلاق",
+      "dismiss_all": "إخفي الكل"
+    },
+    "notification_toast": {
+      "service_call_failed": "فشل الاتصال بخدمة {service} .",
+      "connection_lost": "انقطع الاتصال. جاري إعادة الاتصال ...",
+      "started": "Home Assistant بدأ!",
+      "starting": "يبدأ برنامج Home Assistant حاليا ، ولن يكون كل شيء متاحًا حتى الانتهاء.",
+      "wrapping_up_startup": "اختتام بدء التشغيل، لن يكون كل شيء متاحا حتى يتم الانتهاء منه.",
+      "integration_starting": "بدء {integration}، لن يتوفر كل شيء حتى يتم الانتهاء منه.",
+      "triggered": "تم تشغيل {name}",
+      "dismiss": "Dismiss"
+    },
+    "sidebar": {
+      "external_app_configuration": "تكوين التطبيق",
+      "sidebar_toggle": "Sidebar Toggle",
+      "done": "أُنجز"
+    },
+    "panel": {
+      "error": {
+        "go_back": "الرجوع للخلف",
+        "supervisor": {
+          "ask": "طلب المساعدة",
+          "observer": "تحقق من المراقب",
+          "reboot": "حاول إعادة تشغيل المضيف",
+          "system_health": "تحقق من صحة النظام",
+          "title": "تعذر تحميل لوحة المشرف!",
+          "wait": "إذا كنت قد بدأت للتو ، فتأكد من منح المشرف الوقت الكافي للبدء."
+        }
+      },
+      "history": {
+        "ranges": {
+          "last_week": "الأسبوع الماضي",
+          "this_week": "هذا الأسبوع",
+          "today": "اليوم",
+          "yesterday": "أمس"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "الأسبوع الماضي",
+          "this_week": "هذا الأسبوع",
+          "today": "اليوم",
+          "yesterday": "أمس"
+        }
+      }
+    }
+  }
+}

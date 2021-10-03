@@ -1,0 +1,166 @@
+{
+  "ui": {
+    "panel": {
+      "page-authorize": {
+        "initializing": "A inicializar",
+        "authorizing_client": "Está prestes a dar acesso a {clientId} à sua instância do Home Assistant.",
+        "logging_in_to_with": "A iniciar sessão em **{locationName}** com **{authProviderName}**.",
+        "logging_in_with": "Iniciar a sessão com **{authProviderName}**.",
+        "pick_auth_provider": "Ou entre com",
+        "abort_intro": "Início de sessão cancelado",
+        "form": {
+          "working": "Por favor, aguarde",
+          "unknown_error": "Algo correu mal",
+          "next": "Seguinte",
+          "start_over": "Iniciar novamente",
+          "error": "Erro: {error}",
+          "providers": {
+            "command_line": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Utilizador",
+                    "password": "Palavra-passe"
+                  }
+                },
+                "mfa": {
+                  "data": {
+                    "code": "Código de autenticações por dois fatores"
+                  },
+                  "description": "Abra o **{mfa_module_name}** no seu dispositivo para ver o código de autenticação por dois factores e verificar a sua identidade."
+                }
+              },
+              "error": {
+                "invalid_auth": "Nome de utilizador ou palavra-passe inválida",
+                "invalid_code": "Código de autenticação inválido"
+              },
+              "abort": {
+                "login_expired": "Sessão expirou, por favor entre novamente."
+              }
+            },
+            "homeassistant": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Utilizador",
+                    "password": "Palavra-passe"
+                  }
+                },
+                "mfa": {
+                  "data": {
+                    "code": "Código de autenticação por dois factores"
+                  },
+                  "description": "Abra o **{mfa_module_name}** no seu dispositivo para ver o código de autenticação por dois factores e verificar a sua identidade."
+                }
+              },
+              "error": {
+                "invalid_auth": "Nome de utilizador ou palavra-passe inválida",
+                "invalid_code": "Código de autenticação inválido"
+              },
+              "abort": {
+                "login_expired": "Sessão expirou, por favor entre novamente."
+              }
+            },
+            "legacy_api_password": {
+              "step": {
+                "init": {
+                  "data": { "password": "Palavra-passe para API" },
+                  "description": "Por favor, insira a palavra-passe da API na sua configuração HTTP:"
+                },
+                "mfa": {
+                  "data": {
+                    "code": "Código de autenticação por dois factores"
+                  },
+                  "description": "Abra o **{mfa_module_name}** no seu dispositivo para ver o código de autenticação por dois factores e verificar a sua identidade."
+                }
+              },
+              "error": {
+                "invalid_auth": "Palavra-passe para API inválida",
+                "invalid_code": "Código de autenticação inválido"
+              },
+              "abort": {
+                "no_api_password_set": "Não tem uma palavra-passe para a API configurada.",
+                "login_expired": "Sessão expirou, por favor entre novamente."
+              }
+            },
+            "trusted_networks": {
+              "step": {
+                "init": {
+                  "data": { "user": "Utilizador" },
+                  "description": "Por favor selecione o utilizador com o qual pretende entrar:"
+                }
+              },
+              "abort": {
+                "not_allowed": "O seu computador não está na lista de endereços permitidos."
+              }
+            },
+            "ais_demo": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (demo)",
+                    "password": "Password (demo)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_admin": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (admin)",
+                    "password": "Password (admin)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_cloud": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username",
+                    "password": "Password",
+                    "gate_id": "Gate ID"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

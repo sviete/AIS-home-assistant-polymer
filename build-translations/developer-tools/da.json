@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Hændelser",
+            "description": "Afsend en hændelse til Home Assistant-hændelses-bussen.",
+            "documentation": "Dokumentationen til hændelser",
+            "type": "Hændelsestype",
+            "data": "Hændelsesdata (YAML, valgfrit)",
+            "fire_event": "Afsend hændelse",
+            "event_fired": "Hændelse {name} afsendt",
+            "available_events": "Tilgængelige hændelser",
+            "count_listeners": " ({count} lyttere)",
+            "listen_to_events": "Lyt til hændelser",
+            "listening_to": "Lytter til",
+            "subscribe_to": "Hændelse at abonnere på",
+            "start_listening": "Start med at lytte",
+            "stop_listening": "Stop med at lytte",
+            "alert_event_type": "Hændelsestype er et obligatorisk felt",
+            "notification_event_fired": "Hændelse {type} blev afsendt!"
+          },
+          "services": {
+            "title": "Tjenester",
+            "description": "Tjenesteværktøjet til udviklere giver dig mulighed for at kalde alle tilgængelige tjenester i Home Assistant.",
+            "call_service": "Kald tjeneste",
+            "column_parameter": "Parameter",
+            "column_description": "Beskrivelse",
+            "column_example": "Eksempel",
+            "fill_example_data": "Udfyld eksempeldata",
+            "yaml_mode": "Gå til YAML-tilstand",
+            "ui_mode": "Gå til brugergrænsefladetilstand",
+            "yaml_parameters": "Parametre er kun tilgængelige i YAML-tilstand",
+            "all_parameters": "Alle tilgængelige parametre",
+            "accepts_target": "Et mål for denne tjeneste kan angives, for eksempel: `entity_id: light.bed_light`",
+            "no_template_ui_support": "Brugergrænsefladen understøtter ikke skabeloner, du kan stadig bruge YAML-editoren."
+          },
+          "states": {
+            "title": "Tilstande",
+            "description1": "Tilpas tilstanden for en enhed i Home Assistant.",
+            "description2": "Dette vil ikke kommunikere med den faktiske enhed.",
+            "entity": "Entitet",
+            "state": "Tilstand",
+            "attributes": "Egenskaber",
+            "state_attributes": "Tilstandsegenskaber (YAML, valgfri)",
+            "set_state": "Sæt tilstand",
+            "current_entities": "Aktuelle entiteter",
+            "filter_entities": "Filtrer entiteter",
+            "filter_states": "Filtrer tilstande",
+            "filter_attributes": "Filtrer egenskaber",
+            "no_entities": "Ingen entiteter",
+            "more_info": "Mere information",
+            "alert_entity_field": "Entitet er et obligatorisk felt",
+            "last_updated": "Sidst opdateret",
+            "last_changed": "Sidst ændret",
+            "copy_id": "Kopier ID til Udklipsholder"
+          },
+          "templates": {
+            "title": "Skabelon",
+            "description": "Skabeloner gengives ved hjælp af Jinja2-skabelonmotoren med nogle Home Assistant-specifikke udvidelser.",
+            "editor": "Skabelonredigering",
+            "reset": "Nulstil til demo-skabelon",
+            "result_type": "Resultattype",
+            "jinja_documentation": "Jinja2-skabelon-dokumentation",
+            "template_extensions": "Skabelon-udvidelser til Home Assistant",
+            "unknown_error_template": "Ukendt fejl ved gengivelse af skabelon",
+            "time": "Denne skabelon opdateres hvert minut",
+            "all_listeners": "Denne skabelon lytter til alle ændringer til tilstande",
+            "no_listeners": "Denne skabelon lytter ikke til nogen begivenheder og opdateres ikke automatisk.",
+            "listeners": "Denne skabelon lytter efter følgende ændrede tilstande:",
+            "entity": "Entitet",
+            "domain": "Domæne"
+          }
+        }
+      }
+    }
+  }
+}

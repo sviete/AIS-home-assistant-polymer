@@ -1,0 +1,900 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "Ημερολόγιο",
+    "config": "Ρυθμίσεις",
+    "states": "Επισκόπηση",
+    "map": "Χάρτης",
+    "logbook": "Αρχείο Συμβάντων",
+    "history": "Ιστορικό",
+    "mailbox": "Γραμματοκιβώτιο",
+    "shopping_list": "Λίστα αγορών",
+    "developer_tools": "Εργαλεία προγραμματιστή",
+    "media_browser": "Πρόγραμμα περιήγησης πολυμέσων",
+    "profile": "Προφίλ"
+  },
+  "state": {
+    "default": {
+      "on": "Ενεργό",
+      "off": "Μη Ενεργό",
+      "unknown": "Άγνωστη",
+      "unavailable": "Μη Διαθέσιμο"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "Κλειστό", "on": "Ανοιχτό", "auto": "Αυτόματο" },
+      "preset_mode": {
+        "none": "Κανένας",
+        "eco": "Οικονομικό",
+        "away": "Εκτός Σπιτιού",
+        "boost": "Ενίσχυση",
+        "comfort": "Άνεση",
+        "home": "Σπίτι",
+        "sleep": "Ύπνος",
+        "activity": "Δραστηριότητα"
+      },
+      "hvac_action": {
+        "off": "Κλειστό",
+        "heating": "Θέρμανση",
+        "cooling": "Ψύξη",
+        "drying": "Αφύγρανση",
+        "idle": "Σε αδράνεια",
+        "fan": "Ανεμιστήρας"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "Κανονικός",
+        "eco": "Eco",
+        "away": "Εκτός",
+        "boost": "Ενίσχυση",
+        "comfort": "Άνεση",
+        "home": "Σπίτι",
+        "sleep": "Ύπνος",
+        "auto": "Αυτόματο",
+        "baby": "Μωρό"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "Άγνωστο",
+      "unavailable": "Μη Διαθ",
+      "error": "Σφάλμα",
+      "entity_not_found": "Η οντότητα δεν βρέθηκε"
+    },
+    "alarm_control_panel": {
+      "armed": "Οπλισμένο",
+      "disarmed": "Αφόπλιση",
+      "armed_home": "Οπλισμένο",
+      "armed_away": "Οπλισμένο",
+      "armed_night": "Οπλισμένο",
+      "armed_custom_bypass": "Οπλισμένο",
+      "pending": "Εκκρεμής",
+      "arming": "Όπλιση",
+      "disarming": "Αφόπλιση",
+      "triggered": "Ενεργ"
+    },
+    "device_tracker": { "home": "Σπίτι", "not_home": "Εκτός" },
+    "person": { "home": "Σπίτι", "not_home": "Εκτός" }
+  },
+  "groups": {
+    "owner": "Ιδιοκτήτης",
+    "system-admin": "Διαχειριστές",
+    "system-users": "Χρήστες",
+    "system-read-only": "Χρήστες μόνο για ανάγνωση"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "Χρήστης",
+      "integration": "Ενσωμάτωση",
+      "config_entry": "Παράμετρος διαμόρφωσης",
+      "device": "Συσκευή"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "Θέλετε να αποθηκεύσετε αυτή τη σύνδεση;",
+      "decline": "Όχι, ευχαριστώ",
+      "confirm": "Αποθήκευση σύνδεσης"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "Κωδικός",
+        "clear_code": "Καθαρισμός",
+        "disarm": "Αφοπλισμός",
+        "arm_home": "Οπλισμός εντός",
+        "arm_away": "Οπλισμός εκτός",
+        "arm_night": "Οπλισμός νυκτός",
+        "arm_custom_bypass": "Προσαρμοσμένη παράκαμψη"
+      },
+      "automation": {
+        "last_triggered": "Τελευταία ενεργοποίηση",
+        "trigger": "Εκτέλεση ενεργειών"
+      },
+      "camera": { "not_available": "Μη διαθέσιμη εικόνα" },
+      "climate": {
+        "currently": "Αυτή τη στιγμή",
+        "on_off": "Ενεργοποίηση / απενεργοποίηση",
+        "target_temperature": "Επιθυμητή θερμοκρασία",
+        "target_temperature_entity": "{name} στόχος θερμοκρασίας",
+        "target_temperature_mode": "{name} στόχος θερμοκρασίας {mode}",
+        "current_temperature": "{name} τρέχουσα θερμοκρασία",
+        "heating": "{name} θέρμανση",
+        "cooling": "{name} ψύξη",
+        "high": "υψηλός",
+        "low": "χαμηλός",
+        "target_humidity": "Επιθυμητή υγρασία",
+        "operation": "Λειτουργία",
+        "fan_mode": "Λειτουργία ανεμιστήρα",
+        "swing_mode": "Λειτουργία ανεμιστήρα",
+        "preset_mode": "Προκαθορισμένο",
+        "away_mode": "Λειτουργία εκτός σπιτιού",
+        "aux_heat": "Βοηθητική θέρμανση"
+      },
+      "counter": {
+        "actions": {
+          "increment": "αύξηση",
+          "decrement": "μείωση",
+          "reset": "επαναφορά"
+        }
+      },
+      "cover": { "position": "Θέση", "tilt_position": "Θέση ανάκλισης" },
+      "fan": {
+        "speed": "Ταχύτητα",
+        "preset_mode": "Προεπιλεγμένη λειτουργία",
+        "oscillate": "Περιστροφή",
+        "direction": "Κατεύθυνση",
+        "forward": "Εμπρός",
+        "reverse": "Αντιστροφή"
+      },
+      "humidifier": {
+        "humidity": "Επιθυμητή υγρασία",
+        "mode": "Λειτουργία",
+        "target_humidity_entity": "{name} στόχος υγρασίας",
+        "on_entity": "{name} ενεργοποιημένο"
+      },
+      "light": {
+        "brightness": "Φωτεινότητα",
+        "color_temperature": "Θερμοκρασία χρώματος",
+        "white_value": "Τιμή λευκού",
+        "color_brightness": "Color brightness",
+        "cold_white_value": "Cold white brightness",
+        "warm_white_value": "Warm white brightness",
+        "effect": "Εφέ"
+      },
+      "lock": { "code": "Κώδικας", "lock": "Κλείδωμα", "unlock": "Ξεκλείδωμα" },
+      "media_player": {
+        "source": "Πηγή",
+        "sound_mode": "Λειτουργία ήχου",
+        "browse_media": "Αναζήτηση πολυμέσων",
+        "turn_on": "Ενεργοποίηση",
+        "turn_off": "Απενεργοποίηση",
+        "media_play": "Αναπαραγωγή",
+        "media_play_pause": "Αναπαραγωγή/παύση",
+        "media_next_track": "Επόμενο",
+        "media_previous_track": "Προηγούμενο",
+        "text_to_speak": "Κείμενο προς εκφώνηση"
+      },
+      "persistent_notification": { "dismiss": "Απόρριψη" },
+      "scene": { "activate": "Ενεργοποίηση" },
+      "script": {
+        "run": "Εκτέλεση",
+        "cancel": "Ακύρωση",
+        "cancel_multiple": "Ακύρωση {number}"
+      },
+      "service": { "run": "Εκτέλεση" },
+      "timer": {
+        "actions": {
+          "start": "Εκκίνηση",
+          "pause": "Παύση",
+          "cancel": "Ακύρωση",
+          "finish": "Ολοκληρώθηκαν"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "Συνέχιση καθαρισμού",
+          "return_to_base": "Επιστροφή στο dock",
+          "start_cleaning": "Έναρξη καθαρισμού",
+          "turn_on": "Ενεργοποίηση",
+          "turn_off": "Απενεργοποίηση"
+        }
+      },
+      "water_heater": {
+        "currently": "Αυτή τη στιγμή",
+        "on_off": "Ενεργοποίηση / απενεργοποίηση",
+        "target_temperature": "Επιθυμητή θερμοκρασία",
+        "operation": "Λειτουργία",
+        "away_mode": "Λειτουργία 'Είμαι εκτός'"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "Πίεση αέρα",
+          "humidity": "Υγρασία",
+          "temperature": "Θερμοκρασία",
+          "visibility": "Ορατότητα",
+          "wind_speed": "Ταχύτητα ανέμου",
+          "precipitation": "Υετός"
+        },
+        "cardinal_direction": {
+          "e": "Α",
+          "ene": "ΑΒΑ",
+          "ese": "ΑΝΑ",
+          "n": "Β",
+          "ne": "ΒΑ",
+          "nne": "ΒΒΑ",
+          "nw": "ΒΔ",
+          "nnw": "ΒΒΔ",
+          "s": "Ν",
+          "se": "ΝΑ",
+          "sse": "ΝΝΑ",
+          "ssw": "ΝΝΔ",
+          "sw": "ΝΔ",
+          "w": "Δ",
+          "wnw": "ΔΒΔ",
+          "wsw": "ΔΝΔ"
+        },
+        "day": "Ημέρα",
+        "night": "Νύχτα",
+        "forecast": "Πρόγνωση",
+        "high": "Υψηλή",
+        "low": "Χαμηλή"
+      }
+    },
+    "common": {
+      "and": "και",
+      "continue": "Συνέχεια",
+      "previous": "Προηγούμενο",
+      "loading": "Φόρτωση",
+      "refresh": "Ανανέωση",
+      "cancel": "Ακύρωση",
+      "delete": "Διαγραφή",
+      "remove": "Αφαίρεση",
+      "enable": "Ενεργοποίηση",
+      "disable": "Απενεργοποίηση",
+      "close": "Κλείστε",
+      "leave": "Αποχώρηση",
+      "stay": "Παραμονή",
+      "next": "Επόμενο",
+      "back": "Πίσω",
+      "undo": "Αναίρεση",
+      "save": "Αποθήκευση",
+      "rename": "Μετονομασία",
+      "yes": "Ναι",
+      "no": "Όχι",
+      "not_now": "Όχι τώρα",
+      "skip": "Παράλειψη",
+      "menu": "Μενού",
+      "overflow_menu": "Μενού υπερχείλισης",
+      "successfully_saved": "Αποθηκεύτηκε με επιτυχία",
+      "successfully_deleted": "Η διαγραφή ολοκληρώθηκε με επιτυχία",
+      "error_required": "Υποχρεωτικό",
+      "copied": "Αντιγράφηκε",
+      "copied_clipboard": "Αντιγράφηκε στο πρόχειρο"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "Δεν βρέθηκαν καταχωρήσεις ημερολογίου.",
+        "by": "από",
+        "by_service": "από υπηρεσία",
+        "show_trace": "Εμφάνιση ίχνους",
+        "retrieval_error": "Error during logbook entry retrieval",
+        "messages": {
+          "was_away": "εντοπίστηκε μακριά",
+          "was_at_state": "εντοπίστηκε σε {state}",
+          "rose": "ανέτειλε",
+          "set": "έδυσε",
+          "was_low": "ήταν χαμηλό",
+          "was_normal": "ήταν φυσιολογικό",
+          "was_connected": "ήταν συνδεδεμένο",
+          "was_disconnected": "ήταν αποσυνδεδεμένο",
+          "was_opened": "ήταν ανοιχτό",
+          "was_closed": "ήταν κλειστό",
+          "is_opening": "ανοίγει",
+          "is_closing": "κλείνει",
+          "was_unlocked": "ήταν ξεκλείδωτο",
+          "was_locked": "ήταν κλειδωμένο",
+          "was_plugged_in": "ήταν συνδεδεμένο",
+          "was_unplugged": "ήταν αποσυνδεδεμένο",
+          "was_at_home": "εντοπίστηκε στο σπίτι",
+          "was_unsafe": "δεν ήταν ασφαλές",
+          "was_safe": "ήταν ασφαλές",
+          "detected_device_class": "εντόπισε {device_class}",
+          "cleared_device_class": "παραγράφηκε (δεν εντοπίστηκε {device_class} )",
+          "turned_off": "απενεργοποιήθηκε",
+          "turned_on": "ενεργοποιήθηκε",
+          "changed_to_state": "άλλαξε σε {state}",
+          "became_unavailable": "μετετράπη σε μη διαθέσιμο"
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "Οντότητα",
+          "clear": "Καθαρισμός",
+          "no_match": "Δεν βρέθηκαν οντότητες που να ταιριάζουν",
+          "show_entities": "Εμφάνιση οντοτήτων"
+        },
+        "entity-attribute-picker": {
+          "attribute": "Χαρακτηριστικό",
+          "show_attributes": "Εμφάνιση χαρακτηριστικών"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "Αναπτύξτε αυτήν την περιοχή στις ξεχωριστές συσκευές και οντότητες που περιέχει. Μετά την επέκταση δεν θα ενημερώσει τις συσκευές και τις οντότητες όταν αλλάζει η περιοχή.",
+        "expand_device_id": "Αναπτύξτε αυτήν τη συσκευή σε ξεχωριστές οντότητες. Μετά την επέκταση, δεν θα ενημερώσει τις οντότητες όταν αλλάξει η συσκευή.",
+        "remove_area_id": "Κατάργηση περιοχής",
+        "remove_device_id": "Αφαίρεση συσκευής",
+        "remove_entity_id": "Αφαίρεση οντότητας",
+        "add_area_id": "Επιλέξτε περιοχή",
+        "add_device_id": "Επιλέξτε συσκευή",
+        "add_entity_id": "Διαλέξτε οντότητα"
+      },
+      "user-picker": {
+        "no_user": "Κανένας χρήστης",
+        "add_user": "Προσθήκη χρήστη",
+        "remove_user": "Κατάργηση χρήστη"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Επιλέξτε ένα σχεδιάγραμμα",
+        "add_user": "Προσθήκη χρήστη",
+        "remove_user": "Κατάργηση χρήστη"
+      },
+      "device-picker": {
+        "clear": "Καθαρός",
+        "toggle": "Εναλλαγή",
+        "show_devices": "Εμφάνιση συσκευών",
+        "no_devices": "Δεν έχετε συσκευές",
+        "no_match": "Δεν βρέθηκαν συσκευές που να ταιριάζουν",
+        "device": "Συσκευή",
+        "no_area": "Καμία περιοχή"
+      },
+      "area-picker": {
+        "clear": "Εκκαθάριση",
+        "show_areas": "Εμφάνιση περιοχών",
+        "area": "Περιοχή",
+        "add_new": "Προσθήκη νέας περιοχής...",
+        "no_areas": "Δεν έχετε περιοχές",
+        "no_match": "Δεν βρέθηκαν περιοχές που να ταιριάζουν",
+        "add_dialog": {
+          "title": "Προσθήκη νέας περιοχής",
+          "text": "Εισάγετε το όνομα της νέας περιοχής.",
+          "name": "Όνομα",
+          "add": "Προσθήκη",
+          "failed_create_area": "Αποτυχία δημιουργίας περιοχής."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "Πρόσθετο",
+        "error": {
+          "no_supervisor": {
+            "title": "Χωρίς επόπτη",
+            "description": "Δεν βρέθηκε επόπτης, επομένως δεν ήταν δυνατή η φόρτωση των προσθέτων."
+          },
+          "fetch_addons": {
+            "title": "Σφάλμα κατά την ανάκτηση των προσθέτων",
+            "description": "Σφάλμα κατά την ανάκτηση των προσθέτων"
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "Filter by entity",
+        "filter_by_device": "Filter by device",
+        "filter_by_area": "Filter by area",
+        "filtered_by_entity": "entity: {entity_name}",
+        "filtered_by_device": "device: {device_name}",
+        "filtered_by_area": "area: {area_name}"
+      },
+      "picture-upload": {
+        "label": "Εικόνα",
+        "unsupported_format": "Μη υποστηριζόμενη μορφή, επιλέξτε μια εικόνα JPEG, PNG ή GIF."
+      },
+      "date-range-picker": {
+        "start_date": "Ημερομηνία έναρξης",
+        "end_date": "Ημερομηνία λήξης",
+        "select": "Επιλογή",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Ποτέ",
+        "just_now": "Μόλις τώρα",
+        "duration": {
+          "second": "{count} {count, plural,\n  one {δευτερόλεπτο}\n  other {δευτερόλεπτα}\n}",
+          "minute": "{count} {count, plural,\n  one {λεπτό}\n  other {λεπτά}\n}",
+          "hour": "{count} {count, plural,\n  one {ώρα}\n  other {ώρες}\n}",
+          "day": "{count} {count, plural,\n  one {μέρα}\n  other {μέρες}\n}",
+          "week": "{count} {count, plural,\n  one {εβδομάδα}\n  other {εβδομάδες}\n}"
+        },
+        "past_duration": {
+          "second": "{count} {count, plural,\n  one {δευτερόλεπτο}\n  other {δευτερόλεπτα}\n} πριν",
+          "minute": "{count} {count, plural,\n  one {λεπτό}\n  other {λεπτά}\n} πριν",
+          "hour": "{count} {count, plural,\n  one {ώρα}\n  other {ώρες}\n} πριν",
+          "day": "{count} {count, plural,\n  one {ημέρα}\n  other {ημέρες}\n} πριν",
+          "week": "{count} {count, plural,\n  one {εβδομάδα}\n  other {εβδομάδες}\n} πριν"
+        },
+        "future_duration": {
+          "second": "Σε {count} {count, plural,\n  one {δευτερόλεπτο}\n  other {δευτερόλεπτα}\n}",
+          "minute": "Σε {count} {count, plural,\n  one {λεπτό}\n  other {λεπτά}\n}",
+          "hour": "Σε {count} {count, plural,\n  one {ώρα}\n  other {ώρες}\n}",
+          "day": "Σε {count} {count, plural,\n  μία {ημέρα}\n  other {ημέρες}\n}",
+          "week": "Σε {count} {count, plural,\n  one {εβδομάδα}\n  other {εβδομάδες}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "Η ενσωμάτωση ιστορικού είναι απενεργοποιημένη",
+        "loading_history": "Φόρτωση ιστορικού κατάστασης …",
+        "no_history_found": "Δεν έχει βρεθεί ιστορικό κατάστασης."
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "Υπηρεσία" },
+      "service-control": {
+        "required": "Αυτό το πεδίο είναι υποχρεωτικό",
+        "target": "Στόχοι",
+        "target_description": "Τι πρέπει να χρησιμοποιεί αυτή η υπηρεσία ως στοχευμένες περιοχές, συσκευές ή οντότητες.",
+        "service_data": "Δεδομένα υπηρεσίας",
+        "integration_doc": "Integration documentation"
+      },
+      "related-items": {
+        "no_related_found": "Δεν βρέθηκαν σχετικά αντικείμενα.",
+        "integration": "Ενσωμάτωση",
+        "device": "Συσκευή",
+        "area": "Περιοχή",
+        "entity": "Σχετιζόμενες οντότητες",
+        "group": "Μέρος των ακόλουθων ομάδων",
+        "scene": "Μέρος των ακόλουθων σκηνών",
+        "script": "Μέρος των ακόλουθων δεσμών ενεργειών",
+        "automation": "Μέρος των ακόλουθων αυτοματισμών"
+      },
+      "data-table": {
+        "search": "Αναζήτηση",
+        "no-data": "Δεν υπάρχουν δεδομένα",
+        "filtering_by": "Filtering by",
+        "hidden": "{number} hidden",
+        "clear": "Clear"
+      },
+      "media-browser": {
+        "pick": "Επιλέξετε",
+        "play": "Αναπαραγωγή",
+        "play-media": "Αναπαραγωγή πολυμέσων",
+        "pick-media": "Επιλογή μέσων",
+        "no_items": "Χωρίς στοιχεία",
+        "choose_player": "Επιλογή προγράμματος αναπαραγωγής",
+        "media-player-browser": "Πρόγραμμα περιήγησης πολυμέσων",
+        "web-browser": "Φυλλομετρητής",
+        "media_player": "Πρόγραμμα αναπαραγωγής πολυμέσων",
+        "audio_not_supported": "Το πρόγραμμα περιήγησής σας δεν υποστηρίζει το στοιχείο ήχου.",
+        "video_not_supported": "Το πρόγραμμα περιήγησής σας δεν υποστηρίζει το στοιχείο βίντεο.",
+        "media_not_supported": "Το Πρόγραμμα αναπαραγωγής πολυμέσων του προγράμματος περιήγησης δεν υποστηρίζει αυτόν τον τύπο πολυμέσων",
+        "media_browsing_error": "Σφάλμα περιήγησης πολυμέσων",
+        "learn_adding_local_media": "Μάθετε περισσότερα σχετικά με την προσθήκη πολυμέσων στην {documentation} .",
+        "local_media_files": "Τοποθετήστε τα αρχεία βίντεο, ήχου και εικόνας στον κατάλογο πολυμέσων για να μπορείτε να περιηγηθείτε και να τα αναπαραγάγετε στο πρόγραμμα περιήγησης ή σε υποστηριζόμενες συσκευές αναπαραγωγής πολυμέσων.",
+        "documentation": "τεκμηρίωση",
+        "no_local_media_found": "Δεν βρέθηκαν τοπικά μέσα",
+        "no_media_folder": "Φαίνεται ότι δεν έχετε δημιουργήσει ακόμη έναν κατάλογο πολυμέσων.",
+        "setup_local_help": "Ελέγξτε την {documentation} σχετικά με τον τρόπο ρύθμισης τοπικών μέσων.",
+        "class": {
+          "album": "Άλμπουμ",
+          "app": "Εφαρμογή",
+          "artist": "Καλλιτέχνης",
+          "channel": "Κανάλι",
+          "composer": "Συνθέτης",
+          "contributing_artist": "Συνεισφέροντας Καλλιτέχνης",
+          "directory": "Βιβλιοθήκη",
+          "episode": "Επεισόδιο",
+          "game": "Παιχνίδι",
+          "genre": "Είδος",
+          "image": "Εικόνα",
+          "movie": "Ταινία",
+          "music": "Μουσική",
+          "playlist": "Λίστα αναπαραγωγής",
+          "podcast": "Podcast",
+          "season": "Σεζόν",
+          "track": "Κομμάτι",
+          "tv_show": "Τηλεοπτική εκπομπή",
+          "url": "URL",
+          "video": "Βίντεο"
+        }
+      },
+      "calendar": { "my_calendars": "Τα ημερολόγια μου", "today": "Σήμερα" },
+      "attributes": { "expansion_header": "Attributes" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "Επαναφόρτωση {domain}",
+            "core": "Επαναφόρτωση τοποθεσίας και προσαρμογών",
+            "group": "Επαναφόρτωση ομάδων, οντοτήτων ομάδας και ειδοποίησης υπηρεσιών",
+            "automation": "Επαναφόρτωση αυτοματισμών",
+            "script": "Επαναφόρτωση σεναρίων",
+            "scene": "Επαναφόρτωση σκηνών",
+            "person": "Επαναφόρτωση ατόμων",
+            "zone": "Επαναφόρτωση ζωνών",
+            "input_boolean": "Επαναφόρτωση εισαγόμενων boolean",
+            "input_text": "Επαναφόρτωση κειμένου εισαγωγής",
+            "input_number": "Επαναφόρτωση αριθμών εισαγωγής",
+            "input_datetime": "Επαναφόρτωση ωρών ημερομηνίας εισαγωγής",
+            "input_select": "Επαναφόρτωση επιλογών εισόδου",
+            "template": "Επαναφόρτωση οντοτήτων προτύπου",
+            "universal": "Επαναφόρτωση οντοτήτων αναπαραγωγής καθολικών μέσων",
+            "rest": "Επαναφόρτωση οντοτήτων ανάπαυσης και ειδοποίηση υπηρεσιών",
+            "command_line": "Επαναφόρτωση οντοτήτων γραμμής εντολών",
+            "filter": "Επαναφόρτωση οντοτήτων φίλτρου",
+            "statistics": "Επαναφόρτωση οντοτήτων στατιστικών",
+            "generic": "Επαναφόρτωση γενικών οντοτήτων κάμερας IP",
+            "generic_thermostat": "Επαναφόρτωση γενικών οντοτήτων θερμοστάτη",
+            "homekit": "Επαναφόρτωση HomeKit",
+            "min_max": "Επαναφόρτωση οντοτήτων ελάχιστων/μέγιστων",
+            "history_stats": "Επαναφόρτωση οντοτήτων στατιστικών στοιχείων ιστορικού",
+            "trend": "Επαναφόρτωση οντοτήτων τάσης",
+            "ping": "Επαναφόρτωση ping οντοτήτων δυαδικών αισθητήρων",
+            "filesize": "Επαναφόρτωση οντοτήτων μεγέθους αρχείων",
+            "telegram": "Επαναφόρωση telegram υπηρεσιών ειδοποίησης",
+            "smtp": "Επαναφόρωση smtp υπηρεσιών ειδοποίησης",
+            "mqtt": "Επανααφόρτωση οντοτήτων mqtt",
+            "rpi_gpio": "Επαναφόρτωση GPIO οντοτήτων του Raspberry Pi"
+          },
+          "server_control": {
+            "perform_action": "{action} Διακομιστής",
+            "restart": "Επανεκκίνηση",
+            "stop": "Στοπ"
+          },
+          "types": {
+            "reload": "Επαναφόρτωση",
+            "navigation": "Πλοήγηση",
+            "server_control": "Διακομιστής"
+          },
+          "navigation": {
+            "logs": "Συμβάντα",
+            "automation": "Αυτοματισμοί",
+            "script": "Scripts",
+            "integrations": "Ενσωματώσεις",
+            "areas": "Περιοχές",
+            "scene": "Σκηνές",
+            "helpers": "Βοηθήματα",
+            "tag": "Ετικέτες",
+            "person": "Άνθρωποι",
+            "devices": "Συσκευές",
+            "entities": "Στοιχεία",
+            "energy": "Energy",
+            "lovelace": "Διαχειριστικά Lovelace",
+            "core": "Γενικά",
+            "zone": "Ζώνες",
+            "users": "Χρήστες",
+            "info": "Πληροφορίες",
+            "customize": "Μορφοποιήσεις",
+            "blueprint": "Σχεδιαγράμματα",
+            "server_control": "Στοιχεία ελέγχου Server",
+            "navigate_to": "Μεταβείτε στο {panel}"
+          }
+        },
+        "filter_placeholder": "Φίλτρο οντοτήτων"
+      },
+      "voice_command": {
+        "did_not_hear": "O Home Assistant δεν άκουσε τίποτα",
+        "found": "Βρήκα τα εξής για σας:",
+        "error": "Ωχ, παρουσιάστηκε σφάλμα",
+        "how_can_i_help": "Πώς μπορώ να βοηθήσω;",
+        "label": "Πληκτρολογήστε μια ερώτηση και πατήστε 'Enter'",
+        "label_voice": "Πληκτρολογήστε και πατήστε 'Enter' ή πατήστε το μικρόφωνο για να μιλήσετε"
+      },
+      "generic": {
+        "cancel": "Ακύρωση",
+        "ok": "Εντάξει",
+        "default_confirmation_title": "Είστε σίγουροι;",
+        "close": "κλείσε"
+      },
+      "image_cropper": { "crop": "Περικοπή" },
+      "more_info_control": {
+        "dismiss": "Κλείσιμο διαλόγου.",
+        "settings": "Ρυθμίσεις οντότητας",
+        "edit": "Επεξεργασία οντότητας",
+        "details": "Λεπτομέρειες",
+        "history": "Ιστορικό",
+        "last_changed": "Τελευταία αλλαγή",
+        "last_updated": "Τελευταία ενημέρωση",
+        "script": {
+          "last_action": "Τελευταία ενέργεια",
+          "last_triggered": "Τελευταία ενεργοποίηση"
+        },
+        "sun": {
+          "elevation": "Υψόμετρο",
+          "rising": "Ανατολή",
+          "setting": "Δύση"
+        },
+        "updater": { "title": "Οδηγίες Ενημέρωσης" },
+        "remote": { "activity": "Τρέχουσα δραστηριότητα" },
+        "restored": {
+          "not_provided": "Αυτή η οντότητα επί του παρόντος δεν είναι διαθέσιμη και είναι απομεινάρι από μια καταργημένη, τροποποιημένη ή δυσλειτουργική ενσωμάτωση ή συσκευή.",
+          "remove_intro": "Εάν η οντότητα δεν χρησιμοποιείται πλέον, μπορείτε να την καθαρίσετε αφαιρώντας την.",
+          "remove_action": "Αφαίρεση οντότητας",
+          "confirm_remove_title": "Θέλετε να αφαιρέσετε αυτή την οντότητα;",
+          "confirm_remove_text": "Είστε βέβαιοι πως θέλετε να καταργήσετε αυτή την οντότητα;"
+        },
+        "vacuum": {
+          "status": "Κατάσταση",
+          "commands": "Εντολές ηλεκτρικής σκούπας:",
+          "fan_speed": "Ταχύτητα ανεμιστήρα",
+          "start": "Έναρξη",
+          "pause": "Παύση",
+          "stop": "Στοπ",
+          "clean_spot": "Καθαρό σημείο",
+          "locate": "Εντοπισμός",
+          "return_home": "Επιστροφή στο σπίτι",
+          "start_pause": "Έναρξη/Παύση"
+        },
+        "person": { "create_zone": "Δημιουργία ζώνης από την τρέχουσα θέση" },
+        "cover": {
+          "open_cover": "Άνοιγμα",
+          "close_cover": "Κλείσιμο",
+          "open_tilt_cover": "Άνοιγμα καλύμματος",
+          "close_tile_cover": "Κλείσιμο καλύμματος",
+          "stop_cover": "Το κάλυμμα να παραμένει σταθερό"
+        }
+      },
+      "entity_registry": {
+        "settings": "Ρυθμίσεις",
+        "control": "Έλεγχος",
+        "related": "Σχετίζεται με",
+        "dismiss": "Απόρριψη",
+        "no_unique_id": "Αυτή η οντότητα (\" {entity_id} \") δεν έχει μοναδικό αναγνωριστικό, επομένως δεν είναι δυνατή η διαχείριση των ρυθμίσεών της από το περιβάλλον χρήστη. Δείτε το {faq_link} για περισσότερες λεπτομέρειες.",
+        "faq": "τεκμηρίωση",
+        "info_customize": "Μπορείτε να αντικαταστήσετε ορισμένα χαρακτηριστικά στην ενότητα {customize_link}.",
+        "customize_link": "προσαρμογές οντοτήτων",
+        "editor": {
+          "name": "Όνομα",
+          "icon": "Εικονίδιο",
+          "icon_error": "Το εικονίδιο πρέπει να είναι στη μορφή 'πρόθεμα:όνομα_εικόνας', για παράδειγμα: 'mdi:home'",
+          "entity_id": "Αναγνωριστικό οντότητας",
+          "unavailable": "Αυτή η οντότητα δεν είναι προς το παρόν διαθέσιμη.",
+          "enabled_label": "Ενεργοποίηση οντότητας",
+          "enabled_cause": "Απενεργοποιήθηκε από  {cause}.",
+          "device_disabled": "Η συσκευή αυτής της οντότητας είναι απενεργοποιημένη.",
+          "open_device_settings": "Άνοιγμα ρυθμίσεων συσκευής",
+          "enabled_description": "Οι απενεργοποιημένες οντότητες δεν θα προστεθούν στον Home Assistant.",
+          "enabled_delay_confirm": "Τα ενεργοποιημένα στοιχεία θα προστεθούν στο Home Assistant σε {delay} δευτερόλεπτα",
+          "enabled_restart_confirm": "Επανεκκινήστε το Home Assistant για να ολοκληρώσετε την ενεργοποίηση των στοιχείων",
+          "delete": "Διαγραφή",
+          "confirm_delete": "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν την καταχώριση;",
+          "update": "Ενημέρωση",
+          "note": "Σημείωση: Αυτό μπορεί να μην λειτουργεί ακόμη με όλες τις ενσωματώσεις.",
+          "advanced": "Ρυθμίσεις για προχωρημένους",
+          "area": "Ορισμός μόνο περιοχής οντότητας",
+          "area_note": "Από προεπιλογή, οι οντότητες μιας συσκευής βρίσκονται στην ίδια περιοχή με τη συσκευή. Εάν αλλάξετε την περιοχή αυτής της οντότητας, δεν θα ακολουθεί πλέον την περιοχή της συσκευής.",
+          "follow_device_area": "Παρακολούθηση της περιοχής συσκευής",
+          "change_device_area": "Αλλαγή περιοχής συσκευής"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "Η ενσωμάτωση {platform} δεν έχει φορτωθεί. Προσθέστε το στη διαμόρφωσή σας είτε προσθέτοντας 'default_config:' ή '' {platform} : ''.",
+        "yaml_not_editable": "Δεν είναι δυνατή η επεξεργασία των ρυθμίσεων αυτής της οντότητας από το περιβάλλον χρήστη. Μόνο οντότητες που έχουν δημιουργηθεί από το περιβάλλον χρήστη μπορούν να διαμορφωθούν από το περιβάλλον χρήστη.",
+        "required_error_msg": "Αυτό το πεδίο είναι υποχρεωτικό",
+        "generic": { "name": "Όνομα", "icon": "Εικονίδιο" },
+        "input_datetime": {
+          "date": "Ημερομηνία",
+          "time": "Ώρα",
+          "datetime": "Ημερομηνία και ώρα",
+          "mode": "Τι θέλετε να εισαγάγετε"
+        },
+        "input_text": {
+          "min": "Ελάχιστο μήκος",
+          "max": "Μέγιστο μήκος",
+          "mode": "Λειτουργία προβολής",
+          "text": "Κείμενο",
+          "password": "Κωδικός",
+          "pattern": "Μοτίβο Regex για επικύρωση από την πλευρά του πελάτη"
+        },
+        "input_number": {
+          "min": "Ελάχιστη τιμή",
+          "max": "Μέγιστη τιμή",
+          "mode": "Λειτουργία εμφάνισης",
+          "box": "Πεδίο εισαγωγής",
+          "slider": "Ολισθητής",
+          "step": "Μέγεθος βήματος",
+          "unit_of_measurement": "Μονάδα μέτρησης"
+        },
+        "input_select": {
+          "options": "Επιλογές",
+          "add_option": "Προσθήκη επιλογής",
+          "no_options": "Δεν υπάρχουν επιλογές ακόμα.",
+          "add": "Προσθήκη"
+        },
+        "counter": {
+          "minimum": "Ελάχιστη τιμή",
+          "maximum": "Μέγιστη τιμή",
+          "initial": "Αρχική τιμή",
+          "restore": "Επαναφορά της τελευταίας γνωστής τιμής κατά την εκκίνηση του Home Assistant",
+          "step": "Μέγεθος βήματος"
+        },
+        "timer": { "duration": "Διάρκεια" }
+      },
+      "options_flow": {
+        "form": { "header": "Επιλογές" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "Οι επιλογές αποθηκεύτηκαν με επιτυχία." }
+      },
+      "config_entry_system_options": {
+        "title": "Επιλογές συστήματος για το {integration}",
+        "enable_new_entities_label": "Ενεργοποίηση οντοτήτων που προστέθηκαν πρόσφατα.",
+        "enable_new_entities_description": "Αν απενεργοποιηθεί, οι πρόσφατα ανακαλυφθείσες οντότητες για το {integration} δε θα προστεθούν αυτόματα στον Home Assistant.",
+        "enable_polling_label": "Enable polling for updates.",
+        "enable_polling_description": "If Home Assistant should automatically poll {integration} entities for updates.",
+        "restart_home_assistant": "You need to restart Home Assistant for your changes to take effect.",
+        "update": "Ενημέρωση"
+      },
+      "zha_reconfigure_device": {
+        "heading": "Reconfiguring device",
+        "configuring_alt": "Configuring",
+        "introduction": "Reconfigure a device on your Zigbee network. Use this feature if your device is not functioning correctly.",
+        "battery_device_warning": "You will need to wake battery powered devices before starting the reconfiguration process. Refer to your device's manual for instructions on how to wake the device.",
+        "run_in_background": "You can close this dialog and the reconfiguration will continue in the background.",
+        "start_reconfiguration": "Start Reconfiguration",
+        "in_progress": "The device is being reconfigured. This may take some time.",
+        "configuration_failed": "The device reconfiguration failed. Additional information may be available in the logs.",
+        "configuration_complete": "Device reconfiguration complete.",
+        "button_show": "Show Details",
+        "button_hide": "Hide Details",
+        "cluster_header": "Cluster",
+        "bind_header": "Binding",
+        "reporting_header": "Reporting",
+        "attribute": "Attribute",
+        "min_max_change": "min/max/change"
+      },
+      "zha_device_info": {
+        "manuf": "από τον {manufacturer}",
+        "no_area": "Καμία περιοχή",
+        "device_signature": "Υπογραφή συσκευής Zigbee",
+        "device_children": "Παιδιά συσκευής Zigbee",
+        "buttons": {
+          "add": "Προσθήκη συσκευών μέσω αυτής της συσκευής",
+          "remove": "Κατάργηση συσκευής",
+          "clusters": "Διαχείριση συμπλεγμάτων",
+          "reconfigure": "Ρυθμίστε Ξανά Τη Συσκευή",
+          "zigbee_information": "Υπογραφή συσκευής Zigbee",
+          "device_children": "Προβολή παιδιών",
+          "view_in_visualization": "Προβολή στην Απεικόνιση"
+        },
+        "services": {
+          "reconfigure": "Ρυθμίστε ξανά τη συσκευή ZHA (θεραπεία συσκευής). Χρησιμοποιήστε αυτήν την επιλογή εάν αντιμετωπίζετε προβλήματα με τη συσκευή. Εάν η συγκεκριμένη συσκευή τροφοδοτείται από μπαταρία παρακαλώ βεβαιωθείτε ότι είναι ενεργοποιημένη και δέχεται εντολές όταν χρησιμοποιείτε αυτή την υπηρεσία.",
+          "updateDeviceName": "Ορίστε ένα προσαρμοσμένο όνομα γι αυτήν τη συσκευή στο μητρώο συσκευών.",
+          "remove": "Καταργήστε μια συσκευή από το δίκτυο Zigbee.",
+          "zigbee_information": "Δείτε τις πληροφορίες Zigbee για τη συσκευή."
+        },
+        "confirmations": {
+          "remove": "Είστε βέβαιοι ότι θέλετε να καταργήσετε τη συσκευή;"
+        },
+        "quirk": "Ιδιοτροπία",
+        "last_seen": "Εθεάθη τελευταία",
+        "power_source": "Πηγή ενέργειας",
+        "unknown": "Άγνωστη",
+        "zha_device_card": {
+          "device_name_placeholder": "Αλλαγή ονόματος συσκευής"
+        }
+      },
+      "domain_toggler": {
+        "title": "Εναλλαγή τομέων",
+        "reset_entities": "Επαναφορά οντοτήτων"
+      },
+      "mqtt_device_debug_info": {
+        "title": "Πληροφορίες εντοπισμού σφαλμάτων {device}",
+        "deserialize": "Προσπάθεια ανάλυσης μηνυμάτων MQTT ως JSON",
+        "entities": "Οντότητες",
+        "no_entities": "Δεν υπάρχουν οντότητες",
+        "no_triggers": "Δεν υπάρχουν εναύσματα",
+        "payload_display": "Εμφάνιση ωφέλιμου φορτίου",
+        "recent_messages": "{n} πιο πρόσφατα ληφθέντα μηνύματα",
+        "show_as_yaml": "Εμφάνιση ως YAML",
+        "triggers": "Εναύσματα"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\n  one {δευτερόλεπτο}\n  other {δευτερόλεπτα}\n}",
+      "minute": "{count} {count, plural,\n  one {λεπτό}\n  other {λεπτά}\n}",
+      "hour": "{count} {count, plural,\n  one {ώρα}\n  other {ώρες}\n}",
+      "day": "{count} {count, plural,\n  one {μέρα}\n  other {μέρες}\n}",
+      "week": "{count} {count, plural,\n  one {εβδομάδα}\n  other {εβδομάδες}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "Δεν παρέχεται τύπος.",
+        "error_detected": "Εντοπίστηκαν σφάλματα ρύθμισης παραμέτρων",
+        "editor_not_available": "Δεν διατίθεται οπτικός επεξεργαστής για τον τύπο \" {type} \".",
+        "editor_not_supported": "Ο οπτικός επεξεργαστής δεν υποστηρίζεται για αυτήν τη διαμόρφωση",
+        "edit_in_yaml_supported": "Μπορείτε ακόμα να επεξεργαστείτε τη διαμόρφωσή σας στο YAML.",
+        "key_missing": "Λείπει το απαιτούμενο κλειδί \"{key}\".",
+        "key_not_expected": "Το κλειδί \"{key}\" δεν αναμένεται ή δεν υποστηρίζεται από το οπτικό πρόγραμμα επεξεργασίας.",
+        "key_wrong_type": "Η παρεχόμενη τιμή για το \"{key}\" δεν υποστηρίζεται από το οπτικό πρόγραμμα επεξεργασίας. Υποστηρίζουμε ({type_correct}) αλλά λάβαμε ({type_wrong}).",
+        "no_template_editor_support": "Τα πρότυπα δεν υποστηρίζονται στο οπτικό πρόγραμμα επεξεργασίας"
+      },
+      "supervisor": {
+        "title": "Δεν ήταν δυνατή η φόρτωση του πίνακα Supervisor!",
+        "wait": "If you just started, make sure you have given the Supervisor enough time to start.",
+        "ask": "Ask for help",
+        "reboot": "Δοκιμάστε μια επανεκκίνηση του διακομιστή",
+        "observer": "Check the Observer",
+        "system_health": "Check System Health"
+      }
+    },
+    "login-form": {
+      "password": "Κωδικός",
+      "remember": "Να θυμάμαι",
+      "log_in": "Σύνδεση"
+    },
+    "notification_drawer": {
+      "click_to_configure": "Πατήστε το κουμπί για να διαμορφώσετε το {entity}",
+      "empty": "Καμία ειδοποίηση",
+      "title": "Ειδοποιήσεις",
+      "close": "Κλείστε",
+      "dismiss_all": "Απόρριψη όλων"
+    },
+    "notification_toast": {
+      "service_call_failed": "Απέτυχε η κλήση στην υπηρεσία {service}.",
+      "connection_lost": "Η σύνδεση χάθηκε. Επανασύνδεση…",
+      "started": "Το Home Assistant έχει ξεκινήσει!",
+      "starting": "Το Home Assistant ξεκινά, ενδέχεται να μην είναι ακόμη διαθέσιμα όλα.",
+      "wrapping_up_startup": "Ολοκληρώνοντας την εκκίνηση, δεν θα είναι όλα διαθέσιμα μέχρι να ολοκληρωθεί.",
+      "integration_starting": "Starting {integration}, not everything will be available until it is finished.",
+      "triggered": "Ενεργοποιήθηκε το {name}",
+      "dismiss": "Απόρριψη"
+    },
+    "sidebar": {
+      "external_app_configuration": "Διαμόρφωση Εφαρμογής",
+      "sidebar_toggle": "Εναλλαγή πλαϊνής μπάρας",
+      "done": "Ολοκληρώθηκε"
+    },
+    "panel": {
+      "error": {
+        "go_back": "Πίσω",
+        "supervisor": {
+          "ask": "Ζητήσετε βοήθεια",
+          "observer": "Έλεγχος του Παρατηρητή",
+          "reboot": "Δοκιμάστε μια επανεκκίνηση του διακομιστή",
+          "system_health": "Έλεγχος υγείας συστήματος",
+          "title": "Δεν ήταν δυνατή η φόρτωση του πίνακα Supervisor!",
+          "wait": "Εάν μόλις ξεκινήσατε, βεβαιωθείτε ότι έχετε δώσει στον Supervisor αρκετό χρόνο για να ξεκινήσει."
+        }
+      },
+      "history": {
+        "ranges": {
+          "last_week": "Προηγούμενη εβδομάδα",
+          "this_week": "Αυτή την εβδομάδα",
+          "today": "Σήμερα",
+          "yesterday": "Εχθές"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "Προηγούμενη εβδομάδα",
+          "this_week": "Αυτή την εβδομάδα",
+          "today": "Σήμερα",
+          "yesterday": "Εχθές"
+        }
+      }
+    }
+  }
+}

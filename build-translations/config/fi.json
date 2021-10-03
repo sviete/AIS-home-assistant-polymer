@@ -1,0 +1,1930 @@
+{
+  "ui": {
+    "panel": {
+      "config": {
+        "header": "Säädä Home Assistantia",
+        "introduction": "Täällä voit säätää Home Assistanttia ja sen komponentteja. Huomioithan, ettei kaikkea voi vielä säätää käyttöliittymän kautta, mutta teemme jatkuvasti töitä sen mahdollistamiseksi.",
+        "advanced_mode": {
+          "hint_enable": "Puuttuvatko asetusvaihtoehdot? Ota edistynyt tila käyttöön",
+          "link_profile_page": "profiilisivusi"
+        },
+        "common": {
+          "editor": {
+            "confirm_unsaved": "Sinulla on tallentamattomia muutoksia. Haluatko varmasti poistua?"
+          }
+        },
+        "areas": {
+          "caption": "Alueet",
+          "description": "Hallinnoi kotisi alueita",
+          "data_table": {
+            "area": "Alue",
+            "devices": "Laitteet",
+            "entities": "Kohteet"
+          },
+          "picker": {
+            "header": "Alueet",
+            "introduction": "Alueita käytetään laitteiden järjestämiseen. Näitä tietoja käytetään Home Assistantissa käyttöliittymän ja käyttöoikeuksien järjestämiseen sekä integroinnin muihin järjestelmiin.",
+            "introduction2": "Voit sijoittaa laitteita alueelle siirtymällä alla olevan linkin avulla integraatiot-sivulle ja sitten napauttamalla määritettyyn integraatioon, jotta pääset laitteet -kortteihin.",
+            "integrations_page": "Integraatiot",
+            "no_areas": "Et ole vielä luonut alueita!",
+            "create_area": "Luo alue"
+          },
+          "editor": {
+            "default_name": "Uusi alue",
+            "delete": "Poista",
+            "update": "Päivitä",
+            "create": "Luo",
+            "name": "Nimi",
+            "name_required": "Nimi on pakollinen",
+            "area_id": "Alueen tunnus",
+            "unknown_error": "Tuntematon virhe",
+            "linked_entities_caption": "Kohteet",
+            "no_linked_entities": "There are no entities linked to this area."
+          },
+          "delete": {
+            "confirmation_title": "Haluatko varmasti poistaa tämän alueen?",
+            "confirmation_text": "Tälle alueelle kuuluvien laitteiden osoitus poistetaan."
+          }
+        },
+        "tag": {
+          "caption": "Tunnisteet",
+          "description": "Hallitse tunnisteita",
+          "learn_more": "Lisätietoja tunnisteista",
+          "no_tags": "Ei tunnisteita",
+          "add_tag": "Lisää tunniste",
+          "write": "Kirjoita",
+          "edit": "Muokkaa",
+          "never_scanned": "Ei koskaan skannattu",
+          "create_automation": "Automaation luominen tunnisteella",
+          "confirm_remove_title": "Poista tägi?",
+          "confirm_remove": "Are you sure you want to remove tag {tag}?",
+          "automation_title": "Tunniste {name} skannataan",
+          "headers": { "name": "Nimi", "last_scanned": "Viimeksi skannattu" },
+          "detail": {
+            "new_tag": "Uusi tunniste",
+            "name": "Nimi",
+            "description": "Kuvaus",
+            "tag_id": "Tägin ID",
+            "tag_id_placeholder": "Luodaan automaattisesti, kun se jätetään tyhjäksi",
+            "delete": "Poista",
+            "update": "Päivitä",
+            "create": "Luo",
+            "create_and_write": "Luo ja kirjoita",
+            "usage": "Tunniste voi käynnistää automaation skannattaessa; voit käyttää NFC-tunnisteita, QR-koodeja tai mitä tahansa muita tunnisteita. Kirjoitta tämä tunnisteen ohjelmoitavaan NFC-tunnisteeseen {companion_link} tai luo QR-koodin alla.",
+            "companion_apps": "oheissovelluksillamme"
+          }
+        },
+        "energy": {
+          "caption": "Energy",
+          "description": "Monitor your energy production and consumption",
+          "grid": {
+            "title": "Electricity grid",
+            "sub": "Configure the amount of energy that you consume from the grid and, if you produce energy, give back to the grid. This allows Home Assistant to track your whole home energy usage.",
+            "learn_more": "More information on how to get started.",
+            "flow_dialog": {
+              "from": {
+                "header": "Configure grid consumption",
+                "paragraph": "Grid consumption is the energy that flows from the energy grid to your home.",
+                "energy_stat": "Consumed Energy (kWh)",
+                "cost_para": "Select how Home Assistant should keep track of the costs of the consumed energy.",
+                "no_cost": "Do not track costs",
+                "cost_stat": "Use an entity tracking the total costs",
+                "cost_stat_input": "Total Costs Entity",
+                "cost_entity": "Use an entity with current price",
+                "cost_entity_input": "Entity with the current price",
+                "cost_number": "Use a static price",
+                "cost_number_input": "Price per kWh",
+                "cost_number_suffix": "{currency}/kWh"
+              },
+              "to": {
+                "header": "Configure grid production",
+                "paragraph": "Grid production is the energy that flows from your solar panels to the grid.",
+                "energy_stat": "Energy returned to the grid (kWh)",
+                "cost_para": "Do you get money back when you return energy to the grid?",
+                "no_cost": "I do not get money back",
+                "cost_stat": "Use an entity tracking the total recieved money",
+                "cost_stat_input": "Total Compensation Entity",
+                "cost_entity": "Use an entity with current rate",
+                "cost_entity_input": "Entity with the current rate",
+                "cost_number": "Use a static rate",
+                "cost_number_input": "Rate per kWh",
+                "cost_number_suffix": "{currency}/kWh"
+              }
+            }
+          },
+          "solar": {
+            "title": "Solar Panels",
+            "sub": "Let Home Assistant monitor your solar panels and give you insight on their performance.",
+            "learn_more": "More information on how to get started.",
+            "stat_production": "Your solar energy production",
+            "stat_return_to_grid": "Solar energy returned to the grid",
+            "stat_predicted_production": "Prediction of your solar energy production"
+          },
+          "device_consumption": {
+            "title": "Individual devices",
+            "sub": "Tracking the energy usage of individual devices allows Home Assistant to break down your energy usage by device.",
+            "learn_more": "More information on how to get started.",
+            "add_stat": "Pick entity to track energy of",
+            "selected_stat": "Tracking energy for",
+            "dialog": {
+              "selected_stat_intro": "Select the entity that represents the device energy usage."
+            }
+          }
+        },
+        "helpers": {
+          "caption": "Auttajat",
+          "description": "Elementit, jotka voivat auttaa rakentamaan automaatioita.",
+          "types": {
+            "input_text": "Teksti",
+            "input_number": "Numero",
+            "input_select": "Alasvetovalikko",
+            "input_boolean": "Kytkin",
+            "input_datetime": "Päivämäärä ja/tai kellonaika",
+            "counter": "Laskuri",
+            "timer": "Ajastin"
+          },
+          "picker": {
+            "headers": {
+              "name": "Nimi",
+              "entity_id": "Kohde ID",
+              "type": "Tyyppi",
+              "editable": "Muokattavissa"
+            },
+            "add_helper": "Lisää auttaja",
+            "no_helpers": "Näyttää siltä, että sinulla ei ole vielä avustajia!"
+          },
+          "dialog": {
+            "create": "Luo",
+            "add_helper": "Lisää auttaja",
+            "add_platform": "Lisää {platform}"
+          }
+        },
+        "core": {
+          "caption": "Yleinen",
+          "description": "Muuta Home Assistantin yleisiä asetuksiasi",
+          "section": {
+            "core": {
+              "header": "Yleiset asetukset",
+              "introduction": "Tiedämme, että asetusten muuttaminen saattaa olla työlästä. Täältä löydät työkaluja, jotka toivottavasti helpottavat elämääsi.",
+              "core_config": {
+                "edit_requires_storage": "Editori on poistettu käytöstä, koska asetuksia on annettu configuration.yaml:ssa.",
+                "location_name": "Home Assistant -järjestelmäsi nimi",
+                "latitude": "Leveysaste",
+                "longitude": "Pituusaste",
+                "elevation": "Korkeus merenpinnasta",
+                "elevation_meters": "metriä",
+                "time_zone": "Aikavyöhyke",
+                "unit_system": "Yksikköjärjestelmä",
+                "unit_system_imperial": "Brittiläinen yksikköjärjestelmä",
+                "unit_system_metric": "Kansainvälinen yksikköjärjestelmä",
+                "imperial_example": "Fahrenheit, paunaa",
+                "metric_example": "Celsius, kilogrammat",
+                "find_currency_value": "Find your value",
+                "save_button": "Tallenna",
+                "external_url": "Ulkoinen URL-osoite",
+                "internal_url": "Sisäinen URL-osoite",
+                "currency": "Currency"
+              },
+              "analytics": {
+                "preference": {
+                  "diagnostics": { "title": "Diagnostiikka" },
+                  "statistics": { "title": "Käyttötilastot" },
+                  "usage_supervisor": {
+                    "description": "Nimet, versiot ja ominaisuudet."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "info": {
+          "caption": "Tiedot",
+          "copy_raw": "Raaka teksti",
+          "copy_github": "GitHubille",
+          "description": "Tietoja Home Assistant -asennuksesta",
+          "home_assistant_logo": "Home Assistant-logo",
+          "path_configuration": "Polku configuration.yaml-tiedostoon: {path}",
+          "developed_by": "Kehittänyt joukko mahtavia ihmisiä.",
+          "license": "Julkaistu Apache 2.0-lisenssillä",
+          "source": "Lähde:",
+          "server": "palvelin",
+          "frontend": "frontend-ui",
+          "built_using": "Rakennettu käyttäen",
+          "icons_by": "Kuvakkeet luonut",
+          "frontend_version": "Käyttöliittymän versio: {version} - {type}",
+          "custom_uis": "Mukautetut käyttöliittymät:",
+          "system_health_error": "Järjestelmän kunto-komponenttia ei ole ladattu. Lisää 'system_health:' kohteeseen configuration.yaml",
+          "integrations": "Integraatiot",
+          "documentation": "Dokumentointi",
+          "issues": "Ongelmat",
+          "setup_time": "Asennusaika",
+          "system_health": { "manage": "Hallitse", "more_info": "lisätietoja" }
+        },
+        "logs": {
+          "caption": "Lokit",
+          "description": "Tarkastele Home Assistant -lokeja",
+          "details": "Lokitiedot ( {level} )",
+          "load_full_log": "Lataa Home Assistantin koko loki",
+          "loading_log": "Ladataan virhelokia...",
+          "no_errors": "Virheitä ei ole ilmoitettu.",
+          "no_issues": "Ei uusia aiheita!",
+          "clear": "Tyhjennä",
+          "refresh": "Päivitä",
+          "multiple_messages": "Viesti esiintyi ensimmäisen kerran {time} ja tämän jälkeen {counter} kertaa",
+          "level": {
+            "critical": "KRIITTINEN",
+            "error": "VIRHE",
+            "warning": "VAROITUS",
+            "info": "TIEDOT",
+            "debug": "DEBUG"
+          },
+          "custom_integration": "custom integration",
+          "error_from_custom_integration": "This error originated from a custom integration."
+        },
+        "lovelace": {
+          "caption": "Lovelace-kojelaudat",
+          "description": "Määritä Lovelace-kojelaudat",
+          "dashboards": {
+            "default_dashboard": "Tämä on oletuskojelauta",
+            "caption": "Kojelaudat",
+            "conf_mode": {
+              "yaml": "YAML tiedosto",
+              "storage": "Käyttöliittymäohjattu"
+            },
+            "picker": {
+              "headers": {
+                "title": "Otsikko",
+                "conf_mode": "Asetusmenetelmä",
+                "default": "Oletus",
+                "require_admin": "Vain järjestelmänvalvoja",
+                "sidebar": "Näytä sivupalkissa",
+                "filename": "Tiedoston nimi"
+              },
+              "open": "Avaa",
+              "add_dashboard": "Lisää kojelauta"
+            },
+            "confirm_delete": "Haluatko varmasti poistaa tämän kojelaudan?",
+            "cant_edit_yaml": "YAML-tiedostossa määritettyjä kojelautoja ei voi muokata käyttöliittymästä. Muuta niitä tiedostossa configuration.yaml.",
+            "cant_edit_default": "Lovelace-koontinäyttöä ei voi muokata käyttöliittymästä. Voit piilottaa sen määrittämällä toisen koontinäytön oletukseksi.",
+            "detail": {
+              "edit_dashboard": "Muokkaa kojelautaa",
+              "new_dashboard": "Lisää uusi kojelauta",
+              "dismiss": "Sulje",
+              "show_sidebar": "Näytä sivupalkissa",
+              "icon": "Kuvake",
+              "title": "Otsikko",
+              "title_required": "Otsikko vaaditaan.",
+              "url": "URL",
+              "url_error_msg": "URL-osoitteen tulee sisältää - eikä se saa sisältää välilyöntejä tai erikoismerkkejä, paitsi _ ja -",
+              "require_admin": "Vain järjestelmänvalvoja",
+              "delete": "Poista",
+              "update": "Päivitä",
+              "create": "Luo",
+              "set_default": "Aseta oletukseksi tässä laitteessa",
+              "remove_default": "Poista oletuksena tässä laitteessa"
+            }
+          },
+          "resources": {
+            "caption": "Resurssit",
+            "types": {
+              "css": "Tyylitiedosto",
+              "html": "HTML (vanhentunut)",
+              "js": "JavaScript-tiedosto (vanhentunut)",
+              "module": "JavaScript-moduuli"
+            },
+            "picker": {
+              "headers": { "url": "URL", "type": "Tyyppi" },
+              "no_resources": "Ei resursseja",
+              "add_resource": "Lisää resurssi"
+            },
+            "confirm_delete": "Haluatko varmasti poistaa tämän resurssin?",
+            "refresh_header": "Haluatko päivittää?",
+            "refresh_body": "Sinun on päivitettävä sivu suorittaaksesi poisto loppuun. Haluatko päivittää nyt?",
+            "cant_edit_yaml": "Käytät Lovelacea YAML-tilassa, joten et voi hallita resursseja käyttöliittymän kautta. Hallitse niitä tiedostossa configuration.yaml.",
+            "detail": {
+              "new_resource": "Lisää uusi resurssi",
+              "dismiss": "Sulje",
+              "warning_header": "Ole varovainen!",
+              "warning_text": "Resurssien lisääminen voi olla vaarallista. Varmista, että tiedät resurssin lähteen ja luotat niihin. Huonot resurssit voivat vahingoittaa järjestelmääsi vakavasti.",
+              "url": "Url",
+              "url_error_msg": "URL on pakollinen kenttä",
+              "type": "Resurssin tyyppi",
+              "delete": "Poista",
+              "update": "Päivitä",
+              "create": "Luo"
+            }
+          }
+        },
+        "server_control": {
+          "caption": "Palvelimen hallinta",
+          "description": "Uudelleenkäynnistä ja sammuta Home Assistant -palvelin",
+          "section": {
+            "validation": {
+              "heading": "Asetusten tarkistus",
+              "introduction": "Tarkista asetukset, jos olet äskettäin tehnyt joitain muutoksia asetuksiin ja haluat varmistaa, että se on kelvollinen",
+              "check_config": "Tarkista asetukset",
+              "valid": "Asetukset kunnossa!",
+              "invalid": "Asetukset ei kelpaa"
+            },
+            "reloading": {
+              "heading": "Asetusten uudelleenlataus",
+              "introduction": "Jotkut Home Assistantin osat voidaan ladata uudelleen ilman, että tarvitaan uudelleenkäynnistystä. Painamalla uudelleenlatausta yaml-tiedosto luetaan uudelleen.",
+              "reload": "Lataa uudelleen {domain}",
+              "core": "Lataa ydin uudelleen",
+              "group": "Lataa ryhmät uudelleen",
+              "automation": "Lataa automaatiot uudelleen",
+              "script": "Lataa skriptit uudelleen",
+              "scene": "Lataa tilanteet uudelleen",
+              "person": "Lataa henkilöt uudelleen",
+              "zone": "Lataa alueet uudelleen",
+              "input_boolean": "Lataa booleanit uudelleen",
+              "input_text": "Lataa syöttötekstit uudelleen",
+              "input_number": "Lataa syöttönumerot uudelleen",
+              "input_datetime": "Lataa syöttöpäivämäärät uudelleen",
+              "input_select": "Lataa valinnat uudelleen",
+              "template": "Malli entiteetit",
+              "universal": "Lataa universaali mediasoittimen entiteetit uudelleen",
+              "rest": "Uudelleenlataa rest-entiteetit ja ilmoita palveluiden kuuntelijoille",
+              "command_line": "Lataa komentorivientiteetiteetit uudelleen",
+              "filter": "Lataa suodatinentiteetiteetiteetit uudelleen",
+              "statistics": "Lataa tilastoentiteetit uudelleen",
+              "generic": "Lataa yleiset IP-kamera-entiteetit uudelleen",
+              "generic_thermostat": "Lataa yleiset termostaatit uudelleen",
+              "homekit": "Lataa HomeKit uudelleen",
+              "min_max": "Lataa min/max-kohteet uudelleen",
+              "history_stats": "Lataa historiatilastot-entiteetit uudelleen",
+              "trend": "Lataa trendientiteetiteetit uudelleen",
+              "ping": "Lataa ping-binaarianturin entiteetit uudelleen",
+              "filesize": "Lataa tiedostokokokohteet uudelleen",
+              "telegram": "Päivitä Telegram-ilmoituspalvelut",
+              "smtp": "Lataa smtp-ilmoituspalvelut uudelleen",
+              "mqtt": "Lataa mqtt-entiteetit uudelleen",
+              "rpi_gpio": "Lataa Raspberry Pi GPIO -entiteetit uudelleen"
+            },
+            "server_management": {
+              "heading": "Palvelimen hallinta",
+              "introduction": "Hallitse Home Assistantia suoraan käyttöliittymästä.",
+              "restart": "Käynnistä uudelleen",
+              "confirm_restart": "Haluatko varmasti käynnistää Home Assistantin uudelleen?",
+              "stop": "Pysäytä",
+              "confirm_stop": "Haluatko varmasti pysäyttää Home Assistantin?"
+            }
+          }
+        },
+        "customize": {
+          "caption": "Muokkaukset",
+          "description": "Muokkaa laitteita",
+          "picker": {
+            "header": "Räätälöinti",
+            "introduction": "Muotoile ominaisuuksia olemuskohtaisesti. Lisäykset/muokkaukset tulevat välittömästi voimaan. Poistetut mukautukset tulevat voimaan, kun olemus päivitetään.",
+            "documentation": "Mukautusten dokumentaatio"
+          },
+          "warning": {
+            "include_sentence": "Näyttää siltä, että configuration.yaml ei oikein",
+            "include_link": "sisällytä customize.yaml",
+            "not_applied": "Täällä tehdyt muutokset on kirjoitettu siihen, mutta niitä ei sovelleta kokoonpanon uudelleenlatauksen jälkeen, ellei niitä oteta käyttöön."
+          },
+          "attributes_customize": "Seuraavat määritteet on jo määritetty customize.yaml-tiedostossa.",
+          "attributes_outside": "Seuraavat attribuutit on räätälöity customize.yaml-tiedoston ulkopuolella.",
+          "different_include": "Mahdollisesti verkkotunnuksen, glob-kaavan tai muun sisällön kautta.",
+          "attributes_set": "Seuraavat kohteet määritteet asetetaan ohjelmallisesti.",
+          "attributes_override": "Voit yliajaa ne, jos haluat.",
+          "attributes_not_set": "Seuraavia määritteitä ei määritetty. Aseta ne, jos haluat.",
+          "pick_attribute": "Valitse yliajettava määrite"
+        },
+        "automation": {
+          "caption": "Automaatiot",
+          "description": "Luo ja muokkaa automaatioita",
+          "picker": {
+            "header": "Automaatioeditori",
+            "introduction": "Automaatioeditorissa voit luoda ja muokata automaatioita. Kannattaa lukea ohjeet, jotta osaat varmasti kirjoittaa automaatiot oikein.",
+            "learn_more": "Lisätietoja automatisoinneista",
+            "pick_automation": "Valitse automaatio, jota haluat muokata",
+            "no_automations": "Ei muokattavia automaatioita",
+            "add_automation": "Lisää automaatio",
+            "only_editable": "Vain automaatiot tiedostossa automations.yaml ovat muokattavissa.",
+            "dev_only_editable": "Only automations that have a unique ID assigned are debuggable.",
+            "edit_automation": "Muokkaa automaatiota",
+            "dev_automation": "Debug automation",
+            "show_info_automation": "Näytä tietoja automaatiosta",
+            "delete_automation": "Poista automaatio",
+            "delete_confirm": "Haluatko varmasti poistaa tämän automaation?",
+            "duplicate_automation": "Kopioi automaatio",
+            "duplicate": "Kopioi",
+            "headers": { "name": "Nimi" }
+          },
+          "dialog_new": {
+            "header": "Luo uusi automaatio",
+            "how": "Miten haluat luoda uuden automaation?",
+            "blueprint": { "use_blueprint": "Käytä piirustusta" },
+            "thingtalk": {
+              "header": "Kuvaile automaatiota, jonka haluat luoda",
+              "intro": "Ja yritämme luoda sen sinulle. Esimerkki: Sammuta valot, kun lähden.",
+              "input_label": "Mitä tämän automaation pitäisi tehdä?",
+              "create": "Luo"
+            },
+            "start_empty": "Aloita tyhjästä automaatiosta"
+          },
+          "editor": {
+            "enable_disable": "Ota automaatio käyttöön tai poista se käytöstä",
+            "show_trace": "Show trace",
+            "introduction": "Käytä automaatioita herättääksesi kotisi eloon",
+            "default_name": "Uusi automaatio",
+            "load_error_not_editable": "Vain automaatiot tiedostossa automations.yaml ovat muokattavissa.",
+            "load_error_unknown": "Virhe ladatessa automaatiota ( {err_no} )",
+            "save": "Tallenna",
+            "unsaved_confirm": "Sinulla on tallentamattomia muutoksia. Haluatko varmasti poistua?",
+            "alias": "Nimi",
+            "move_up": "Siirrä ylöspäin",
+            "move_down": "Siirrä alaspäin",
+            "description": {
+              "label": "Kuvaus",
+              "placeholder": "Valinnainen kuvaus"
+            },
+            "blueprint": {
+              "header": "Piirustus",
+              "blueprint_to_use": "Käytettävä piirustus",
+              "no_blueprints": "Sinulla ei ole yhtään piirustusta",
+              "no_inputs": "Tällä piirustuksella ei ole syötteitä."
+            },
+            "modes": {
+              "label": "Tila",
+              "description": "Tila määrittää, mitä tapahtuu, kun automaatio käynnistyy, kun toiminnot ovat edelleen käynnissä edellisestä käynnistyksestä. Lisätietoja osoitteessa {documentation_link}.",
+              "documentation": "automaation dokumentaatio",
+              "single": "Yksittäinen (oletus)",
+              "restart": "Käynnistä uudelleen",
+              "queued": "Jonossa",
+              "parallel": "Rinnakkain"
+            },
+            "max": {
+              "queued": "Jonon pituus",
+              "parallel": "Rinnakkaisten ajojen enimmäismäärä"
+            },
+            "edit_yaml": "Muokkaa YAML-tiedostona",
+            "edit_ui": "Muokkaa käyttöliittymässä",
+            "copy_to_clipboard": "Kopioi leikepöydälle",
+            "triggers": {
+              "name": "Käynnistysehto",
+              "header": "Laukaisuehdot",
+              "introduction": "Laukaisuehdot määrittelevät, milloin automaatiota aletaan suorittaa. Samassa säännössä voi olla useita laukaisuehtoja. Kun laukaisuehto täyttyy, Home Assistant varmistaa ehdot. Jos ehdot täyttyvät, toiminto suoritetaan.",
+              "learn_more": "Lisätietoja triggereistä",
+              "add": "Laukaisuehto",
+              "id": "Trigger ID (used by the trigger condition)",
+              "duplicate": "Kopioi",
+              "delete": "Poista",
+              "delete_confirm": "Haluatko varmasti poistaa tämän?",
+              "unsupported_platform": "Alustaa {platform} ei tueta",
+              "type_select": "Laukaisimen tyyppi",
+              "type": {
+                "device": {
+                  "label": "Laite",
+                  "trigger": "Laukaisin",
+                  "extra_fields": {
+                    "above": "Yli",
+                    "below": "Alle",
+                    "for": "Kesto",
+                    "zone": "Zone"
+                  }
+                },
+                "event": {
+                  "label": "Tapahtuma",
+                  "event_type": "Tapahtuman tyyppi",
+                  "event_data": "Tapahtuman tietosisältö",
+                  "context_users": "Rajoita tapahtumiin, jotka ovat käynnistäneet",
+                  "context_user_picked": "Käyttäjän laukaisutapahtuma",
+                  "context_user_pick": "Valitse käyttäjä"
+                },
+                "geo_location": {
+                  "label": "Geolocation",
+                  "source": "Lähde",
+                  "zone": "Alue",
+                  "event": "Tapahtuma:",
+                  "enter": "Saapuminen alueelle",
+                  "leave": "Poistu"
+                },
+                "state": {
+                  "label": "Tila",
+                  "attribute": "Attribuutti (valinnainen)",
+                  "from": "Lähtötila",
+                  "for": "Viive",
+                  "to": "Kohdetila"
+                },
+                "homeassistant": {
+                  "label": "Home Assistant",
+                  "event": "Tapahtuma:",
+                  "start": "Käynnistys",
+                  "shutdown": "Sammutus"
+                },
+                "mqtt": {
+                  "label": "MQTT",
+                  "topic": "Aihe",
+                  "payload": "Tietosisältö (payload)"
+                },
+                "numeric_state": {
+                  "label": "Numeerinen tila",
+                  "above": "Yli",
+                  "below": "Alle",
+                  "value_template": "Arvomalli (template)"
+                },
+                "sun": {
+                  "label": "Aurinko",
+                  "event": "Tapahtuma:",
+                  "sunrise": "Auringonnousu",
+                  "sunset": "Auringonlasku",
+                  "offset": "Poikkeama (vapaaehtoinen)"
+                },
+                "tag": { "label": "Tägi" },
+                "template": {
+                  "label": "Malli (template)",
+                  "value_template": "Arvomalli (template)"
+                },
+                "time": {
+                  "type_value": "Kiinteä aika",
+                  "type_input": "Päivämäärä- ja aika-apurin arvo",
+                  "label": "Aika",
+                  "at": "Kellonaikana"
+                },
+                "time_pattern": {
+                  "label": "Aikakuvio",
+                  "hours": "Tuntia",
+                  "minutes": "Minuuttia",
+                  "seconds": "Sekuntia"
+                },
+                "webhook": {
+                  "label": "Webhook",
+                  "webhook_id": "Webhook-tunnus"
+                },
+                "zone": {
+                  "label": "Alue",
+                  "entity": "Kokonaisuus, jolla on sijainti",
+                  "zone": "Alue",
+                  "event": "Tapahtuma",
+                  "enter": "Saapuminen alueelle",
+                  "leave": "Poistuminen alueelta"
+                }
+              }
+            },
+            "conditions": {
+              "name": "Ehto",
+              "header": "Ehdot",
+              "introduction": "Ehdot ovat vapaaehtoinen osa automaatiosääntöä. Niillä voidaan estää toimintoa tapahtumasta, vaikka se olisi laukaistu. Ehdot näyttävät hyvin samanlaisilta kuin laukaisimet, mutta ne ovat eri asia. Laukaisimen tehtävä on tarkkailla järjestelmän tapahtumia. Ehto kuitenkin katsoo systeemin tilaa vain ja ainoastaan yhdellä hetkellä. Laukaisin voi esimerkiksi huomata, jos jokin vipu käännetään päälle. Ehto voi nähdä vain onko vipu päällä vai pois päältä.",
+              "learn_more": "Lisätietoja ehdoista",
+              "add": "Lisää ehto",
+              "duplicate": "Kopioi",
+              "delete": "Poista",
+              "delete_confirm": "Haluatko varmasti poistaa tämän?",
+              "unsupported_condition": "Ehtoa ei tueta: {condition}",
+              "type_select": "Ehdon tyyppi",
+              "type": {
+                "and": { "label": "Ja" },
+                "device": {
+                  "label": "Laite",
+                  "condition": "Ehto",
+                  "extra_fields": {
+                    "above": "Yli",
+                    "below": "Alle",
+                    "for": "Kesto",
+                    "hvac_mode": "HVAC-tila",
+                    "preset_mode": "Esiasetettu tila"
+                  }
+                },
+                "not": { "label": "Ei" },
+                "numeric_state": {
+                  "label": "Lukuarvo",
+                  "above": "Yli",
+                  "below": "Alle",
+                  "value_template": "Arvomalli, vapaahtoinen (template)"
+                },
+                "or": { "label": "Tai" },
+                "state": { "label": "Tila", "state": "Tila" },
+                "sun": {
+                  "label": "Aurinko",
+                  "before": "Ennen",
+                  "after": "Jälkeen",
+                  "before_offset": "Ennen auringonlaskua",
+                  "after_offset": "Auringonlaskun jälkeen",
+                  "sunrise": "Auringonnousu",
+                  "sunset": "Auringonlasku"
+                },
+                "template": {
+                  "label": "Malli (template)",
+                  "value_template": "Arvomalli (template)"
+                },
+                "time": {
+                  "type_value": "Kiinteä aika",
+                  "type_input": "Päivämäärä/aika avustimen arvo",
+                  "label": "Aika",
+                  "after": "Jälkeen",
+                  "before": "Ennen",
+                  "weekdays": {
+                    "mon": "Maanantai",
+                    "tue": "Tiistai",
+                    "wed": "Keskiviikko",
+                    "thu": "Torstai",
+                    "fri": "Perjantai",
+                    "sat": "Lauantai",
+                    "sun": "Sunnuntai"
+                  }
+                },
+                "trigger": {
+                  "label": "Trigger",
+                  "no_triggers": "No triggers available",
+                  "id": "Trigger ID"
+                },
+                "zone": {
+                  "label": "Alue",
+                  "entity": "Kokonaisuus, jolla on sijainti",
+                  "zone": "Alue"
+                }
+              }
+            },
+            "actions": {
+              "name": "Toiminta",
+              "header": "Toiminnot",
+              "introduction": "Home Assistant suorittaa toiminnot, kun automaatio laukaistaan.",
+              "learn_more": "Lisätietoja toiminnoista",
+              "add": "Lisää toiminto",
+              "duplicate": "Kopioi",
+              "delete": "Poista",
+              "delete_confirm": "Haluatko varmasti poistaa tämän?",
+              "unsupported_action": "Toimintoa {action} ei tueta",
+              "type_select": "Toiminnon tyyppi",
+              "type": {
+                "service": { "label": "Kutsu palvelua" },
+                "delay": { "label": "Viive", "delay": "Viive" },
+                "wait_template": {
+                  "label": "Odota",
+                  "wait_template": "Odotusmalli (template)",
+                  "timeout": "Aikakatkaisu",
+                  "continue_timeout": "Jatka odotusajan jälkeen"
+                },
+                "wait_for_trigger": {
+                  "label": "Odota laukaisinta",
+                  "timeout": "Odotusaika (valinnainen)",
+                  "continue_timeout": "Jatka odotusajan jälkeen"
+                },
+                "condition": { "label": "Ehto" },
+                "event": {
+                  "label": "Lähetä tapahtuma",
+                  "event": "Tapahtuma",
+                  "service_data": "Palvelun data"
+                },
+                "device_id": {
+                  "label": "Laite",
+                  "action": "Toiminta",
+                  "extra_fields": {
+                    "code": "Koodi",
+                    "message": "Viesti",
+                    "title": "Otsikko",
+                    "position": "Position",
+                    "mode": "Tila",
+                    "humidity": "Kosteus",
+                    "value": "Arvo",
+                    "brightness_pct": "Brightness",
+                    "flash": "Flash"
+                  }
+                },
+                "scene": { "label": "Aktivoi tilanne" },
+                "repeat": {
+                  "label": "Toista",
+                  "type_select": "Toistotyyppi",
+                  "type": {
+                    "count": { "label": "Laske" },
+                    "while": {
+                      "label": "Sillä aikaa",
+                      "conditions": "Sillä aikaa, kun ehdot"
+                    },
+                    "until": { "label": "Kunnes", "conditions": "Kunnes ehdot" }
+                  },
+                  "sequence": "Toiminnot"
+                },
+                "choose": {
+                  "label": "Valitse",
+                  "default": "Oletustoiminnot",
+                  "option": "Vaihtoehto {number}",
+                  "add_option": "Lisää vaihtoehto",
+                  "remove_option": "Poista vaihtoehto",
+                  "conditions": "Ehdot",
+                  "sequence": "Toiminnot"
+                }
+              }
+            }
+          },
+          "thingtalk": {
+            "create": "Luo automaatio",
+            "task_selection": {
+              "header": "Luo uusi automaatio",
+              "introduction": "Kirjoita alle, mitä tämän automaation pitäisi tehdä, ja yritämme muuntaa sen Home Assistant -automaatioksi.",
+              "language_note": "Huomaa: Toistaiseksi vain englantia tuetaan.",
+              "for_example": "Esimerkiksi:",
+              "error_empty": "Kirjoita komento tai napauta ohita.",
+              "error_unsupported": "Emme voineet luoda automaatiota sille (vielä?)."
+            },
+            "link_devices": {
+              "header": "Upeaa! Nyt meidän on linkitettävä joitakin laitteita",
+              "ambiguous_entities": "One or more devices have more than one matching entity, please pick the one you want to use.",
+              "unknown_placeholder": "Tuntematon paikkamerkki"
+            }
+          }
+        },
+        "blueprint": {
+          "caption": "Piirustukset",
+          "description": "Hallitse piirustuksia",
+          "overview": {
+            "header": "Piirustusten muokkain",
+            "introduction": "The blueprint configuration allows you to import and manage your blueprints.",
+            "learn_more": "Lisätietoja piirustusten käytöstä",
+            "headers": {
+              "name": "Nimi",
+              "domain": "Toimialue",
+              "file_name": "Tiedoston nimi"
+            },
+            "confirm_delete_header": "Poistetaanko tämä piirustus?",
+            "confirm_delete_text": "Haluatko varmasti poistaa tämän piirustuksen?",
+            "add_blueprint": "Tuo piirustus",
+            "use_blueprint": "Luo automaatio",
+            "delete_blueprint": "Poista piirustus",
+            "share_blueprint": "Jaa piirustus",
+            "share_blueprint_no_url": "Unable to share blueprint: no source url",
+            "discover_more": "Löydä lisää piirustuksia"
+          },
+          "add": {
+            "header": "Tuo piirustus",
+            "import_header": "Piirustus \"{name}\"",
+            "import_introduction_link": "Voit tuoda muiden käyttäjien piirustuksia GitHubista ja {community_link}. Kirjoita piirustuksen URL-osoite alle.",
+            "community_forums": "yhteisön keskustelualueilta",
+            "url": "Piirustuksen URL",
+            "raw_blueprint": "Piirustuksen sisältö",
+            "importing": "Ladataan piirustusta...",
+            "import_btn": "Piirustuksen esikatselu",
+            "saving": "Tuodaan piirustusta...",
+            "save_btn": "Tuo piirustus",
+            "error_no_url": "Ole hyvä ja kirjoita piirustuksen URL",
+            "unsupported_blueprint": "Tämä piirustus ei ole tuettu",
+            "file_name": "Piirustuksen polku"
+          }
+        },
+        "script": {
+          "caption": "Skripti",
+          "description": "Luo ja muokkaa skriptejä",
+          "picker": {
+            "header": "Skriptieditori",
+            "introduction": "Skriptieditorin avulla voit luoda ja muokata skriptejä. Seuraa alla olevaa linkkiä lukeaksesi ohjeet varmistaaksesi, että olet määrittänyt Home Assistant -sovelluksen oikein.",
+            "learn_more": "Lisätietoja skripteistä",
+            "no_scripts": "Emme löytäneet muokattavia skriptejä",
+            "add_script": "Lisää skripti",
+            "show_info": "Näytä tietoja skriptistä",
+            "run_script": "Suorita komentosarja",
+            "edit_script": "Muokkaa skriptiä",
+            "dev_script": "Debug script",
+            "headers": { "name": "Nimi" },
+            "duplicate_script": "Kopioi skripti",
+            "duplicate": "Kopioi"
+          },
+          "editor": {
+            "alias": "Nimi",
+            "icon": "Kuvake",
+            "id": "Kohde ID",
+            "id_already_exists_save_error": "Et voi tallentaa tätä skriptiä, koska tunnus ei ole yksilöivä. Valitse toinen tunnus tai jätä se tyhjäksi, jolloin se luodaan automaattisesti.",
+            "id_already_exists": "Tämä tunnus on jo olemassa",
+            "introduction": "Käytä scriptejä suorittaaksesi toimintasarjan.",
+            "show_trace": "Show trace",
+            "header": "Skripti: {name}",
+            "default_name": "Uusi skripti",
+            "modes": {
+              "label": "Tila",
+              "description": "Moodi hallitsee sitä, mitä tapahtuu, kun skripti käynnistetään, kun se edelleen toimii yhdestä tai useammasta aiemmasta kutsusta. Katso lisätietoja {documentation_link} .",
+              "documentation": "skriptin dokumentaatio",
+              "single": "Yksittäinen (oletus)",
+              "restart": "Käynnistä uudelleen",
+              "queued": "Jonossa",
+              "parallel": "Rinnakkain"
+            },
+            "max": {
+              "queued": "Jonon pituus",
+              "parallel": "Rinnakkaisten ajojen enimmäismäärä"
+            },
+            "load_error_not_editable": "Vain scripts.yaml-tiedostossa olevat skriptit ovat muokattavissa.",
+            "delete_confirm": "Haluatko varmasti poistaa tämän skriptin?",
+            "delete_script": "Poista skripti",
+            "save_script": "Tallenna komentosarja",
+            "sequence": "Järjestys",
+            "sequence_sentence": "Skriptin toimintojen järjestys.",
+            "link_available_actions": "Lisätietoja saatavilla olevista toiminnoista"
+          }
+        },
+        "scene": {
+          "caption": "Tilanteet",
+          "description": "Luo ja muokkaa tilanteita",
+          "activated": "Aktivoitu tilanne {name}.",
+          "picker": {
+            "header": "Tilanne-editori",
+            "introduction": "Tilanne-editorin avulla voit luoda ja muokata tilanteita. Seuraa alla olevaa linkkiä lukeaksesi ohjeet varmistaaksesi, että olet määrittänyt Home Assistant -sovelluksen oikein.",
+            "learn_more": "Lisätietoja tilanteista",
+            "pick_scene": "Valitse muokattava tilanne",
+            "no_scenes": "Emme löytäneet muokattavia tilanteita",
+            "add_scene": "Lisää tilanne",
+            "only_editable": "Vain tilanteet tiedostossa scenes.yaml ovat muokattavissa.",
+            "edit_scene": "Muokkaa tilannetta",
+            "show_info_scene": "Näytä tietoja tilanteesta",
+            "delete_scene": "Poista tilanne",
+            "delete_confirm": "Haluatko varmasti poistaa tämän tilanteen?",
+            "duplicate_scene": "Kopioi tilanne",
+            "duplicate": "Kopioi",
+            "headers": { "name": "Nimi" }
+          },
+          "editor": {
+            "introduction": "Käytä tilanteita herättääksesi kotisi eloon.",
+            "default_name": "Uusi tilanne",
+            "load_error_not_editable": "Vain tilanteet tiedostossa scenes.yaml ovat muokattavissa.",
+            "load_error_unknown": "Virhe ladattaessa tilannetta ({err_no}).",
+            "save": "Tallenna",
+            "unsaved_confirm": "Sinulla on tallentamattomia muutoksia. Haluatko varmasti poistua?",
+            "name": "Nimi",
+            "icon": "Kuvake",
+            "devices": {
+              "header": "Laitteet",
+              "introduction": "Lisää laitteet, jotka haluat sisällyttää tilanteeseesi. Aseta kaikki laitteet haluamaasi tilaan tätä tilannetta varten.",
+              "add": "Lisää laite",
+              "delete": "Poista laite"
+            },
+            "entities": {
+              "header": "Kohteet",
+              "introduction": "Kohteet, jotka eivät kuulu laitteisiin, voidaan asettaa täällä.",
+              "without_device": "Kohteet ilman laitetta",
+              "device_entities": "Jos lisäät kohteen, joka kuuluu laitteeseen, laite lisätään.",
+              "add": "Lisää kohde",
+              "delete": "Poista kohde"
+            }
+          }
+        },
+        "cloud": {
+          "description_login": "Kirjautunut sisään {email}",
+          "description_not_login": "Et ole kirjautunut",
+          "description_features": "Ohjaus poissa kotoa Alexan tai Google Assistantin avulla.",
+          "login": {
+            "title": "Cloud Kirjautuminen",
+            "introduction": "Home Assistant Cloud tarjoaa turvallisen etäyhteyden instanssiin ollessasi poissa kotoa. Sen avulla voit myös muodostaa yhteyden pilvipalveluihin Amazon Alexaan ja Google Assistantiin.",
+            "introduction2": "Tätä palvelua ylläpitää kumppanimme",
+            "introduction2a": ", Home Assistantin ja Hass.io: n perustajien perustama yritys.",
+            "introduction3": "Home Assistant Cloud on tilauspalvelu, jossa on ilmainen yhden kuukauden kokeilu. Maksutietoja ei tarvita.",
+            "learn_more_link": "Lisätietoja Home Assistant Cloudista",
+            "dismiss": "Hylkää",
+            "sign_in": "Kirjaudu sisään",
+            "email": "Sähköposti",
+            "email_error_msg": "Virheellinen sähköpostiosoite",
+            "password": "Salasana",
+            "password_error_msg": "Salasanan pitää olla vähintään 8 merkkiä pitkä",
+            "forgot_password": "Unohtuiko salasana?",
+            "start_trial": "Aloita ilmainen 1 kuukauden kokeilu",
+            "trial_info": "Maksutietoja ei tarvita",
+            "alert_password_change_required": "Sinun on vaihdettava salasanasi ennen sisäänkirjautumista.",
+            "alert_email_confirm_necessary": "Sinun on vahvistettava sähköpostiosoitteesi ennen sisäänkirjautumista."
+          },
+          "forgot_password": {
+            "title": "Unohtuiko salasana?",
+            "subtitle": "Unohtuiko salasana?",
+            "instructions": "Kirjoita sähköpostiosoitteesi ja lähetämme sinulle linkin salasanasi palauttamiseksi.",
+            "email": "Sähköposti",
+            "email_error_msg": "Virheellinen sähköpostiosoite",
+            "send_reset_email": "Lähetä palautusviesti",
+            "check_your_email": "Tarkista sähköpostistasi ohjeet salasanan vaihtamiseen."
+          },
+          "register": {
+            "title": "Rekisteröi tili",
+            "headline": "Aloita ilmainen kokeilu",
+            "information": "Luo tili aloittaaksesi ilmaisen yhden kuukauden kokeilun Home Assistant Cloudilla. Maksutietoja ei tarvita.",
+            "information2": "Kokeilu antaa sinulle pääsyn kaikkiin Home Assistant Cloud -etuihin, mukaan lukien:",
+            "feature_remote_control": "Hallitse Home Assistantia kodin ulkopuolelta",
+            "feature_google_home": "Integrointi Google Assistant -sovelluksen kanssa",
+            "feature_amazon_alexa": "Integrointi Amazon Alexan kanssa",
+            "feature_webhook_apps": "Helppo integrointi webhook-pohjaisiin sovelluksiin, kuten OwnTracksiin",
+            "information3": "Tätä palvelua ylläpitää kumppanimme",
+            "information3a": ", Home Assistantin ja Hass.io:n perustajien perustama yritys.",
+            "information4": "Rekisteröimällä tilin hyväksyt seuraavat ehdot.",
+            "link_terms_conditions": "Ehdot",
+            "link_privacy_policy": "Tietosuojakäytäntö",
+            "create_account": "Luo tili",
+            "email_address": "Sähköpostiosoite",
+            "email_error_msg": "Virheellinen sähköpostiosoite",
+            "password": "Salasana",
+            "password_error_msg": "Salasanan pitää olla vähintään 8 merkkiä pitkä",
+            "start_trial": "Aloita kokeilujakso",
+            "resend_confirm_email": "Lähetä varmistusviesti uudelleen",
+            "account_created": "Tili luotu! Tarkista sähköpostistasi ohjeet tilisi aktivoimiseksi."
+          },
+          "account": {
+            "thank_you_note": "Kiitos, että olet osa Home Assistant Cloudia. Sinun kaltaisten ihmisten takia pystymme tarjoamaan loistavan kodin automaatiokokemuksen kaikille. Kiitos!",
+            "nabu_casa_account": "Nabu Casa -tili",
+            "connection_status": "Pilviyhteyden tila",
+            "manage_account": "Tilin Hallinta",
+            "sign_out": "Kirjaudu ulos",
+            "integrations": "Integraatiot",
+            "integrations_introduction": "Home Assistant Cloud integraatiot mahdollistavat pilvipalveluihin käytön ilman että Home Assistant asennus on näkyvissä julkisesti Internetissä.",
+            "integrations_introduction2": "Tsekkaa verkkosivut kohteesta",
+            "integrations_link_all_features": " kaikki käytettävissä olevat ominaisuudet",
+            "connected": "Yhdistetty",
+            "connecting": "Connecting...",
+            "not_connected": "Ei yhteyttä",
+            "fetching_subscription": "Haetaan tilausta...",
+            "tts": {
+              "title": "Teksti puheeksi",
+              "info": "Bring personality to your home by having it speak to you by using our Text-to-Speech services. You can use this in automations and scripts by using the {service} service.",
+              "default_language": "Oletuskieli",
+              "male": "Mies",
+              "female": "Nainen",
+              "try": "Kokeile",
+              "dialog": {
+                "header": "Kokeile \"teksti puheeksi\" -toimintoa",
+                "example_message": "Hello {name}, you can play any text on any supported media player!",
+                "target": "Kohde",
+                "target_browser": "Selain",
+                "play": "Toista"
+              }
+            },
+            "remote": {
+              "title": "Etähallinta",
+              "connected": "Yhdistetty",
+              "not_connected": "Ei yhteyttä",
+              "reconnecting": "Reconnecting",
+              "access_is_being_prepared": "Etäkäyttöä valmistellaan. Ilmoitamme sinulle, kun se on valmis.",
+              "info": "Home Assistant Cloud tarjoaa turvallisen etäyhteyden ollessasi poissa kotoa.",
+              "instance_is_available": "Asennuksesi on saatavilla osoitteessa",
+              "instance_will_be_available": "Asennuksesi tulee saataville",
+              "remote_enabled": {
+                "caption": "Automatically connect",
+                "description": "Enable this option to make sure that your Home Assistant instance is always remotely accessible."
+              },
+              "link_learn_how_it_works": "Lisätietoja toiminnasta",
+              "certificate_info": "Sertifikaatin tiedot"
+            },
+            "alexa": {
+              "title": "Alexa",
+              "info": "Alexa Integraatio Home Assistant Cloudille mahdollistaa Home Assistant laitteiden ohjaamisen miltä tahansa Alexa laitteelta.",
+              "enable_ha_skill": "Ota Kotiavustajan taito käyttöön Alexassa",
+              "config_documentation": "Asetusten dokumentaatio.",
+              "enable_state_reporting": "Ota tilaraportointi käyttöön",
+              "info_state_reporting": "Jos otat tilaraportoinnin käyttöön, Home Assistant lähettää kaikki julkistettujen kohteiden tilamuutokset Amazonille. Tämän avulla voit aina nähdä uusimmat tilat Alexa-sovelluksessa ja käyttää tilamuutoksia rutiinien luomiseen.",
+              "sync_entities": "Synkronoi kohteet",
+              "manage_entities": "Hallitse kohteita",
+              "sync_entities_error": "Kohteiden synkronointi epäonnistui:",
+              "state_reporting_error": "Tilaa {enable_disable} .ei ole saatavilla",
+              "enable": "Ota käyttöön",
+              "disable": "Poista käytöstä"
+            },
+            "google": {
+              "title": "Google Assistant",
+              "info": "Google Assistant Integraatio Home Assistant Cloudille mahdollistaa Home Assistant laitteiden ohjaamisen miltä tahansa Google Assistant laitteelta.",
+              "enable_ha_skill": "Aktivoi Home Assistant -taito Google Assistantille",
+              "config_documentation": "Asetusten dokumentaatio.",
+              "enable_state_reporting": "Ota tilaraportointi käyttöön",
+              "info_state_reporting": "Jos otat tilaraportoinnin käyttöön, Home Assistant lähettää kaikki julkistettujen kohteiden tilamuutokset Googlelle. Tämän avulla voit aina nähdä uusimmat tilat Google-sovelluksessa.",
+              "security_devices": "Turvalaitteet",
+              "enter_pin_info": "Anna turvalaitteille, kuten oville, autotalleille ja lukoille PIN-koodi. Tätä koodia tullaan sinulta kysymään käyttäessäsi edellä mainittuja laitteita Google Assistantin kautta.",
+              "devices_pin": "Suojauslaitteiden pin",
+              "enter_pin_hint": "Anna PIN-koodi turvalaitteiden käyttämistä varten",
+              "sync_entities": "Synkronoi kohteet Googleen",
+              "sync_entities_404_message": "Kohteiden synkronointi Googlelle epäonnistui. Kysy \"Hey Google, sync my devices\" synkronoidaksesi kohteet.",
+              "manage_entities": "Hallitse kohteita",
+              "enter_pin_error": "PIN-koodin tallentaminen ei onnistu:",
+              "not_configured_title": "Google Assistant is not activated",
+              "not_configured_text": "Before you can use Google Assistant, you need to activate the Home Assistant Cloud skill for Google Assistant in the Google Home app."
+            },
+            "webhooks": {
+              "title": "Webhooks",
+              "info": "Kaikille, jotka ovat määritetty käynnistymään webhookin avulla, voidaan antaa julkisesti saatavilla oleba URL jotta voit lähettää tietoja takaisin Home Assistant mistä tahansa, paljastamatta järjestelmääsi Internetiin.",
+              "no_hooks_yet": "Näyttää sinulla ei ole vielä webhookeja. Aloita määrittämällä ",
+              "no_hooks_yet_link_integration": "webhook-pohjainen integraatio",
+              "no_hooks_yet2": "tai luomalla",
+              "no_hooks_yet_link_automation": "webhook-automaatio",
+              "link_learn_more": "Lisätietoja webhook-pohjaisten automaatioiden luomisesta.",
+              "loading": "Ladataan...",
+              "manage": "Hallitse",
+              "disable_hook_error_msg": "Webhookin poistaminen epäonnistui:"
+            }
+          },
+          "alexa": {
+            "title": "Alexa",
+            "banner": "Tämän käyttöliittymän kautta näkyvien kohteiden muokkaaminen on poistettu käytöstä, koska olet määrittänyt kohdesuodattimet kohteessa configuration.yaml.",
+            "exposed_entities": "Julkistetut kohteet",
+            "not_exposed_entities": "eJulk",
+            "manage_domains": "Hallitse toimialueita",
+            "expose_entity": "Näytä entiteetti",
+            "dont_expose_entity": "Älä näytä entiteettiä",
+            "follow_domain": "Seuraa verkkotunnusta",
+            "exposed": "{selected} on näkyvissä",
+            "not_exposed": "{selected} ei ole näkyvissä",
+            "expose": "Julkista Alexalle"
+          },
+          "dialog_certificate": {
+            "certificate_information": "Sertifikaatin tiedot",
+            "certificate_expiration_date": "Sertifikaatin vanhenemispäivä",
+            "will_be_auto_renewed": "Uusitaan automaattisesti",
+            "fingerprint": "Varmenteen sormenjälki:",
+            "close": "Sulje"
+          },
+          "google": {
+            "title": "Google Assistant",
+            "expose": "Julkista Google Assistantille",
+            "disable_2FA": "Poista kaksivaiheinen tunnistautuminen",
+            "banner": "Tämän käyttöliittymän kautta näkyvien kihteiden muokkaaminen on poistettu käytöstä, koska olet määrittänyt kohdesuodattimet kohteessa configuration.yaml.",
+            "exposed_entities": "Julkistetut kohteet",
+            "not_exposed_entities": "Julkistamattomat kohteet",
+            "manage_domains": "Hallitse toimialueita",
+            "expose_entity": "Näytä entiteetti",
+            "dont_expose_entity": "Älä näytä entiteettiä",
+            "follow_domain": "Seuraa verkkotunnusta",
+            "exposed": "{selected} on näkyvissä",
+            "not_exposed": "{selected} ei ole näkyvissä",
+            "sync_to_google": "Synkronoidaan muutokset Googleen."
+          },
+          "dialog_cloudhook": {
+            "webhook_for": "Webhook kohteelle {name}",
+            "available_at": "Webhook on saatavana seuraavassa URL-osoitteessa:",
+            "managed_by_integration": "Tätä webhookia hallitsee integrointi, eikä sitä voi poistaa käytöstä.",
+            "info_disable_webhook": "Jos et enää halua käyttää tätä webhookia, voit",
+            "link_disable_webhook": "Poista käytöstä",
+            "view_documentation": "Näytä dokumentaatio",
+            "close": "Sulje",
+            "confirm_disable": "Haluatko varmasti poistaa tämän webhookin käytöstä?",
+            "copied_to_clipboard": "Kopioitiin leikepöydälle"
+          }
+        },
+        "devices": {
+          "add_prompt": "Kohdetta {name} ei ole vielä lisätty tällä laitteella. Voit lisätä yhden napsauttamalla yllä olevaa + -painiketta.",
+          "caption": "Laitteet",
+          "description": "Hallitse yhdistettyjä laitteita.",
+          "device_info": "Laitteen tiedot",
+          "unnamed_device": "Nimeämätön laite",
+          "unknown_error": "Tuntematon virhe",
+          "name": "Nimi",
+          "update": "Päivitä",
+          "no_devices": "Ei laitteita",
+          "enabled_label": "Ota laite käyttöön",
+          "enabled_cause": "{cause} on poistanut laitteen käytöstä.",
+          "disabled_by": {
+            "user": "Käyttäjä",
+            "integration": "Integraatio",
+            "config_entry": "Asetus"
+          },
+          "enabled_description": "Poistettuja laitteita ei näytetä, ja laitteeseen kuuluvat entiteetit poistetaan käytöstä, eikä niitä lisätä Home Assistantiin.",
+          "automation": {
+            "automations": "Automaatiot",
+            "no_automations": "Ei automaatioita",
+            "unknown_automation": "Tuntematon automaatio",
+            "create": "Luo automaatio laitteella",
+            "create_disable": "Automaatiota ei voi luoda käytöstä poistetulle laitteelle",
+            "triggers": {
+              "caption": "Tee jotain kun...",
+              "no_triggers": "Ei laukaisuehtoja",
+              "unknown_trigger": "Tuntematon laukaisuehto"
+            },
+            "conditions": {
+              "caption": "Tee jotain vain, jos...",
+              "no_conditions": "Ei ehtoja",
+              "unknown_condition": "Tuntematon ehto"
+            },
+            "actions": {
+              "caption": "Kun jokin laukeaa...",
+              "no_actions": "Ei toimintoja",
+              "unknown_action": "Tuntematon toiminto"
+            },
+            "no_device_automations": "Tälle laitteelle ei ole käytettävissä automaatioita."
+          },
+          "script": {
+            "scripts": "Skriptit",
+            "no_scripts": "Ei skriptejä",
+            "create": "Luo tilanne laitteella",
+            "create_disable": "Skriptiä ei voi luoda käytöstä poistetulle laitteelle"
+          },
+          "scene": {
+            "scenes": "Tilanteet",
+            "no_scenes": "Ei tilanteita",
+            "create": "Luo tilanne laitteella",
+            "create_disable": "Tilannetta ei voi luoda käytöstä poistetulle laitteelle"
+          },
+          "cant_edit": "Voit muokata vain käyttöliittymässä luotuja kohteita.",
+          "device_not_found": "Laitetta ei löydy.",
+          "entities": {
+            "entities": "Kohteet",
+            "add_entities_lovelace": "Lisää Lovelace näkymään",
+            "none": "Tällä laitteella ei ole kohteita",
+            "hide_disabled": "Piilota käytöstä poistetut",
+            "disabled_entities": "{count} {count, plural,\n  one {kohde}\n  other {kohdetta}\n}"
+          },
+          "scripts": "Skriptit",
+          "scenes": "Tilanteet",
+          "confirm_rename_entity_ids": "Haluatko myös nimetä kohteiden ID:t uudelleen?",
+          "confirm_rename_entity_ids_warning": "Tämä ei muuta mitään määrityksiä (kuten automaatiot, komentosarjat, tilanteet, kojelaudat), jotka käyttävät tällä hetkellä entiteettejä! Sinun on päivitettävä ne itse käyttääksesi uusia entiteettitunnuksia!",
+          "confirm_disable_config_entry": "There are no more devices for the config entry {entry_name}, do you want to instead disable the config entry?",
+          "update_device_error": "Updating the device failed",
+          "disabled": "Poistettu käytöstä",
+          "data_table": {
+            "device": "Laite",
+            "manufacturer": "Valmistaja",
+            "model": "Malli",
+            "area": "Alue",
+            "integration": "Integraatio",
+            "battery": "Akku",
+            "no_devices": "Ei laitteita"
+          },
+          "delete": "Poista",
+          "confirm_delete": "Haluatko varmasti poistaa tämän laitteen?",
+          "picker": {
+            "search": "Etsi laitteita",
+            "filter": {
+              "filter": "Suodatin",
+              "show_disabled": "Näytä käytöstä poistetut laitteet",
+              "hidden_devices": "{number} {number, plural,\n  one {piilotettu laite}\n  other {piilotettua laitetta}\n}",
+              "show_all": "Näytä kaikki"
+            }
+          }
+        },
+        "entities": {
+          "caption": "Kohteet",
+          "description": "Hallitse kohteita",
+          "picker": {
+            "header": "Kohteet",
+            "introduction": "Home Assistant pitää rekisteriä jokaisesta havaitetusta olemuksesta, joka voidaan yksilöidä. Kullekin näille yksiköille määritetään olemus-ID, varattu juuri tälle yksikölle.",
+            "introduction2": "Kohderekisterin avulla voit yliajaa nimen, muuttaa sen ID-tunnusta tai poistaa sen Home Assistantista. Huomaa, että rekisterimerkinnän poistaminen ei poista kohdetta.",
+            "search": "Hae kohteita",
+            "filter": {
+              "filter": "Suodatin",
+              "show_disabled": "Näytä käytöstä poistetut kohteet",
+              "show_unavailable": "Näytä ei-käytettävissä olevat kohteet",
+              "show_readonly": "Näytä vain luku -kohteet",
+              "hidden_entities": "{number} hidden {number, plural,\n  one {entity}\n  other {entities}\n}",
+              "show_all": "Näytä kaikki"
+            },
+            "status": {
+              "restored": "Palautettu",
+              "unavailable": "Ei saatavissa",
+              "disabled": "Poistettu käytöstä",
+              "readonly": "Vain luku -tilassa",
+              "ok": "Ok"
+            },
+            "headers": {
+              "name": "Nimi",
+              "entity_id": "Kohde ID",
+              "integration": "Integraatio",
+              "area": "Alue",
+              "status": "Tila"
+            },
+            "selected": "{number} valittuna",
+            "enable_selected": {
+              "button": "Ota valitut käyttöön",
+              "confirm_title": "Haluatko ottaa {number} kohdetta käyttöön?",
+              "confirm_text": "Tämä tekee ne saataville Home Assistantissa, jos ne ovat nyt poistettu käytöstä."
+            },
+            "disable_selected": {
+              "button": "Poista valitut käytöstä",
+              "confirm_title": "Haluatko poistaa käytöstä {number} kohdetta?",
+              "confirm_text": "Käytöstä poistettuja kohteita ei lisätä Home Assistantiin."
+            },
+            "remove_selected": {
+              "button": "Poista valitut",
+              "confirm_title": "Haluatko poistaa {number} kohdetta?",
+              "confirm_partly_title": "Vain {number} valittua entiteettiä voidaan poistaa.",
+              "confirm_text": "Sinun tulisi poistaa ne Lovelace-käyttöliittymästä ja automaatioista, jos ne sisältävät näitä kohteita.",
+              "confirm_partly_text": "Voit poistaa vain {removable} valittujen {selected} entiteetin. Entiteetit voidaan poistaa vain, jos integrointi ei enää tarjoa entiteettejä. Joskus Home Assistant on käynnistettävä uudelleen, ennen kuin voit poistaa poistetun integroinnin entiteetit. Haluatko varmasti poistaa siirrettävät entiteetit?"
+            }
+          }
+        },
+        "person": {
+          "caption": "Henkilöt",
+          "description": "Hallitse henkilöitä, joita Home Assistant seuraa",
+          "introduction": "Täällä voit määritellä jokaisen kiinnostavan henkilön Home Assistantissa.",
+          "note_about_persons_configured_in_yaml": "Huomaa: configuration.yaml-tiedoston kautta määritettyjä henkilöitä ei voi muokata käyttöliittymän kautta.",
+          "learn_more": "Lisätietoja henkilöistä",
+          "no_persons_created_yet": "Näyttää siltä, ettet ole vielä luonut yhtään henkilöä.",
+          "create_person": "Luo henkilö",
+          "add_person": "Lisää henkilö",
+          "confirm_delete": "Haluatko varmasti poistaa tämän henkilön?",
+          "confirm_delete2": "Tälle henkilölle kuuluvien laitteiden osoitus poistetaan.",
+          "person_not_found_title": "Henkilöä ei löydy",
+          "person_not_found": "Emme löytäneet henkilöä, jota yritit muokata.",
+          "detail": {
+            "new_person": "Uusi Henkilö",
+            "name": "Nimi",
+            "name_error_msg": "Nimi on pakollinen",
+            "linked_user": "Yhdsitetty käyttäjä",
+            "device_tracker_intro": "Valitse tälle henkilölle kuuluvat laitteet.",
+            "no_device_tracker_available_intro": "Kun sinulla on laitteita, jotka ilmaisevat henkilön läsnäolon, voit kohdistaa ne henkilöön täällä. Voit lisätä ensimmäisen laitteen lisäämällä läsnäolon tunnistusintegraation sivulta.",
+            "link_presence_detection_integrations": "Läsnäolon tunnistusintegraatiot",
+            "link_integrations_page": "Integraatiot",
+            "device_tracker_picked": "Seuraa laitetta",
+            "device_tracker_pick": "Valitse seurattava laite",
+            "delete": "Poista",
+            "create": "Luo",
+            "update": "Päivitä",
+            "confirm_delete_user": "Haluatko varmasti poistaa käyttäjän {name}? Voit edelleen seurata käyttäjää, mutta henkilö ei voi enää kirjautua sisään.",
+            "admin": "Järjestelmänvalvoja",
+            "allow_login": "Salli henkilön kirjautua sisään"
+          }
+        },
+        "zone": {
+          "caption": "Alueet",
+          "description": "Hallitse vyöhykkeitä, joissa haluat seurata ihmisiä.",
+          "introduction": "Vyöhykkeiden avulla voit määrittää alueita maan päällä. Kun henkilö on vyöhykkeellä, tila saa vyöhykkeen nimen. Vyöhykkeitä voidaan käyttää myös laukaisimina tai ehtoina automaatioissa.",
+          "no_zones_created_yet": "Näyttää siltä, että et ole vielä luonut vyöhykkeitä.",
+          "create_zone": "Luo alue",
+          "add_zone": "Lisää vyöhyke",
+          "confirm_delete": "Haluatko varmasti poistaa tämän vyöhykkeen?",
+          "configured_in_yaml": "Configuration.yaml-tiedoston kautta määritettyjä vyöhykkeitä ei voi muokata käyttöliittymän kautta.",
+          "edit_home_zone": "Kotivyöhykkeen sädettä ei voi vielä määrittää käyttöliittymästä. Raahaa merkkiä kartalla muuttaaksesi kotivyöhykettä.",
+          "edit_home_zone_narrow": "Kotivyöhykkeen sädettä ei voi vielä muokata käyttöliittymästä. Paikka voidaan muuttaa yleisestä konfiguraatiosta.",
+          "go_to_core_config": "Siirry yleisiin asetuksiin?",
+          "home_zone_core_config": "Kotivyöhykkeen sijaintia voi muokata yleiset asetukset-sivulta. Koti-alueen sädettä ei voi vielä muokata Frontendistä. Haluatko siirtyä yleisiin asetuksiin?",
+          "detail": {
+            "new_zone": "Uusi vyöhyke",
+            "name": "Nimi",
+            "icon": "Kuvake",
+            "icon_error_msg": "Kuvakkeen tulisi olla muodossa etuliite:ikoni, esimerkiksi: mdi:koti",
+            "radius": "Säde",
+            "latitude": "Leveysaste",
+            "longitude": "Pituusaste",
+            "passive": "Passiivinen",
+            "passive_note": "Passiiviset vyöhykkeet on piilotetaan käyttöliittymässä, eikä niitä käytetä laitteiden paikannuksen sijaintina. Tämä on hyödyllistä, jos haluat käyttää vain automaatioihin.",
+            "required_error_msg": "Tämä kenttä on pakollinen",
+            "delete": "Poista",
+            "create": "Luo",
+            "update": "Päivitä"
+          }
+        },
+        "integrations": {
+          "caption": "Integraatiot",
+          "description": "Hallitse liitettyjä laitteita ja palveluita",
+          "integration": "integraatio",
+          "discovered": "Löydetty",
+          "attention": "Huomiota tarvitaan",
+          "configured": "Määritetty",
+          "new": "Määritä uusi integraatio",
+          "confirm_new": "Do you want to set up {integration}?",
+          "add_integration": "Lisää integraatio",
+          "no_integrations": "Näyttää ettei yhtään integraatiota ole määritetty. Lisää ensimmäinen integraatio klikkaamalla painiketta alhaalta!",
+          "note_about_integrations": "Kaikkia integraatioita ei voi vielä määrittää käyttöliittymän kautta.",
+          "note_about_website_reference": "Lisää saatavilla",
+          "home_assistant_website": "Home Assistant -sivusto",
+          "configure": "Määrittele",
+          "reconfigure": "Määritä uudelleen",
+          "none": "Mitään ei ole vielä määritetty",
+          "none_found": "Integraatioita ei löytynyt",
+          "none_found_detail": "Muokkaa haku ehtojasi",
+          "integration_not_found": "Integraatiota ei löydy.",
+          "details": "Integroinnin yksityiskohdat",
+          "rename_dialog": "Muokkaa tämän määritysmerkinnän nimeä",
+          "rename_input_label": "Merkinnän nimi",
+          "search": "Etsi integraatioita",
+          "disable": {
+            "show_disabled": "Näytä käytöstä poistetut integraatiot",
+            "disabled_integrations": "{number} poistettu käytöstä",
+            "show": "Näytä",
+            "hide_disabled": "Piilota käytöstä poistetut integraatiot"
+          },
+          "ignore": {
+            "ignore": "Ohita",
+            "confirm_ignore_title": "Ohitetaanko kohteen {name} etsintä?",
+            "confirm_ignore": "Oletko varma, ettet halua määrittää tätä integrointia? Voit kumota tämän napsauttamalla oikeassa yläkulmassa olevasta valikosta \"Näytä ohitetut integroinnit\".",
+            "show_ignored": "Näytä ohitetut integraatiot",
+            "ignored": "Ohitettu",
+            "confirm_delete_ignore_title": "Lopeta integraation {name} ohittaminen?",
+            "confirm_delete_ignore": "Tämä saa integroinnin näkymään löydetyissä integroinneissa uudelleen, kun se löydetään. Tämä saattaa vaatia uudelleenkäynnistyksen tai kestää jonkin aikaa.",
+            "stop_ignore": "Lopeta ohittaminen",
+            "hide_ignored": "Piilota ohitetut integraatiot"
+          },
+          "config_entry": {
+            "devices": "{count} {count, plural,\n  one {laite}\n  other {laitteet}\n}",
+            "entities": "{count} {count, plural,\n  one {kohde}\n  other {kohteet}\n}",
+            "services": "{count} {count, plural,\n  one {palvelu}\n  other {palvelua}\n}",
+            "rename": "Nimeä uudelleen",
+            "configure": "Määrittele",
+            "system_options": "Järjestelmäasetukset",
+            "documentation": "Dokumentointi",
+            "delete": "Poista",
+            "delete_confirm": "Haluatko varmasti poistaa tämän integraation?",
+            "reload": "Lataa uudelleen",
+            "restart_confirm": "Käynnistä Home Assistant uudellen viimeistelläksesi tämän integraation poistamisen",
+            "reload_confirm": "Integraatio ladattiin uudelleen",
+            "reload_restart_confirm": "Viimeistele tämän integroinnin uudelleenlataaminen käynnistämällä Home Assistant uudelleen",
+            "disable_restart_confirm": "Viimeistele tämän integraation käytöstä poisto käynnistämällä Home Assistant uudelleen",
+            "enable_restart_confirm": "Viimeistele tämän integraation käyttöönotto käynnistämällä Home Assistant uudelleen",
+            "disable_error": "Enabling or disabling of the integration failed",
+            "manuf": "{manufacturer}",
+            "hub": "Yhdistetty kautta",
+            "firmware": "Laiteohjelmisto: {version}",
+            "unnamed_entry": "Nimeämätön merkintä",
+            "device_unavailable": "laite ei saatavissa",
+            "entity_unavailable": "kohde ei saatavilla",
+            "area": "Alueessa {area}",
+            "no_area": "Ei aluetta",
+            "not_loaded": "Ei ladattu",
+            "check_the_logs": "Tarkista lokitiedot",
+            "disable": {
+              "disabled": "Poistettu käytöstä",
+              "disabled_cause": "{cause} poistanut käytöstä",
+              "disabled_by": {
+                "user": "Käyttäjä",
+                "integration": "Integraatio",
+                "device": "Laite"
+              },
+              "disable_confirm": "Haluatko varmasti poistaa tämän asetusten osan käytöstä? Sen laitteet ja entiteetit poistetaan käytöstä."
+            },
+            "provided_by_custom_integration": "Provided by a custom integration",
+            "depends_on_cloud": "Depends on the cloud",
+            "disabled_polling": "Automatic polling for updated data disabled",
+            "state": {
+              "loaded": "Ladattu",
+              "setup_error": "Failed to set up",
+              "migration_error": "Migration error",
+              "setup_retry": "Retrying setup",
+              "not_loaded": "Ei ladattu",
+              "failed_unload": "Failed to unload"
+            },
+            "logs": "Lokit",
+            "options": "Asetukset"
+          },
+          "config_flow": {
+            "aborted": "Keskeytetty",
+            "close": "Sulje",
+            "dismiss": "Sulje ikkuna",
+            "finish": "Valmis",
+            "submit": "Lähetä",
+            "next": "Seuraava",
+            "not_all_required_fields": "Täytä kaikki pakolliset kentät.",
+            "error_saving_area": "Virhe tallennettaessa aluetta: {error}",
+            "created_config": "Asetus luotu {name}",
+            "external_step": {
+              "description": "Tämä vaihe edellyttää, että vierailet ulkopuolisella verkkosivustolla.",
+              "open_site": "Avaa verkkosivusto"
+            },
+            "pick_flow_step": {
+              "title": "We discovered these, want to set them up?",
+              "new_flow": "No, set up an other instance of {integration}"
+            },
+            "loading": {
+              "loading_flow": "Please wait while {integration} is being setup",
+              "loading_step": "Loading next step for {integration}",
+              "fallback_title": "the integration"
+            },
+            "error": "Virhe",
+            "could_not_load": "Config flow could not be loaded",
+            "not_loaded": "The integration could not be loaded, try to restart Home Assistant.",
+            "loading_first_time": "Odota, kunnes integraatio on asennettu"
+          }
+        },
+        "users": {
+          "caption": "Käyttäjät",
+          "description": "Käyttäjien hallinta",
+          "users_privileges_note": "Käyttäjät-ryhmä on vielä kesken. Käyttäjä ei voi hallita Home Assistantia käyttöliittymän kautta. Auditoimme edelleen kaikkia hallinta-API-päätepisteitä varmistaaksemme, että ne rajoittavat pääsyn oikein.",
+          "picker": {
+            "headers": {
+              "name": "Nimi",
+              "username": "Käyttäjätunnus",
+              "group": "Ryhmä",
+              "system": "Järjestelmä",
+              "is_active": "Aktiivinen",
+              "is_owner": "Omistaja"
+            },
+            "add_user": "Lisää käyttäjä"
+          },
+          "editor": {
+            "caption": "Näytä käyttäjä",
+            "name": "Nimi",
+            "username": "Käyttäjätunnus",
+            "change_password": "Vaihda salasana",
+            "new_password": "Uusi salasana",
+            "password_changed": "Salasana on vaihdettu!",
+            "activate_user": "Aktivoi käyttäjä",
+            "deactivate_user": "Passivoi käyttäjätunnus",
+            "delete_user": "Poista käyttäjä",
+            "update_user": "Päivitä",
+            "id": "ID",
+            "owner": "Omistaja",
+            "admin": "Järjestelmänvalvoja",
+            "group": "Ryhmä",
+            "active": "Aktiivinen",
+            "system_generated": "Järjestelmän luoma",
+            "system_generated_users_not_removable": "Järjestelmän luomia käyttäjiä ei voi poistaa.",
+            "system_generated_users_not_editable": "Järjestelmän luomia käyttäjiä ei voi päivittää.",
+            "unnamed_user": "Nimeämätön käyttäjä",
+            "confirm_user_deletion": "Haluatko varmasti poistaa {name}?",
+            "active_tooltip": "Määrittää, voiko käyttäjä kirjautua sisään"
+          },
+          "add_user": {
+            "caption": "Lisää käyttäjä",
+            "password": "Salasana",
+            "password_confirm": "Vahvista salasana",
+            "password_not_match": "Salasanat eivät täsmää",
+            "create": "Luo"
+          }
+        },
+        "mqtt": {
+          "title": "MQTT",
+          "description_publish": "Julkaise paketti",
+          "topic": "aihe",
+          "payload": "Tietosisältö (malli sallittu)",
+          "publish": "Julkaise",
+          "description_listen": "Kuuntele aihetta",
+          "listening_to": "Kuunnellaan",
+          "subscribe_to": "Tilaa aihe",
+          "start_listening": "Aloita kuuntelu",
+          "stop_listening": "Lopeta kuuntelu",
+          "message_received": "Viesti {id} vastaanotettu aiheessa {topic} {time}:",
+          "button": "Määritä"
+        },
+        "ozw": {
+          "common": {
+            "zwave": "Z-Wave",
+            "node_id": "Solmun tunnus",
+            "ozw_instance": "OpenZWave-instanssi",
+            "instance": "Instanssi",
+            "controller": "Ohjain",
+            "network": "Verkko",
+            "wakeup_instructions": "Herätysohjeet",
+            "query_stage": "Kyselyn vaihe"
+          },
+          "device_info": {
+            "zwave_info": "Z-Wave-tiedot",
+            "stage": "Vaihe",
+            "node_failed": "Solmu epäonnistui"
+          },
+          "node_query_stages": {
+            "protocolinfo": "Noudetaan tämän solmun Z-Wave-perusominaisuudet ohjaimelta",
+            "probe": "Tarkistetaan, onko solmu hereillä/elossa",
+            "wakeup": "Asetetaan tuki herätysjonoille ja viesteille",
+            "manufacturerspecific1": "Noudetaan solmun valmistajan tiedot ja tuotetunnus",
+            "nodeinfo": "Noudetaan solmun tuetut komentoluokat",
+            "nodeplusinfo": "Noudetaan solmun Z-Wave+-tiedot",
+            "manufacturerspecific2": "Noudetaan solmun lisävalmistajan tiedot ja tuotetunnus",
+            "versions": "Noudetaan tiedot laiteohjelmistosta ja komentoluokan versioista",
+            "instances": "Noudetaan lisätietoja, laitteen tukemista esiintymistä tai kanavista",
+            "static": "Noudetaan staattiset arvot laitteesta",
+            "cacheload": "Ladataan tietoja OpenZWave-välimuistitiedostosta. Akkukäyttöiset solmut pysyvät tässä vaiheessa, kunnes solmu herää.",
+            "associations": "Päivitetään yhdistysryhmiä ja jäsenyyksiä",
+            "neighbors": "Noudetaan luettelo solmun naapureista",
+            "session": "Noudetaan solmun harvoin muuttuvat arvot",
+            "dynamic": "Noudetaan solmun usein muuttuvat arvot",
+            "configuration": "Noudetaan solmun määritysarvot",
+            "complete": "Haastatteluprosessi on valmis"
+          },
+          "refresh_node": {
+            "button": "Päivitä solmu",
+            "title": "Päivitä solmun tiedot",
+            "complete": "Solmun päivitys valmis",
+            "description": "Tämä käskee OpenZWavea haastattelemaan solmun uudelleen ja päivittämään solmun komentoluokat, ominaisuudet ja arvot.",
+            "battery_note": "Jos solmu on akkukäyttöinen, muista herättää se ennen jatkamista",
+            "wakeup_header": "Herätysohjeet",
+            "wakeup_instructions_source": "Herätysohjeet ovat peräisin OpenZWave-yhteisölaitetietokannasta.",
+            "start_refresh_button": "Aloita päivitys",
+            "refreshing_description": "Päivitetään solmun tietoja...",
+            "node_status": "Solmun tila",
+            "step": "Askel"
+          },
+          "network_status": {
+            "online": "Online",
+            "offline": "Offline",
+            "starting": "Käynnistetään",
+            "unknown": "Tuntematon",
+            "details": {
+              "driverallnodesqueried": "Kaikkia solmuja on kysytty",
+              "driverallnodesqueriedsomedead": "Kaikkia solmuja on kysytty. Osa solmuista kuolleita",
+              "driverawakenodesqueries": "Kaikkia hereillä olevia solmuja on kysytty",
+              "driverremoved": "Ohjain on poistettu",
+              "driverreset": "Ohjain on nollattu",
+              "driverfailed": "Yhteyden muodostaminen Z-Wave-ohjaimeen epäonnistui",
+              "driverready": "Alustetaan Z-Wave-ohjain",
+              "ready": "Valmis yhdistämään",
+              "stopped": "OpenZWave pysähtyi",
+              "started": "Yhdistetty MQTT:hen",
+              "starting": "Yhdistetään MQTT:hen",
+              "offline": "OZWDaemon offline-tilassa"
+            }
+          },
+          "navigation": {
+            "select_instance": "Valitse instanssi",
+            "network": "Verkko",
+            "nodes": "Solmut",
+            "node": { "dashboard": "Kojelauta", "config": "Asetus" }
+          },
+          "select_instance": {
+            "header": "Valitse OpenZWave",
+            "introduction": "Käynnissä on useita OpenZWave-esiintymiä. Mitä esiintymää haluat hallita?",
+            "none_found": "Emme löytäneet OpenZWave-esiintymää. Jos uskot, että tämä on väärin, tarkista OpenZWave- ja MQTT-asetukset ja varmista, että Home Assistant voi kommunikoida MQTT-välittäjäsi kanssa."
+          },
+          "network": {
+            "header": "Verkon hallinta",
+            "introduction": "Hallitse verkon laajuisia toimintoja.",
+            "node_count": "{count} solmua"
+          },
+          "nodes_table": {
+            "id": "ID",
+            "manufacturer": "Valmistaja",
+            "model": "Malli",
+            "query_stage": "Kyselyn vaihe",
+            "zwave_plus": "Z-Wave Plus",
+            "failed": "Epäonnistui"
+          },
+          "node": {
+            "button": "Solmun tiedot",
+            "not_found": "Solmua ei löytynyt"
+          },
+          "node_config": {
+            "header": "Solmun määritys",
+            "introduction": "Hallitse Z-Wave-solmun eri kokoonpanoparametreja.",
+            "help_source": "Config-parametrien kuvaukset ja ohjetekstit ovat OpenZWave-projektin toimittamia.",
+            "wakeup_help": "Akkukäyttösten solmujen on oltava hereillä, jotta niiden kokoonpanoa voidaan muuttaa. Jos solmu ei ole hereillä, OpenZWave yrittää päivittää solmun kokoonpanon seuraavan herätyksen yhteydessä, mikä voi olla useita tunteja (tai päiviä) myöhemmin. Herätä laite seuraavasti:"
+          },
+          "node_metadata": { "product_manual": "Tuotteen käyttöopas" },
+          "services": {
+            "add_node": "Lisää solmu",
+            "remove_node": "Poista solmu",
+            "cancel_command": "Peruuta komento"
+          },
+          "button": "Määrittele"
+        },
+        "zha": {
+          "common": {
+            "clusters": "Klusterit",
+            "manufacturer_code_override": "Valmistajan koodin yliajo",
+            "value": "Arvo"
+          },
+          "configuration_page": {
+            "shortcuts_title": "Pikanäppäimet",
+            "update_button": "Päivitä kokoonpano"
+          },
+          "add_device_page": {
+            "spinner": "Etsitään ZHA Zigbee laitteita...",
+            "pairing_mode": "Varmista, että laitteesi ovat paritustilassa. Tarkista laitteen ohjeet, kuinka tämä tehdään.",
+            "discovered_text": "Laitteet tulevat tänne, kun ne löydetään.",
+            "no_devices_found": "Mitään laitteita ei löydy. Varmista, että ne ovat paritustilassa ja pidä ne hereillä havaitsemisen ollessa käynnissä.",
+            "search_again": "Etsi uudestaan"
+          },
+          "add_device": "Lisää laite",
+          "clusters": {
+            "header": "Klusterit",
+            "help_cluster_dropdown": "Valitse klusteri tarkastellaksesi määritteitä ja komentoja.",
+            "introduction": "Klusterit ovat rakennuspalikoita Zigbee-toiminnallisuudelle. Ne erottavat toiminnallisuuden loogisiksi yksiköiksi. On asiakas- ja palvelintyyppejä, jotka koostuvat määritteistä ja komennoista."
+          },
+          "cluster_attributes": {
+            "header": "Klusterin määritteet",
+            "introduction": "Tarkastele ja muokkaa klusterimääritteitä.",
+            "attributes_of_cluster": "Valitun klusterin määritteet",
+            "get_zigbee_attribute": "Hae Zigbee-ominaisuus",
+            "set_zigbee_attribute": "Aseta Zigbee-ominaisuus",
+            "help_attribute_dropdown": "Valitse määrite, jonka arvoa haluat tarkastella tai määrittää.",
+            "help_get_zigbee_attribute": "Hae valitun määritteen arvo.",
+            "help_set_zigbee_attribute": "Määritä määritetyn kohteen määritetyn klusterin määritteen arvo."
+          },
+          "cluster_commands": {
+            "header": "Klusterikomennot",
+            "introduction": "Tarkastele ja anna klusterikomentoja.",
+            "commands_of_cluster": "Valitun klusterin komennot",
+            "issue_zigbee_command": "Anna Zigbee käsky",
+            "help_command_dropdown": "Valitse lähettettävä komento"
+          },
+          "device_pairing_card": {
+            "PAIRED": "Laite löydetty",
+            "PAIRED_status_text": "Haastattelun aloittaminen",
+            "INTERVIEW_COMPLETE": "Haastattelu valmis",
+            "INTERVIEW_COMPLETE_status_text": "Määrittää",
+            "CONFIGURED": "Määritys valmis",
+            "CONFIGURED_status_text": "Alustetaan",
+            "INITIALIZED": "Alustus on valmis",
+            "INITIALIZED_status_text": "Laite on käyttövalmis"
+          },
+          "network": { "caption": "Verkko" },
+          "groups": {
+            "add_group": "Lisää ryhmä",
+            "caption": "Ryhmät",
+            "groups": "Ryhmät",
+            "group_id": "Ryhmän ID",
+            "members": "Jäsenet",
+            "group_info": "Ryhmätiedot",
+            "group_details": "Tässä ovat kaikki valitun Zigbee-ryhmän tiedot.",
+            "group_not_found": "Ryhmää ei löytynyt!",
+            "add_members": "Lisää jäseniä",
+            "remove_members": "Poista jäseniä",
+            "removing_members": "Poistetaan jäseniä",
+            "create_group_details": "Kirjoita tarvittavat tiedot uuden Zigbee-ryhmän luomiseksi",
+            "group_name_placeholder": "Ryhmän nimi",
+            "create_group": "Zigbee-kotiautomaatio - Luo ryhmä",
+            "create": "Luo ryhmä",
+            "creating_group": "Ryhmän luominen"
+          },
+          "visualization": {
+            "header": "Verkon visualisointi",
+            "caption": "Visualisointi",
+            "highlight_label": "Highlight Devices",
+            "zoom_label": "Zoom To Device",
+            "auto_zoom": "Automaattinen zoomaus",
+            "refresh_topology": "Refresh Topology"
+          },
+          "group_binding": {
+            "header": "Ryhmäsidonta",
+            "introduction": "Sido ja pura ryhmiä",
+            "group_picker_label": "Sidottavat ryhmät",
+            "group_picker_help": "Valitse ryhmä, jos haluat antaa sidontakomennon.",
+            "cluster_selection_help": "Valitse valittuun ryhmään sidottavat klusterit.",
+            "bind_button_label": "Sido ryhmä",
+            "unbind_button_label": "Pura ryhmän sidonta",
+            "bind_button_help": "Sido valittu ryhmä valittuihin laiteklustereihin.",
+            "unbind_button_help": "Pura valitun ryhmän sidonta valituista laiteklustereista."
+          },
+          "button": "Määritä"
+        },
+        "zwave": {
+          "description": "Z-Wave -verkon asetukset",
+          "learn_more": "Z-wave lisätietoja",
+          "common": {
+            "value": "Arvo",
+            "instance": "Esiintymä",
+            "index": "Indeksi",
+            "unknown": "tuntematon",
+            "wakeup_interval": "Herätysväli"
+          },
+          "migration": {
+            "ozw": {
+              "header": "Siirry OpenZWaveen",
+              "introduction": "Tämän ohjatun toiminnon avulla voit siirtyä vanhasta Z-Wave-integraatiosta OpenZWave-integraatioon, joka on tällä hetkellä betaversiossa."
+            }
+          },
+          "network_management": {
+            "header": "Z-Wave-verkon hallinta",
+            "introduction": "Suorita Z-Wave-verkkoon vaikuttavia komentoja. Et saa palautetta siitä, onnistuiko useimmat komennot, mutta voit tarkistaa OZW-lokin ja yrittää selvittää sen."
+          },
+          "node_management": {
+            "header": "Z-Wave-solmun hallinta",
+            "introduction": "Suorita Z-Wave-komennot, jotka vaikuttavat yhteen solmuun. Valitse solmu nähdäksesi luettelon käytettävissä olevista komennoista.",
+            "nodes": "Solmut",
+            "nodes_hint": "Valitse solmu tarkastellaksesi solmukohtaisia vaihtoehtoja",
+            "entities": "Tämän solmun kohteet",
+            "entity_info": "Kohteen tiedot",
+            "exclude_entity": "Jätä tämä kohde pois Home Assistantista",
+            "pooling_intensity": "Kyselyn voimakkuus",
+            "node_protection": "Solmujen suojaus",
+            "protection": "Suojaus",
+            "set_protection": "Aseta suojaus",
+            "node_group_associations": "Solmujen ryhmäyhdistykset",
+            "group": "Ryhmä",
+            "node_to_control": "Hallinnoitava solmu",
+            "nodes_in_group": "Muut tämän ryhmän solmut:",
+            "max_associations": "Maksimiyhdistykset:",
+            "add_to_group": "Lisää ryhmään",
+            "remove_from_group": "Poista ryhmästä",
+            "remove_broadcast": "Poista lähetys"
+          },
+          "ozw_log": {
+            "header": "OZW-loki",
+            "introduction": "Tarkastele lokia. 0 on pienin (lataa koko lokin) ja 1000 on maksimi. Lataus näyttää staattisen lokin ja päivittää automaattisesti viimeisen määritetyn määrän rivejä lokiin.",
+            "last_log_lines": "Viimeisten lokirivien määrä",
+            "load": "Lataa",
+            "tail": "Häntä"
+          },
+          "network_status": {
+            "network_stopped": "Z-Wave-verkko pysäytetty",
+            "network_starting": "Käynnistetään Z-Wave-verkkoa...",
+            "network_starting_note": "Tämä voi viedä hetken verkon koosta riippuen.",
+            "network_started": "Z-Wave-verkko käynnistetty",
+            "network_started_note_some_queried": "Hereillä olevat solmut on kysytty. Nukkuvat solmut kysytään kun ne heräävät.",
+            "network_started_note_all_queried": "Kaikista solmuista on kyselty."
+          },
+          "node_config": {
+            "header": "Solmun määritysasetukset",
+            "seconds": "sekuntia",
+            "set_wakeup": "Aseta herätysväli",
+            "config_parameter": "Asetusparametri",
+            "config_value": "Asetusarvo",
+            "true": "Tosi",
+            "false": "Epätosi",
+            "set_config_parameter": "Aseta parametri"
+          },
+          "values": { "header": "Solmujen arvot" },
+          "services": {
+            "start_network": "Käynnistä verkko",
+            "stop_network": "Pysäytä verkko",
+            "heal_network": "Paranna verkko",
+            "test_network": "Testaa verkkoyhteys",
+            "soft_reset": "Pehmeä nollaus",
+            "save_config": "Tallenna asetukset",
+            "add_node_secure": "Lisää suojattu solmu",
+            "add_node": "Lisää solmu",
+            "remove_node": "Poista solmu",
+            "cancel_command": "Peruuta komento",
+            "refresh_node": "Päivitä solmu",
+            "remove_failed_node": "Poista epäonnistunut solmu",
+            "replace_failed_node": "Korvaa epäonnistunut solmu",
+            "print_node": "Tulosta solmu",
+            "heal_node": "Paranna solmu",
+            "test_node": "Testaa solmu",
+            "node_info": "Solmun tiedot",
+            "refresh_entity": "Päivitä kohde"
+          },
+          "button": "Määritä"
+        },
+        "ais_dom_config": {
+          "header": "Configure AIS Home Gateway",
+          "introduction": "Here it is possible to configure your AIS Home Gateway. Not everything is possible to configure from the UI yet, but we're working on it."
+        },
+        "ais_dom": {
+          "caption": " AIS Home Gateway Settings",
+          "description": "Manage your IoT and Audio gateway"
+        },
+        "ais_dom_devices": {
+          "caption": "Configuration of AIS home Devices",
+          "description": "Manage your devices with AIS dom software"
+        },
+        "ais_dom_zigbee": {
+          "caption": "Configuration of AIS Zigbee",
+          "description": "Manage your zigbee devices"
+        },
+        "ais_dom_zwave": {
+          "caption": "Configuration of AIS ZWave",
+          "description": "Manage your ZWave devices"
+        },
+        "ais_dom_config_update": {
+          "caption": "Gateway software",
+          "description": "System update, backup and synchronization with the Integrator Portal"
+        },
+        "ais_dom_config_wifi": {
+          "caption": "WiFi network",
+          "description": "WiFi connection settings"
+        },
+        "ais_dom_config_display": {
+          "caption": "Screen",
+          "description": "Screen Settings"
+        },
+        "ais_dom_config_tts": {
+          "caption": "The assistant voice",
+          "description": "Voice assistant settings"
+        },
+        "ais_dom_config_night": {
+          "caption": "Night mode",
+          "description": "Set the hours when the assistant should be quieter"
+        },
+        "ais_dom_config_logs": {
+          "caption": "Logs and recorder",
+          "description": "Configuration of logs and DB recorder"
+        },
+        "ais_dom_config_remote": {
+          "caption": "Remote control",
+          "description": "Configuration of remote access to the gateway"
+        },
+        "ais_dom_config_usb": {
+          "caption": "USB devices",
+          "description": "Support for USB devices"
+        },
+        "ais_dom_config_power": {
+          "caption": "Stop the Gate",
+          "description": "Restart or turn off the gate"
+        },
+        "zwave_js": {
+          "navigation": { "network": "Verkko", "logs": "Lokit" },
+          "common": {
+            "network": "Verkko",
+            "node_id": "Node ID",
+            "home_id": "Kodin ID",
+            "source": "Source",
+            "close": "Sulje",
+            "add_node": "Add Node",
+            "remove_node": "Remove Node",
+            "reconfigure_server": "Re-configure Server",
+            "heal_network": "Heal Network"
+          },
+          "dashboard": {
+            "header": "Manage your Z-Wave Network",
+            "introduction": "Manage your Z-Wave network and Z-Wave nodes",
+            "driver_version": "Ohjaimen versio",
+            "server_version": "Palvelinversio",
+            "home_id": "Kodin ID",
+            "nodes_ready": "Nodes ready",
+            "dump_debug": "Download a dump of your network to help diagnose issues",
+            "dump_dead_nodes_title": "Some of your nodes are dead",
+            "dump_dead_nodes_text": "Some of your nodes didn't respond and are assumed dead. These will not be fully exported.",
+            "dump_not_ready_title": "Not all nodes are ready yet",
+            "dump_not_ready_text": "If you create an export while not all nodes are ready, you could miss needed data. Give your network some time to query all nodes. Do you want to continue with the dump?",
+            "dump_not_ready_confirm": "Lataa"
+          },
+          "device_info": {
+            "zwave_info": "Z-Wave tiedot",
+            "node_status": "Node Status",
+            "node_ready": "Solmu valmis",
+            "device_config": "Configure Device",
+            "reinterview_device": "Re-interview Device",
+            "heal_node": "Heal Node",
+            "remove_failed": "Remove Failed Device"
+          },
+          "node_config": {
+            "header": "Z-Wave Device Configuration",
+            "introduction": "Manage and adjust device (node) specific configuration parameters for the selected device",
+            "attribution": "Device configuration parameters and descriptions are provided by the {device_database}",
+            "zwave_js_device_database": "Z-Wave JS -laitetietokanta",
+            "battery_device_notice": "Akkulaitteiden on oltava hereillä, jotta ne voivat päivittää konfiguraationsa. Katso laitteen käyttöoppaasta ohjeet laitteen herättämiseen.",
+            "parameter_is_read_only": "Tämä parametri on vain luku -tyyppinen.",
+            "error_device_not_found": "Laitetta ei löydy.",
+            "set_param_accepted": "The parameter has been updated.",
+            "set_param_queued": "The parameter change has been queued, and will be updated when the device wakes up.",
+            "set_param_error": "An error occurred.",
+            "parameter": "Parameter"
+          },
+          "node_status": {
+            "unknown": "Tuntematon",
+            "asleep": "Unessa",
+            "awake": "Hereillä",
+            "dead": "Kuollut",
+            "alive": "Elossa"
+          },
+          "network_status": {
+            "connected": "Yhdistetty",
+            "connecting": "Yhdistetään",
+            "unknown": "Tuntematon"
+          },
+          "add_node": {
+            "title": "Add a Z-Wave Node",
+            "introduction": "This wizard will guide you through adding a node to your Z-Wave network.",
+            "use_secure_inclusion": "Use secure inclusion",
+            "secure_inclusion_warning": "Secure devices require additional bandwidth; too many secure devices can slow down your Z-Wave network. We recommend only using secure inclusion for devices that require it, like locks or garage door openers.",
+            "start_inclusion": "Start Inclusion",
+            "start_secure_inclusion": "Start Secure Inclusion",
+            "cancel_inclusion": "Cancel Inclusion",
+            "controller_in_inclusion_mode": "Your Z-Wave controller is now in inclusion mode.",
+            "follow_device_instructions": "Follow the directions that came with your device to trigger pairing on the device.",
+            "inclusion_failed": "The node could not be added. Please check the logs for more information.",
+            "inclusion_finished": "The node has been added.",
+            "view_device": "Näytä laite",
+            "interview_started": "The device is being interviewed. This may take some time.",
+            "interview_failed": "The device interview failed. Additional information may be available in the logs."
+          },
+          "remove_node": {
+            "title": "Remove a Z-Wave Node",
+            "introduction": "Remove a node from your Z-Wave network, and remove the associated device and entities from Home Assistant.",
+            "start_exclusion": "Start Exclusion",
+            "cancel_exclusion": "Cancel Exclusion",
+            "controller_in_exclusion_mode": "Your Z-Wave controller is now in exclusion mode.",
+            "follow_device_instructions": "Follow the directions that came with your device to trigger exclusion on the device.",
+            "exclusion_failed": "The node could not be removed. Please check the logs for more information.",
+            "exclusion_finished": "Node {id} has been removed from your Z-Wave network."
+          },
+          "remove_failed_node": {
+            "title": "Remove a Failed Z-Wave Device",
+            "introduction": "Remove a failed device from your Z-Wave network. Use this if you are unable to exclude a device normally because it is broken.",
+            "remove_device": "Remove Device",
+            "in_progress": "The device removal is in progress.",
+            "removal_finished": "Node {id} has been removed from your Z-Wave network.",
+            "removal_failed": "The device could not be removed from your Z-Wave network."
+          },
+          "reinterview_node": {
+            "title": "Re-interview a Z-Wave Device",
+            "introduction": "Re-interview a device on your Z-Wave network. Use this feature if your device has missing or incorrect functionality.",
+            "battery_device_warning": "You will need to wake battery powered devices before starting the re-interview. Refer to your device's manual for instructions on how to wake the device.",
+            "run_in_background": "You can close this dialog and the interview will continue in the background.",
+            "start_reinterview": "Start Re-interview",
+            "in_progress": "The device is being interviewed. This may take some time.",
+            "interview_failed": "The device interview failed. Additional information may be available in the logs.",
+            "interview_complete": "Device interview complete."
+          },
+          "heal_network": {
+            "title": "Heal your Z-Wave Network",
+            "introduction": "Start a network heal on your Z-Wave network. A network heal will cause all devices to re-calculate their routes back to the controller and is recommended if you have recently moved devices or your controller.",
+            "traffic_warning": "The healing process generates a large amount of traffic on the Z-Wave network. This may cause devices to respond slowly (or not at all) while the heal is in progress.",
+            "start_heal": "Start Healing",
+            "in_progress": "Network healing is in progress. This will take some time.",
+            "run_in_background": "You can close this dialog and the network healing will continue in the background.",
+            "stop_heal": "Stop Healing",
+            "healing_complete": "Network healing is complete.",
+            "healing_failed": "Healing failed. Additional information may be available in the logs.",
+            "healing_cancelled": "Network healing has been cancelled."
+          },
+          "heal_node": {
+            "title": "Heal a Z-Wave Device",
+            "introduction": "Tell {device} to update its routes back to the controller. This can help with communication issues if you have recently moved the device or your controller.",
+            "traffic_warning": "The healing process generates a large amount of traffic on the Z-Wave network. This may cause devices to respond slowly (or not at all) while the heal is in progress.",
+            "start_heal": "Heal Device",
+            "healing_failed": "{device} could not be healed.",
+            "healing_failed_check_logs": "Additional information may be available in the logs.",
+            "healing_complete": "{device} has been healed.",
+            "in_progress": "{device} healing is in progress.",
+            "network_heal_in_progress": "A Z-Wave network heal is already in progress. Please wait for it to finish before healing an individual device."
+          },
+          "logs": {
+            "title": "Z-Wave JS Logs",
+            "log_level": "Log Level",
+            "subscribed_to_logs": "Subscribed to Z-Wave JS Log Messages...",
+            "log_level_changed": "Log Level changed to: {level}"
+          },
+          "button": "Määrittele"
+        },
+        "filtering": {
+          "clear": "Tyhjennä",
+          "filtering_by": "Suodatus",
+          "show": "Näytä"
+        },
+        "hassio": { "button": "Määrittele" },
+        "integration_panel_move": {
+          "link_integration_page": "Integraatiot",
+          "missing_zha": "Etsitkö ZHA-asetuspaneelia? Se siirrettiin kohtaan ZHA {integrations_page}.",
+          "missing_zwave": "Etsitkö Z-Wave-asetuspaneelia? Se siirrettiin Z-Wave-kohtaan {integrations_page}."
+        }
+      }
+    }
+  }
+}

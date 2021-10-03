@@ -1,0 +1,892 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "לוח שנה",
+    "config": "תצורה",
+    "states": "סקירה כללית",
+    "map": "מפה",
+    "logbook": "יומן רישום",
+    "history": "היסטוריה",
+    "mailbox": "תיבת דואר",
+    "shopping_list": "רשימת קניות",
+    "developer_tools": "כלים למפתחים",
+    "media_browser": "סייר המדיה",
+    "profile": "פרופיל"
+  },
+  "state": {
+    "default": {
+      "on": "מופעל",
+      "off": "מופסק",
+      "unknown": "לא ידוע",
+      "unavailable": "לא זמין"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "כבוי", "on": "מופעל", "auto": "אוטומטי" },
+      "preset_mode": {
+        "none": "לא נבחר",
+        "eco": "חסכון",
+        "away": "לא בבית",
+        "boost": "מוגבר",
+        "comfort": "נוחות",
+        "home": "בבית",
+        "sleep": "שינה",
+        "activity": "פעילות"
+      },
+      "hvac_action": {
+        "off": "כבוי",
+        "heating": "חימום",
+        "cooling": "קירור",
+        "drying": "מייבש",
+        "idle": "כבוי",
+        "fan": "מאוורר"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "רגיל",
+        "eco": "חסכוני",
+        "away": "לא בבית",
+        "boost": "גבוה",
+        "comfort": "נוחות",
+        "home": "בבית",
+        "sleep": "שינה",
+        "auto": "אוטומטי",
+        "baby": "תִינוֹק"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "לא ידוע",
+      "unavailable": "לא זמין",
+      "error": "שגיאה",
+      "entity_not_found": "הישות לא נמצאה"
+    },
+    "alarm_control_panel": {
+      "armed": "דרוך",
+      "disarmed": "לא דרוך",
+      "armed_home": "דרוך",
+      "armed_away": "דרוך",
+      "armed_night": "דרוך",
+      "armed_custom_bypass": "דרוך",
+      "pending": "ממתין",
+      "arming": "דורך",
+      "disarming": "מבטל",
+      "triggered": "מופעל"
+    },
+    "device_tracker": { "home": "בבית", "not_home": "לא בבית" },
+    "person": { "home": "בבית", "not_home": "לא בבית" }
+  },
+  "groups": {
+    "owner": "בעלים",
+    "system-admin": "מנהלים",
+    "system-users": "משתמשים",
+    "system-read-only": "משתמשים לקריאה בלבד"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "משתמש",
+      "integration": "אינטגרציה",
+      "config_entry": "תצורת כניסה",
+      "device": "מכשיר"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "האם ברצונך להישאר מחובר?",
+      "decline": "לא",
+      "confirm": "כן"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "קוד",
+        "clear_code": "נקה",
+        "disarm": "לא דרוך",
+        "arm_home": "דרוך בבית",
+        "arm_away": "דרוך לא בבית",
+        "arm_night": "דריכה לילית",
+        "arm_custom_bypass": "מעקף מותאם אישית"
+      },
+      "automation": {
+        "last_triggered": "הפעלה אחרונה",
+        "trigger": "הרץ פעולות"
+      },
+      "camera": { "not_available": "התמונה אינה זמינה" },
+      "climate": {
+        "currently": "כעת",
+        "on_off": "הפעלה / כיבוי",
+        "target_temperature": "טמפרטורת היעד",
+        "target_temperature_entity": "{name} טמפרטורת יעד",
+        "target_temperature_mode": "{name} טמפרטורת יעד {mode}",
+        "current_temperature": "{שם} טמפרטורה נוכחית",
+        "heating": "{שם} חימום",
+        "cooling": "{שם} קירור",
+        "high": "גבוה",
+        "low": "נמוך",
+        "target_humidity": "לחות היעד",
+        "operation": "סוג",
+        "fan_mode": "מצב מאורר",
+        "swing_mode": "מצב נדנוד",
+        "preset_mode": "מצב מוגדר",
+        "away_mode": "מצב לא בבית",
+        "aux_heat": "מסייע חום"
+      },
+      "counter": {
+        "actions": {
+          "increment": "הוסף",
+          "decrement": "הורד",
+          "reset": "איפוס"
+        }
+      },
+      "cover": { "position": "מיקום", "tilt_position": "הטיה" },
+      "fan": {
+        "speed": "מהירות",
+        "preset_mode": "מצב מוגדר מראש",
+        "oscillate": "נעים",
+        "direction": "כיוון",
+        "forward": "קדימה",
+        "reverse": "אחורה"
+      },
+      "humidifier": {
+        "humidity": "יעד לחות",
+        "mode": "מצב",
+        "target_humidity_entity": "{שם} לחות יעד",
+        "on_entity": "{name} דולק"
+      },
+      "light": {
+        "brightness": "בהירות",
+        "color_temperature": "טמפרטורת הצבע",
+        "white_value": "בהירות לבנה",
+        "color_brightness": "בהירות צבע",
+        "cold_white_value": "בהירות לבנה קרה",
+        "warm_white_value": "בהירות לבנה חמה",
+        "effect": "אפקט"
+      },
+      "lock": { "code": "קוד", "lock": "נעילה", "unlock": "ביטול נעילה" },
+      "media_player": {
+        "source": "מקור",
+        "sound_mode": "מצב קול",
+        "browse_media": "עיון במדיה",
+        "turn_on": "הדלק",
+        "turn_off": "כבה",
+        "media_play": "הפעל",
+        "media_play_pause": "הפעל/השהה",
+        "media_next_track": "הבא",
+        "media_previous_track": "הקודם",
+        "text_to_speak": "טקסט לדיבור"
+      },
+      "persistent_notification": { "dismiss": "נקה" },
+      "scene": { "activate": "הפעל" },
+      "script": {
+        "run": "רוץ",
+        "cancel": "ביטול",
+        "cancel_multiple": "בטל {number}"
+      },
+      "service": { "run": "רוץ" },
+      "timer": {
+        "actions": {
+          "start": "התחלה",
+          "pause": "השהיה",
+          "cancel": "ביטול",
+          "finish": "סיום"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "לחדש את הניקוי",
+          "return_to_base": "חזור לעגינה",
+          "start_cleaning": "התחל לנקות",
+          "turn_on": "הדלק",
+          "turn_off": "כבה"
+        }
+      },
+      "water_heater": {
+        "currently": "כעת",
+        "on_off": "הפעלה / כיבוי",
+        "target_temperature": "טמפרטורת היעד",
+        "operation": "פעולה",
+        "away_mode": "מצב לא בבית"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "לחץ אוויר",
+          "humidity": "לחות",
+          "temperature": "טמפרטורה",
+          "visibility": "ראות",
+          "wind_speed": "מהירות הרוח",
+          "precipitation": "משקעים"
+        },
+        "cardinal_direction": {
+          "e": "מזרח",
+          "ene": "צפון מזרח",
+          "ese": " דרום מזרח",
+          "n": "צפון",
+          "ne": "צפון מזרח",
+          "nne": "צפון מזרח",
+          "nw": "צפון מערב",
+          "nnw": "צפון מערב",
+          "s": "דרום",
+          "se": "דרום מזרח",
+          "sse": "דרום מזרח",
+          "ssw": "דרום מערב",
+          "sw": "דרום מערב",
+          "w": "מערב",
+          "wnw": "צפון מערב",
+          "wsw": "דרום מערב"
+        },
+        "day": "יום",
+        "night": "לילה",
+        "forecast": "תחזית",
+        "high": "גבוה",
+        "low": "נמוך"
+      }
+    },
+    "common": {
+      "and": "וגם",
+      "continue": "המשך",
+      "previous": "הקודם",
+      "loading": "טוען",
+      "refresh": "רענן",
+      "cancel": "ביטול",
+      "delete": "מחיקה",
+      "remove": "הסר",
+      "enable": "אפשר",
+      "disable": "השבת",
+      "close": "סגור",
+      "leave": "עזוב",
+      "stay": "הישאר",
+      "next": "הבא",
+      "back": "חזור",
+      "undo": "בטל",
+      "save": "שמור",
+      "rename": "שנה שם",
+      "yes": "כן",
+      "no": "לא",
+      "not_now": "לא עכשיו",
+      "skip": "דלג",
+      "menu": "תפריט",
+      "overflow_menu": "תפריט גולש",
+      "successfully_saved": "נשמר בהצלחה",
+      "successfully_deleted": "נמחק בהצלחה",
+      "error_required": "חובה",
+      "copied": "מועתק",
+      "copied_clipboard": "הועתק ללוח"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "לא נמצאו ערכי יומן רישום.",
+        "by": "על ידי",
+        "by_service": "באמצעות שרות",
+        "show_trace": "הצג מעקב",
+        "retrieval_error": "שגיאה במהלך אחזור ערך יומן רישום",
+        "messages": {
+          "was_away": "זוהה כלא בבית",
+          "was_at_state": "היה ב {state}",
+          "rose": "זרחה",
+          "set": "שקעה",
+          "was_low": "היה נמוך",
+          "was_normal": "היה נורמלי",
+          "was_connected": "היה מחובר",
+          "was_disconnected": "היה מנותק",
+          "was_opened": "היה פתוח",
+          "was_closed": "היה סגור",
+          "is_opening": "נפתח",
+          "is_closing": "נסגר",
+          "was_unlocked": "לא היה נעול",
+          "was_locked": "היה נעול",
+          "was_plugged_in": "היה מחובר",
+          "was_unplugged": "היה מנותק",
+          "was_at_home": "היה בבית",
+          "was_unsafe": "היה לא בטוח",
+          "was_safe": "היה בטוח",
+          "detected_device_class": "זוהה {device_class}",
+          "cleared_device_class": "נוקה (לא זוהה {device_class} )",
+          "turned_off": "נכבה",
+          "turned_on": "הופעל",
+          "changed_to_state": "שונה ל- {state}",
+          "became_unavailable": "הפך ללא זמין"
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "ישות",
+          "clear": "נקה",
+          "no_match": "לא נמצאו ישויות תואמות",
+          "show_entities": "הצג ישויות"
+        },
+        "entity-attribute-picker": {
+          "attribute": "תכונה",
+          "show_attributes": "הצג תכונות"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "הרחב אזור זה למכשירים וליישויות הנפרדות שהוא מכיל. לאחר ההרחבה, הוא לא יעדכן את המכשירים והישויות כאשר האזור משתנה.",
+        "expand_device_id": "הרחב התקן זה לישויות הנפרדות שהוא מכיל. לאחר ההרחבה, הוא לא יעדכן את הישויות כאשר ההתקן ישתנה.",
+        "remove_area_id": "הסר אזור",
+        "remove_device_id": "הסר מכשיר",
+        "remove_entity_id": "הסר ישות",
+        "add_area_id": "בחר אזור",
+        "add_device_id": "בחר מכשיר",
+        "add_entity_id": "בחר ישות"
+      },
+      "user-picker": {
+        "no_user": "אין משתמש",
+        "add_user": "הוסף משתמש",
+        "remove_user": "הסר משתמש"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "בחר תכנית שרטוט",
+        "add_user": "הוסף משתמש",
+        "remove_user": "הסר משתמש"
+      },
+      "device-picker": {
+        "clear": "נקה",
+        "toggle": "בורר מצבים",
+        "show_devices": "הצג התקנים",
+        "no_devices": "אין לך מכשירים",
+        "no_match": "לא נמצאו מכשירים תואמים",
+        "device": "מכשיר",
+        "no_area": "אין אזור"
+      },
+      "area-picker": {
+        "clear": "נקה",
+        "show_areas": "הצג אזורים",
+        "area": "אזור",
+        "add_new": "הוספת אזור חדש...",
+        "no_areas": "אין לך אזורים",
+        "no_match": "לא נמצאו אזורים תואמים",
+        "add_dialog": {
+          "title": "הוסף אזור חדש",
+          "text": "הזן את שם האזור החדש.",
+          "name": "שם",
+          "add": "הוסף",
+          "failed_create_area": "יצירת אזור נכשלה."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "הרחבה",
+        "error": {
+          "no_supervisor": {
+            "title": "אין מפקח",
+            "description": "לא נמצא מפקח, כך שלא היתה אפשרות לטעון הרחבות."
+          },
+          "fetch_addons": {
+            "title": "שגיאה באחזור הרחבות",
+            "description": "אחזור הרחבות החזירה שגיאה."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "סנן לפי ישות",
+        "filter_by_device": "סנן לפי מכשיר",
+        "filter_by_area": "סנן לפי אזור",
+        "filtered_by_entity": "ישות: {entity_name}",
+        "filtered_by_device": "מכשיר: {device_name}",
+        "filtered_by_area": "אזור: {area_name}"
+      },
+      "picture-upload": {
+        "label": "תמונה",
+        "unsupported_format": "פורמט לא נתמך, בחר תמונת JPEG, PNG או GIF."
+      },
+      "date-range-picker": {
+        "start_date": "תאריך התחלה",
+        "end_date": "תאריך סיום",
+        "select": "בחר",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "אף פעם לא",
+        "just_now": "עכשיו",
+        "duration": {
+          "second": "{count} {count, plural,\n  one {שנייה}\n  other {שניות}\n}",
+          "minute": "{count} {count, plural,\n  one {דקה}\n  other {דקות}\n}",
+          "hour": "{count} {count, plural,\n  one {שעה}\n  other {שעות}\n}",
+          "day": "{count} {count, plural,\n  one {יום}\n  other {ימים}\n}",
+          "week": "{count} {count, plural,\n  one {שבוע}\n  other {שבועות}\n}"
+        },
+        "past_duration": {
+          "second": "לפני {count} {count, plural,\n  one {שניה}\n  other {שניות}\n}",
+          "minute": "לפני {count} {count, plural,\n  one {דקה}\n  other {דקות}\n}",
+          "hour": "לפני {count} {count, plural,\n  one {שעה}\n  other {שעות}\n}",
+          "day": "לפני {count} {count, plural,\n  one {יום}\n  other {ימים}\n}",
+          "week": "לפני {count} {count, plural,\n  one {שבוע}\n  other {שבועות}\n}"
+        },
+        "future_duration": {
+          "second": "בעוד {count} {count, plural,\n  one {שניה}\n  other {שניות}\n}",
+          "minute": "בעוד {count} {count, plural,\n  one {דקה}\n  other {דקות}\n}",
+          "hour": "בעוד {count} {count, plural,\n  one {שעה}\n  other {שעות}\n}",
+          "day": "בעוד {count} {count, plural,\n  one {יום}\n  other {ימים}\n}",
+          "week": "בעוד {count} {count, plural,\n  one {שבוע}\n  other {שבועות}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "היסטוריית השילוב מושבתת",
+        "loading_history": "טוען היסטוריה...",
+        "no_history_found": "לא נמצאה היסטוריה"
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "שירות" },
+      "service-control": {
+        "required": "שדה זה נדרש",
+        "target": "יעדים",
+        "target_description": "אלה האיזורים, התקנים וישויות בהם ישתמש שירות זה",
+        "service_data": "נתוני שירות",
+        "integration_doc": "תיעוד אינטגרציה"
+      },
+      "related-items": {
+        "no_related_found": "לא נמצאו פריטים קשורים.",
+        "integration": "אינטגרציה",
+        "device": "מכשיר",
+        "area": "אֵזוֹר",
+        "entity": "ישויות קשורות",
+        "group": "חלק מהקבוצות הבאות",
+        "scene": "חלק מהסצנות הבאות",
+        "script": "חלק מהסקריפטים הבאים",
+        "automation": "חלק מהאוטומציות הבאות"
+      },
+      "data-table": {
+        "search": "חיפוש",
+        "no-data": "אין נתונים",
+        "filtering_by": "סינון לפי",
+        "hidden": "{number} חבוי",
+        "clear": "נקה"
+      },
+      "media-browser": {
+        "pick": "בחר",
+        "play": "הפעל",
+        "play-media": "הפעל מדיה",
+        "pick-media": "בחר מדיה",
+        "no_items": "אין פריטים",
+        "choose_player": "בחר נגן",
+        "media-player-browser": "סייר נגן המדיה",
+        "web-browser": "דפדפן",
+        "media_player": "נגן מדיה",
+        "audio_not_supported": "הדפדפן שלך אינו תומך ברכיב השמע.",
+        "video_not_supported": "הדפדפן שלך אינו תומך ברכיב הווידאו.",
+        "media_not_supported": "נגן המדיה של הדפדפן אינו תומך בסוג מדיה זה",
+        "media_browsing_error": "שגיאת בסיור המדיה",
+        "learn_adding_local_media": "למד עוד אודות הוספת מדיה ב-{documentation}.",
+        "local_media_files": "מקם את קבצי הווידאו, השמע והתמונה בספריית המדיה כדי שתוכל לעיין בהם ולהשמיע אותם בדפדפן או בנגני מדיה נתמכים.",
+        "documentation": "תיעוד",
+        "no_local_media_found": "לא נמצאה מדיה מקומית",
+        "no_media_folder": "נראה שעדיין לא יצרת ספריית מדיה.",
+        "setup_local_help": "עיין ב{documentation} כיצד להגדיר מדיה מקומית.",
+        "class": {
+          "album": "אלבום",
+          "app": "יישום",
+          "artist": "אמן",
+          "channel": "ערוץ",
+          "composer": "מלחין",
+          "contributing_artist": "אמן תורם",
+          "directory": "ספריה",
+          "episode": "פרק",
+          "game": "משחק",
+          "genre": "ז'אנר",
+          "image": "תמונה",
+          "movie": "סרט",
+          "music": "מוזיקה",
+          "playlist": "רשימת השמעה",
+          "podcast": "פודקאסט",
+          "season": "עונה",
+          "track": "רצועה",
+          "tv_show": "תוכנית טלוויזיה",
+          "url": "כתובת אתר",
+          "video": "וידאו"
+        }
+      },
+      "calendar": { "my_calendars": "היומנים שלי", "today": "היום" },
+      "attributes": { "expansion_header": "תכונות" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "{domain}",
+            "core": "מיקום והתאמות אישיות",
+            "group": "קבוצות, ישויות קבוצתיות ושירותי הודעה",
+            "automation": "אוטומציות",
+            "script": "סקריפטים",
+            "scene": "סצנות",
+            "person": "אנשים",
+            "zone": "אזורים",
+            "input_boolean": "קלט בוליאני",
+            "input_text": "קלט טקסט",
+            "input_number": "קלט מספרים",
+            "input_datetime": "קלט תאריך וזמן",
+            "input_select": "קלט בחירה",
+            "template": "תבנית ישויות",
+            "universal": "ישויות אוניברסליות של נגן מדיה",
+            "rest": "שאר ישויות ושירותי הודעות",
+            "command_line": "ישויות שורת פקודה",
+            "filter": "סינון ישויות",
+            "statistics": "סטטיסטיקה ישויות",
+            "generic": "ישויות כלליות של מצלמת IP",
+            "generic_thermostat": "ישויות כלליות של וסת חום",
+            "homekit": "HomeKit",
+            "min_max": "ישויות מינימום/מקסימום",
+            "history_stats": "היסטוריית מצב ישויות",
+            "trend": "מגמת ישויות",
+            "ping": "איתות (Ping) ישויות חיישנים בינאריים",
+            "filesize": "ישויות בגודל הקובץ",
+            "telegram": "שירותי הודעת טלגרם",
+            "smtp": "שירותי הודעת SMTP",
+            "mqtt": "ישויות MQTT שתצורתן נקבעה באופן ידני",
+            "rpi_gpio": "ישויות GPIO של רספברי פאי"
+          },
+          "server_control": {
+            "perform_action": "{action} שרת",
+            "restart": "הפעלה מחדש",
+            "stop": "עצור"
+          },
+          "types": {
+            "reload": "טען מחדש",
+            "navigation": "ניווט",
+            "server_control": "שרת"
+          },
+          "navigation": {
+            "logs": "יומנים",
+            "automation": "אוטומציות",
+            "script": "סקריפטים",
+            "integrations": "שילובים",
+            "areas": "אזורים",
+            "scene": "סצנות",
+            "helpers": "מסייעים",
+            "tag": "תגים",
+            "person": "אנשים",
+            "devices": "התקנים",
+            "entities": "ישויות",
+            "energy": "Energy",
+            "lovelace": "לוחות הבקרה של Lovelace",
+            "core": "כללי",
+            "zone": "אזורים",
+            "users": "משתמשים",
+            "info": "מידע",
+            "customize": "התאמות אישיות",
+            "blueprint": "שרטוטים",
+            "server_control": "פקדי שרת",
+            "navigate_to": "נווט אל {panel}"
+          }
+        },
+        "filter_placeholder": "מסנן ישויות"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant לא שמע כלום",
+        "found": "מצאתי עבורך את הדברים הבאים:",
+        "error": "אופס, אירעה שגיאה",
+        "how_can_i_help": "איך אני יכול לעזור?",
+        "label": "הקלד שאלה ולחץ על 'Enter'",
+        "label_voice": "הקלד ולחץ על 'Enter' או הקש על המיקרופון כדי לדבר"
+      },
+      "generic": {
+        "cancel": "ביטול",
+        "ok": "אישור",
+        "default_confirmation_title": "האם אתה בטוח?",
+        "close": "סגור"
+      },
+      "image_cropper": { "crop": "חתוך" },
+      "more_info_control": {
+        "dismiss": "סגור",
+        "settings": "הגדרות ישות",
+        "edit": "ערוך יישות",
+        "details": "פרטים",
+        "history": "היסטוריה",
+        "last_changed": "שינוי אחרון",
+        "last_updated": "עודכן לאחרונה",
+        "script": {
+          "last_action": "פעולה אחרונה",
+          "last_triggered": "גורם הפעיל לאחרונה"
+        },
+        "sun": { "elevation": "גובה", "rising": "זורחת", "setting": "שוקעת" },
+        "updater": { "title": "הוראות עדכון" },
+        "remote": { "activity": "פעילות נוכחית" },
+        "restored": {
+          "not_provided": "ישות זו אינה זמינה כרגע והיא בת לאינטגרציה או מכשיר שהוסרו, השתנו או לא מתפקדים.",
+          "remove_intro": "אם הישות כבר אינה בשימוש, תוכלו לנקות אותה על ידי הסרתה.",
+          "remove_action": "הסר יישות",
+          "confirm_remove_title": "להסיר את הישות?",
+          "confirm_remove_text": "האם אתה בטוח שברצונך להסיר ישות זו?"
+        },
+        "vacuum": {
+          "status": "סטטוס",
+          "commands": "פקודות שואב אבק:",
+          "fan_speed": "מהירות מאוורר",
+          "start": "התחל",
+          "pause": "השהיה",
+          "stop": "עצור",
+          "clean_spot": "נקה נקודה",
+          "locate": "איתור",
+          "return_home": "חזור הביתה",
+          "start_pause": "התחל/השהה"
+        },
+        "person": { "create_zone": "צור אזור מהמיקום הנוכחי" },
+        "cover": {
+          "open_cover": "פתח וילון",
+          "close_cover": "סגור וילון",
+          "open_tilt_cover": "פתח את הטיית הוילון",
+          "close_tile_cover": "סגור את הטיית הוילון",
+          "stop_cover": "עצור וילון מלנוע"
+        }
+      },
+      "entity_registry": {
+        "settings": "הגדרות",
+        "control": "בקרה",
+        "related": "קשורים",
+        "dismiss": "בטל",
+        "no_unique_id": "לישות זו (\"{entity_id}\") אין מזהה ייחודי, ולכן לא ניתן לנהל את הגדרותיה ממשק המשתמש. עיין ב-{faq_link} לפרטים נוספים.",
+        "faq": "תיעוד",
+        "info_customize": "באפשרותך להחליף תכונות מסוימות במקטע {customize_link}.",
+        "customize_link": "התאמות אישיות של ישויות",
+        "editor": {
+          "name": "שם",
+          "icon": "סמליל",
+          "icon_error": "סמלים צריכים להיות בפורמט: prefix:iconname, למשל: mdi:home",
+          "entity_id": "מזהה ישות",
+          "unavailable": "ישות זו אינה זמינה כרגע.",
+          "enabled_label": "הפוך ישות לזמינה",
+          "enabled_cause": "מושבת עקב {סיבה}.",
+          "device_disabled": "המכשיר של ישות זו מושבת.",
+          "open_device_settings": "פתח את הגדרות המכשיר",
+          "enabled_description": "ישויות מושבתות לא יתווספו ל Home Assistant.",
+          "enabled_delay_confirm": "הישויות המופעלות יתווספו ל-Home Assistant בעוד {delay} שניות",
+          "enabled_restart_confirm": "הפעל מחדש את Assistant Home כדי להפוך את היישויות לזמינות",
+          "delete": "מחק",
+          "confirm_delete": "האם אתה בטוח שברצונך למחוק רשומה זו?",
+          "update": "עדכון",
+          "note": "הערה: יתכן שזה עדיין לא פועל עם כל השילובים.",
+          "advanced": "הגדרות מתקדמות",
+          "area": "הגדרת אזור ישות בלבד",
+          "area_note": "כברירת מחדל, הישויות של התקן נמצאות באותו אזור כמו ההתקן. אם תשנה את האזור של ישות זו, היא לא תעקוב עוד אחר אזור ההתקן.",
+          "follow_device_area": "עקוב אחר אזור ההתקן",
+          "change_device_area": "שינוי את אזור ההתקן"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "השילוב {platform} לא נטען. אנא הוסף אותו לתצורה שלך על ידי הוספת 'default_config:' או '' {platform} : ''.",
+        "yaml_not_editable": "אין אפשרות לערוך את ההגדרות של ישות זו מממשק המשתמש. רק ישויות שהוגדרו מממשק המשתמש ניתנות להגדרה מתוך ממשק המשתמש.",
+        "required_error_msg": "שדה זה הוא חובה",
+        "generic": { "name": "שם", "icon": "סמל" },
+        "input_datetime": {
+          "date": "תאריך",
+          "time": "זמן",
+          "datetime": "תאריך ושעה",
+          "mode": "מה ברצונך להזין?"
+        },
+        "input_text": {
+          "min": "אורך מינימלי",
+          "max": "אורך מקסימאלי",
+          "mode": "מצב תצוגה",
+          "text": "טקסט",
+          "password": "סיסמה",
+          "pattern": "דפוס Regex לצורך אימות בצד הלקוח"
+        },
+        "input_number": {
+          "min": "ערך מינימלי",
+          "max": "ערך מקסימאלי",
+          "mode": "מצב תצוגה",
+          "box": "שדה קלט",
+          "slider": "סליידר",
+          "step": "גודל צעד",
+          "unit_of_measurement": "יחידת מידה"
+        },
+        "input_select": {
+          "options": "אפשרויות",
+          "add_option": "הוסף אפשרות",
+          "no_options": "אין עדיין אפשרויות.",
+          "add": "הוסף"
+        },
+        "counter": {
+          "minimum": "ערך מינימלי",
+          "maximum": "ערך מרבי",
+          "initial": "ערך התחלתי",
+          "restore": "שחזור הערך הידוע האחרון בעת הפעלת Home Assistant",
+          "step": "גודל הצעד"
+        },
+        "timer": { "duration": "משך" }
+      },
+      "options_flow": {
+        "form": { "header": "אפשרויות" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "האפשרויות נשמרו בהצלחה." }
+      },
+      "config_entry_system_options": {
+        "title": "אפשרויות מערכת עבור {integration}",
+        "enable_new_entities_label": "הפוך ישויות חדשות שנוספו לזמינות.",
+        "enable_new_entities_description": "אם יש להוסיף באופן אוטומטי התקנים שהתגלו לאחרונה עבור {integration}.",
+        "enable_polling_label": "אפשר תשאול עבור עדכונים.",
+        "enable_polling_description": "אם Home Assistant אמור לתשאל אוטומטית {integration} עבור עדכונים.",
+        "restart_home_assistant": "עליך להפעיל מחדש את Home Assistant כדי שהשינויים שלך ייכנסו לתוקף.",
+        "update": "עדכון"
+      },
+      "zha_reconfigure_device": {
+        "heading": "מגדיר תצורה מחדש של המכשיר",
+        "configuring_alt": "הגדרת תצורה",
+        "introduction": "קביעת תצורה מחדש של התקן ברשת Zigbee. השתמש בתכונה זו אם ההתקן שלך אינו פועל כראוי.",
+        "battery_device_warning": "יהיה עליך להעיר התקנים המופעלים באמצעות סוללה לפני שתתחיל בתהליך קביעת התצורה מחדש. עיין במדריך למשתמש של המכשיר לקבלת הוראות להעיר את ההתקן.",
+        "run_in_background": "באפשרותך לסגור תיבת דו-שיח זו וקביעת התצורה מחדש תמשיך ברקע.",
+        "start_reconfiguration": "התחל קביעת תצורה מחדש",
+        "in_progress": "תצורת ההתקן נקבע, מחדש. פעולה זו עשויה להימשך זמן מה.",
+        "configuration_failed": "קביעת התצורה מחדש של ההתקן נכשלה. ייתכן שמידע נוסף יהיה זמין ביומני הרישום.",
+        "configuration_complete": "קביעת התצורה הושלמה",
+        "button_show": "הצג פרטים",
+        "button_hide": "הסתר פרטים",
+        "cluster_header": "אֶשׁכּוֹל",
+        "bind_header": "קישור",
+        "reporting_header": "דיווח",
+        "attribute": "מאפיין",
+        "min_max_change": "מינימום/מקסימום/שינוי"
+      },
+      "zha_device_info": {
+        "manuf": "לפי {manufacturer}",
+        "no_area": "ללא אזור",
+        "device_signature": "חתימת התקן Zigbee",
+        "device_children": "ילדי מכשיר זיגבי",
+        "buttons": {
+          "add": "הוסף התקנים באמצעות התקן זה",
+          "remove": "הסר מכשיר",
+          "clusters": "ניהול אשכולות",
+          "reconfigure": "הגדר מחדש את המכשיר",
+          "zigbee_information": "חתימת התקן Zigbee",
+          "device_children": "צפה בילדים",
+          "view_in_visualization": "הצג בפריט חזותי"
+        },
+        "services": {
+          "reconfigure": "הגדר מחדש את המכשיר ה- ZHA (ריפוי מכשיר). השתמש בזה אם אתה נתקל בבעיות במכשיר. אם המכשיר המדובר הוא מכשיר המונע על ידי סוללה, אנא וודא שהוא דלוק ומקבל פקודות בעת השימוש בשירות זה.",
+          "updateDeviceName": "הגדר שם מותאם אישית עבור מכשיר זה במאגר ההתקנים.",
+          "remove": "הסר מכשיר מרשת ה-Zigbee",
+          "zigbee_information": "הצגת מידע Zigbee עבור ההתקן."
+        },
+        "confirmations": { "remove": "האם אתה בטוח שברצונך למחוק מכשיר זה?" },
+        "quirk": "מוזרות",
+        "last_seen": "נראה לאחרונה",
+        "power_source": "מקור כוח",
+        "unknown": "לא ידוע",
+        "zha_device_card": { "device_name_placeholder": "שנה שם התקן" }
+      },
+      "domain_toggler": {
+        "title": "החלף דומיינים",
+        "reset_entities": "איפוס ישויות"
+      },
+      "mqtt_device_debug_info": {
+        "title": "{device} פרטי איתור באגים",
+        "deserialize": "נסה לנתח הודעות MQTT כ- JSON",
+        "entities": "ישויות",
+        "no_entities": "אין ישויות",
+        "no_triggers": "אין טריגרים",
+        "payload_display": "הצג Payload",
+        "recent_messages": "{n} ההודעות שהתקבלו לאחרונה",
+        "show_as_yaml": "הצג כ־YAML",
+        "triggers": "טריגרים"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\n  one {שניה}\n  other {שניות}\n}",
+      "minute": "{count} {count, plural,\n  one {דקה}\n  other {דקות}\n}",
+      "hour": "{count} {count, plural,\n  one {שעה}\n  other {שעות}\n}",
+      "day": "{count} {count, plural,\n  one {יום}\n  other {ימים}\n}",
+      "week": "{count} {count, plural,\n  one {שבוע}\n  other {שבועות}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "לא סופק סוג.",
+        "error_detected": "זוהו שגיאות תצורה",
+        "editor_not_available": "אין עורך חזותי זמין עבור הסוג \"{type}\".",
+        "editor_not_supported": "עורך חזותי אינו נתמך עבור תצורה זו",
+        "edit_in_yaml_supported": "באפשרותך עדיין לערוך את תצורתך ב-YAML.",
+        "key_missing": "המפתח הנדרש \"{key}\" חסר.",
+        "key_not_expected": "המפתח \"{key}\" אינו צפוי או לא נתמך על ידי העורך החזותי.",
+        "key_wrong_type": "הערך שסופק עבור \"{key}\" אינו נתמך על-ידי העורך החזותי. אנו תומכים ({type_correct}) אך קיבלנו ({type_wrong}).",
+        "no_template_editor_support": "תבניות אינן נתמכות בעורך החזותי"
+      },
+      "supervisor": {
+        "title": "לא ניתן לטעון את לוח המפקח!",
+        "wait": "אם רק התחלת, ודא שנתת למפקח מספיק זמן להתחיל.",
+        "ask": "בקש עזרה",
+        "reboot": "נסה אתחול מחדש של המחשב המארח",
+        "observer": "בדוק את המשקיף",
+        "system_health": "בדוק את בריאות המערכת"
+      }
+    },
+    "login-form": {
+      "password": "סיסמה",
+      "remember": "זכור",
+      "log_in": "התחבר"
+    },
+    "notification_drawer": {
+      "click_to_configure": "לחץ על הלחצן כדי להגדיר {entity}",
+      "empty": "אין התראות",
+      "title": "התראות",
+      "close": "סגור",
+      "dismiss_all": "שחרר הכל"
+    },
+    "notification_toast": {
+      "service_call_failed": "נכשלה הקריאה לשירות {service} .",
+      "connection_lost": "החיבור אבד. מתחבר מחדש...",
+      "started": "Home Assistant עלה!",
+      "starting": "Home Assistant בעלייה, ייתכן שלא הכל יהיה זמין עד שהעליה תסתיים",
+      "wrapping_up_startup": "סיום העליה, לא הכל יהיה זמין עד לסיום.",
+      "integration_starting": "מפעיל את {integration} , לא הכל יהיה זמין עד לסיום.",
+      "triggered": "הופעל {name}",
+      "dismiss": "בטל"
+    },
+    "sidebar": {
+      "external_app_configuration": "הגדרות היישום",
+      "sidebar_toggle": "שנה מצב סרגל צידי",
+      "done": "בוצע"
+    },
+    "panel": {
+      "error": {
+        "go_back": "חזור",
+        "supervisor": {
+          "ask": "בקש עזרה",
+          "observer": "בדוק את הצופה",
+          "reboot": "נסה אתחול מחדש של המחשב המארח",
+          "system_health": "בדוק את בריאות המערכת",
+          "title": "לא היתה אפשרות לטעון את לוח המפקח!",
+          "wait": "אם רק התחלת, ודא שנתת למפקח מספיק זמן להתחיל."
+        }
+      },
+      "history": {
+        "ranges": {
+          "last_week": "שבוע שעבר",
+          "this_week": "השבוע",
+          "today": "היום",
+          "yesterday": "אתמול"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "שבוע שעבר",
+          "this_week": "השבוע",
+          "today": "היום",
+          "yesterday": "אתמול"
+        }
+      }
+    }
+  }
+}

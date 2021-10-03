@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Händelser",
+            "description": "Kör händelse till händelsebuss",
+            "documentation": "Dokumentation om händelser.",
+            "type": "Händelsetyp",
+            "data": "Händelsedata (YAML, valfritt)",
+            "fire_event": "Utlös händelse",
+            "event_fired": "Händelse {name} utlöst",
+            "available_events": "Tillgängliga händelser",
+            "count_listeners": " ({count} lyssnare)",
+            "listen_to_events": "Lyssna på händelser",
+            "listening_to": "Lyssnar på",
+            "subscribe_to": "Ämne att prenumerera på",
+            "start_listening": "Börja lyssna",
+            "stop_listening": "Sluta lyssna",
+            "alert_event_type": "Händelsetyp är ett obligatoriskt fält",
+            "notification_event_fired": "Händelse {type} utlöstes!"
+          },
+          "services": {
+            "title": "Tjänster",
+            "description": "Utvecklarverktyget för tjänster låter dig anropa alla tillgängliga tjänster i Home Assistant.",
+            "call_service": "Anropa tjänst",
+            "column_parameter": "Parameter",
+            "column_description": "Beskrivning",
+            "column_example": "Exempel",
+            "fill_example_data": "Fyll på exempeldata",
+            "yaml_mode": "Gå till YAML-läge",
+            "ui_mode": "Gå till UI-läge",
+            "yaml_parameters": "Parametrar endast tillgängliga i YAML-läge",
+            "all_parameters": "Alla tillgängliga parametrar",
+            "accepts_target": "This service accepts a target, for example: `entity_id: light.bed_light`",
+            "no_template_ui_support": "The UI does not support templates, you can still use the YAML editor."
+          },
+          "states": {
+            "title": "Tillstånd",
+            "description1": "Ställ in representationen av en enhet i Home Assistant.",
+            "description2": "Detta kommer inte att kommunicera med den faktiska enheten.",
+            "entity": "Enhet",
+            "state": "Tillstånd",
+            "attributes": "Attribut",
+            "state_attributes": "Tillståndsattribut (YAML, valfritt)",
+            "set_state": "Ange tillstånd",
+            "current_entities": "Nuvarande enheter",
+            "filter_entities": "Filtrera entiteter",
+            "filter_states": "Filtrera tillstånd",
+            "filter_attributes": "Filterattribut",
+            "no_entities": "Inga enheter",
+            "more_info": "Mer information",
+            "alert_entity_field": "Enhet är ett obligatoriskt fält",
+            "last_updated": "Senast uppdaterad",
+            "last_changed": "Senast ändrad",
+            "copy_id": "Kopiera ID till klippbordet"
+          },
+          "templates": {
+            "title": "Mallar",
+            "description": "Mallar tolkas med hjälp av Jinja2 template engine med vissa Home Assistant-specifika tillägg.",
+            "editor": "Mallredigerare",
+            "reset": "Återställ till demomall",
+            "result_type": "Resultattyp",
+            "jinja_documentation": "Malldokumentation för Jinja2",
+            "template_extensions": "Mallutökningar för Home Assistant",
+            "unknown_error_template": "Okänt fel vid rendering av mall",
+            "time": "Den här mallen uppdateras i början av varje minut.",
+            "all_listeners": "Den här mallen lyssnar efter alla tillståndsändrade händelser.",
+            "no_listeners": "Den här mallen lyssnar inte efter några händelser och uppdateras inte automatiskt.",
+            "listeners": "Den här mallen lyssnar efter följande tillståndsändrade händelser:",
+            "entity": "Entitet",
+            "domain": "Domän"
+          }
+        }
+      }
+    }
+  }
+}

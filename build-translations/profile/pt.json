@@ -1,0 +1,148 @@
+{
+  "ui": {
+    "panel": {
+      "profile": {
+        "current_user": "Esta atualmente ligado como {fullName}",
+        "is_owner": "Você é um proprietário.",
+        "logout": "Sair",
+        "logout_title": "Sair?",
+        "logout_text": "Tem certeza que deseja terminar a sessão?",
+        "force_narrow": {
+          "header": "Esconder sempre a barra lateral.",
+          "description": "Isto esconderá por defeito a barra lateral, semelhante à experiência no telemóvel."
+        },
+        "customize_sidebar": {
+          "header": "Altere a ordem e oculte os itens da barra lateral",
+          "description": "Pode também pressionar e segurar o cabeçalho da barra lateral para ativar o modo de edição.",
+          "button": "Editar"
+        },
+        "vibrate": {
+          "header": "Vibrar",
+          "description": "Ative ou desative a vibração neste dispositivo ao controlar dispositivos."
+        },
+        "enable_shortcuts": {
+          "header": "Atalhos de Teclado",
+          "description": "Ativar ou desativar atalhos de teclado para executar várias ações na IU."
+        },
+        "suspend": {
+          "header": "Fechar automaticamente a conexão",
+          "description": "Devemos fechar a conexão com o servidor depois de ficar oculto por 5 minutos?"
+        },
+        "push_notifications": {
+          "header": "Notificações push",
+          "description": "Enviar notificações para este dispositivo.",
+          "error_load_platform": "Configurar notify.html5.",
+          "error_use_https": "Requer SSL ativo para o interface principal",
+          "push_notifications": "Notificações push",
+          "link_promo": "Saiba mais",
+          "add_device_prompt": {
+            "title": "Como se deve chamar este dispositivo?",
+            "input_label": "Nome do dispositivo"
+          }
+        },
+        "language": {
+          "header": "Idioma",
+          "link_promo": "Ajude na tradução",
+          "dropdown_label": "Idioma"
+        },
+        "number_format": {
+          "header": "Formatação numérica",
+          "dropdown_label": "Formatação numérica",
+          "description": "Choose how numbers are formatted.",
+          "formats": {
+            "language": "Auto (use language setting)",
+            "system": "Use system locale",
+            "comma_decimal": "1,234,567.89",
+            "decimal_comma": "1.234.567,89",
+            "space_comma": "1 234 567,89",
+            "none": "None"
+          }
+        },
+        "time_format": {
+          "header": "Formato de hora",
+          "dropdown_label": "Formato de hora",
+          "description": "Escolha como os horários são formatados.",
+          "formats": {
+            "12": "12 horas (AM/PM)",
+            "24": "24 horas",
+            "language": "Auto (usar configuração de idioma)",
+            "system": "Utilizar o formato do sistema"
+          }
+        },
+        "themes": {
+          "header": "Tema",
+          "error_no_theme": "Não há temas disponíveis.",
+          "link_promo": "Saiba mais sobre temas",
+          "dropdown_label": "Tema",
+          "dark_mode": {
+            "auto": "Automático",
+            "light": "Luz",
+            "dark": "Escuro"
+          },
+          "primary_color": "Cor primária",
+          "accent_color": "Cor de destaque",
+          "reset": "Redefinir"
+        },
+        "dashboard": {
+          "header": "Painel de instrumentos",
+          "description": "Escolha um painel de instrumentos padrão para este dispositivo.",
+          "dropdown_label": "Painel de instrumentos"
+        },
+        "change_password": {
+          "header": "Alterar palavra-passe",
+          "current_password": "Palavra-passe atual",
+          "new_password": "Nova palavra-passe",
+          "confirm_new_password": "Confirmar a nova palavra-passe",
+          "error_required": "Obrigatório",
+          "submit": "Enviar",
+          "error_new_mismatch": "Os novos valores da palavra-passe introduzidos não coincidem",
+          "error_new_is_old": "A nova palavra-passe deve ser diferente da palavra-passe atual",
+          "success": "Palavra-passe alterada com sucesso"
+        },
+        "mfa": {
+          "header": "Módulos de Autenticação por Multíplos-fatores",
+          "disable": "Desativar",
+          "enable": "Ativar",
+          "confirm_disable": "Tem certeza de que deseja desativar {name} ?"
+        },
+        "mfa_setup": {
+          "title_aborted": "Abortado",
+          "title_success": "Sucesso!",
+          "step_done": "Configuração concluída para {step}",
+          "close": "Fechar",
+          "submit": "Enviar"
+        },
+        "advanced_mode": {
+          "title": "Modo avançado",
+          "description": "Desbloqueia funcionalidades avançadas.",
+          "link_promo": "Saber mais"
+        },
+        "refresh_tokens": {
+          "header": "Atualizar Tokens",
+          "description": "Cada \"refresh token\" representa uma sessão de utilizador. Os \"refresh tokens\" serão automaticamente removidos quando clicar em sair. Os seguintes \"refresh tokens\" estão activos para a sua conta.",
+          "token_title": "Atualizar o token de {clientId}",
+          "created_at": "Criado a {date}",
+          "last_used": "Última utilização a {date} em {location}",
+          "not_used": "Nunca foi utilizado",
+          "confirm_delete": "Tem certeza de que deseja apagar o \"refresh token\" de {name} ?",
+          "delete_failed": "Falha ao apagar o \"refresh token\"",
+          "current_token_tooltip": "Não é possível eliminar o \"refresh token\" actual"
+        },
+        "long_lived_access_tokens": {
+          "header": "Tokens de acesso de longa duração",
+          "description": "Crie tokens de acesso de longa duração para permitir que os seus scripts possam interagir com a sua instância do Home Assistant. Cada token será válido durante 10 anos após criação. Os seguintes tokens de acesso de longa duração estão atualmente activos.",
+          "learn_auth_requests": "Aprenda a fazer pedidos autenticados.",
+          "created": "Criado em {date}",
+          "confirm_delete": "Tem certeza de que deseja apagar o token de acesso de {name} ?",
+          "delete_failed": "Falha ao criar o token de acesso.",
+          "create": "Criar Token",
+          "create_failed": "Falha ao criar o token de acesso.",
+          "name": "Nome",
+          "prompt_name": "Nome?",
+          "prompt_copy_token": "Copie o seu token de acesso. Não será mostrado novamente.",
+          "empty_state": "Ainda não tem um token de longa duração"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "ui": {
+    "panel": {
+      "mailbox": {
+        "empty": "Nu aveți mesaje",
+        "playback_title": "Redarea mesajelor",
+        "delete_prompt": "Ștergeți acest mesaj?",
+        "delete_button": "Ștergeți"
+      }
+    }
+  }
+}

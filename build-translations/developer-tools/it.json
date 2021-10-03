@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Eventi",
+            "description": "Attiva un evento sul bus eventi.",
+            "documentation": "Documentazione degli eventi",
+            "type": "Tipo di Evento",
+            "data": "Dati Evento (YAML, opzionale)",
+            "fire_event": "Scatena Evento",
+            "event_fired": "Evento {name} generato",
+            "available_events": "Eventi disponibili",
+            "count_listeners": " ({count} ascoltatori)",
+            "listen_to_events": "Ascoltare gli eventi",
+            "listening_to": "In ascolto di",
+            "subscribe_to": "Evento a cui iscriversi",
+            "start_listening": "Iniziare ad ascoltare",
+            "stop_listening": "Interrompere l'ascolto",
+            "alert_event_type": "Il tipo di evento è un campo obbligatorio",
+            "notification_event_fired": "Evento {type} eseguito con successo!"
+          },
+          "services": {
+            "title": "Servizi",
+            "description": "Lo strumento di sviluppo del servizio consente di chiamare qualsiasi servizio disponibile in Home Assistant.",
+            "call_service": "Chiama il Servizio",
+            "column_parameter": "Parametro",
+            "column_description": "Descrizione",
+            "column_example": "Esempio",
+            "fill_example_data": "Inserisci dati di esempio",
+            "yaml_mode": "Vai in modalità YAML",
+            "ui_mode": "Vai in modalità Interfaccia Utente",
+            "yaml_parameters": "Parametri disponibili solo in modalità YAML",
+            "all_parameters": "Tutti i parametri disponibili",
+            "accepts_target": "Questo servizio accetta una destinazione, per esempio: `entity_id: light.bed_light`.",
+            "no_template_ui_support": "L'Interfaccia Utente non supporta i modelli, puoi comunque utilizzare l'editor YAML."
+          },
+          "states": {
+            "title": "Stati",
+            "description1": "Imposta lo stato corrente di un'entità all'interno di Home Assistant.",
+            "description2": "Se l'entità appartiene a un dispositivo, non si potrà attuare nessuna comunicazione con esso.",
+            "entity": "Entità",
+            "state": "Stato",
+            "attributes": "Attributi",
+            "state_attributes": "Attributi di stato (YAML, facoltativo)",
+            "set_state": "Imposta Stato",
+            "current_entities": "Entità correnti",
+            "filter_entities": "Filtra entità",
+            "filter_states": "Filtra stati",
+            "filter_attributes": "Filtra attributi",
+            "no_entities": "Nessuna entità",
+            "more_info": "Ulteriori informazioni",
+            "alert_entity_field": "Entità è un campo obbligatorio",
+            "last_updated": "Ultimo aggiornamento",
+            "last_changed": "Ultima modifica",
+            "copy_id": "Copia ID negli appunti"
+          },
+          "templates": {
+            "title": "Modelli",
+            "description": "Il rendering dei modelli viene eseguito utilizzando il motore di modelli Jinja2 con alcune estensioni specifiche di Home Assistant.",
+            "editor": "Editor di modelli",
+            "reset": "Ripristina il modello di esempio",
+            "result_type": "Tipo di risultato",
+            "jinja_documentation": "Documentazione del modello Jinja2",
+            "template_extensions": "Estensioni del modello Home Assistant",
+            "unknown_error_template": "Errore sconosciuto nel rendering del modello",
+            "time": "Questo modello si aggiorna all'inizio di ogni minuto.",
+            "all_listeners": "Questo modello è in ascolto di tutti gli eventi di stato modificato.",
+            "no_listeners": "Questo modello non è in ascolto di alcun evento e non verrà aggiornato automaticamente.",
+            "listeners": "Questo modello è in ascolto dei seguenti eventi di modifica dello stato:",
+            "entity": "Entità",
+            "domain": "Dominio"
+          }
+        }
+      }
+    }
+  }
+}

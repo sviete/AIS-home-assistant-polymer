@@ -1,0 +1,866 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "Kalendrar",
+    "config": "Konfigurasjon",
+    "states": "Oversikt",
+    "map": "Kart",
+    "logbook": "Loggbok",
+    "history": "Historie",
+    "mailbox": "Postkasse",
+    "shopping_list": "Handleliste",
+    "developer_tools": "Utviklarverktøy",
+    "media_browser": "Media Browser",
+    "profile": "Profil"
+  },
+  "state": {
+    "default": {
+      "on": "På",
+      "off": "Av",
+      "unknown": "Ukjent",
+      "unavailable": "Utilgjengeleg"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "Av", "on": "På", "auto": "Auto" },
+      "preset_mode": {
+        "none": "Inga",
+        "eco": "Øko",
+        "away": "Borte",
+        "boost": "Auke",
+        "comfort": "Komfort",
+        "home": "Heime",
+        "sleep": "Søvn",
+        "activity": "Aktivitet"
+      },
+      "hvac_action": {
+        "off": "Av",
+        "heating": "Oppvarming",
+        "cooling": "Nedkjøling",
+        "drying": "Tørkar",
+        "idle": "Tomgang",
+        "fan": "Vifte"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "Normal",
+        "eco": "Eco",
+        "away": "Away",
+        "boost": "Boost",
+        "comfort": "Comfort",
+        "home": "Home",
+        "sleep": "Sleep",
+        "auto": "Auto",
+        "baby": "Baby"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "Ukjent",
+      "unavailable": "Utilgjengeleg",
+      "error": "Feil",
+      "entity_not_found": "Fann ikkje einheten"
+    },
+    "alarm_control_panel": {
+      "armed": "Påslått",
+      "disarmed": "Deaktiver",
+      "armed_home": "Påslått",
+      "armed_away": "Påslått",
+      "armed_night": "Påslått",
+      "armed_custom_bypass": "Påslått",
+      "pending": "Ventar",
+      "arming": "Slår på",
+      "disarming": "Slå av",
+      "triggered": "Utløys"
+    },
+    "device_tracker": { "home": "Heime", "not_home": "Borte " },
+    "person": { "home": "Heime", "not_home": "Borte " }
+  },
+  "groups": {
+    "owner": "Owner",
+    "system-admin": "Administratorer",
+    "system-users": "Brukarar",
+    "system-read-only": "Lesebegrensa brukarar"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "Brukar",
+      "integration": "Integrasjon",
+      "config_entry": "Konfigurer oppføring",
+      "device": "Device"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "Vil du lagre denne pålogginga?",
+      "decline": "Nei takk",
+      "confirm": "Lagre innlogging"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "Kode",
+        "clear_code": "Slett alt",
+        "disarm": "Skru av",
+        "arm_home": "Heimemodus",
+        "arm_away": "Bortemodus",
+        "arm_night": "Aktiver natt",
+        "arm_custom_bypass": "Tilpassa bypass"
+      },
+      "automation": { "last_triggered": "Sist utløyst", "trigger": "Utfør" },
+      "camera": { "not_available": "Bilete ikkje tilgjengeleg" },
+      "climate": {
+        "currently": "Akkurat no",
+        "on_off": "På / av",
+        "target_temperature": "Temperaturmål",
+        "target_temperature_entity": "{name} target temperature",
+        "target_temperature_mode": "{name} target temperature {mode}",
+        "current_temperature": "{name} current temperature",
+        "heating": "{name} heating",
+        "cooling": "{name} cooling",
+        "high": "high",
+        "low": "low",
+        "target_humidity": "Fuktigheitsmål",
+        "operation": "Operasjon",
+        "fan_mode": "Viftemodus",
+        "swing_mode": "Svingmodus",
+        "preset_mode": "Mal",
+        "away_mode": "Bortemodus",
+        "aux_heat": "Aux-varme"
+      },
+      "counter": {
+        "actions": {
+          "increment": "increment",
+          "decrement": "decrement",
+          "reset": "reset"
+        }
+      },
+      "cover": { "position": "Posisjon", "tilt_position": "Tiltposisjon" },
+      "fan": {
+        "speed": "Fart",
+        "preset_mode": "Malmodus",
+        "oscillate": "Sving",
+        "direction": "Retning",
+        "forward": "Framover",
+        "reverse": "Bakover"
+      },
+      "humidifier": {
+        "humidity": "Target humidity",
+        "mode": "Mode",
+        "target_humidity_entity": "{name} target humidity",
+        "on_entity": "{name} on"
+      },
+      "light": {
+        "brightness": "Lysstyrke",
+        "color_temperature": "Fargetemperatur",
+        "white_value": "Kvitverdi",
+        "color_brightness": "Color brightness",
+        "cold_white_value": "Cold white brightness",
+        "warm_white_value": "Warm white brightness",
+        "effect": "Effekt"
+      },
+      "lock": { "code": "Kode", "lock": "Lås", "unlock": "Lås opp" },
+      "media_player": {
+        "source": "Kjelde",
+        "sound_mode": "Lydmodus",
+        "browse_media": "Browse media",
+        "turn_on": "Turn on",
+        "turn_off": "Turn off",
+        "media_play": "Play",
+        "media_play_pause": "Play/pause",
+        "media_next_track": "Next",
+        "media_previous_track": "Previous",
+        "text_to_speak": "Tekst til tale"
+      },
+      "persistent_notification": { "dismiss": "Avvis" },
+      "scene": { "activate": "Aktiver" },
+      "script": {
+        "run": "Køyr",
+        "cancel": "Avbryt",
+        "cancel_multiple": "Avbryt {number}"
+      },
+      "service": { "run": "Køyr" },
+      "timer": {
+        "actions": {
+          "start": "start",
+          "pause": "pause",
+          "cancel": "avbryt",
+          "finish": "fullfør"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "Fortsett reingjeringa",
+          "return_to_base": "Gå tilbake til ladestasjonen",
+          "start_cleaning": "Start reingjering",
+          "turn_on": "Skru på",
+          "turn_off": "Skru av"
+        }
+      },
+      "water_heater": {
+        "currently": "For augeblinken",
+        "on_off": "På / av",
+        "target_temperature": "Temperaturmål",
+        "operation": "Operasjon",
+        "away_mode": "Bortemodus"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "Lufttrykk",
+          "humidity": "Fuktigheit",
+          "temperature": "Temperatur",
+          "visibility": "Sikt",
+          "wind_speed": "Vindfart",
+          "precipitation": "Nedbør"
+        },
+        "cardinal_direction": {
+          "e": "Ø",
+          "ene": "ØNØ",
+          "ese": "ØSØ",
+          "n": "N",
+          "ne": "NØ",
+          "nne": "NNØ",
+          "nw": "NV",
+          "nnw": "NNV",
+          "s": "S",
+          "se": "SØ",
+          "sse": "SSØ",
+          "ssw": "SSV",
+          "sw": "SV",
+          "w": "V",
+          "wnw": "VNV",
+          "wsw": "VSV"
+        },
+        "day": "Day",
+        "night": "Night",
+        "forecast": "Vêrmelding",
+        "high": "Høgt",
+        "low": "Lågt"
+      }
+    },
+    "common": {
+      "and": "og",
+      "continue": "Continue",
+      "previous": "Førre",
+      "loading": "Lastar",
+      "refresh": "Oppdater ",
+      "cancel": "Avbryt",
+      "delete": "Slett",
+      "remove": "Remove",
+      "enable": "Enable",
+      "disable": "Disable",
+      "close": "Close",
+      "leave": "Leave",
+      "stay": "Stay",
+      "next": "Neste",
+      "back": "Tilbake",
+      "undo": "Undo",
+      "save": "Lagre",
+      "rename": "Rename",
+      "yes": "Yes",
+      "no": "No",
+      "not_now": "Not now",
+      "skip": "Skip",
+      "menu": "Meny",
+      "overflow_menu": "Overflow menu",
+      "successfully_saved": "Vellukka lagring",
+      "successfully_deleted": "Vellukka sletting",
+      "error_required": "Påkrevd",
+      "copied": "Copied",
+      "copied_clipboard": "Copied to clipboard"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "No logbook entries found.",
+        "by": "by",
+        "by_service": "by service",
+        "show_trace": "Show trace",
+        "retrieval_error": "Error during logbook entry retrieval",
+        "messages": {
+          "was_away": "was detected away",
+          "was_at_state": "was detected at {state}",
+          "rose": "rose",
+          "set": "set",
+          "was_low": "was low",
+          "was_normal": "was normal",
+          "was_connected": "was connected",
+          "was_disconnected": "was disconnected",
+          "was_opened": "was opened",
+          "was_closed": "was closed",
+          "is_opening": "opnar",
+          "is_closing": "stenger",
+          "was_unlocked": "was unlocked",
+          "was_locked": "was locked",
+          "was_plugged_in": "was plugged in",
+          "was_unplugged": "was unplugged",
+          "was_at_home": "was detected at home",
+          "was_unsafe": "was unsafe",
+          "was_safe": "was safe",
+          "detected_device_class": "detected {device_class}",
+          "cleared_device_class": "cleared (no {device_class} detected)",
+          "turned_off": "turned off",
+          "turned_on": "turned on",
+          "changed_to_state": "changed to {state}",
+          "became_unavailable": "became unavailable"
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "Eining",
+          "clear": "Clear",
+          "no_match": "No matching entities found",
+          "show_entities": "Vis oppføringar"
+        },
+        "entity-attribute-picker": {
+          "attribute": "Attribute",
+          "show_attributes": "Show attributes"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "Expand this area into the separate devices and entities that it contains. After expanding, it will not update the devices and entities when the area changes.",
+        "expand_device_id": "Expand this device into the separate entities that it contains. After expanding, it will not update the entities when the device changes.",
+        "remove_area_id": "Remove area",
+        "remove_device_id": "Remove device",
+        "remove_entity_id": "Remove entity",
+        "add_area_id": "Pick area",
+        "add_device_id": "Pick device",
+        "add_entity_id": "Pick entity"
+      },
+      "user-picker": {
+        "no_user": "No user",
+        "add_user": "Add user",
+        "remove_user": "Remove user"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Select a Blueprint",
+        "add_user": "Add user",
+        "remove_user": "Remove user"
+      },
+      "device-picker": {
+        "clear": "Clear",
+        "toggle": "Veksl ",
+        "show_devices": "Show devices",
+        "no_devices": "You don't have any devices",
+        "no_match": "No matching devices found",
+        "device": "Enhet",
+        "no_area": "Inga område"
+      },
+      "area-picker": {
+        "clear": "Klar ",
+        "show_areas": "Vis områda",
+        "area": "Område",
+        "add_new": "Legg til nytt område...",
+        "no_areas": "You don't have any areas",
+        "no_match": "No matching areas found",
+        "add_dialog": {
+          "title": "Legg til nytt område ",
+          "text": "Legg til namnet til det nye området.",
+          "name": "Namn",
+          "add": "Legg til",
+          "failed_create_area": "Klarte ikkje å opprette område."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "Tillegg",
+        "error": {
+          "no_supervisor": {
+            "title": "Inga Supervisor",
+            "description": "Fann ikkje Supervisor, så tillegget kunne ikkje lastast."
+          },
+          "fetch_addons": {
+            "title": "Feil ved henting av tillegg.",
+            "description": "Henter tillegget som gav feilen."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "Filter by entity",
+        "filter_by_device": "Filter by device",
+        "filter_by_area": "Filter by area",
+        "filtered_by_entity": "entity: {entity_name}",
+        "filtered_by_device": "device: {device_name}",
+        "filtered_by_area": "area: {area_name}"
+      },
+      "picture-upload": {
+        "label": "Picture",
+        "unsupported_format": "Unsupported format, please choose a JPEG, PNG or GIF image."
+      },
+      "date-range-picker": {
+        "start_date": "Start date",
+        "end_date": "End date",
+        "select": "Select",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Aldri",
+        "just_now": "Just now",
+        "duration": {
+          "second": "{count} {count, plural,\none {sekund}\nother {sekundar}\n}",
+          "minute": "{count} {count, plural,\none {minutt}\nother {minutt}\n}",
+          "hour": "{count} {count, plural,\none {time}\nother {timar}\n}",
+          "day": "{count} {count, plural,\none {dag}\nother {dagar}\n}",
+          "week": "{count} {count, plural,\none {veke}\nother {veker}\n}"
+        },
+        "past_duration": {
+          "second": "{count} {count, plural,\n  one {second}\n  other {seconds}\n} ago",
+          "minute": "{count} {count, plural,\n  one {minute}\n  other {minutes}\n} ago",
+          "hour": "{count} {count, plural,\n  one {hour}\n  other {hours}\n} ago",
+          "day": "{count} {count, plural,\n  one {day}\n  other {days}\n} ago",
+          "week": "{count} {count, plural,\n  one {week}\n  other {weeks}\n} ago"
+        },
+        "future_duration": {
+          "second": "In {count} {count, plural,\n  one {second}\n  other {seconds}\n}",
+          "minute": "In {count} {count, plural,\n  one {minute}\n  other {minutes}\n}",
+          "hour": "In {count} {count, plural,\n  one {hour}\n  other {hours}\n}",
+          "day": "In {count} {count, plural,\n  one {day}\n  other {days}\n}",
+          "week": "In {count} {count, plural,\n  one {week}\n  other {weeks}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "History integration disabled",
+        "loading_history": "Lastar tilstandshistoria...",
+        "no_history_found": "Inga tilstandshistorie funne"
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "Teneste" },
+      "service-control": {
+        "required": "Dette feltet obligatorisk",
+        "target": "Mål",
+        "target_description": "Kva skal denne tenesta bruke som målretta område, einingar og oppføringar.",
+        "service_data": "Tenestedata",
+        "integration_doc": "Integration documentation"
+      },
+      "related-items": {
+        "no_related_found": "No related items found.",
+        "integration": "Integrasjon",
+        "device": "Eining",
+        "area": "Område",
+        "entity": "Related entities",
+        "group": "Part of the following groups",
+        "scene": "Part of the following scenes",
+        "script": "Part of the following scripts",
+        "automation": "Part of the following automations"
+      },
+      "data-table": {
+        "search": "Search",
+        "no-data": "Ingen data",
+        "filtering_by": "Filtering by",
+        "hidden": "{number} hidden",
+        "clear": "Clear"
+      },
+      "media-browser": {
+        "pick": "Pick",
+        "play": "Play",
+        "play-media": "Play Media",
+        "pick-media": "Pick Media",
+        "no_items": "No items",
+        "choose_player": "Choose Player",
+        "media-player-browser": "Media Player Browser",
+        "web-browser": "Web Browser",
+        "media_player": "Media Player",
+        "audio_not_supported": "Your browser does not support the audio element.",
+        "video_not_supported": "Your browser does not support the video element.",
+        "media_not_supported": "The Browser Media Player does not support this type of media",
+        "media_browsing_error": "Media Browsing Error",
+        "learn_adding_local_media": "Learn more about adding media in the {documentation}.",
+        "local_media_files": "Place your video, audio and image files in the media directory to be able to browse and play them in the browser or on supported media players.",
+        "documentation": "documentation",
+        "no_local_media_found": "No local media found",
+        "no_media_folder": "It looks like you have not yet created a media directory.",
+        "setup_local_help": "Check the {documentation} on how to setup local media.",
+        "class": {
+          "album": "Album",
+          "app": "App",
+          "artist": "Artist",
+          "channel": "Channel",
+          "composer": "Composer",
+          "contributing_artist": "Contributing Artist",
+          "directory": "Library",
+          "episode": "Episode",
+          "game": "Game",
+          "genre": "Genre",
+          "image": "Image",
+          "movie": "Movie",
+          "music": "Music",
+          "playlist": "Playlist",
+          "podcast": "Podcast",
+          "season": "Season",
+          "track": "Track",
+          "tv_show": "TV Show",
+          "url": "URL",
+          "video": "Video"
+        }
+      },
+      "calendar": { "my_calendars": "My Calendars", "today": "Today" },
+      "attributes": { "expansion_header": "Attributes" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "{domain}",
+            "core": "Location & customizations",
+            "group": "Groups, group entities, and notify services",
+            "automation": "Automations",
+            "script": "Scripts",
+            "scene": "Scenes",
+            "person": "People",
+            "zone": "Zones",
+            "input_boolean": "Input booleans",
+            "input_text": "Input texts",
+            "input_number": "Input numbers",
+            "input_datetime": "Input date times",
+            "input_select": "Input selects",
+            "template": "Template entities",
+            "universal": "Universal media player entities",
+            "rest": "Rest entities and notify services",
+            "command_line": "Command line entities",
+            "filter": "Filter entities",
+            "statistics": "Statistics entities",
+            "generic": "Generic IP camera entities",
+            "generic_thermostat": "Generic thermostat entities",
+            "homekit": "HomeKit",
+            "min_max": "Min/max entities",
+            "history_stats": "History stats entities",
+            "trend": "Trend entities",
+            "ping": "Ping binary sensor entities",
+            "filesize": "File size entities",
+            "telegram": "Telegram notify services",
+            "smtp": "SMTP notify services",
+            "mqtt": "Manually configured MQTT entities",
+            "rpi_gpio": "Raspberry Pi GPIO entities"
+          },
+          "server_control": {
+            "perform_action": "{action} server",
+            "restart": "Restart",
+            "stop": "Stop"
+          },
+          "types": {
+            "reload": "Reload",
+            "navigation": "Navigate",
+            "server_control": "Server"
+          },
+          "navigation": {
+            "logs": "Logs",
+            "automation": "Automations",
+            "script": "Scripts",
+            "integrations": "Integrations",
+            "areas": "Areas",
+            "scene": "Scenes",
+            "helpers": "Helpers",
+            "tag": "Merknader",
+            "person": "People",
+            "devices": "Devices",
+            "entities": "Entities",
+            "energy": "Energy",
+            "lovelace": "Lovelace Dashboards",
+            "core": "General",
+            "zone": "Zones",
+            "users": "Users",
+            "info": "Info",
+            "customize": "Customizations",
+            "blueprint": "Blueprints",
+            "server_control": "Server Controls"
+          }
+        },
+        "filter_placeholder": "Entity Filter"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant did not hear anything",
+        "found": "I found the following for you:",
+        "error": "Oops, an error has occurred",
+        "how_can_i_help": "How can I help?",
+        "label": "Type a question and press 'Enter'",
+        "label_voice": "Type and press 'Enter' or tap the microphone to speak"
+      },
+      "generic": {
+        "cancel": "Avbryt",
+        "ok": "OK",
+        "default_confirmation_title": "Er du sikker?",
+        "close": "close"
+      },
+      "image_cropper": { "crop": "Crop" },
+      "more_info_control": {
+        "dismiss": "Dismiss dialog",
+        "settings": "Entity settings",
+        "edit": "Rediger oppføringa",
+        "details": "Details",
+        "history": "History",
+        "last_changed": "Last changed",
+        "last_updated": "Last updated",
+        "script": {
+          "last_action": "Siste handling",
+          "last_triggered": "Last triggered"
+        },
+        "sun": {
+          "elevation": "Høgde",
+          "rising": "Soloppgang",
+          "setting": "Solnedgang"
+        },
+        "updater": { "title": "Oppdater instruksane" },
+        "remote": { "activity": "Current activity" },
+        "restored": {
+          "not_provided": "This entity is currently unavailable and is an orphan to a removed, changed or dysfunctional integration or device.",
+          "remove_intro": "If the entity is no longer in use, you can clean it up by removing it.",
+          "remove_action": "Remove entity",
+          "confirm_remove_title": "Remove entity?",
+          "confirm_remove_text": "Are you sure you want to remove this entity?"
+        },
+        "vacuum": {
+          "status": "Status",
+          "commands": "Støvsugarkommandoar",
+          "fan_speed": "Viftefart",
+          "start": "Start ",
+          "pause": "Sett på pause",
+          "stop": "Stopp ",
+          "clean_spot": "Reingjer området",
+          "locate": "Lokaliser",
+          "return_home": "Returner heim ",
+          "start_pause": "Start/Sett på pause"
+        },
+        "person": { "create_zone": "Opprett sone frå gjeldande stad" },
+        "cover": {
+          "open_cover": "Open cover",
+          "close_cover": "Close cover",
+          "open_tilt_cover": "Open cover tilt",
+          "close_tile_cover": "Close cover tilt",
+          "stop_cover": "Stop cover from moving"
+        }
+      },
+      "entity_registry": {
+        "settings": "Settings",
+        "control": "Control",
+        "related": "Related",
+        "dismiss": "Dismiss",
+        "no_unique_id": "This entity (\"{entity_id}\") does not have a unique ID, therefore its settings cannot be managed from the UI. See the {faq_link} for more detail.",
+        "faq": "documentation",
+        "info_customize": "You can overwrite some attributes in the {customize_link} section.",
+        "customize_link": "entity customizations",
+        "editor": {
+          "name": "Namnoverskriding",
+          "icon": "Icon",
+          "icon_error": "Icons should be in the format 'prefix:iconname', e.g. 'mdi:home'",
+          "entity_id": "Oppførings-ID",
+          "unavailable": "Denne eininga er for augeblinken ikkje tilgjengeleg.",
+          "enabled_label": "Aktiver oppføringa",
+          "enabled_cause": "Deaktivert av {cause}.",
+          "device_disabled": "The device of this entity is disabled.",
+          "open_device_settings": "Open device settings",
+          "enabled_description": "Dekativere oppføringar kjem ikkje til å bli lagt til i Home Assistant",
+          "enabled_delay_confirm": "The enabled entities will be added to Home Assistant in {delay} seconds",
+          "enabled_restart_confirm": "Restart Home Assistant to finish enabling the entities",
+          "delete": "SLETT",
+          "confirm_delete": "Er du sikker på at du vil slette denne oppføringa?",
+          "update": "OPPDATER",
+          "note": "Merk: dette fungerer kanskje ikkje med alle integrasjonane.",
+          "advanced": "Advanced settings",
+          "area": "Set entity area only",
+          "area_note": "By default the entities of a device are in the same area as the device. If you change the area of this entity, it will no longer follow the area of the device.",
+          "follow_device_area": "Follow device area",
+          "change_device_area": "Change device area"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "The {platform} integration is not loaded. Please add it to your configuration either by adding 'default_config:' or ''{platform}:''.",
+        "yaml_not_editable": "The settings of this entity cannot be edited from the UI. Only entities set up from the UI are configurable from the UI.",
+        "required_error_msg": "This field is required",
+        "generic": { "name": "Name", "icon": "Icon" },
+        "input_datetime": {
+          "date": "Date",
+          "time": "Time",
+          "datetime": "Date and time",
+          "mode": "What do you want to input"
+        },
+        "input_text": {
+          "min": "Minimum length",
+          "max": "Maximum length",
+          "mode": "Display mode",
+          "text": "Text",
+          "password": "Password",
+          "pattern": "Regex pattern for client-side validation"
+        },
+        "input_number": {
+          "min": "Minimum value",
+          "max": "Maximum value",
+          "mode": "Display mode",
+          "box": "Input field",
+          "slider": "Slider",
+          "step": "Step size",
+          "unit_of_measurement": "Unit of measurement"
+        },
+        "input_select": {
+          "options": "Options",
+          "add_option": "Add option",
+          "no_options": "There are no options yet.",
+          "add": "Add"
+        },
+        "counter": {
+          "minimum": "Minimum value",
+          "maximum": "Maximum value",
+          "initial": "Initial value",
+          "restore": "Restore the last known value when Home Assistant starts",
+          "step": "Step size"
+        },
+        "timer": { "duration": "Duration" }
+      },
+      "options_flow": {
+        "form": { "header": "Val" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "Vala vart lagra vellukka." }
+      },
+      "config_entry_system_options": {
+        "title": "Systemval",
+        "enable_new_entities_label": "Aktiver nyleg tillagde oppføringar.",
+        "enable_new_entities_description": "Dersom denne er deaktivert, kjem ikkje nyoppdaga oppføringar til å bli automatisk lagt til i Home Assistant.",
+        "enable_polling_label": "Enable polling for updates.",
+        "enable_polling_description": "If Home Assistant should automatically poll {integration} entities for updates.",
+        "restart_home_assistant": "You need to restart Home Assistant for your changes to take effect.",
+        "update": "Oppdater"
+      },
+      "zha_reconfigure_device": {
+        "heading": "Reconfiguring device",
+        "configuring_alt": "Configuring",
+        "introduction": "Reconfigure a device on your Zigbee network. Use this feature if your device is not functioning correctly.",
+        "battery_device_warning": "You will need to wake battery powered devices before starting the reconfiguration process. Refer to your device's manual for instructions on how to wake the device.",
+        "run_in_background": "You can close this dialog and the reconfiguration will continue in the background.",
+        "start_reconfiguration": "Start Reconfiguration",
+        "in_progress": "The device is being reconfigured. This may take some time.",
+        "configuration_failed": "The device reconfiguration failed. Additional information may be available in the logs.",
+        "configuration_complete": "Device reconfiguration complete.",
+        "button_show": "Show Details",
+        "button_hide": "Hide Details",
+        "cluster_header": "Cluster",
+        "bind_header": "Binding",
+        "reporting_header": "Reporting",
+        "attribute": "Attribute",
+        "min_max_change": "min/max/change"
+      },
+      "zha_device_info": {
+        "manuf": "av {manufacturer}",
+        "no_area": "Inga område",
+        "device_signature": "Zigbee device signature",
+        "device_children": "Zigbee device children",
+        "buttons": {
+          "add": "Add Devices via this device",
+          "remove": "Remove Device",
+          "clusters": "Manage Clusters",
+          "reconfigure": "Reconfigure Device",
+          "zigbee_information": "Zigbee device signature",
+          "device_children": "View Children",
+          "view_in_visualization": "Visning i visualisering"
+        },
+        "services": {
+          "reconfigure": "Konfigurer ZHA-eininga (heal device) på nytt. Bruk dette om du har problem med eininga. Dersom eininga går på batteri, ver sikker på at den er vaken og tek i mot kommandar når du brukar denne tenesta.",
+          "updateDeviceName": "Gje eininga eit tilpassa namn i einingsregisteret. ",
+          "remove": "Fjern eining frå Zigbee-nettverket",
+          "zigbee_information": "View the Zigbee information for the device."
+        },
+        "confirmations": {
+          "remove": "Er du sikker på at du vil fjerne eininga?"
+        },
+        "quirk": "Quirk",
+        "last_seen": "Last Seen",
+        "power_source": "Power Source",
+        "unknown": "Ukjent",
+        "zha_device_card": { "device_name_placeholder": "Endre navn på eining" }
+      },
+      "domain_toggler": {
+        "title": "Toggle Domains",
+        "reset_entities": "Reset Entities"
+      },
+      "mqtt_device_debug_info": {
+        "title": "{device} debug info",
+        "deserialize": "Attempt to parse MQTT messages as JSON",
+        "entities": "Oppføringar",
+        "no_entities": "Ingen oppføringar",
+        "no_triggers": "Ingen utløysarar",
+        "payload_display": "Nyttelastvisning",
+        "recent_messages": "{n} sist mottekne melding(ar)",
+        "show_as_yaml": "Vis som YAML",
+        "triggers": "Utløysarar"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\none {sekund}\nother {sekundar}\n}",
+      "minute": "{count} {count, plural,\none {minutt}\nother {minutt}\n}",
+      "hour": "{count} {count, plural,\none {time}\nother {timar}\n}",
+      "day": "{count} {count, plural,\none {dag}\nother {dagar}\n}",
+      "week": "{count} {count, plural,\none {veke}\nother {veker}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "No type provided.",
+        "error_detected": "Configuration errors detected",
+        "editor_not_available": "No visual editor available for type \"{type}\".",
+        "editor_not_supported": "Visual editor is not supported for this configuration",
+        "edit_in_yaml_supported": "You can still edit your config in YAML.",
+        "key_missing": "Required key \"{key}\" is missing.",
+        "key_not_expected": "Nøkkelen \"{key}\" er ikkje forventa eller støtta av den visuelle redigeraren.",
+        "key_wrong_type": "Den gitte verdien for \"{key}\" er ikkje støtta av den visuelle redigeraren. Vi støttar ({type_correct}), men mottok ({type_wrong}).",
+        "no_template_editor_support": "Templates not supported in visual editor"
+      },
+      "supervisor": {
+        "title": "Could not load the Supervisor panel!",
+        "wait": "If you just started, make sure you have given the Supervisor enough time to start.",
+        "ask": "Ask for help",
+        "reboot": "Try a reboot of the host",
+        "observer": "Check the Observer",
+        "system_health": "Check System Health"
+      }
+    },
+    "login-form": {
+      "password": "Passord",
+      "remember": "Hugs",
+      "log_in": "Logg inn"
+    },
+    "notification_drawer": {
+      "click_to_configure": "Klikk på knappen for å konfigurere {entity}",
+      "empty": "Ingen varslar",
+      "title": "Varsler",
+      "close": "Close",
+      "dismiss_all": "Dismiss all"
+    },
+    "notification_toast": {
+      "service_call_failed": "Klarte ikkje å kalle tenesten {service}.",
+      "connection_lost": "Tilkopling mista. Prøver å kople til på nytt..",
+      "started": "Home Assistant har starta!",
+      "starting": "Home Assistant held på å starte. Alt er ikkje tilgjengeleg før den er ferdig starta.",
+      "wrapping_up_startup": "Wrapping up startup, not everything will be available until it is finished.",
+      "integration_starting": "Starting {integration}, not everything will be available until it is finished.",
+      "triggered": "Triggered {name}",
+      "dismiss": "Dismiss"
+    },
+    "sidebar": {
+      "external_app_configuration": "App-konfigurasjon",
+      "sidebar_toggle": "Sidebar Toggle",
+      "done": "Done"
+    },
+    "panel": {}
+  }
+}

@@ -1,0 +1,473 @@
+{
+  "ui": {
+    "panel": {
+      "lovelace": {
+        "cards": {
+          "confirm_delete": "Oletko varma, että haluat poistaa tämän kortin?",
+          "actions": {
+            "action_confirmation": "Are you sure you want to run action \"{action}\"?",
+            "no_entity_more_info": "No entity provided for more info dialog",
+            "no_entity_toggle": "No entity provided to toggle",
+            "no_navigation_path": "No navigation path specified",
+            "no_url": "Avattavaa URL-osoitetta ei ole määritetty",
+            "no_service": "Suoritettavaa palvelua ei ole määritelty"
+          },
+          "empty_state": {
+            "title": "Tervetuloa kotiin",
+            "no_devices": "Tällä sivulla voit ohjata laitteitasi, mutta näyttää siltä, että et ole vielä määrittänyt laitteita. Pääset alkuun integroinnit-sivulla.",
+            "go_to_integrations_page": "Siirry integraatiot-sivulle"
+          },
+          "entities": { "never_triggered": "Ei koskaan laukaistu" },
+          "shopping-list": {
+            "checked_items": "Valitut kohteet",
+            "clear_items": "Tyhjää valitut kohteet",
+            "add_item": "Lisää",
+            "reorder_items": "Reorder items",
+            "drag_and_drop": "Raahaa ja pudota"
+          },
+          "picture-elements": {
+            "hold": "Pidä:",
+            "tap": "Napauta:",
+            "navigate_to": "Siirry kohtaan {location}",
+            "url": "Avaa ikkuna {url_path}",
+            "toggle": "Kytke {name}",
+            "call_service": "Kutsu palvelua {name}",
+            "more_info": "Näytä lisätietoa: {name}"
+          },
+          "safe-mode": {
+            "header": "Vikasietotila aktivoitu",
+            "description": "Home Assistant joutui vaikeuksiin kokoonpanoa ladattaessa, ja se on nyt käynnissä vikasietotilassa. Katso virhelokistua mikä meni pieleen."
+          },
+          "starting": { "description": "Home Assistant käynnistyy..." }
+        },
+        "unused_entities": {
+          "title": "Käyttämättömät entiteetit",
+          "available_entities": "Nämä ovat yksiköitä, jotka sinulla on käytettävissä, mutta joita ei vielä ole Lovelace-käyttöliittymässäsi.",
+          "select_to_add": "Valitse kohteet, jotka haluat lisätä korttiin, ja napsauta sitten Lisää kortti -painiketta.",
+          "entity": "Kohde",
+          "entity_id": "Kohde ID",
+          "domain": "Toimialue",
+          "last_changed": "Viimeksi muutettu",
+          "search": "Hae kohteita",
+          "no_data": "Käyttämättömiä kohteita ei löytynyt"
+        },
+        "add_entities": {
+          "yaml_unsupported": "Tätä toimintoa ei voi käyttää, kun Lovelace-käyttöliittymää käytetään YAML-tilassa.",
+          "generated_unsupported": "Voit käyttää tätä toimintoa vain, kun olet ottanut hallintaan Lovelace-käyttöliittymän.",
+          "saving_failed": "Lovelacen käyttöliittymän asetusten tallennus epäonnistui."
+        },
+        "views": {
+          "confirm_delete": "Oletko varma, että haluat poistaa tämän näkymän?",
+          "confirm_delete_text": "Haluatko varmasti poistaa ''{name}'' -näkymäsi?",
+          "confirm_delete_existing_cards": "Tämän näkymän poistaminen poistaa myös kortit",
+          "confirm_delete_existing_cards_text": "Haluatko varmasti poistaa näkymän {name}? Näkymä sisältää {number} korttia, jotka poistetaan. Tätä toimintoa ei voi kumota."
+        },
+        "menu": {
+          "configure_ui": "Muokkaa käyttöliittymää",
+          "help": "Apua",
+          "start_conversation": "Aloita keskustelu",
+          "reload_resources": "Lataa resurssit uudelleen",
+          "exit_edit_mode": "Poistu käyttöliittymän muokkaustilasta",
+          "close": "Sulje"
+        },
+        "reload_resources": {
+          "refresh_header": "Haluatko päivittää?",
+          "refresh_body": "Sinun täytyy päivittää sivu viimeistelläksesi uudelleenlatauksen. Haluatko päivittää nyt?"
+        },
+        "editor": {
+          "header": "Muokkaa käyttöliittymää",
+          "menu": {
+            "open": "Avaa Lovelace-valikko",
+            "raw_editor": "Raaka konfigurointieditori",
+            "manage_dashboards": "Hallinnoi työpöytiä",
+            "manage_resources": "Hallinnoi resursseja"
+          },
+          "common": {
+            "edit": "Muokkaa",
+            "clear": "Tyhjennä",
+            "add": "Lisää",
+            "none": "Ei mitään"
+          },
+          "raw_editor": {
+            "header": "Muokkaa asetuksia",
+            "save": "Tallenna",
+            "unsaved_changes": "Tallentamattomat muutokset",
+            "saved": "Tallennettu",
+            "reload": "Lataa uudelleen",
+            "lovelace_changed": "The Lovelace config was updated, do you want to load the updated config in the editor and lose your current changes?",
+            "confirm_remove_config_title": "Haluatko varmasti poistaa Lovelace-käyttöliittymän asetukset?",
+            "confirm_remove_config_text": "Lovelace käyttöliittymän näkymät luodaan automaattisesti alueistasi ja laitteistasi, jos poistat nykyisen määrityksen.",
+            "confirm_unsaved_changes": "Sinulla on tallentamattomia muutoksia. Haluatko varmasti poistua?",
+            "confirm_unsaved_comments": "Asetuksesi sisältää kommentoituja rivejä. Kommentoituja rivejä ei tallenneta. Haluatko  jatkaa?",
+            "error_parse_yaml": "YAML-tiedostoa ei voida jäsentää: {error}",
+            "error_invalid_config": "Asetuksesi ovat virheelliset: {error}",
+            "error_save_yaml": "YAML-tiedostoa ei voi tallentaa: {error}",
+            "error_remove": "Asetusta ei voida poistaa: {error}",
+            "resources_moved": "Resursseja ei enää lisätä Lovelace-kokoonpanoon, mutta ne voidaan lisätä Lovelace config -paneeliin."
+          },
+          "edit_lovelace": {
+            "header": "Lovelace-käyttöliittymän otsikko",
+            "explanation": "Tämä otsikko on esillä näkymien yläpuolella Lovelace-käyttöliittymässä.",
+            "edit_title": "Muokkaa otsikkoa",
+            "title": "Otsikko"
+          },
+          "edit_view": {
+            "header": "Näytä asetukset",
+            "header_name": "{name} Näytä asetukset",
+            "add": "Lisää näkymä",
+            "edit": "Muokkaa näkymää",
+            "delete": "Poista näkymä",
+            "move_left": "Siirrä näkymää vasemmalle",
+            "move_right": "Siirrä näkymää oikealle",
+            "tab_settings": "Asetukset",
+            "tab_badges": "Merkit",
+            "tab_visibility": "Näkyvyys",
+            "visibility": {
+              "select_users": "Valitse ketkä käyttäjät näkevät tämän näkymän navigoinnissa"
+            },
+            "type": "View type",
+            "types": {
+              "masonry": "Masonry (default)",
+              "sidebar": "Sidebar",
+              "panel": "Panel (1 card)"
+            }
+          },
+          "edit_badges": {
+            "panel_mode": "Näitä merkkejä ei näytetä, koska tämä näkymä on \"Paneelitilassa\"."
+          },
+          "edit_card": {
+            "header": "Kortti-asetukset",
+            "typed_header": "{type}-kortin kokoonpano",
+            "pick_card": "Valitse kortti jonka haluat lisätä",
+            "pick_card_view_title": "Minkä kortin haluat lisätä {name} -näkymääsi?",
+            "toggle_editor": "Vaihda editori",
+            "unsaved_changes": "Sinulla on tallentamattomia muutoksia",
+            "confirm_cancel": "Haluatko varmasti peruuttaa?",
+            "show_visual_editor": "Näytä visuaalinen editori",
+            "show_code_editor": "Näytä koodieditori",
+            "add": "Lisää kortti",
+            "edit": "Muokkaa",
+            "clear": "Tyhjennä",
+            "delete": "Poista kortti",
+            "duplicate": "Kopioi kortti",
+            "move": "Siirrä",
+            "move_before": "Siirrä kortti ennen",
+            "move_after": "Siirrä kortti jälkeen",
+            "options": "Lisää vaihtoehtoja",
+            "search_cards": "Etsi kortteja"
+          },
+          "move_card": { "header": "Valitse näkymä, johon kortti siirretään" },
+          "select_view": {
+            "header": "Valitse näkymä",
+            "dashboard_label": "Kojelauta"
+          },
+          "suggest_card": {
+            "header": "Loimme ehdotuksen sinulle",
+            "create_own": "Valitse toinen kortti",
+            "add": "Lisää Lovelace-käyttöliittymään"
+          },
+          "save_config": {
+            "header": "Hallitse Lovelace käyttöliittymääsi",
+            "para": "Oletuksena Home Assistant ylläpitää käyttöliittymääsi, päivittäen sitä uusien yksiköiden tai Lovelace komponenttien tullessa saataville. Jos muokkaat käyttöliittymääsi, emme enää tee muutoksia automaattisesti.",
+            "para_sure": "Oletko varma, että haluat ottaa haltuun käyttöliittymän?",
+            "yaml_mode": "Käytät YAML-tilaa, mikä tarkoittaa, että et voi muuttaa Lovelace-asetuksia käyttöliittymästä. Jos haluat muuttaa Lovelacea käyttöliittymästä, poista 'mode: yaml' Lovelace-määrityksestäsi tiedostossa 'configuration.yaml'.",
+            "yaml_control": "Jos haluat hallita YAML-tilaa, luo YAML-tiedosto, jonka nimi on määritetty tämän kojelaudan kokoonpanossa, tai oletusarvoinen 'ui-lovelace.yaml'.",
+            "yaml_config": "Tämän aloittamisen helpottamiseksi on tämä hallintapaneelin nykyinen kokoonpano:",
+            "empty_config": "Aloita tyhjällä kojelaudalla",
+            "close": "Sulje",
+            "save": "Ota hallintaan",
+            "cancel": "Antaa olla"
+          },
+          "migrate": {
+            "header": "Epäkelvot asetukset",
+            "para_no_id": "Elementillä ei ole ID. Lisää ID elementille 'ui-lovelace.yaml'-tiedostossa.",
+            "para_migrate": "Home Assistant voi lisätä ID:t kaikkiin kortteihisi ja näkymiin automaattisesti painamalla 'Tuo vanhat asetukset'-nappia.",
+            "migrate": "Tuo vanhat asetukset"
+          },
+          "action-editor": {
+            "navigation_path": "Navigointipolku",
+            "url_path": "URL-polku",
+            "actions": {
+              "default_action": "Oletustoiminto",
+              "call-service": "Kutsu palvelua",
+              "more-info": "Lisätietoja",
+              "toggle": "Vaihda",
+              "navigate": "Siirry",
+              "url": "URL-osoite",
+              "none": "Ei toimintoa"
+            }
+          },
+          "card": {
+            "alarm-panel": {
+              "name": "Hälytyspaneeli",
+              "available_states": "Käytettävissä olevat tilat",
+              "description": "Hälytyspaneelikortin kortin avulla voit virittää ja purkaa hälytyksen ohjauspaneelin integrointeja."
+            },
+            "calendar": {
+              "name": "Kalenteri",
+              "description": "Kalenterikortissa näkyy kalenteri, joka sisältää päivä-, viikko- ja luettelonäkymät",
+              "inital_view": "Alkuperäinen näkymä",
+              "calendar_entities": "Kalenteri entiteetit",
+              "views": {
+                "dayGridMonth": "Kuukausi",
+                "dayGridDay": "Päivä",
+                "listWeek": "Luettelo"
+              }
+            },
+            "conditional": {
+              "name": "Ehdollinen",
+              "description": "Ehdollinen kortti näyttää toisen kortin kohteen tilan perusteella.",
+              "conditions": "Ehdot",
+              "card": "Kortti",
+              "state_equal": "Tila on yhtä suuri kuin",
+              "state_not_equal": "Tila ei ole yhtä suuri kuin",
+              "current_state": "Nykyinen",
+              "condition_explanation": "Kortti näytetään, kun kaikki alla olevat ehdot täyttyvät.",
+              "change_type": "Muuta tyyppiä"
+            },
+            "config": { "required": "Vaadittu", "optional": "Valinnainen" },
+            "entities": {
+              "name": "Kohteet",
+              "show_header_toggle": "Näytä otsikkokytkin?",
+              "toggle": "Ota kohteet käyttöön tai poista käytöstä",
+              "description": "Kohde-kortti on yleisin korttityyppi. Se ryhmittelee kohteet yhteen luetteloiksi.",
+              "special_row": "erityinen rivi",
+              "edit_special_row": "Näytä rivin tiedot klikkaamalla Muokkaa-painiketta",
+              "entity_row_editor": "Entiteetti rivi editori",
+              "secondary_info_values": {
+                "none": "Ei toissijaisia tietoja",
+                "entity-id": "Entiteetin tunnus",
+                "last-changed": "Viimeksi muutettu",
+                "last-triggered": "Viimeksi laukaistu",
+                "position": "Sijainti",
+                "tilt-position": "Kallistuksen sijainti",
+                "brightness": "Kirkkaus",
+                "last-updated": "Viimeksi päivitetty"
+              },
+              "entity_row": {
+                "divider": "Jakaja",
+                "call-service": "Kutsu palvelua",
+                "section": "Osio",
+                "weblink": "Nettilinkki",
+                "attribute": "Määrite",
+                "buttons": "Painikkeet",
+                "conditional": "Ehdollinen",
+                "cast": "Cast",
+                "button": "Painike"
+              }
+            },
+            "entity": {
+              "name": "Kohde",
+              "description": "Kohdekortti antaa sinulle nopean yleiskatsauksen kohteen tilasta."
+            },
+            "button": {
+              "name": "Painike",
+              "description": "Painikekortti antaa sinun lisätä painikkeita tehtävien suorittamiseen.",
+              "default_action_help": "Oletustoiminto riippuu entiteetin ominaisuuksista, se joko vaihtaa tai lisätietoja näytetään."
+            },
+            "entity-filter": {
+              "name": "Kohteen suodatus",
+              "description": "Kohdesuodatin-kortin avulla voit määrittää luettelon kohteista, joita haluat seurata vain tietyssä tilassa."
+            },
+            "gauge": {
+              "name": "Mittari",
+              "needle_gauge": "Display as needle gauge?",
+              "severity": {
+                "define": "Määritä vakavuus?",
+                "green": "Vihreä",
+                "red": "Punainen",
+                "yellow": "Keltainen"
+              },
+              "description": "Mittarikortti on peruskortti, jonka avulla anturitiedot voidaan nähdä visuaalisesti."
+            },
+            "glance": {
+              "name": "Pikavilkaisu",
+              "columns": "Sarakkeet",
+              "description": "Glance-kortti on hyödyllinen useiden anturien ryhmittelemiseksi kompaktiin yleiskuvaan."
+            },
+            "grid": {
+              "name": "Ruudukko",
+              "description": "Ruudukkokortin avulla voit näyttää useita kortteja ruudukossa.",
+              "columns": "Sarakkeet",
+              "square": "Näytä kortit neliöinä"
+            },
+            "logbook": {
+              "name": "Lokikirja",
+              "description": "The Logbook card shows a list of events for entities."
+            },
+            "history-graph": {
+              "name": "Historiakuvaaja",
+              "description": "Historiakaavio-kortin avulla voit näyttää kaavion kullekin luettelossa olevalle kohteelle."
+            },
+            "statistics-graph": {
+              "name": "Statistics Graph",
+              "description": "The Statistics Graph card allows you to display a graph of the statistics for each of the entities listed."
+            },
+            "horizontal-stack": {
+              "name": "Vaakapino",
+              "description": "Vaakapinokortin avulla voit pinota yhteen useita kortteja, jolloin ne ovat aina vierekkäin yhden sarakkeen tilassa."
+            },
+            "humidifier": {
+              "name": "Ilmankostutin",
+              "description": "Ilmankostutin-kortti antaa hallita ilmankostutin kokonaisuutta. Voit muuttaa kosteus ja tila asetusta."
+            },
+            "iframe": {
+              "name": "iFrame",
+              "description": "Verkkosivukortin avulla voit upottaa suosikkiverkkosivusi suoraan Home Assistantiin."
+            },
+            "light": {
+              "name": "Valo",
+              "description": "Valokortti antaa sinun muuttaa valon kirkkautta."
+            },
+            "generic": {
+              "aspect_ratio": "Kuvasuhde",
+              "attribute": "Määrite",
+              "camera_image": "Kamerakohde",
+              "camera_view": "Kameranäkymä",
+              "double_tap_action": "Kaksoisnapautustoiminto",
+              "entities": "Kohteet",
+              "entity": "Kohde",
+              "hold_action": "Pitkä painallus toiminto",
+              "hours_to_show": "Näytettävät tunnit",
+              "days_to_show": "Days to Show",
+              "icon": "Kuvake",
+              "icon_height": "Kuvakkeen korkeus",
+              "image": "Kuvan polku",
+              "maximum": "Enimmäismäärä",
+              "manual": "Manuaalinen",
+              "manual_description": "Haluatko lisätä mukautetun kortin tai vain kirjoittaa YAML:in manuaalisesti?",
+              "minimum": "Vähimmäismäärä",
+              "name": "Nimi",
+              "refresh_interval": "Päivitysväli",
+              "show_icon": "Näytä kuvake?",
+              "show_name": "Näytä nimi?",
+              "show_state": "Näytä tila?",
+              "tap_action": "Napautus toiminto",
+              "title": "Otsikko",
+              "theme": "Teema",
+              "no_theme": "Ei teemaa",
+              "unit": "Yksikkö",
+              "url": "URL",
+              "state": "Tila",
+              "secondary_info_attribute": "Toissijainen info-attribuutti",
+              "search": "Hae",
+              "state_color": "Värikuvakkeet tilan perusteella?"
+            },
+            "map": {
+              "name": "Kartta",
+              "geo_location_sources": "Maantieteelliset lähteet",
+              "dark_mode": "Tumma tila?",
+              "default_zoom": "Oletuszoomaus",
+              "hours_to_show": "Näytettävät tunnit",
+              "source": "Lähde",
+              "description": "Karttakortti, jonka avulla voit näyttää entiteettejä kartalla."
+            },
+            "markdown": {
+              "name": "Merkintä",
+              "content": "Sisältö",
+              "description": "Markdown-korttia käytetään Markdownin tuottamiseen."
+            },
+            "media-control": {
+              "name": "Mediaohjaus",
+              "description": "Media Control -korttia käytetään mediasoittimen näyttämiseen käyttöliittymässä, jossa on helppokäyttöiset ohjaimet."
+            },
+            "picture": {
+              "name": "Kuva",
+              "description": "Kuvakortti antaa sinun asettaa kuvan, jota käytetään navigointiin käyttöliittymän eri poluille tai palvelun suorittamiseen."
+            },
+            "picture-elements": {
+              "name": "Kuvaelementit",
+              "description": "Picture Elements -kortti on yksi monipuolisimmista korttityypeistä. Korttien avulla voit sijoittaa kuvakkeita tai tekstiä ja jopa palveluja! Koordinaatteihin perustuvassa kuvassa."
+            },
+            "picture-entity": {
+              "name": "Kuvakohde",
+              "description": "Kuvakohde -kortti näyttää kohteen kuvan muodossa. URL-osoitteesta saatujen kuvien sijasta se voi myös näyttää kameran kuvan."
+            },
+            "picture-glance": {
+              "name": "Kuva pikavilkaisu",
+              "description": "Picture Glance -kortissa näkyy kuva ja vastaava kohde näkyy kuvakkeena. Oikealla puolella olevat kohteet sallivat vaihtotoiminnot, toiset näyttävät enemmän tietoja -valintaikkunan.",
+              "state_entity": "State Entity"
+            },
+            "plant-status": {
+              "name": "Kasvin tila",
+              "description": "Kasvien tila -kortti on tarkoitettu kaikille siellä oleville ihanille kotikasvitieteilijöille."
+            },
+            "sensor": {
+              "name": "Sensori",
+              "show_more_detail": "Näytä lisätietoja",
+              "graph_type": "Kaavion tyyppi",
+              "description": "Anturikortti antaa sinulle nopean yleiskatsauksen antureiden tilasta valinnaisella kaaviolla, joka kuvaa muutosta ajan myötä."
+            },
+            "shopping-list": {
+              "name": "Ostoslista",
+              "description": "Ostolistakortti antaa sinun lisätä, muokata, tarkistaa ja tyhjentää kohteita ostoslistaltasi.",
+              "integration_not_loaded": "Tämä kortti vaatii `shopping_list` -integraation ottamisen käyttöön."
+            },
+            "thermostat": {
+              "name": "Termostaatti",
+              "description": "Termostaatti-kortti antaa sinun hallita ilmastokohteita. Voit muuttaa kohteen lämpötilaa ja toimintaa."
+            },
+            "vertical-stack": {
+              "name": "Pystypino",
+              "description": "Pystypino-kortti antaa sinun ryhmitellä useita kortteja niin, että ne ovat aina samassa sarakkeessa."
+            },
+            "weather-forecast": {
+              "name": "Sääennuste",
+              "description": "Sääennustekortti näyttää säätiedot. Erittäin hyödyllinen sisällyttää käyttöliittymiin, joita ihmiset näkevät seinällä.",
+              "show_forecast": "Näytä sääennuste"
+            }
+          },
+          "view": {
+            "panel_mode": {
+              "warning_multiple_cards": "Tämä näkymä sisältää useamman kuin yhden kortin, paneelinäkymä tukee vain yhtä korttia.",
+              "description": "Tämä renderöi ensimmäisen kortin täydellä leveydellä. Muita kortteja tässä näkymässä ei näytetä.",
+              "title": "Paneelitila?"
+            }
+          },
+          "cardpicker": {
+            "no_description": "Ei kuvausta saatavilla.",
+            "custom_card": "Mukautettu",
+            "domain": "Toimialue",
+            "entity": "Kohde",
+            "by_entity": "Kohteen mukaan",
+            "by_card": "Kortin mukaan"
+          },
+          "header-footer": {
+            "header": "Otsikko",
+            "footer": "Alatunniste",
+            "choose_header_footer": "Valitse {type}",
+            "types": {
+              "graph": { "name": "Kaavio" },
+              "picture": { "name": "Kuva" },
+              "buttons": { "name": "Painikkeet" }
+            }
+          },
+          "sub-element-editor": {
+            "types": {
+              "header": "Otsikkoeditori",
+              "footer": "Alatunnisteen muokkaus",
+              "row": "Kohderivieditori"
+            }
+          }
+        },
+        "warning": {
+          "attribute_not_found": "Määrite {attribute} ei ole käytettävissä kohteessa {entity}",
+          "entity_not_found": "Yksikkö ei ole käytettävissä: {entity}",
+          "entity_non_numeric": "Yksikkö ei ole numeerinen: {entity}",
+          "entity_unavailable": "{entity} ei ole tällä hetkellä käytettävissä",
+          "starting": "Home Assistant käynnistyy. Kaikki palvelut eivät  välttämättä ole vielä saatavilla."
+        },
+        "changed_toast": {
+          "message": "Lovelace-asetukset päivitettiin. Haluatko päivittää näkymän?"
+        },
+        "components": {
+          "timestamp-display": {
+            "invalid": "Invalid timestamp",
+            "invalid_format": "Invalid display format"
+          }
+        },
+        "reload_lovelace": "Lataa Lovelace uudelleen"
+      }
+    }
+  }
+}

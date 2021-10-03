@@ -1,0 +1,902 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "Kalender",
+    "config": "Instellingen",
+    "states": "Overzicht",
+    "map": "Kaart",
+    "logbook": "Logboek",
+    "history": "Geschiedenis",
+    "mailbox": "Postvak",
+    "shopping_list": "Boodschappenlijst",
+    "developer_tools": "Ontwikkelhulpmiddelen",
+    "media_browser": "Mediabrowser",
+    "profile": "Profiel"
+  },
+  "state": {
+    "default": {
+      "on": "Aan",
+      "off": "Uit",
+      "unknown": "Onbekend",
+      "unavailable": "Niet beschikbaar"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "Uit", "on": "Aan", "auto": "Auto" },
+      "preset_mode": {
+        "none": "Geen",
+        "eco": "Eco",
+        "away": "Afwezig",
+        "boost": "Boost",
+        "comfort": "Comfort",
+        "home": "Thuis",
+        "sleep": "Slapen",
+        "activity": "Activiteit"
+      },
+      "hvac_action": {
+        "off": "Uit",
+        "heating": "Verwarmen",
+        "cooling": "Koelen",
+        "drying": "Ontvochtigen",
+        "idle": "Inactief",
+        "fan": "Ventilator"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "Normaal",
+        "eco": "Eco",
+        "away": "Afwezig",
+        "boost": "Boost",
+        "comfort": "Comfort",
+        "home": "Thuis",
+        "sleep": "Slapen",
+        "auto": "Auto",
+        "baby": "Baby"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "Onbek.",
+      "unavailable": "Niet besch",
+      "error": "Fout",
+      "entity_not_found": "Entiteit niet gevonden"
+    },
+    "alarm_control_panel": {
+      "armed": "Actief",
+      "disarmed": "Uit",
+      "armed_home": "Actief",
+      "armed_away": "Actief",
+      "armed_night": "Actief",
+      "armed_custom_bypass": "Ingeschakeld",
+      "pending": "Wacht",
+      "arming": "Activeren",
+      "disarming": "Uitschakelen",
+      "triggered": "Gaat af"
+    },
+    "device_tracker": { "home": "Thuis", "not_home": "Afwezig" },
+    "person": { "home": "Thuis", "not_home": "Afwezig" }
+  },
+  "groups": {
+    "owner": "Eigenaar",
+    "system-admin": "Beheerders",
+    "system-users": "Gebruikers",
+    "system-read-only": "Alleen-lezen gebruikers"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "Gebruiker",
+      "integration": "Integratie",
+      "config_entry": "Configuratie-item",
+      "device": "Apparaat"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "Wil je ingelogd blijven?",
+      "decline": "Nee",
+      "confirm": "Ja"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "Code",
+        "clear_code": "Wis",
+        "disarm": "Uitschakelen",
+        "arm_home": "Inschakelen thuis",
+        "arm_away": "Inschakelen afwezig",
+        "arm_night": "Inschakelen nacht",
+        "arm_custom_bypass": "Gedeeltelijk actief"
+      },
+      "automation": {
+        "last_triggered": "Laatst uitgevoerd",
+        "trigger": "Uitvoeren"
+      },
+      "camera": { "not_available": "Afbeelding niet beschikbaar" },
+      "climate": {
+        "currently": "Momenteel",
+        "on_off": "Aan / uit",
+        "target_temperature": "Gewenste temperatuur",
+        "target_temperature_entity": "{name} doeltemperatuur",
+        "target_temperature_mode": "{name} doeltemperatuur {mode}",
+        "current_temperature": "{name} huidige temperatuur",
+        "heating": "{name} verwarming",
+        "cooling": "{name} koeling",
+        "high": "hoog",
+        "low": "laag",
+        "target_humidity": "Gewenste luchtvochtigheid",
+        "operation": "Werking",
+        "fan_mode": "Ventilatormodus",
+        "swing_mode": "Swingmodus",
+        "preset_mode": "Voorinstelling",
+        "away_mode": "Afwezigheidsmodus",
+        "aux_heat": "Extra warmte"
+      },
+      "counter": {
+        "actions": {
+          "increment": "verhoging",
+          "decrement": "verlagen",
+          "reset": "reset"
+        }
+      },
+      "cover": { "position": "Positie", "tilt_position": "Kantelpositie" },
+      "fan": {
+        "speed": "Snelheid",
+        "preset_mode": "Vooraf ingestelde modus",
+        "oscillate": "Oscilleren",
+        "direction": "Richting",
+        "forward": "Voorwaarts",
+        "reverse": "Omkeren"
+      },
+      "humidifier": {
+        "humidity": "Doel luchtvochtigheid",
+        "mode": "Modus",
+        "target_humidity_entity": "{name} doel luchtvochtigheid",
+        "on_entity": "{name} aan"
+      },
+      "light": {
+        "brightness": "Helderheid",
+        "color_temperature": "Kleurtemperatuur",
+        "white_value": "Witwaarde",
+        "color_brightness": "Kleurhelderheid",
+        "cold_white_value": "Koud wit helderheid",
+        "warm_white_value": "Warm wit helderheid",
+        "effect": "Effect"
+      },
+      "lock": {
+        "code": "Code",
+        "lock": "Vergrendelen",
+        "unlock": "Ontgrendelen"
+      },
+      "media_player": {
+        "source": "Bron",
+        "sound_mode": "Geluidsmodus",
+        "browse_media": "Door media bladeren",
+        "turn_on": "Inschakelen",
+        "turn_off": "Uitschakelen",
+        "media_play": "Speel",
+        "media_play_pause": "Afspelen/pauzeren",
+        "media_next_track": "Volgende",
+        "media_previous_track": "Vorige",
+        "text_to_speak": "Tekst naar spraak"
+      },
+      "persistent_notification": { "dismiss": "Sluiten" },
+      "scene": { "activate": "Activeren" },
+      "script": {
+        "run": "Uitvoeren",
+        "cancel": "Annuleer",
+        "cancel_multiple": "Annuleer {number}"
+      },
+      "service": { "run": "Uitvoeren" },
+      "timer": {
+        "actions": {
+          "start": "start",
+          "pause": "pauze",
+          "cancel": "annuleren",
+          "finish": "voltooien"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "Hervat schoonmaak",
+          "return_to_base": "Keer terug naar dock",
+          "start_cleaning": "Begin schoonmaak",
+          "turn_on": "Inschakelen",
+          "turn_off": "Uitschakelen"
+        }
+      },
+      "water_heater": {
+        "currently": "Momenteel",
+        "on_off": "Aan / uit",
+        "target_temperature": "Gewenste temperatuur",
+        "operation": "Werking",
+        "away_mode": "Afwezigheidsmodus"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "Luchtdruk",
+          "humidity": "Vochtigheid",
+          "temperature": "Temperatuur",
+          "visibility": "Zicht",
+          "wind_speed": "Windsnelheid",
+          "precipitation": "Neerslag"
+        },
+        "cardinal_direction": {
+          "e": "O",
+          "ene": "ONO",
+          "ese": "OZO",
+          "n": "N",
+          "ne": "NO",
+          "nne": "NNO",
+          "nw": "NW",
+          "nnw": "NNW",
+          "s": "Z",
+          "se": "ZO",
+          "sse": "ZZO",
+          "ssw": "ZZW",
+          "sw": "ZW",
+          "w": "W",
+          "wnw": "WNW",
+          "wsw": "WZW"
+        },
+        "day": "Dag",
+        "night": "Nacht",
+        "forecast": "Verwachting",
+        "high": "Hoog",
+        "low": "Laag"
+      }
+    },
+    "common": {
+      "and": "en",
+      "continue": "Ga verder",
+      "previous": "Vorige",
+      "loading": "Bezig met laden",
+      "refresh": "Vernieuwen",
+      "cancel": "Annuleren",
+      "delete": "Verwijderen",
+      "remove": "Verwijderen",
+      "enable": "Inschakelen",
+      "disable": "Uitschakelen",
+      "close": "Sluiten",
+      "leave": "Verlaten",
+      "stay": "Blijf",
+      "next": "Volgende",
+      "back": "Terug",
+      "undo": "Ongedaan maken",
+      "save": "Opslaan",
+      "rename": "Naam wijzigen",
+      "yes": "Ja",
+      "no": "Nee",
+      "not_now": "Niet nu",
+      "skip": "Overslaan",
+      "menu": "Menu",
+      "overflow_menu": "Overloopmenu",
+      "successfully_saved": "Succesvol opgeslagen",
+      "successfully_deleted": "Succesvol verwijderd",
+      "error_required": "Verplicht",
+      "copied": "Gekopieerd",
+      "copied_clipboard": "Gekopieerd naar het klembord"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "Geen logboekvermeldingen gevonden.",
+        "by": "door",
+        "by_service": "door service",
+        "show_trace": "Tracering weergeven",
+        "retrieval_error": "Fout tijdens het ophalen van de logboekregel",
+        "messages": {
+          "was_away": "was afwezig",
+          "was_at_state": "was bij {state}",
+          "rose": "opkomst",
+          "set": "ondergang",
+          "was_low": "was laag",
+          "was_normal": "was normaal",
+          "was_connected": "verbonden",
+          "was_disconnected": "verbroken",
+          "was_opened": "geopend",
+          "was_closed": "gesloten",
+          "is_opening": "Aan het openen",
+          "is_closing": "aan het sluiten",
+          "was_unlocked": "ontgrendeld",
+          "was_locked": "vergrendeld",
+          "was_plugged_in": "is aangesloten",
+          "was_unplugged": "is niet aangesloten",
+          "was_at_home": "was thuis",
+          "was_unsafe": "was onveilig",
+          "was_safe": "was veilig",
+          "detected_device_class": "{device_class} gedetecteerd",
+          "cleared_device_class": "niets gedetecteerd (geen {device_class} gedetecteerd)",
+          "turned_off": "is uitgeschakeld",
+          "turned_on": "is ingeschakeld",
+          "changed_to_state": "gewijzigd in {state}",
+          "became_unavailable": "is niet meer beschikbaar"
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "Entiteit",
+          "clear": "Wis",
+          "no_match": "Geen overeenkomende entiteiten gevonden",
+          "show_entities": "Entiteiten weergeven"
+        },
+        "entity-attribute-picker": {
+          "attribute": "Attribuut",
+          "show_attributes": "Toon attributen"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "Breid dit gebied uit in de afzonderlijke apparaten en entiteiten die het bevat. Na het uitbreiden zal het de apparaten en entiteiten niet bijwerken wanneer het gebied verandert.",
+        "expand_device_id": "Breid dit apparaat uit in afzonderlijke entiteiten. Na het uitbreiden worden de entiteiten niet bijgewerkt wanneer het apparaat verandert.",
+        "remove_area_id": "Verwijder gebied",
+        "remove_device_id": "Verwijder apparaat",
+        "remove_entity_id": "Verwijder entiteit",
+        "add_area_id": "Kies gebied",
+        "add_device_id": "Kies apparaat",
+        "add_entity_id": "Kies entiteit"
+      },
+      "user-picker": {
+        "no_user": "Geen gebruiker",
+        "add_user": "Gebruiker toevoegen",
+        "remove_user": "Gebruiker verwijderen"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Selecteer een Blueprint",
+        "add_user": "Gebruiker toevoegen",
+        "remove_user": "Gebruiker verwijderen"
+      },
+      "device-picker": {
+        "clear": "Wis",
+        "toggle": "Omschakelen",
+        "show_devices": "Apparaten weergeven",
+        "no_devices": "Je hebt geen apparaten",
+        "no_match": "Geen overeenkomende apparaten gevonden",
+        "device": "Apparaat",
+        "no_area": "Geen gebied"
+      },
+      "area-picker": {
+        "clear": "Wis",
+        "show_areas": "Toon gebieden",
+        "area": "Gebied",
+        "add_new": "Nieuw gebied toevoegen...",
+        "no_areas": "Je hebt geen gebieden",
+        "no_match": "Geen overeenkomende gebieden gevonden",
+        "add_dialog": {
+          "title": "Gebied toevoegen",
+          "text": "Geef de naam op van het nieuwe gebied.",
+          "name": "Naam",
+          "add": "Toevoegen",
+          "failed_create_area": "Kan het gebied niet maken."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "Add-on",
+        "error": {
+          "no_supervisor": {
+            "title": "Geen Supervisor",
+            "description": "Geen Supervisor gevonden, dus add-ons konden niet worden geladen."
+          },
+          "fetch_addons": {
+            "title": "Fout bij ophalen add-ons",
+            "description": "Het ophalen van add-ons leverde een fout op."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "Filter op entiteit",
+        "filter_by_device": "Filter op apparaat",
+        "filter_by_area": "Filter op gebied",
+        "filtered_by_entity": "entiteit: {entity_name}",
+        "filtered_by_device": "apparaat: {device_name}",
+        "filtered_by_area": "gebied: {area_name}"
+      },
+      "picture-upload": {
+        "label": "Afbeelding",
+        "unsupported_format": "Niet-ondersteund formaat. Kies een JPEG-, PNG- of GIF-afbeelding."
+      },
+      "date-range-picker": {
+        "start_date": "Startdatum",
+        "end_date": "Einddatum",
+        "select": "Selecteer",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Nooit",
+        "just_now": "Zojuist",
+        "duration": {
+          "second": "{count} {count, plural,\none {seconde}\nother {seconden}\n}",
+          "minute": "{count} {count, plural,\none {minuut}\nother {minuten}\n}",
+          "hour": "{count} {count, plural,\none {uur}\nother {uur}\n}",
+          "day": "{count} {count, plural,\none {dag}\nother {dagen}\n}",
+          "week": "{count} {count, plural,\none {week}\nother {weken}\n}"
+        },
+        "past_duration": {
+          "second": "{count} {count, plural,\n  one {seconde}\n  other {seconden}\n} geleden",
+          "minute": "{count} {count, plural,\n  one {minuut}\n  other {minuten}\n} geleden",
+          "hour": "{count} {count, plural,\n  one {uur}\n  other {uren}\n} geleden",
+          "day": "{count} {count, plural,\n  one {dag}\n  other {dagen}\n} geleden",
+          "week": "{count} {count, plural,\n  one {week}\n  other {weken}\n} geleden"
+        },
+        "future_duration": {
+          "second": "Binnen {count} {count, plural,\n  one {seconde}\n  other {seconden}\n}",
+          "minute": "Binnen {count} {count, plural,\n  one {minuut}\n  other {minuten}\n}",
+          "hour": "Binnen {count} {count, plural,\n  one {uur}\n  other {uren}\n}",
+          "day": "Binnen {count} {count, plural,\n  one {dag}\n  other {dagen}\n}",
+          "week": "Binnen {count} {count, plural,\n  one {week}\n  other {weken}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "Geschiedenis integratie uitgeschakeld",
+        "loading_history": "Geschiedenis laden ...",
+        "no_history_found": "Geen geschiedenis gevonden"
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "Service" },
+      "service-control": {
+        "required": "Dit veld is verplicht",
+        "target": "Doelen",
+        "target_description": "Wat moet deze dienst gebruiken als doelgebieden, apparaten of entiteiten.",
+        "service_data": "Service data",
+        "integration_doc": "Integratiedocumentatie"
+      },
+      "related-items": {
+        "no_related_found": "Geen gerelateerde items gevonden.",
+        "integration": "Integratie",
+        "device": "Apparaat",
+        "area": "Gebied",
+        "entity": "Gerelateerde entiteiten",
+        "group": "Onderdeel van de volgende groepen",
+        "scene": "Onderdeel van de volgende scènes",
+        "script": "Onderdeel van de volgende scripts",
+        "automation": "Onderdeel van de volgende automatiseringen"
+      },
+      "data-table": {
+        "search": "Zoek",
+        "no-data": "Geen gegevens",
+        "filtering_by": "Filteren op",
+        "hidden": "{number} verborgen",
+        "clear": "Wis"
+      },
+      "media-browser": {
+        "pick": "Kies",
+        "play": "Speel",
+        "play-media": "Media afspelen",
+        "pick-media": "Kies Media",
+        "no_items": "Niets gevonden",
+        "choose_player": "Kies speler",
+        "media-player-browser": "Mediaspeler-browser",
+        "web-browser": "Webbrowser",
+        "media_player": "Mediaspeler",
+        "audio_not_supported": "Uw browser ondersteunt het audio-element niet.",
+        "video_not_supported": "Uw browser ondersteunt het video-element niet.",
+        "media_not_supported": "De Browser Media Player ondersteunt dit type media niet",
+        "media_browsing_error": "Fout bij bladeren door media",
+        "learn_adding_local_media": "Leer meer over media toevoegen in de {documentation}.",
+        "local_media_files": "Plaats je video, audio en foto bestanden in de media map om bestanden te kunnen doorzoeken en afspelen in de browser of op ondersteunde mediaspelers.",
+        "documentation": "documentatie",
+        "no_local_media_found": "Geen lokale media gevonden",
+        "no_media_folder": "Het lijkt erop dat je nog geen media map hebt gemaakt.",
+        "setup_local_help": "Raadpleeg de {documentation} voor het instellen van lokale media.",
+        "class": {
+          "album": "Album",
+          "app": "App",
+          "artist": "Artiest",
+          "channel": "Kanaal",
+          "composer": "Componist",
+          "contributing_artist": "Bijdragende artiest",
+          "directory": "Bibliotheek",
+          "episode": "Aflevering",
+          "game": "Spel",
+          "genre": "Genre",
+          "image": "Afbeelding",
+          "movie": "Film",
+          "music": "Muziek",
+          "playlist": "Afspeellijst",
+          "podcast": "Podcast",
+          "season": "Seizoen",
+          "track": "Nummer",
+          "tv_show": "TV-programma",
+          "url": "URL",
+          "video": "Video"
+        }
+      },
+      "calendar": { "my_calendars": "Mijn agenda's", "today": "Vandaag" },
+      "attributes": { "expansion_header": "Attributen" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "{domain}",
+            "core": "Locatie en aanpassingen",
+            "group": "Groepen, groepsentiteiten en notify services",
+            "automation": "Automatiseringen",
+            "script": "Scripts",
+            "scene": "Scenes",
+            "person": "Personen",
+            "zone": "Zones",
+            "input_boolean": "Input booleans",
+            "input_text": "Input texts",
+            "input_number": "Input numbers",
+            "input_datetime": "Input date times",
+            "input_select": "Input selects",
+            "template": "Template entiteiten",
+            "universal": "Universele mediaspeler entiteiten",
+            "rest": "Rest-entiteiten en notify-services",
+            "command_line": "Opdrachtregel-entiteiten",
+            "filter": "Filter-entiteiten",
+            "statistics": "Statistische entiteiten",
+            "generic": "Generieke IP camera entiteiten",
+            "generic_thermostat": "Generieke thermostaat entiteiten",
+            "homekit": "HomeKit",
+            "min_max": "Min/max entiteiten",
+            "history_stats": "Historische statistieken entiteiten",
+            "trend": "Trend-entiteiten",
+            "ping": "Ping binaire sensor entiteiten",
+            "filesize": "Bestandsgrootte entiteiten",
+            "telegram": "Telegram notify services",
+            "smtp": "SMTP notify services",
+            "mqtt": "Handmatig geconfigureerde MQTT-entiteiten",
+            "rpi_gpio": "Raspberry Pi GPIO-entiteiten"
+          },
+          "server_control": {
+            "perform_action": "{action} Server",
+            "restart": "Herstarten",
+            "stop": "Stop"
+          },
+          "types": {
+            "reload": "Herlaad",
+            "navigation": "Navigeer",
+            "server_control": "Server"
+          },
+          "navigation": {
+            "logs": "Logs",
+            "automation": "Automatiseringen",
+            "script": "Scripts",
+            "integrations": "Integraties",
+            "areas": "Gebieden",
+            "scene": "Scènes",
+            "helpers": "Helpers",
+            "tag": "Tags",
+            "person": "Personen",
+            "devices": "Apparaten",
+            "entities": "Entiteiten",
+            "energy": "Energy",
+            "lovelace": "Lovelace Dashboards",
+            "core": "Algemeen",
+            "zone": "Zones",
+            "users": "Gebruikers",
+            "info": "Info",
+            "customize": "Aanpassingen",
+            "blueprint": "Blueprints",
+            "server_control": "Server Controls",
+            "navigate_to": "Navigeer naar {panel}"
+          }
+        },
+        "filter_placeholder": "Entiteitsfilter"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant heeft niets gehoord",
+        "found": "Ik heb het volgende voor je gevonden:",
+        "error": "Oeps, er is een fout opgetreden",
+        "how_can_i_help": "Hoe kan ik helpen?",
+        "label": "Typ een vraag en druk op 'Enter'",
+        "label_voice": "Typ en druk op 'Enter' of tik op de microfoon om te spreken"
+      },
+      "generic": {
+        "cancel": "Annuleren",
+        "ok": "OK",
+        "default_confirmation_title": "Weet je het zeker?",
+        "close": "Sluiten"
+      },
+      "image_cropper": { "crop": "Snijd bij" },
+      "more_info_control": {
+        "dismiss": "Dialoogvenster sluiten",
+        "settings": "Entiteit instellingen",
+        "edit": "Entiteit bewerken",
+        "details": "Details",
+        "history": "Geschiedenis",
+        "last_changed": "Laatst gewijzigd",
+        "last_updated": "Laatst bijgewerkt",
+        "script": {
+          "last_action": "Laatste actie",
+          "last_triggered": "Laatst geactiveerd"
+        },
+        "sun": {
+          "elevation": "Hoogtehoek",
+          "rising": "Opkomst",
+          "setting": "Ondergang"
+        },
+        "updater": { "title": "Update-instructies" },
+        "remote": { "activity": "Huidige activiteit" },
+        "restored": {
+          "not_provided": "Deze entiteit is momenteel niet beschikbaar en is een wees voor een verwijderde, gewijzigde of disfunctionele integratie of apparaat.",
+          "remove_intro": "Als de entiteit niet meer in gebruik is, kan je deze opruimen door het te verwijderen.",
+          "remove_action": "Entiteit verwijderen",
+          "confirm_remove_title": "Entiteit verwijderen?",
+          "confirm_remove_text": "Weet je zeker dat je dit item wilt verwijderen?"
+        },
+        "vacuum": {
+          "status": "Status",
+          "commands": "Stofzuigeropdrachten:",
+          "fan_speed": "Ventilatiesnelheid",
+          "start": "Start",
+          "pause": "Pauze",
+          "stop": "Stop",
+          "clean_spot": "Plek schoonmaken",
+          "locate": "Zoek",
+          "return_home": "Terugkeren",
+          "start_pause": "Start/Pauze"
+        },
+        "person": { "create_zone": "Creëer zone van huidige locatie" },
+        "cover": {
+          "open_cover": "Open zonnewering",
+          "close_cover": "Sluit zonnewering",
+          "open_tilt_cover": "Open klep",
+          "close_tile_cover": "Sluit klep",
+          "stop_cover": "Stop beweging van zonnewering"
+        }
+      },
+      "entity_registry": {
+        "settings": "instellingen",
+        "control": "Bediening",
+        "related": "Gerelateerd",
+        "dismiss": "Sluiten",
+        "no_unique_id": "Deze entiteit (\"{entity_id}\") heeft geen unieke ID, daarom kunnen de instellingen ervan niet worden beheerd vanuit de gebruikersinterface. Zie de {faq_link} voor meer details.",
+        "faq": "documentatie",
+        "info_customize": "U kunt sommige attributen overschrijven in de {customize_link} sectie.",
+        "customize_link": "entiteitsaanpassingen",
+        "editor": {
+          "name": "Naam",
+          "icon": "Pictogram",
+          "icon_error": "Pictogrammen moeten de notatie 'prefix:pictogramnaam' hebben, bijvoorbeeld 'mdi:home'",
+          "entity_id": "Entiteits-ID",
+          "unavailable": "Deze entiteit is momenteel niet beschikbaar.",
+          "enabled_label": "Schakel entiteit in",
+          "enabled_cause": "Uitgeschakeld vanwege {cause}",
+          "device_disabled": "Het apparaat van deze entiteit is uitgeschakeld.",
+          "open_device_settings": "Open de apparaatinstellingen",
+          "enabled_description": "Uitgeschakelde entiteiten zullen niet aan Home Assistant worden toegevoegd",
+          "enabled_delay_confirm": "De ingeschakelde entiteiten worden over {delay} seconden aan Home Assistant toegevoegd",
+          "enabled_restart_confirm": "Start Home Assistant opnieuw om het inschakelen van de entiteiten te voltooien",
+          "delete": "Verwijderen",
+          "confirm_delete": "Weet je zeker dat je dit item wilt verwijderen?",
+          "update": "Bijwerken",
+          "note": "Opmerking: dit werkt mogelijk nog niet met alle integraties.",
+          "advanced": "Geavanceerde instellingen",
+          "area": "Alleen entiteitsgebied instellen",
+          "area_note": "Standaard liggen de entiteiten van een apparaat in hetzelfde gebied als het apparaat. Als u het gebied van deze entiteit wijzigt, zal het niet langer het gebied van het apparaat volgen.",
+          "follow_device_area": "Volg het apparaatgebied",
+          "change_device_area": "Verander het apparaatgebied"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "De {platform} integratie is niet geladen. Voeg het aan je configuratie toe door 'default_config:' of ''{platform}:'' toe te voegen.",
+        "yaml_not_editable": "De instellingen van deze entiteit kunnen niet worden bewerkt vanuit de gebruikersinterface. Alleen entiteiten die zijn ingesteld vanuit de gebruikersinterface, kunnen worden geconfigureerd vanuit de gebruikersinterface.",
+        "required_error_msg": "Dit veld is verplicht",
+        "generic": { "name": "Naam", "icon": "Pictogram" },
+        "input_datetime": {
+          "date": "Datum",
+          "time": "Tijd",
+          "datetime": "Datum en tijd",
+          "mode": "Wat wil je invoeren"
+        },
+        "input_text": {
+          "min": "Minimale lengte",
+          "max": "Maximale lengte",
+          "mode": "Weergavemodus",
+          "text": "Tekst",
+          "password": "Wachtwoord",
+          "pattern": "Regex-patroon voor clientvalidatie"
+        },
+        "input_number": {
+          "min": "Minimale waarde",
+          "max": "Maximale waarde",
+          "mode": "Weergavemodus",
+          "box": "Invoerveld",
+          "slider": "Schuifregelaar",
+          "step": "Stapgrootte",
+          "unit_of_measurement": "Meeteenheid"
+        },
+        "input_select": {
+          "options": "Opties",
+          "add_option": "Optie toevoegen",
+          "no_options": "Er zijn nog geen opties.",
+          "add": "Toevoegen"
+        },
+        "counter": {
+          "minimum": "Minimale waarde",
+          "maximum": "Maximale waarde",
+          "initial": "Beginwaarde",
+          "restore": "Herstel de laatst bekende waarde wanneer Home Assistant start",
+          "step": "Stapgrootte"
+        },
+        "timer": { "duration": "Duur" }
+      },
+      "options_flow": {
+        "form": { "header": "Instellingen" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "Instellingen succesvol opgeslagen." }
+      },
+      "config_entry_system_options": {
+        "title": "Systeeminstellingen voor {integration}",
+        "enable_new_entities_label": "Voeg nieuwe entiteiten automatisch toe",
+        "enable_new_entities_description": "Of nieuw ontdekte apparaten voor {integration} automatisch moeten worden toegevoegd.",
+        "enable_polling_label": "Schakel polling voor updates in.",
+        "enable_polling_description": "Of Home Assistant automatisch moet pollen voor {integration} entiteiten updates.",
+        "restart_home_assistant": "U moet Home Assistant opnieuw starten om uw wijzigingen door te voeren.",
+        "update": "Bijwerken"
+      },
+      "zha_reconfigure_device": {
+        "heading": "Apparaat opnieuw configureren",
+        "configuring_alt": "Configureren",
+        "introduction": "Herconfigureer een apparaat op uw Zigbee netwerk. Gebruik deze functie als uw apparaat niet correct functioneert.",
+        "battery_device_warning": "U moet apparaten met een batterij wekken voordat u het herconfiguratieproces start. Raadpleeg de handleiding van uw toestel voor instructies over hoe u het toestel kunt wekken.",
+        "run_in_background": "U kunt dit dialoogvenster sluiten en de herconfiguratie wordt op de achtergrond voortgezet.",
+        "start_reconfiguration": "Start herconfiguratie",
+        "in_progress": "Het apparaat wordt opnieuw geconfigureerd. Dit kan wat tijd kosten.",
+        "configuration_failed": "De herconfiguratie van het apparaat is mislukt. Mogelijk is er aanvullende informatie beschikbaar in de logboeken.",
+        "configuration_complete": "Herconfiguratie van apparaat voltooid.",
+        "button_show": "Details weergeven",
+        "button_hide": "Details verbergen",
+        "cluster_header": "Cluster",
+        "bind_header": "Binding",
+        "reporting_header": "Rapporteren",
+        "attribute": "Attribuut",
+        "min_max_change": "min/max/verandering"
+      },
+      "zha_device_info": {
+        "manuf": "door {manufacturer}",
+        "no_area": "Geen Gebied",
+        "device_signature": "Handtekening van het Zigbee-apparaat",
+        "device_children": "Kinderen van Zigbee-apparaat",
+        "buttons": {
+          "add": "Apparaten toevoegen via dit apparaat",
+          "remove": "Verwijder apparaat",
+          "clusters": "Clusters beheren",
+          "reconfigure": "Apparaat opnieuw configureren",
+          "zigbee_information": "Zigbee-apparaathandtekening",
+          "device_children": "Bekijk onderliggende apparaten",
+          "view_in_visualization": "Bekijk in Visualisatie"
+        },
+        "services": {
+          "reconfigure": "Herconfigureer het ZHA-apparaat (heal device). Gebruik dit als je problemen hebt met het apparaat. Als het een apparaat met batterij is, zorg dan dat het wakker is en commando's accepteert wanneer je deze service gebruikt.",
+          "updateDeviceName": "Stel een aangepaste naam in voor dit apparaat in het apparaatregister.",
+          "remove": "Verwijder een apparaat uit het Zigbee-netwerk.",
+          "zigbee_information": "Bekijk de Zigbee-informatie voor het apparaat."
+        },
+        "confirmations": {
+          "remove": "Weet je zeker dat je het apparaat wilt verwijderen?"
+        },
+        "quirk": "Quirk",
+        "last_seen": "Laatst gezien",
+        "power_source": "Stroombron",
+        "unknown": "Onbekend",
+        "zha_device_card": { "device_name_placeholder": "Wijzig apparaatnaam" }
+      },
+      "domain_toggler": {
+        "title": "Domeinen in- en uitschakelen",
+        "reset_entities": "Entiteiten opnieuw instellen"
+      },
+      "mqtt_device_debug_info": {
+        "title": "{device} foutopsporingsgegevens",
+        "deserialize": "Probeer MQTT-berichten als JSON te ontleden",
+        "entities": "Entiteiten",
+        "no_entities": "Geen entiteiten",
+        "no_triggers": "Geen triggers",
+        "payload_display": "Payload-display",
+        "recent_messages": "{n} meest recent ontvangen bericht(en)",
+        "show_as_yaml": "Toon als YAML",
+        "triggers": "Triggers"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\none {seconde}\nother {seconden}\n}",
+      "minute": "{count} {count, plural,\none {minuut}\nother {minuten}\n}",
+      "hour": "{count} {count, plural,\none {uur}\nother {uur}\n}",
+      "day": "{count} {count, plural,\none {dag}\nother {dagen}\n}",
+      "week": "{count} {count, plural,\none {week}\nother {weken}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "Geen type opgegeven.",
+        "error_detected": "Configuratiefouten ontdekt",
+        "editor_not_available": "Geen visuele editor beschikbaar voor type \"{type}\".",
+        "editor_not_supported": "Visuele editor wordt niet ondersteund voor deze configuratie",
+        "edit_in_yaml_supported": "Je kan nog steeds de configuratie in YAML bewerken.",
+        "key_missing": "Verplichte sleutel \"{key}\" ontbreekt.",
+        "key_not_expected": "Sleutel \"{key}\" wordt niet verwacht of ondersteund door de visuele editor.",
+        "key_wrong_type": "De opgegeven waarde voor \" {key} \" wordt niet ondersteund door de visuele editor. We ondersteunen ( {type_correct} ) maar hebben ( {type_wrong} ) ontvangen.",
+        "no_template_editor_support": "Sjablonen worden niet ondersteund in de visuele editor"
+      },
+      "supervisor": {
+        "title": "Kan het supervisorpaneel niet laden!",
+        "wait": "Als Home Assistant net is gestart, zorg ervoor dat de supervisor genoeg tijd heeft gehad om op te starten.",
+        "ask": "Vraag om hulp",
+        "reboot": "Probeer een herstart van de host",
+        "observer": "Controleer de Observer",
+        "system_health": "Controleer de systeemstatus"
+      }
+    },
+    "login-form": {
+      "password": "Wachtwoord",
+      "remember": "Onthouden",
+      "log_in": "Aanmelden"
+    },
+    "notification_drawer": {
+      "click_to_configure": "Klik op de knop om {entity} te configureren",
+      "empty": "Geen notificaties",
+      "title": "Notificaties",
+      "close": "Sluiten",
+      "dismiss_all": "Alles verbergen"
+    },
+    "notification_toast": {
+      "service_call_failed": "Kan service {service} niet aanroepen",
+      "connection_lost": "Verbinding verbroken. Opnieuw verbinden...",
+      "started": "Home Assistant is gestart!",
+      "starting": "Home Assistant is aan het opstarten. Tijdens het opstarten is niet alles beschikbaar.",
+      "wrapping_up_startup": "Opstarten aan het afronden, niet alles is beschikbaar totdat het voltooid is.",
+      "integration_starting": "{integration} starten, niet alles is beschikbaar totdat het voltooid is.",
+      "triggered": "Geactiveerd {name}",
+      "dismiss": "Afwijzen"
+    },
+    "sidebar": {
+      "external_app_configuration": "App configuratie",
+      "sidebar_toggle": "Zijbalk in- en uitschakelen",
+      "done": "Klaar"
+    },
+    "panel": {
+      "error": {
+        "go_back": "Ga terug",
+        "supervisor": {
+          "ask": "Vraag om hulp",
+          "observer": "Controleer de Observer",
+          "reboot": "Probeer de host opnieuw op te starten",
+          "system_health": "Controleer de systeemstatus",
+          "title": "Kan het supervisor scherm niet laden!",
+          "wait": "Als Home Assistant net is gestart, zorg ervoor dat de supervisor genoeg tijd heeft gehad om op te starten."
+        }
+      },
+      "history": {
+        "ranges": {
+          "last_week": "Vorige week",
+          "this_week": "Deze week",
+          "today": "Vandaag",
+          "yesterday": "Gisteren"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "Vorige week",
+          "this_week": "Deze week",
+          "today": "Vandaag",
+          "yesterday": "Gisteren"
+        }
+      }
+    }
+  }
+}

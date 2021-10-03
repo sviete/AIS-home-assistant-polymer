@@ -1,0 +1,1941 @@
+{
+  "ui": {
+    "panel": {
+      "config": {
+        "header": "Home Assistant の設定",
+        "introduction": "このビューでは、コンポーネントとHome Assistantを設定できます。まだすべてをUIから設定できるわけではありませんが、現在取り組んでいます。",
+        "advanced_mode": {
+          "hint_enable": "設定オプションが見つかりませんか？アドバイスモードを有効にしてください。",
+          "link_profile_page": "プロフィールページ"
+        },
+        "common": {
+          "editor": {
+            "confirm_unsaved": "未保存の変更があります。本当に出て行きますか？"
+          }
+        },
+        "areas": {
+          "caption": "エリア",
+          "description": "すべて自宅のエリアの一覧",
+          "data_table": {
+            "area": "エリア",
+            "devices": "デバイス",
+            "entities": "エンティティ"
+          },
+          "picker": {
+            "header": "エリア",
+            "introduction": "エリアは、デバイスの場所を整理するために使用されます。この情報は、ホームアシスタント全体で、インターフェイス、アクセス権、他のシステムとの統合を整理するために使用されます。",
+            "introduction2": "デバイスをエリアに配置するには、次のリンクを使用して統合ページに移動し、設定済みの統合をクリックしてデバイス カードにアクセスします。",
+            "integrations_page": "インテグレーションページ",
+            "no_areas": "まだエリアがないようです！",
+            "create_area": "エリアの作成"
+          },
+          "editor": {
+            "default_name": "新しいエリア",
+            "delete": "削除",
+            "update": "更新",
+            "create": "作成",
+            "name": "名前",
+            "name_required": "名前は必須です",
+            "area_id": "エリア ID",
+            "unknown_error": "不明なエラー",
+            "linked_entities_caption": "エンティティ",
+            "no_linked_entities": "このエリアにリンクしているエンティティはありません。"
+          },
+          "delete": {
+            "confirmation_title": "このエリアを削除してもよろしいですか？",
+            "confirmation_text": "このエリアのすべてのデバイスは割り当て解除されます。"
+          }
+        },
+        "tag": {
+          "caption": "タグ",
+          "description": "タグの管理",
+          "learn_more": "タグの詳細",
+          "no_tags": "タグなし",
+          "add_tag": "タグを追加する",
+          "write": "書き込み",
+          "edit": "編集",
+          "never_scanned": "最後にスキャンされた",
+          "create_automation": "タグを使用したオートメーションの作成",
+          "confirm_remove_title": "タグを削除しますか?",
+          "confirm_remove": "タグ{tag}を削除してもよろしいですか？",
+          "automation_title": "{name}タグのスキャン",
+          "headers": { "name": "名前", "last_scanned": "最後にスキャンされた" },
+          "detail": {
+            "new_tag": "新しいタグ",
+            "name": "名前",
+            "description": "説明",
+            "tag_id": "タグID",
+            "tag_id_placeholder": "空のままにすると自動生成",
+            "delete": "削除",
+            "update": "更新",
+            "create": "作成",
+            "create_and_write": "作成と書き込み",
+            "usage": "タグは、スキャン時にオートメーションをトリガーすることができ、NFCタグ、QRコード、または他の種類のタグを使用することができます。{companion_link} を使用して、このタグをプログラム可能な NFC タグに書き込むか、以下の QR コードを作成してください。",
+            "companion_apps": "コンパニオン アプリ"
+          }
+        },
+        "energy": {
+          "caption": "Energy",
+          "description": "Monitor your energy production and consumption",
+          "grid": {
+            "title": "Electricity grid",
+            "sub": "Configure the amount of energy that you consume from the grid and, if you produce energy, give back to the grid. This allows Home Assistant to track your whole home energy usage.",
+            "learn_more": "More information on how to get started.",
+            "flow_dialog": {
+              "from": {
+                "header": "Configure grid consumption",
+                "paragraph": "Grid consumption is the energy that flows from the energy grid to your home.",
+                "energy_stat": "Consumed Energy (kWh)",
+                "cost_para": "Select how Home Assistant should keep track of the costs of the consumed energy.",
+                "no_cost": "Do not track costs",
+                "cost_stat": "Use an entity tracking the total costs",
+                "cost_stat_input": "Total Costs Entity",
+                "cost_entity": "Use an entity with current price",
+                "cost_entity_input": "Entity with the current price",
+                "cost_number": "Use a static price",
+                "cost_number_input": "Price per kWh",
+                "cost_number_suffix": "{currency}/kWh"
+              },
+              "to": {
+                "header": "Configure grid production",
+                "paragraph": "Grid production is the energy that flows from your solar panels to the grid.",
+                "energy_stat": "Energy returned to the grid (kWh)",
+                "cost_para": "Do you get money back when you return energy to the grid?",
+                "no_cost": "I do not get money back",
+                "cost_stat": "Use an entity tracking the total recieved money",
+                "cost_stat_input": "Total Compensation Entity",
+                "cost_entity": "Use an entity with current rate",
+                "cost_entity_input": "Entity with the current rate",
+                "cost_number": "Use a static rate",
+                "cost_number_input": "Rate per kWh",
+                "cost_number_suffix": "{currency}/kWh"
+              }
+            }
+          },
+          "solar": {
+            "title": "Solar Panels",
+            "sub": "Let Home Assistant monitor your solar panels and give you insight on their performance.",
+            "learn_more": "More information on how to get started.",
+            "stat_production": "Your solar energy production",
+            "stat_return_to_grid": "Solar energy returned to the grid",
+            "stat_predicted_production": "Prediction of your solar energy production"
+          },
+          "device_consumption": {
+            "title": "Individual devices",
+            "sub": "Tracking the energy usage of individual devices allows Home Assistant to break down your energy usage by device.",
+            "learn_more": "More information on how to get started.",
+            "add_stat": "Pick entity to track energy of",
+            "selected_stat": "Tracking energy for",
+            "dialog": {
+              "selected_stat_intro": "Select the entity that represents the device energy usage."
+            }
+          }
+        },
+        "helpers": {
+          "caption": "ヘルパー",
+          "description": "自動化の構築に役立つ要素を管理する",
+          "types": {
+            "input_text": "テキスト",
+            "input_number": "数",
+            "input_select": "ドロップダウン",
+            "input_boolean": "切り替え",
+            "input_datetime": "日付・時刻",
+            "counter": "カウンター",
+            "timer": "タイマー"
+          },
+          "picker": {
+            "headers": {
+              "name": "名前",
+              "entity_id": "エンティティ ID",
+              "type": "タイプ",
+              "editable": "編集可能"
+            },
+            "add_helper": "ヘルパーを追加",
+            "no_helpers": "まだヘルパーがいないようです！"
+          },
+          "dialog": {
+            "create": "作成",
+            "add_helper": "ヘルパーを追加",
+            "add_platform": "{platform} を追加"
+          }
+        },
+        "core": {
+          "caption": "一般",
+          "description": "ホームの場所、タイムゾーン、単位など一般的な設定",
+          "section": {
+            "core": {
+              "header": "一般的な設定",
+              "introduction": "設定の変更は、面倒なプロセスになる可能性があります。私たちは知っています。このセクションでは、あなたの人生を少しでも楽にしようとしています。",
+              "core_config": {
+                "edit_requires_storage": "設定がconfiguration.yamlに保存されているため、エディターが無効になっています。",
+                "location_name": "Home Assistantインストールの名前",
+                "latitude": "緯度",
+                "longitude": "経度",
+                "elevation": "高度",
+                "elevation_meters": "メートル",
+                "time_zone": "タイムゾーン",
+                "unit_system": "単位システム",
+                "unit_system_imperial": "インペリアル",
+                "unit_system_metric": "メトリック",
+                "imperial_example": "華氏、ポンド",
+                "metric_example": "摂氏、キログラム",
+                "find_currency_value": "Find your value",
+                "save_button": "保存",
+                "external_url": "外部 URL",
+                "internal_url": "内部 URL",
+                "currency": "Currency"
+              },
+              "analytics": {
+                "documentation": "この機能を有効にする前に、アナリティクスのドキュメントページ{link}をご覧になり、何を送信するのか、どのように保存されるのかをご確認ください。",
+                "header": "アナリティクス",
+                "instance_id": "インスタンス ID: {huuid}",
+                "introduction": "インスタンスからの分析を共有します。 {link}で公開されます",
+                "learn_more": "データの処理方法",
+                "needs_base": "このオプションを有効にするには、ベースアナリティクスを有効にする必要があります。",
+                "preference": {
+                  "base": {
+                    "description": "これには、インスタンスID、バージョン、インストールタイプが含まれます。",
+                    "title": "ベーシック・アナリティクス"
+                  },
+                  "diagnostics": {
+                    "description": "クラッシュ レポートと診断情報を共有する",
+                    "title": "診断"
+                  },
+                  "statistics": {
+                    "description": "これには、インストールされている要素の数が含まれます。完全なリストは、ドキュメントを参照してください。",
+                    "title": "使用統計"
+                  },
+                  "usage_supervisor": {
+                    "description": "これには、インテグレーション\nやアドオンの名前と機能が含まれます。",
+                    "title": "使用したインテグレーションやアドオン"
+                  },
+                  "usage": {
+                    "description": "これには、インテグレーションの名前が含まれます",
+                    "title": "使用されるインテグレーション"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "info": {
+          "caption": "情報",
+          "copy_raw": "本来のテキスト",
+          "copy_github": "GitHubの場合",
+          "description": "ホーム アシスタントのインストールに関する情報を表示する",
+          "home_assistant_logo": "ホームアシスタントのロゴ",
+          "path_configuration": "ディスク上に configuration.yaml へのパス: {path}",
+          "developed_by": "素晴らしい人々の集まりによって開発されました。",
+          "license": "Apache 2.0ライセンスの下で公開",
+          "source": "ソース：",
+          "server": "サーバー",
+          "frontend": "フロントエンド ui",
+          "built_using": "を使用して構築",
+          "icons_by": "アイコン",
+          "frontend_version": "フロントエンドバージョン: {version} - {type}",
+          "custom_uis": "カスタムの UIs:",
+          "system_health_error": "「システムの正常性」コンポーネントが有効されていません、configuration.yaml に 'system_health:' を追加してください。",
+          "integrations": "インテグレーション",
+          "documentation": "ドキュメント",
+          "issues": "問題",
+          "setup_time": "設定時間",
+          "system_health": { "manage": "管理", "more_info": "詳細情報" }
+        },
+        "logs": {
+          "caption": "ログ",
+          "description": "Home Assistantログを表示する",
+          "details": "ログの詳細（ {level} ）",
+          "load_full_log": "完全な Home Assistant ログを読み込む",
+          "loading_log": "エラーログを読み込んでいます…",
+          "no_errors": "エラーは報告されていません。",
+          "no_issues": "新しい問題はありません！",
+          "clear": "消去",
+          "refresh": "更新",
+          "multiple_messages": "メッセージは最初に{time}発生し、 {counter}回表示されます",
+          "level": {
+            "critical": "クリティカル",
+            "error": "エラー",
+            "warning": "警告",
+            "info": "情報",
+            "debug": "デバッグ"
+          },
+          "custom_integration": "カスタム・インテグレーション",
+          "error_from_custom_integration": "このエラーは、カスタム統合から発生しました。"
+        },
+        "lovelace": {
+          "caption": "Lovelace ダッシュボード",
+          "description": "Lovelace ダッシュボードを設定する",
+          "dashboards": {
+            "default_dashboard": "これはデフォルトのダッシュボードです",
+            "caption": "ダッシュボード",
+            "conf_mode": { "yaml": "YAML ファイル", "storage": "UI 制御" },
+            "picker": {
+              "headers": {
+                "title": "タイトル",
+                "conf_mode": "設定方法",
+                "default": "デフォルト",
+                "require_admin": "管理者のみ",
+                "sidebar": "サイドバーに表示",
+                "filename": "ファイル名"
+              },
+              "open": "開く",
+              "add_dashboard": "ダッシュボードを追加"
+            },
+            "confirm_delete": "このダッシュボードを削除してもよろしいですか？",
+            "cant_edit_yaml": "YAMLで定義されたダッシュボードはUIから編集できません。それらをconfiguration.yamlで変更します。",
+            "cant_edit_default": "標準の Lovelace ダッシュボードは UI から編集できません。別のダッシュボードをデフォルトとして設定することで、非表示にすることができます。",
+            "detail": {
+              "edit_dashboard": "ダッシュボードを編集",
+              "new_dashboard": "新しいダッシュボードを追加",
+              "dismiss": "閉じる",
+              "show_sidebar": "サイドバーに表示",
+              "icon": "アイコン",
+              "title": "タイトル",
+              "title_required": "タイトルが必要です。",
+              "url": "URL",
+              "url_error_msg": "URLには-を含める必要があり、スペースや特殊文字を含めることはできません（_および-を除く）",
+              "require_admin": "管理者のみ",
+              "delete": "削除",
+              "update": "更新",
+              "create": "作成",
+              "set_default": "このデバイスでデフォルトとして設定",
+              "remove_default": "このデバイスのデフォルトとして削除"
+            }
+          },
+          "resources": {
+            "caption": "リソース",
+            "types": {
+              "css": "Stylesheet",
+              "html": "HTML (非推奨)",
+              "js": "JavaScript ファイル (非推奨)",
+              "module": "JavaScript モジュール"
+            },
+            "picker": {
+              "headers": { "url": "URL", "type": "タイプ" },
+              "no_resources": "リソースなし",
+              "add_resource": "リソースを追加"
+            },
+            "confirm_delete": "このリソースを削除してもよろしいですか？",
+            "refresh_header": "更新しますか？",
+            "refresh_body": "削除を完了するにはページを更新する必要があります。今すぐ更新しますか？",
+            "cant_edit_yaml": "LovelaceをYAMLモードで使用しているため、UIを使用してリソースを管理することはできません。それらをconfiguration.yamlで管理します。",
+            "detail": {
+              "new_resource": "新しいリソースを追加",
+              "dismiss": "閉じる",
+              "warning_header": "注意してください！",
+              "warning_text": "リソースを追加することは危険であり、リソースのソースを把握し、信頼してください。リソースが悪いと、システムに深刻な損害を与える可能性があります。",
+              "url": "URL",
+              "url_error_msg": "URL は必須フィールドです",
+              "type": "リソースの種類",
+              "delete": "削除",
+              "update": "更新",
+              "create": "作成"
+            }
+          }
+        },
+        "server_control": {
+          "caption": "サーバー コントロール",
+          "description": "Home Assistant サーバーの再起動と停止",
+          "section": {
+            "validation": {
+              "heading": "設定の検証",
+              "introduction": "設定に変更を加えた後、すべてが有効であることを確認する場合は、設定を検証します。",
+              "check_config": "設定を確認",
+              "valid": "設定は有効です！",
+              "invalid": "設定は無効です"
+            },
+            "reloading": {
+              "heading": "設定の再読込",
+              "introduction": "Home Assistant の一部は、再起動を必要とせずに再読込できます。再読込を押すと、現在の設定をアンロードし、新しい設定を読み込みます。",
+              "reload": "{domain} の再読み込み",
+              "core": "ロケーションとカスタマイズの再読込",
+              "group": "グループの再読込",
+              "automation": "オートメーションの再読込",
+              "script": "スクリプトの再読込",
+              "scene": "シーンの再読込",
+              "person": "人",
+              "zone": "ゾーンの再読込",
+              "input_boolean": "入力ブール値を再読み込み",
+              "input_text": "入力テキストを再読み込み",
+              "input_number": "入力番号を再読み込み",
+              "input_datetime": "入力日時を再読み込み",
+              "input_select": "入力選択の再読み込み",
+              "template": "テンプレート エンティティの再読み込み",
+              "universal": "ユニバーサル メディア プレーヤー エンティティの再読み込み",
+              "rest": "残りのエンティティの再読み込み",
+              "command_line": "コマンド ライン エンティティの再読み込み",
+              "filter": "フィルターエンティティの再読み込み",
+              "statistics": "静的エンティティの再読み込み",
+              "generic": "汎用 IP カメラ エンティティの再読み込み",
+              "generic_thermostat": "汎用サーモスタット エンティティの再読み込み",
+              "homekit": "HomeKitの再読み込み",
+              "min_max": "最小/最大エンティティを再読み込み",
+              "history_stats": "履歴エンティティを再読み込み",
+              "trend": "トレンドエンティティを再読み込み",
+              "ping": "ping バイナリ センサー エンティティの再読み込み",
+              "filesize": "ファイルサイズエンティティを再読み込み",
+              "telegram": "テレグラム通知サービスの再読み込み",
+              "smtp": "SMTP 通知サービスの再読み込み",
+              "mqtt": "mqtt エンティティの再読み込み",
+              "rpi_gpio": "Raspberry PiGPIOエンティティの再読み込み"
+            },
+            "server_management": {
+              "heading": "サーバー管理",
+              "introduction": "Home Assistant から Home Assistant サーバーを操作します。",
+              "restart": "再起動",
+              "confirm_restart": "Home Assistant を再起動してもよろしいですか？",
+              "stop": "停止",
+              "confirm_stop": "Home Assistantを停止してもよろしいですか？"
+            }
+          }
+        },
+        "customize": {
+          "caption": "カスタマイズ",
+          "description": "エンティティのカスタマイズ",
+          "picker": {
+            "header": "カスタマイズ",
+            "introduction": "エンティティごとの属性を微調整します。追加/編集されたカスタマイズは、すぐに有効になります。削除されたカスタマイズは、エンティティが更新されたときに有効になります。",
+            "documentation": "カスタマイズドキュメント"
+          },
+          "warning": {
+            "include_sentence": "あなたのconfiguration.yamlが正しくないようです",
+            "include_link": "customize.yaml を含めます",
+            "not_applied": "ここで行った変更は、その中に書き込まれますが、インクルードが適切に行われなければ、コンフィギュレーションの再読み込み後には適用されません。"
+          },
+          "attributes_customize": "次の属性は既にcustomize.yamlに設定されています。",
+          "attributes_outside": "次の属性は、customize.yamlの外部からカスタマイズされます。",
+          "different_include": "おそらくドメインを介して、globまたは別のものを含む。",
+          "attributes_set": "次の属性はプログラム的に設定されています。",
+          "attributes_override": "必要に応じてオーバーライドできます。",
+          "attributes_not_set": "次の属性は設定されていません。必要に応じて設定してください。",
+          "pick_attribute": "オーバーライドする属性を選択してください"
+        },
+        "automation": {
+          "caption": "オートメーション",
+          "description": "オートメーションの作成と編集",
+          "picker": {
+            "header": "オートメーションエディター",
+            "introduction": "オートメーションエディタを使用すると、オートメーションを作成および編集できます。以下のリンクをクリックして、ホーム アシスタントを正しく設定したことを確認する手順を確認してください。",
+            "learn_more": "自動化の詳細",
+            "pick_automation": "編集するオートメーションを選択",
+            "no_automations": "編集可能なオートメーションが見つかりません。",
+            "add_automation": "オートメーションの追加",
+            "only_editable": "automations.yaml で定義されたオートメーションのみが編集可能です。",
+            "dev_only_editable": "automations.yaml で定義されたオートメーションのみがデバッグ可能です。",
+            "edit_automation": "オートメーションを編集",
+            "dev_automation": "デバッグの自動化",
+            "show_info_automation": "オートメーションに関する情報を表示",
+            "delete_automation": "オートメーションを削除",
+            "delete_confirm": "このオートメーションを削除してもよろしいですか？",
+            "duplicate_automation": "オートメーションを複製",
+            "duplicate": "複製",
+            "headers": { "name": "名前" }
+          },
+          "dialog_new": {
+            "header": "新しいオートメーションを作成する",
+            "how": "新しい自動化をどのように作成しますか？",
+            "blueprint": { "use_blueprint": "設計図を使用する" },
+            "thingtalk": {
+              "header": "作成するオートメーションの説明",
+              "intro": "そして、私たちはあなたのためにそれを作成しようとします。例: 私が去るときにライトを消す。",
+              "input_label": "この自動化は何をすべきでしょうか?",
+              "create": "作成"
+            },
+            "start_empty": "空の自動化から始める"
+          },
+          "editor": {
+            "enable_disable": "オートメーションの有効化/無効化",
+            "show_trace": "トレースの表示",
+            "introduction": "オートメーションを使用して、あなたの家を生き生きとさせましょう。",
+            "default_name": "新しいオートメーション",
+            "load_error_not_editable": "編集できるのは、automations.yamlのオートメーションのみです。",
+            "load_error_unknown": "オートメーションの読み込み中にエラーが発生しました ({err_no})。",
+            "save": "保存",
+            "unsaved_confirm": "未保存の変更があります。本当に出て行きますか？",
+            "alias": "名前",
+            "move_up": "上に移動",
+            "move_down": "下に移動",
+            "description": {
+              "label": "説明",
+              "placeholder": "オプションの説明"
+            },
+            "blueprint": {
+              "header": "設計図",
+              "blueprint_to_use": "使用する設計図",
+              "no_blueprints": "設計図はありません",
+              "no_inputs": "この設計図には入力がありません。"
+            },
+            "modes": {
+              "label": "モード",
+              "description": "このモードは、アクションが以前のトリガーから実行されている間に自動化がトリガーされたときに何が起こるかを制御します。詳細については{documentation_link}を確認してください。",
+              "documentation": "自動化ドキュメント",
+              "single": "シングル（デフォルト）",
+              "restart": "再起動",
+              "queued": "待機中",
+              "parallel": "並列"
+            },
+            "max": { "queued": "キューの長さ", "parallel": "並列実行の最大数" },
+            "edit_yaml": "YAML で編集",
+            "edit_ui": "UI で編集",
+            "copy_to_clipboard": "クリップボードにコピー",
+            "triggers": {
+              "name": "トリガー",
+              "header": "トリガー",
+              "introduction": "トリガーはオートメーションルールの処理を開始させます。同じルールに対して複数のトリガーを指定することが可能です。トリガーが開始されると、Home Assistantは条件があれば確認し、アクションを呼び出します。\n\n[トリガーについて](https://home-assistant.io/docs/automation/trigger/)",
+              "learn_more": "トリガーの詳細",
+              "add": "トリガーを追加",
+              "id": "Trigger ID (used by the trigger condition)",
+              "duplicate": "複製",
+              "delete": "削除",
+              "delete_confirm": "本当に削除しますか？",
+              "unsupported_platform": "サポートされていないプラットフォーム： {platform}",
+              "type_select": "トリガーの種類",
+              "type": {
+                "device": {
+                  "label": "デバイス",
+                  "trigger": "トリガー",
+                  "extra_fields": {
+                    "above": "上",
+                    "below": "以下に",
+                    "for": "期間",
+                    "zone": "ゾーン"
+                  }
+                },
+                "event": {
+                  "label": "イベント",
+                  "event_type": "イベントの種類",
+                  "event_data": "イベントのデータ",
+                  "context_users": "トリガーされるイベントの制限",
+                  "context_user_picked": "ユーザー起動イベント",
+                  "context_user_pick": "ユーザーを追加"
+                },
+                "geo_location": {
+                  "label": "ジオロケーション",
+                  "source": "ソース：",
+                  "zone": "ゾーン",
+                  "event": "イベント：",
+                  "enter": "入力",
+                  "leave": "去る"
+                },
+                "state": {
+                  "label": "状態",
+                  "attribute": "属性（オプション）",
+                  "from": "変化前",
+                  "for": "のために",
+                  "to": "変化後"
+                },
+                "homeassistant": {
+                  "label": "Home Assistant",
+                  "event": "イベント：",
+                  "start": "起動",
+                  "shutdown": "停止"
+                },
+                "mqtt": {
+                  "label": "MQTT",
+                  "topic": "トピック",
+                  "payload": "ペイロード（オプション）"
+                },
+                "numeric_state": {
+                  "label": "数値の状態",
+                  "above": "上",
+                  "below": "以下に",
+                  "value_template": "バリューテンプレート（オプショナル）"
+                },
+                "sun": {
+                  "label": "太陽",
+                  "event": "イベント",
+                  "sunrise": "日の出",
+                  "sunset": "日の入",
+                  "offset": "オフセット（オプション）"
+                },
+                "tag": { "label": "タグ" },
+                "template": {
+                  "label": "テンプレート",
+                  "value_template": "バリューテンプレート"
+                },
+                "time": {
+                  "type_value": "定刻",
+                  "type_input": "日付/時刻ヘルパーの値",
+                  "label": "時刻",
+                  "at": "時期"
+                },
+                "time_pattern": {
+                  "label": "タイムパターン",
+                  "hours": "時間",
+                  "minutes": "分",
+                  "seconds": "秒"
+                },
+                "webhook": { "label": "Webhook", "webhook_id": "Webhook ID" },
+                "zone": {
+                  "label": "ゾーン",
+                  "entity": "場所に対応するエンティティ",
+                  "zone": "ゾーン",
+                  "event": "イベント：",
+                  "enter": "いる",
+                  "leave": "去る"
+                }
+              }
+            },
+            "conditions": {
+              "name": "条件",
+              "header": "条件",
+              "introduction": "条件はオプションであり、すべての条件が満たされない限り、それ以上の実行を防ぎます。",
+              "learn_more": "条件の詳細",
+              "add": "条件を追加",
+              "duplicate": "デュプリケート",
+              "delete": "削除",
+              "delete_confirm": "本当に削除しますか？",
+              "unsupported_condition": "未サポートの条件：{condition}",
+              "type_select": "条件の種類",
+              "type": {
+                "and": { "label": "AND" },
+                "device": {
+                  "label": "デバイス",
+                  "condition": "条件",
+                  "extra_fields": {
+                    "above": "上",
+                    "below": "以下に",
+                    "for": "期間",
+                    "hvac_mode": "HVACモード",
+                    "preset_mode": "プリセットモード"
+                  }
+                },
+                "not": { "label": "Not" },
+                "numeric_state": {
+                  "label": "数的状態",
+                  "above": "超過",
+                  "below": "未満",
+                  "value_template": "バリューテンプレート（オプショナル）"
+                },
+                "or": { "label": "OR" },
+                "state": { "label": "状態", "state": "状態" },
+                "sun": {
+                  "label": "太陽",
+                  "before": "前：",
+                  "after": "後：",
+                  "before_offset": "オフセット前（オプション）",
+                  "after_offset": "オフセット後（オプション）",
+                  "sunrise": "日の出",
+                  "sunset": "日の入"
+                },
+                "template": {
+                  "label": "テンプレート",
+                  "value_template": "バリューテンプレート"
+                },
+                "time": {
+                  "type_value": "定刻",
+                  "type_input": "日付/時刻ヘルパーの値",
+                  "label": "時間",
+                  "after": "後",
+                  "before": "前",
+                  "weekdays": {
+                    "mon": "月曜日",
+                    "tue": "火曜日",
+                    "wed": "水曜日",
+                    "thu": "木曜日",
+                    "fri": "金曜日",
+                    "sat": "土曜日",
+                    "sun": "日曜日"
+                  }
+                },
+                "trigger": {
+                  "label": "Trigger",
+                  "no_triggers": "No triggers available",
+                  "id": "Trigger ID"
+                },
+                "zone": {
+                  "label": "ゾーン",
+                  "entity": "場所に対応するエンティティ",
+                  "zone": "ゾーン"
+                }
+              }
+            },
+            "actions": {
+              "name": "アクション",
+              "header": "アクション",
+              "introduction": "アクションは、オートメーションがトリガーされたときにHome Assistantが実行するものです。\n\n [アクションの詳細]（https://home-assistant.io/docs/automation/action/）",
+              "learn_more": "アクションの詳細",
+              "add": "アクションを追加",
+              "duplicate": "デュプリケート",
+              "delete": "削除",
+              "delete_confirm": "本当に削除しますか？",
+              "unsupported_action": "未サポートのアクション：{action}",
+              "type_select": "アクションの種類",
+              "type": {
+                "service": { "label": "サービスの呼び出し" },
+                "delay": { "label": "遅延", "delay": "遅延" },
+                "wait_template": {
+                  "label": "待つ",
+                  "wait_template": "待機テンプレート",
+                  "timeout": "タイムアウト（オプション）",
+                  "continue_timeout": "タイムアウト時に続行"
+                },
+                "wait_for_trigger": {
+                  "label": "トリガーを待つ",
+                  "timeout": "タイムアウト (オプション)",
+                  "continue_timeout": "タイムアウト時に続行"
+                },
+                "condition": { "label": "条件" },
+                "event": {
+                  "label": "イベントを実行",
+                  "event": "イベント：",
+                  "service_data": "サービスデータ"
+                },
+                "device_id": {
+                  "label": "デバイス",
+                  "action": "アクション",
+                  "extra_fields": {
+                    "code": "コード",
+                    "message": "メッセージ",
+                    "title": "タイトル",
+                    "position": "ポジション",
+                    "mode": "モード",
+                    "humidity": "湿度",
+                    "value": "値",
+                    "brightness_pct": "明るさ",
+                    "flash": "フラッシュ"
+                  }
+                },
+                "scene": { "label": "シーンをアクティブにする" },
+                "repeat": {
+                  "label": "繰り返す",
+                  "type_select": "繰り返しのタイプ",
+                  "type": {
+                    "count": { "label": "カウント" },
+                    "while": { "label": "しばらくの間", "conditions": "条件" },
+                    "until": { "label": "まで", "conditions": "条件まで" }
+                  },
+                  "sequence": "アクション"
+                },
+                "choose": {
+                  "label": "選択",
+                  "default": "デフォルトのアクション",
+                  "option": "オプション {番号}",
+                  "add_option": "オプションを追加",
+                  "remove_option": "オプションを削除",
+                  "conditions": "条件",
+                  "sequence": "アクション"
+                }
+              }
+            }
+          },
+          "thingtalk": {
+            "create": "オートメーションを作成",
+            "task_selection": {
+              "header": "新しいオートメーションを作成する",
+              "introduction": "このオートメーションの実行内容の下に入力すると、ホーム アシスタントのオートメーションに変換されます。",
+              "language_note": "注: 現在は英語のみがサポートされています。",
+              "for_example": "例えば：",
+              "error_empty": "コマンドを入力するか、スキップをタップします。",
+              "error_unsupported": "私たちは自動化を作成できませんでした(まだ?"
+            },
+            "link_devices": {
+              "header": "すごい！今、我々はいくつかのデバイスをリンクする必要があります",
+              "ambiguous_entities": "1 つ以上のデバイスに複数の一致するエンティティがあります。",
+              "unknown_placeholder": "不明なプレースホルダ"
+            }
+          }
+        },
+        "blueprint": {
+          "caption": "設計図",
+          "description": "設計図の管理",
+          "overview": {
+            "header": "設計図エディタ",
+            "introduction": "設計図エディターを使用すると、設計図を作成および編集できます。",
+            "learn_more": "設計図の詳細",
+            "headers": {
+              "name": "名前",
+              "domain": "ドメイン",
+              "file_name": "ファイル名"
+            },
+            "confirm_delete_header": "この設計図を削除しますか?",
+            "confirm_delete_text": "この設計図を削除してもよ思いますか?",
+            "add_blueprint": "設計図を追加する",
+            "use_blueprint": "オートメーションを作成",
+            "delete_blueprint": "設計図を削除",
+            "share_blueprint": "設計図を共有する",
+            "share_blueprint_no_url": "設計図を共有できません: ソース URL がありません",
+            "discover_more": "より多くの設計図を見る"
+          },
+          "add": {
+            "header": "新しい設計図を追加する",
+            "import_header": "インポート{name} （ {domain} ）",
+            "import_introduction_link": "他のユーザーの設計図をGithubと{community_link}からインポートできます。以下に設計図のURLを入力します。",
+            "community_forums": "コミュニティフォーラム",
+            "url": "設計図のURL",
+            "raw_blueprint": "設計図コンテンツ",
+            "importing": "設計図をインポートしています...",
+            "import_btn": "設計図をインポートする",
+            "saving": "設計図を保存しています...",
+            "save_btn": "設計図の保存",
+            "error_no_url": "設計図のURLを入力してください。",
+            "unsupported_blueprint": "この設計図はサポートされていません",
+            "file_name": "設計図のパス"
+          }
+        },
+        "script": {
+          "caption": "スクリプト",
+          "description": "スクリプトの作成と編集",
+          "picker": {
+            "header": "スクリプト エディタ",
+            "introduction": "スクリプトエディタを使用すると、スクリプトを作成および編集できます。以下のリンクに従って手順を読み、Home Assistantが正しく設定されていることを確認してください。",
+            "learn_more": "スクリプトの詳細",
+            "no_scripts": "編集可能なスクリプトが見つかりませんでした",
+            "add_script": "スクリプトを追加",
+            "show_info": "スクリプトに関する情報を表示",
+            "run_script": "スクリプトを実行する",
+            "edit_script": "スクリプトを編集",
+            "dev_script": "Debug script",
+            "headers": { "name": "名前" },
+            "duplicate_script": "スクリプトの複製",
+            "duplicate": "複製"
+          },
+          "editor": {
+            "alias": "名前",
+            "icon": "アイコン",
+            "id": "エンティティ ID",
+            "id_already_exists_save_error": "IDが一意ではないため、このスクリプトを保存できません。別のIDを選択するか、空白のままにして自動的に生成します。",
+            "id_already_exists": "このIDはすでに存在します",
+            "introduction": "スクリプトを使用して一連のアクションを実行する。",
+            "show_trace": "Show trace",
+            "header": "スクリプト： {name}",
+            "default_name": "新しいスクリプト",
+            "modes": {
+              "label": "モード",
+              "description": "このモードは、アクションが以前のトリガーから実行されている間に自動化がトリガーされたときに何が起こるかを制御します。詳細については{documentation_link}を確認してください。",
+              "documentation": "スクリプトのドキュメント",
+              "single": "シングル（デフォルト）",
+              "restart": "再起動",
+              "queued": "待機中",
+              "parallel": "並列"
+            },
+            "max": { "queued": "キューの長さ", "parallel": "並列実行の最大数" },
+            "load_error_not_editable": "scripts.yaml内のスクリプトのみが編集可能です。",
+            "delete_confirm": "このスクリプトを削除しますか?",
+            "delete_script": "スクリプトを削除",
+            "save_script": "スクリプトを保存",
+            "sequence": "シーケンス",
+            "sequence_sentence": "このスクリプトのアクションのシーケンス。",
+            "link_available_actions": "使用可能なアクションに関する情報をもっと見る。"
+          }
+        },
+        "scene": {
+          "caption": "シーン",
+          "description": "シーンの作成と編集",
+          "activated": "アクティブ化されたシーン {name}。",
+          "picker": {
+            "header": "シーンエディター",
+            "introduction": "シーン エディタを使用すると、シーンを作成および編集できます。以下のリンクをクリックして、ホーム アシスタントを正しく設定したことを確認する手順を確認してください。",
+            "learn_more": "シーンの情報をもっと見る。",
+            "pick_scene": "編集するシーンを選択",
+            "no_scenes": "編集可能なシーンが見つかりません。",
+            "add_scene": "シーンを追加",
+            "only_editable": "scenes.yaml で定義されたシーンのみが編集可能です。",
+            "edit_scene": "シーンを編集",
+            "show_info_scene": "シーンに関する情報を表示",
+            "delete_scene": "シーンを削除",
+            "delete_confirm": "このシーンを削除してもよろしいですか？",
+            "duplicate_scene": "シーンの複製",
+            "duplicate": "複製",
+            "headers": { "name": "名前" }
+          },
+          "editor": {
+            "introduction": "シーンを使用して、あなたの家を生き生きとさせましょう。",
+            "default_name": "新しいシーン",
+            "load_error_not_editable": "scenes.yaml で定義されたシーンのみが編集可能です。",
+            "load_error_unknown": "シーンの読み込みエラー ({err_no})。",
+            "save": "保存",
+            "unsaved_confirm": "未保存の変更があります、終了してもよろしいですか？",
+            "name": "名前",
+            "icon": "アイコン",
+            "devices": {
+              "header": "デバイス",
+              "introduction": "シーンに含めるデバイスを追加します。すべてのデバイスをこのシーンに対して必要な状態に設定します。",
+              "add": "デバイスを追加",
+              "delete": "デバイスを削除"
+            },
+            "entities": {
+              "header": "エンティティ",
+              "introduction": "デバイスに属していないエンティティをここで設定できます。",
+              "without_device": "デバイスのないエンティティ",
+              "device_entities": "デバイスに属するエンティティを追加するには、デバイスも追加されます。",
+              "add": "エンティティを追加",
+              "delete": "エンティティを削除"
+            }
+          }
+        },
+        "cloud": {
+          "description_login": "{email}としてログインしました",
+          "description_not_login": "ログインしていない",
+          "description_features": "自宅の外からコントロールするために、AlexaとGoogleアシスタントに統合します。",
+          "login": {
+            "title": "クラウドログイン",
+            "introduction": "Home Assistant Cloudは、外出中のインスタンスへの安全なリモート接続を提供します。また、AmazonのAlexaやGoogleアシスタントなどのクラウド専用サービスに接続することもできます。",
+            "introduction2": "このサービスはパートナーによって運営されています",
+            "introduction2a": "、Home AssistantとHass.ioの創設者によって設立された会社。",
+            "introduction3": "Home Assistant Cloudは、1か月間の無料トライアル付きのサブスクリプションサービスです。支払い情報は必要ありません。",
+            "learn_more_link": "Home Assistant Cloud の情報をもっと見る。",
+            "dismiss": "閉じる",
+            "sign_in": "サインイン",
+            "email": "Eメール",
+            "email_error_msg": "無効な電子メール",
+            "password": "パスワード",
+            "password_error_msg": "パスワードは8文字以上です",
+            "forgot_password": "パスワードをお忘れですか？",
+            "start_trial": "1か月無料トライアルを開始",
+            "trial_info": "支払い情報は必要ありません",
+            "alert_password_change_required": "ログインする前にパスワードを変更する必要があります。",
+            "alert_email_confirm_necessary": "ログインする前にメールアドレスを確認する必要があります。"
+          },
+          "forgot_password": {
+            "title": "パスワードを忘れた場合",
+            "subtitle": "パスワードをお忘れですか",
+            "instructions": "メールアドレスを入力してください。パスワードをリセットするためのリンクが送信されます。",
+            "email": "Eメール",
+            "email_error_msg": "無効な電子メール",
+            "send_reset_email": "リセットメールを送信",
+            "check_your_email": "パスワードをリセットする方法については、メールを確認してください。"
+          },
+          "register": {
+            "title": "アカウントの登録",
+            "headline": "無料試用を開始",
+            "information": "アカウントを作成して、Home Assistant Cloudで1か月間の無料トライアルを開始してください。支払い情報は必要ありません。",
+            "information2": "試用版では、Home Assistant Cloud すべての特典にアクセスできます、例えば：",
+            "feature_remote_control": "家の外でのHome Assistantの制御",
+            "feature_google_home": "Google Assistant との統合",
+            "feature_amazon_alexa": "Amazon Alexa との統合",
+            "feature_webhook_apps": "OwnTracksなどのWebhookベースのアプリとの簡単な統合",
+            "information3": "このサービスはパートナーが運営しています。",
+            "information3a": "ホームアシスタントとHass.ioの創業者によって設立された会社。",
+            "information4": "アカウントを登録することにより、以下の条件に同意するものとします。",
+            "link_terms_conditions": "利用規約",
+            "link_privacy_policy": "プライバシーポリシー",
+            "create_account": "アカウントの作成",
+            "email_address": "メールアドレス",
+            "email_error_msg": "無効な電子メール",
+            "password": "パスワード",
+            "password_error_msg": "パスワードは 8 文字以上です",
+            "start_trial": "試用を開始",
+            "resend_confirm_email": "確認メールを再送信",
+            "account_created": "アカウントが作成されました!アカウントを有効にする方法については、メールを確認してください。"
+          },
+          "account": {
+            "thank_you_note": "Home Assistant Cloudにご参加いただきありがとうございます。私たちは皆のために優れたホームオートメーション体験を作ることができるのはあなたのような人々のおかげです。ありがとうございました！",
+            "nabu_casa_account": "Nabu Casa アカウント",
+            "connection_status": "クラウド接続の状態",
+            "manage_account": "アカウントの管理",
+            "sign_out": "サインアウト",
+            "integrations": "インテグレーション",
+            "integrations_introduction": "ホームアシスタントクラウドの統合により、ホームアシスタントインスタンスをインターネット上で公開することなく、クラウド内のサービスに接続できます。",
+            "integrations_introduction2": "ウェブサイトを確認してください",
+            "integrations_link_all_features": "利用可能なすべての機能",
+            "connected": "接続",
+            "connecting": "接続しています...",
+            "not_connected": "接続されていません",
+            "fetching_subscription": "サブスクリプションを取得しています。",
+            "tts": {
+              "title": "テキスト読み上げ",
+              "info": "私たちのテキスト読み上げサービスを使用してあなたに話をさせることによって、あなたの家に人格をもたらします。これは、{service} サービスを使用して、自動化およびスクリプトで使用できます。",
+              "default_language": "使用するデフォルト言語",
+              "male": "男性",
+              "female": "女性",
+              "try": "試す",
+              "dialog": {
+                "header": "テキスト読み上げの試行",
+                "example_message": "こんにちは{name} 、サポートされているメディアプレーヤーで任意のテキストを再生できます！",
+                "target": "ターゲット",
+                "target_browser": "ブラウザ",
+                "play": "再生"
+              }
+            },
+            "remote": {
+              "title": "リモートコントロール",
+              "connected": "接続",
+              "not_connected": "接続されていません",
+              "reconnecting": "Reconnecting",
+              "access_is_being_prepared": "リモート アクセスの準備中です。準備ができたらお知らせします。",
+              "info": "Home Assistant Cloud は、自宅の外からインスタンスへの安全なリモート接続を提供します。",
+              "instance_is_available": "インスタンスは次の場所にあります",
+              "instance_will_be_available": "インスタンスは次の時点で利用可能になります。",
+              "remote_enabled": {
+                "caption": "自動的に接続",
+                "description": "このオプションを有効にすると、ホームアシスタントのインスタンスが常にリモートでアクセスできるようになります。"
+              },
+              "link_learn_how_it_works": "仕組みを学ぶ",
+              "certificate_info": "証明書情報"
+            },
+            "alexa": {
+              "title": "Alexa",
+              "info": "AlexaとHome Assistant Cloudの統合により、すべてのAlexa対応デバイスを介してすべてのHome Assistantデバイスを制御できます。",
+              "enable_ha_skill": "AlexaのHome Assistantスキルを有効にする",
+              "config_documentation": "設定に関するドキュメント",
+              "enable_state_reporting": "状態レポートを有効にする",
+              "info_state_reporting": "状態レポートを有効にすると、ホームアシスタントは公開されたエンティティのすべての状態変更を Amazon に送信します。これにより、常にAlexaアプリで最新の状態を表示し、状態の変更を使用してルーチンを作成できます。",
+              "sync_entities": "エンティティの同期",
+              "manage_entities": "エンティティの管理",
+              "sync_entities_error": "エンティティの同期に失敗しました:",
+              "state_reporting_error": "状態を{enable_disable}報告できません。",
+              "enable": "有効",
+              "disable": "無効"
+            },
+            "google": {
+              "title": "Googleアシスタント",
+              "info": "ホーム アシスタント クラウド向けの Google アシスタント統合機能を使用すると、Google アシスタント対応のデバイスを介してすべてのホーム アシスタント デバイスを制御できます。",
+              "enable_ha_skill": "GoogleアシスタントのHome Assistantスキルを有効にする",
+              "config_documentation": "設定に関するドキュメント",
+              "enable_state_reporting": "状態レポートを有効にする",
+              "info_state_reporting": "状態レポートを有効にすると、ホーム アシスタントは公開されたエンティティのすべての状態変更を Google に送信します。これにより、Google アプリで最新の状態を常に確認できます。",
+              "security_devices": "セキュリティデバイス",
+              "enter_pin_info": "セキュリティ デバイスと通信するには、ピンを入力してください。セキュリティデバイスは、ドア、ガレージドア、ロックです。Google アシスタント経由でこのようなデバイスとやり取りする際に、このピンを入力する必要があります。",
+              "devices_pin": "セキュリティデバイス PIN",
+              "enter_pin_hint": "セキュリティデバイスを使用するには PIN を入力してください",
+              "sync_entities": "エンティティをGoogleに同期",
+              "sync_entities_404_message": "エンティティをGoogleに同期できませんでした。Googleに「OK Google、デバイスを同期して」と尋ねてエンティティを同期してください。",
+              "manage_entities": "エンティティの管理",
+              "enter_pin_error": "ピンを保存できません：",
+              "not_configured_title": "Googleアシスタントがアクティブ化されていません",
+              "not_configured_text": "Google アシスタントを使用する前に、「Google Home」アプリで「Google アシスタント」のホームアシスタントクラウドスキルを有効にする必要があります。"
+            },
+            "webhooks": {
+              "title": "ウェブフック",
+              "info": "webhook によってトリガーされるように設定された URL を公開可能な URL を与えることができ、インスタンスをインターネットに公開することなく、どこからでもホームアシスタントにデータを送信できます。",
+              "no_hooks_yet": "まだwebhookがないようです。はじめに",
+              "no_hooks_yet_link_integration": "Webhook ベースのインテグレーション",
+              "no_hooks_yet2": "または作成することによって",
+              "no_hooks_yet_link_automation": "Webhookオートメーション",
+              "link_learn_more": "Webhookを利用した自動化の作成について詳しく学んでください。",
+              "loading": "読み込み中...",
+              "manage": "管理",
+              "disable_hook_error_msg": "ウェブホックを無効にできませんでした："
+            }
+          },
+          "alexa": {
+            "title": "Alexa",
+            "banner": "この UI を介して公開されるエンティティの編集は、configuration.yaml でエンティティ フィルターを設定しているため無効になります。",
+            "exposed_entities": "公開されたエンティティ",
+            "not_exposed_entities": "公開されていないエンティティ",
+            "manage_domains": "ドメインの管理",
+            "expose_entity": "エンティティの公開",
+            "dont_expose_entity": "エンティティを公開しない",
+            "follow_domain": "ドメインをフォローする",
+            "exposed": "{selected}は公開されました",
+            "not_exposed": "{selected} は公開されていません",
+            "expose": "Alexa に公開"
+          },
+          "dialog_certificate": {
+            "certificate_information": "証明書情報",
+            "certificate_expiration_date": "証明書の有効期限",
+            "will_be_auto_renewed": "自動的に更新されます",
+            "fingerprint": "証明書のフィンガープリント:",
+            "close": "閉じる"
+          },
+          "google": {
+            "title": "Google Assistant",
+            "expose": "Google Assistant に公開",
+            "disable_2FA": "多要素認証を無効にする",
+            "banner": "この UI を介して公開されるエンティティの編集は、configuration.yaml でエンティティ フィルターを設定しているため無効になります。",
+            "exposed_entities": "公開されたエンティティ",
+            "not_exposed_entities": "公開されていないエンティティ",
+            "manage_domains": "ドメインの管理",
+            "expose_entity": "エンティティを公開する",
+            "dont_expose_entity": "エンティティを公開しない",
+            "follow_domain": "ドメインをフォローする",
+            "exposed": "{selected}は公開されました",
+            "not_exposed": "{selected} は公開されていません",
+            "sync_to_google": "変更をGoogleに同期しています。"
+          },
+          "dialog_cloudhook": {
+            "webhook_for": "{name} Webhook",
+            "available_at": "Webhookは次のURLで入手できます。",
+            "managed_by_integration": "この webhook は統合によって管理され、無効にすることはできません。",
+            "info_disable_webhook": "このウェブフックを使用したくない場合は、次の手順を実行します。",
+            "link_disable_webhook": "無効にする",
+            "view_documentation": "ドキュメントを見る",
+            "close": "閉じる",
+            "confirm_disable": "このウェブホックを無効化してもよろしいですか？",
+            "copied_to_clipboard": "クリップボードにコピーしました"
+          }
+        },
+        "devices": {
+          "add_prompt": "このデバイスを使用した{name}はまだ追加されていません。上の[+]ボタンをクリックして追加できます。",
+          "caption": "デバイス",
+          "description": "接続されたデバイスの管理",
+          "device_info": "デバイス情報",
+          "unnamed_device": "名前のないデバイス",
+          "unknown_error": "不明なエラー",
+          "name": "名前",
+          "update": "更新",
+          "no_devices": "デバイスなし",
+          "enabled_label": "デバイスを有効にする",
+          "enabled_cause": "デバイスは{cause}によって無効にされています。",
+          "disabled_by": {
+            "user": "ユーザー",
+            "integration": "インテグレーション",
+            "config_entry": "設定エントリ"
+          },
+          "enabled_description": "無効なデバイスは表示されず、デバイスに属するエンティティは無効になり、ホーム アシスタントに追加されません。",
+          "automation": {
+            "automations": "オートメーション",
+            "no_automations": "オートメーションなし",
+            "unknown_automation": "不明なオートメーション",
+            "create": "デバイスからオートメーションを作成",
+            "create_disable": "無効なデバイスで自動化を作成できません",
+            "triggers": {
+              "caption": "いつ何かをする.",
+              "no_triggers": "トリガーなし",
+              "unknown_trigger": "不明なトリガー"
+            },
+            "conditions": {
+              "caption": "次の場合にのみ何かしてください...",
+              "no_conditions": "条件なし",
+              "unknown_condition": "状態不明"
+            },
+            "actions": {
+              "caption": "何かがトリガーされたとき...",
+              "no_actions": "アクションなし",
+              "unknown_action": "不明なアクション"
+            },
+            "no_device_automations": "このデバイスで利用可能なオートメーションはありません。"
+          },
+          "script": {
+            "scripts": "スクリプト",
+            "no_scripts": "スクリプトなし",
+            "create": "デバイスからスクリプトを作成",
+            "create_disable": "デバイスが無効になっているのでスクリプトを作成できません"
+          },
+          "scene": {
+            "scenes": "シーン",
+            "no_scenes": "シーンなし",
+            "create": "デバイスからシーンを作成",
+            "create_disable": "デバイスが無効になっているのでシーンを作成できません"
+          },
+          "cant_edit": "編集できるのは、UI で作成された項目のみです。",
+          "device_not_found": "デバイスが見つかりません。",
+          "entities": {
+            "entities": "エンティティ",
+            "add_entities_lovelace": "Lovelaceに追加",
+            "none": "このデバイスにはエンティティがありません",
+            "hide_disabled": "無効を非表示",
+            "disabled_entities": "{count} {count, plural,\n  one {無効なエンティティ}\n  other {無効なエンティティ}\n}"
+          },
+          "scripts": "スクリプト",
+          "scenes": "シーン",
+          "confirm_rename_entity_ids": "エンティティの ID も変更しますか？",
+          "confirm_rename_entity_ids_warning": "この場合、これらのエンティティを現在使用している設定 (オートメーション、スクリプト、シーン、Lovelace など) は変更されません。",
+          "confirm_disable_config_entry": "{entry_name}デバイスはもうありません。設定エントリを無効にしますか？",
+          "update_device_error": "デバイスの更新に失敗しました",
+          "disabled": "無効",
+          "data_table": {
+            "device": "デバイス",
+            "manufacturer": "メーカー",
+            "model": "型番",
+            "area": "エリア",
+            "integration": "インテグレーション",
+            "battery": "バッテリー",
+            "no_devices": "デバイスなし"
+          },
+          "delete": "削除",
+          "confirm_delete": "このデバイスを削除してもよろしいですか？",
+          "picker": {
+            "search": "デバイスを探す",
+            "filter": {
+              "filter": "フィルター",
+              "show_disabled": "無効なデバイスを表示する",
+              "hidden_devices": "{number} 非表示 {number, plural,\n  one {デバイス}\n  other {デバイス}\n}",
+              "show_all": "すべてを表示"
+            }
+          }
+        },
+        "entities": {
+          "caption": "エンティティ",
+          "description": "すべて既知のエンティティの一覧",
+          "picker": {
+            "header": "エンティティ",
+            "introduction": "Home Assistantは、一意に識別できる、これまでに見たすべてのエンティティのレジストリを保持します。これらの各エンティティには、エンティティIDが割り当てられ、このエンティティだけに予約されます。",
+            "introduction2": "エンティティ レジストリを使用して、名前を上書きするか、エンティティ ID を変更するか、またはホーム アシスタントからエントリを削除します。",
+            "search": "エンティティを検索",
+            "filter": {
+              "filter": "フィルター",
+              "show_disabled": "無効なエンティティを表示",
+              "show_unavailable": "利用できないエンティティの表示",
+              "show_readonly": "読み取り専用のエンティティを表示",
+              "hidden_entities": "{number} 非表示 {number, plural,\n  one {エンティティ}\n  other {エンティティ}\n}",
+              "show_all": "すべてを表示"
+            },
+            "status": {
+              "restored": "復元",
+              "unavailable": "利用できません",
+              "disabled": "無効",
+              "readonly": "読み取り専用",
+              "ok": "OK"
+            },
+            "headers": {
+              "name": "名前",
+              "entity_id": "エンティティ ID",
+              "integration": "インテグレーション",
+              "area": "エリア",
+              "status": "ステータス"
+            },
+            "selected": "{number}選択されました",
+            "enable_selected": {
+              "button": "選択を有効にする",
+              "confirm_title": "{number}エンティティを有効にしますか？",
+              "confirm_text": "これにより、ホーム アシスタントが無効になった場合に、再びホーム アシスタントで使用できるようになります。"
+            },
+            "disable_selected": {
+              "button": "選択を無効にする",
+              "confirm_title": "{number}エンティティを無効にしますか？",
+              "confirm_text": "無効化されたエンティティはHome Assistantに追加されません。"
+            },
+            "remove_selected": {
+              "button": "選択したものを削除",
+              "confirm_title": "{number}エンティティを削除しますか？",
+              "confirm_partly_title": "削除できるのは、選択された{number}エンティティのみです。",
+              "confirm_text": "これらのエンティティが含まれている場合は、Lovelace の設定および自動化からそれらを削除する必要があります。Lovelace",
+              "confirm_partly_text": "選択した{selected}エンティティの{selected}削除{removable}のみを削除できます。エンティティが削除できるのは、統合によってエンティティが提供されなくなった場合のみです。削除された統合のエンティティを削除する前に、Home Assistantを再起動する必要がある場合があります。削除可能なエンティティを削除してもよろしいですか？"
+            }
+          }
+        },
+        "person": {
+          "caption": "人",
+          "description": "Home Assistant を追跡している人の管理。",
+          "introduction": "ここでは、Home Assistantで関心のある各人を定義できます。",
+          "note_about_persons_configured_in_yaml": "注：configuration.yaml で設定された人は、UI で編集できません。",
+          "learn_more": "ユーザーの詳細",
+          "no_persons_created_yet": "まだ人を作成していないようです。",
+          "create_person": "人を作成",
+          "add_person": "人を追加",
+          "confirm_delete": "このユーザーを削除しますか?",
+          "confirm_delete2": "このユーザーに属するすべてのデバイスは割り当て解除されます。",
+          "person_not_found_title": "人が見つかりません",
+          "person_not_found": "編集しようとしている人が見つかりませんでした。",
+          "detail": {
+            "new_person": "新しい人",
+            "name": "名前",
+            "name_error_msg": "名前は必須です",
+            "linked_user": "リンクされたユーザー",
+            "device_tracker_intro": "このユーザーに属するデバイスを選択します。",
+            "no_device_tracker_available_intro": "人の存在を示すデバイスがある場合は、ここでその人をその人に割り当てることができます。統合ページからプレゼンス検出統合を追加することで、最初のデバイスを追加できます。",
+            "link_presence_detection_integrations": "プレゼンス検出のインテグレーション",
+            "link_integrations_page": "インテグレーションページ",
+            "device_tracker_picked": "デバイスの追跡",
+            "device_tracker_pick": "追跡するデバイスを選択",
+            "delete": "削除",
+            "create": "作成",
+            "update": "更新",
+            "confirm_delete_user": "{name}ユーザーアカウントを削除してもよろしいですか？ユーザーを追跡することはできますが、ユーザーはログインできなくなります。",
+            "admin": "管理者",
+            "allow_login": "ユーザーにログインを許可する"
+          }
+        },
+        "zone": {
+          "caption": "ゾーン",
+          "description": "ユーザーを追跡するゾーンを管理する",
+          "introduction": "ゾーンを使用すると、地球上の特定の地域を指定できます。人がゾーン内にいるとき、州はゾーンから名前を取ります。ゾーンは、オートメーション設定内のトリガーまたは条件として使用することもできます。",
+          "no_zones_created_yet": "まだゾーンを作成していないようです。",
+          "create_zone": "ゾーンを作成",
+          "add_zone": "ゾーンを追加",
+          "confirm_delete": "このゾーンを削除してもよろしいですか？",
+          "configured_in_yaml": "configuration.yamlで設定されたゾーンは、UIで編集できません。",
+          "edit_home_zone": "ホームゾーンの半径は、フロントエンドからはまだ編集できません。マップ上のマーカーをドラッグして、ホームゾーンを移動します。",
+          "edit_home_zone_narrow": "ホームゾーンの半径は、フロントエンドからはまだ編集できません。場所は、一般設定から変更できます。",
+          "go_to_core_config": "一般的な設定に移動しますか？",
+          "home_zone_core_config": "ホームゾーンの場所は、一般設定ページから編集できます。ホームゾーンの半径は、フロントエンドからはまだ編集できません。一般設定に移動しますか？",
+          "detail": {
+            "new_zone": "新しいゾーン",
+            "name": "名前",
+            "icon": "アイコン",
+            "icon_error_msg": "アイコンは、prefix：iconnameの形式にする必要があります。例：mdi：home",
+            "radius": "半径",
+            "latitude": "緯度",
+            "longitude": "経度",
+            "passive": "パッシブ",
+            "passive_note": "パッシブゾーンはフロントエンドで非表示になり、デバイストラッカーの場所として使用されません。これは、自動化に使用するだけの場合に役立ちます。",
+            "required_error_msg": "この項目は必須です",
+            "delete": "削除",
+            "create": "作成",
+            "update": "更新"
+          }
+        },
+        "integrations": {
+          "caption": "インテグレーション",
+          "description": "インテグレーションの管理とセットアップ",
+          "integration": "インテグレーション",
+          "discovered": "発見",
+          "attention": "注意が必要",
+          "configured": "設定済み",
+          "new": "新しい統合の設定",
+          "confirm_new": "{integration}を設定しますか？",
+          "add_integration": "インテグレーションを追加",
+          "no_integrations": "まだ設定されていないようです。あなたの最初の統合を追加するには、下のボタンをクリックしてください!",
+          "note_about_integrations": "まだすべての統合をUI経由で設定できるわけではありません。",
+          "note_about_website_reference": "より多くが利用可能です",
+          "home_assistant_website": "Home Assistant のウェブサイト",
+          "configure": "設定",
+          "reconfigure": "再設定",
+          "none": "まだ設定されていません",
+          "none_found": "インテグレーションが見つかりません。",
+          "none_found_detail": "別の検索基準をためしてみます。",
+          "integration_not_found": "インテグレーションが見つかりません。",
+          "details": "インテグレーションの詳細",
+          "rename_dialog": "このコンフィグレーションエントリーの名前を変更",
+          "rename_input_label": "エントリー名",
+          "search": "インテグレーションを検索",
+          "disable": {
+            "show_disabled": "無効なintegrationを表示",
+            "disabled_integrations": "{number}は無効",
+            "show": "表示",
+            "hide_disabled": "無視されたインテグレーションを表示"
+          },
+          "ignore": {
+            "ignore": "無視する",
+            "confirm_ignore_title": "{name} の検出を無視しますか？",
+            "confirm_ignore": "この統合を設定しないでよろしいですか？右上のオーバーフローメニューで[無視された統合を表示]をクリックすると、これを元に戻すことができます。",
+            "show_ignored": "無視されたインテグレーションを表示",
+            "ignored": "無視しました",
+            "confirm_delete_ignore_title": "{name} の無視を停止しますか？",
+            "confirm_delete_ignore": "これにより、検出された統合が検出されると、統合が再び表示されます。再起動が必要な場合や、しばらく時間がかかる場合があります。",
+            "stop_ignore": "無視を停止する",
+            "hide_ignored": "無視されたインテグレーションを非表示にする"
+          },
+          "config_entry": {
+            "devices": "{count} {count, plural,\n  one {デバイス}\n  other {デバイス}\n}",
+            "entities": "{count} {count, plural,\n  one {エンティティ}\n  other {エントリー}\n}",
+            "services": "{count} {count, plural,\n  one {サービス}\n  other {サービス}\n}",
+            "rename": "名前を変更",
+            "configure": "設定",
+            "system_options": "システムオプション",
+            "documentation": "ドキュメント",
+            "delete": "削除",
+            "delete_confirm": "この統合を削除しますか?",
+            "reload": "再読込",
+            "restart_confirm": "ホーム アシスタントを再起動して、この統合の削除を完了します。",
+            "reload_confirm": "インテグレーションが再読み込みされました",
+            "reload_restart_confirm": "ホームアシスタントを再起動してこのインテグレーションの再読み込みを完了してください。\n",
+            "disable_restart_confirm": "Homeassistantを再起動して、このintegrationを無効にします。",
+            "enable_restart_confirm": "Home Assistantを再起動して、このintegrationを有効にします",
+            "disable_error": "統合の有効化または無効化に失敗しました",
+            "manuf": "{manufacturer}",
+            "hub": "経由で接続",
+            "firmware": "ファームウェア： {version}",
+            "unnamed_entry": "名前のないエントリ",
+            "device_unavailable": "デバイスを利用できません",
+            "entity_unavailable": "エンティティは利用できません",
+            "area": "{area}",
+            "no_area": "エリアなし",
+            "not_loaded": "読み込まれていない場合は{logs_link} を確認してください",
+            "check_the_logs": "ログの確認",
+            "disable": {
+              "disabled": "無効",
+              "disabled_cause": "{cause}によって無効化",
+              "disabled_by": {
+                "user": "ユーザー",
+                "integration": "インテグレーション",
+                "device": "デバイス"
+              },
+              "disable_confirm": "この設定項目を無効にしてよろしいですか？そのデバイスやエンティティは無効になります。"
+            },
+            "provided_by_custom_integration": "カスタムインテグレーションによる提供",
+            "depends_on_cloud": "クラウドに依存",
+            "disabled_polling": "更新されたデータの自動ポーリングが無効",
+            "state": {
+              "loaded": "読み込み",
+              "setup_error": "セットアップに失敗しました。",
+              "migration_error": "移行エラー",
+              "setup_retry": "設定をやり直す",
+              "not_loaded": "読み込まれていません",
+              "failed_unload": "アンロードに失敗しました。"
+            },
+            "logs": "ログ",
+            "options": "オプション"
+          },
+          "config_flow": {
+            "aborted": "中止",
+            "close": "閉じる",
+            "dismiss": "ダイアログを閉じる",
+            "finish": "完了",
+            "submit": "送信",
+            "next": "次",
+            "not_all_required_fields": "必須フィールドの一覧に入力するわけではありません。",
+            "error_saving_area": "エリアを保存できません: {error}",
+            "created_config": "{name} の設定を作成しました。",
+            "external_step": {
+              "description": "この手順を完了するには、外部のウエブサイトにアクセスする必要があります。",
+              "open_site": "ウェブサイトを開く"
+            },
+            "pick_flow_step": {
+              "title": "これらを発見しました。設定しますか？",
+              "new_flow": "いいえ、{integration} の他のインスタンスを設定します"
+            },
+            "loading": {
+              "loading_flow": "Please wait while {integration} is being setup",
+              "loading_step": "Loading next step for {integration}",
+              "fallback_title": "the integration"
+            },
+            "error": "エラー",
+            "could_not_load": "設定フローを読み込めませんでした",
+            "not_loaded": "インテグレーションファイルを読み込めませんでした。ホームアシスタントを再起動してください。",
+            "loading_first_time": "インテグレーションのインストールを完了するまでお待ちください"
+          }
+        },
+        "users": {
+          "caption": "ユーザー",
+          "description": "ユーザーの管理",
+          "users_privileges_note": "ユーザーグループは作業中です。ユーザーは、UIを介してインスタンスを管理できなくなります。すべての管理APIエンドポイントを引き続き監査して、管理者へのアクセスを正しく制限していることを確認しています。",
+          "picker": {
+            "headers": {
+              "name": "名前",
+              "username": "ユーザー名",
+              "group": "グループ",
+              "system": "システム",
+              "is_active": "アクティブ",
+              "is_owner": "オーナー"
+            },
+            "add_user": "ユーザーを追加する"
+          },
+          "editor": {
+            "caption": "ユーザーを表示",
+            "name": "名前",
+            "username": "ユーザー名",
+            "change_password": "パスワードの変更",
+            "new_password": "新しいパスワード",
+            "password_changed": "パスワードが変更されました!",
+            "activate_user": "ユーザーを有効化",
+            "deactivate_user": "ユーザーを無効化",
+            "delete_user": "ユーザーを削除",
+            "update_user": "更新",
+            "id": "ID",
+            "owner": "所有者",
+            "admin": "管理者",
+            "group": "グループ",
+            "active": "アクティブ",
+            "system_generated": "システムジェネレート",
+            "system_generated_users_not_removable": "システムで生成されたユーザーを削除できません。",
+            "system_generated_users_not_editable": "システムが生成されたユーザーを変更できません。",
+            "unnamed_user": "名前のないユーザー",
+            "confirm_user_deletion": "{name}を削除してもよろしいですか？",
+            "active_tooltip": "ユーザーがログインできるかどうかを制御します"
+          },
+          "add_user": {
+            "caption": "ユーザーの追加",
+            "password": "パスワード",
+            "password_confirm": "パスワードの確認",
+            "password_not_match": "パスワードが一致しません",
+            "create": "作成する"
+          }
+        },
+        "mqtt": {
+          "title": "MQTT",
+          "description_publish": "パケットをパブリッシュ",
+          "topic": "トピック",
+          "payload": "ペイロード (テンプレート可)",
+          "publish": "パブリッシュ",
+          "description_listen": "トピックをリッスン",
+          "listening_to": "リッスンします",
+          "subscribe_to": "サブスクライブするトピック",
+          "start_listening": "リッスンを開始",
+          "stop_listening": "リッスンを停止",
+          "message_received": "{time}に{topic}で受信したメッセージ{id} {time} ：",
+          "button": "設定"
+        },
+        "ozw": {
+          "common": {
+            "zwave": "Z-Wave",
+            "node_id": "ノードID",
+            "ozw_instance": "OpenZWaveインスタンス",
+            "instance": "インスタンス",
+            "controller": "コントローラ",
+            "network": "ネットワーク",
+            "wakeup_instructions": "ウェイクアップ手順",
+            "query_stage": "クエリ ステージ"
+          },
+          "device_info": {
+            "zwave_info": "Z-Wave情報",
+            "stage": "段階",
+            "node_failed": "ノードが失敗しました"
+          },
+          "node_query_stages": {
+            "protocolinfo": "コントローラからこのノードの基本的なZ-Wave機能を取得する",
+            "probe": "ノードが起動しているかどうかの確認",
+            "wakeup": "ウェイクアップ キューとメッセージのサポートのセットアップ",
+            "manufacturerspecific1": "ノードからの製造元および製品IDコードの取得",
+            "nodeinfo": "ノードから設定値を取得する",
+            "nodeplusinfo": "ノードからZ-Wave +情報を取得する",
+            "manufacturerspecific2": "ノードから頻繁に変更される値を取得する",
+            "versions": "ファームウェアおよびコマンドクラスのバージョンに関する情報の取得",
+            "instances": "デバイスがサポートするインスタンスまたはチャネルに関する詳細の取得",
+            "static": "ノードから設定値を取得する",
+            "cacheload": "OpenZWave キャッシュファイルから情報を読み込んでいます。バッテリー・ノードは、ノードがウェイクアップするまでこの段階にとどまります。",
+            "associations": "関連グループとメンバーシップの更新",
+            "neighbors": "ノードの近隣ノードのリストの取得",
+            "session": "ノードから頻繁に変更される値を取得する",
+            "dynamic": "ノードから頻繁に変更される値を取得する",
+            "configuration": "ノードから設定値を取得する",
+            "complete": "面接プロセスが完了しました"
+          },
+          "refresh_node": {
+            "button": "ノードの更新",
+            "title": "ノード情報を更新",
+            "complete": "ノードの更新が完了しました",
+            "description": "これにより、OpenZWaveはノードに再インタビューし、ノードのコマンドクラス、機能、および値を更新するように指示します。",
+            "battery_note": "ノードがバッテリ駆動の場合は、必ずスリープ解除してから続行してください。",
+            "wakeup_header": "ウェイクアップの手順",
+            "wakeup_instructions_source": "ウェイクアップの手順は、OpenZWaveコミュニティデバイスデータベースから提供されます。",
+            "start_refresh_button": "更新を開始",
+            "refreshing_description": "ノード情報を更新しています。",
+            "node_status": "ノードの状態",
+            "step": "ステップ"
+          },
+          "network_status": {
+            "online": "オンライン",
+            "offline": "オフライン",
+            "starting": "開始",
+            "unknown": "不明",
+            "details": {
+              "driverallnodesqueried": "すべての稼働中のノードが照会されました",
+              "driverallnodesqueriedsomedead": "すべてのノードが照会されました。一部のノードがダウンしているのが見つかりました",
+              "driverawakenodesqueries": "すべての稼働中のノードが照会されました",
+              "driverremoved": "ドライバーが削除されました",
+              "driverreset": "ドライバーがリセットされました",
+              "driverfailed": "Z-Waveコントローラーへの接続に失敗しました",
+              "driverready": "Z-Waveコントローラーの初期化",
+              "ready": "接続の準備完了",
+              "stopped": "OpenZWaveが停止しました",
+              "started": "MQTTに接続されています",
+              "starting": "MQTTへの接続",
+              "offline": "OZWデーモンオフライン"
+            }
+          },
+          "navigation": {
+            "select_instance": "インスタンスを選択",
+            "network": "ネットワーク",
+            "nodes": "ノード",
+            "node": { "dashboard": "ダッシュ ボード", "config": "設定" }
+          },
+          "select_instance": {
+            "header": "OpenZWaveインスタンスを選択",
+            "introduction": "複数のOpenZWaveインスタンスが実行されています。どのインスタンスを管理しますか？",
+            "none_found": "OpenZWaveインスタンスが見つかりませんでした。これが正しくないと思われる場合は、OpenZWaveとMQTTの設定を確認し、HomeAssistantがMQTTブローカーと通信できることを確認してください。"
+          },
+          "network": {
+            "header": "ネットワーク管理",
+            "introduction": "接続されたデバイスの管理",
+            "node_count": "{count}ノード"
+          },
+          "nodes_table": {
+            "id": "ID",
+            "manufacturer": "メーカー",
+            "model": "モデル",
+            "query_stage": "クエリステージ",
+            "zwave_plus": "Z-Wave Plus",
+            "failed": "失敗しました"
+          },
+          "node": {
+            "button": "ノードの詳細",
+            "not_found": "ノードが見つかりません"
+          },
+          "node_config": {
+            "header": "ノード設定",
+            "introduction": "Z-Wave ノードの各種設定パラメータを管理します。",
+            "help_source": "設定パラメータの説明とヘルプテキストは、OpenZWaveプロジェクトによって提供されます。",
+            "wakeup_help": "バッテリ駆動のノードは、設定を変更するためにスリープ状態になっている必要があります。ノードがスリープ解除されていない場合、OpenZWave は、ノードがウェイクアップする次の時間 (または数日後) にノードの設定を更新しようとします。デバイスを起動するには、次の手順に従います。"
+          },
+          "node_metadata": { "product_manual": "製品マニュアル" },
+          "services": {
+            "add_node": "ノードを追加",
+            "remove_node": "ノードを削除",
+            "cancel_command": "コマンドのキャンセル"
+          },
+          "button": "設定"
+        },
+        "zha": {
+          "common": {
+            "clusters": "クラスター",
+            "manufacturer_code_override": "製造元コードの上書き",
+            "value": "バリュー"
+          },
+          "configuration_page": {
+            "shortcuts_title": "ショートカット",
+            "update_button": "構成の更新",
+            "zha_options": {
+              "default_light_transition": "デフォルトのライト遷移時間(秒)",
+              "enable_identify_on_join": "デバイスがネットワークに参加する際に、識別効果を有効にする",
+              "title": "グローバルオプション"
+            }
+          },
+          "add_device_page": {
+            "spinner": "ZHA Zigbeeデバイスを検索しています...",
+            "pairing_mode": "デバイスがペアリングモードになっていることを確認します。これを行う方法については、デバイスの手順を確認してください。",
+            "discovered_text": "検出されると、デバイスがここに表示されます。",
+            "no_devices_found": "デバイスが見つかりませんでした。デバイスがペアリングモードであることを確認し、検出の実行中はデバイスをウェイクアップしてください。",
+            "search_again": "もう一度検索"
+          },
+          "add_device": "デバイスの追加",
+          "clusters": {
+            "header": "クラスター",
+            "help_cluster_dropdown": "クラスターを選択して、属性とコマンドを表示します。",
+            "introduction": "クラスタは Zigbee 機能の設定要素です。機能を論理単位に分割します。クライアントとサーバーの種類があり、属性とコマンドで設定されています。"
+          },
+          "cluster_attributes": {
+            "header": "クラスター属性",
+            "introduction": "クラスター属性の表示と編集",
+            "attributes_of_cluster": "選択したクラスターの属性",
+            "get_zigbee_attribute": "Zigbee属性を取得",
+            "set_zigbee_attribute": "Zigbee属性を設定",
+            "help_attribute_dropdown": "属性を選択して、その値を表示または設定します。",
+            "help_get_zigbee_attribute": "選択した属性の値を取得します。",
+            "help_set_zigbee_attribute": "指定したエンティティ上の指定したクラスターの属性値を設定します。"
+          },
+          "cluster_commands": {
+            "header": "クラスタコマンド",
+            "introduction": "クラスターコマンドを表示して発行します。",
+            "commands_of_cluster": "選択したクラスタのコマンド",
+            "issue_zigbee_command": "Zigbeeコマンドを発行する",
+            "help_command_dropdown": "対話するコマンドを選択します。"
+          },
+          "device_pairing_card": {
+            "PAIRED": "デバイスが見つかりました",
+            "PAIRED_status_text": "インタビュー開始",
+            "INTERVIEW_COMPLETE": "インタビュー完了",
+            "INTERVIEW_COMPLETE_status_text": "設定",
+            "CONFIGURED": "設定の完了",
+            "CONFIGURED_status_text": "初期化中",
+            "INITIALIZED": "初期化が完了しました",
+            "INITIALIZED_status_text": "デバイスを使用する準備ができました"
+          },
+          "network": { "caption": "ネットワーク" },
+          "groups": {
+            "add_group": "グループの追加",
+            "caption": "グループ",
+            "groups": "グループ",
+            "group_id": "グループ ID",
+            "members": "メンバー",
+            "group_info": "グループ情報",
+            "group_details": "選択した Zigbee グループの詳細をすべて次に示します。",
+            "group_not_found": "グループが見つかりません!",
+            "add_members": "メンバーの追加",
+            "remove_members": "メンバーを削除",
+            "removing_members": "メンバーの削除",
+            "create_group_details": "必要な詳細を入力して、新しいzigbeeグループを作成します",
+            "group_name_placeholder": "グループ名",
+            "create_group": "Zigbeeホームオートメーション-グループの作成",
+            "create": "グループの作成",
+            "creating_group": "グループを作成しています"
+          },
+          "visualization": {
+            "header": "ネットワークの視覚化",
+            "caption": "可視化",
+            "highlight_label": "デバイスを強調表示",
+            "zoom_label": "デバイスにズーム",
+            "auto_zoom": "自動ズーム",
+            "refresh_topology": "トポロジの更新"
+          },
+          "group_binding": {
+            "header": "グループバインディング",
+            "introduction": "グループのバインドとバインド解除。",
+            "group_picker_label": "バインド可能なグループ",
+            "group_picker_help": "bindコマンドを発行するグループを選択します。",
+            "cluster_selection_help": "選択したグループにバインドするクラスターを選択します。",
+            "bind_button_label": "バインド グループ",
+            "unbind_button_label": "グループのバインド解除",
+            "bind_button_help": "選択したグループを選択したデバイス クラスタにバインドします。",
+            "unbind_button_help": "選択したデバイス クラスタから選択したグループのバインドを解除します。"
+          },
+          "button": "設定"
+        },
+        "zwave": {
+          "description": "Z-waveネットワークを管理します",
+          "learn_more": "Z-Wave の詳細",
+          "common": {
+            "value": "バリュー",
+            "instance": "インスタンス",
+            "index": "インデックス",
+            "unknown": "不明",
+            "wakeup_interval": "ウェイクアップ間隔"
+          },
+          "migration": {
+            "ozw": {
+              "header": "OpenZWaveに移行",
+              "introduction": "このウィザードは、従来の Z-Wave 統合から、現在ベータ版の OpenZWave 統合に移行するのに役立ちます。"
+            }
+          },
+          "network_management": {
+            "header": "Z-Waveネットワーク管理",
+            "introduction": "Z-Wave ネットワークに影響するコマンドを実行します。ほとんどのコマンドが成功したかどうかについてのフィードバックは得られませんが、OZWログをチェックして調べることもできます。"
+          },
+          "node_management": {
+            "header": "Z-Waveノード管理",
+            "introduction": "単一ノードに影響するZ-Waveコマンドを実行します。ノードを選択すると、使用可能なコマンドのリストが表示されます。",
+            "nodes": "ノード",
+            "nodes_hint": "ノードを選択してノードごとのオプションを表示します",
+            "entities": "このノードのエンティティ",
+            "entity_info": "エンティティ情報",
+            "exclude_entity": "このエンティティをHome Assistantから除外する",
+            "pooling_intensity": "ポーリングの強度",
+            "node_protection": "ノード保護",
+            "protection": "保護",
+            "set_protection": "保護を設定する",
+            "node_group_associations": "ノードグループの関連付け",
+            "group": "グループ",
+            "node_to_control": "制御するノード",
+            "nodes_in_group": "このグループの他のノード:",
+            "max_associations": "最大関連付け：",
+            "add_to_group": "グループに追加",
+            "remove_from_group": "グループから削除",
+            "remove_broadcast": "ブロードキャストを削除"
+          },
+          "ozw_log": {
+            "header": "OZWログ",
+            "introduction": "ログを表示します。0 は最小 (ログ全体をロード) 、最大 1000 が指定されます。ロードは静的なログを表示し、末尾はログの最後に指定された行数で自動更新されます。",
+            "last_log_lines": "最後のログ行数",
+            "load": "読み込み",
+            "tail": "最終行"
+          },
+          "network_status": {
+            "network_stopped": "Z-Waveネットワークが停止しました",
+            "network_starting": "Z-Waveネットワークを開始しています...",
+            "network_starting_note": "ネットワークのサイズによっては、この処理に時間がかかる場合があります。",
+            "network_started": "Z-Waveネットワークが開始されました",
+            "network_started_note_some_queried": "ウェイク ノードが照会されました。スリープノードは、スリープ解除時に照会されます。",
+            "network_started_note_all_queried": "すべてのノードが照会されました。"
+          },
+          "node_config": {
+            "header": "ノード設定オプション",
+            "seconds": "秒",
+            "set_wakeup": "ウェイクアップ間隔を設定",
+            "config_parameter": "パラメーターの設定",
+            "config_value": "バリューを設定",
+            "true": "真",
+            "false": "偽",
+            "set_config_parameter": "パラメーターの設定"
+          },
+          "values": { "header": "ノード値" },
+          "services": {
+            "start_network": "ネットワークの開始",
+            "stop_network": "ネットワークの停止",
+            "heal_network": "ネットワークの修復",
+            "test_network": "テストネットワーク",
+            "soft_reset": "ソフトリセット",
+            "save_config": "設定を保存",
+            "add_node_secure": "ノードのセキュアな追加",
+            "add_node": "ノードを追加",
+            "remove_node": "ノードを削除",
+            "cancel_command": "コマンドのキャンセル",
+            "refresh_node": "ノードを更新",
+            "remove_failed_node": "失敗したノードを削除",
+            "replace_failed_node": "失敗したノードの置換",
+            "print_node": "ノードの印刷",
+            "heal_node": "ノードの修復",
+            "test_node": "テストノード",
+            "node_info": "ノード情報",
+            "refresh_entity": "エンティティの更新"
+          },
+          "button": "設定"
+        },
+        "ais_dom_config": {
+          "header": "Configure AIS Home Gateway",
+          "introduction": "Here it is possible to configure your AIS Home Gateway. Not everything is possible to configure from the UI yet, but we're working on it."
+        },
+        "ais_dom": {
+          "caption": " AIS Home Gateway Settings",
+          "description": "Manage your IoT and Audio gateway"
+        },
+        "ais_dom_devices": {
+          "caption": "Configuration of AIS home Devices",
+          "description": "Manage your devices with AIS dom software"
+        },
+        "ais_dom_zigbee": {
+          "caption": "Configuration of AIS Zigbee",
+          "description": "Manage your zigbee devices"
+        },
+        "ais_dom_zwave": {
+          "caption": "Configuration of AIS ZWave",
+          "description": "Manage your ZWave devices"
+        },
+        "ais_dom_config_update": {
+          "caption": "Gateway software",
+          "description": "System update, backup and synchronization with the Integrator Portal"
+        },
+        "ais_dom_config_wifi": {
+          "caption": "WiFi network",
+          "description": "WiFi connection settings"
+        },
+        "ais_dom_config_display": {
+          "caption": "Screen",
+          "description": "Screen Settings"
+        },
+        "ais_dom_config_tts": {
+          "caption": "The assistant voice",
+          "description": "Voice assistant settings"
+        },
+        "ais_dom_config_night": {
+          "caption": "Night mode",
+          "description": "Set the hours when the assistant should be quieter"
+        },
+        "ais_dom_config_logs": {
+          "caption": "Logs and recorder",
+          "description": "Configuration of logs and DB recorder"
+        },
+        "ais_dom_config_remote": {
+          "caption": "Remote control",
+          "description": "Configuration of remote access to the gateway"
+        },
+        "ais_dom_config_usb": {
+          "caption": "USB devices",
+          "description": "Support for USB devices"
+        },
+        "ais_dom_config_power": {
+          "caption": "Stop the Gate",
+          "description": "Restart or turn off the gate"
+        },
+        "zwave_js": {
+          "navigation": { "network": "ネットワーク", "logs": "ログ" },
+          "common": {
+            "network": "ネットワーク",
+            "node_id": "ノードID",
+            "home_id": "ホームID",
+            "source": "Source",
+            "close": "閉じる",
+            "add_node": "ノードの追加",
+            "remove_node": "ノードの削除",
+            "reconfigure_server": "サーバーの再設定",
+            "heal_network": "ネットワークの修復"
+          },
+          "dashboard": {
+            "header": "Z-Wave ネットワークの管理",
+            "introduction": "Z-WaveネットワークとZ-Waveノードを管理する",
+            "driver_version": "ドライバーバージョン",
+            "server_version": "サーバーバージョン",
+            "home_id": "ホームID",
+            "nodes_ready": "ノードの準備完了",
+            "dump_debug": "ネットワークのダンプをダウンロードして、問題の診断に役立ててください",
+            "dump_dead_nodes_title": "一部のノードが停止しています",
+            "dump_dead_nodes_text": "一部のノードが応答せず、停止していると見なされます。これらは完全にはエクスポートされません。",
+            "dump_not_ready_title": "すべてのノードが照会されました。",
+            "dump_not_ready_text": "すべてのノードの準備が整っていない状態でエクスポートを作成すると、必要なデータが見逃される可能性があります。ネットワークにすべてのノードを照会する時間を与えます。ダンプを続行しますか?",
+            "dump_not_ready_confirm": "ダウンロード"
+          },
+          "device_info": {
+            "zwave_info": "Z-Wave情報",
+            "node_status": "ノードの状態",
+            "node_ready": "ノードの準備完了",
+            "device_config": "デバイスの設定",
+            "reinterview_device": "Re-interview Device",
+            "heal_node": "Heal Node",
+            "remove_failed": "Remove Failed Device"
+          },
+          "node_config": {
+            "header": "Z-Waveデバイスの設定",
+            "introduction": "選択したデバイスのデバイス(ノード)固有の設定パラメータを管理および調整する",
+            "attribution": "デバイスの構成パラメータと説明は、{device_database}で提供されます。",
+            "zwave_js_device_database": "Z-Wave JSデバイスデータベース",
+            "battery_device_notice": "バッテリ デバイスは、設定を更新するためにスリープ状態にする必要があります。デバイスのスリープ解除方法については、デバイスのマニュアルを参照してください。",
+            "parameter_is_read_only": "このパラメータは読み取り専用です。",
+            "error_device_not_found": "デバイスが見つかりません",
+            "set_param_accepted": "パラメータが更新されました。",
+            "set_param_queued": "パラメーターの変更はキューに入れられており、デバイスがスリープ解除されると更新されます。",
+            "set_param_error": "エラーが発生しました。",
+            "parameter": "Parameter"
+          },
+          "node_status": {
+            "unknown": "不明",
+            "asleep": "スリープ",
+            "awake": "起きている",
+            "dead": "停止中",
+            "alive": "作動中"
+          },
+          "network_status": {
+            "connected": "接続済み",
+            "connecting": "接続",
+            "unknown": "不明"
+          },
+          "add_node": {
+            "title": "Z-Waveノードを追加",
+            "introduction": "このウィザードでは、Z-Wave ネットワークにノードを追加する手順を説明します。",
+            "use_secure_inclusion": "安全なインクルージョンを使用する",
+            "secure_inclusion_warning": "セキュアなデバイスには、追加の帯域幅が必要です。安全なデバイスが多すぎると、Z-Waveネットワークが遅くなる可能性があります。ロックやガレージドアオープナーなど、必要なデバイスにのみ安全な組み込みを使用することをお勧めします。",
+            "start_inclusion": "インクルージョンを開始",
+            "start_secure_inclusion": "セキュアインクルージョンの開始",
+            "cancel_inclusion": "インクルージョンをキャンセルする",
+            "controller_in_inclusion_mode": "これで、Z-Waveコントローラーはインクルージョンモードになります。",
+            "follow_device_instructions": "デバイスに付属の指示に従って、デバイスでペアリングを開始します。",
+            "inclusion_failed": "ノードを追加できませんでした。詳細については、ログを確認してください。",
+            "inclusion_finished": "ノードが追加されました。ノードのバックグラウンドでの設定が完了すると、すべてのエンティティが表示されるまで数分かかる場合があります。",
+            "view_device": "デバイスを表示",
+            "interview_started": "デバイスはインタビュー中です。これには時間がかかる場合があります。",
+            "interview_failed": "デバイスのインタビューに失敗しました。追加情報がログに残っている場合があります。"
+          },
+          "remove_node": {
+            "title": "Z-Waveノードを削除します",
+            "introduction": "Z-Waveネットワークからノードを削除し、関連するデバイスとエンティティをHomeAssistantから削除します。",
+            "start_exclusion": "除外を開始する",
+            "cancel_exclusion": "除外をキャンセルする",
+            "controller_in_exclusion_mode": "Z-Wave コントローラが除外モードになりました。",
+            "follow_device_instructions": "デバイスに付属の指示に従って、デバイスの除外をトリガーします。",
+            "exclusion_failed": "ノードを削除できませんでした。詳細については、ログを確認してください。",
+            "exclusion_finished": "ノード{id}がZ-Waveネットワークから削除されました。"
+          },
+          "remove_failed_node": {
+            "title": "Remove a Failed Z-Wave Device",
+            "introduction": "Remove a failed device from your Z-Wave network. Use this if you are unable to exclude a device normally because it is broken.",
+            "remove_device": "Remove Device",
+            "in_progress": "The device removal is in progress.",
+            "removal_finished": "Node {id} has been removed from your Z-Wave network.",
+            "removal_failed": "The device could not be removed from your Z-Wave network."
+          },
+          "reinterview_node": {
+            "title": "Z-Waveデバイスへの再インタビュー",
+            "introduction": "Z-Wave ネットワーク上のデバイスに再インタビューします。デバイスの機能が不足している場合や、機能が正しくない場合は、この機能を使用します。",
+            "battery_device_warning": "再会する前に、バッテリー駆動のデバイスをスリープ解除する必要があります。デバイスをウェイクアップする方法については、デバイスのマニュアルを参照してください。",
+            "run_in_background": "このダイアログを閉じても、インタビューはバックグラウンドで継続されます。",
+            "start_reinterview": "再インタビューを開始",
+            "in_progress": "デバイスがインタビュー中です。これには時間がかかる場合があります。",
+            "interview_failed": "デバイスのインタビューに失敗しました。追加情報がログに残っている場合があります。",
+            "interview_complete": "デバイスのインタビューが完了しました。"
+          },
+          "heal_network": {
+            "title": "Z-Waveネットワークの修復",
+            "introduction": "Z-Wave ネットワークでネットワーク修復を開始します。ネットワークの修復は、すべてのデバイスがコントローラに戻ってルートを再計算し、最近デバイスまたはコントローラを移動した場合に推奨されます。",
+            "traffic_warning": "この修復プロセスでは、Z-Wave ネットワーク上に大量のトラフィックが生成されます。これにより、修復が進行中のデバイスの応答が遅くなる (またはまったく反応しない) ことがあります。",
+            "start_heal": "修復を開始する",
+            "in_progress": "ネットワークの修復が進行中です。これには少し時間がかかります。",
+            "run_in_background": "このダイアログを閉じると、ネットワークの修復がバックグラウンドで続行されます。",
+            "stop_heal": "修復をやめる",
+            "healing_complete": "ネットワークの修復が完了しました。",
+            "healing_failed": "修復に失敗しました。追加情報はログで利用できる場合があります。",
+            "healing_cancelled": "ネットワークの修復がキャンセルされました。"
+          },
+          "heal_node": {
+            "title": "Heal a Z-Wave Device",
+            "introduction": "Tell {device} to update its routes back to the controller. This can help with communication issues if you have recently moved the device or your controller.",
+            "traffic_warning": "The healing process generates a large amount of traffic on the Z-Wave network. This may cause devices to respond slowly (or not at all) while the heal is in progress.",
+            "start_heal": "Heal Device",
+            "healing_failed": "{device} could not be healed.",
+            "healing_failed_check_logs": "Additional information may be available in the logs.",
+            "healing_complete": "{device} has been healed.",
+            "in_progress": "{device} healing is in progress.",
+            "network_heal_in_progress": "A Z-Wave network heal is already in progress. Please wait for it to finish before healing an individual device."
+          },
+          "logs": {
+            "title": "Z-WaveJSログ",
+            "log_level": "ログレベル",
+            "subscribed_to_logs": "Z-WaveJSログメッセージを購読しました...",
+            "log_level_changed": "ログレベルが変更されました。{level}に変更されました。"
+          },
+          "button": "設定"
+        },
+        "filtering": {
+          "clear": "消去",
+          "filtering_by": "フィルタリング",
+          "show": "表示"
+        },
+        "hassio": { "button": "設定" },
+        "integration_panel_move": {
+          "link_integration_page": "インテグレーションページ",
+          "missing_zha": "ZHA設定パネルがありませんか？ {integrations_page} ZHAエントリに移動されました。",
+          "missing_zwave": "Z-Wave設定パネルがありませんか？ {integrations_page}のZ-Waveエントリに移動されました。"
+        }
+      }
+    }
+  }
+}
