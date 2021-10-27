@@ -1,7 +1,7 @@
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import {css, CSSResultArray, html, LitElement, TemplateResult} from "lit";
-import {customElement, property} from 'lit/decorators';
+import { css, CSSResultArray, html, LitElement, TemplateResult } from "lit";
+import { customElement, property } from "lit/decorators";
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
@@ -23,7 +23,7 @@ import { HomeAssistant } from "../../../types";
 class HaConfigAisDomConfigTts extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @property() public isWide?: boolean;
+  @property({ type: Boolean }) public isWide?: boolean;
 
   @property({ type: Boolean }) public narrow = false;
 

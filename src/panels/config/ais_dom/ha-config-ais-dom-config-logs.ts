@@ -289,7 +289,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                     komponent Historia lub Dziennik.
                     <br />
                     <br />
-                    <ha-icon icon="hass:poll-box" slot="suffix"></ha-icon>
+                    <ha-icon icon="hass:chart-box" slot="suffix"></ha-icon>
                     <ha-switch
                       .checked=${this.dbShowHistory}
                       @change=${this.dbShowHistoryChanged}
