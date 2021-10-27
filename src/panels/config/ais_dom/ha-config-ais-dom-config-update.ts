@@ -12,7 +12,6 @@ import "../../../components/buttons/ha-call-service-button";
 import "../../../components/ha-icon";
 import { css, html, CSSResultArray, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
-import { repeat } from "lit/directives/repeat";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
 
@@ -25,34 +24,14 @@ class HaConfigAisDomConfigUpdate extends LitElement {
 
   @property({ type: Boolean }) public isWide = true;
 
-  @property({ type: String }) public aisVersionInfo = "";
-
-  @property({ type: Array }) private aisAutoUpdatFullInfo = [];
-
-  @property({ type: Array }) private aisBackupFullInfo = [];
-
-  @property({ type: Boolean }) public isBackupValid = true;
+  @property({ type: Boolean }) public validateConfigInProgress = false;
 
   @property({ type: String }) public validateLog = "";
 
-  @property({ type: String }) public backupInfo = "";
-
-  @property({ type: String }) public backupError = "";
-
-  @property({ type: String }) public restoreInfo = "";
-
-  @property({ type: String }) public restoreError = "";
-
   @property({ type: String }) public aisButtonVersionCheckUpgrade = "";
 
-  @property({ type: Object }) public aisUpdateSystemData = { say: true };
-
-  @property({ type: Boolean }) public validating = false;
-
   protected async firstUpdated() {
-    this.aisVersionInfo = this._computeAisVersionInfo();
-    this.aisButtonVersionCheckUpgrade =
-      this._computeAisButtonVersionCheckUpgrade();
+    // --- //
   }
 
   protected render(): TemplateResult {
@@ -67,7 +46,13 @@ class HaConfigAisDomConfigUpdate extends LitElement {
           >
           <ha-card header="Wersja systemu AI-Speaker">
             <div class="card-content">
-              ${this.aisVersionInfo}
+              <div
+                style="color:${this._getTextColor(
+                  this.hass.states["sensor.version_info"]
+                )}"
+              >
+                ${this.hass.states["sensor.version_info"].state}
+              </div>
               <div>
                 <div style="margin-top:30px;" id="ha-switch-id">
                   <ha-switch
@@ -82,8 +67,8 @@ class HaConfigAisDomConfigUpdate extends LitElement {
                       <ha-icon
                         icon=${this.hass.states["input_boolean.ais_auto_update"]
                           .state === "on"
-                          ? "mdi:sync-off"
-                          : "mdi:sync"}
+                          ? "mdi:sync"
+                          : "mdi:sync-off"}
                       ></ha-icon></h3
                   ></span>
                 </div>
@@ -103,48 +88,179 @@ class HaConfigAisDomConfigUpdate extends LitElement {
                   poprawki zapewniające bezpieczeństwo i stabilność działania
                   systemu.
                   <table style="margin-top: 10px;">
-                    ${repeat(
-                      this.aisAutoUpdatFullInfo,
-                      (item) =>
-                        html`
-                          <tr>
-                            <td>
-                              <ha-icon icon=${item.name_icon}></ha-icon>
-                              ${item.name}
-                            </td>
-                            <td>${item.value}</td>
-                            <td>${item.new_value}</td>
-                            <td><ha-icon icon=${item.icon}></ha-icon></td>
-                          </tr>
-                          ${item.name !== "Status"
-                            ? html`<tr style="height: 1em;"></tr>`
-                            : html``}
-                        `
-                    )}
+                    ${this.hass.states["sensor.version_info"].attributes
+                      .update_check_time
+                      ? html`<tr>
+                          <td>
+                            <ha-icon icon=""></ha-icon>
+                            Sprawdzono o
+                          </td>
+                          <td>
+                            ${this.hass.states["sensor.version_info"].attributes
+                              .update_check_time}
+                          </td>
+                          <td></td>
+                          <td><ha-icon icon=""></ha-icon></td>
+                        </tr>`
+                      : html``}
+                    ${this.hass.states["sensor.version_info"].attributes
+                      .update_status
+                      ? html`<tr>
+                          <td>
+                            <ha-icon icon=""></ha-icon>
+                            Status
+                          </td>
+                          <td>
+                            ${this.getVersionName(
+                              this.hass.states["sensor.version_info"].attributes
+                                .update_status
+                            )}
+                          </td>
+                          <td></td>
+                          <td>
+                            <ha-icon
+                              icon=${this.getVersionIcon(
+                                this.hass.states["sensor.version_info"]
+                                  .attributes.update_status
+                              )}
+                            ></ha-icon>
+                          </td>
+                        </tr>`
+                      : html``}
+                    <tr style="height: 1em;"></tr>
+                    ${this.hass.states["sensor.version_info"].attributes
+                      .zigbee2mqtt_current_version
+                      ? html`<tr>
+                          <td>
+                            <ha-icon icon="mdi:zigbee"></ha-icon>
+                            Zigbee
+                          </td>
+                          <td>
+                            ${this.hass.states["sensor.version_info"].attributes
+                              .zigbee2mqtt_current_version}
+                          </td>
+                          <td>
+                            ${this.hass.states["sensor.version_info"].attributes
+                              .zigbee2mqtt_newest_version}
+                          </td>
+                          <td>
+                            <ha-icon
+                              icon=${this.hass.states["sensor.version_info"]
+                                .attributes.reinstall_zigbee2mqtt
+                                ? "hass:alert"
+                                : "hass:check"}
+                            ></ha-icon>
+                          </td>
+                        </tr>`
+                      : html``}
+                    ${this.hass.states["sensor.version_info"].attributes
+                      .zigbee2mqtt_current_version
+                      ? html`<tr>
+                          <td>
+                            <ha-icon icon="mdi:home-assistant"></ha-icon>
+                            AIS HA
+                          </td>
+                          <td>
+                            ${this.hass.states["sensor.version_info"].attributes
+                              .dom_app_current_version}
+                          </td>
+                          <td>
+                            ${this.hass.states["sensor.version_info"].attributes
+                              .dom_app_newest_version}
+                          </td>
+                          <td>
+                            <ha-icon
+                              icon=${this.hass.states["sensor.version_info"]
+                                .attributes.reinstall_dom_app
+                                ? "hass:alert"
+                                : "hass:check"}
+                            ></ha-icon>
+                          </td>
+                        </tr>`
+                      : html``}
+                    ${this.hass.states["sensor.version_info"].attributes
+                      .android_app_current_version
+                      ? html`<tr>
+                          <td>
+                            <ha-icon icon="mdi:home-assistant"></ha-icon>
+                            Android
+                          </td>
+                          <td>
+                            ${this.hass.states["sensor.version_info"].attributes
+                              .android_app_current_version}
+                          </td>
+                          <td>
+                            ${this.hass.states["sensor.version_info"].attributes
+                              .android_app_newest_version}
+                          </td>
+                          <td>
+                            <ha-icon
+                              icon=${this.hass.states["sensor.version_info"]
+                                .attributes.reinstall_android_app
+                                ? "hass:alert"
+                                : "hass:check"}
+                            ></ha-icon>
+                          </td>
+                        </tr>`
+                      : html``}
+                    ${this.hass.states["sensor.version_info"].attributes
+                      .linux_apt_current_version
+                      ? html`<tr>
+                          <td>
+                            <ha-icon icon="mdi:linux"></ha-icon>
+                            Linux
+                          </td>
+                          <td>
+                            ${this.hass.states["sensor.version_info"].attributes
+                              .linux_apt_current_version}
+                          </td>
+                          <td>
+                            ${this.hass.states["sensor.version_info"].attributes
+                              .linux_apt_newest_version}
+                          </td>
+                          <td>
+                            <ha-icon
+                              icon=${this.hass.states["sensor.version_info"]
+                                .attributes.reinstall_linux_apt
+                                ? "hass:alert"
+                                : "hass:check"}
+                            ></ha-icon>
+                          </td>
+                        </tr>`
+                      : html``}
                   </table>
                 </div>
               </div>
 
-              ${!this._showUpdateButton
+              ${this._showUpdateButton(this.hass.states["sensor.version_info"])
                 ? html` <div class="center-container">
                     <ha-call-service-button
                       class="warning"
                       .hass=${this.hass}
                       domain="ais_updater"
                       service="execute_upgrade"
-                      service-data="[[aisUpdateSystemData]]"
+                      .serviceData=${{ say: true }}
                     >
-                      ${this.aisButtonVersionCheckUpgrade}
+                      ${this._computeAisButtonVersionCheckUpgrade(
+                        this.hass.states["sensor.version_info"]
+                      )}
                     </ha-call-service-button>
                   </div>`
                 : html`
+                    <br /><br /><br />
+                    ${this.hass.states["sensor.version_info"].attributes
+                      .progress
+                      ? html` <mwc-linear-progress
+                          determinate
+                          .progress=${this.hass.states["sensor.version_info"]
+                            .attributes.progress}
+                          .buffer=${this.hass.states["sensor.version_info"]
+                            .attributes.buffer}
+                        >
+                        </mwc-linear-progress>`
+                      : html`<mwc-linear-progress indeterminate>
+                        </mwc-linear-progress>`}
                     <br />
-                    <mwc-linear-progress
-                      determinate
-                      progress="0.5"
-                      buffer="0.75"
-                    >
-                    </mwc-linear-progress>
                   `}
             </div>
           </ha-card>
@@ -180,11 +296,16 @@ class HaConfigAisDomConfigUpdate extends LitElement {
                 ${!this.validateLog
                   ? html` <div class="validate-container">
                       <div class="validate-result" id="result">
-                        ${this.backupInfo}
+                        ${this.hass.states["sensor.ais_backup_info"].attributes
+                          .backup_info}
                       </div>
-                      ${!this.validating
+
+                      ${!this.validateConfigInProgress
                         ? html` <div class="config-invalid">
-                              <span class="text"> ${this.backupError} </span>
+                              <span class="text">
+                                ${this.hass.states["sensor.ais_backup_info"]
+                                  .attributes.backup_error}
+                              </span>
                             </div>
                             ${this.hass.states["sensor.ais_backup_info"]
                               .state === "1"
@@ -200,18 +321,17 @@ class HaConfigAisDomConfigUpdate extends LitElement {
                             <mwc-button raised="" @click=${this.doBackup}>
                               ${this.hass.states["sensor.ais_backup_info"]
                                 .state === "0"
-                                ? html` Wykonaj kopie konfiguracji `
+                                ? html` Sprawdź konfigurację `
                                 : html``}
                               ${this.hass.states["sensor.ais_backup_info"]
                                 .state === "1"
                                 ? html` Wykonaj kopie konfiguracji `
                                 : html``}
                             </mwc-button>`
-                        : html`<paper-spinner active=""></paper-spinner>`}
+                        : html`<mwc-linear-progress indeterminate>
+                          </mwc-linear-progress>`}
                     </div>`
-                  : html``}
-                ${this.validateLog
-                  ? html` <div class="config-invalid">
+                  : html`<div class="config-invalid">
                         <mwc-button raised="" @click=${this.doBackup}>
                           Popraw i sprawdź ponownie
                         </mwc-button>
@@ -219,49 +339,102 @@ class HaConfigAisDomConfigUpdate extends LitElement {
                       <p></p>
                       <div id="configLog" class="validate-log">
                         ${this.validateLog}
-                      </div>`
-                  : html``}
+                      </div>`}
               </div>
-              ${this.isBackupValid
+              ${this.hass.states["sensor.ais_backup_info"].attributes
+                .file_size ||
+              this.hass.states["sensor.ais_backup_info"].attributes
+                .file_zigbee_size
                 ? html` <h2>
                       Przywracanie ustawień
                       <ha-icon icon="mdi:backup-restore"></ha-icon>
                     </h2>
                     <div class="validate-container">
                       <table style="margin-top: 40px; margin-bottom: 10px;">
-                        ${repeat(
-                          this.aisBackupFullInfo,
-                          (item) =>
-                            html`
-                              <tr>
-                                <td>
-                                  <ha-icon icon=${item.icon}></ha-icon>
-                                  ${item.name}
-                                </td>
-                                <td>${item.value}</td>
-                                <td>${item.new_value}</td>
-                              </tr>
-                            `
-                        )}
+                      ${
+                        this.hass.states["sensor.ais_backup_info"].attributes
+                          .file_size
+                          ? html` <tr>
+                              <td>
+                                <ha-icon icon="mdi:home-assistant"></ha-icon>
+                                AIS HA
+                              </td>
+                              <td>
+                                ${this.hass.states["sensor.ais_backup_info"]
+                                  .attributes.file_name}
+                              </td>
+                              <td>
+                                ${this.hass.states["sensor.ais_backup_info"]
+                                  .attributes.file_size}
+                              </td>
+                            </tr>`
+                          : html``
+                      }
+                      ${
+                        this.hass.states["sensor.ais_backup_info"].attributes
+                          .file_zigbee_size
+                          ? html` <tr>
+                              <td>
+                                <ha-icon icon="mdi:zigbee"></ha-icon>
+                                Zigbee
+                              </td>
+                              <td>
+                                ${this.hass.states["sensor.ais_backup_info"]
+                                  .attributes.file_zigbee_name}
+                              </td>
+                              <td>
+                                ${this.hass.states["sensor.ais_backup_info"]
+                                  .attributes.file_zigbee_size}
+                              </td>
+                            </tr>`
+                          : html``
+                      }
+
                       </table>
                       <div class="validate-container">
                         <div class="validate-result" id="result">
-                          ${this.restoreInfo}
+                          ${
+                            this.hass.states["sensor.ais_backup_info"]
+                              .attributes.restore_info
+                          }
                         </div>
-
-                        ${!this.validating
-                          ? html`
-                            <div class="config-invalid">
+                        <div class="config-invalid">
                               <span class="text">
-                              ${this.restoreError}
+                              ${
+                                this.hass.states["sensor.ais_backup_info"]
+                                  .attributes.restore_error
+                              }
                               </span>
                             </div>
                             Przywracanie ustawień z kopii:
                             <br />
                             <paper-radio-group selected="all" id="backup_type2">
-                                <paper-radio-button name="all">Wszystkich</paper-radio-button>
-                                <paper-radio-button name="ha">AIS HA</paper-radio-button>
-                                <paper-radio-button name="zigbee">Zigbee</paper-radio-button>
+                                ${
+                                  this.hass.states["sensor.ais_backup_info"]
+                                    .attributes.file_size &&
+                                  this.hass.states["sensor.ais_backup_info"]
+                                    .attributes.file_zigbee_size
+                                    ? html`<paper-radio-button name="all"
+                                        >Wszystkich</paper-radio-button
+                                      >`
+                                    : html``
+                                }
+                                ${
+                                  this.hass.states["sensor.ais_backup_info"]
+                                    .attributes.file_size
+                                    ? html`<paper-radio-button name="ha"
+                                        >AIS HA</paper-radio-button
+                                      >`
+                                    : html``
+                                }
+                                ${
+                                  this.hass.states["sensor.ais_backup_info"]
+                                    .attributes.file_zigbee_size
+                                    ? html`<paper-radio-button name="zigbee"
+                                        >Zigbee</paper-radio-button
+                                      >`
+                                    : html``
+                                }
                             </paper-radio-group>
                             <br />
                             <paper-input
@@ -273,8 +446,7 @@ class HaConfigAisDomConfigUpdate extends LitElement {
                             <mwc-button raised="" @click=${this.restoreBackup}>
                               Przywróć konfigurację z kopii
                             </mwc-button>
-                          </div>`
-                          : html` <paper-spinner active=""></paper-spinner> `}
+                          </div>
                       </div>
                     </div>`
                 : html``}
@@ -338,124 +510,23 @@ class HaConfigAisDomConfigUpdate extends LitElement {
         }
 
         .validate-result {
-          color: var(--google-green-500);
-          font-weight: 500;
-        }
-
-        .config-invalid .text {
-          color: var(--google-red-500);
-          font-weight: 500;
+          color: #0da035;
         }
 
         .config-invalid {
           text-align: center;
-          margin-top: 20px;
+          margin-top: 2em;
+          margin-bottom: 1em;
+          color: #f44336;
         }
 
         .validate-log {
           white-space: pre-wrap;
           direction: ltr;
+          color: #f44336;
         }
       `,
     ];
-  }
-
-  _computeAisVersionInfo() {
-    const versionInfo = this.hass.states["sensor.version_info"];
-    const versionInfoAttr = versionInfo.attributes;
-    this.aisAutoUpdatFullInfo = [];
-
-    if ("update_check_time" in versionInfoAttr) {
-      this.aisAutoUpdatFullInfo.push({
-        name: "Sprawdzono o",
-        name_icon: "",
-        value: versionInfoAttr.update_check_time,
-        icon: "",
-      });
-    }
-
-    if ("update_status" in versionInfoAttr) {
-      this.aisAutoUpdatFullInfo.push({
-        name: "Status",
-        name_icon: "",
-        value: this.getVersionName(versionInfoAttr.update_status),
-        icon: this.getVersionIcon(versionInfoAttr.update_status),
-      });
-    }
-
-    if ("zigbee2mqtt_current_version" in versionInfoAttr) {
-      this.aisAutoUpdatFullInfo.push({
-        name: "Zigbee",
-        name_icon: "mdi:zigbee",
-        value: versionInfoAttr.zigbee2mqtt_current_version,
-        new_value: versionInfoAttr.zigbee2mqtt_newest_version,
-        icon: versionInfoAttr.reinstall_zigbee2mqtt
-          ? "hass:alert"
-          : "hass:check",
-      });
-    }
-
-    if ("dom_app_current_version" in versionInfoAttr) {
-      this.aisAutoUpdatFullInfo.push({
-        name: "AIS HA",
-        name_icon: "mdi:home-assistant",
-        value: versionInfoAttr.dom_app_current_version,
-        new_value: versionInfoAttr.dom_app_newest_version,
-        icon: versionInfoAttr.reinstall_dom_app ? "hass:alert" : "hass:check",
-      });
-    }
-    if ("android_app_current_version" in versionInfoAttr) {
-      this.aisAutoUpdatFullInfo.push({
-        name: "Android",
-        name_icon: "mdi:android",
-        value: versionInfoAttr.android_app_current_version,
-        new_value: versionInfoAttr.android_app_newest_version,
-        icon: versionInfoAttr.reinstall_android_app
-          ? "hass:alert"
-          : "hass:check",
-      });
-    }
-    if ("linux_apt_current_version" in versionInfoAttr) {
-      this.aisAutoUpdatFullInfo.push({
-        name: "Linux",
-        name_icon: "mdi:linux",
-        value: versionInfoAttr.linux_apt_current_version,
-        new_value: versionInfoAttr.linux_apt_newest_version,
-        icon: versionInfoAttr.reinstall_linux_apt ? "hass:alert" : "hass:check",
-      });
-    }
-
-    return versionInfo.state;
-  }
-
-  _computeAisBackupInfo(hass) {
-    const backupInfo = hass.states["sensor.ais_backup_info"];
-    const backupInfoAttr = backupInfo.attributes;
-    this.aisBackupFullInfo = [];
-    this.isBackupValid = false;
-    this.backupInfo = backupInfoAttr.backup_info;
-    this.backupError = backupInfoAttr.backup_error;
-    this.restoreInfo = backupInfoAttr.restore_info;
-    this.restoreError = backupInfoAttr.restore_error;
-    if ("file_size" in backupInfoAttr) {
-      this.isBackupValid = !!backupInfoAttr.file_name;
-      this.aisBackupFullInfo.push({
-        name: "AIS HA",
-        value: backupInfoAttr.file_name,
-        new_value: backupInfoAttr.file_size,
-        icon: "mdi:home-assistant",
-      });
-    }
-    if ("file_zigbee_size" in backupInfoAttr) {
-      this.isBackupValid = !!backupInfoAttr.file_zigbee_name;
-      this.aisBackupFullInfo.push({
-        name: "Zigbee",
-        value: backupInfoAttr.file_zigbee_name,
-        new_value: backupInfoAttr.file_zigbee_size,
-        icon: "mdi:zigbee",
-      });
-    }
-    return backupInfo.state;
   }
 
   getVersionName(status) {
@@ -483,7 +554,7 @@ class HaConfigAisDomConfigUpdate extends LitElement {
     if (status === "checking") {
       retS = "mdi:cloud-sync";
     } else if (status === "outdated") {
-      retS = "";
+      retS = "mdi:clock-alert-outline";
     } else if (status === "downloading") {
       retS = "mdi:progress-download";
     } else if (status === "installing") {
@@ -498,8 +569,8 @@ class HaConfigAisDomConfigUpdate extends LitElement {
     return retS;
   }
 
-  _computeAisButtonVersionCheckUpgrade() {
-    const attr = this.hass.states["sensor.version_info"].attributes;
+  _computeAisButtonVersionCheckUpgrade(versionInfo) {
+    const attr = versionInfo.attributes;
     if (
       attr.reinstall_dom_app ||
       attr.reinstall_android_app ||
@@ -517,8 +588,8 @@ class HaConfigAisDomConfigUpdate extends LitElement {
     return "Sprawdź dostępność aktualizacji";
   }
 
-  _showUpdateButton(hass) {
-    const attr = hass.states["sensor.version_info"].attributes;
+  _showUpdateButton(versionInfo) {
+    const attr = versionInfo.attributes;
     if (
       attr.reinstall_dom_app ||
       attr.reinstall_android_app ||
@@ -536,20 +607,46 @@ class HaConfigAisDomConfigUpdate extends LitElement {
     return true;
   }
 
+  _getTextColor(versionInfo) {
+    const attr = versionInfo.attributes;
+    if (
+      attr.reinstall_dom_app ||
+      attr.reinstall_android_app ||
+      attr.reinstall_linux_apt ||
+      attr.reinstall_zigbee2mqtt
+    ) {
+      if (attr.update_status === "outdated") {
+        return "#f44336";
+      }
+      if (attr.update_status === "unknown") {
+        return "#ff9800";
+      }
+      return "#ff9800";
+    }
+    return "#0da035";
+  }
+
   changeAutoUpdateMode() {
     this.hass.callService("input_boolean", "toggle", {
       entity_id: "input_boolean.ais_auto_update",
     });
   }
 
+  isBackupInProgress(backupInfo) {
+    if (backupInfo.state === "0") {
+      return false;
+    }
+    return true;
+  }
+
   doBackup() {
     // 1. validation
     if (this.hass.states["sensor.ais_backup_info"].state === "0") {
-      this.validating = true;
+      this.validateConfigInProgress = true;
       this.validateLog = "";
 
       this.hass.callApi("POST", "config/core/check_config").then((result) => {
-        this.validating = false;
+        this.validateConfigInProgress = false;
         const valid = result.result === "valid" ? "1" : "0";
         if (valid === "0") {
           this.hass.callService("ais_cloud", "set_backup_step", {
@@ -567,7 +664,6 @@ class HaConfigAisDomConfigUpdate extends LitElement {
       });
     } else {
       // 2. backup and transfer
-      this.validating = true;
       this.validateLog = "";
       const password = this.shadowRoot.getElementById("password1").value;
       const type = this.shadowRoot.getElementById("backup_type1").selected;
@@ -579,7 +675,6 @@ class HaConfigAisDomConfigUpdate extends LitElement {
   }
 
   restoreBackup() {
-    this.validating = true;
     this.validateLog = "";
     const password = this.shadowRoot.getElementById("password2").value;
     const type = this.shadowRoot.getElementById("backup_type2").selected;
