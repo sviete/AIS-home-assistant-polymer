@@ -2,6 +2,7 @@ import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
 import "@polymer/paper-radio-button/paper-radio-button";
 import "@polymer/paper-radio-group/paper-radio-group";
+import "@material/mwc-linear-progress/mwc-linear-progress";
 import { html } from "@polymer/polymer/lib/utils/html-tag";
 import { PolymerElement } from "@polymer/polymer/polymer-element";
 
@@ -137,6 +138,7 @@ class HaConfigAisDomControl extends PolymerElement {
                     >[[aisButtonVersionCheckUpgrade]]
                   </ha-call-service-button>
                 </div>
+                <mwc-linear-progress indeterminate> </mwc-linear-progress>
               </div>
             </ha-card>
 
