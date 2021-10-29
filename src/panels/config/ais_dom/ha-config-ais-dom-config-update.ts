@@ -182,7 +182,7 @@ class HaConfigAisDomConfigUpdate extends LitElement {
                       .android_app_current_version
                       ? html`<tr>
                           <td>
-                            <ha-icon icon="mdi:home-assistant"></ha-icon>
+                            <ha-icon icon="mdi:android"></ha-icon>
                             Android
                           </td>
                           <td>
@@ -292,7 +292,7 @@ class HaConfigAisDomConfigUpdate extends LitElement {
                 konfiguracji
               </div>
               <br />
-              <div style="border-bottom: 1px solid white;">
+              <div>
                 ${!this.validateLog
                   ? html` <div class="validate-container">
                       <div class="validate-result" id="result">
@@ -346,9 +346,11 @@ class HaConfigAisDomConfigUpdate extends LitElement {
               this.hass.states["sensor.ais_backup_info"].attributes
                 .file_zigbee_size
                 ? html` <h2>
-                      Przywracanie ustawień
-                      <ha-icon icon="mdi:backup-restore"></ha-icon>
+                      Przywracanie ustawień z kopii
+                      <ha-icon icon="mdi:cloud-download-outline"></ha-icon>
                     </h2>
+                    W tym miejscu możesz, przywrócić ustawienia bramki z kopii, która zostanie pobrana z portalu integratora.
+                    Jeśli zaszyfrowałeś kopię hasłem, to podaj je przed wykonaniem przywracania ustawień z kopii.
                     <div class="validate-container">
                       <table style="margin-top: 40px; margin-bottom: 10px;">
                       ${
