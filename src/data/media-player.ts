@@ -10,8 +10,15 @@ import {
   mdiImage,
   mdiMovie,
   mdiMusic,
+  mdiPause,
+  mdiPlay,
   mdiPlaylistMusic,
+  mdiPlayPause,
   mdiPodcast,
+  mdiPower,
+  mdiSkipNext,
+  mdiSkipPrevious,
+  mdiStop,
   mdiTelevisionClassic,
   mdiVideo,
   mdiWeb,
@@ -328,7 +335,7 @@ export const computeMediaControls = (
     return supportsFeature(stateObj, SUPPORT_TURN_ON)
       ? [
           {
-            icon: "hass:power",
+            icon: mdiPower,
             action: "turn_on",
           },
         ]
@@ -339,7 +346,7 @@ export const computeMediaControls = (
 
   if (supportsFeature(stateObj, SUPPORT_TURN_OFF)) {
     buttons.push({
-      icon: "hass:power",
+      icon: mdiPower,
       action: "turn_off",
     });
   }
@@ -349,7 +356,7 @@ export const computeMediaControls = (
     supportsFeature(stateObj, SUPPORT_PREVIOUS_TRACK)
   ) {
     buttons.push({
-      icon: "hass:skip-previous",
+      icon: mdiSkipPrevious,
       action: "media_previous_track",
     });
   }
@@ -367,12 +374,12 @@ export const computeMediaControls = (
     buttons.push({
       icon:
         state === "on"
-          ? "hass:play-pause"
+          ? mdiPlayPause
           : state !== "playing"
-          ? "hass:play"
+          ? mdiPlay
           : supportsFeature(stateObj, SUPPORT_PAUSE)
-          ? "hass:pause"
-          : "hass:stop",
+          ? mdiPause
+          : mdiStop,
       action:
         state !== "playing"
           ? "media_play"
@@ -387,7 +394,7 @@ export const computeMediaControls = (
     supportsFeature(stateObj, SUPPORT_NEXT_TRACK)
   ) {
     buttons.push({
-      icon: "hass:skip-next",
+      icon: mdiSkipNext,
       action: "media_next_track",
     });
   }
