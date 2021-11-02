@@ -97,6 +97,20 @@ const PANEL_ICONS = {
   "shopping-list": mdiCart,
 };
 
+const PANEL_ICONS = {
+  calendar: mdiCalendar,
+  config: mdiCog,
+  "developer-tools": mdiHammer,
+  energy: mdiLightningBolt,
+  hassio: mdiHomeAssistant,
+  history: mdiChartBox,
+  logbook: mdiFormatListBulletedType,
+  lovelace: mdiViewDashboard,
+  map: mdiTooltipAccount,
+  "media-browser": mdiPlayBoxMultiple,
+  "shopping-list": mdiCart,
+};
+
 const panelSorter = (
   reverseSort: string[],
   defaultPanel: string,
