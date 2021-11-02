@@ -15,8 +15,9 @@ export const addEntitiesToLovelaceView = async (
   element: HTMLElement,
   hass: HomeAssistant,
   entities: string[],
-  cardConfig?: LovelaceCardConfig[]
+  cardTitle?: string
 ) => {
+  hass.loadFragmentTranslation("lovelace");
   const dashboards = await fetchDashboards(hass);
 
   const storageDashs = dashboards.filter(
@@ -32,6 +33,7 @@ export const addEntitiesToLovelaceView = async (
     showSuggestCardDialog(element, {
       entities,
       yaml: true,
+      cardTitle,
     });
     return;
   }
@@ -70,6 +72,7 @@ export const addEntitiesToLovelaceView = async (
       showSuggestCardDialog(element, {
         entities,
         yaml: true,
+        cardTitle,
       });
     } else {
       // all storage dashboards are generated
@@ -89,6 +92,7 @@ export const addEntitiesToLovelaceView = async (
 
   if (!storageDashs.length && lovelaceConfig.views.length === 1) {
     showSuggestCardDialog(element, {
+      cardTitle,
       lovelaceConfig: lovelaceConfig!,
       saveConfig: async (newConfig: LovelaceConfig): Promise<void> => {
         try {
@@ -110,9 +114,11 @@ export const addEntitiesToLovelaceView = async (
     lovelaceConfig,
     urlPath,
     allowDashboardChange: true,
+    actionLabel: hass.localize("ui.common.next"),
     dashboards,
     viewSelectedCallback: (newUrlPath, selectedDashConfig, viewIndex) => {
       showSuggestCardDialog(element, {
+        cardTitle,
         lovelaceConfig: selectedDashConfig,
         saveConfig: async (newConfig: LovelaceConfig): Promise<void> => {
           try {
