@@ -2,10 +2,10 @@ import "@polymer/paper-input/paper-input";
 import "../../components/ha-icon-button";
 import "@material/mwc-button";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import "../../components/dialog/ha-paper-dialog";
+import "../../components/ha-dialog";
 import { createCloseHeading } from "../../components/ha-dialog";
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
-import {property} from 'lit/decorators';
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { property } from "lit/decorators";
 import { HomeAssistant } from "../../types";
 import { haStyleDialog } from "../../resources/styles";
 
@@ -89,7 +89,7 @@ export class HaDialogAisgalery extends LitElement {
       </div>
         <mwc-button
             slot="primaryAction"
-            @click="${this._addPicture}"
+            @click=${this._addPicture}
             .disabled=${nameInvalid || pictureInvalid || this._submitting}
           > Dodaj
           </mwc-button>

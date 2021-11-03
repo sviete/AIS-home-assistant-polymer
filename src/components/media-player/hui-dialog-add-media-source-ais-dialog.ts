@@ -10,10 +10,10 @@ import { property, customElement } from "lit/decorators";
 import "../ha-circular-progress";
 import "../ha-chip-set";
 import "../ha-switch";
+import { HassEntity } from "home-assistant-js-websocket";
 import { createCloseHeading } from "../ha-dialog";
 import { haStyleDialog } from "../../resources/styles";
 import type { HomeAssistant } from "../../types";
-import { HassEntity } from "home-assistant-js-websocket";
 import {
   showAlertDialog,
   showConfirmationDialog,
@@ -89,9 +89,10 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
       this.hass.states["media_player.wbudowany_glosnik"].attributes
         .media_content_id
     ) {
-      this.mediaStreamUrl = this.hass.states[
-        "media_player.wbudowany_glosnik"
-      ].attributes.media_content_id;
+      this.mediaStreamUrl =
+        this.hass.states[
+          "media_player.wbudowany_glosnik"
+        ].attributes.media_content_id;
     } else {
       this.mediaStreamUrl = "";
     }
@@ -99,8 +100,8 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
     this.mediaShare = false;
 
     this.mediaChips = [];
-    const options = this.hass.states["input_select.radio_type"].attributes
-      .options;
+    const options =
+      this.hass.states["input_select.radio_type"].attributes.options;
     options.forEach((element: string) => {
       if (!element.startsWith("Moje") && !element.startsWith("Udostępnione")) {
         this.mediaChips.push(element || "");
@@ -336,8 +337,8 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
         this.mediaTypePlaceholder = "Typ radia";
         this.mediaUrlPlaceholder = "Adres URL Strumienia";
         this.mediaChips = [];
-        const options = this.hass.states["input_select.radio_type"].attributes
-          .options;
+        const options =
+          this.hass.states["input_select.radio_type"].attributes.options;
         options.forEach((element) => {
           if (
             !element.startsWith("Moje") &&
@@ -351,8 +352,8 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
         this.mediaTypePlaceholder = "Typ podcasta";
         this.mediaUrlPlaceholder = "Adres URL Kanału RSS (rss feed)";
         this.mediaChips = [];
-        const options = this.hass.states["input_select.podcast_type"].attributes
-          .options;
+        const options =
+          this.hass.states["input_select.podcast_type"].attributes.options;
         options.forEach((element) => {
           if (
             !element.startsWith("Moje") &&
