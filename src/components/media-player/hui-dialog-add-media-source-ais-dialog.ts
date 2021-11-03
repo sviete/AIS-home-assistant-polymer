@@ -1,9 +1,6 @@
+import "./../ha-radio";
+import "./../ha-icon";
 import "@material/mwc-button/mwc-button";
-import "@material/mwc-list/mwc-list";
-import "@material/mwc-list/mwc-list-item";
-import "@polymer/paper-item/paper-item";
-import "@polymer/paper-radio-group/paper-radio-group";
-import "@polymer/paper-radio-button/paper-radio-button";
 import "@polymer/paper-input/paper-input";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property, customElement } from "lit/decorators";
@@ -145,25 +142,41 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
               </p>
 
               <label> Typ audio: </label>
-              <paper-radio-group
-                .selected=${this.mediaCategory}
-                .value=${this.mediaCategory}
-                @selected-changed=${this._mediaCategoryChanged}
-              >
-                <paper-radio-button name="radio">
-                  <ha-icon icon="mdi:radio"></ha-icon>
-                </paper-radio-button>
 
-                <paper-radio-button name="podcast">
-                  <ha-icon icon="mdi:podcast"></ha-icon>
-                </paper-radio-button>
-                <paper-radio-button name="audiobook">
-                  <ha-icon icon="mdi:book-music"></ha-icon>
-                </paper-radio-button>
-                <paper-radio-button name="music">
-                  <ha-icon icon="mdi:music"></ha-icon>
-                </paper-radio-button>
-              </paper-radio-group>
+              <div class="audio-types" id="audio_types">
+                <ha-radio
+                  name="at"
+                  .checked=${this.mediaCategory === "radio"}
+                  value="radio"
+                  @change=${this._mediaCategoryChanged}
+                ></ha-radio>
+                <ha-icon icon="mdi:radio"></ha-icon>
+
+                <ha-radio
+                  name="at"
+                  .checked=${this.mediaCategory === "podcast"}
+                  value="podcast"
+                  @change=${this._mediaCategoryChanged}
+                ></ha-radio>
+                <ha-icon icon="mdi:podcast"></ha-icon>
+
+                <ha-radio
+                  name="at"
+                  checked=${this.mediaCategory === "audiobook"}
+                  value="audiobook"
+                  @change=${this._mediaCategoryChanged}
+                ></ha-radio>
+                <ha-icon icon="mdi:book-music"></ha-icon>
+
+                <ha-radio
+                  name="at"
+                  checked=${this.mediaCategory === "music"}
+                  value="music"
+                  @change=${this._mediaCategoryChanged}
+                ></ha-radio>
+                <ha-icon icon="mdi:music"></ha-icon>
+              </div>
+
               <br />
               ${this.mediaCategory === "radio" ||
               this.mediaCategory === "podcast"
@@ -329,7 +342,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
   }
 
   private _mediaCategoryChanged(ev): void {
-    const newVal = ev.detail.value;
+    const newVal = ev.currentTarget.value;
     if (newVal !== this.mediaCategory) {
       this.mediaCategory = newVal;
       if (newVal === "radio") {
