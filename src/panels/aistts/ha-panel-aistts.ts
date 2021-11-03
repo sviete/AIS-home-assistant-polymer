@@ -9,8 +9,6 @@ import "@polymer/paper-listbox/paper-listbox";
 import "@polymer/paper-dropdown-menu/paper-dropdown-menu-light";
 import "@material/mwc-list/mwc-list-item";
 import "@polymer/paper-input/paper-textarea";
-import "@polymer/paper-radio-button/paper-radio-button";
-import "@polymer/paper-radio-group/paper-radio-group";
 import "../../components/ha-button-menu";
 import "../../components/ha-card";
 import "../../components/ha-menu-button";
