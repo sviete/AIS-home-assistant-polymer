@@ -1,7 +1,7 @@
+import "../../../components/ha-radio";
+import "../../../components/ha-formfield";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import "@polymer/paper-radio-button/paper-radio-button";
-import "@polymer/paper-radio-group/paper-radio-group";
 import "@material/mwc-linear-progress/mwc-linear-progress";
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
@@ -29,6 +29,10 @@ class HaConfigAisDomConfigUpdate extends LitElement {
   @property({ type: String }) public validateLog = "";
 
   @property({ type: String }) public aisButtonVersionCheckUpgrade = "";
+
+  @property({ type: String }) public backupType = "all";
+
+  @property({ type: String }) public backupType2 = "all";
 
   protected async firstUpdated() {
     // --- //
@@ -282,12 +286,35 @@ class HaConfigAisDomConfigUpdate extends LitElement {
               <div class="center-container">
                 Kopia zapasowa ustawień:
                 <br />
-                <paper-radio-group selected="all" id="backup_type1">
-                  <paper-radio-button name="all">Wszystkich</paper-radio-button>
-                  <paper-radio-button name="ha">AIS HA</paper-radio-button>
-                  <paper-radio-button name="zigbee">Zigbee</paper-radio-button>
-                </paper-radio-group>
-                <br />
+                <div class="backup-types" id="backup_type1">
+                  <ha-formfield name="all" label="Wszystkich">
+                    <ha-radio
+                      name="bt"
+                      @change=${this._handleBackupTypeValueChanged}
+                      value="all"
+                      .checked=${this.backupType === "all"}
+                    >
+                    </ha-radio>
+                  </ha-formfield>
+                  <ha-formfield name="ha" label="AIS HA">
+                    <ha-radio
+                      name="bt"
+                      @change=${this._handleBackupTypeValueChanged}
+                      value="ha"
+                      .checked=${this.backupType === "ha"}
+                    >
+                    </ha-radio>
+                  </ha-formfield>
+                  <ha-formfield name="zigbee" label="Zigbee">
+                    <ha-radio
+                      name="bt"
+                      @change=${this._handleBackupTypeValueChanged}
+                      value="zigbee"
+                      .checked=${this.backupType === "zigbee"}
+                    >
+                    </ha-radio>
+                  </ha-formfield>
+                </div>
                 Przed wykonaniem nowej kopii ustawień sprawdź poprawność
                 konfiguracji
               </div>
@@ -349,12 +376,13 @@ class HaConfigAisDomConfigUpdate extends LitElement {
                       Przywracanie ustawień z kopii
                       <ha-icon icon="mdi:cloud-download-outline"></ha-icon>
                     </h2>
-                    W tym miejscu możesz, przywrócić ustawienia bramki z kopii, która zostanie pobrana z portalu integratora.
-                    Jeśli zaszyfrowałeś kopię hasłem, to podaj je przed wykonaniem przywracania ustawień z kopii.
+                    W tym miejscu możesz, przywrócić ustawienia bramki z kopii,
+                    która zostanie pobrana z portalu integratora. Jeśli
+                    zaszyfrowałeś kopię hasłem, to podaj je przed wykonaniem
+                    przywracania ustawień z kopii.
                     <div class="validate-container">
                       <table style="margin-top: 40px; margin-bottom: 10px;">
-                      ${
-                        this.hass.states["sensor.ais_backup_info"].attributes
+                        ${this.hass.states["sensor.ais_backup_info"].attributes
                           .file_size
                           ? html` <tr>
                               <td>
@@ -370,10 +398,8 @@ class HaConfigAisDomConfigUpdate extends LitElement {
                                   .attributes.file_size}
                               </td>
                             </tr>`
-                          : html``
-                      }
-                      ${
-                        this.hass.states["sensor.ais_backup_info"].attributes
+                          : html``}
+                        ${this.hass.states["sensor.ais_backup_info"].attributes
                           .file_zigbee_size
                           ? html` <tr>
                               <td>
@@ -389,66 +415,80 @@ class HaConfigAisDomConfigUpdate extends LitElement {
                                   .attributes.file_zigbee_size}
                               </td>
                             </tr>`
-                          : html``
-                      }
-
+                          : html``}
                       </table>
                       <div class="validate-container">
                         <div class="validate-result" id="result">
-                          ${
-                            this.hass.states["sensor.ais_backup_info"]
-                              .attributes.restore_info
-                          }
+                          ${this.hass.states["sensor.ais_backup_info"]
+                            .attributes.restore_info}
                         </div>
                         <div class="config-invalid">
-                              <span class="text">
-                              ${
-                                this.hass.states["sensor.ais_backup_info"]
-                                  .attributes.restore_error
-                              }
-                              </span>
-                            </div>
-                            Przywracanie ustawień z kopii:
-                            <br />
-                            <paper-radio-group selected="all" id="backup_type2">
-                                ${
-                                  this.hass.states["sensor.ais_backup_info"]
-                                    .attributes.file_size &&
-                                  this.hass.states["sensor.ais_backup_info"]
-                                    .attributes.file_zigbee_size
-                                    ? html`<paper-radio-button name="all"
-                                        >Wszystkich</paper-radio-button
-                                      >`
-                                    : html``
-                                }
-                                ${
-                                  this.hass.states["sensor.ais_backup_info"]
-                                    .attributes.file_size
-                                    ? html`<paper-radio-button name="ha"
-                                        >AIS HA</paper-radio-button
-                                      >`
-                                    : html``
-                                }
-                                ${
-                                  this.hass.states["sensor.ais_backup_info"]
-                                    .attributes.file_zigbee_size
-                                    ? html`<paper-radio-button name="zigbee"
-                                        >Zigbee</paper-radio-button
-                                      >`
-                                    : html``
-                                }
-                            </paper-radio-group>
-                            <br />
-                            <paper-input
-                              placeholder="hasło"
-                              no-label-float=""
-                              type="password"
-                              id="password2"
-                            ></paper-input>
-                            <mwc-button raised="" @click=${this.restoreBackup}>
-                              Przywróć konfigurację z kopii
-                            </mwc-button>
+                          <span class="text">
+                            ${this.hass.states["sensor.ais_backup_info"]
+                              .attributes.restore_error}
+                          </span>
+                        </div>
+                        Przywracanie ustawień z kopii:
+                        <div class="center-container">
+                          <div class="backup-types" id="backup_type2">
+                            ${this.hass.states["sensor.ais_backup_info"]
+                              .attributes.file_size &&
+                            this.hass.states["sensor.ais_backup_info"]
+                              .attributes.file_zigbee_size
+                              ? html` <ha-formfield
+                                  name="all"
+                                  label="Wszystkich"
+                                >
+                                  <ha-radio
+                                    name="bt2"
+                                    @change=${this
+                                      ._handleBackupType2ValueChanged}
+                                    value="all"
+                                    .checked=${this.backupType2 === "all"}
+                                  >
+                                  </ha-radio>
+                                </ha-formfield>`
+                              : html``}
+                            ${this.hass.states["sensor.ais_backup_info"]
+                              .attributes.file_size
+                              ? html` <ha-formfield name="ha" label="AIS HA">
+                                  <ha-radio
+                                    name="bt2"
+                                    @change=${this
+                                      ._handleBackupType2ValueChanged}
+                                    value="ha"
+                                    .checked=${this.backupType2 === "ha"}
+                                  >
+                                  </ha-radio>
+                                </ha-formfield>`
+                              : html``}
+                            ${this.hass.states["sensor.ais_backup_info"]
+                              .attributes.file_zigbee_size
+                              ? html` <ha-formfield
+                                  name="zigbee"
+                                  label="Zigbee"
+                                >
+                                  <ha-radio
+                                    name="bt2"
+                                    @change=${this
+                                      ._handleBackupType2ValueChanged}
+                                    value="zigbee"
+                                    .checked=${this.backupType2 === "zigbee"}
+                                  >
+                                  </ha-radio>
+                                </ha-formfield>`
+                              : html``}
                           </div>
+                          <paper-input
+                            placeholder="hasło"
+                            no-label-float=""
+                            type="password"
+                            id="password2"
+                          ></paper-input>
+                          <mwc-button raised="" @click=${this.restoreBackup}>
+                            Przywróć konfigurację z kopii
+                          </mwc-button>
+                        </div>
                       </div>
                     </div>`
                 : html``}
@@ -495,8 +535,7 @@ class HaConfigAisDomConfigUpdate extends LitElement {
         }
         .center-container {
           text-align: center;
-          margin-top: 2em;
-          height: 70px;
+          min-height: 70px;
         }
         table {
           width: 100%;
@@ -517,8 +556,6 @@ class HaConfigAisDomConfigUpdate extends LitElement {
 
         .config-invalid {
           text-align: center;
-          margin-top: 2em;
-          margin-bottom: 1em;
           color: #f44336;
         }
 
@@ -569,6 +606,16 @@ class HaConfigAisDomConfigUpdate extends LitElement {
       retS = "mdi:restart-alert";
     }
     return retS;
+  }
+
+  private _handleBackupTypeValueChanged(ev: CustomEvent) {
+    const input = ev.currentTarget;
+    this.backupType = input.value;
+  }
+
+  private _handleBackupType2ValueChanged(ev: CustomEvent) {
+    const input = ev.currentTarget;
+    this.backupType2 = input.value;
   }
 
   _computeAisButtonVersionCheckUpgrade(versionInfo) {
@@ -668,7 +715,7 @@ class HaConfigAisDomConfigUpdate extends LitElement {
       // 2. backup and transfer
       this.validateLog = "";
       const password = this.shadowRoot.getElementById("password1").value;
-      const type = this.shadowRoot.getElementById("backup_type1").selected;
+      const type = this.backupType;
       this.hass.callService("ais_cloud", "do_backup", {
         password: password,
         type: type,
@@ -679,7 +726,7 @@ class HaConfigAisDomConfigUpdate extends LitElement {
   restoreBackup() {
     this.validateLog = "";
     const password = this.shadowRoot.getElementById("password2").value;
-    const type = this.shadowRoot.getElementById("backup_type2").selected;
+    const type = this.backupType2;
     this.hass.callService("ais_cloud", "restore_backup", {
       password: password,
       type: type,
