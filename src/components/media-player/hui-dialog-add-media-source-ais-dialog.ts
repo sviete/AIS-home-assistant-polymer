@@ -142,10 +142,9 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
               </p>
 
               <label> Typ audio: </label>
-
               <div class="audio-types" id="audio_types">
                 <ha-radio
-                  name="at"
+                  name="audioType"
                   .checked=${this.mediaCategory === "radio"}
                   value="radio"
                   @change=${this._mediaCategoryChanged}
@@ -153,7 +152,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
                 <ha-icon icon="mdi:radio"></ha-icon>
 
                 <ha-radio
-                  name="at"
+                  name="audioType"
                   .checked=${this.mediaCategory === "podcast"}
                   value="podcast"
                   @change=${this._mediaCategoryChanged}
@@ -161,16 +160,16 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
                 <ha-icon icon="mdi:podcast"></ha-icon>
 
                 <ha-radio
-                  name="at"
-                  checked=${this.mediaCategory === "audiobook"}
+                  name="audioType"
+                  .checked=${this.mediaCategory === "audiobook"}
                   value="audiobook"
                   @change=${this._mediaCategoryChanged}
                 ></ha-radio>
                 <ha-icon icon="mdi:book-music"></ha-icon>
 
                 <ha-radio
-                  name="at"
-                  checked=${this.mediaCategory === "music"}
+                  name="audioType"
+                  .checked=${this.mediaCategory === "music"}
                   value="music"
                   @change=${this._mediaCategoryChanged}
                 ></ha-radio>
