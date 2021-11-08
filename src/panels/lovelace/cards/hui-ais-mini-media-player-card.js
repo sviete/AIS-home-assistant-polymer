@@ -1707,24 +1707,32 @@
         i = r(23),
         o = r(2),
         s = {};
-      (s["[object Float32Array]"] = s["[object Float64Array]"] = s[
-        "[object Int8Array]"
-      ] = s["[object Int16Array]"] = s["[object Int32Array]"] = s[
-        "[object Uint8Array]"
-      ] = s["[object Uint8ClampedArray]"] = s["[object Uint16Array]"] = s[
-        "[object Uint32Array]"
-      ] = !0),
-        (s["[object Arguments]"] = s["[object Array]"] = s[
-          "[object ArrayBuffer]"
-        ] = s["[object Boolean]"] = s["[object DataView]"] = s[
-          "[object Date]"
-        ] = s["[object Error]"] = s["[object Function]"] = s[
-          "[object Map]"
-        ] = s["[object Number]"] = s["[object Object]"] = s[
-          "[object RegExp]"
-        ] = s["[object Set]"] = s["[object String]"] = s[
-          "[object WeakMap]"
-        ] = !1),
+      (s["[object Float32Array]"] =
+        s["[object Float64Array]"] =
+        s["[object Int8Array]"] =
+        s["[object Int16Array]"] =
+        s["[object Int32Array]"] =
+        s["[object Uint8Array]"] =
+        s["[object Uint8ClampedArray]"] =
+        s["[object Uint16Array]"] =
+        s["[object Uint32Array]"] =
+          !0),
+        (s["[object Arguments]"] =
+          s["[object Array]"] =
+          s["[object ArrayBuffer]"] =
+          s["[object Boolean]"] =
+          s["[object DataView]"] =
+          s["[object Date]"] =
+          s["[object Error]"] =
+          s["[object Function]"] =
+          s["[object Map]"] =
+          s["[object Number]"] =
+          s["[object Object]"] =
+          s["[object RegExp]"] =
+          s["[object Set]"] =
+          s["[object String]"] =
+          s["[object WeakMap]"] =
+            !1),
         (t.exports = function (t) {
           return o(t) && i(t.length) && !!s[n(t)];
         });
@@ -2287,7 +2295,8 @@
     },
     function (t, e, r) {
       var n = r(126),
-        i = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g,
+        i =
+          /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g,
         o = /\\(\\)?/g,
         s = n(function (t) {
           var e = [];
@@ -2502,34 +2511,43 @@
         x = r(160),
         k = r(5),
         S = {};
-      (S["[object Arguments]"] = S["[object Array]"] = S[
-        "[object ArrayBuffer]"
-      ] = S["[object DataView]"] = S["[object Boolean]"] = S[
-        "[object Date]"
-      ] = S["[object Float32Array]"] = S["[object Float64Array]"] = S[
-        "[object Int8Array]"
-      ] = S["[object Int16Array]"] = S["[object Int32Array]"] = S[
-        "[object Map]"
-      ] = S["[object Number]"] = S["[object Object]"] = S[
-        "[object RegExp]"
-      ] = S["[object Set]"] = S["[object String]"] = S["[object Symbol]"] = S[
-        "[object Uint8Array]"
-      ] = S["[object Uint8ClampedArray]"] = S["[object Uint16Array]"] = S[
-        "[object Uint32Array]"
-      ] = !0),
-        (S["[object Error]"] = S["[object Function]"] = S[
-          "[object WeakMap]"
-        ] = !1),
-        (t.exports = function t(e, r, $, j, O, C) {
-          var P,
+      (S["[object Arguments]"] =
+        S["[object Array]"] =
+        S["[object ArrayBuffer]"] =
+        S["[object DataView]"] =
+        S["[object Boolean]"] =
+        S["[object Date]"] =
+        S["[object Float32Array]"] =
+        S["[object Float64Array]"] =
+        S["[object Int8Array]"] =
+        S["[object Int16Array]"] =
+        S["[object Int32Array]"] =
+        S["[object Map]"] =
+        S["[object Number]"] =
+        S["[object Object]"] =
+        S["[object RegExp]"] =
+        S["[object Set]"] =
+        S["[object String]"] =
+        S["[object Symbol]"] =
+        S["[object Uint8Array]"] =
+        S["[object Uint8ClampedArray]"] =
+        S["[object Uint16Array]"] =
+        S["[object Uint32Array]"] =
+          !0),
+        (S["[object Error]"] =
+          S["[object Function]"] =
+          S["[object WeakMap]"] =
+            !1),
+        (t.exports = function t(e, r, $, j, O, P) {
+          var C,
             A = 1 & r,
             M = 2 & r,
             E = 4 & r;
-          if (($ && (P = O ? $(e, j, O, C) : $(e)), void 0 !== P)) return P;
+          if (($ && (C = O ? $(e, j, O, P) : $(e)), void 0 !== C)) return C;
           if (!w(e)) return e;
           var T = _(e);
           if (T) {
-            if (((P = m(e)), !A)) return l(e, P);
+            if (((C = m(e)), !A)) return l(e, C);
           } else {
             var I = f(e),
               V = "[object Function]" == I || "[object GeneratorFunction]" == I;
@@ -2539,32 +2557,32 @@
               "[object Arguments]" == I ||
               (V && !O)
             ) {
-              if (((P = M || V ? {} : v(e)), !A))
-                return M ? h(e, a(P, e)) : u(e, s(P, e));
+              if (((C = M || V ? {} : v(e)), !A))
+                return M ? h(e, a(C, e)) : u(e, s(C, e));
             } else {
               if (!S[I]) return O ? e : {};
-              P = g(e, I, A);
+              C = g(e, I, A);
             }
           }
-          C || (C = new n());
-          var N = C.get(e);
+          P || (P = new n());
+          var N = P.get(e);
           if (N) return N;
-          C.set(e, P),
+          P.set(e, C),
             x(e)
               ? e.forEach(function (n) {
-                  P.add(t(n, r, $, n, e, C));
+                  C.add(t(n, r, $, n, e, P));
                 })
               : b(e) &&
                 e.forEach(function (n, i) {
-                  P.set(i, t(n, r, $, i, e, C));
+                  C.set(i, t(n, r, $, i, e, P));
                 });
           var L = E ? (M ? d : p) : M ? keysIn : k,
             z = T ? void 0 : L(e);
           return (
             i(z || e, function (n, i) {
-              z && (n = e[(i = n)]), o(P, i, t(n, r, $, i, e, C));
+              z && (n = e[(i = n)]), o(C, i, t(n, r, $, i, e, P));
             }),
-            P
+            C
           );
         });
     },
@@ -3762,7 +3780,7 @@
         }
         if (!g[w] && (k || (w && !v[w]))) {
           for (var S, $, j = -1, O = 0; O < p.length; O++) {
-            -1 !== (C = y.indexOf(p[O])) && (-1 === j || C < j) && (j = C);
+            -1 !== (P = y.indexOf(p[O])) && (-1 === j || P < j) && (j = P);
           }
           -1 !== ($ = -1 === j ? y.lastIndexOf("@") : y.lastIndexOf("@", j)) &&
             ((S = y.slice(0, $)),
@@ -3770,18 +3788,18 @@
             (this.auth = decodeURIComponent(S))),
             (j = -1);
           for (O = 0; O < h.length; O++) {
-            var C;
-            -1 !== (C = y.indexOf(h[O])) && (-1 === j || C < j) && (j = C);
+            var P;
+            -1 !== (P = y.indexOf(h[O])) && (-1 === j || P < j) && (j = P);
           }
           -1 === j && (j = y.length),
             (this.host = y.slice(0, j)),
             (y = y.slice(j)),
             this.parseHost(),
             (this.hostname = this.hostname || "");
-          var P =
+          var C =
             "[" === this.hostname[0] &&
             "]" === this.hostname[this.hostname.length - 1];
-          if (!P)
+          if (!C)
             for (
               var A = this.hostname.split(/\./), M = ((O = 0), A.length);
               O < M;
@@ -3805,12 +3823,12 @@
           this.hostname.length > 255
             ? (this.hostname = "")
             : (this.hostname = this.hostname.toLowerCase()),
-            P || (this.hostname = n.toASCII(this.hostname));
+            C || (this.hostname = n.toASCII(this.hostname));
           var D = this.port ? ":" + this.port : "",
             R = this.hostname || "";
           (this.host = R + D),
             (this.href += this.host),
-            P &&
+            C &&
               ((this.hostname = this.hostname.substr(
                 1,
                 this.hostname.length - 2
@@ -3994,9 +4012,9 @@
           else if (!i.isNullOrUndefined(t.search)) {
             if (S)
               (r.hostname = r.host = k.shift()),
-                (P =
+                (C =
                   !!(r.host && r.host.indexOf("@") > 0) && r.host.split("@")) &&
-                  ((r.auth = P.shift()), (r.host = r.hostname = P.shift()));
+                  ((r.auth = C.shift()), (r.host = r.hostname = C.shift()));
             return (
               (r.search = t.search),
               (r.query = t.query),
@@ -4021,27 +4039,27 @@
                   ("." === $ || ".." === $)) ||
                 "" === $,
               O = 0,
-              C = k.length;
-            C >= 0;
-            C--
+              P = k.length;
+            P >= 0;
+            P--
           )
-            "." === ($ = k[C])
-              ? k.splice(C, 1)
+            "." === ($ = k[P])
+              ? k.splice(P, 1)
               : ".." === $
-              ? (k.splice(C, 1), O++)
-              : O && (k.splice(C, 1), O--);
+              ? (k.splice(P, 1), O++)
+              : O && (k.splice(P, 1), O--);
           if (!w && !x) for (; O--; O) k.unshift("..");
           !w ||
             "" === k[0] ||
             (k[0] && "/" === k[0].charAt(0)) ||
             k.unshift(""),
             j && "/" !== k.join("/").substr(-1) && k.push("");
-          var P,
+          var C,
             A = "" === k[0] || (k[0] && "/" === k[0].charAt(0));
           S &&
             ((r.hostname = r.host = A ? "" : k.length ? k.shift() : ""),
-            (P = !!(r.host && r.host.indexOf("@") > 0) && r.host.split("@")) &&
-              ((r.auth = P.shift()), (r.host = r.hostname = P.shift())));
+            (C = !!(r.host && r.host.indexOf("@") > 0) && r.host.split("@")) &&
+              ((r.auth = C.shift()), (r.host = r.hostname = C.shift())));
           return (
             (w = w || (r.host && k.length)) && !A && k.unshift(""),
             k.length
@@ -4501,7 +4519,8 @@
         },
         u = (t) => -1 !== t.index,
         h = () => document.createComment(""),
-        p = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
+        p =
+          /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
       function d(t, e) {
         const {
             element: { content: r },
@@ -4557,10 +4576,12 @@
        * http://polymer.github.io/PATENTS.txt
        */
       const g = new WeakMap(),
-        v = (t) => (...e) => {
-          const r = t(...e);
-          return g.set(r, !0), r;
-        },
+        v =
+          (t) =>
+          (...e) => {
+            const r = t(...e);
+            return g.set(r, !0), r;
+          },
         _ = (t) => "function" == typeof t && g.has(t),
         y = {},
         b = {};
@@ -4733,7 +4754,7 @@
           this.value !== y && this.committer.commit();
         }
       }
-      class C {
+      class P {
         constructor(t) {
           (this.value = void 0),
             (this.__pendingValue = void 0),
@@ -4810,7 +4831,7 @@
           for (const i of t)
             (r = e[n]),
               void 0 === r &&
-                ((r = new C(this.options)),
+                ((r = new P(this.options)),
                 e.push(r),
                 0 === n ? r.appendIntoPart(this) : r.insertAfterPart(e[n - 1])),
               r.setValue(i),
@@ -4822,7 +4843,7 @@
           i(this.startNode.parentNode, t.nextSibling, this.endNode);
         }
       }
-      class P {
+      class C {
         constructor(t, e, r) {
           if (
             ((this.value = void 0),
@@ -4997,11 +5018,11 @@
             return new A(t, e.slice(1), r).parts;
           }
           if ("@" === i) return [new T(t, e.slice(1), n.eventContext)];
-          if ("?" === i) return [new P(t, e.slice(1), r)];
+          if ("?" === i) return [new C(t, e.slice(1), r)];
           return new j(t, e, r).parts;
         }
         handleTextExpression(t) {
-          return new C(t);
+          return new P(t);
         }
       })();
       /**
@@ -5146,7 +5167,7 @@
           reflect: !1,
           hasChanged: W,
         };
-      class X extends HTMLElement {
+      class J extends HTMLElement {
         constructor() {
           super(),
             (this._updateState = 0),
@@ -5382,7 +5403,7 @@
         updated(t) {}
         firstUpdated(t) {}
       }
-      X.finalized = !0;
+      J.finalized = !0;
       /**
 @license
 Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
@@ -5393,7 +5414,7 @@ found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
 part of the polymer project is also subject to an additional IP rights grant
 found at http://polymer.github.io/PATENTS.txt
 */
-      const J =
+      const X =
           "adoptedStyleSheets" in Document.prototype &&
           "replace" in CSSStyleSheet.prototype,
         K = Symbol();
@@ -5408,7 +5429,7 @@ found at http://polymer.github.io/PATENTS.txt
         get styleSheet() {
           return (
             void 0 === this._styleSheet &&
-              (J
+              (X
                 ? ((this._styleSheet = new CSSStyleSheet()),
                   this._styleSheet.replaceSync(this.cssText))
                 : (this._styleSheet = null)),
@@ -5452,7 +5473,7 @@ found at http://polymer.github.io/PATENTS.txt
         "2.3.1"
       );
       const tt = {};
-      class et extends X {
+      class et extends J {
         static getStyles() {
           return this.styles;
         }
@@ -5487,7 +5508,7 @@ found at http://polymer.github.io/PATENTS.txt
           const t = this.constructor._styles;
           0 !== t.length &&
             (void 0 === window.ShadyCSS || window.ShadyCSS.nativeShadow
-              ? J
+              ? X
                 ? (this.renderRoot.adoptedStyleSheets = t.map(
                     (t) => t.styleSheet
                   ))
@@ -5536,7 +5557,7 @@ found at http://polymer.github.io/PATENTS.txt
               let n = L.get(e);
               void 0 === n &&
                 (i(e, e.firstChild),
-                L.set(e, (n = new C(Object.assign({ templateFactory: V }, r)))),
+                L.set(e, (n = new P(Object.assign({ templateFactory: V }, r)))),
                 n.appendInto(e)),
                 n.setValue(t),
                 n.commit();
@@ -5638,6 +5659,7 @@ found at http://polymer.github.io/PATENTS.txt
         });
       var at = r(62);
       const ct = {
+          repeat: !0,
           shuffle: !0,
           power: !1,
           source: !0,
@@ -5647,6 +5669,7 @@ found at http://polymer.github.io/PATENTS.txt
           icon_state: !0,
           sound_mode: !0,
           runtime: !0,
+          runtime_remaining: !0,
           volume: !1,
           volume_level: !0,
           controls: !1,
@@ -5654,21 +5677,30 @@ found at http://polymer.github.io/PATENTS.txt
           play_stop: !0,
           prev: !1,
           next: !1,
+          jump: !0,
           state_label: !1,
         },
-        lt = "mdi:speaker",
-        ut = "mdi:chevron-down",
-        ht = "mdi:speaker-multiple",
-        pt = { true: "mdi:volume-off", false: "mdi:volume-high" },
-        dt = "mdi:skip-next",
-        ft = { true: "mdi:pause", false: "mdi:play" },
-        mt = "mdi:play-box-multiple",
-        gt = "mdi:skip-previous",
-        vt = "mdi:shuffle",
-        _t = { true: "mdi:stop", false: "mdi:play" },
-        yt = "mdi:volume-minus",
-        bt = "mdi:volume-plus",
-        wt = [
+        lt = { OFF: "off", ALL: "all", ONE: "one" },
+        ut = "mdi:speaker",
+        ht = "mdi:chevron-down",
+        pt = "mdi:speaker-multiple",
+        dt = { true: "mdi:volume-off", false: "mdi:volume-high" },
+        ft = "mdi:skip-next",
+        mt = { true: "mdi:pause", false: "mdi:play" },
+        gt = "mdi:play-box-multiple",
+        vt = "mdi:skip-previous",
+        _t = "mdi:shuffle",
+        yt = {
+          [lt.OFF]: "mdi:repeat-off",
+          [lt.ONE]: "mdi:repeat-once",
+          [lt.ALL]: "mdi:repeat",
+        },
+        bt = { true: "mdi:stop", false: "mdi:play" },
+        wt = "mdi:volume-minus",
+        xt = "mdi:volume-plus",
+        kt = "mdi:fast-forward",
+        St = "mdi:rewind",
+        $t = [
           "entity",
           "groupMgmtEntity",
           "_overflow",
@@ -5681,8 +5713,8 @@ found at http://polymer.github.io/PATENTS.txt
           "backgroundColor",
           "foregroundColor",
         ],
-        xt = ["media_duration", "media_position", "media_position_updated_at"],
-        kt = [
+        jt = ["media_duration", "media_position", "media_position_updated_at"],
+        Ot = [
           { attr: "media_title" },
           { attr: "media_artist" },
           { attr: "media_series_title" },
@@ -5690,9 +5722,10 @@ found at http://polymer.github.io/PATENTS.txt
           { attr: "media_episode", prefix: "E" },
           { attr: "app_name" },
         ],
-        St = "squeezebox",
-        $t = "soundtouch",
-        jt = (t) => {
+        Pt = "squeezebox",
+        Ct = "soundtouch",
+        At = "media_player",
+        Mt = (t) => {
           ((t) => {
             if (!t.entity || "media_player" !== t.entity.split(".")[0])
               throw new Error(
@@ -5715,10 +5748,12 @@ found at http://polymer.github.io/PATENTS.txt
             speaker_group: {
               show_group_count: !0,
               platform: "sonos",
+              supports_master: !0,
               ...t.sonos,
               ...t.speaker_group,
             },
             shortcuts: { label: "Przekieruj media na", ...t.shortcuts },
+            jump_amount: 10,
           };
           return (
             (e.max_volume = Number(e.max_volume) || 100),
@@ -5729,8 +5764,8 @@ found at http://polymer.github.io/PATENTS.txt
             e
           );
         };
-      var Ot = jt;
-      var Ct = (t) => {
+      var Et = Mt;
+      var Tt = (t) => {
         let e = "";
         return (
           [].slice
@@ -5739,7 +5774,7 @@ found at http://polymer.github.io/PATENTS.txt
           window.btoa(e)
         );
       };
-      class Pt {
+      class It {
         constructor(t, e, r) {
           (this.hass = t || {}),
             (this.config = e || {}),
@@ -5780,6 +5815,9 @@ found at http://polymer.github.io/PATENTS.txt
         get shuffle() {
           return this.attr.shuffle || !1;
         }
+        get repeat() {
+          return this.attr.repeat || lt.OFF;
+        }
         get content() {
           return this.attr.media_content_type || "none";
         }
@@ -5802,8 +5840,10 @@ found at http://polymer.github.io/PATENTS.txt
           return this.group.length > 1;
         }
         get group() {
-          return this.platform === St
+          return this.platform === Pt
             ? this.attr.sync_group || []
+            : this.platform === At
+            ? this.attr.group_members || []
             : this.attr[this.platform + "_group"] || [];
         }
         get platform() {
@@ -5845,15 +5885,17 @@ found at http://polymer.github.io/PATENTS.txt
           );
         }
         get mediaInfo() {
-          return kt
-            .map((t) => ({ text: this.attr[t.attr], prefix: "", ...t }))
-            .filter((t) => t.text);
+          return Ot.map((t) => ({
+            text: this.attr[t.attr],
+            prefix: "",
+            ...t,
+          })).filter((t) => t.text);
         }
         get hasProgress() {
           return (
             !this.config.hide.progress &&
             !this.idle &&
-            xt.every((t) => t in this.attr)
+            jt.every((t) => t in this.attr)
           );
         }
         get supportsPrev() {
@@ -5867,10 +5909,10 @@ found at http://polymer.github.io/PATENTS.txt
           );
         }
         get progress() {
-          return (
-            this.position +
-            (Date.now() - new Date(this.updatedAt).getTime()) / 1e3
-          );
+          return this.isPlaying
+            ? this.position +
+                (Date.now() - new Date(this.updatedAt).getTime()) / 1e3
+            : this.position;
         }
         get idleView() {
           const t = this.config.idle_view;
@@ -5902,6 +5944,9 @@ found at http://polymer.github.io/PATENTS.txt
         get supportsShuffle() {
           return !(void 0 === this.attr.shuffle);
         }
+        get supportsRepeat() {
+          return !(void 0 === this.attr.repeat);
+        }
         get supportsMute() {
           return !(void 0 === this.attr.is_volume_muted);
         }
@@ -5909,7 +5954,9 @@ found at http://polymer.github.io/PATENTS.txt
           return !(void 0 === this.attr.volume_level);
         }
         get supportsMaster() {
-          return this.platform !== St;
+          return (
+            this.platform !== Pt && this.config.speaker_group.supports_master
+          );
         }
         async fetchArtwork() {
           const t = this.attr.entity_picture_local
@@ -5918,7 +5965,7 @@ found at http://polymer.github.io/PATENTS.txt
           try {
             const e = await fetch(new Request(t)),
               r = await e.arrayBuffer(),
-              n = Ct(r);
+              n = Tt(r);
             return `url(data:${
               e.headers.get("Content-Type") || "image/jpeg"
             };base64,${n})`;
@@ -5930,7 +5977,7 @@ found at http://polymer.github.io/PATENTS.txt
           return this.attr[t] || "";
         }
         toggle(t) {
-          console.log("AIS media browser todo");
+          console.log("AIS media browser todo " + t);
         }
         toggleMute(t) {
           this.config.speaker_group.sync_volume
@@ -5946,6 +5993,13 @@ found at http://polymer.github.io/PATENTS.txt
         }
         toggleShuffle(t) {
           this.callService(t, "shuffle_set", { shuffle: !this.shuffle });
+        }
+        toggleRepeat(t) {
+          const e = Object.values(lt),
+            { length: r } = e,
+            n = e.indexOf(this.repeat) - 1,
+            i = e[(n - (1 % r) + r) % r];
+          this.callService(t, "repeat_set", { repeat: i });
         }
         setSource(t, e) {
           this.callService(t, "select_source", { source: e });
@@ -5998,6 +6052,11 @@ found at http://polymer.github.io/PATENTS.txt
         seek(t, e) {
           this.callService(t, "media_seek", { seek_position: e });
         }
+        jump(t, e) {
+          const r = this.progress + e,
+            n = Math.min(Math.max(r, 0), this.mediaDuration || r);
+          this.callService(t, "media_seek", { seek_position: n });
+        }
         setVolume(t, e) {
           this.config.speaker_group.sync_volume
             ? this.group.forEach((r) => {
@@ -6025,28 +6084,37 @@ found at http://polymer.github.io/PATENTS.txt
             i = { entity_id: e };
           if (r)
             switch (((i.master = this.entityId), n)) {
-              case $t:
+              case Ct:
                 return this.handleSoundtouch(
                   t,
                   this.isGrouped ? "ADD_ZONE_SLAVE" : "CREATE_ZONE",
                   e
                 );
-              case St:
+              case Pt:
                 return this.callService(
                   t,
                   "sync",
                   { entity_id: this.entityId, other_player: e },
-                  St
+                  Pt
+                );
+              case At:
+                return this.callService(
+                  t,
+                  "join",
+                  { entity_id: this.entityId, group_members: e },
+                  n
                 );
               default:
                 return this.callService(t, "join", i, n);
             }
           else
             switch (n) {
-              case $t:
+              case Ct:
                 return this.handleSoundtouch(t, "REMOVE_ZONE_SLAVE", e);
-              case St:
-                return this.callService(t, "unsync", i, St);
+              case Pt:
+                return this.callService(t, "unsync", i, Pt);
+              case At:
+                return this.callService(t, "unjoin", { entity_id: e }, n);
               default:
                 return this.callService(t, "unjoin", i, n);
             }
@@ -6056,7 +6124,7 @@ found at http://polymer.github.io/PATENTS.txt
             t,
             e,
             { master: this.master, slaves: r },
-            $t,
+            Ct,
             !0
           );
         }
@@ -6076,7 +6144,7 @@ found at http://polymer.github.io/PATENTS.txt
             });
         }
       }
-      var At = Y`
+      var Vt = Y`
   :host {
     overflow: visible !important;
     display: block;
@@ -6513,7 +6581,7 @@ found at http://polymer.github.io/PATENTS.txt
     padding-right: 4px;
   }
 `;
-      var Mt = Y`
+      var Nt = Y`
   .ellipsis {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -6539,9 +6607,48 @@ found at http://polymer.github.io/PATENTS.txt
   ha-icon-button[inactive] {
     opacity: .5;
   }
-`,
-        Et = r(63);
-      const Tt = (t, e, r) => {
+`;
+      var Lt = (t, e, r, n, i) => {
+          let o;
+          switch (n.action) {
+            case "more-info":
+              (o = new Event("hass-more-info", { composed: !0 })),
+                (o.detail = { entityId: n.entity || i }),
+                t.dispatchEvent(o);
+              break;
+            case "navigate":
+              if (!n.navigation_path) return;
+              window.history.pushState(null, "", n.navigation_path),
+                (o = new Event("location-changed", { composed: !0 })),
+                (o.detail = { replace: !1 }),
+                window.dispatchEvent(o);
+              break;
+            case "call-service": {
+              if (!n.service) return;
+              const [t, r] = n.service.split(".", 2),
+                i = { ...n.service_data };
+              e.callService(t, r, i);
+              break;
+            }
+            case "url":
+              if (!n.url) return;
+              n.new_tab
+                ? window.open(n.url, "_blank")
+                : (window.location.href = n.url);
+              break;
+            case "fire-dom-event":
+              (o = new Event("ll-custom", { composed: !0, bubbles: !0 })),
+                (o.detail = n),
+                t.dispatchEvent(o);
+          }
+          n.haptic &&
+            ((t, e) => {
+              const r = new Event("haptic", { composed: !0 });
+              (r.detail = { haptic: e }), t.dispatchEvent(r);
+            })(t, n.haptic);
+        },
+        zt = r(63);
+      const Dt = (t, e, r) => {
           const n = [t, e, r].map((t) => {
             let e = t;
             return (
@@ -6551,23 +6658,23 @@ found at http://polymer.github.io/PATENTS.txt
           });
           return 0.2126 * n[0] + 0.7152 * n[1] + 0.0722 * n[2];
         },
-        It = (t, e) =>
+        Rt = (t, e) =>
           Math.round(
             100 *
               (((t, e) => {
-                const r = Tt(...t),
-                  n = Tt(...e);
+                const r = Dt(...t),
+                  n = Dt(...e);
                 return (Math.max(r, n) + 0.05) / (Math.min(r, n) + 0.05);
               })(t, e) +
                 Number.EPSILON)
           ) / 100,
-        Vt = (t) => {
+        Ft = (t) => {
           t.sort((t, e) => e.population - t.population);
           const e = t[0];
           let r;
           const n = new Map();
           function i(t) {
-            return n.has(t) || n.set(t, It(e.rgb, t.rgb)), n.get(t) > 4.5;
+            return n.has(t) || n.set(t, Rt(e.rgb, t.rgb)), n.get(t) > 4.5;
           }
           for (let e = 1; e < t.length && void 0 === r; e += 1) {
             if (i(t[e])) {
@@ -6593,7 +6700,7 @@ found at http://polymer.github.io/PATENTS.txt
           return void 0 === r && (r = e.bodyTextColor), [r, e.hex];
         };
       r(186);
-      var Nt = {
+      var Ut = {
         en: {
           placeholder: { tts: "Text to speech" },
           label: {
@@ -6605,6 +6712,18 @@ found at http://polymer.github.io/PATENTS.txt
           },
           state: { idle: "Idle", unavailable: "Unavailable" },
           title: { speaker_management: "Group management" },
+        },
+        de: {
+          placeholder: { tts: "Text zum Sprechen" },
+          label: {
+            leave: "Verlassen",
+            ungroup: "Teilen",
+            group_all: "Gruppieren",
+            send: "Senden",
+            master: "Master",
+          },
+          state: { idle: "Pause", unavailable: "Nicht verfügbar" },
+          title: { speaker_management: "Wiedergabe auf" },
         },
         fr: {
           placeholder: { tts: "Texte à lire" },
@@ -6676,15 +6795,39 @@ found at http://polymer.github.io/PATENTS.txt
           state: { idle: "Nečinný", unavailable: "Nedostupný" },
           title: { speaker_management: "Správa skupin" },
         },
+        ru: {
+          placeholder: { tts: "Преобразование текста в речь" },
+          label: {
+            leave: "Покинуть",
+            ungroup: "Разгруппировать",
+            group_all: "Сгруппировать все",
+            send: "Отправить",
+            master: "Мастер",
+          },
+          state: { idle: "Бездействие", unavailable: "Недоступен" },
+          title: { speaker_management: "Управление группой" },
+        },
+        es: {
+          placeholder: { tts: "Texto a voz" },
+          label: {
+            leave: "Salir",
+            ungroup: "Desagrupar",
+            group_all: "Agrupar todos",
+            send: "Enviar",
+            master: "Maestro",
+          },
+          state: { idle: "Inactivo", unavailable: "No disponible" },
+          title: { speaker_management: "Gestión de grupo" },
+        },
       };
-      const Lt = (t, e) =>
+      const Bt = (t, e) =>
         e.split(".").reduce((t, e) => (t && t[e]) || null, t);
-      var zt = (t, e, r, n = "unknown") => {
+      var qt = (t, e, r, n = "unknown") => {
         const i = t.selectedLanguage || t.language;
         return (
-          (Nt[i] && Lt(Nt[i], e)) ||
+          (Ut[i] && Bt(Ut[i], e)) ||
           (t.resources[i] && t.resources[i][r]) ||
-          Lt(Nt.en, e) ||
+          Bt(Ut.en, e) ||
           n
         );
       };
@@ -6747,7 +6890,7 @@ found at http://polymer.github.io/PATENTS.txt
           ${this.item.name}
           ${
             this.master
-              ? D`<span class="master">(${zt(
+              ? D`<span class="master">(${qt(
                   this.hass,
                   "label.master"
                 )})</span>`
@@ -6874,7 +7017,7 @@ found at http://polymer.github.io/PATENTS.txt
               { id: n } = this.player;
             return D`
       <div class='mmp-group-list'>
-        <span class='mmp-group-list__title'>${zt(
+        <span class='mmp-group-list__title'>${qt(
           this.hass,
           "title.speaker_management"
         )}</span>
@@ -6882,14 +7025,14 @@ found at http://polymer.github.io/PATENTS.txt
         <div class='mmp-group-list__buttons'>
           <mmp-button raised ?disabled=${!r}
             @click=${(t) => this.player.handleGroupChange(t, n, !1)}>
-            <span>${zt(this.hass, "label.leave")}</span>
+            <span>${qt(this.hass, "label.leave")}</span>
           </mmp-button>
           ${
             r && e
               ? D`
             <mmp-button raised
               @click=${(e) => this.player.handleGroupChange(e, t, !1)}>
-              <span>${zt(this.hass, "label.ungroup")}</span>
+              <span>${qt(this.hass, "label.ungroup")}</span>
             </mmp-button>
           `
               : D``
@@ -6903,7 +7046,7 @@ found at http://polymer.github.io/PATENTS.txt
               )}>
             <span><svg style="width:24px;height:24px; vertical-align:middle;" viewBox="0 0 24 24">
                     <path fill="#fff" d="M19,19H5V5H15V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z" />
-                  </svg> ${zt(this.hass, "label.group_all")}</span>
+                  </svg> ${qt(this.hass, "label.group_all")}</span>
           </mmp-button>
         </div>
       </div>
@@ -6983,7 +7126,8 @@ found at http://polymer.github.io/PATENTS.txt
           <ha-icon-button
             class='mmp-dropdown__button icon'
             slot='dropdown-trigger'
-            .icon=${ut}>
+            .icon=${ht}>
+            <ha-icon .icon=${ht}></ha-icon>
           </ha-icon-button>
         `
             : D`
@@ -6992,7 +7136,7 @@ found at http://polymer.github.io/PATENTS.txt
               <span class='mmp-dropdown__label ellipsis'>
                 ${this.selected || this.label}
               </span>
-              <ha-icon class='mmp-dropdown__icon' .icon=${ut}></ha-icon>
+              <ha-icon class='mmp-dropdown__icon' .icon=${ht}></ha-icon>
             </div>
           </mmp-button>
         `
@@ -7017,7 +7161,7 @@ found at http://polymer.github.io/PATENTS.txt
           }
           static get styles() {
             return [
-              Mt,
+              Nt,
               Y`
         :host {
           display: block;
@@ -7183,7 +7327,7 @@ found at http://polymer.github.io/PATENTS.txt
           }
           static get styles() {
             return [
-              Mt,
+              Nt,
               Y`
         .mmp-shortcuts__buttons {
           box-sizing: border-box;
@@ -7252,7 +7396,7 @@ found at http://polymer.github.io/PATENTS.txt
             return { hass: {}, config: {}, player: {} };
           }
           get label() {
-            return zt(
+            return qt(
               this.hass,
               "placeholder.tts",
               "ui.card.media_player.text_to_speak",
@@ -7267,14 +7411,16 @@ found at http://polymer.github.io/PATENTS.txt
           }
           render() {
             return D`
-      <paper-input id="tts-input" class='mmp-tts__input'
+      <paper-input
+        id="tts-input"
+        class="mmp-tts__input"
         no-label-float
         placeholder=${this.label}...
         @keypress=${this.handleTtsKeyPres}
         @click=${(t) => t.stopPropagation()}>
       </paper-input>
-      <mmp-button class='mmp-tts__button' @click=${this.handleTts}>
-        <span>${zt(this.hass, "label.send")}</span>
+      <mmp-button class="mmp-tts__button" @click=${this.handleTts}>
+        <span>${qt(this.hass, "label.send")}</span>
       </mmp-button>
     `;
           }
@@ -7296,12 +7442,13 @@ found at http://polymer.github.io/PATENTS.txt
                 ...("group" === e.entity_id && {
                   entity_id: this.player.group,
                 }),
+                ...e.data,
               };
             e.language && (n.language = e.language),
               "alexa" === e.platform
                 ? this.hass.callService("notify", "alexa_media", {
                     message: r,
-                    data: { type: e.type || "tts" },
+                    data: { type: e.type || "tts", ...e.data },
                     target: n.entity_id,
                   })
                 : "sonos" === e.platform
@@ -7309,16 +7456,18 @@ found at http://polymer.github.io/PATENTS.txt
                     sonos_entity: n.entity_id,
                     volume: e.volume || 0.5,
                     message: r,
+                    ...e.data,
                   })
                 : "webos" === e.platform
                 ? this.hass.callService(
                     "notify",
                     n.entity_id.split(".").slice(-1)[0],
-                    { message: r }
+                    { message: r, ...e.data }
                   )
                 : "ga" === e.platform
                 ? this.hass.callService("notify", "ga_broadcast", {
                     message: r,
+                    ...e.data,
                   })
                 : "ais" === e.platform
                 ? this.hass.callService("ais_exo_player", "play_text_or_url", {
@@ -7376,10 +7525,10 @@ found at http://polymer.github.io/PATENTS.txt
           }
         }
       );
-      var Dt = (t) => {
-        let e = parseInt(t % 60, 10),
-          r = parseInt((t / 60) % 60, 10),
-          n = parseInt((t / 3600) % 24, 10);
+      var Ht = (t) => {
+        let e = Math.abs(parseInt(t % 60, 10)),
+          r = Math.abs(parseInt((t / 60) % 60, 10)),
+          n = Math.abs(parseInt((t / 3600) % 24, 10));
         return (
           (n = n < 10 ? "0" + n : n),
           (r = r < 10 ? "0" + r : r),
@@ -7396,6 +7545,7 @@ found at http://polymer.github.io/PATENTS.txt
             return {
               _player: {},
               showTime: Boolean,
+              showRemainingTime: Boolean,
               progress: Number,
               duration: Number,
               tracker: {},
@@ -7442,8 +7592,19 @@ found at http://polymer.github.io/PATENTS.txt
           this.showTime
             ? D`
           <div class='mmp-progress__duration'>
-            <span>${Dt(this.seekProgress || this.progress)}</span>
-            <span>${Dt(this.duration)}</span>
+            <span>${Ht(this.seekProgress || this.progress)}</span>
+            <div>
+              ${
+                this.showTime
+                  ? D`
+                <span class='mmp-progress__duration__remaining'>
+                  -${Ht(this.duration - (this.seekProgress || this.progress))} |
+                </span>
+              `
+                  : ""
+              }
+              <span>${Ht(this.duration)}</span>
+            </div>
           </div>
         `
             : ""
@@ -7517,6 +7678,9 @@ found at http://polymer.github.io/PATENTS.txt
         font-size: .8em;
         padding: 0 6px;
         z-index: 2
+      }
+      .mmp-progress__duration__remaining {
+        opacity: .5;
       }
       paper-progress {
         height: var(--mmp-progress-height);
@@ -7641,6 +7805,9 @@ found at http://polymer.github.io/PATENTS.txt
           get showShuffle() {
             return !this.config.hide.shuffle && this.player.supportsShuffle;
           }
+          get showRepeat() {
+            return !this.config.hide.repeat && this.player.supportsRepeat;
+          }
           get maxVol() {
             return this.config.max_volume || 100;
           }
@@ -7650,24 +7817,15 @@ found at http://polymer.github.io/PATENTS.txt
           get vol() {
             return Math.round(100 * this.player.vol);
           }
+          get jumpAmount() {
+            return this.config.jump_amount || 10;
+          }
           render() {
             const { hide: t } = this.config;
             return D`
       ${t.volume ? D`` : this.renderVolControls(this.player.muted)}
-      ${
-        this.showShuffle
-          ? D`
-        <div class='flex mmp-media-controls__shuffle'>
-          <ha-icon-button
-            class='shuffle-button'
-            @click=${(t) => this.player.toggleShuffle(t)}
-            .icon=${vt}
-            ?color=${this.player.shuffle}>
-          </ha-icon-button>
-        </div>
-      `
-          : D``
-      }
+      ${this.renderShuffleButton()}
+      ${this.renderRepeatButton()}
       ${
         t.controls
           ? D``
@@ -7680,23 +7838,57 @@ found at http://polymer.github.io/PATENTS.txt
               ? D`
             <ha-icon-button
               @click=${(t) => this.player.prev(t)}
-              .icon=${gt}>
+              .icon=${vt}>
+             <ha-icon .icon=${vt}></ha-icon>
             </ha-icon-button>`
               : ""
           }
+          ${this.renderJumpBackwardButton()}
           ${this.renderPlayButtons()}
+          ${this.renderJumpForwardButton()}
           ${
             !t.next && this.player.supportsNext
               ? D`
             <ha-icon-button
               @click=${(t) => this.player.next(t)}
-              .icon=${dt}>
+              .icon=${ft}>
+             <ha-icon .icon=${ft}></ha-icon>
             </ha-icon-button>`
               : ""
           }
         </div>
       `
       }
+    `;
+          }
+          renderShuffleButton() {
+            return this.showShuffle
+              ? D`
+      <div class='flex mmp-media-controls__shuffle'>
+        <ha-icon-button
+          class='shuffle-button'
+          @click=${(t) => this.player.toggleShuffle(t)}
+          .icon=${_t}
+          ?color=${this.player.shuffle}>
+          <ha-icon .icon=${_t}></ha-icon>
+        </ha-icon-button>
+      </div>
+    `
+              : D``;
+          }
+          renderRepeatButton() {
+            if (!this.showRepeat) return D``;
+            const t = [lt.ONE, lt.ALL].includes(this.player.repeat);
+            return D`
+      <div class='flex mmp-media-controls__repeat'>
+        <ha-icon-button
+          class='repeat-button'
+          @click=${(t) => this.player.toggleRepeat(t)}
+          .icon=${yt[this.player.repeat]}
+          ?color=${t}>
+          <ha-icon .icon=${yt[this.player.repeat]}></ha-icon>
+        </ha-icon-button>
+      </div>
     `;
           }
           renderVolControls(t) {
@@ -7735,11 +7927,13 @@ found at http://polymer.github.io/PATENTS.txt
       ${this.renderMuteButton(t)}
       <ha-icon-button
         @click=${(t) => this.player.volumeDown(t)}
-        .icon=${yt}>
+        .icon=${wt}>
+          <ha-icon .icon=${wt}></ha-icon>
       </ha-icon-button>
       <ha-icon-button
         @click=${(t) => this.player.volumeUp(t)}
-        .icon=${bt}>
+        .icon=${xt}>
+          <ha-icon .icon=${xt}></ha-icon>
       </ha-icon-button>
     `;
           }
@@ -7756,28 +7950,32 @@ found at http://polymer.github.io/PATENTS.txt
                   return D`
           <ha-icon-button
             @click=${(t) => this.player.playPause(t)}
-            .icon=${ft[this.player.isPlaying]}>
+            .icon=${mt[this.player.isPlaying]}>
+            <ha-icon .icon=${mt[this.player.isPlaying]}></ha-icon>
           </ha-icon-button>
         `;
                 case "stop":
                   return D`
           <ha-icon-button
             @click=${(t) => this.player.stop(t)}
-            .icon=${_t.true}>
+            .icon=${bt.true}>
+            <ha-icon .icon=${bt.true}></ha-icon>
           </ha-icon-button>
         `;
                 case "play_stop":
                   return D`
           <ha-icon-button
             @click=${(t) => this.player.playStop(t)}
-            .icon=${_t[this.player.isPlaying]}>
+            .icon=${bt[this.player.isPlaying]}>
+            <ha-icon .icon=${bt[this.player.isPlaying]}></ha-icon>
           </ha-icon-button>
         `;
                 case "next":
                   return D`
           <ha-icon-button
             @click=${(t) => this.player.next(t)}
-            .icon=${dt}>
+            .icon=${ft}>
+            <ha-icon .icon=${ft}></ha-icon>
           </ha-icon-button>
         `;
                 default:
@@ -7785,7 +7983,8 @@ found at http://polymer.github.io/PATENTS.txt
                   return D`
           <ha-icon-button
             @click=${(t) => this.player.toggleMute(t)}
-            .icon=${pt[t]}>
+            .icon=${dt[t]}>
+            <ha-icon .icon=${dt[t]}></ha-icon>
           </ha-icon-button>
         `;
               }
@@ -7799,7 +7998,8 @@ found at http://polymer.github.io/PATENTS.txt
           : D`
         <ha-icon-button
           @click=${(t) => this.player.playPause(t)}
-          .icon=${ft[this.player.isPlaying]}>
+          .icon=${mt[this.player.isPlaying]}>
+            <ha-icon .icon=${mt[this.player.isPlaying]}></ha-icon>
         </ha-icon-button>
       `
       }
@@ -7809,10 +8009,35 @@ found at http://polymer.github.io/PATENTS.txt
           : D`
         <ha-icon-button
           @click=${(t) => this.handleStop(t)}
-          .icon=${t.play_pause ? _t[this.player.isPlaying] : _t.true}>
+          .icon=${t.play_pause ? bt[this.player.isPlaying] : bt.true}>
+            <ha-icon .icon=${
+              t.play_pause ? bt[this.player.isPlaying] : bt.true
+            }></ha-icon>
         </ha-icon-button>
       `
       }
+    `;
+          }
+          renderJumpForwardButton() {
+            return this.config.hide.jump || !this.player.hasProgress
+              ? D``
+              : D`
+      <ha-icon-button
+        @click=${(t) => this.player.jump(t, this.jumpAmount)}
+        .icon=${kt}>
+        <ha-icon .icon=${kt}></ha-icon>
+      </ha-icon-button>
+    `;
+          }
+          renderJumpBackwardButton() {
+            return this.config.hide.jump || !this.player.hasProgress
+              ? D``
+              : D`
+      <ha-icon-button
+        @click=${(t) => this.player.jump(t, -this.jumpAmount)}
+        .icon=${St}>
+        <ha-icon .icon=${St}></ha-icon>
+      </ha-icon-button>
     `;
           }
           handleStop(t) {
@@ -7826,7 +8051,7 @@ found at http://polymer.github.io/PATENTS.txt
           }
           static get styles() {
             return [
-              Mt,
+              Nt,
               Y`
         :host {
           display: flex;
@@ -7865,16 +8090,12 @@ found at http://polymer.github.io/PATENTS.txt
           max-width: none;
           justify-content: space-between;
         }
-        .mmp-media-controls__shuffle {
+        .mmp-media-controls__shuffle,
+        .mmp-media-controls__repeat {
           flex: 3;
           flex-shrink: 200;
           justify-content: center;
-        }
-        .mmp-media-controls__shuffle ha-icon-button {
-          height: 36px;
-          width: 36px;
-          min-width: 36px;
-          margin: 2px;
+          --mdc-icon-size: 20px;
         }
       `,
             ];
@@ -7894,7 +8115,7 @@ found at http://polymer.github.io/PATENTS.txt
             };
           }
           get icon() {
-            return this.config.speaker_group.icon || ht;
+            return this.config.speaker_group.icon || pt;
           }
           get showGroupButton() {
             return this.config.speaker_group.entities;
@@ -7936,7 +8157,7 @@ found at http://polymer.github.io/PATENTS.txt
             return this.player.isUnavailable && this.showLabel
               ? D`
         <span class='label ellipsis'>
-          ${zt(this.hass, "state.unavailable", "state.default.unavailable")}
+          ${qt(this.hass, "state.unavailable", "state.default.unavailable")}
         </span>
       `
               : D`
@@ -7979,6 +8200,7 @@ found at http://polymer.github.io/PATENTS.txt
           ?inactive=${!this.player.isGrouped}
           ?color=${this.groupVisible}
           @click=${this.handleGroupClick}>
+          <ha-icon .icon=${this.icon}></ha-icon>
         </ha-icon-button>`
           : ""
       }
@@ -7986,9 +8208,10 @@ found at http://polymer.github.io/PATENTS.txt
         this.showPowerButton
           ? D`
         <ha-icon-button class='power-button'
-          .icon=${mt}
+          .icon=${gt}
           @click=${(t) => this.player.toggle(t)}
           ?color=${this.powerColor}>
+          <ha-icon .icon=${gt}></ha-icon>
         </ha-icon-button>`
           : ""
       }
@@ -8002,20 +8225,21 @@ found at http://polymer.github.io/PATENTS.txt
             return this.player.isPaused
               ? D`
         <ha-icon-button
-          .icon=${ft[this.player.isPlaying]}
+          .icon=${mt[this.player.isPlaying]}
           @click=${(t) => this.player.playPause(t)}>
+          <ha-icon .icon=${mt[this.player.isPlaying]}></ha-icon>
         </ha-icon-button>`
               : this.showLabel
               ? D`
         <span class='label ellipsis'>
-          ${zt(this.hass, "state.idle", "state.media_player.idle")}
+          ${qt(this.hass, "state.idle", "state.media_player.idle")}
         </span>
       `
               : D``;
           }
           static get styles() {
             return [
-              Mt,
+              Nt,
               Y`
         :host {
           display: flex;
@@ -8041,22 +8265,22 @@ found at http://polymer.github.io/PATENTS.txt
           }
         }
       );
-      const Rt = ["cover", "full-cover", "material", "cover-fit", "none"],
-        Ft = ["icon", "full"],
-        Ut = ["icon", "full"],
-        Bt = ["short", "scroll"],
-        qt = ["play_pause", "stop", "play_stop", "next"];
+      const Gt = ["cover", "full-cover", "material", "cover-fit", "none"],
+        Wt = ["icon", "full"],
+        Zt = ["icon", "full"],
+        Jt = ["short", "scroll"],
+        Xt = ["play_pause", "stop", "play_stop", "next"];
       customElements.define(
         "mini-media-player-editor",
         class extends et {
           static get styles() {
-            return At;
+            return Vt;
           }
           static get properties() {
             return { hass: {}, _config: {} };
           }
           setConfig(t) {
-            this._config = Object.assign({}, Ot, t);
+            this._config = Object.assign({}, Et, t);
           }
           get getMediaPlayerEntities() {
             return Object.keys(this.hass.states).filter(
@@ -8146,9 +8370,9 @@ found at http://polymer.github.io/PATENTS.txt
               >
               <paper-listbox
                 slot="dropdown-content"
-                .selected=${Object.values(Rt).indexOf(this._config.artwork)}
+                .selected=${Object.values(Gt).indexOf(this._config.artwork)}
               >
-                ${Object.values(Rt).map(
+                ${Object.values(Gt).map(
                   (t) => D` <paper-item>${t}</paper-item> `
                 )}
               </paper-listbox>
@@ -8162,9 +8386,9 @@ found at http://polymer.github.io/PATENTS.txt
               >
               <paper-listbox
                 slot="dropdown-content"
-                .selected=${Object.values(Ft).indexOf(this._config.source)}
+                .selected=${Object.values(Wt).indexOf(this._config.source)}
               >
-                ${Object.values(Ft).map(
+                ${Object.values(Wt).map(
                   (t) => D` <paper-item>${t}</paper-item> `
                 )}
               </paper-listbox>
@@ -8178,9 +8402,9 @@ found at http://polymer.github.io/PATENTS.txt
               >
               <paper-listbox
                 slot="dropdown-content"
-                .selected=${Object.values(Ut).indexOf(this._config.sound_mode)}
+                .selected=${Object.values(Zt).indexOf(this._config.sound_mode)}
               >
-                ${Object.values(Ut).map(
+                ${Object.values(Zt).map(
                   (t) => D` <paper-item>${t}</paper-item> `
                 )}
               </paper-listbox>
@@ -8196,9 +8420,9 @@ found at http://polymer.github.io/PATENTS.txt
               >
               <paper-listbox
                 slot="dropdown-content"
-                .selected=${Object.values(Bt).indexOf(this._config.info)}
+                .selected=${Object.values(Jt).indexOf(this._config.info)}
               >
-                ${Object.values(Bt).map(
+                ${Object.values(Jt).map(
                   (t) => D` <paper-item>${t}</paper-item> `
                 )}
               </paper-listbox>
@@ -8212,11 +8436,11 @@ found at http://polymer.github.io/PATENTS.txt
               >
               <paper-listbox
                 slot="dropdown-content"
-                .selected=${Object.values(qt).indexOf(
+                .selected=${Object.values(Xt).indexOf(
                   this._config.replace_mute
                 )}
               >
-                ${Object.values(qt).map(
+                ${Object.values(Xt).map(
                   (t) => D` <paper-item>${t}</paper-item> `
                 )}
               </paper-listbox>
@@ -8247,12 +8471,6 @@ found at http://polymer.github.io/PATENTS.txt
           </div>
 
           <div class="side-by-side">
-            <paper-input
-              label="Idle View"
-              .value="${this._config.idle_view}"
-              .configValue="${"idle_view"}"
-              @value-changed=${this.valueChanged}
-            ></paper-input>
 
             <paper-input
               label="Background"
@@ -8324,7 +8542,7 @@ found at http://polymer.github.io/PATENTS.txt
               entity: {},
               player: {},
               groupMgmtEntity: {},
-              groupMgmtPlayer: Pt,
+              groupMgmtPlayer: It,
               _overflow: Boolean,
               break: Boolean,
               initial: Boolean,
@@ -8340,7 +8558,7 @@ found at http://polymer.github.io/PATENTS.txt
             };
           }
           static get styles() {
-            return [Mt, At];
+            return [Nt, Vt];
           }
           set hass(t) {
             if (!t) return;
@@ -8350,7 +8568,7 @@ found at http://polymer.github.io/PATENTS.txt
               e &&
                 this.entity !== e &&
                 ((this.entity = e),
-                (this.player = new Pt(t, this.config, e)),
+                (this.player = new It(t, this.config, e)),
                 (this.rtl = this.computeRTL(t)),
                 (this.idle = this.player.idle),
                 this.player.trackIdle && this.updateIdleStatus()),
@@ -8362,7 +8580,7 @@ found at http://polymer.github.io/PATENTS.txt
               e &&
                 this.groupMgmtPlayer !== e &&
                 ((this.groupMgmtEntity = e),
-                (this.groupMgmtPlayer = new Pt(t, this.config, e)));
+                (this.groupMgmtPlayer = new It(t, this.config, e)));
             }
           }
           get hass() {
@@ -8381,7 +8599,7 @@ found at http://polymer.github.io/PATENTS.txt
             return window.document.createElement("mini-media-player-editor");
           }
           setConfig(t) {
-            this.config = jt(t);
+            this.config = Mt(t);
           }
           shouldUpdate(t) {
             return (
@@ -8394,7 +8612,7 @@ found at http://polymer.github.io/PATENTS.txt
               t.has("player") &&
                 "material" === this.config.artwork &&
                 this.setColors(),
-              wt.some((e) => t.has(e)) && this.player
+              $t.some((e) => t.has(e)) && this.player
             );
           }
           firstUpdated() {
@@ -8498,7 +8716,8 @@ found at http://polymer.github.io/PATENTS.txt
               ? D`
             <mmp-progress
               .player=${this.player}
-              .showTime=${!this.config.hide.runtime}>
+              .showTime=${!this.config.hide.runtime}
+              .showRemainingTime=${!this.config.hide.runtime_remaining}>
             </mmp-progress>
           `
               : ""
@@ -8567,35 +8786,7 @@ found at http://polymer.github.io/PATENTS.txt
           }
           handlePopup(t) {
             t.stopPropagation(),
-              ((t, e, r, n, i) => {
-                let o;
-                switch (n.action) {
-                  case "more-info":
-                    (o = new Event("hass-more-info", { composed: !0 })),
-                      (o.detail = { entityId: n.entity || i }),
-                      t.dispatchEvent(o);
-                    break;
-                  case "navigate":
-                    if (!n.navigation_path) return;
-                    window.history.pushState(null, "", n.navigation_path),
-                      (o = new Event("location-changed", { composed: !0 })),
-                      (o.detail = { replace: !1 }),
-                      window.dispatchEvent(o);
-                    break;
-                  case "call-service": {
-                    if (!n.service) return;
-                    const [t, r] = n.service.split(".", 2),
-                      i = { ...n.service_data };
-                    e.callService(t, r, i);
-                    break;
-                  }
-                  case "url":
-                    if (!n.url) return;
-                    n.new_tab
-                      ? window.open(n.url, "_blank")
-                      : (window.location.href = n.url);
-                }
-              })(
+              Lt(
                 this,
                 this._hass,
                 this.config,
@@ -8692,7 +8883,7 @@ found at http://polymer.github.io/PATENTS.txt
             }
           }
           computeIcon() {
-            return this.config.icon ? this.player.icon : lt;
+            return this.config.icon ? this.config.icon : this.player.icon || ut;
           }
           measureCard() {
             const t = this.shadowRoot.querySelector("ha-card");
@@ -8744,9 +8935,9 @@ found at http://polymer.github.io/PATENTS.txt
                   (this.foregroundColor = ""), void (this.backgroundColor = "")
                 );
               try {
-                [this.foregroundColor, this.backgroundColor] = await ((t = this
-                  .player.picture),
-                new Et(t, { colorCount: 16, generator: Vt }).getPalette());
+                [this.foregroundColor, this.backgroundColor] = await ((t =
+                  this.player.picture),
+                new zt(t, { colorCount: 16, generator: Ft }).getPalette());
               } catch (t) {
                 console.error("Error getting Image Colors", t),
                   (this.foregroundColor = ""),
