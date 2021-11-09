@@ -23,7 +23,8 @@ import "../components/ha-radio";
 import "../components/ha-formfield";
 import type { HaRadio } from "../components/ha-radio";
 
-const amsterdam: [number, number] = [52.3731339, 4.8903147];
+// AIS
+const amsterdam: [number, number] = [52.0693, 19.4803];
 const mql = matchMedia("(prefers-color-scheme: dark)");
 
 @customElement("onboarding-core-config")
