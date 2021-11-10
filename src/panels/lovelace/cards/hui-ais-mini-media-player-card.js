@@ -7262,7 +7262,10 @@ found at http://polymer.github.io/PATENTS.txt
             return this.shortcuts.list;
           }
           get show() {
-            return !this.shortcuts.hide_when_off || this.player.active;
+            return (
+              "media_player.wbudowany_glosnik" === this.player.id &&
+              (!this.shortcuts.hide_when_off || this.player.active)
+            );
           }
           get active() {
             return this.player.getAttribute(this.shortcuts.attribute);
@@ -8953,7 +8956,7 @@ found at http://polymer.github.io/PATENTS.txt
           type: "hui-ais-mini-media-player-card",
           name: "AIS Media Player",
           preview: !1,
-          description: "AAIS Media Player Card",
+          description: "AIS Media Player Card",
         });
     },
   ]);

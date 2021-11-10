@@ -4197,7 +4197,6 @@
             },
             "page-authorize": {
                 "abort_intro": "Logowanie przerwane",
-                "store_token": "Zapamiętaj mnie na tym urządzeniu",
                 "authorizing_client": "Uzyskujesz dostęp do instancji Asystenta domowego w lokalizacji {clientId}.",
                 "form": {
                     "error": "Błąd: {error}",
@@ -4365,7 +4364,7 @@
                 "logging_in_to_with": "Logowanie do **{locationName}** przy użyciu **{authProviderName}**.",
                 "logging_in_with": "Logowanie za pomocą **{authProviderName}**.",
                 "pick_auth_provider": "Lub zaloguj się za pomocą",
-                "store_token": "Nie wylogowuj mnie"
+                "store_token": "Zapamiętaj mnie na tym urządzeniu"
             },
             "page-demo": {
                 "cards": {
