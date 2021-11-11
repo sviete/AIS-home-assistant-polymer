@@ -610,18 +610,28 @@ export const aisAudioLovelace: LovelaceConfig = {
             {
               cards: [
                 {
+                  type: "ais-auto-entities",
                   card: {
-                    show_header_toggle: false,
-                    type: "entities",
+                    type: "vertical-stack",
                   },
+                  card_param: "cards",
                   filter: {
+                    exclude: [
+                      {
+                        entity_id: "media_player.wbudowany_glosnik",
+                      },
+                    ],
                     include: [
                       {
                         domain: "media_player",
+                        options: {
+                          type: "custom:hui-ais-mini-media-player-card",
+                          artwork: "cover-fit",
+                          source: "full",
+                        },
                       },
                     ],
                   },
-                  type: "ais-auto-entities",
                 },
               ],
               icon: "mdi:speaker-multiple",
