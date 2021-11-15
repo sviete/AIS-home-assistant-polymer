@@ -68,6 +68,7 @@ class PanelDeveloperTools extends LitElement {
               )}
             </paper-tab>
             <paper-tab page-name="console"> Terminal </paper-tab>
+            <paper-tab page-name="webcmd"> Manager </paper-tab>
           </ha-tabs>
         </app-header>
         <developer-tools-router

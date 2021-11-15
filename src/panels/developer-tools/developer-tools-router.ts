@@ -45,6 +45,10 @@ class DeveloperToolsRouter extends HassRouterPage {
         tag: "developer-tools-console",
         load: () => import("./console/developer-tools-console"),
       },
+      webcmd: {
+        tag: "developer-tools-webcmd",
+        load: () => import("./webcmd/developer-tools-webcmd"),
+      },
     },
   };
 
