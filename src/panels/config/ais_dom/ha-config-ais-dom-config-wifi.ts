@@ -4,11 +4,10 @@ import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-dashboard";
-import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
-import { fireEvent } from "../../../common/dom/fire_event";
-// import { processConfigEntities } from "../../lovelace/common/process-config-entities";
 import { css, html, CSSResultArray, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
+import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
+import { fireEvent } from "../../../common/dom/fire_event";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
 
@@ -44,14 +43,13 @@ class HaConfigAisDomConfigWifi extends LitElement {
                   <div class="aisInfoRow">Lokalna nazwa hosta</div>
                   <div class="aisInfoRow">
                     <mwc-button
-                      >${this.hass.states["sensor.local_host_name"]
-                        .state}</mwc-button
-                    >
-                    <ha-icon-button
-                      class="user-button"
-                      icon="hass:cog"
-                      @click=${this.createFlowHostName}
-                    ></ha-icon-button>
+                      >${this.hass.states["sensor.local_host_name"].state}
+                      <ha-icon
+                        class="user-button"
+                        icon="hass:cog"
+                        @click=${this.createFlowHostName}
+                      ></ha-icon>
+                    </mwc-button>
                   </div>
                 </div>
                 <div style="text-align: center;" @click=${this.showLocalIpInfo}>
@@ -78,16 +76,14 @@ class HaConfigAisDomConfigWifi extends LitElement {
                 </div>
               </div>
               <div class="card-actions">
-                <div>
-                  <ha-icon-button
-                    class="user-button"
-                    icon="hass:wifi"
-                    @click=${this.showWiFiGroup}
-                  ></ha-icon-button
-                  ><mwc-button @click=${this.createFlowWifi}
-                    >Konfigurator połączenia z siecą WiFi</mwc-button
-                  >
-                </div>
+                <ha-icon
+                  class="user-button"
+                  icon="hass:wifi"
+                  @click=${this.showWiFiGroup}
+                ></ha-icon
+                ><mwc-button @click=${this.createFlowWifi}
+                  >Konfigurator połączenia z siecą WiFi</mwc-button
+                >
               </div>
             </ha-card>
           </ha-config-section>
@@ -119,8 +115,8 @@ class HaConfigAisDomConfigWifi extends LitElement {
           @apply --layout-center-center;
           height: 70px;
         }
-        ha-icon-button {
-          vertical-align: middle;
+        div.card-actions {
+          text-align: center;
         }
       `,
     ];
