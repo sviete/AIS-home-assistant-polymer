@@ -3,6 +3,16 @@ import "../../../components/ha-code-editor";
 import "../../../components/ha-expansion-panel";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
+import {
+  css,
+  CSSResultGroup,
+  html,
+  LitElement,
+  PropertyValues,
+  TemplateResult,
+} from "lit";
+import { customElement, property } from "lit/decorators";
+import { dump, load } from "js-yaml";
 import { HomeAssistant } from "../../../types";
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
@@ -14,20 +24,9 @@ import "@polymer/paper-item/paper-item";
 import "@polymer/paper-listbox/paper-listbox";
 import "../../../components/buttons/ha-call-service-button";
 import "../../../components/ha-icon";
-import "../../../components/ha-icon-button";
 import "../../../components/ha-circular-progress";
 import { handleFetchPromise } from "../../../util/hass-call-api";
-import {
-  css,
-  CSSResultGroup,
-  html,
-  LitElement,
-  PropertyValues,
-  TemplateResult,
-} from "lit";
-import { customElement, property } from "lit/decorators";
 import { haStyle } from "../../../resources/styles";
-import { dump, load } from "js-yaml";
 
 export interface aisSaveDbSettingsResponse {
   info: string;
@@ -229,7 +228,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
     }
     return html`
       <div id="card-icon" style="animation: pulse 6s infinite;">
-        <ha-icon-button icon=${dbIcon}></ha-icon-button>
+        <ha-icon icon=${dbIcon}></ha-icon>
       </div>
     `;
   }
@@ -314,7 +313,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
                     Wybór silnika bazy danych:
                     <br />
-                    <ha-icon-button icon="mdi:database"></ha-icon-button>
+                    <ha-icon icon="mdi:database"></ha-icon>
                     <ha-paper-dropdown-menu
                       label-float="Silnik bazy danych"
                       dynamic-align=""
@@ -390,9 +389,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                     ? html`
                         <div class="card-content">
                           Wybór dysku do zapisu bazy danych: <br />
-                          <ha-icon-button
-                            icon="mdi:usb-flash-drive"
-                          ></ha-icon-button>
+                          <ha-icon icon="mdi:usb-flash-drive"></ha-icon>
                           <ha-paper-dropdown-menu
                             label-float="Wybrany dysk"
                             dynamic-align=""
@@ -569,10 +566,10 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                 this.hass.states["sensor.ais_logs_settings_info"]
               )}
             >
-              <ha-icon-button icon="mdi:content-save-edit"></ha-icon-button>
+              <ha-icon icon="mdi:content-save-edit"></ha-icon>
             </div>
             <div class="card-content">
-              <ha-icon-button icon="mdi:bug-check"></ha-icon-button>
+              <ha-icon icon="mdi:bug-check"></ha-icon>
               <ha-paper-dropdown-menu
                 label-float="Poziom logowania"
                 dynamic-align=""
@@ -595,7 +592,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
               Jeśli chcesz zapisywać logi trwale do pliku, wybierz dysk wymienny
               (USB, SD card) na którym będą zapisywane logi: <br />
-              <ha-icon-button icon="mdi:usb-flash-drive"></ha-icon-button>
+              <ha-icon icon="mdi:usb-flash-drive"></ha-icon>
 
               <ha-paper-dropdown-menu
                 label-float="Wybrany dysk"

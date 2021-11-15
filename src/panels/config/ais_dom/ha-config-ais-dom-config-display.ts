@@ -1,132 +1,129 @@
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import { html } from "@polymer/polymer/lib/utils/html-tag";
-import { PolymerElement } from "@polymer/polymer/polymer-element";
 import "../../../layouts/hass-subpage";
-import "../../../resources/ha-style";
-
 import "./ha-config-ais-dom-dashboard";
-import LocalizeMixin from "../../../mixins/localize-mixin";
+import { property } from "lit/decorators";
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { HomeAssistant } from "../../../types";
 
 /*
  * @appliesMixin LocalizeMixin
  */
-class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
-  static get template() {
+class HaConfigAisDomControl extends LitElement {
+  @property() public hass?: HomeAssistant;
+
+  @property({ type: Boolean }) public isWide = true;
+
+  static get styles(): CSSResultGroup {
+    return css`
+      .content {
+        padding-bottom: 32px;
+      }
+      .border {
+        margin: 32px auto 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        max-width: 1040px;
+      }
+      .narrow .border {
+        max-width: 640px;
+      }
+      .center-container {
+        @apply --layout-vertical;
+        @apply --layout-center-center;
+        height: 70px;
+      }
+      .content {
+        padding-bottom: 24px;
+        direction: ltr;
+      }
+      .account-row {
+        display: flex;
+        padding: 0 16px;
+      }
+      mwc-button {
+        align-self: center;
+      }
+      .soon {
+        font-style: italic;
+        margin-top: 24px;
+        text-align: center;
+      }
+      .nowrap {
+        white-space: nowrap;
+      }
+      .wrap {
+        white-space: normal;
+      }
+      .status {
+        text-transform: capitalize;
+        padding: 16px;
+      }
+      a {
+        color: var(--primary-color);
+      }
+      .buttons {
+        position: relative;
+        width: 200px;
+        height: 200px;
+      }
+      .button {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+      }
+      .arrow {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .arrow-up {
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-bottom: 16px solid black;
+      }
+      .arrow-right {
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        border-left: 16px solid black;
+      }
+      .arrow-left {
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        border-right: 16px solid black;
+      }
+      .arrow-down {
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 16px solid black;
+      }
+      .down {
+        bottom: 0;
+        left: 75px;
+      }
+      .left {
+        top: 75px;
+        left: 0;
+      }
+      .right {
+        top: 75px;
+        right: 0;
+      }
+      .up {
+        top: 0;
+        left: 75px;
+      }
+      div.card-actions {
+        text-align: center;
+      }
+    `;
+  }
+
+  protected render(): TemplateResult {
     return html`
-      <style include="iron-flex ha-style">
-        .content {
-          padding-bottom: 32px;
-        }
-        .border {
-          margin: 32px auto 0;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-          max-width: 1040px;
-        }
-        .narrow .border {
-          max-width: 640px;
-        }
-        .center-container {
-          @apply --layout-vertical;
-          @apply --layout-center-center;
-          height: 70px;
-        }
-        .content {
-          padding-bottom: 24px;
-          direction: ltr;
-        }
-        .account-row {
-          display: flex;
-          padding: 0 16px;
-        }
-        mwc-button {
-          align-self: center;
-        }
-        .soon {
-          font-style: italic;
-          margin-top: 24px;
-          text-align: center;
-        }
-        .nowrap {
-          white-space: nowrap;
-        }
-        .wrap {
-          white-space: normal;
-        }
-        .status {
-          text-transform: capitalize;
-          padding: 16px;
-        }
-        a {
-          color: var(--primary-color);
-        }
-        .buttons {
-          position: relative;
-          width: 200px;
-          height: 200px;
-        }
-
-        .button {
-          position: absolute;
-          width: 50px;
-          height: 50px;
-        }
-
-        .arrow {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-        }
-
-        .arrow-up {
-          border-left: 12px solid transparent;
-          border-right: 12px solid transparent;
-          border-bottom: 16px solid black;
-        }
-
-        .arrow-right {
-          border-top: 12px solid transparent;
-          border-bottom: 12px solid transparent;
-          border-left: 16px solid black;
-        }
-
-        .arrow-left {
-          border-top: 12px solid transparent;
-          border-bottom: 12px solid transparent;
-          border-right: 16px solid black;
-        }
-
-        .arrow-down {
-          border-left: 12px solid transparent;
-          border-right: 12px solid transparent;
-          border-top: 16px solid black;
-        }
-
-        .down {
-          bottom: 0;
-          left: 75px;
-        }
-
-        .left {
-          top: 75px;
-          left: 0;
-        }
-
-        .right {
-          top: 75px;
-          right: 0;
-        }
-
-        .up {
-          top: 0;
-          left: 75px;
-        }
-      </style>
-
       <hass-subpage header="Konfiguracja bramki AIS dom">
-        <div class$="[[computeClasses(isWide)]]">
-          <ha-config-section is-wide="[[isWide]]">
+        <div>
+          <ha-config-section .isWide=${this.isWide}>
             <span slot="header">Ustawienia ekranu</span>
             <span slot="introduction"
               >Jeżeli obraz na monitorze lub telewizorze podłączonym do bramki
@@ -145,28 +142,28 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
                       <button
                         class="button up"
                         data-value="top"
-                        on-click="wmOverscan"
+                        @click=${this.wmOverscan}
                       >
                         <span class="arrow-up arrow"></span>
                       </button>
                       <button
                         class="button down"
                         data-value="bottom"
-                        on-click="wmOverscan"
+                        @click=${this.wmOverscan}
                       >
                         <span class="arrow-down arrow"></span>
                       </button>
                       <button
                         class="button right"
                         data-value="right"
-                        on-click="wmOverscan"
+                        @click=${this.wmOverscan}
                       >
                         <span class="arrow-right arrow"></span>
                       </button>
                       <button
                         class="button left"
                         data-value="left"
-                        on-click="wmOverscan"
+                        @click=${this.wmOverscan}
                       >
                         <span class="arrow-left arrow"></span>
                       </button>
@@ -183,7 +180,7 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
                       <button
                         class="button up"
                         data-value="-top"
-                        on-click="wmOverscan"
+                        @click=${this.wmOverscan}
                       >
                         <span class="arrow-down arrow"></span>
                       </button>
@@ -193,21 +190,21 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
                       <button
                         class="button down"
                         data-value="-bottom"
-                        on-click="wmOverscan"
+                        @click=${this.wmOverscan}
                       >
                         <span class="arrow-up arrow"></span>
                       </button>
                       <button
                         class="button right"
                         data-value="-right"
-                        on-click="wmOverscan"
+                        @click=${this.wmOverscan}
                       >
                         <span class="arrow-left arrow"></span>
                       </button>
                       <button
                         class="button left"
                         data-value="-left"
-                        on-click="wmOverscan"
+                        @click=${this.wmOverscan}
                       >
                         <span class="arrow-right arrow"></span>
                       </button>
@@ -215,16 +212,10 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
                   </div>
                 </div>
                 <div class="card-actions" style="margin-top: 30px;">
-                  <div>
-                    <ha-icon-button
-                      class="user-button"
-                      icon="mdi:restore"
-                      on-click="wmRestoreSettings"
-                    ></ha-icon-button
-                    ><mwc-button on-click="wmOverscan" data-value="reset"
-                      >Reset ekranu do ustawień domyślnych</mwc-button
-                    >
-                  </div>
+                  <mwc-button @click=${this.wmOverscan} data-value="reset">
+                    <ha-icon class="user-button" icon="mdi:restore"></ha-icon>
+                    Reset ekranu do ustawień domyślnych
+                  </mwc-button>
                 </div>
               </div>
             </ha-card>
@@ -232,18 +223,6 @@ class HaConfigAisDomControl extends LocalizeMixin(PolymerElement) {
         </div>
       </hass-subpage>
     `;
-  }
-
-  static get properties() {
-    return {
-      hass: Object,
-      isWide: Boolean,
-    };
-  }
-
-  ready() {
-    super.ready();
-    // TODO
   }
 
   wmOverscan(event) {
@@ -257,3 +236,9 @@ customElements.define(
   "ha-config-ais-dom-config-display",
   HaConfigAisDomControl
 );
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "ha-config-ais-dom-config-display": HaConfigAisDomControl;
+  }
+}
