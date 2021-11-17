@@ -16,7 +16,7 @@ class HaPanelDevWebCmd extends LitElement {
     super.firstUpdated(params);
 
     this.url =
-      window.location.protocol + "//" + window.location.hostname + ":8888";
+      window.location.protocol + "//" + window.location.hostname + ":8000";
     this.localConection = true;
     if (
       window.location.hostname.startsWith("dom-") ||
@@ -101,7 +101,7 @@ class HaPanelDevWebCmd extends LitElement {
                   target="_blank"
                   style="color: var(--accent-color);"
                   href="http://${this.hass.states["sensor.internal_ip_address"]
-                    .state}:8888"
+                    .state}:8000"
                   >http://${this.hass.states["sensor.internal_ip_address"]
                     .state}:8000</a
                 >
