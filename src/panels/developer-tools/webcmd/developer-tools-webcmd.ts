@@ -36,8 +36,9 @@ class HaPanelDevWebCmd extends LitElement {
             style="width: 100%; height: 100%; display: flex; align-items: center;"
           >
             <div style="width: 100%;">
-              <p style="text-align: center;">
-                <span class="text"><b>TWOJE POŁĄCZENIE JEST ZDALNE</b></span>
+              <p
+                style="text-align: center; display: flex; justify-content: center; flex-wrap: nowrap; align-items: center; line-height: 1; font-size: 1.5em;"
+              >
                 <span class="icon">
                   <svg
                     class="a"
@@ -50,6 +51,8 @@ class HaPanelDevWebCmd extends LitElement {
                     />
                   </svg>
                 </span>
+                <span class="text"><b>TWOJE POŁĄCZENIE JEST ZDALNE</b></span>
+                <img src="/static/icons/favicon-50x50.png" height="40" />
                 <br />
               </p>
               <svg
@@ -62,31 +65,45 @@ class HaPanelDevWebCmd extends LitElement {
                 />
               </svg>
               <p style="text-align: center;">
-                <span class="text"
-                  ><b>MANAGER PLIKÓW DOSTĘPNY JEST TYLKO LOKALNIE</b></span
+                <span
+                  class="text"
+                  style="display: flex; justify-content: center; flex-wrap: nowrap; align-items: center; line-height: 1;"
                 >
-                <span class="icon">
-                  <svg
-                    class="a"
-                    style="width:36px;height:36px"
-                    viewBox="0 0 24 24"
+                  <span class="text"
+                    ><b
+                      >APLIKACJA MANAGER PLIKÓW DOSTĘPNY JEST LOKALNIE</b
+                    ></span
                   >
-                    <path
-                      fill="currentColor"
-                      d="M15 13L11 9V12H2V14H11V17M22 12H20V21H4V16H6V19H18V11L12 5L7 10H4L12 2L22 12Z"
-                    />
-                  </svg>
+                  <span class="icon">
+                    <svg
+                      class="a"
+                      style="width:36px;height:36px"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M15 13L11 9V12H2V14H11V17M22 12H20V21H4V16H6V19H18V11L12 5L7 10H4L12 2L22 12Z"
+                      />
+                    </svg>
+                  </span>
                 </span>
+                Dokumentacja:
+                <a
+                  target="_blank"
+                  style="color: var(--accent-color);"
+                  href="https://ai-speaker.com/docs/ais_app_integration_manager"
+                  >www.ai-speaker.com/docs/manager</a
+                >
                 <br />
                 <br />
-                Adres aplikacji w lokalanej sieci:
+                Adres aplikacji w Twojej lokalanej sieci:
                 <a
                   target="_blank"
                   style="color: var(--accent-color);"
                   href="http://${this.hass.states["sensor.internal_ip_address"]
                     .state}:8888"
                   >http://${this.hass.states["sensor.internal_ip_address"]
-                    .state}:8888</a
+                    .state}:8000</a
                 >
               </p>
             </div>
