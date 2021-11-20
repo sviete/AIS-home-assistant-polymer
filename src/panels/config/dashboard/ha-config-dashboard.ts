@@ -1,3 +1,4 @@
+import "./ha-config-updates";
 import { mdiCloudLock } from "@mdi/js";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
@@ -35,7 +36,7 @@ class HaConfigDashboard extends LitElement {
     >
       <div slot="header">${this.hass.localize("ui.panel.config.header")}</div>
 
-      <div slot="introduction">
+      <div class="intro" slot="introduction">
         ${this.hass.localize("ui.panel.config.introduction")}
       </div>
 
@@ -50,6 +51,12 @@ class HaConfigDashboard extends LitElement {
           </ha-card>
         `
       )}
+      ${isComponentLoaded(this.hass, "hassio")
+        ? html`<ha-config-updates
+            .hass=${this.hass}
+            slot="introduction"
+          ></ha-config-updates>`
+        : ""}
       ${this.cloudStatus && isComponentLoaded(this.hass, "cloud")
         ? html`
             <ha-card>
@@ -144,6 +151,9 @@ class HaConfigDashboard extends LitElement {
         }
         .promo-advanced a {
           color: var(--secondary-text-color);
+        }
+        .intro {
+          margin-bottom: 24px;
         }
       `,
     ];

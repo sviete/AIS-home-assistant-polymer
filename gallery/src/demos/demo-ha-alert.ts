@@ -1,3 +1,4 @@
+import "../../../src/components/ha-logo-svg";
 import { html, css, LitElement, TemplateResult } from "lit";
 import { customElement } from "lit/decorators";
 import "../../../src/components/ha-alert";
@@ -8,8 +9,9 @@ const alerts: {
   description: string | TemplateResult;
   type: "info" | "warning" | "error" | "success";
   dismissable?: boolean;
-  action?: string;
   rtl?: boolean;
+  iconSlot?: TemplateResult;
+  actionSlot?: TemplateResult;
 }[] = [
   {
     title: "Test info alert",
@@ -73,13 +75,25 @@ const alerts: {
     title: "Error with action",
     description: "This is a test error alert with action",
     type: "error",
-    action: "restart",
+    actionSlot: html`<mwc-button slot="action" label="restart"></mwc-button>`,
   },
   {
     title: "Unsaved data",
     description: "You have unsaved data",
     type: "warning",
-    action: "save",
+    actionSlot: html`<mwc-button slot="action" label="save"></mwc-button>`,
+  },
+  {
+    title: "Slotted icon",
+    description: "Alert with slotted icon",
+    type: "warning",
+    iconSlot: html`<ha-logo-svg slot="icon"></ha-logo-svg>`,
+  },
+  {
+    title: "Slotted action",
+    description: "Alert with slotted action",
+    type: "info",
+    actionSlot: html`<mwc-button slot="action" label="action"></mwc-button>`,
   },
   {
     description: "Dismissable information (RTL)",
@@ -91,7 +105,7 @@ const alerts: {
     title: "Error with action",
     description: "This is a test error alert with action (RTL)",
     type: "error",
-    action: "restart",
+    actionSlot: html`<mwc-button slot="action" label="restart"></mwc-button>`,
     rtl: true,
   },
   {
@@ -114,10 +128,9 @@ export class DemoHaAlert extends LitElement {
                 .title=${alert.title || ""}
                 .alertType=${alert.type}
                 .dismissable=${alert.dismissable || false}
-                .actionText=${alert.action || ""}
                 .rtl=${alert.rtl || false}
               >
-                ${alert.description}
+                ${alert.iconSlot} ${alert.description} ${alert.actionSlot}
               </ha-alert>
             `
           )}
@@ -144,6 +157,15 @@ export class DemoHaAlert extends LitElement {
       }
       span {
         margin-right: 16px;
+      }
+      ha-logo-svg {
+        width: 28px;
+        height: 28px;
+        padding-right: 8px;
+        place-self: center;
+      }
+      mwc-button {
+        --mdc-theme-primary: var(--primary-text-color);
       }
     `;
   }
