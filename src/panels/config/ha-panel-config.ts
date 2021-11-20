@@ -10,7 +10,6 @@ import {
   mdiNfcVariant,
   mdiPalette,
   mdiPaletteSwatch,
-  mdiPencil,
   mdiPuzzle,
   mdiRobot,
   mdiScriptText,
@@ -185,16 +184,6 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       core: true,
     },
   ],
-  advanced: [
-    {
-      component: "customize",
-      path: "/config/customize",
-      translationKey: "ui.panel.config.customize.caption",
-      iconPath: mdiPencil,
-      core: true,
-      advancedOnly: true,
-    },
-  ],
 };
 
 export const aisConfigSections: { [name: string]: PageNavigation[] } = {
@@ -340,10 +329,8 @@ class HaPanelConfig extends HassRouterPage {
         tag: "ha-config-info",
         load: () => import("./info/ha-config-info"),
       },
-      customize: {
-        tag: "ha-config-customize",
-        load: () => import("./customize/ha-config-customize"),
-      },
+      // customize was removed in 2021.12, fallback to dashboard
+      customize: "dashboard",
       dashboard: {
         tag: "ha-config-dashboard",
         load: () => import("./dashboard/ha-config-dashboard"),
