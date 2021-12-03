@@ -1,7 +1,6 @@
 import {
   fetchConfig,
   fetchDashboards,
-  LovelaceCardConfig,
   LovelaceConfig,
   LovelacePanelConfig,
   saveConfig,
@@ -105,7 +104,6 @@ export const addEntitiesToLovelaceView = async (
       },
       path: [0],
       entities,
-      cardConfig,
     });
     return;
   }
@@ -133,7 +131,6 @@ export const addEntitiesToLovelaceView = async (
         },
         path: [viewIndex],
         entities,
-        cardConfig,
       });
     },
   });
