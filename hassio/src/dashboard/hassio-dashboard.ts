@@ -29,16 +29,20 @@ class HassioDashboard extends LitElement {
         .narrow=${this.narrow}
         .route=${this.route}
         .tabs=${supervisorTabs(this.hass)}
-        main-page
+        .mainPage=${!atLeastVersion(this.hass.config.version, 2021, 12)}
+        back-path="/config"
         supervisor
         hasFab
       >
         <span slot="header">
-          ${this.supervisor.localize("panel.dashboard")}
+          ${this.supervisor.localize(
+            atLeastVersion(this.hass.config.version, 2021, 12)
+              ? "panel.addons"
+              : "panel.dashboard"
+          )}
         </span>
         <div class="content">
-          ${this.hass.config.version.includes("dev") ||
-          !atLeastVersion(this.hass.config.version, 2021, 12)
+          ${!atLeastVersion(this.hass.config.version, 2021, 12)
             ? html`
                 <hassio-update
                   .hass=${this.hass}
