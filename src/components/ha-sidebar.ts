@@ -3,13 +3,11 @@ import {
   mdiBell,
   mdiCalendar,
   mdiCart,
-  mdiCellphoneCog,
   mdiChartBox,
   mdiClose,
   mdiCog,
   mdiFormatListBulletedType,
   mdiHammer,
-  mdiHomeAssistant,
   mdiLightningBolt,
   mdiMenu,
   mdiMenuOpen,
@@ -45,10 +43,6 @@ import {
   PersistentNotification,
   subscribeNotifications,
 } from "../data/persistent_notification";
-import {
-  ExternalConfig,
-  getExternalConfig,
-} from "../external_app/external_config";
 import { actionHandler } from "../panels/lovelace/common/directives/action-handler-directive";
 import { haStyleScrollbar } from "../resources/styles";
 import type { HomeAssistant, PanelInfo, Route } from "../types";
@@ -58,13 +52,7 @@ import "./ha-menu-button";
 import "./ha-svg-icon";
 import "./user/ha-user-badge";
 
-const SHOW_AFTER_SPACER = [
-  "config",
-  "developer-tools",
-  "hassio",
-  "aishelp",
-  "aisdocs",
-];
+const SHOW_AFTER_SPACER = ["config", "developer-tools", "aishelp", "aisdocs"];
 
 const SUPPORT_SCROLL_IF_NEEDED = "scrollIntoViewIfNeeded" in document.body;
 
@@ -77,7 +65,6 @@ const SORT_VALUE_URL_PATHS = {
   logbook: 6,
   history: 7,
   "developer-tools": 9,
-  hassio: 10,
   config: 11,
   aishelp: 12,
   aisdocs: 13,
@@ -88,7 +75,6 @@ const PANEL_ICONS = {
   config: mdiCog,
   "developer-tools": mdiHammer,
   energy: mdiLightningBolt,
-  hassio: mdiHomeAssistant,
   history: mdiChartBox,
   logbook: mdiFormatListBulletedType,
   lovelace: mdiViewDashboard,
@@ -206,8 +192,6 @@ class HaSidebar extends LitElement {
 
   @property({ type: Boolean }) public editMode = false;
 
-  @state() private _externalConfig?: ExternalConfig;
-
   @state() private _notifications?: PersistentNotification[];
 
   @state() private _renderEmptySortable = false;
@@ -254,7 +238,6 @@ class HaSidebar extends LitElement {
       changedProps.has("expanded") ||
       changedProps.has("narrow") ||
       changedProps.has("alwaysExpand") ||
-      changedProps.has("_externalConfig") ||
       changedProps.has("_notifications") ||
       changedProps.has("editMode") ||
       changedProps.has("_renderEmptySortable") ||
@@ -285,11 +268,6 @@ class HaSidebar extends LitElement {
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
 
-    if (this.hass && this.hass.auth.external) {
-      getExternalConfig(this.hass.auth.external).then((conf) => {
-        this._externalConfig = conf;
-      });
-    }
     subscribeNotifications(this.hass.connection, (notifications) => {
       this._notifications = notifications;
     });
@@ -364,10 +342,8 @@ class HaSidebar extends LitElement {
       this._hiddenPanels
     );
 
-    // Show the update-available as beeing part of configuration
-    const selectedPanel = this.route.path?.startsWith(
-      "/hassio/update-available"
-    )
+    // Show the supervisor as beeing part of configuration
+    const selectedPanel = this.route.path?.startsWith("/hassio/")
       ? "config"
       : this.hass.panelUrl;
 
@@ -387,7 +363,6 @@ class HaSidebar extends LitElement {
           : this._renderPanels(beforeSpacer)}
         ${this._renderSpacer()}
         ${this._renderPanels(afterSpacer)}
-        ${this._renderExternalConfiguration()}
       </paper-listbox>
     `;
   }
@@ -572,34 +547,6 @@ class HaSidebar extends LitElement {
     </a>`;
   }
 
-  private _renderExternalConfiguration() {
-    return html`${this._externalConfig && this._externalConfig.hasSettingsScreen
-      ? html`
-          <a
-            aria-role="option"
-            aria-label=${this.hass.localize(
-              "ui.sidebar.external_app_configuration"
-            )}
-            href="#external-app-configuration"
-            tabindex="-1"
-            @click=${this._handleExternalAppConfiguration}
-            @mouseenter=${this._itemMouseEnter}
-            @mouseleave=${this._itemMouseLeave}
-          >
-            <paper-icon-item>
-              <ha-svg-icon
-                slot="item-icon"
-                .path=${mdiCellphoneCog}
-              ></ha-svg-icon>
-              <span class="item-text">
-                ${this.hass.localize("ui.sidebar.external_app_configuration")}
-              </span>
-            </paper-icon-item>
-          </a>
-        `
-      : ""}`;
-  }
-
   private get _tooltip() {
     return this.shadowRoot!.querySelector(".tooltip")! as HTMLDivElement;
   }
@@ -769,13 +716,6 @@ class HaSidebar extends LitElement {
 
   private _handleShowNotificationDrawer() {
     fireEvent(this, "hass-show-notifications");
-  }
-
-  private _handleExternalAppConfiguration(ev: Event) {
-    ev.preventDefault();
-    this.hass.auth.external!.fireMessage({
-      type: "config_screen/show",
-    });
   }
 
   private _toggleSidebar(ev: CustomEvent) {

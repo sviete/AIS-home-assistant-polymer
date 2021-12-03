@@ -320,8 +320,6 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         }
       }
 
-      entities.forEach((entity) => entity);
-
       let filteredEntities = showReadOnly
         ? entities.concat(stateEntities)
         : entities;
@@ -486,7 +484,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
           ? undefined
           : "/config"}
         .route=${this.route}
-        .tabs=${configSections.integrations}
+        .tabs=${configSections.devices}
         .columns=${this._columns(
           this.narrow,
           this.hass.language,
