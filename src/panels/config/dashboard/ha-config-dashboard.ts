@@ -91,6 +91,14 @@ class HaConfigDashboard extends LitElement {
                         ${this.hass.localize("panel.config")}
                       </div>`
                     : ""}
+
+                  <ha-config-navigation
+                    .hass=${this.hass}
+                    .narrow=${this.narrow}
+                    .showAdvanced=${this.showAdvanced}
+                    .pages=${aisConfigSections.dashboard}
+                  ></ha-config-navigation>
+
                   ${this.cloudStatus && isComponentLoaded(this.hass, "cloud")
                     ? html`
                         <ha-config-navigation
