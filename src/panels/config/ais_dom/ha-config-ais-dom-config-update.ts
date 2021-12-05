@@ -49,7 +49,7 @@ class HaConfigAisDomConfigUpdate extends LitElement {
             Integratora</span
           >
           <ha-card header="Wersja systemu AI-Speaker">
-            <div class="card-content">
+            <div class="card-content" style="text-align:center">
               <div
                 style="color:${this._getTextColor(
                   this.hass.states["sensor.version_info"]
@@ -57,7 +57,8 @@ class HaConfigAisDomConfigUpdate extends LitElement {
               >
                 ${this.hass.states["sensor.version_info"].state}
               </div>
-              <div>
+              <img class="versionLogo" src="/static/ais_version.png" />
+              <div style="text-align:left">
                 <div style="margin-top:30px;" id="ha-switch-id">
                   <ha-switch
                     .checked=${this.hass.states["input_boolean.ais_auto_update"]
@@ -78,7 +79,7 @@ class HaConfigAisDomConfigUpdate extends LitElement {
                 </div>
               </div>
 
-              <div style="display: inline-block;">
+              <div style="display: inline-block; text-align:left;">
                 <div>
                   ${this.hass.states["input_boolean.ais_auto_update"].state ===
                   "on"
@@ -563,6 +564,9 @@ class HaConfigAisDomConfigUpdate extends LitElement {
           white-space: pre-wrap;
           direction: ltr;
           color: #f44336;
+        }
+        img.versionLogo {
+          max-width: 30%;
         }
       `,
     ];

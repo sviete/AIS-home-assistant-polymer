@@ -86,19 +86,22 @@ class HaConfigDashboard extends LitElement {
                     </ha-card>`
                   : ""}
                 <ha-card>
-                  ${this.narrow && this.supervisorUpdates?.length
-                    ? html`<div class="title">
-                        ${this.hass.localize("panel.config")}
-                      </div>`
+                  ${this.narrow
+                    ? html`<div class="title">Konfiguracja bramki AIS dom</div>`
                     : ""}
-
                   <ha-config-navigation
                     .hass=${this.hass}
                     .narrow=${this.narrow}
                     .showAdvanced=${this.showAdvanced}
                     .pages=${aisConfigSections.dashboard}
                   ></ha-config-navigation>
-
+                </ha-card>
+                <ha-card>
+                  ${this.narrow && this.supervisorUpdates?.length
+                    ? html`<div class="title">
+                        ${this.hass.localize("panel.config")}
+                      </div>`
+                    : ""}
                   ${this.cloudStatus && isComponentLoaded(this.hass, "cloud")
                     ? html`
                         <ha-config-navigation

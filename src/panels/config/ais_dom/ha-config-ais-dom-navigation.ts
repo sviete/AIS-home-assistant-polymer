@@ -7,7 +7,6 @@ import { PageNavigation } from "../../../layouts/hass-tabs-subpage";
 import "../../../components/ha-icon";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
-import { HomeAssistant } from "../../../types";
 import "../dashboard/ha-config-navigation";
 import {
   mdiCloudSyncOutline,
@@ -20,6 +19,7 @@ import {
   mdiRestart,
   mdiUsb,
 } from "@mdi/js";
+import { HomeAssistant } from "../../../types";
 
 const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
   integrations: [
@@ -28,6 +28,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
       path: "/config/ais_dom_config_update",
       translationKey: "ui.panel.config.ais_dom_config_update.caption",
       iconPath: mdiCloudSyncOutline,
+      iconColor: "#43a047",
       core: true,
     },
     {
@@ -35,6 +36,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
       path: "/config/ais_dom_config_wifi",
       translationKey: "ui.panel.config.ais_dom_config_wifi.caption",
       iconPath: mdiWifi,
+      iconColor: "#e48629",
       core: true,
     },
     {
@@ -42,6 +44,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
       path: "/config/ais_dom_config_display",
       translationKey: "ui.panel.config.ais_dom_config_display.caption",
       iconPath: mdiMonitorEdit,
+      iconColor: "#00bcd4",
       core: true,
     },
     {
@@ -49,6 +52,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
       path: "/config/ais_dom_config_tts",
       translationKey: "ui.panel.config.ais_dom_config_tts.caption",
       iconPath: mdiAccountTieVoice,
+      iconColor: "#518c43",
       core: true,
     },
     {
@@ -56,6 +60,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
       path: "/config/ais_dom_config_night",
       translationKey: "ui.panel.config.ais_dom_config_night.caption",
       iconPath: mdiWeatherNight,
+      iconColor: "#0D47A1",
       core: true,
     },
     {
@@ -63,6 +68,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
       path: "/config/ais_dom_config_remote",
       translationKey: "ui.panel.config.ais_dom_config_remote.caption",
       iconPath: mdiWeb,
+      iconColor: "#4d2ea4",
       core: true,
     },
     {
@@ -70,6 +76,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
       path: "/config/ais_dom_config_logs",
       translationKey: "ui.panel.config.ais_dom_config_logs.caption",
       iconPath: mdiDatabaseSettings,
+      iconColor: "#b1345c",
       core: true,
     },
     {
@@ -77,6 +84,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
       path: "/config/ais_dom_config_usb",
       translationKey: "ui.panel.config.ais_dom_config_usb.caption",
       iconPath: mdiUsb,
+      iconColor: "#616161",
       core: true,
     },
     {
@@ -84,6 +92,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
       path: "/config/ais_dom_config_power",
       translationKey: "ui.panel.config.ais_dom_config_power.caption",
       iconPath: mdiRestart,
+      iconColor: "#ff5722",
       core: true,
     },
   ],
@@ -93,21 +102,26 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
 class HaConfigAisDomNavigation extends LitElement {
   @property() public hass!: HomeAssistant;
 
+  @property({ type: Boolean, reflect: true })
+  public narrow!: boolean;
+
   @property() public showAdvanced!: boolean;
 
   protected render(): TemplateResult | void {
     return html`
-      ${Object.values(aisGateConfigSections).map(
-        (section) => html`
-          <ha-card>
-            <ha-config-navigation
-              .hass=${this.hass}
-              .showAdvanced=${this.showAdvanced}
-              .pages=${section}
-            ></ha-config-navigation>
-          </ha-card>
+      <ha-card>
+        ${Object.values(aisGateConfigSections).map(
+          (section) => html`
+          <ha-config-navigation
+                    .hass=${this.hass}
+                    .narrow=${this.narrow}
+                    .showAdvanced=${this.showAdvanced}
+                    .pages=${section}
+          ></ha-config-navigation>
+      </ha-card>
         `
-      )}
+        )}
+      </ha-card>
     `;
   }
 
