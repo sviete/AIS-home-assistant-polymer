@@ -37,11 +37,7 @@ class HaConfigInfo extends LitElement {
         .tabs=${configSections.general}
       >
         <div class="about">
-          <a
-            href=${documentationUrl(this.hass, "")}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://ai-speaker.com" target="_blank" rel="noreferrer">
             <ha-logo-svg title="AI-Speaker"> </ha-logo-svg>
           </a>
           <br />
