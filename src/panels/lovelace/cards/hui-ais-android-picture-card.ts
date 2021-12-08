@@ -8,6 +8,7 @@ import {
   TemplateResult,
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
+import Hammer from "hammerjs";
 import { computeDomain } from "../../../common/entity/compute_domain";
 import "../../../components/ha-card";
 import { ActionHandlerEvent } from "../../../data/lovelace";
@@ -45,9 +46,9 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
 
   @state() private _config?: PictureEntityCardConfig;
 
-  protected firstUpdated(changedProps: PropertyValues): void {
-    super.firstUpdated(changedProps);
-  }
+  @state() private aisPanEnd = {};
+
+  @state() private aisPanStart = {};
 
   public getCardSize(): number {
     return 3;
@@ -74,6 +75,76 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
     return hasConfigOrEntityChanged(this, changedProps);
   }
 
+  protected firstUpdated(changedProps: PropertyValues): void {
+    super.firstUpdated(changedProps);
+    const streamElement = this.shadowRoot!.getElementById(
+      this._config?.element_id
+    );
+    const divElement = this.shadowRoot!.getElementById(
+      this._config?.element_id + "_div"
+    );
+    const hammertime = new Hammer(streamElement);
+    hammertime.get("pan").set({ direction: Hammer.DIRECTION_VERTICAL });
+
+    hammertime.on("panup", (ev) => {
+      // console.debug("panup");
+    });
+
+    hammertime.on("pandown", (ev) => {
+      // console.debug("pandown");
+    });
+
+    hammertime.on("panstart", (ev) => {
+      this.aisPanStart = ev;
+    });
+    hammertime.on("panend", (ev) => {
+      ev.preventDefault();
+      this.aisPanEnd = ev;
+      const bcrStreamElement = ev.target.getBoundingClientRect();
+      const sX = this.aisPanStart.center.x;
+      const sY = this.aisPanStart.center.y;
+      const eX = this.aisPanEnd.center.x;
+      const eY = this.aisPanEnd.center.y;
+
+      const aisSX = Math.floor(
+        ((sX - bcrStreamElement.left) / bcrStreamElement.width) * 100
+      );
+      const aisSY = Math.floor(
+        ((sY - bcrStreamElement.top) / bcrStreamElement.height) * 100
+      );
+      const aisEX = Math.floor(
+        ((eX - bcrStreamElement.left) / bcrStreamElement.width) * 100
+      );
+      const aisEY = Math.floor(
+        ((eY - bcrStreamElement.top) / bcrStreamElement.height) * 100
+      );
+
+      this._handleServiceCall("pan", aisSX, aisSY, aisEX, aisEY);
+    });
+
+    hammertime.on("tap", (ev) => {
+      ev.preventDefault();
+      const bcrStreamElement = ev.target.getBoundingClientRect();
+      const ripple = document.createElement("div");
+      ripple.className = "ripple2";
+      const androidImg = ev.target.getBoundingClientRect();
+      ripple.style.left = `${ev.center.x - bcrStreamElement.left}px`;
+      ripple.style.top = `${ev.center.y}px`;
+      divElement.appendChild(ripple);
+
+      const aisX = Math.floor(
+        ((ev.center.x - bcrStreamElement.left) / bcrStreamElement.width) * 100
+      );
+      const aisY = Math.floor(
+        ((ev.center.y - bcrStreamElement.top) / bcrStreamElement.height) * 100
+      );
+      ripple.style.animation = "ripple-effect 0.4s  linear";
+      ripple.onanimationend = () => divElement.removeChild(ripple);
+
+      this._handleServiceCall("tap", aisX, aisY, 0, 0);
+    });
+  }
+
   protected updated(changedProps: PropertyValues): void {
     super.updated(changedProps);
   }
@@ -92,7 +163,12 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
     }
 
     return html`
-      <ha-card>
+      <ha-card
+        @contextmenu=${this._handleBack}
+        @mousemove=${this._handleMouseMove}
+        .id=${this._config.element_id}
+      >
+        <div .id=${this._config.element_id + "_div"}></div>
         <hui-image
           .hass=${this.hass}
           .image=${this._config.image}
@@ -103,8 +179,6 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
           .cameraView=${this._config.camera_view}
           .entity=${this._config.entity}
           .aspectRatio=${this._config.aspect_ratio}
-          @click=${this._handleClick}
-          @contextmenu=${this._handleBack}
         ></hui-image>
       </ha-card>
     `;
@@ -160,30 +234,48 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
     `;
   }
 
-  private _handleClick(ev: ActionHandlerEvent) {
-    // handleAction(this, this.hass!, this._config!, ev.detail.action!);
-    console.log(ev);
+  private _handleMouseMove(ev: ActionHandlerEvent) {
+    ev.preventDefault();
   }
 
   private _handleBack(ev) {
     ev.preventDefault();
+    if (ev.target.className === "ripple") {
+      return;
+    }
+
+    const bcrStreamElement = ev.target.getBoundingClientRect();
     const ripple = document.createElement("div");
     ripple.className = "ripple";
-    ripple.style.left = `${ev.clientX}px`;
-    ripple.style.top = `${ev.clientY}px`;
-    ripple.style.position = "fixed";
-    ripple.style.width = "10px";
-    ripple.style.height = "10px";
-    ripple.style.borderRadius = "50%";
-    ripple.style.backgroundColor = "transparent";
-    ripple.style.border = "1.5px solid #00a5ffcc";
-    ripple.style.animation = "ripple-effect 0.6s  linear";
-    ripple.onanimationend = () => document.body.removeChild(ripple);
-    document.body.appendChild(ripple);
 
-    const xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", window.location.origin + "/ais-back", true);
-    xmlHttp.send(null);
+    ripple.style.left = `${ev.clientX - bcrStreamElement.left}px`;
+    ripple.style.top = `${ev.clientY}px`;
+
+    const divElement = this.shadowRoot!.getElementById(
+      this._config?.element_id + "_div"
+    );
+    divElement.appendChild(ripple);
+
+    ripple.style.animation = "ripple-effect 0.4s  linear";
+    ripple.onanimationend = () => divElement.removeChild(ripple);
+
+    this._handleServiceCall("back", 0, 0, 0, 0);
+  }
+
+  private _handleServiceCall(
+    name: string,
+    sX: number,
+    sY: number,
+    eX: number,
+    eY: number
+  ) {
+    this.hass.callService("ais_shell_command", "screen_stream_command", {
+      name: name,
+      sX: sX,
+      sY: sY,
+      eX: eX,
+      eY: eY,
+    });
   }
 }
 
