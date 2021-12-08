@@ -1,3 +1,4 @@
+import "../components/hui-warning";
 import {
   css,
   CSSResultGroup,
@@ -7,21 +8,13 @@ import {
   TemplateResult,
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
-import { ifDefined } from "lit/directives/if-defined";
-import { applyThemesOnElement } from "../../../common/dom/apply_themes_on_element";
 import { computeDomain } from "../../../common/entity/compute_domain";
-import { computeStateDisplay } from "../../../common/entity/compute_state_display";
-import { computeStateName } from "../../../common/entity/compute_state_name";
 import "../../../components/ha-card";
 import { ActionHandlerEvent } from "../../../data/lovelace";
 import { HomeAssistant } from "../../../types";
-import { actionHandler } from "../common/directives/action-handler-directive";
 import { findEntities } from "../common/find-entities";
-import { handleAction } from "../common/handle-action";
-import { hasAction } from "../common/has-action";
 import { hasConfigOrEntityChanged } from "../common/has-changed";
 import "../components/hui-image";
-import { createEntityNotFoundWarning } from "../components/hui-warning";
 import { LovelaceCard } from "../types";
 import { PictureEntityCardConfig } from "./types";
 
@@ -52,6 +45,10 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
 
   @state() private _config?: PictureEntityCardConfig;
 
+  protected firstUpdated(changedProps: PropertyValues): void {
+    super.firstUpdated(changedProps);
+  }
+
   public getCardSize(): number {
     return 3;
   }
@@ -79,22 +76,6 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
 
   protected updated(changedProps: PropertyValues): void {
     super.updated(changedProps);
-    if (!this._config || !this.hass) {
-      return;
-    }
-    const oldHass = changedProps.get("hass") as HomeAssistant | undefined;
-    const oldConfig = changedProps.get("_config") as
-      | PictureEntityCardConfig
-      | undefined;
-
-    if (
-      !oldHass ||
-      !oldConfig ||
-      oldHass.themes !== this.hass.themes ||
-      oldConfig.theme !== this._config.theme
-    ) {
-      applyThemesOnElement(this, this.hass.themes, this._config.theme);
-    }
   }
 
   protected render(): TemplateResult {
@@ -106,31 +87,8 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
 
     if (!stateObj) {
       return html`
-        <hui-warning>
-          ${createEntityNotFoundWarning(this.hass, this._config.entity)}
-        </hui-warning>
+        <hui-warning> Nie moża połączyć z ekranem systemu Android </hui-warning>
       `;
-    }
-
-    const name = this._config.name || computeStateName(stateObj);
-    const entityState = computeStateDisplay(
-      this.hass!.localize,
-      stateObj,
-      this.hass.locale
-    );
-
-    let footer: TemplateResult | string = "";
-    if (this._config.show_name && this._config.show_state) {
-      footer = html`
-        <div class="footer both">
-          <div>${name}</div>
-          <div>${entityState}</div>
-        </div>
-      `;
-    } else if (this._config.show_name) {
-      footer = html`<div class="footer single">${name}</div>`;
-    } else if (this._config.show_state) {
-      footer = html`<div class="footer single">${entityState}</div>`;
     }
 
     return html`
@@ -139,25 +97,15 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
           .hass=${this.hass}
           .image=${this._config.image}
           .stateImage=${this._config.state_image}
-          .stateFilter=${this._config.state_filter}
           .cameraImage=${computeDomain(this._config.entity) === "camera"
             ? this._config.entity
             : this._config.camera_image}
           .cameraView=${this._config.camera_view}
           .entity=${this._config.entity}
           .aspectRatio=${this._config.aspect_ratio}
-          @action=${this._handleAction}
-          .actionHandler=${actionHandler({
-            hasHold: hasAction(this._config!.hold_action),
-            hasDoubleClick: hasAction(this._config!.double_tap_action),
-          })}
-          tabindex=${ifDefined(
-            hasAction(this._config.tap_action) || this._config.entity
-              ? "0"
-              : undefined
-          )}
+          @click=${this._handleClick}
+          @contextmenu=${this._handleBack}
         ></hui-image>
-        ${footer}
       </ha-card>
     `;
   }
@@ -176,27 +124,6 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
         cursor: pointer;
       }
 
-      .footer {
-        /* start paper-font-common-nowrap style */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        /* end paper-font-common-nowrap style */
-
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: var(
-          --ha-picture-card-background-color,
-          rgba(0, 0, 0, 0.3)
-        );
-        padding: 16px;
-        font-size: 16px;
-        line-height: 16px;
-        color: var(--ha-picture-card-text-color, white);
-      }
-
       .both {
         display: flex;
         justify-content: space-between;
@@ -205,11 +132,58 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
       .single {
         text-align: center;
       }
+
+      .ripple {
+        width: 10px;
+        height: 10px;
+        background-color: transparent;
+        position: fixed !important;
+        border-radius: 50%;
+        border: 1.5px solid #00a5ffcc;
+      }
+
+      .ripple2 {
+        width: 10px;
+        height: 10px;
+        background-color: transparent;
+        position: fixed !important;
+        border-radius: 50%;
+        border: 2px solid #e7711eb8;
+      }
+
+      @keyframes ripple-effect {
+        to {
+          transform: scale(5);
+          opacity: 0.01;
+        }
+      }
     `;
   }
 
-  private _handleAction(ev: ActionHandlerEvent) {
-    handleAction(this, this.hass!, this._config!, ev.detail.action!);
+  private _handleClick(ev: ActionHandlerEvent) {
+    // handleAction(this, this.hass!, this._config!, ev.detail.action!);
+    console.log(ev);
+  }
+
+  private _handleBack(ev) {
+    ev.preventDefault();
+    const ripple = document.createElement("div");
+    ripple.className = "ripple";
+    ripple.style.left = `${ev.clientX}px`;
+    ripple.style.top = `${ev.clientY}px`;
+    ripple.style.position = "fixed";
+    ripple.style.width = "10px";
+    ripple.style.height = "10px";
+    ripple.style.borderRadius = "50%";
+    ripple.style.backgroundColor = "transparent";
+    ripple.style.border = "1.5px solid #00a5ffcc";
+    ripple.style.animation = "ripple-effect 0.6s  linear";
+    ripple.onanimationend = () => document.body.removeChild(ripple);
+    document.body.appendChild(ripple);
+
+    const xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", window.location.origin + "/ais-back", true);
+    xmlHttp.send(null);
   }
 }
 
