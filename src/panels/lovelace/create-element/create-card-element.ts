@@ -13,7 +13,6 @@ import "../cards/hui-light-card";
 import "../cards/hui-sensor-card";
 import "../cards/hui-thermostat-card";
 import "../cards/hui-weather-forecast-card";
-import "../cards/hui-ais-zigbee2mqtt-card";
 import "../cards/hui-ais-mini-media-player-card";
 import "../cards/hui-ais-expansion-panel-card";
 import {
