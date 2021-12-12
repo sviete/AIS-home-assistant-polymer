@@ -1,7 +1,15 @@
 import "@polymer/paper-input/paper-input";
 import { html, LitElement, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators";
-import { assert, literal, object, optional, string, union } from "superstruct";
+import {
+  assert,
+  assign,
+  literal,
+  object,
+  optional,
+  string,
+  union,
+} from "superstruct";
 import { createDurationData } from "../../../../../common/datetime/create_duration_data";
 import { fireEvent } from "../../../../../common/dom/fire_event";
 import { hasTemplate } from "../../../../../common/string/has-template";
@@ -10,20 +18,23 @@ import "../../../../../components/entity/ha-entity-picker";
 import "../../../../../components/ha-duration-input";
 import { StateTrigger } from "../../../../../data/automation";
 import { HomeAssistant } from "../../../../../types";
-import { forDictStruct } from "../../structs";
+import { baseTriggerStruct, forDictStruct } from "../../structs";
 import {
   handleChangeEvent,
   TriggerElement,
 } from "../ha-automation-trigger-row";
 
-const stateTriggerStruct = object({
-  platform: literal("state"),
-  entity_id: string(),
-  attribute: optional(string()),
-  from: optional(string()),
-  to: optional(string()),
-  for: optional(union([string(), forDictStruct])),
-});
+const stateTriggerStruct = assign(
+  baseTriggerStruct,
+  object({
+    platform: literal("state"),
+    entity_id: string(),
+    attribute: optional(string()),
+    from: optional(string()),
+    to: optional(string()),
+    for: optional(union([string(), forDictStruct])),
+  })
+);
 
 @customElement("ha-automation-trigger-state")
 export class HaStateTrigger extends LitElement implements TriggerElement {
@@ -38,6 +49,13 @@ export class HaStateTrigger extends LitElement implements TriggerElement {
   public shouldUpdate(changedProperties: PropertyValues) {
     if (!changedProperties.has("trigger")) {
       return true;
+    }
+    if (
+      this.trigger.for &&
+      typeof this.trigger.for === "object" &&
+      this.trigger.for.milliseconds === 0
+    ) {
+      delete this.trigger.for.milliseconds;
     }
     // Check for templates in trigger. If found, revert to YAML mode.
     if (this.trigger && hasTemplate(this.trigger)) {

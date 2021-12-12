@@ -77,6 +77,7 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
 
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
+
     const streamElement = this.shadowRoot!.getElementById(
       this._config?.element_id
     );
@@ -125,18 +126,23 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
     hammertime.on("tap", (ev) => {
       ev.preventDefault();
       const bcrStreamElement = ev.target.getBoundingClientRect();
+      console.log("1" + ev);
+      console.log(ev);
+      console.log("2" + ev);
+      console.log(ev.target);
+      console.log("3" + ev);
+      console.log(bcrStreamElement);
       const ripple = document.createElement("div");
       ripple.className = "ripple2";
-      const androidImg = ev.target.getBoundingClientRect();
-      ripple.style.left = `${ev.center.x - bcrStreamElement.left}px`;
+      ripple.style.left = `${ev.center.x - bcrStreamElement.x}px`;
       ripple.style.top = `${ev.center.y}px`;
       divElement.appendChild(ripple);
 
       const aisX = Math.floor(
-        ((ev.center.x - bcrStreamElement.left) / bcrStreamElement.width) * 100
+        ((ev.center.x - bcrStreamElement.x) / bcrStreamElement.width) * 100
       );
       const aisY = Math.floor(
-        ((ev.center.y - bcrStreamElement.top) / bcrStreamElement.height) * 100
+        ((ev.center.y - bcrStreamElement.y) / bcrStreamElement.height) * 100
       );
       ripple.style.animation = "ripple-effect 0.4s  linear";
       ripple.onanimationend = () => divElement.removeChild(ripple);
