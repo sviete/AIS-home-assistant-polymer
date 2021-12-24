@@ -26,7 +26,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom_config_update",
       path: "/config/ais_dom_config_update",
-      translationKey: "ui.panel.config.ais_dom_config_update.caption",
+      translationKey: "ais_dom_config_update",
       iconPath: mdiCloudSyncOutline,
       iconColor: "#43a047",
       core: true,
@@ -34,7 +34,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom_config_wifi",
       path: "/config/ais_dom_config_wifi",
-      translationKey: "ui.panel.config.ais_dom_config_wifi.caption",
+      translationKey: "ais_dom_config_wifi",
       iconPath: mdiWifi,
       iconColor: "#e48629",
       core: true,
@@ -42,7 +42,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom_config_display",
       path: "/config/ais_dom_config_display",
-      translationKey: "ui.panel.config.ais_dom_config_display.caption",
+      translationKey: "ais_dom_config_display",
       iconPath: mdiMonitorEdit,
       iconColor: "#00bcd4",
       core: true,
@@ -50,7 +50,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom_config_tts",
       path: "/config/ais_dom_config_tts",
-      translationKey: "ui.panel.config.ais_dom_config_tts.caption",
+      translationKey: "ais_dom_config_tts",
       iconPath: mdiAccountTieVoice,
       iconColor: "#518c43",
       core: true,
@@ -58,7 +58,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom_config_night",
       path: "/config/ais_dom_config_night",
-      translationKey: "ui.panel.config.ais_dom_config_night.caption",
+      translationKey: "ais_dom_config_night",
       iconPath: mdiWeatherNight,
       iconColor: "#0D47A1",
       core: true,
@@ -66,7 +66,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom_config_remote",
       path: "/config/ais_dom_config_remote",
-      translationKey: "ui.panel.config.ais_dom_config_remote.caption",
+      translationKey: "ais_dom_config_remote",
       iconPath: mdiWeb,
       iconColor: "#4d2ea4",
       core: true,
@@ -74,7 +74,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom_config_logs",
       path: "/config/ais_dom_config_logs",
-      translationKey: "ui.panel.config.ais_dom_config_logs.caption",
+      translationKey: "ais_dom_config_logs",
       iconPath: mdiDatabaseSettings,
       iconColor: "#b1345c",
       core: true,
@@ -82,7 +82,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom_config_usb",
       path: "/config/ais_dom_config_usb",
-      translationKey: "ui.panel.config.ais_dom_config_usb.caption",
+      translationKey: "ais_dom_config_usb",
       iconPath: mdiUsb,
       iconColor: "#616161",
       core: true,
@@ -90,7 +90,7 @@ const aisGateConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom_config_power",
       path: "/config/ais_dom_config_power",
-      translationKey: "ui.panel.config.ais_dom_config_power.caption",
+      translationKey: "ais_dom_config_power",
       iconPath: mdiRestart,
       iconColor: "#ff5722",
       core: true,

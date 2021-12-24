@@ -936,11 +936,68 @@
         "faq_link": "My Home Assistant FAQ",
         "error": "An unknown error occurred"
       },
+
       "config": {
         "header": "Configure Home Assistant",
         "dashboard": {
+          "ais_dom_config": {
+            "header": "Configure AIS Home Gateway",
+            "introduction": "Here it is possible to configure your AIS Home Gateway. Not everything is possible to configure from the UI yet, but we're working on it."
+          },
+          "ais_dom": {
+            "title": " AIS Home Gateway Settings",
+            "description": "Manage your IoT and Audio gateway"
+          },
+          "ais_dom_devices": {
+            "title": "Configuration of Wifi devices",
+            "description": "Manage your devices with AIS dom software"
+          },
+          "ais_dom_zigbee": {
+            "title": "Configuration of AIS Zigbee",
+            "description": "Manage your zigbee devices"
+          },
+          "ais_dom_zwave": {
+            "title": "Configuration of AIS ZWave",
+            "description": "Manage your ZWave devices"
+          },
+          "ais_dom_config_update": {
+            "title": "Gateway software",
+            "description": "System update, backup and synchronization with the Integrator Portal"
+          },
+          "ais_dom_config_wifi": {
+            "title": "WiFi network",
+            "description": "WiFi connection settings"
+          },
+          "ais_dom_config_display": {
+            "title": "Screen",
+            "description": "Screen Settings"
+          },
+          "ais_dom_config_tts": {
+            "title": "The assistant voice",
+            "description": "Voice assistant settings"
+          },
+          "ais_dom_config_night": {
+            "title": "Night mode",
+            "description": "Set the hours when the assistant should be quieter"
+          },
+          "ais_dom_config_logs": {
+            "title": "Logs and recorder",
+            "description": "Configuration of logs and DB recorder"
+          },
+          "ais_dom_config_remote": {
+            "title": "Remote control",
+            "description": "Configuration of remote access to the gateway"
+          },
+          "ais_dom_config_usb": {
+            "title": "USB devices",
+            "description": "Support for USB devices"
+          },
+          "ais_dom_config_power": {
+            "title": "Stop the Gate",
+            "description": "Restart or turn off the gate"
+          },
           "devices": {
-            "title": "Devices & Services",
+            "title": "Devices & HA Services",
             "description": "Integrations, devices, entities and areas"
           },
           "automations": {
@@ -2851,62 +2908,7 @@
             "refresh_entity": "Refresh Entity"
           }
         },
-        "ais_dom_config": {
-          "header": "Configure AIS Home Gateway",
-          "introduction": "Here it is possible to configure your AIS Home Gateway. Not everything is possible to configure from the UI yet, but we're working on it."
-        },
-        "ais_dom": {
-          "caption": " AIS Home Gateway Settings",
-          "description": "Manage your IoT and Audio gateway"
-        },
-        "ais_dom_devices": {
-          "caption": "Configuration of Wifi devices",
-          "description": "Manage your devices with AIS dom software"
-        },
-        "ais_dom_zigbee": {
-          "caption": "Configuration of AIS Zigbee",
-          "description": "Manage your zigbee devices"
-        },
-        "ais_dom_zwave": {
-          "caption": "Configuration of AIS ZWave",
-          "description": "Manage your ZWave devices"
-        },
-        "ais_dom_config_update": {
-          "caption": "Gateway software",
-          "description": "System update, backup and synchronization with the Integrator Portal"
-        },
-        "ais_dom_config_wifi": {
-          "caption": "WiFi network",
-          "description": "WiFi connection settings"
-        },
-        "ais_dom_config_display": {
-          "caption": "Screen",
-          "description": "Screen Settings"
-        },
-        "ais_dom_config_tts": {
-          "caption": "The assistant voice",
-          "description": "Voice assistant settings"
-        },
-        "ais_dom_config_night": {
-          "caption": "Night mode",
-          "description": "Set the hours when the assistant should be quieter"
-        },
-        "ais_dom_config_logs": {
-          "caption": "Logs and recorder",
-          "description": "Configuration of logs and DB recorder"
-        },
-        "ais_dom_config_remote": {
-          "caption": "Remote control",
-          "description": "Configuration of remote access to the gateway"
-        },
-        "ais_dom_config_usb": {
-          "caption": "USB devices",
-          "description": "Support for USB devices"
-        },
-        "ais_dom_config_power": {
-          "caption": "Stop the Gate",
-          "description": "Restart or turn off the gate"
-        },
+
         "zwave_js": {
           "navigation": {
             "network": "Network",

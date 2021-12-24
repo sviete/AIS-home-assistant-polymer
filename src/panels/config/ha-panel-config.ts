@@ -289,7 +289,7 @@ export const aisConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom",
       path: "/config/ais_dom",
-      translationKey: "ui.panel.config.ais_dom.caption",
+      translationKey: "ais_dom",
       iconPath: mdiMonitorSpeaker,
       iconColor: "#E48629",
       core: true,
@@ -297,7 +297,7 @@ export const aisConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom_devices",
       path: "/config/ais_dom_devices",
-      translationKey: "ui.panel.config.ais_dom_devices.caption",
+      translationKey: "ais_dom_devices",
       iconPath: mdiWifi,
       iconColor: "#ff5722",
       core: true,
@@ -305,7 +305,7 @@ export const aisConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom_zigbee",
       path: "/config/ais_dom_zigbee",
-      translationKey: "ui.panel.config.ais_dom_zigbee.caption",
+      translationKey: "ais_dom_zigbee",
       iconPath: mdiZigbee,
       iconColor: "#ffd400",
       core: true,
@@ -313,7 +313,7 @@ export const aisConfigSections: { [name: string]: PageNavigation[] } = {
     {
       component: "ais_dom_zwave",
       path: "/config/ais_dom_zwave",
-      translationKey: "ui.panel.config.ais_dom_zwave.caption",
+      translationKey: "ais_dom_zwave",
       iconPath: mdiZWave,
       iconColor: "#00bcd4",
       core: true,
