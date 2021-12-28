@@ -43,9 +43,12 @@ class PanelDeveloperTools extends LitElement {
             @iron-activate=${this.handlePageSelected}
           >
             <paper-tab page-name="state">
-              ${this.hass.localize(
-                "ui.panel.developer-tools.tabs.states.title"
-              )}
+              <span style="color: #4c4c4c; text-align: center;"
+                ><ha-icon icon="hass:state-machine">></ha-icon><br />
+                ${this.hass.localize(
+                  "ui.panel.developer-tools.tabs.states.title"
+                )}</span
+              >
             </paper-tab>
             <paper-tab page-name="service">
               ${this.hass.localize(
@@ -53,9 +56,12 @@ class PanelDeveloperTools extends LitElement {
               )}
             </paper-tab>
             <paper-tab page-name="template">
-              ${this.hass.localize(
-                "ui.panel.developer-tools.tabs.templates.title"
-              )}
+              <span style="color: #4c4c4c; text-align: center;"
+                ><ha-icon icon="hass:ninja">></ha-icon><br />
+                ${this.hass.localize(
+                  "ui.panel.developer-tools.tabs.templates.title"
+                )}</span
+              >
             </paper-tab>
             <paper-tab page-name="event">
               ${this.hass.localize(
@@ -67,8 +73,21 @@ class PanelDeveloperTools extends LitElement {
                 "ui.panel.developer-tools.tabs.statistics.title"
               )}
             </paper-tab>
-            <paper-tab page-name="console"> Terminal </paper-tab>
-            <paper-tab page-name="webcmd"> Manager </paper-tab>
+            <paper-tab page-name="android">
+              <span style="color: green; text-align: center;"
+                ><ha-icon icon="hass:android">></ha-icon><br />Android</span
+              >
+            </paper-tab>
+            <paper-tab page-name="console">
+              <span style="color: black; text-align: center;"
+                ><ha-icon icon="hass:console">></ha-icon><br />Terminal</span
+              >
+            </paper-tab>
+            <paper-tab page-name="webcmd">
+              <span style="color: blue; text-align: center;"
+                ><ha-icon icon="hass:folder-home">></ha-icon><br />Manager</span
+              >
+            </paper-tab>
           </ha-tabs>
         </app-header>
         <developer-tools-router
