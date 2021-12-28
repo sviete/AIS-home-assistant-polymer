@@ -43,20 +43,23 @@ class PanelDeveloperTools extends LitElement {
             @iron-activate=${this.handlePageSelected}
           >
             <paper-tab page-name="state">
-              <span style="color: #4c4c4c; text-align: center;"
+              <span style="color: #4a5963; text-align: center;"
                 ><ha-icon icon="hass:state-machine">></ha-icon><br />
                 ${this.hass.localize(
                   "ui.panel.developer-tools.tabs.states.title"
-                )}</span
-              >
+                )}
+              </span>
             </paper-tab>
             <paper-tab page-name="service">
-              ${this.hass.localize(
-                "ui.panel.developer-tools.tabs.services.title"
-              )}
+              <span style="color: #4d2ea4; text-align: center;"
+                ><ha-icon icon="hass:function-variant">></ha-icon><br />
+                ${this.hass.localize(
+                  "ui.panel.developer-tools.tabs.services.title"
+                )}
+              </span>
             </paper-tab>
             <paper-tab page-name="template">
-              <span style="color: #4c4c4c; text-align: center;"
+              <span style="color: #0d47a1; text-align: center;"
                 ><ha-icon icon="hass:ninja">></ha-icon><br />
                 ${this.hass.localize(
                   "ui.panel.developer-tools.tabs.templates.title"
@@ -64,14 +67,20 @@ class PanelDeveloperTools extends LitElement {
               >
             </paper-tab>
             <paper-tab page-name="event">
-              ${this.hass.localize(
-                "ui.panel.developer-tools.tabs.events.title"
-              )}
+              <span style="color: #4c4c4c; text-align: center;"
+                ><ha-icon icon="hass:alert-decagram">></ha-icon><br />
+                ${this.hass.localize(
+                  "ui.panel.developer-tools.tabs.events.title"
+                )}
+              </span>
             </paper-tab>
             <paper-tab page-name="statistics">
-              ${this.hass.localize(
-                "ui.panel.developer-tools.tabs.statistics.title"
-              )}
+              <span style="color: #b1345c; text-align: center;"
+                ><ha-icon icon="hass:counter">></ha-icon><br />
+                ${this.hass.localize(
+                  "ui.panel.developer-tools.tabs.statistics.title"
+                )}
+              </span>
             </paper-tab>
             <paper-tab page-name="android">
               <span style="color: green; text-align: center;"
