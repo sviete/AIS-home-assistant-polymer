@@ -2054,62 +2054,6 @@
                         "not_applied": "Wprowadzone tutaj zmiany są w nim zapisane, ale nie zostaną zastosowane po ponownym wczytaniu konfiguracji, chyba że dołączony plik jest na miejscu."
                     }
                 },
-                "ais_dom_config": {
-                    "header": "Konfiguracja AIS Dom IoT",
-                    "introduction": "Konfiguracja bramki."
-                  },
-                  "ais_dom": {
-                    "title": " Ustawienia AIS Dom IoT",
-                    "description": "Dostosuj parametry bramki AIS Dom IoT"
-                  },
-                  "ais_dom_devices": {
-                    "title": "Configuration of Wifi devices",
-                    "description": "Manage your devices with AIS dom software"
-                  },
-                  "ais_dom_zigbee": {
-                    "title": "Configuration of AIS Zigbee",
-                    "description": "Manage your zigbee devices"
-                  },
-                  "ais_dom_zwave": {
-                    "title": "Configuration of AIS ZWave",
-                    "description": "Manage your ZWave devices"
-                  },
-                  "ais_dom_config_update": {
-                    "title": "Gateway software",
-                    "description": "System update, backup and synchronization with the Integrator Portal"
-                  },
-                  "ais_dom_config_wifi": {
-                    "title": "WiFi network",
-                    "description": "WiFi connection settings"
-                  },
-                  "ais_dom_config_display": {
-                    "title": "Screen",
-                    "description": "Screen Settings"
-                  },
-                  "ais_dom_config_tts": {
-                    "title": "The assistant voice",
-                    "description": "Voice assistant settings"
-                  },
-                  "ais_dom_config_night": {
-                    "title": "Night mode",
-                    "description": "Set the hours when the assistant should be quieter"
-                  },
-                  "ais_dom_config_logs": {
-                    "title": "Logs and recorder",
-                    "description": "Configuration of logs and DB recorder"
-                  },
-                  "ais_dom_config_remote": {
-                    "title": "Remote control",
-                    "description": "Configuration of remote access to the gateway"
-                  },
-                  "ais_dom_config_usb": {
-                    "title": "USB devices",
-                    "description": "Support for USB devices"
-                  },
-                  "ais_dom_config_power": {
-                    "title": "Stop the Gate",
-                    "description": "Restart or turn off the gate"
-                  },
                 "devices": {
                     "add_prompt": "{name} używające tego urządzenia nie zostały jeszcze dodane. Możesz je dodać, klikając przycisk + powyżej.",
                     "automation": {
@@ -2432,6 +2376,104 @@
                     }
                 },
                 "header": "Konfiguruj Asystenta domowego",
+                "dashboard": {
+                    "ais_dom_config": {
+                        "header": "Konfiguracja AIS Dom IoT",
+                        "introduction": "Konfiguracja bramki."
+                      },
+                      "ais_dom": {
+                        "title": " Ustawienia AIS Dom IoT",
+                        "description": "Dostosuj parametry bramki AIS Dom IoT"
+                      },
+                      "ais_dom_devices": {
+                        "title": "Konfiguracja urządzeń Wifi",
+                        "description": "Zarządzaj swoimi urządzeniami z oprogramowaniem AIS dom"
+                      },
+                      "ais_dom_zigbee": {
+                        "title": "Konfiguracja Zigbee2Mqtt",
+                        "description": "Zarządzaj swoimi urządzeniami zigbee"
+                      },
+                      "ais_dom_zwave": {
+                        "title": "Konfiguracja ZWaveJS2Mqtt",
+                        "description": "Zarządzaj urządzeniami ZWave"
+                      },
+                      "ais_dom_config_update": {
+                        "title": "Oprogramowanie bramki IoT",
+                        "description": "Aktualizacja systemu, backup i synchronizacja z Portalem Integratora"
+                      },
+                      "ais_dom_config_wifi": {
+                        "title": "Sieć Wi-Fi",
+                        "description": "Ustawienia połączenia Wi-Fi"
+                      },
+                      "ais_dom_config_display": {
+                        "title": "Ekran",
+                        "description": "Ustawienia ekranu"
+                      },
+                      "ais_dom_config_tts": {
+                        "title": "Głos asystenta",
+                        "description": "Ustawienia asystenta głosowego"
+                      },
+                      "ais_dom_config_night": {
+                        "title": "Tryb nocny",
+                        "description": "Ustaw godziny, w których asystent powinien być ciszej"
+                      },
+                      "ais_dom_config_logs": {
+                        "title": "Logi i rejestrator",
+                        "description": "Konfiguracja logów i rejestratora DB"
+                      },
+                      "ais_dom_config_remote": {
+                        "title": "Zdalne dostęp",
+                        "description": "Konfiguracja zdalnego dostępu do bramki"
+                      },
+                      "ais_dom_config_usb": {
+                        "title": "Urządzenia USB",
+                        "description": "Wsparcie dla urządzeń USB"
+                      },
+                      "ais_dom_config_power": {
+                        "title": "Zatrzymaj bramkę IoT",
+                        "description": "Uruchom ponownie lub wyłącz bramkę IoT"
+                      },
+                    "devices": {
+                      "title": "Urządzenia i usługi HA",
+                      "description": "Integracje, urządzenia, encje i obszary"
+                    },
+                    "automations": {
+                      "title": "Automatyzacje i Sceny",
+                      "description": "Zarządzaj automatyzacjami, scenami, skryptami i pomocnikami"
+                    },
+                    "blueprints": {
+                      "title": "Blueprints",
+                      "description": "Szablony gotowych automatyzacji i skryptów"
+                    },
+                    "supervisor": {
+                      "title": "Dodatki, kopie zapasowe i nadzorca",
+                      "description": "Twórz kopie zapasowe, sprawdzaj logi lub uruchom ponownie system"
+                    },
+                    "dashboards": {
+                      "title": "Pulpity nawigacyjne",
+                      "description": "Twórz spersonalizowane zestawy kart, aby kontrolować swój dom"
+                    },
+                    "energy": {
+                      "title": "Energia",
+                      "description": "Monitoruj produkcję i zużycie energii"
+                    },
+                    "tags": {
+                      "title": "Tagi",
+                      "description": "Uruchamiaj automatyzację po zeskanowaniu tagu NFC, kodu QR itp."
+                    },
+                    "people": {
+                      "title": "Ludzie i strefy",
+                      "description": "Zarządzaj osobami i strefami śledzonymi przez Home Assistant"
+                    },
+                    "companion": {
+                      "title": "Aplikacja towarzysząca",
+                      "description": "Lokalizacja i powiadomienia"
+                    },
+                    "settings": {
+                      "title": "Ustawienia",
+                      "description": "Podstawowe ustawienia, kontrola serwera, logi i informacje"
+                    }
+                  },
                 "helpers": {
                     "caption": "Pomocnicy",
                     "description": "Elementy, które pomagają w tworzeniu automatyzacji",
