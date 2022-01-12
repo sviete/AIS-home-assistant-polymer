@@ -38,17 +38,13 @@ export default <T extends Constructor<HassBaseEl>>(superClass: T) =>
       });
       mql.addListener((ev) => this._applyTheme(ev.matches));
       if (!this._themeApplied && mql.matches) {
-        applyThemesOnElement(
-          document.documentElement,
-          {
-            default_theme: "default",
-            default_dark_theme: null,
-            themes: {},
-            darkMode: false,
-          },
-          "default",
-          { dark: true }
-        );
+        applyThemesOnElement(document.documentElement, {
+          default_theme: "default",
+          default_dark_theme: null,
+          themes: {},
+          darkMode: true,
+          theme: "default",
+        });
       }
     }
 
@@ -89,6 +85,9 @@ export default <T extends Constructor<HassBaseEl>>(superClass: T) =>
       }
 
       themeSettings = { ...this.hass.selectedTheme, dark: darkMode };
+      this._updateHass({
+        themes: { ...this.hass.themes!, theme: themeName },
+      });
 
       applyThemesOnElement(
         document.documentElement,
@@ -96,10 +95,6 @@ export default <T extends Constructor<HassBaseEl>>(superClass: T) =>
         themeName,
         themeSettings
       );
-
-      // Now determine value that should be stored in the local storage settings
-      darkMode =
-        darkMode || !!(darkPreferred && this.hass.themes.default_dark_theme);
 
       if (darkMode !== this.hass.themes.darkMode) {
         this._updateHass({
@@ -136,5 +131,7 @@ export default <T extends Constructor<HassBaseEl>>(superClass: T) =>
           (themeMeta.getAttribute("default-content") as string);
         themeMeta.setAttribute("content", themeColor);
       }
+
+      this.hass!.auth.external?.fireMessage({ type: "theme-update" });
     }
   };

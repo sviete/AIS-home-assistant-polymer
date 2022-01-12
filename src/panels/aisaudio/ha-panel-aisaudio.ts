@@ -1,12 +1,16 @@
-import "@mdi/js";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property, customElement } from "lit/decorators";
 import "@polymer/app-layout/app-header-layout/app-header-layout";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import "@polymer/paper-checkbox/paper-checkbox";
 import "@material/mwc-checkbox";
 import "@material/mwc-formfield";
+import {
+  mdiMicrophone,
+  mdiFolderMultiple,
+  mdiMusicNotePlus,
+  mdiInformation,
+} from "@mdi/js";
 import { showVoiceCommandDialog } from "../../dialogs/voice-command-dialog/show-ha-voice-command-dialog";
 import { showMediaBrowserDialog } from "../../components/media-player/show-media-browser-dialog";
 import { showCheckMediaSourceAisDialog } from "../../components/media-player/show-check-media-source-ais-dialog";
@@ -84,23 +88,24 @@ class PanelAisAudio extends LitElement {
             ></ha-menu-button>
             <ha-icon-button
               label="Informacje o audio"
-              icon="hass:information"
+              .path=${mdiInformation}
               @click=${this._showCheckAisMedia}
             ></ha-icon-button>
             <ha-icon-button
               label="Dodaj audio"
               icon="hass:music-note-plus"
+              .path=${mdiMusicNotePlus}
               @click=${this._showAddAisMedia}
             ></ha-icon-button>
             <div main-title>Audio</div>
             <ha-icon-button
               label="Przeglądaj media"
-              icon="hass:folder-multiple"
+              .path=${mdiFolderMultiple}
               @click=${this._showBrowseMedia}
             ></ha-icon-button>
             <ha-icon-button
               label="Rozpocznij rozmowę"
-              icon="hass:forum-outline"
+              .path=${mdiMicrophone}
               @click=${this._showVoiceCommandDialog}
             ></ha-icon-button>
           </app-toolbar>

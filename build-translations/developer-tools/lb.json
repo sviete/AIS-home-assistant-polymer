@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Evenementer",
+            "description": "Een Evenement um Evenement Bus starten",
+            "documentation": "Dokumentatioun iwwert d'Evenementer",
+            "type": "Typ vun Evenement",
+            "data": "Evenement Donnéeë (YAML, fakultativ)",
+            "fire_event": "Evenement starten",
+            "event_fired": "Evenement {name} gestart",
+            "available_events": "Verfügbar Evenementer",
+            "count_listeners": " ({count} nolauschterer)",
+            "listen_to_events": "Op Evenementer lauschteren",
+            "listening_to": "Lauschtert op",
+            "subscribe_to": "Evenement fir unzemellen",
+            "start_listening": "Fänk un mam lauschteren",
+            "stop_listening": "Hal op mam lauschteren",
+            "alert_event_type": "Type vun Evenement ass obligatorescht",
+            "notification_event_fired": "Event {type} erfollegräich gestart"
+          },
+          "services": {
+            "title": "Servicen",
+            "description": "De Service am Entwécklungsgeschir erlaabt Iech e verfügbare Service am Home Assistant opzeruffen.",
+            "call_service": "Service opruffen",
+            "column_parameter": "Parameter",
+            "column_description": "Beschreiwung",
+            "column_example": "Beispill",
+            "fill_example_data": "Gitt Beispill Donnéeën un",
+            "yaml_mode": "Go to YAML mode",
+            "ui_mode": "Go to UI mode",
+            "yaml_parameters": "Parameters only available in YAML mode",
+            "all_parameters": "All available parameters",
+            "accepts_target": "This service accepts a target, for example: `entity_id: light.bed_light`",
+            "no_template_ui_support": "Den UI ënnerstëtzt kenge Modeller, du kanns awer den YAML Editeur benotzen."
+          },
+          "states": {
+            "title": "Zoustänn",
+            "description1": "Setzt d'Representatioun vun engem Apparat am Home Assistant.",
+            "description2": "Dëst wäert net mam aktuellen Apparat kommunizéieren.",
+            "entity": "Entitéit",
+            "state": "Zoustand",
+            "attributes": "Attributer",
+            "state_attributes": "Atrributer vum Zoustand (YAML, fakultativ)",
+            "set_state": "Zoustand setzen",
+            "current_entities": "Aktuell Entitéiten",
+            "filter_entities": "Entitéite filteren",
+            "filter_states": "Zoustänn filteren",
+            "filter_attributes": "Attributer filteren",
+            "no_entities": "Keng Entitéiten",
+            "more_info": "Méi Info",
+            "alert_entity_field": "Entitéit ass e obligatorescht Feld",
+            "last_updated": "Läscht Aktualiséierung",
+            "last_changed": "Läscht Ännerung",
+            "copy_id": "Copy ID to clipboard"
+          },
+          "templates": {
+            "title": "Modeller",
+            "description": "Modeller ginn mëttels Jinja2 template engine duergestallt mat e puer Home Assistant spezifesch Erweiderungen.",
+            "editor": "Modell Editeur",
+            "reset": "Op Demo Modell zeréck setzen",
+            "result_type": "Typ vum Resultat",
+            "jinja_documentation": "Jinja2 Modell Dokumentatioun",
+            "template_extensions": "Home Assistant Modell Erweiderungen",
+            "unknown_error_template": "Onbekannte Feeler beim duerstelle vum Modell",
+            "time": "Dës Virlag aktualiséiert sech am Ufank vun all Minutt.",
+            "all_listeners": "Dës Virlag lauschtert fir all geännert Zoustänn Evenementer.",
+            "no_listeners": "Dës Virlag lauschtert net fir geännert Zoustänn Evenementer a gëtt net automatesch aktualiséiert.",
+            "listeners": "Dës Virlag lauschtert fir déi folgend geännert Evenementer:",
+            "entity": "Entitéit",
+            "domain": "Domain"
+          }
+        }
+      }
+    }
+  }
+}

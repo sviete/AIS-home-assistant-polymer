@@ -39,6 +39,7 @@ export interface EntityCardConfig extends LovelaceCardConfig {
   attribute?: string;
   unit?: string;
   theme?: string;
+  state_color?: boolean;
 }
 
 export interface EntitiesCardEntityConfig extends EntityConfig {
@@ -73,6 +74,12 @@ export interface EntitiesCardConfig extends LovelaceCardConfig {
   header?: LovelaceHeaderFooterConfig;
   footer?: LovelaceHeaderFooterConfig;
   state_color?: boolean;
+}
+
+export interface AreaCardConfig extends LovelaceCardConfig {
+  area: string;
+  navigation_path?: string;
+  show_camera?: boolean;
 }
 
 export interface ButtonCardConfig extends LovelaceCardConfig {
@@ -386,6 +393,7 @@ export interface ThermostatCardConfig extends LovelaceCardConfig {
 export interface WeatherForecastCardConfig extends LovelaceCardConfig {
   entity: string;
   name?: string;
+  show_current?: boolean;
   show_forecast?: boolean;
   secondary_info_attribute?: string;
   theme?: string;

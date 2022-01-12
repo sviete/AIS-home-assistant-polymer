@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Събития",
+            "description": "Fire an event on the event bus.",
+            "documentation": "Events documentation",
+            "type": "Event Type",
+            "data": "Event Data (YAML, optional)",
+            "fire_event": "Fire Event",
+            "event_fired": "Event {name} fired",
+            "available_events": "Налични събития",
+            "count_listeners": "({count} слушатели)",
+            "listen_to_events": "Listen to events",
+            "listening_to": "Listening to",
+            "subscribe_to": "Event to subscribe to",
+            "start_listening": "Start listening",
+            "stop_listening": "Stop listening",
+            "alert_event_type": "Event type is a mandatory field",
+            "notification_event_fired": "Event {type} successfully fired!"
+          },
+          "services": {
+            "title": "Услуги",
+            "description": "The service dev tool allows you to call any available service in Home Assistant.",
+            "call_service": "Call Service",
+            "column_parameter": "Параметър",
+            "column_description": "Описание",
+            "column_example": "Пример",
+            "fill_example_data": "Fill Example Data",
+            "yaml_mode": "Отидете в YAML режим",
+            "ui_mode": "Отидете в режим Потребителски интерфейс",
+            "yaml_parameters": "Параметрите са налични само в YAML режим",
+            "all_parameters": "Всички налични параметри",
+            "accepts_target": "This service accepts a target, for example: `entity_id: light.bed_light`",
+            "no_template_ui_support": "Потребителският интерфейс не поддържа шаблони, все още можете да използвате YAML редактора."
+          },
+          "states": {
+            "title": "Състояния",
+            "description1": "Задайте представянето на устройство или обект в Home Assistant.",
+            "description2": "Промяната е фиктивна, до следваща актуализация на устройството или обекта.",
+            "entity": "Обект",
+            "state": "Състояние",
+            "attributes": "Атрибути",
+            "state_attributes": "Атрибути на състоянието (YAML, по избор)",
+            "set_state": "Задаване на състояние",
+            "current_entities": "Настоящи обекти",
+            "filter_entities": "Филтриране на обектите",
+            "filter_states": "Филтриране на състоянията",
+            "filter_attributes": "Филтриране на атрибутите",
+            "no_entities": "Няма обекти",
+            "more_info": "Повече информация",
+            "alert_entity_field": "Entity is a mandatory field",
+            "last_updated": "Последна актуализация",
+            "last_changed": "Последна промяна",
+            "copy_id": "Копиране на идентификатора в клипборда"
+          },
+          "templates": {
+            "title": "Шаблон",
+            "description": "Шаблоните се изобразяват с помощта на механизма за шаблони Jinja2 с някои специфични разширения на Home Assistant.",
+            "editor": "Редактор на шаблони",
+            "reset": "Връщане към демонстрационен шаблон",
+            "result_type": "Тип на резултата",
+            "jinja_documentation": "Документация за Jinja2 шаблони",
+            "template_extensions": "Разширения на шаблона за Home Assistant",
+            "unknown_error_template": "Неизвестна грешка при визуализирането на шаблон",
+            "time": "Този шаблон се актуализира в началото на всяка минута.",
+            "all_listeners": "Този шаблон следи за всички събития на промяна на състояние.",
+            "no_listeners": "Този шаблон не слуша никакви събития и няма да се актуализира автоматично.",
+            "listeners": "Този шаблон следи за събития със следните промени на състояния:",
+            "entity": "Обект",
+            "domain": "Домейн"
+          }
+        }
+      }
+    }
+  }
+}

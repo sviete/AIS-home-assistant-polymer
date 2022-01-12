@@ -1,7 +1,6 @@
 import "../../layouts/ha-app-layout";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import "@polymer/paper-checkbox/paper-checkbox";
 import "../../components/ha-icon-button";
 import "@polymer/paper-item/paper-icon-item";
 import "@polymer/paper-item/paper-item";
@@ -10,20 +9,19 @@ import "@polymer/paper-listbox/paper-listbox";
 import "@polymer/paper-dropdown-menu/paper-dropdown-menu-light";
 import "@material/mwc-list/mwc-list-item";
 import "@polymer/paper-input/paper-textarea";
-import "@polymer/paper-radio-button/paper-radio-button";
-import "@polymer/paper-radio-group/paper-radio-group";
 import "../../components/ha-button-menu";
 import "../../components/ha-card";
 import "../../components/ha-menu-button";
 import "../../components/ha-slider";
 import "../../components/ha-expansion-panel";
-import { HomeAssistant } from "../../types";
-import { haStyle } from "../../resources/styles";
+import "../../components/ha-checkbox";
 import { PaperInputElement } from "@polymer/paper-input/paper-input";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import { mdiDrag } from "@mdi/js";
 import { css, html, LitElement, PropertyValues } from "lit";
 import { property, customElement, query } from "lit/decorators";
+import { repeat } from "lit/directives/repeat";
+import { guard } from "lit/directives/guard";
 import {
   addItem,
   clearItems,
@@ -34,8 +32,8 @@ import {
 } from "./aistts";
 import { showConfirmationDialog } from "../../dialogs/generic/show-dialog-box";
 import { navigate } from "../../common/navigate";
-import { repeat } from "lit/directives/repeat";
-import { guard } from "lit/directives/guard";
+import { haStyle } from "../../resources/styles";
+import { HomeAssistant } from "../../types";
 
 interface Voice {
   key: string;
@@ -391,12 +389,12 @@ export class HaPanelAisTts extends LitElement {
                         (item) =>
                           html`
                             <div class="editRow">
-                              <paper-checkbox
+                              <ha-checkbox
                                 tabindex="0"
                                 ?checked=${item.complete}
                                 .itemId=${item.id}
                                 @click=${this._completeItem}
-                              ></paper-checkbox>
+                              ></ha-checkbox>
                               <paper-input
                                 no-label-float
                                 .value=${item.name}
@@ -482,12 +480,12 @@ export class HaPanelAisTts extends LitElement {
                           ${this._getItemRow(item, false)}
                         </div>
                       </ha-expansion-panel>
-                      <paper-checkbox
+                      <ha-checkbox
                         tabindex="0"
                         ?checked=${item.complete}
                         .itemId=${item.id}
                         @click=${this._completeItem}
-                      ></paper-checkbox>
+                      ></ha-checkbox>
                     `
                   : ``}
                 <paper-input
@@ -792,10 +790,10 @@ export class HaPanelAisTts extends LitElement {
           cursor: pointer;
         }
 
-        paper-checkbox {
+        ha-checkbox {
           padding-left: 4px;
           padding-right: 20px;
-          --paper-checkbox-label-spacing: 0px;
+          --ha-checkbox-label-spacing: 0px;
         }
 
         paper-input {
@@ -840,7 +838,7 @@ export class HaPanelAisTts extends LitElement {
         paper-icon-item:first-child {
           border-top: 0;
         }
-        paper-checkbox {
+        ha-checkbox {
           padding: 11px;
         }
         paper-input {

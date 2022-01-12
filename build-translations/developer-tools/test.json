@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "TRANSLATED",
+            "description": "TRANSLATED",
+            "documentation": "TRANSLATED",
+            "type": "TRANSLATED",
+            "data": "TRANSLATED",
+            "fire_event": "TRANSLATED",
+            "event_fired": "TRANSLATED",
+            "available_events": "TRANSLATED",
+            "count_listeners": "TRANSLATED",
+            "listen_to_events": "TRANSLATED",
+            "listening_to": "TRANSLATED",
+            "subscribe_to": "TRANSLATED",
+            "start_listening": "TRANSLATED",
+            "stop_listening": "TRANSLATED",
+            "alert_event_type": "TRANSLATED",
+            "notification_event_fired": "TRANSLATED"
+          },
+          "services": {
+            "title": "TRANSLATED",
+            "description": "TRANSLATED",
+            "call_service": "TRANSLATED",
+            "column_parameter": "TRANSLATED",
+            "column_description": "TRANSLATED",
+            "column_example": "TRANSLATED",
+            "fill_example_data": "TRANSLATED",
+            "yaml_mode": "TRANSLATED",
+            "ui_mode": "TRANSLATED",
+            "yaml_parameters": "TRANSLATED",
+            "all_parameters": "TRANSLATED",
+            "accepts_target": "TRANSLATED",
+            "no_template_ui_support": "TRANSLATED"
+          },
+          "states": {
+            "title": "TRANSLATED",
+            "description1": "TRANSLATED",
+            "description2": "TRANSLATED",
+            "entity": "TRANSLATED",
+            "state": "TRANSLATED",
+            "attributes": "TRANSLATED",
+            "state_attributes": "TRANSLATED",
+            "set_state": "TRANSLATED",
+            "current_entities": "TRANSLATED",
+            "filter_entities": "TRANSLATED",
+            "filter_states": "TRANSLATED",
+            "filter_attributes": "TRANSLATED",
+            "no_entities": "TRANSLATED",
+            "more_info": "TRANSLATED",
+            "alert_entity_field": "TRANSLATED",
+            "last_updated": "TRANSLATED",
+            "last_changed": "TRANSLATED",
+            "copy_id": "TRANSLATED"
+          },
+          "templates": {
+            "title": "TRANSLATED",
+            "description": "TRANSLATED",
+            "editor": "TRANSLATED",
+            "reset": "TRANSLATED",
+            "result_type": "TRANSLATED",
+            "jinja_documentation": "TRANSLATED",
+            "template_extensions": "TRANSLATED",
+            "unknown_error_template": "TRANSLATED",
+            "time": "TRANSLATED",
+            "all_listeners": "TRANSLATED",
+            "no_listeners": "TRANSLATED",
+            "listeners": "TRANSLATED",
+            "entity": "TRANSLATED",
+            "domain": "TRANSLATED"
+          }
+        }
+      }
+    }
+  }
+}

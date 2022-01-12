@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "事件",
+            "description": "将事件发送到事件总线。",
+            "documentation": "事件文档",
+            "type": "事件类型",
+            "data": "事件数据（格式为 YAML，选填）",
+            "fire_event": "触发事件",
+            "event_fired": "事件 {name} 已触发",
+            "available_events": "可用事件",
+            "count_listeners": " ({count} 个监听器)",
+            "listen_to_events": "监听事件",
+            "listening_to": "监听",
+            "subscribe_to": "订阅事件",
+            "start_listening": "开始监听",
+            "stop_listening": "停止监听",
+            "alert_event_type": "事件类型是必填字段",
+            "notification_event_fired": "事件 {type} 成功触发！"
+          },
+          "services": {
+            "title": "服务",
+            "description": "服务开发工具可让您调用 Home Assistant 中任何可用的服务。",
+            "call_service": "调用服务",
+            "column_parameter": "参数",
+            "column_description": "描述",
+            "column_example": "示例",
+            "fill_example_data": "填写示例数据",
+            "yaml_mode": "进入 YAML 模式",
+            "ui_mode": "进入 UI 模式",
+            "yaml_parameters": "以下参数只能在 YAML 模式下使用",
+            "all_parameters": "所有可用的参数",
+            "accepts_target": "该服务接受一个目标，例如：`entity_id: light.bed_light`",
+            "no_template_ui_support": "UI 不支持模板，请使用 YAML 编辑器。"
+          },
+          "states": {
+            "title": "状态",
+            "description1": "此处可设置实体在 Home Assistant 中的状态。",
+            "description2": "此操作只会改变实体在系统中显示的状态，而不会改变实际设备的状态。",
+            "entity": "实体",
+            "state": "状态",
+            "attributes": "属性",
+            "state_attributes": "状态属性（格式为 YAML，选填）",
+            "set_state": "设置状态",
+            "current_entities": "现有实体",
+            "filter_entities": "输入筛选实体",
+            "filter_states": "输入筛选状态",
+            "filter_attributes": "输入筛选属性",
+            "no_entities": "没有可用实体",
+            "more_info": "更多信息",
+            "alert_entity_field": "实体是必填字段",
+            "last_updated": "上次更新",
+            "last_changed": "上次变化",
+            "copy_id": "将 ID 复制到剪贴板"
+          },
+          "templates": {
+            "title": "模板",
+            "description": "模板使用 jinja2 模板引擎和一些 Home Assistant 特定的插件进行渲染。",
+            "editor": "模板编辑器",
+            "reset": "重置为演示模板",
+            "result_type": "结果类型",
+            "jinja_documentation": "Jinja2 模板文档",
+            "template_extensions": "Home Assistant 模板插件",
+            "unknown_error_template": "渲染模板时发生了未知错误",
+            "time": "此模板在每分钟初更新。",
+            "all_listeners": "此模板监听所有的状态改变事件。",
+            "no_listeners": "此模板不监听任何状态改变事件，并且不会自动更新。",
+            "listeners": "此模板监听以下状态改变事件：",
+            "entity": "实体",
+            "domain": "域"
+          }
+        }
+      }
+    }
+  }
+}

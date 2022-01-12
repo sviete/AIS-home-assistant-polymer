@@ -1,0 +1,475 @@
+{
+  "ui": {
+    "panel": {
+      "lovelace": {
+        "cards": {
+          "confirm_delete": "Sécher fir dës Kaart ze läschen?",
+          "actions": {
+            "action_confirmation": "Are you sure you want to run action \"{action}\"?",
+            "no_entity_more_info": "No entity provided for more info dialog",
+            "no_entity_toggle": "No entity provided to toggle",
+            "no_navigation_path": "No navigation path specified",
+            "no_url": "No URL to open specified",
+            "no_service": "No service to run specified"
+          },
+          "empty_state": {
+            "title": "Wëllkomm Doheem",
+            "no_devices": "Dës Säit erlaabt et iech är Apparater ze kontrolléiere, awer wéi et schéngt sinn nach keng Apparater ageriicht. Gitt op d'Integratioun's Säit fir unzefänken.",
+            "go_to_integrations_page": "Zur Integratiouns Säit goen"
+          },
+          "entities": { "never_triggered": "Ni ausgeléist" },
+          "shopping-list": {
+            "checked_items": "Markéiert Elementer",
+            "clear_items": "Markéiert Elementer läschen",
+            "add_item": "Element dobäisetzen",
+            "reorder_items": "Artikele nei sortéieren",
+            "drag_and_drop": "Drag an Drop"
+          },
+          "picture-elements": {
+            "hold": "Gedréckt halen:",
+            "tap": "Tippen:",
+            "navigate_to": "Navigéieren zu {location}",
+            "url": "Fënster opmaachen mat {url_path}",
+            "toggle": "{name} ëmschalten",
+            "call_service": "Service {name} opruffen",
+            "more_info": "méi Informatiounen: {name}"
+          },
+          "safe-mode": {
+            "header": "Sécherheetsmodus aktivéiert",
+            "description": "Home Assistant konnt Konfiguratioun net richteg lueden an leeft elo am Sécherheetsmodus. Kuck Logbicher fir de Feeler ze fannen."
+          },
+          "starting": { "description": "Home Assistant start, waart w.e.g..." }
+        },
+        "unused_entities": {
+          "title": "Onbenotzten Entitéiten",
+          "available_entities": "Dës si verfügbar Entitéiten, déi awer nach net an ärer Lovelace UI sinn.",
+          "select_to_add": "Wielt d'Entitéite aus déi zu enger Kaart dobäigesaat solle ginn an klickt den Kaart dobäisetzen Knäppchen",
+          "entity": "Entitéit",
+          "entity_id": "ID vun der Entitéit",
+          "domain": "Domän",
+          "last_changed": "Läscht Ännerung",
+          "search": "Entitéite sichen",
+          "no_data": "Keng onbenotzten Entitéite fonnt"
+        },
+        "add_entities": {
+          "yaml_unsupported": "Dës Funktioun kann net benotz gi wann de Lovelace am YAML Modus bedriwwe gëtt.",
+          "generated_unsupported": "Dës Funktioun kann nëmme benotzt gi wann dir d'Kontroll iwwert Lovelace iwwerholl hutt.",
+          "saving_failed": "Feeler beim Späicheren vun der Lovelace Konfiguratioun"
+        },
+        "views": {
+          "confirm_delete": "Usiicht läschen?",
+          "confirm_delete_text": "Sécher fir d'Usiicht ''{name}'' ze läsche?",
+          "confirm_delete_existing_cards": "D'Läschen vun dëser Usiicht läscht och d'Kaarten",
+          "confirm_delete_existing_cards_text": "Sécher fir d'Usiicht ''{name}'' ze läsche? Dës Usiicht enthält {number} Kaart(en) déi och geläscht ginn. Dës Aktioun kann net réckgängeg gemaach ginn."
+        },
+        "menu": {
+          "configure_ui": "Tableau de Bord änneren",
+          "help": "Hëllef",
+          "start_conversation": "Ënnerhalung starten",
+          "reload_resources": "Ressource frësch lueden",
+          "exit_edit_mode": "Benotzer Interface Editéierungsmodus verloossen",
+          "close": "Zoumaachen"
+        },
+        "reload_resources": {
+          "refresh_header": "Soll aktualiséiert ginn?",
+          "refresh_body": "D'Säit muss aktualiséiert gi fir d'Aktualiséierung ofzeschléissen, elo aktualiséieren?"
+        },
+        "editor": {
+          "header": "UI änneren",
+          "menu": {
+            "open": "Lovelace Menu opmaachen",
+            "raw_editor": "Editeur fir déi reng Konfiguratioun",
+            "manage_dashboards": "Tableau de Bord verwalten",
+            "manage_resources": "Ressource verwalten"
+          },
+          "common": {
+            "edit": "Änneren",
+            "clear": "Läschen",
+            "add": "Dobäisetzen",
+            "none": "Keen"
+          },
+          "raw_editor": {
+            "header": "Konfiguratioun änneren",
+            "save": "Späicheren",
+            "unsaved_changes": "Net gespäicherten Ännerungen",
+            "saved": "Gespäichert",
+            "reload": "Reload",
+            "lovelace_changed": "The Lovelace config was updated, do you want to load the updated config in the editor and lose your current changes?",
+            "confirm_remove_config_title": "Sécher fir deng Lovelace Konfiguratioun ze läschen?",
+            "confirm_remove_config_text": "Mir erstellen automatesch är Lovelace Usiichte mat äre Beräicher an Apparaten wann dir är Lovelace Konfiguratioun läscht.",
+            "confirm_unsaved_changes": "Dir hutt net gespäichert Ännerungen, sécher fir eraus ze goen?",
+            "confirm_unsaved_comments": "Deng Konfiguratioun enthält Kommentaren, dës ginn net gespäichert. Wëlls Du weiderfueren?",
+            "error_parse_yaml": "Kann de YAML net analyséieren: {error}",
+            "error_invalid_config": "Är Konfiguratioun ass ongëlteg: {error}",
+            "error_save_yaml": "Kann de YAML net späicheren: {error}",
+            "error_remove": "Kann Konfiguratioun net läschen: {error}",
+            "resources_moved": "Ressourcen sollen net méi an d'Lovelace Konfiguratioun bäigesat ginn, awer kënnen am Lovelace Konfiguratiouns Panel bäigefügt ginn."
+          },
+          "edit_lovelace": {
+            "header": "Titel vun ärem Lovelace Benotzer Interface",
+            "explanation": "Dësen Titel gëtt iwwert den Usiichte vu Lovelace ugewisen.",
+            "edit_title": "Titel änneren",
+            "title": "Titel"
+          },
+          "edit_view": {
+            "header": "Konfiguratioun kucken",
+            "header_name": "{name} Konfiguratioun kucken",
+            "add": "Vue dobäisetzen",
+            "edit": "Vue änneren",
+            "delete": "Vue läschen",
+            "move_left": "Usiicht no lenks réckelen",
+            "move_right": "Usiicht no riets réckelen",
+            "tab_settings": "Astellungen",
+            "tab_badges": "Badgen",
+            "tab_visibility": "Visibilitéit",
+            "visibility": {
+              "select_users": "Wiel d'Benotzer aus déi dës Usiicht an der Navigatioun gesinn"
+            },
+            "type": "View type",
+            "types": {
+              "masonry": "Masonry (default)",
+              "sidebar": "Sidebar",
+              "panel": "Panel (1 card)"
+            }
+          },
+          "edit_badges": {
+            "panel_mode": "Dës Badge gi net ugewise well dës Usiicht am \"Panel Modus\" ass."
+          },
+          "edit_card": {
+            "header": "Kaart Konfiguratioun",
+            "typed_header": "{type} Kaart Konfiguratioun",
+            "pick_card": "Wielt eng Kaart aus déi soll dobäigesat ginn.",
+            "pick_card_view_title": "Wéieng Kaart wëllt dir zu ärer {name}Usiicht dobäisetzen?",
+            "toggle_editor": "Editeur ëmschalten",
+            "unsaved_changes": "Du hues ongespäichert Ännerungen",
+            "confirm_cancel": "Sécher fir ofzebriechen ?",
+            "show_visual_editor": "Visuellen Editeur uweisen",
+            "show_code_editor": "Code Editeur uweisen",
+            "add": "Kaart dobäisetzen",
+            "edit": "Änneren",
+            "clear": "Läschen",
+            "delete": "Kaart läschen",
+            "duplicate": "Kaart Replikéieren",
+            "move": "Zur Usiicht réckelen",
+            "move_before": "Kaart réckelen virun",
+            "move_after": "Kaart réckelen no",
+            "options": "Méi Optiounen",
+            "search_cards": "Kaart sichen"
+          },
+          "move_card": {
+            "header": "Vue auswielen wou d'Kaart geréckelt soll ginn."
+          },
+          "select_view": {
+            "header": "Vue auswielen",
+            "dashboard_label": "Tableau de Bord"
+          },
+          "suggest_card": {
+            "header": "Mir hun eng Suggestioun fir iech erstallt",
+            "create_own": "Aner Kaart auswielen",
+            "add": "Zu Lovelace bäisetzen"
+          },
+          "save_config": {
+            "header": "Kontroll iwwert Loveloce UI iwwerhuelen",
+            "para": "Dësen Tableau de Bord gëtt vum Home Assistant verwalt. Et gëtt automatesch aktualiséiert soubal nei Entitéiten oder Lovelace-Komponenten disponibel sinn. Wanns Du d'Kontrolle iwwerhëlls, kann dësen Tableau de Bord net méi automatesch aktualiséiertginn. Du kanns ëmmer ee neien Tableau de Bord erstellen fir domatt ze testen.",
+            "para_sure": "Sécher fir d'Kontrolle iwwert de Benotzer Interface z'iwwerhuelen?",
+            "yaml_mode": "Du benotz de YAML Modus fir dësen Tableau de Bord, dëst bedeit dass du d'Lovelace Konfiguratioun net kanns aus dem Benotzer Interface änneren. Wann's du Lovelace vum Benotzer Interface aus wëlls änneren, läsch de 'mode: yaml' aus denger Lovelace Konfiguratioun am 'configuration.yaml'",
+            "yaml_control": "Fir d'Kontroll am YAML Modus z'iwwerhuelen, erstell ee YAML Fichier mam Numm deen an der Konfiguratioun vun dësem Tableau de Bord uginn ass, oder de Standard 'ui-lovelace.yaml'",
+            "yaml_config": "Fir de Start ze vereinfachen, hei ass déi aktuell Konfiguratioun vun dësem Tableau de Bord:",
+            "empty_config": "Mat engem eidelen Tableau de Bord ufänken",
+            "close": "Zoumaachen",
+            "save": "Kontroll iwwerhuelen",
+            "cancel": "Vergiess et"
+          },
+          "migrate": {
+            "header": "Konfiguratioun net kompatibel",
+            "para_no_id": "Dëst Element huet keng ID. Definéiert w.e.g. eng ID fir dëst Element am 'ui-lovelace.yaml'.",
+            "para_migrate": "Home Assistant kann ID's zu all äre Kaarten automatesch dobäisetzen andeem dir de Knäppche 'Konfiguratioun migréieren' dréckt.",
+            "migrate": "Konfiguratioun migréieren"
+          },
+          "action-editor": {
+            "navigation_path": "Nagiatioun's Pad",
+            "url_path": "URL Pad",
+            "actions": {
+              "default_action": "Standard Aktioun",
+              "call-service": "Service ruffen",
+              "more-info": "Méi Informatiounen",
+              "toggle": "Ëmschalten",
+              "navigate": "Navigéieren",
+              "url": "URL",
+              "none": "Keng Aktioun"
+            }
+          },
+          "card": {
+            "alarm-panel": {
+              "name": "Alarm Zentral",
+              "available_states": "Verfügbar Zoustänn",
+              "description": "D'Alarm Panel Kaart erlaabt et d'Integratioun vun der Alarm Kontroll Panel ze arméieren an ze desaktivéieren."
+            },
+            "calendar": {
+              "name": "Kalenner",
+              "description": "Kalenner Kaart weist ee Kalenner mat Deeg, Wochen an Lëschten un",
+              "inital_view": "Initial Vue",
+              "calendar_entities": "Kalenner Entitéiten",
+              "views": {
+                "dayGridMonth": "Mount",
+                "dayGridDay": "Dag",
+                "listWeek": "Lëscht"
+              }
+            },
+            "conditional": {
+              "name": "Bedingungen",
+              "description": "D'Konditiounskaart weist eng aner Kaart baséierend op den Zoustand vun Entitéiten.",
+              "conditions": "Konditiounen",
+              "card": "Kaart",
+              "state_equal": "Zoustand ass gläich mat",
+              "state_not_equal": "Zoustand ass net gläich mat",
+              "current_state": "aktuell",
+              "condition_explanation": "D'Kaart gëtt réischt ugewisen wann ALL Konditiounen erfëllt sinn.",
+              "change_type": "Typ änneren"
+            },
+            "config": { "required": "Obligatoresch", "optional": "Optional" },
+            "entities": {
+              "name": "Entitéiten",
+              "show_header_toggle": "Titel Schalter uweisen?",
+              "toggle": "Entitéiten ëmschalten",
+              "description": "D'Entitéite Kaart ass déi am meeschten allgemengen Zort Kaart. Si gruppéiert Entitéite gemeinsam a Lëschten.",
+              "special_row": "Spezial Réih",
+              "edit_special_row": "Kuckt d'Detailer vun dëser Rei andeems Du op den Edit Knäppchen klicks",
+              "entity_row_editor": "Entitéite Réih Editor",
+              "secondary_info_values": {
+                "none": "Keng Sekundär Informatioun",
+                "entity-id": "Entitéit ID",
+                "last-changed": "Läscht Ännerung",
+                "last-triggered": "Läscht ausgeléist",
+                "position": "Positioun",
+                "tilt-position": "Kippstellung",
+                "brightness": "Hellegkeet",
+                "last-updated": "Läscht mise à jour"
+              },
+              "entity_row": {
+                "divider": "Deeler",
+                "call-service": "Service ruffen",
+                "section": "Sektioun",
+                "weblink": "Web Link",
+                "attribute": "Attribut",
+                "buttons": "Knäppercher",
+                "conditional": "Conditionnel",
+                "cast": "Cast",
+                "button": "Knäppchen"
+              }
+            },
+            "entity": {
+              "name": "Entitéit",
+              "description": "D'Entity Kaart gëtt Dir e séieren Iwwerbléck iwwer den Zoustand vun enger Entitéit."
+            },
+            "button": {
+              "name": "Knäppchen",
+              "description": "Knäppchen Kaart erlaabt et Knäppchen mat Aktioune unzeweisen.",
+              "default_action_help": "D'Standardaktioun hänkt vun de Fäegkeete vun der Entitéit of, et gëtt entweder ëmgeschalt oder \"méi Info\" gëtt ugewisen."
+            },
+            "entity-filter": {
+              "name": "Entitéite Filter",
+              "description": "D'Entity Filter Kaart erlaabt Iech eng Lëscht vun Entitéiten ze definéieren déi nëmmen ugewise gi wann se an engem bestëmmten Zoustand sinn."
+            },
+            "gauge": {
+              "name": "Skala",
+              "needle_gauge": "Display as needle gauge?",
+              "severity": {
+                "define": "Schwieregkeetsgrad definéieren?",
+                "green": "Gréng",
+                "red": "Roud",
+                "yellow": "Giel"
+              },
+              "description": "D'Gauge Kaart ass eng Basis Kaart déi Sensor Date visuell duerstellt."
+            },
+            "glance": {
+              "name": "Usiicht",
+              "columns": "Kolonnen",
+              "description": "D'Glance Kaart ass nëtzlech fir verschidde Sensoren an enger kompakter Iwwersiicht ze gruppéieren."
+            },
+            "grid": {
+              "name": "Gitter",
+              "description": "Gitter Kaart erlaabt et multiple Kaarten als Gitter unzeweisen.",
+              "columns": "Columns",
+              "square": "Render cards as squares"
+            },
+            "logbook": {
+              "name": "Logbuch",
+              "description": "Logbuch weist eng Lëscht vun Evenementer vun Entitéiten un."
+            },
+            "history-graph": {
+              "name": "Verlaf Diagramm",
+              "description": "D'Verlaf's Grafik Kaart erlaabt Iech eng Grafik fir all eenzel opgelëschten Entitéiten unzeweisen."
+            },
+            "statistics-graph": {
+              "name": "Statistics Graph",
+              "description": "The Statistics Graph card allows you to display a graph of the statistics for each of the entities listed."
+            },
+            "horizontal-stack": {
+              "name": "Horizontale Stapel",
+              "description": "Horizontal Kaart erlaabt et méi Kaarten ze gruppéieren fir dass se ëmmer an der selwechter Rei ugewise ginn."
+            },
+            "humidifier": {
+              "name": "Loftbefiichter",
+              "description": "Loftbefiichter Kaart gëtt dir Kontroll iwwert ee Loftbefiichter. Erlaabt et dir d'Fiichtegkeet a Betriibs Modus anzestellen."
+            },
+            "iframe": {
+              "name": "Websäit",
+              "description": "Websäit Kaart erlaabt et eng aaner Websäit am Home Assistant unzeweisen."
+            },
+            "light": {
+              "name": "Luucht",
+              "description": "Luucht Kaart erlaabt et d'Hellegkeet vun de Luuchten ze veränneren."
+            },
+            "generic": {
+              "aspect_ratio": "Säiteverhältnis",
+              "attribute": "Attribut",
+              "camera_image": "Kamera Entitéit",
+              "camera_view": "Kamera Usiicht",
+              "double_tap_action": "Aktioun beim 2-mol tippen",
+              "entities": "Entitéiten",
+              "entity": "Entitéit",
+              "hold_action": "Aktioun beim unhalen",
+              "hours_to_show": "Stonnen uweisen",
+              "days_to_show": "Days to Show",
+              "icon": "Ikon",
+              "icon_height": "Héicht vun der Ikon",
+              "image": "Wee zum Bild",
+              "maximum": "Maximum",
+              "manual": "Manuell",
+              "manual_description": "Muss Du eng personaliséiert Kaart bäifügen oder wëlls de Yaml manuell schreiwen?",
+              "minimum": "Minimum",
+              "name": "Numm",
+              "refresh_interval": "Aktualiséierungs Intervall",
+              "show_icon": "Ikon uweisen?",
+              "show_name": "Numm uweisen?",
+              "show_state": "Zoustand uweisen?",
+              "tap_action": "Aktioun beim tippen",
+              "title": "Titel",
+              "theme": "Thema",
+              "no_theme": "Kee Thema",
+              "unit": "Eenheet",
+              "url": "URL",
+              "state": "Zoustand",
+              "secondary_info_attribute": "Sekundär Informatiouns Attribut",
+              "search": "Sichen",
+              "state_color": "Ikone baséierend um Zoustand fierwen?"
+            },
+            "map": {
+              "name": "Kaart",
+              "geo_location_sources": "Quell vun der Geolokalisatioun",
+              "dark_mode": "Däischteren Modus",
+              "default_zoom": "Standard Zoom",
+              "hours_to_show": "Stonnen uweisen",
+              "source": "Quell",
+              "description": "Kaarte Kaart erméiglecht d'Visualisatioun vun Entitéiten op enger Kaart."
+            },
+            "markdown": {
+              "name": "Markdown",
+              "content": "Contenu",
+              "description": "Markdown Kaart gëtt benotzt fir Text ze formatéieren."
+            },
+            "media-control": {
+              "name": "Medie Kontroll",
+              "description": "Medien Kontroller Kaart gëtt benotzt fir Medie Spiller Entitéiten an engem Interface mat Kontroll Knäppchen unzeweisen."
+            },
+            "picture": {
+              "name": "Bild",
+              "description": "D'Foto Kaart erlaabt Iech e Bild ze setze fir als Navigatioun ze benotze fir op verschidde Weeër an Ärem Interface oder e Service op ze ruffen."
+            },
+            "picture-elements": {
+              "name": "Biller Elementer",
+              "description": "D'Picture Elements Kaart ass eng vun de villsäitegsten Aarte vu Kaarten. D'Kaarten erlaben Iech Ikonen oder Text ze positionéieren a souguer Servicer! Op engem Bild wat op Koordinate baséiert."
+            },
+            "picture-entity": {
+              "name": "Biller Entitéit",
+              "description": "Bild Entitéite Kaart affichéiert eng Entitéit an der Form vun engem Bild. Amplaatz vun Biller vun enger URL kënnen och Biller vun enger Kamera ugewise ginn."
+            },
+            "picture-glance": {
+              "name": "Biller Usiicht",
+              "description": "D'Picture Glance Kaart weist e Bild an entspriechend Entitéiten Zoustänn als Ikon un. D'Entitéiten op der rietser Säit erlaben et Aktiounen auszeféieren, oder anerer weise méi Informatioun un.",
+              "state_entity": "State Entity"
+            },
+            "plant-status": {
+              "name": "Status vun der Planz",
+              "description": "Pflanz Kaart ass fir all Botanist geduecht."
+            },
+            "sensor": {
+              "name": "Sensor",
+              "show_more_detail": "Méi Detailer uweisen",
+              "graph_type": "Typ vun Graph.",
+              "description": "Sensor Kaart erméiglecht eng schnell vue vun den Zoustänn vun de Sensoren mat engem optionalen Graphique fir den Verlaf ze visualiséieren."
+            },
+            "shopping-list": {
+              "name": "Akafslëscht",
+              "description": "Akafslëscht Kaart erlaabt et Saachen op eng Akafslëscht dobäizesetzen, änneren oder ofzehaken.",
+              "integration_not_loaded": "Dës Kaart erfuerdert dass d'Integratioun `shopping_list ageriicht ass."
+            },
+            "thermostat": {
+              "name": "Thermostat",
+              "description": "Thermostat Kaart erlaabt d'Kontroll vun den Klima Entitéiten. Souwuel Temperatur an Betriibs Modus kënnen geännert ginn."
+            },
+            "vertical-stack": {
+              "name": "Vertikale Stapel",
+              "description": "Vertikal Kaart erlaabt et méi Kaarten ze gruppéieren fir dass se ëmmer an der selwechter Kolonne ugewise ginn."
+            },
+            "weather-forecast": {
+              "name": "Wiederprevisioune",
+              "description": "Wieder Previsoune Kaart weist d'Météo un. Immens nëtzlech fir Interfacen déi Benotzer un d'Mauer hänken.",
+              "show_forecast": "Prévisioun uweisen"
+            }
+          },
+          "view": {
+            "panel_mode": {
+              "warning_multiple_cards": "Dës Usiicht enthält méi wéi eng Kaart, mee eng Panneau Usiicht kann nëmmen 1 Kaart uweisen.",
+              "description": "Dëst stellt déi éischt Kaart op voller Breet duer. Aner Kaarte oder Badge ginn net duergestallt.",
+              "title": "Panel Modus?"
+            }
+          },
+          "cardpicker": {
+            "no_description": "Keng Beschreiwung verfügbar",
+            "custom_card": "Personnaliséiert",
+            "domain": "Domain",
+            "entity": "Entitéit",
+            "by_entity": "Der Entitéit no",
+            "by_card": "Der Kaart no"
+          },
+          "header-footer": {
+            "header": "Entête",
+            "footer": "Fousszeilen",
+            "choose_header_footer": "{typ} auswielen",
+            "types": {
+              "graph": { "name": "Graph" },
+              "picture": { "name": "Bild" },
+              "buttons": { "name": "Knäppercher" }
+            }
+          },
+          "sub-element-editor": {
+            "types": {
+              "header": "Entête Editeur",
+              "footer": "Fousszeilen Editeur",
+              "row": "Editeur vun der Réih vun Entitéiten"
+            }
+          }
+        },
+        "warning": {
+          "attribute_not_found": "Attribut {attribute} net disponibel an: {entity}",
+          "entity_not_found": "Entitéit net erreechbar: {entity}",
+          "entity_non_numeric": "Entitéit ass net numerescher Natur: {entity}",
+          "entity_unavailable": "Entitéit ass fir de Moment net erreechbar: {entity}",
+          "starting": "Home Assistant start, et wäert nach net alles prett sinn"
+        },
+        "changed_toast": {
+          "message": "Lovelace Konfiguratioun gouf geännert, soll frësch geluede ginn fir d'Ännerunge siichtbar ze machen?"
+        },
+        "components": {
+          "timestamp-display": {
+            "invalid": "Ongëltege Zäitstempel",
+            "invalid_format": "Ongëltege Display Format"
+          }
+        },
+        "reload_lovelace": "Benotzer frësch lueden"
+      }
+    }
+  }
+}

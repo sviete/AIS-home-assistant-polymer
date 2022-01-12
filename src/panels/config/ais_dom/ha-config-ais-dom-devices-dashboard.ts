@@ -1,6 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
 import memoizeOne from "memoize-one";
+import { mdiPlus } from "@mdi/js";
 import { HASSDomEvent } from "../../../common/dom/fire_event";
 import { navigate } from "../../../common/navigate";
 import { LocalizeFunc } from "../../../common/translations/localize";
@@ -23,7 +24,6 @@ import "../../../layouts/hass-tabs-subpage-data-table";
 import { HomeAssistant, Route } from "../../../types";
 import { configSections } from "../ha-panel-config";
 import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
-import { mdiPlus } from "@mdi/js";
 import "@material/mwc-fab";
 
 interface DeviceRowData extends DeviceRegistryEntry {
@@ -183,77 +183,75 @@ export class HaConfigAisDomDeviceDashboard extends LitElement {
     }
   );
 
-  private _columns = memoizeOne(
-    (narrow: boolean): DataTableColumnContainer => {
-      const columns: DataTableColumnContainer = narrow
-        ? {
-            name: {
-              title: "Device",
-              sortable: true,
-              filterable: true,
-              direction: "asc",
-              grows: true,
-              template: (name, device: DataTableRowData) => html`
-                ${name}
-                <div class="secondary">
-                  ${device.area} | ${device.integration}
-                </div>
-              `,
-            },
-          }
-        : {
-            name: {
-              title: this.hass.localize(
-                "ui.panel.config.devices.data_table.device"
-              ),
-              sortable: true,
-              filterable: true,
-              grows: true,
-              direction: "asc",
-            },
-          };
+  private _columns = memoizeOne((narrow: boolean): DataTableColumnContainer => {
+    const columns: DataTableColumnContainer = narrow
+      ? {
+          name: {
+            title: "Device",
+            sortable: true,
+            filterable: true,
+            direction: "asc",
+            grows: true,
+            template: (name, device: DataTableRowData) => html`
+              ${name}
+              <div class="secondary">
+                ${device.area} | ${device.integration}
+              </div>
+            `,
+          },
+        }
+      : {
+          name: {
+            title: this.hass.localize(
+              "ui.panel.config.devices.data_table.device"
+            ),
+            sortable: true,
+            filterable: true,
+            grows: true,
+            direction: "asc",
+          },
+        };
 
-      columns.manufacturer = {
-        title: this.hass.localize(
-          "ui.panel.config.devices.data_table.manufacturer"
-        ),
-        sortable: true,
-        hidden: narrow,
-        filterable: true,
-        width: "15%",
-      };
-      columns.model = {
-        title: this.hass.localize("ui.panel.config.devices.data_table.model"),
-        sortable: true,
-        hidden: narrow,
-        filterable: true,
-        width: "15%",
-      };
-      columns.area = {
-        title: this.hass.localize("ui.panel.config.devices.data_table.area"),
-        sortable: true,
-        hidden: narrow,
-        filterable: true,
-        width: "15%",
-      };
-      columns.integration = {
-        title: this.hass.localize(
-          "ui.panel.config.devices.data_table.integration"
-        ),
-        sortable: true,
-        hidden: narrow,
-        filterable: true,
-        width: "15%",
-      };
-      columns.sw_version = {
-        title: "Wersja",
-        sortable: true,
-        width: narrow ? "90px" : "15%",
-        maxWidth: "90px",
-      };
-      return columns;
-    }
-  );
+    columns.manufacturer = {
+      title: this.hass.localize(
+        "ui.panel.config.devices.data_table.manufacturer"
+      ),
+      sortable: true,
+      hidden: narrow,
+      filterable: true,
+      width: "15%",
+    };
+    columns.model = {
+      title: this.hass.localize("ui.panel.config.devices.data_table.model"),
+      sortable: true,
+      hidden: narrow,
+      filterable: true,
+      width: "15%",
+    };
+    columns.area = {
+      title: this.hass.localize("ui.panel.config.devices.data_table.area"),
+      sortable: true,
+      hidden: narrow,
+      filterable: true,
+      width: "15%",
+    };
+    columns.integration = {
+      title: this.hass.localize(
+        "ui.panel.config.devices.data_table.integration"
+      ),
+      sortable: true,
+      hidden: narrow,
+      filterable: true,
+      width: "15%",
+    };
+    columns.sw_version = {
+      title: "Wersja",
+      sortable: true,
+      width: narrow ? "90px" : "15%",
+      maxWidth: "90px",
+    };
+    return columns;
+  });
 
   public constructor() {
     super();
@@ -273,7 +271,7 @@ export class HaConfigAisDomDeviceDashboard extends LitElement {
         .backPath=${this._searchParms.has("historyBack")
           ? undefined
           : "/config"}
-        .tabs=${configSections.integrations}
+        .tabs=${configSections.devices}
         .route=${this.route}
         .columns=${this._columns(this.narrow)}
         .data=${this._devices(

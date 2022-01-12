@@ -1,0 +1,154 @@
+{
+  "ui": {
+    "panel": {
+      "page-authorize": {
+        "initializing": "初期化中",
+        "authorizing_client": "{clientId} Home Assistantインスタンスへのアクセスを許可しようとしています。",
+        "logging_in_to_with": "**{authProviderName}** で **{locationName}** にログインします。",
+        "logging_in_with": "**{authProviderName}**でログインします。",
+        "pick_auth_provider": "またはログイン",
+        "abort_intro": "ログインが中止されました",
+        "form": {
+          "working": "お待ちください",
+          "unknown_error": "エラーが発生しました",
+          "next": "次",
+          "start_over": "やり直す",
+          "error": "エラー： {error}",
+          "providers": {
+            "command_line": {
+              "step": {
+                "init": {
+                  "data": { "username": "ユーザー名", "password": "パスワード" }
+                },
+                "mfa": {
+                  "data": { "code": "多要素認証コード" },
+                  "description": "デバイスで** {mfa_module_name} **を開き、2段階認証コードを表示して、本人確認を行います。"
+                }
+              },
+              "error": {
+                "invalid_auth": "ユーザー名やパスワードが正しくありません",
+                "invalid_code": "認証コードが正しくありません"
+              },
+              "abort": {
+                "login_expired": "セッションがタイムアウトしました、再度ログインしてください。"
+              }
+            },
+            "homeassistant": {
+              "step": {
+                "init": {
+                  "data": { "username": "ユーザー名", "password": "パスワード" }
+                },
+                "mfa": {
+                  "data": { "code": "多要素認証コード" },
+                  "description": "デバイスで** {mfa_module_name} **を開き、2段階認証コードを表示して、本人確認を行います。"
+                }
+              },
+              "error": {
+                "invalid_auth": "無効なユーザー名またはパスワード",
+                "invalid_code": "無効な認証コード"
+              },
+              "abort": {
+                "login_expired": "セッションの有効期限が切れました、もう一度ログインしてください。"
+              }
+            },
+            "legacy_api_password": {
+              "step": {
+                "init": {
+                  "data": { "password": "API パスワード" },
+                  "description": "HTTP設定にAPIパスワードを入力してください："
+                },
+                "mfa": {
+                  "data": { "code": "多要素認証コード" },
+                  "description": "デバイスで** {mfa_module_name} **を開き、2段階認証コードを表示して、本人確認を行います。"
+                }
+              },
+              "error": {
+                "invalid_auth": "無効な API パスワード",
+                "invalid_code": "無効な認証コード"
+              },
+              "abort": {
+                "no_api_password_set": "API パスワードが設定されていません。",
+                "login_expired": "セッションがタイムアウトしました、再度ログインしてください。"
+              }
+            },
+            "trusted_networks": {
+              "step": {
+                "init": {
+                  "data": { "user": "ユーザー" },
+                  "description": "ログインするユーザーを選択してください："
+                }
+              },
+              "abort": {
+                "not_allowed": "お使いのコンピューターは許可されていません。"
+              }
+            },
+            "ais_demo": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (demo)",
+                    "password": "Password (demo)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_admin": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (admin)",
+                    "password": "Password (admin)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_cloud": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username",
+                    "password": "Password",
+                    "gate_id": "Gate ID"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

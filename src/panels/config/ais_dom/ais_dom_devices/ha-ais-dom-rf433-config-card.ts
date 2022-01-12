@@ -1,5 +1,6 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property, customElement } from "lit/decorators";
+import { HassEntity } from "home-assistant-js-websocket";
 import { HomeAssistant } from "../../../../types";
 import "../../../../components/entity/state-badge";
 import "@polymer/paper-item/paper-item";
@@ -9,7 +10,6 @@ import "../../../../components/ha-card";
 import "../../../../components/ha-icon";
 import "../../../../components/ha-switch";
 import { EntityRegistryStateEntry } from "../../devices/ha-config-device-page";
-import { HassEntity } from "home-assistant-js-websocket";
 import { loadAddAisDomDeviceDialog } from "./show-dialog-ais-dom-device-detail";
 
 @customElement("ha-ais-dom-rf433-config-card")
@@ -108,9 +108,8 @@ export class HaDeviceEntitiesCard extends LitElement {
     "Aby nauczyć Asystenta kodów pilota radiowego (lub innego urządzenia wysyłającego kody radiowe o częstotliwości 433), uruchom tryb uczenia kodów RF, naciskając przycisk poniżej.";
 
   protected render(): TemplateResult {
-    const stateObj: HassEntity = this.hass.states[
-      "sensor.ais_dom_mqtt_rf_sensor"
-    ];
+    const stateObj: HassEntity =
+      this.hass.states["sensor.ais_dom_mqtt_rf_sensor"];
     return html`
       <div class="content">
         <ha-card header=${this._currentModeHeader}>

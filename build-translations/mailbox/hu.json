@@ -1,0 +1,12 @@
+{
+  "ui": {
+    "panel": {
+      "mailbox": {
+        "empty": "Nincsenek üzeneteid",
+        "playback_title": "Üzenet lejátszása",
+        "delete_prompt": "Törlöd az üzenetet?",
+        "delete_button": "Törlés"
+      }
+    }
+  }
+}

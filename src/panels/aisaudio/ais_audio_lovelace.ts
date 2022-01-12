@@ -9,42 +9,129 @@ export const aisAudioLovelace: LovelaceConfig = {
         {
           cards: [
             {
-              artwork: "full-cover",
-              entity: "media_player.wbudowany_glosnik",
-              hide: {
-                power: true,
-                runtime: false,
-                shuffle: false,
-                source: true,
+              type: "conditional",
+              conditions: [
+                {
+                  entity: "sensor.ais_player_mode",
+                  state: "music_player",
+                },
+                {
+                  entity: "input_select.ais_music_service",
+                  state_not: "Spotify",
+                },
+              ],
+              card: {
+                artwork: "full-cover",
+                entity: "media_player.wbudowany_glosnik",
+                hide: {
+                  power: true,
+                  runtime: false,
+                  shuffle: false,
+                  source: true,
+                },
+                icon: "mdi:monitor-speaker",
+                more_info: false,
+                name: " ",
+                shortcuts: {
+                  buttons: [
+                    {
+                      icon: "mdi:bookmark-music",
+                      id: "script.ais_add_item_to_bookmarks",
+                      type: "script",
+                    },
+                    {
+                      icon: "mdi:thumb-up",
+                      id: "script.ais_add_item_to_favorites",
+                      type: "script",
+                    },
+                  ],
+                  columns: 2,
+                  list: [],
+                },
+                show_progress: true,
+                speaker_group: {
+                  platform: "ais",
+                  show_group_count: true,
+                },
+                tts: {
+                  platform: "ais",
+                },
+                type: "ais-mini-media-player",
               },
-              icon: "mdi:monitor-speaker",
-              more_info: false,
-              name: " ",
-              shortcuts: {
-                buttons: [
-                  {
-                    icon: "mdi:bookmark-music",
-                    id: "script.ais_add_item_to_bookmarks",
-                    type: "script",
-                  },
-                  {
-                    icon: "mdi:thumb-up",
-                    id: "script.ais_add_item_to_favorites",
-                    type: "script",
-                  },
-                ],
-                columns: 2,
-                list: [],
+            },
+            {
+              type: "conditional",
+              conditions: [
+                {
+                  entity: "sensor.ais_player_mode",
+                  state_not: "music_player",
+                },
+              ],
+              card: {
+                artwork: "full-cover",
+                entity: "media_player.wbudowany_glosnik",
+                hide: {
+                  power: true,
+                  runtime: false,
+                  shuffle: false,
+                  source: true,
+                },
+                icon: "mdi:monitor-speaker",
+                more_info: false,
+                name: " ",
+                shortcuts: {
+                  buttons: [
+                    {
+                      icon: "mdi:bookmark-music",
+                      id: "script.ais_add_item_to_bookmarks",
+                      type: "script",
+                    },
+                    {
+                      icon: "mdi:thumb-up",
+                      id: "script.ais_add_item_to_favorites",
+                      type: "script",
+                    },
+                  ],
+                  columns: 2,
+                  list: [],
+                },
+                show_progress: true,
+                speaker_group: {
+                  platform: "ais",
+                  show_group_count: true,
+                },
+                tts: {
+                  platform: "ais",
+                },
+                type: "ais-mini-media-player",
               },
-              show_progress: true,
-              speaker_group: {
-                platform: "ais",
-                show_group_count: true,
+            },
+            {
+              type: "conditional",
+              conditions: [
+                {
+                  entity: "sensor.ais_player_mode",
+                  state: "music_player",
+                },
+                {
+                  entity: "input_select.ais_music_service",
+                  state: "Spotify",
+                },
+              ],
+              card: {
+                artwork: "full-cover",
+                entity: "media_player.android_tv_127_0_0_1",
+                hide: {
+                  power: true,
+                  runtime: false,
+                  shuffle: false,
+                  source: true,
+                },
+                icon: "mdi:monitor-speaker",
+                more_info: false,
+                name: " ",
+                type: "ais-mini-media-player",
               },
-              tts: {
-                platform: "ais",
-              },
-              type: "ais-mini-media-player",
             },
             {
               type: "conditional",
@@ -610,18 +697,28 @@ export const aisAudioLovelace: LovelaceConfig = {
             {
               cards: [
                 {
+                  type: "ais-auto-entities",
                   card: {
-                    show_header_toggle: false,
-                    type: "entities",
+                    type: "vertical-stack",
                   },
+                  card_param: "cards",
                   filter: {
+                    exclude: [
+                      {
+                        entity_id: "media_player.wbudowany_glosnik",
+                      },
+                    ],
                     include: [
                       {
                         domain: "media_player",
+                        options: {
+                          type: "custom:hui-ais-mini-media-player-card",
+                          artwork: "cover-fit",
+                          source: "full",
+                        },
                       },
                     ],
                   },
-                  type: "ais-auto-entities",
                 },
               ],
               icon: "mdi:speaker-multiple",

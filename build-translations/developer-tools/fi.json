@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Tapahtumat",
+            "description": "Lähetä tapahtumaa Home Assistantin tapahtumaväylään.",
+            "documentation": "Tapahtumien dokumentaatio.",
+            "type": "Tapahtumatyyppi",
+            "data": "Tapahtuman data (YAML, valinnainen)",
+            "fire_event": "Laukaise tapahtuma",
+            "event_fired": "Tapahtuma {name} käynnistetty",
+            "available_events": "Käytettävissä olevat tapahtumat",
+            "count_listeners": "({count} kuuntelijaa)",
+            "listen_to_events": "Kuuntele tapahtumia",
+            "listening_to": "Kuunnellaan",
+            "subscribe_to": "Tilaa tapahtuma",
+            "start_listening": "Aloita kuuntelu",
+            "stop_listening": "Lopeta kuuntelu",
+            "alert_event_type": "Tapahtumatyyppi on pakollinen kenttä",
+            "notification_event_fired": "Tapahtuma {type} käynnistetty!"
+          },
+          "services": {
+            "title": "Palvelut",
+            "description": "Service dev -työkalun avulla voit kutsua mitä tahansa käytettävissä olevaan palvelua Home Assistant -sovelluksessa.",
+            "call_service": "Kutsu palvelua",
+            "column_parameter": "Parametri",
+            "column_description": "Kuvaus",
+            "column_example": "Esimerkki",
+            "fill_example_data": "Täytä esimerkkitiedoilla",
+            "yaml_mode": "Siirry YAML-tilaan",
+            "ui_mode": "Siirry käyttöliittymätilaan",
+            "yaml_parameters": "Parameters only available in YAML mode",
+            "all_parameters": "All available parameters",
+            "accepts_target": "This service accepts a target, for example: `entity_id: light.bed_light`",
+            "no_template_ui_support": "Käyttöliittymä ei tue malleja, mutta voit silti käyttää YAML-editoria."
+          },
+          "states": {
+            "title": "Tilat",
+            "description1": "Aseta laitteen esitys Home Assistant -sovelluksessa.",
+            "description2": "Tämä ei kommunikoi varsinaisen laitteen kanssa.",
+            "entity": "Kohde",
+            "state": "Tila",
+            "attributes": "Määritteet",
+            "state_attributes": "Tilamääritteet (YAML, valinnainen)",
+            "set_state": "Aseta tila",
+            "current_entities": "Nykyiset kohteet",
+            "filter_entities": "Suodata kohteita",
+            "filter_states": "Suodata tiloja",
+            "filter_attributes": "Suodata määritteitä",
+            "no_entities": "Ei kohteita",
+            "more_info": "Lisätietoja",
+            "alert_entity_field": "Kohde on pakollinen kenttä",
+            "last_updated": "Last updated",
+            "last_changed": "Last changed",
+            "copy_id": "Kopioi ID leikepöydälle"
+          },
+          "templates": {
+            "title": "Malli",
+            "description": "Mallit tehdään Jinja2-mallimoottorilla, joissa on joitain Home Assistant -kohtaisia laajennuksia.",
+            "editor": "Mallieditori",
+            "reset": "Palauta demomalliin",
+            "result_type": "Tuloksen tyyppi",
+            "jinja_documentation": "Jinja2-mallin dokumentaatio",
+            "template_extensions": "Home Assistant -mallilaajennukset",
+            "unknown_error_template": "Tuntematon virhe mallin renderöinnissa",
+            "time": "Tämä malli päivittyy jokaisen minuutin alussa.",
+            "all_listeners": "Tämä malli kuuntelee kaikkia tilan muuttamia tapahtumia.",
+            "no_listeners": "Tämä malli ei kuuntele mitään tapahtumia eikä päivity automaattisesti.",
+            "listeners": "Tämä malli kuuntelee seuraavia tilan muuttuneita tapahtumia:",
+            "entity": "Kohde",
+            "domain": "Toimialue"
+          }
+        }
+      }
+    }
+  }
+}

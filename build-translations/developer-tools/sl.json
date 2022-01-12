@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Dogodki",
+            "description": "Zaženite dogodek na \"event bus\".",
+            "documentation": "Dokumentacija o dogodkih.",
+            "type": "Vrsta dogodka",
+            "data": "Podatki o dogodku (YAML, neobvezno)",
+            "fire_event": "Zaženite dogodek",
+            "event_fired": "Dogodek {name} zagnan",
+            "available_events": "Razpoložljivi dogodki",
+            "count_listeners": " ({count} poslušalcev)",
+            "listen_to_events": "Prisluhnite dogodkom",
+            "listening_to": "Poslušanje",
+            "subscribe_to": "Dogodek, na katerega se lahko naročite",
+            "start_listening": "Začnite poslušati",
+            "stop_listening": "Nehajte poslušati",
+            "alert_event_type": "Vrsta dogodka je obvezno polje",
+            "notification_event_fired": "Dogodek {type} uspešno zagnan!"
+          },
+          "services": {
+            "title": "Storitve",
+            "description": "Storitev dev orodje vam omogoča, da pokličete vse razpoložljive storitve v Home Assistant.",
+            "call_service": "Kliči Storitev",
+            "column_parameter": "Parameter",
+            "column_description": "Opis",
+            "column_example": "Primer",
+            "fill_example_data": "Izpolnite primer podatkov",
+            "yaml_mode": "Go to YAML mode",
+            "ui_mode": "Go to UI mode",
+            "yaml_parameters": "Parameters only available in YAML mode",
+            "all_parameters": "All available parameters",
+            "accepts_target": "This service accepts a target, for example: `entity_id: light.bed_light`",
+            "no_template_ui_support": "The UI does not support templates, you can still use the YAML editor."
+          },
+          "states": {
+            "title": "Stanja",
+            "description1": "Nastavite predstavitev naprave v programu Home Assistant.",
+            "description2": "To ne bo komuniciralo z dejansko napravo.",
+            "entity": "Subjekt",
+            "state": "Stanje",
+            "attributes": "Lastnosti",
+            "state_attributes": "Lastnosti stanja (YAML, neobvezno)",
+            "set_state": "Nastavi stanje",
+            "current_entities": "Trenutne entitete",
+            "filter_entities": "Filter entitet",
+            "filter_states": "Filter stanj",
+            "filter_attributes": "Filter atributov",
+            "no_entities": "Brez entitet",
+            "more_info": "Več informacij",
+            "alert_entity_field": "Entiteta je obvezno polje",
+            "last_updated": "Zadnja osvežitev",
+            "last_changed": "Zadnja sprememba",
+            "copy_id": "Copy ID to clipboard"
+          },
+          "templates": {
+            "title": "Predloge",
+            "description": "Predloge so upodobljene s pomočjo mehanizma za predloge Jinja2 z nekaterimi posebnimi razširitvami Home Assistant.",
+            "editor": "Urejevalnik predlog",
+            "reset": "Ponastavi na demo predlogo",
+            "result_type": "Vrsta rezultata",
+            "jinja_documentation": "Dokumentacija predloge Jinja2",
+            "template_extensions": "Home Assistant razširitvene predloge",
+            "unknown_error_template": "Neznana napaka upodabljanju predloge",
+            "time": "Ta predloga se posodobi na začetku vsake minute.",
+            "all_listeners": "Ta predloga motri vse dogodke, ki so posledica spremembe stanja.",
+            "no_listeners": "Ta predloga ne motri nobenih dogodkov in se ne bo samodejno posodabljala.",
+            "listeners": "Ta predloga motri naslednje dogodke, ki so posledica spremembe stanja:",
+            "entity": "Entiteta",
+            "domain": "Domena"
+          }
+        }
+      }
+    }
+  }
+}

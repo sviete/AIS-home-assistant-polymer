@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Įvykiai",
+            "description": "Fire an event on the event bus.",
+            "documentation": "Įvykių dokumentacija",
+            "type": "Event Type",
+            "data": "Event Data (YAML, optional)",
+            "fire_event": "Fire Event",
+            "event_fired": "Event {name} fired",
+            "available_events": "Available Events",
+            "count_listeners": " ({count}  listeners)",
+            "listen_to_events": "Listen to events",
+            "listening_to": "Listening to",
+            "subscribe_to": "Event to subscribe to",
+            "start_listening": "Start listening",
+            "stop_listening": "Stop listening",
+            "alert_event_type": "Event type is a mandatory field",
+            "notification_event_fired": "Event {type} successfully fired!"
+          },
+          "services": {
+            "title": "Paslaugos",
+            "description": "The service dev tool allows you to call any available service in Home Assistant.",
+            "call_service": "Call Service",
+            "column_parameter": "Parameter",
+            "column_description": "Description",
+            "column_example": "Example",
+            "fill_example_data": "Fill Example Data",
+            "yaml_mode": "Go to YAML mode",
+            "ui_mode": "Go to UI mode",
+            "yaml_parameters": "Parameters only available in YAML mode",
+            "all_parameters": "All available parameters",
+            "accepts_target": "This service accepts a target, for example: `entity_id: light.bed_light`",
+            "no_template_ui_support": "Vartotojo sąsaja nepalaiko šablonų, bet jūs vis tiek galite naudoti YAML redaktorių."
+          },
+          "states": {
+            "title": "Būsenos",
+            "description1": "Set the current state representation of an entity within Home Assistant.",
+            "description2": "If the entity belongs to a device, there will be no actual communication with that device.",
+            "entity": "Entity",
+            "state": "State",
+            "attributes": "Attributes",
+            "state_attributes": "State attributes (YAML, optional)",
+            "set_state": "Set State",
+            "current_entities": "Current entities",
+            "filter_entities": "Filter entities",
+            "filter_states": "Filter states",
+            "filter_attributes": "Filter attributes",
+            "no_entities": "No entities",
+            "more_info": "Daugiau informacijos",
+            "alert_entity_field": "Entity is a mandatory field",
+            "last_updated": "Atnaujinta",
+            "last_changed": "Pakeista",
+            "copy_id": "Copy ID to clipboard"
+          },
+          "templates": {
+            "title": "Šablonas",
+            "description": "Templates are rendered using the Jinja2 template engine with some Home Assistant specific extensions.",
+            "editor": "Template editor",
+            "reset": "Reset to demo template",
+            "result_type": "Rezultato tipas",
+            "jinja_documentation": "Jinja2 template documentation",
+            "template_extensions": "Home Assistant template extensions",
+            "unknown_error_template": "Unknown error rendering template",
+            "time": "Šis šablonas atnaujinamas kiekvienos minutės pradžioje.",
+            "all_listeners": "This template listens for all state changed events.",
+            "no_listeners": "This template does not listen for any events and will not update automatically.",
+            "listeners": "This template listens for the following state changed events:",
+            "entity": "Entity",
+            "domain": "Domenas"
+          }
+        }
+      }
+    }
+  }
+}

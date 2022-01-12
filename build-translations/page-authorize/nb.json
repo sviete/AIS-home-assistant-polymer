@@ -1,0 +1,152 @@
+{
+  "ui": {
+    "panel": {
+      "page-authorize": {
+        "initializing": "Initialiserer",
+        "authorizing_client": "Du er i ferd med å gi {clientId} tilgang til din Home Assistant",
+        "logging_in_to_with": "Logger på **{locationName}** med **{authProviderName}**.",
+        "logging_in_with": "Logg inn med **{authProviderName}**.",
+        "pick_auth_provider": "Eller logg inn med",
+        "abort_intro": "Innlogging avbrutt",
+        "form": {
+          "working": "Vennligst vent",
+          "unknown_error": "Noe gikk galt",
+          "next": "Neste",
+          "start_over": "Start på nytt",
+          "error": "Feil: {error}",
+          "providers": {
+            "command_line": {
+              "step": {
+                "init": {
+                  "data": { "username": "Brukernavn", "password": "Passord" }
+                },
+                "mfa": {
+                  "data": { "code": "Totrinns verifiseringskode" },
+                  "description": "Åpne **{mfa_module_name}** på enheten din for å se din tofaktors godkjenningskode og bekrefte identiteten din:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Ugyldig brukernavn eller passord",
+                "invalid_code": "Ugyldig godkjenningskode"
+              },
+              "abort": {
+                "login_expired": "Økten er utløpt, vennligst logg inn på nytt"
+              }
+            },
+            "homeassistant": {
+              "step": {
+                "init": {
+                  "data": { "username": "Brukernavn", "password": "Passord" }
+                },
+                "mfa": {
+                  "data": { "code": "Totrinns verifiseringskode" },
+                  "description": "Åpne **{mfa_module_name}** på enheten din for å se din tofaktors godkjenningskode og bekrefte identiteten din:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Ugyldig brukernavn eller passord",
+                "invalid_code": "Ugyldig godkjenningskode"
+              },
+              "abort": {
+                "login_expired": "Økten er utløpt, vennligst logg inn på nytt"
+              }
+            },
+            "legacy_api_password": {
+              "step": {
+                "init": {
+                  "data": { "password": "API-passord" },
+                  "description": "Vennligst fyll inn API-passordet i HTTP-konfigurasjonen:"
+                },
+                "mfa": {
+                  "data": { "code": "Totrinns verifiseringskode" },
+                  "description": "Åpne **{mfa_module_name}** på enheten din for å se din tofaktors godkjenningskode og bekrefte identiteten din:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Ugyldig API-passord",
+                "invalid_code": "Ugyldig godkjenningskode"
+              },
+              "abort": {
+                "no_api_password_set": "Du har ikke konfigurert et API-passord.",
+                "login_expired": "Økten er utløpt, vennligst logg inn på nytt"
+              }
+            },
+            "trusted_networks": {
+              "step": {
+                "init": {
+                  "data": { "user": "Bruker" },
+                  "description": "Vennligst velg en bruker du vil logge inn som:"
+                }
+              },
+              "abort": { "not_allowed": "Datamaskinen din er ikke tillatt." }
+            },
+            "ais_demo": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (demo)",
+                    "password": "Password (demo)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_admin": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (admin)",
+                    "password": "Password (admin)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_cloud": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username",
+                    "password": "Password",
+                    "gate_id": "Gate ID"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

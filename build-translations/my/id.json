@@ -1,0 +1,14 @@
+{
+  "ui": {
+    "panel": {
+      "my": {
+        "not_supported": "Pengalihan ini tidak didukung oleh instans Home Assistant Anda. Periksa {link} tentang pengalihan yang didukung dan versi mana mulai diperkenalkan.",
+        "component_not_loaded": "Pengalihan ini tidak didukung oleh instans Home Assistant Anda. Anda memerlukan integrasi {integrasi} untuk menggunakan pengalihan ini.",
+        "no_supervisor": "Pengalihan ini tidak didukung oleh instalasi Home Assistant Anda. Pengalihan ini memerlukan metode instalasi Home Assistant Operating System atau Home Assistant Supervised. Untuk informasi selengkapnya, lihat {docs_link}.",
+        "documentation": "dokumentasi",
+        "faq_link": "FAQ Home Assistant Saya",
+        "error": "Terjadi kesalahan yang tidak diketahui"
+      }
+    }
+  }
+}

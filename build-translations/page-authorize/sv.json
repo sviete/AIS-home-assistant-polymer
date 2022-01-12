@@ -1,0 +1,152 @@
+{
+  "ui": {
+    "panel": {
+      "page-authorize": {
+        "initializing": "Initierar",
+        "authorizing_client": "Du håller på att ge {clientId} behörighet till din Home Assistant.",
+        "logging_in_to_with": "Loggar in på **{locationName}** med **{authProviderName}**.",
+        "logging_in_with": "Loggar in med **{authProviderName}**.",
+        "pick_auth_provider": "Eller logga in med",
+        "abort_intro": "Inloggning avbruten",
+        "form": {
+          "working": "Vänligen vänta",
+          "unknown_error": "Något gick fel",
+          "next": "Nästa",
+          "start_over": "Börja om",
+          "error": "Fel: {error}",
+          "providers": {
+            "command_line": {
+              "step": {
+                "init": {
+                  "data": { "username": "Användarnamn", "password": "Lösenord" }
+                },
+                "mfa": {
+                  "data": { "code": "Tvåfaktors autentiseringskod" },
+                  "description": "Öppna **{mfa_module_name}** på din enhet för att visa din tvåfaktors autentiseringskod och verifiera din identitet:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Felaktigt användarnamn eller lösenord",
+                "invalid_code": "Ogiltig autentiseringskod"
+              },
+              "abort": {
+                "login_expired": "Sessionen har gått ut, vänligen logga in igen."
+              }
+            },
+            "homeassistant": {
+              "step": {
+                "init": {
+                  "data": { "username": "Användarnamn", "password": "Lösenord" }
+                },
+                "mfa": {
+                  "data": { "code": "Tvåfaktorsautentiseringskod" },
+                  "description": "Öppna **{mfa_module_name}** på din enhet för att visa din tvåfaktors autentiseringskod och verifiera din identitet:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Felaktigt användarnamn eller lösenord",
+                "invalid_code": "Ogiltig autentiseringskod"
+              },
+              "abort": {
+                "login_expired": "Sessionen avslutades. Logga in igen."
+              }
+            },
+            "legacy_api_password": {
+              "step": {
+                "init": {
+                  "data": { "password": "API-lösenord" },
+                  "description": "Lägg in ett API-lösenord i din HTTP-konfiguration:"
+                },
+                "mfa": {
+                  "data": { "code": "Tvåfaktorsautentiseringskod" },
+                  "description": "Öppna **{mfa_module_name}** på din enhet för att visa din tvåfaktors autentiseringskod och verifiera din identitet:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Ogiltigt API-lösenord",
+                "invalid_code": "Ogiltig autentiseringskod"
+              },
+              "abort": {
+                "no_api_password_set": "Du har inget API-lösenord konfigurerat",
+                "login_expired": "Sessionen har gått ut, vänligen logga in igen."
+              }
+            },
+            "trusted_networks": {
+              "step": {
+                "init": {
+                  "data": { "user": "Användare" },
+                  "description": "Välj den användare du vill logga in som:"
+                }
+              },
+              "abort": { "not_allowed": "Din dator har inte tillåtelse." }
+            },
+            "ais_demo": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (demo)",
+                    "password": "Password (demo)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_admin": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (admin)",
+                    "password": "Password (admin)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_cloud": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username",
+                    "password": "Password",
+                    "gate_id": "Gate ID"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

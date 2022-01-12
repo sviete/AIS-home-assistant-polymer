@@ -1,0 +1,13 @@
+{
+  "ui": {
+    "panel": {
+      "custom": {
+        "external_panel": {
+          "question_trust": "Megbízol a(z) {name} külső panelben a következő linken: {link}?",
+          "complete_access": "Hozzáférést fog kapni a Home Assistant összes adatához.",
+          "hide_message": "Ellenőrizd a panel_custom komponens dokumentációját ennek az üzenetnek az elrejtéséhez"
+        }
+      }
+    }
+  }
+}

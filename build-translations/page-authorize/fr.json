@@ -1,0 +1,158 @@
+{
+  "ui": {
+    "panel": {
+      "page-authorize": {
+        "initializing": "Initialisation",
+        "authorizing_client": "Vous êtes sur le point de donner accès à {clientId} à votre instance de Home Assistant.",
+        "logging_in_to_with": "Connexion à **{locationName}** avec **{authProviderName}**.",
+        "logging_in_with": "Se connecter avec **{authProviderName}**.",
+        "pick_auth_provider": "Ou connectez-vous avec",
+        "abort_intro": "Connexion interrompue",
+        "form": {
+          "working": "Veuillez patienter",
+          "unknown_error": "Un problème est survenu",
+          "next": "Suivant",
+          "start_over": "Recommencer",
+          "error": "Erreur: {error}",
+          "providers": {
+            "command_line": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Nom d'utilisateur",
+                    "password": "Mot de passe"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Code d'authentification à deux facteurs" },
+                  "description": "Ouvrez le **{mfa_module_name}** sur votre appareil pour afficher votre code d'authentification à deux facteurs et vérifier votre identité:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Nom d'utilisateur ou mot de passe invalide",
+                "invalid_code": "Code d'authentification invalide"
+              },
+              "abort": {
+                "login_expired": "Session expirée, veuillez vous connecter à nouveau."
+              }
+            },
+            "homeassistant": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Nom d'utilisateur",
+                    "password": "Mot de passe"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Code d'authentification à deux facteurs" },
+                  "description": "Ouvrez le **{mfa_module_name}** sur votre appareil pour afficher votre code d'authentification à deux facteurs et vérifier votre identité:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Nom d'utilisateur ou mot de passe invalide",
+                "invalid_code": "Code d'authentification invalide"
+              },
+              "abort": {
+                "login_expired": "Session expirée, veuillez vous connecter à nouveau."
+              }
+            },
+            "legacy_api_password": {
+              "step": {
+                "init": {
+                  "data": { "password": "Mot de passe API" },
+                  "description": "Veuillez saisir le mot de passe API dans votre configuration http:"
+                },
+                "mfa": {
+                  "data": { "code": "Code d'authentification à deux facteurs" },
+                  "description": "Ouvrez le ** {mfa_module_name} ** sur votre appareil pour afficher votre code d'authentification à deux facteurs et confirmer votre identité:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Mot de passe API invalide",
+                "invalid_code": "Code d'authentification invalide"
+              },
+              "abort": {
+                "no_api_password_set": "Vous n'avez pas de mot de passe API configuré.",
+                "login_expired": "Session expirée, veuillez vous connecter à nouveau."
+              }
+            },
+            "trusted_networks": {
+              "step": {
+                "init": {
+                  "data": { "user": "Utilisateur" },
+                  "description": "Sélectionnez l'utilisateur avec lequel vous souhaitez vous connecter :"
+                }
+              },
+              "abort": { "not_allowed": "Votre ordinateur n'est pas autorisé." }
+            },
+            "ais_demo": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (demo)",
+                    "password": "Password (demo)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_admin": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (admin)",
+                    "password": "Password (admin)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_cloud": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username",
+                    "password": "Password",
+                    "gate_id": "Gate ID"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

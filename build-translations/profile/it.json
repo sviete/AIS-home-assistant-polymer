@@ -1,0 +1,144 @@
+{
+  "ui": {
+    "panel": {
+      "profile": {
+        "current_user": "Sei attualmente connesso come {fullName}.",
+        "is_owner": "Sei un proprietario.",
+        "logout": "Disconnetti",
+        "logout_title": "Disconnettersi?",
+        "logout_text": "Sei sicuro di voler effettuare il logout?",
+        "force_narrow": {
+          "header": "Nascondi sempre la barra laterale",
+          "description": "Questo nasconderà la barra laterale per impostazione predefinita, in modo simile all'esperienza mobile"
+        },
+        "customize_sidebar": {
+          "header": "Modifica l'ordine e nascondi gli elementi dalla barra laterale",
+          "description": "Puoi anche tenere premuta l'intestazione della barra laterale per attivare la modalità di modifica.",
+          "button": "Modifica"
+        },
+        "vibrate": {
+          "header": "Vibrazione",
+          "description": "Abilitare o disabilitare la vibrazione su questo dispositivo durante il controllo dei dispositivi."
+        },
+        "enable_shortcuts": {
+          "header": "Scorciatoie da tastiera",
+          "description": "Abilita o disabilita le scorciatoie da tastiera per eseguire varie azioni nell'interfaccia utente."
+        },
+        "suspend": {
+          "header": "Chiudi automaticamente la connessione",
+          "description": "Dovremmo chiudere la connessione al server dopo essere stati nascosti per 5 minuti?"
+        },
+        "push_notifications": {
+          "header": "Notifiche push",
+          "description": "Invia notifiche a questo dispositivo.",
+          "error_load_platform": "Configura notify.html5.",
+          "error_use_https": "Richiede SSL abilitato per il frontend.",
+          "push_notifications": "Notifiche push",
+          "link_promo": "Per saperne di più",
+          "add_device_prompt": {
+            "title": "Come dovrebbe essere chiamato questo dispositivo?",
+            "input_label": "Nome del dispositivo"
+          }
+        },
+        "language": {
+          "header": "Lingua",
+          "link_promo": "Aiuta a tradurre",
+          "dropdown_label": "Lingua"
+        },
+        "number_format": {
+          "header": "Formato del numero",
+          "dropdown_label": "Formato numero",
+          "description": "Scegli come vengono formattati i numeri.",
+          "formats": {
+            "language": "Auto (usa l'impostazione della lingua)",
+            "system": "Usa le impostazioni locali del sistema",
+            "comma_decimal": "1,234,567.89",
+            "decimal_comma": "1.234.567,89",
+            "space_comma": "1 234 567,89",
+            "none": "Nessuno"
+          }
+        },
+        "time_format": {
+          "header": "Formato orario",
+          "dropdown_label": "Formato orario",
+          "description": "Scegli come vengono formattate le ore.",
+          "formats": {
+            "12": "12 ore (AM/PM)",
+            "24": "24 ore",
+            "language": "Automatico (usa l'impostazione della lingua)",
+            "system": "Usa le impostazioni locali del sistema"
+          }
+        },
+        "themes": {
+          "header": "Tema",
+          "error_no_theme": "Nessun tema disponibile.",
+          "link_promo": "Per saperne di più sui temi",
+          "dropdown_label": "Tema",
+          "dark_mode": { "auto": "Auto", "light": "Chiaro", "dark": "Scuro" },
+          "primary_color": "Colore principale",
+          "accent_color": "Colore accento",
+          "reset": "Reset"
+        },
+        "dashboard": {
+          "header": "Plancia",
+          "description": "Scegliere una plancia di default per questo dispositivo.",
+          "dropdown_label": "Plancia"
+        },
+        "change_password": {
+          "header": "Cambia password",
+          "current_password": "Password corrente",
+          "new_password": "Nuova password",
+          "confirm_new_password": "Conferma la nuova password",
+          "error_required": "Richiesto",
+          "submit": "Invia",
+          "error_new_mismatch": "I valori della nuova password immessi non corrispondono",
+          "error_new_is_old": "La nuova password deve essere diversa dalla password corrente",
+          "success": "Password modificata correttamente"
+        },
+        "mfa": {
+          "header": "Codice di autenticazione a più fattori",
+          "disable": "Disattivare",
+          "enable": "Abilita",
+          "confirm_disable": "Sei sicuro di voler disabilitare {name} ?"
+        },
+        "mfa_setup": {
+          "title_aborted": "Interrotto",
+          "title_success": "Completata con Successo",
+          "step_done": "Installazione completata per {step}",
+          "close": "Chiudi",
+          "submit": "Invia"
+        },
+        "advanced_mode": {
+          "title": "Modalità avanzata",
+          "description": "Sblocca funzionalità avanzate.",
+          "link_promo": "Per saperne di più"
+        },
+        "refresh_tokens": {
+          "header": "Token di aggiornamento",
+          "description": "Ogni token di aggiornamento rappresenta una sessione di accesso. I token di aggiornamento verranno rimossi automaticamente quando si fa clic su Disconnetti. I seguenti token di aggiornamento sono attualmente attivi per il tuo account.",
+          "token_title": "Token di aggiornamento per {clientId}",
+          "created_at": "Creato il {date}",
+          "last_used": "Ultimo utilizzo del {date} da {location}",
+          "not_used": "Non è mai stato usato",
+          "confirm_delete": "Sei sicuro di voler eliminare il token di aggiornamento per {name} ?",
+          "delete_failed": "Impossibile eliminare il token di aggiornamento.",
+          "current_token_tooltip": "Impossibile eliminare il token di aggiornamento corrente"
+        },
+        "long_lived_access_tokens": {
+          "header": "Token di accesso a lunga vita",
+          "description": "Crea token di accesso di lunga durata per consentire agli script di interagire con l'istanza di Home Assistant. Ogni token sarà valido per 10 anni dalla creazione. I seguenti token di accesso a vita lunga sono attualmente attivi.",
+          "learn_auth_requests": "Scopri come effettuare richieste autenticate.",
+          "created": "Creato {date}",
+          "confirm_delete": "Sei sicuro di voler eliminare il token di accesso per {name} ?",
+          "delete_failed": "Impossibile eliminare il token di accesso.",
+          "create": "Crea token",
+          "create_failed": "Impossibile creare il token di accesso.",
+          "name": "Nome",
+          "prompt_name": "Assegnare un nome al token",
+          "prompt_copy_token": "Copia il tuo token di accesso. Non verrà più mostrato.",
+          "empty_state": "Non hai ancora un token di accesso di lunga durata."
+        }
+      }
+    }
+  }
+}

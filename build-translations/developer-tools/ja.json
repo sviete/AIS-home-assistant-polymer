@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "イベント",
+            "description": "イベントバスでイベントを起動します。",
+            "documentation": "イベントのドキュメント。",
+            "type": "イベントの種類",
+            "data": "イベントデータ（YAML、オプション）",
+            "fire_event": "イベントを実行",
+            "event_fired": "イベント{name}が発生しました",
+            "available_events": "利用可能なイベント",
+            "count_listeners": "（ {count}人のリスナー）",
+            "listen_to_events": "イベントを聞く",
+            "listening_to": "リッスンします",
+            "subscribe_to": "サブスクライブするイベント",
+            "start_listening": "リッスンを開始",
+            "stop_listening": "リッスンを停止",
+            "alert_event_type": "イベントタイプは必須フィールドです",
+            "notification_event_fired": "{type} のイベント が正常に実行されました！"
+          },
+          "services": {
+            "title": "サービス",
+            "description": "サービス開発ツールを使用すると、ホームアシスタントで利用可能なサービスを呼び出すことができます。",
+            "call_service": "サービスの呼び出し",
+            "column_parameter": "パラメータ",
+            "column_description": "説明",
+            "column_example": "例",
+            "fill_example_data": "データ記入例",
+            "yaml_mode": "YAMLモードに移動します",
+            "ui_mode": "UIモードに移動します",
+            "yaml_parameters": "YAMLモードでのみ使用可能なパラメータ",
+            "all_parameters": "利用可能なすべてのパラメータ",
+            "accepts_target": "このサービスは、ターゲットを受け入れます。例： `entity_id：light.bed_light`",
+            "no_template_ui_support": "UIはテンプレートをサポートしていませんが、YAMLエディタを使用することができます。"
+          },
+          "states": {
+            "title": "状態",
+            "description1": "Home Assistant内でデバイスの表現を設定します。",
+            "description2": "実際のデバイスと通信しません。",
+            "entity": "エンティティ",
+            "state": "状態",
+            "attributes": "属性",
+            "state_attributes": "状態属性（YAML、オプション）",
+            "set_state": "状態を設定",
+            "current_entities": "現在のエンティティ",
+            "filter_entities": "エンティティのフィルター処理",
+            "filter_states": "状態のフィルター処理",
+            "filter_attributes": "フィルター属性",
+            "no_entities": "エンティティなし",
+            "more_info": "もっと見る",
+            "alert_entity_field": "エンティティは必須フィールドです",
+            "last_updated": "最終更新",
+            "last_changed": "最終変更",
+            "copy_id": "ID をクリップボードにコピー"
+          },
+          "templates": {
+            "title": "テンプレート",
+            "description": "テンプレートは、いくつかのホームアシスタント固有の拡張機能を持つJinja2テンプレートエンジンを使用してレンダリングされます。",
+            "editor": "テンプレートエディター",
+            "reset": "デモ テンプレートにリセット",
+            "result_type": "結果の種類",
+            "jinja_documentation": "Jinja2テンプレートのドキュメント",
+            "template_extensions": "ホーム アシスタント テンプレートの拡張機能",
+            "unknown_error_template": "不明なテンプレートレンダリングエラー",
+            "time": "このテンプレートは、最後の状態変更イベントの後 60 秒ごとに更新されます。",
+            "all_listeners": "このテンプレートは、すべての状態変更イベントをリッスンします。",
+            "no_listeners": "このテンプレートは、状態が変更されたイベントが聞こえないため、自動的に更新されません。",
+            "listeners": "このテンプレートは、次の状態変更イベントをリッスンします。",
+            "entity": "エンティティ",
+            "domain": "ドメイン"
+          }
+        }
+      }
+    }
+  }
+}

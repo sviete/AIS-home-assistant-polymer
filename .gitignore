@@ -1,9 +1,9 @@
+build-translations
 .DS_Store
 .reify-cache
 
 # build
 build
-build-translations/*
 hass_frontend/*
 dist
 

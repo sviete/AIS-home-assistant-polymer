@@ -1,0 +1,148 @@
+{
+  "ui": {
+    "panel": {
+      "page-authorize": {
+        "initializing": "正在初始化",
+        "authorizing_client": "您即将授权 {clientId} 访问 Home Assistant 实例。",
+        "logging_in_to_with": "正在通过 **{authProviderName}** 登录 **{locationName}**。",
+        "logging_in_with": "正在通过 **{authProviderName}** 登录。",
+        "pick_auth_provider": "或者用以下方式登录",
+        "abort_intro": "登录中断",
+        "form": {
+          "working": "请稍候",
+          "unknown_error": "出现了一些问题",
+          "next": "下一步",
+          "start_over": "重新开始",
+          "error": "错误：{error}",
+          "providers": {
+            "command_line": {
+              "step": {
+                "init": {
+                  "data": { "username": "用户名", "password": "密码" }
+                },
+                "mfa": {
+                  "data": { "code": "双重认证口令" },
+                  "description": "在设备上打开 **{mfa_module_name}** 查看双重认证口令并验证您的身份:"
+                }
+              },
+              "error": {
+                "invalid_auth": "用户名或密码无效",
+                "invalid_code": "无效口令"
+              },
+              "abort": { "login_expired": "会话已过期，请重新登录。" }
+            },
+            "homeassistant": {
+              "step": {
+                "init": {
+                  "data": { "username": "用户名", "password": "密码" }
+                },
+                "mfa": {
+                  "data": { "code": "双重认证口令" },
+                  "description": "在设备上打开 **{mfa_module_name}** 查看双重认证口令并验证您的身份:"
+                }
+              },
+              "error": {
+                "invalid_auth": "用户名或密码无效",
+                "invalid_code": "无效口令"
+              },
+              "abort": { "login_expired": "会话已过期，请重新登录。" }
+            },
+            "legacy_api_password": {
+              "step": {
+                "init": {
+                  "data": { "password": "API 密码" },
+                  "description": "请输入 http 配置中的 API 密码:"
+                },
+                "mfa": {
+                  "data": { "code": "双重认证口令" },
+                  "description": "在设备上打开 **{mfa_module_name}** 查看双重认证口令并验证您的身份:"
+                }
+              },
+              "error": {
+                "invalid_auth": "API 密码无效",
+                "invalid_code": "无效口令"
+              },
+              "abort": {
+                "no_api_password_set": "您还没有配置 API 密码。",
+                "login_expired": "会话已过期，请重新登录。"
+              }
+            },
+            "trusted_networks": {
+              "step": {
+                "init": {
+                  "data": { "user": "用户" },
+                  "description": "请选择要登录的用户："
+                }
+              },
+              "abort": { "not_allowed": "您的电脑不允许访问。" }
+            },
+            "ais_demo": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (demo)",
+                    "password": "Password (demo)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_admin": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username (admin)",
+                    "password": "Password (admin)"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            },
+            "ais_cloud": {
+              "step": {
+                "init": {
+                  "data": {
+                    "username": "Username",
+                    "password": "Password",
+                    "gate_id": "Gate ID"
+                  }
+                },
+                "mfa": {
+                  "data": { "code": "Two-factor Authentication Code" },
+                  "description": "Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:"
+                }
+              },
+              "error": {
+                "invalid_auth": "Invalid username or password",
+                "invalid_code": "Invalid authentication code"
+              },
+              "abort": {
+                "login_expired": "Session expired, please login again."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

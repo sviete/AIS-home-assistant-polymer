@@ -1,0 +1,76 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Czy jesteś gotowy, aby ożywić swój dom, odzyskać prywatność i dołączyć do społeczności fanów automatyki domowej?",
+        "next": "Dalej",
+        "finish": "Zakończ",
+        "user": {
+          "intro": "Zacznijmy od utworzenia konta użytkownika.",
+          "required_field": "Wymagane",
+          "data": {
+            "name": "Imię",
+            "username": "Nazwa użytkownika",
+            "password": "Hasło",
+            "password_confirm": "Potwierdź hasło"
+          },
+          "create_account": "Utwórz konto",
+          "error": {
+            "required_fields": "Wypełnij wszystkie wymagane pola",
+            "password_not_match": "Hasła nie są takie same"
+          }
+        },
+        "core-config": {
+          "intro": "{name}, witamy w Asystent domowy. Jak chcesz nazwać swój dom?",
+          "intro_location": "Chcielibyśmy wiedzieć, gdzie mieszkasz. Te dane pomogą w wyświetlaniu informacji i konfigurowaniu automatyki opartej na położeniu słońca. Te dane nigdy nie będą udostępniane poza Twoją sieć lokalną.",
+          "intro_location_detect": "Możemy pomóc Ci wprowadzić te informacje, wysyłając jednorazowe zapytanie do usługi zewnętrznej.",
+          "location_name": "Nazwa instalacji Home Assistanta",
+          "location_name_default": "Dom",
+          "button_detect": "Wykryj",
+          "finish": "Dalej"
+        },
+        "integration": {
+          "intro": "Urządzenia i usługi są reprezentowane w Asystent domowy jako integracje. Możesz je teraz skonfigurować lub zrobić to później w konfiguracji.",
+          "more_integrations": "Więcej",
+          "finish": "Dalej"
+        },
+        "analytics": {
+          "finish": "Dalej",
+          "intro": "Udostępniaj dane analityczne ze swojej instancji. Te dane będą publicznie dostępne pod adresem {link}"
+        },
+        "restore": {
+          "description": "Alternatywnie możesz przywrócić z poprzedniej migawki.",
+          "in_progress": "Trwa przywracanie",
+          "show_log": "Pokaż cały log",
+          "hide_log": "Ukryj cały log",
+          "full_snapshot": "Pełny snapshot",
+          "partial_snapshot": "Częściowy snapshot",
+          "type": "Typ snapshota",
+          "select_type": "Wybierz, co przywrócić",
+          "folders": "Foldery",
+          "addons": "Dodatki",
+          "password_protection": "Ochrona hasłem",
+          "password": "Hasło snapshota",
+          "confirm_password": "Potwierdź hasło snapshota"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Czy chcesz przywrócić konfigurację systemu z kopii zapasowej?",
+          "ais_restore_intro_step1": "Zaloguj się do portalu integratora:",
+          "ais_restore_intro_step2": "Jeśli zabezpieczyłeś kopie hasłem to je podaj:",
+          "ais_restore_intro_step3": "Wybierz bramkę której konfigurację chcesz przywrócić:",
+          "ais_restore_ok_info_step1": "Przywracam konfigurację z kopii zapasowej... poczekaj na ponowne uruchomienie",
+          "ais_restore_button": "PRZYWRÓĆ",
+          "ais_login": "Zaloguj do AI-Speaker",
+          "ais_logout": "Wyloguj się z AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Aplikacja mobilna!",
+          "intro": "Zwiększ funkcjonalność Asystenta domowego, instalując naszą oficjalną aplikację mobilną na platformę Android. Zeskanuj kod lub go kliknij:",
+          "mob_benefits": "Dzięki aplikacji możesz wysyłać komendy głosowe z telefonu, otrzymywać powiadomienia o zdarzeniach w domu, kontrolować spoza domu, wysyłać swoją aktualną lokalizację do bramki itp.",
+          "other_mob_apps": "Możesz też zainstalować mobilną aplikację Home Assistant Companion:",
+          "finish": "Zamknij"
+        }
+      }
+    }
+  }
+}

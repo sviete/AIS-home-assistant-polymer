@@ -66,10 +66,7 @@ export class HaManualAutomationEditor extends LitElement {
                 "ui.panel.config.automation.editor.modes.description",
                 "documentation_link",
                 html`<a
-                  href="${documentationUrl(
-                    this.hass,
-                    "/docs/automation/modes/"
-                  )}"
+                  href=${documentationUrl(this.hass, "/docs/automation/modes/")}
                   target="_blank"
                   rel="noreferrer"
                   >${this.hass.localize(
@@ -161,7 +158,7 @@ export class HaManualAutomationEditor extends LitElement {
             )}
           </p>
           <a
-            href="${documentationUrl(this.hass, "/docs/automation/trigger/")}"
+            href=${documentationUrl(this.hass, "/docs/automation/trigger/")}
             target="_blank"
             rel="noreferrer"
           >
@@ -190,7 +187,7 @@ export class HaManualAutomationEditor extends LitElement {
             )}
           </p>
           <a
-            href="${documentationUrl(this.hass, "/docs/scripts/conditions/")}"
+            href=${documentationUrl(this.hass, "/docs/scripts/conditions/")}
             target="_blank"
             rel="noreferrer"
           >
@@ -219,7 +216,7 @@ export class HaManualAutomationEditor extends LitElement {
             )}
           </p>
           <a
-            href="${documentationUrl(this.hass, "/docs/automation/action/")}"
+            href=${documentationUrl(this.hass, "/docs/automation/action/")}
             target="_blank"
             rel="noreferrer"
           >
@@ -294,7 +291,10 @@ export class HaManualAutomationEditor extends LitElement {
     const mode = ((ev.target as PaperListboxElement)?.selectedItem as any)
       ?.mode;
 
-    if (mode === this.config!.mode) {
+    if (
+      mode === this.config!.mode ||
+      (!this.config!.mode && mode === MODES[0])
+    ) {
       return;
     }
     const value = {

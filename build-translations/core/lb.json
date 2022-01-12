@@ -1,0 +1,900 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "Kalenner",
+    "config": "Astellungen",
+    "states": "Iwwersiicht",
+    "map": "Kaart",
+    "logbook": "Journal",
+    "history": "Verlaf",
+    "mailbox": "Bréifkëscht",
+    "shopping_list": "Akafslëscht",
+    "developer_tools": "Entwécklungsgeschir",
+    "media_browser": "Medie navigateur",
+    "profile": "Profil"
+  },
+  "state": {
+    "default": {
+      "on": "Un",
+      "off": "Aus",
+      "unknown": "Onbekannt",
+      "unavailable": "Net erreechbar"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "Aus", "on": "Un", "auto": "Auto" },
+      "preset_mode": {
+        "none": "Keen",
+        "eco": "Eco",
+        "away": "Ënnerwee",
+        "boost": "Boost",
+        "comfort": "Bequem",
+        "home": "Doheem",
+        "sleep": "Schlofen",
+        "activity": "Aktivitéit"
+      },
+      "hvac_action": {
+        "off": "Aus",
+        "heating": "Hëtzen",
+        "cooling": "Ofkillen",
+        "drying": "Dréchnen",
+        "idle": "Waart",
+        "fan": "Ventilator"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "Normal",
+        "eco": "Eco",
+        "away": "Ënnerwee",
+        "boost": "Boost",
+        "comfort": "Bequem",
+        "home": "Doheem",
+        "sleep": "Schlofen",
+        "auto": "Auto",
+        "baby": "Baby"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "Onbekannt",
+      "unavailable": "Net Verfügbar",
+      "error": "Feeler",
+      "entity_not_found": "Entitéit net fonnt"
+    },
+    "alarm_control_panel": {
+      "armed": "Aktivéiert",
+      "disarmed": "Desaktivéieren",
+      "armed_home": "Aktivéiert",
+      "armed_away": "Aktivéiert",
+      "armed_night": "Aktivéiert",
+      "armed_custom_bypass": "Aktivéiert",
+      "pending": "Ustoend",
+      "arming": "Aktivéieren",
+      "disarming": "Desaktivéieren",
+      "triggered": "Ausgeléist"
+    },
+    "device_tracker": { "home": "Doheem", "not_home": "Ënnerwee" },
+    "person": { "home": "Doheem", "not_home": "Ënnerwee" }
+  },
+  "groups": {
+    "owner": "Besëtzer",
+    "system-admin": "Administrateuren",
+    "system-users": "Benotzer",
+    "system-read-only": "Benotzer mat nëmmen Lies Rechter"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "Benotzer",
+      "integration": "Integratioun",
+      "config_entry": "Konfiguratioun's Entrée",
+      "device": "Apparat"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "Soll dëse Login gespäichert ginn?",
+      "decline": "Nee",
+      "confirm": "Jo"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "Code",
+        "clear_code": "Kloer",
+        "disarm": "Desaktivéieren",
+        "arm_home": "Aktivéiert Doheem",
+        "arm_away": "Aktivéiert Ënnerwee",
+        "arm_night": "Aktivéiert Nuecht",
+        "arm_custom_bypass": "Personaliséierte Bypass"
+      },
+      "automation": {
+        "last_triggered": "Läscht ausgeléist",
+        "trigger": "Ausléisen"
+      },
+      "camera": { "not_available": "Bild net disponibel" },
+      "climate": {
+        "currently": "Momentan",
+        "on_off": "Un / Aus",
+        "target_temperature": "Zieltemperatur",
+        "target_temperature_entity": "{name} Zieltemperatur",
+        "target_temperature_mode": "{name} Zieltemperatur {mode}",
+        "current_temperature": "{name} aktuell Temperatur",
+        "heating": "{name} hëtzen",
+        "cooling": "{name} killen",
+        "high": "héich",
+        "low": "niddreg",
+        "target_humidity": "Zielfiichtegkeet",
+        "operation": "Aktioun",
+        "fan_mode": "Ventilatioun Modus",
+        "swing_mode": "Schwenk Modus",
+        "preset_mode": "Virastellung",
+        "away_mode": "Modus Keen Doheem",
+        "aux_heat": "Zousätzlech Heizung"
+      },
+      "counter": {
+        "actions": {
+          "increment": "Inkremental",
+          "decrement": "Dekremental",
+          "reset": "reset"
+        }
+      },
+      "cover": { "position": "Positioun", "tilt_position": "Kippestellung" },
+      "fan": {
+        "speed": "Vitesse",
+        "preset_mode": "Preset Mode",
+        "oscillate": "Pendele",
+        "direction": "Richtung",
+        "forward": "Vir",
+        "reverse": "Hannerzeg"
+      },
+      "humidifier": {
+        "humidity": "Viséiert Fiichtegkeet",
+        "mode": "Modus",
+        "target_humidity_entity": "{name} Viséiert Fiichtegkeet",
+        "on_entity": "{name} un"
+      },
+      "light": {
+        "brightness": "Hellegkeet",
+        "color_temperature": "Faarf Temperatur",
+        "white_value": "Wäisse Wäert",
+        "color_brightness": "Color brightness",
+        "cold_white_value": "Cold white brightness",
+        "warm_white_value": "Warm white brightness",
+        "effect": "Effekt"
+      },
+      "lock": { "code": "Code", "lock": "Spären", "unlock": "Entspären" },
+      "media_player": {
+        "source": "Quell",
+        "sound_mode": "Toun Modus",
+        "browse_media": "Medien duerchgoen",
+        "turn_on": "Uschalten",
+        "turn_off": "Ausschalten",
+        "media_play": "Spill",
+        "media_play_pause": "Spill/Pause",
+        "media_next_track": "Nächst",
+        "media_previous_track": "Viregt",
+        "text_to_speak": "Text zu Sprooch"
+      },
+      "persistent_notification": { "dismiss": "Verwerfen" },
+      "scene": { "activate": "Aktivéieren" },
+      "script": {
+        "run": "Run",
+        "cancel": "Ofbriechen",
+        "cancel_multiple": "{number} ofbriechen"
+      },
+      "service": { "run": "Ausféieren" },
+      "timer": {
+        "actions": {
+          "start": "Start",
+          "pause": "Pause",
+          "cancel": "Ofbriechen",
+          "finish": "Ofschléissen"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "Fuer mam botzen weider",
+          "return_to_base": "Zeréck zur Statioun kommen",
+          "start_cleaning": "Fänk mam botzen un",
+          "turn_on": "Uschalten",
+          "turn_off": "Ausschalten"
+        }
+      },
+      "water_heater": {
+        "currently": "Momentan",
+        "on_off": "Un / Aus",
+        "target_temperature": "Zieltemperatur",
+        "operation": "Aktioun",
+        "away_mode": "Modus Keen Doheem"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "Loftdrock",
+          "humidity": "Fiichtegkeet",
+          "temperature": "Temperatur",
+          "visibility": "Visibilitéit",
+          "wind_speed": "Wandvitesse",
+          "precipitation": "Nidderschlag"
+        },
+        "cardinal_direction": {
+          "e": "O",
+          "ene": "ONO",
+          "ese": "OSO",
+          "n": "N",
+          "ne": "NO",
+          "nne": "NNO",
+          "nw": "NW",
+          "nnw": "NNW",
+          "s": "S",
+          "se": "SO",
+          "sse": "SSO",
+          "ssw": "SSW",
+          "sw": "SW",
+          "w": "W",
+          "wnw": "WNW",
+          "wsw": "WSW"
+        },
+        "day": "Dag",
+        "night": "Nuecht",
+        "forecast": "Prognose",
+        "high": "Héich",
+        "low": "Niddreg"
+      }
+    },
+    "common": {
+      "and": "an",
+      "continue": "Weider",
+      "previous": "Virdrun",
+      "loading": "Lued",
+      "refresh": "Aktualiséieren",
+      "cancel": "Ofbriechen",
+      "delete": "Läschen",
+      "remove": "Läschen",
+      "enable": "Aktivéieren",
+      "disable": "Desaktivéieren",
+      "close": "Zoumaachen",
+      "leave": "Fortgoen",
+      "stay": "Bleiwen",
+      "next": "Nächst",
+      "back": "Zeréck",
+      "undo": "Réckgängeg maachen",
+      "save": "Späicheren",
+      "rename": "Ëmbenennen",
+      "yes": "Jo",
+      "no": "Nee",
+      "not_now": "Net elo",
+      "skip": "Iwwersprangen",
+      "menu": "Menu",
+      "overflow_menu": "Iwwerlaf menu",
+      "successfully_saved": "Erfollegräich gespäichert.",
+      "successfully_deleted": "Erfollegräich geläscht.",
+      "error_required": "Erfuerderlech",
+      "copied": "Kopéiert",
+      "copied_clipboard": "An den Zwëschespäicher kopéiert"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "Keng Logbicher Entrée fonnt",
+        "by": "vun",
+        "by_service": "no Service",
+        "show_trace": "Spuer uweisen",
+        "retrieval_error": "Error during logbook entry retrieval",
+        "messages": {
+          "was_away": "war Ënnerwee",
+          "was_at_state": "war {state}",
+          "rose": "gehuewen",
+          "set": "Setzen",
+          "was_low": "war niddereg",
+          "was_normal": "war normal",
+          "was_connected": "war connectéiert",
+          "was_disconnected": "war déconnectéiert",
+          "was_opened": "war opgemaach",
+          "was_closed": "war zou",
+          "is_opening": "is opening",
+          "is_closing": "is closing",
+          "was_unlocked": "war net gespaart",
+          "was_locked": "war gespaart",
+          "was_plugged_in": "war ugeschloss",
+          "was_unplugged": "war net ugeschloss",
+          "was_at_home": "war doheem",
+          "was_unsafe": "war onsécher",
+          "was_safe": "war sécher",
+          "detected_device_class": "{device_class} détektéiert",
+          "cleared_device_class": "geläscht (keng {device_class} détektéiert)",
+          "turned_off": "ausgeschalt",
+          "turned_on": "ugeschalt",
+          "changed_to_state": "geännert op {state}",
+          "became_unavailable": "ass onereechbar ginn."
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "Entitéit",
+          "clear": "Läschen",
+          "no_match": "Keng passend Entitéite fonnt",
+          "show_entities": "Entitéite uweisen"
+        },
+        "entity-attribute-picker": {
+          "attribute": "Attribut",
+          "show_attributes": "Attributer uweisen"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "Erweider dëse Beräich an de getrennten Apparater an Entitéiten déi et enthält. Nom Ausbau ginn d'Apparater an d'Entitéiten net aktualiséiert wann de Beräich ännert.",
+        "expand_device_id": "Erweider dësen Apparat a getrennten Entitéiten. Nom Ausbau gëtt net d'Entitéite aktualiséiert wann den Apparat ännert.",
+        "remove_area_id": "Beräich läschen",
+        "remove_device_id": "Apparat läschen",
+        "remove_entity_id": "Entitéit läschen",
+        "add_area_id": "Beräich auswielen",
+        "add_device_id": "Apparat auswielen",
+        "add_entity_id": "Entitéit auswielen"
+      },
+      "user-picker": {
+        "no_user": "Kee Benotzer",
+        "add_user": "Benotzer erstellen",
+        "remove_user": "Benotzer läschen"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Plang auswielen",
+        "add_user": "Benotzer erstellen",
+        "remove_user": "Benotzer läschen"
+      },
+      "device-picker": {
+        "clear": "Läschen",
+        "toggle": "Ëmschalten",
+        "show_devices": "Apparater uweisen",
+        "no_devices": "Du hues keng Apparater.",
+        "no_match": "Keng passend Apparater fonnt",
+        "device": "Apparat",
+        "no_area": "Kee Beräich"
+      },
+      "area-picker": {
+        "clear": "Läschen",
+        "show_areas": "Beräicher uweisen",
+        "area": "Beräich",
+        "add_new": "Neien Beräich dobäisetzen...",
+        "no_areas": "Du hues keng Beräicher",
+        "no_match": "Keng passend Beräicher fonnt",
+        "add_dialog": {
+          "title": "Neien Beräich dobäisetzen",
+          "text": "Gitt den numm vun neien Beräich un.",
+          "name": "Numm",
+          "add": "Dobäisetzen",
+          "failed_create_area": "Feeler beim erstellen vum Beräich."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "Add-on",
+        "error": {
+          "no_supervisor": {
+            "title": "Keen Supervisor",
+            "description": "No Supervisor found, so add-ons could not be loaded."
+          },
+          "fetch_addons": {
+            "title": "Error fetching add-ons",
+            "description": "Fetching add-ons returned an error."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "Der Entitéit no filteren",
+        "filter_by_device": "Filter by device",
+        "filter_by_area": "Filter by area",
+        "filtered_by_entity": "entity: {entity_name}",
+        "filtered_by_device": "device: {device_name}",
+        "filtered_by_area": "area: {area_name}"
+      },
+      "picture-upload": {
+        "label": "Bild",
+        "unsupported_format": "Net ënnerstëtzte Format, wiel e JPEG, PNG oder GIF Bild."
+      },
+      "date-range-picker": {
+        "start_date": "Start Datum",
+        "end_date": "End Datum",
+        "select": "Auswielen",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Nie",
+        "just_now": "Grad eben",
+        "duration": {
+          "second": "{count} {count, plural,\none {Sekonn}\nother {Sekonnen}\n}",
+          "minute": "{count} {count, plural,\n  one {Minutt}\n  other {Minutten}\n}",
+          "hour": "{count} {count, plural,\n  one {Stonn}\n  other {Stonnen}\n}",
+          "day": "{count} {count, plural,\none {Dag}\nother {Deeg}\n}",
+          "week": "{count} {count, plural,\none {Woch}\nother {Wochen}\n}"
+        },
+        "past_duration": {
+          "second": "{count} {count, plural,\n  one {second}\n  other {seconds}\n} ago",
+          "minute": "{count} {count, plural,\n  one {minute}\n  other {minutes}\n} ago",
+          "hour": "{count} {count, plural,\n  one {hour}\n  other {hours}\n} ago",
+          "day": "{count} {count, plural,\n  one {day}\n  other {days}\n} ago",
+          "week": "{count} {count, plural,\n  one {week}\n  other {weeks}\n} ago"
+        },
+        "future_duration": {
+          "second": "In {count} {count, plural,\n  one {second}\n  other {seconds}\n}",
+          "minute": "In {count} {count, plural,\n  one {minute}\n  other {minutes}\n}",
+          "hour": "In {count} {count, plural,\n  one {hour}\n  other {hours}\n}",
+          "day": "In {count} {count, plural,\n  one {day}\n  other {days}\n}",
+          "week": "In {count} {count, plural,\n  one {week}\n  other {weeks}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "History integration disabled",
+        "loading_history": "Lued Status Verlaaf",
+        "no_history_found": "Keen Status Verlaaf fonnt"
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "Service" },
+      "service-control": {
+        "required": "This field is required",
+        "target": "Targets",
+        "target_description": "What should this service use as targeted areas, devices or entities.",
+        "service_data": "Service data",
+        "integration_doc": "Integration documentation"
+      },
+      "related-items": {
+        "no_related_found": "Keng ähnlech Objeten fonnt.",
+        "integration": "Integratioun",
+        "device": "Apparat",
+        "area": "Beräich",
+        "entity": "Entitéiten a Relatioun",
+        "group": "Deel vun de folgende Gruppen",
+        "scene": "Deel vun de folgende Zeenen",
+        "script": "Deel vun de folgende Skripten",
+        "automation": "Deel vun de folgenden Automatismen"
+      },
+      "data-table": {
+        "search": "Sichen",
+        "no-data": "Keng Donnée",
+        "filtering_by": "Filtering by",
+        "hidden": "{number} hidden",
+        "clear": "Clear"
+      },
+      "media-browser": {
+        "pick": "Auswielen",
+        "play": "Spill",
+        "play-media": "Media ofspillen",
+        "pick-media": "Media auswielen",
+        "no_items": "Keng Elementer",
+        "choose_player": "Ofspiller auswielen",
+        "media-player-browser": "Media Player Browser",
+        "web-browser": "Web Navigateur",
+        "media_player": "Medie Spiller",
+        "audio_not_supported": "Däin Browser ënnerstëtzt dësen Audio Element net.",
+        "video_not_supported": "Däin Browser ënnerstëtzt dëse Video Element net.",
+        "media_not_supported": "De Medie Spiller vum Browser ënnerstëtzt dëse typ vun Medie net",
+        "media_browsing_error": "Feeler beim duerchsiche vun de Medie",
+        "learn_adding_local_media": "Méi iwwert dobäisetze vun Medie an der {documentation} liesen.",
+        "local_media_files": "Placéier deng Video, Audio an Biller Dateien am Medie Dossier fir se kënnen duerch ze sichen an am Browser oder ënnerstëtzte Medie Spiller of ze spillen.",
+        "documentation": "Dokumentatioun",
+        "no_local_media_found": "Keng lokal Medie fonnt",
+        "no_media_folder": "Et gesäit sou aus wéi wann nach keen lokale Medie Dossier erstallt gouf.",
+        "setup_local_help": "Kuck Dokumentatioun iwwert d'ariichten vun lokale Medien.",
+        "class": {
+          "album": "Album",
+          "app": "App",
+          "artist": "Artist",
+          "channel": "Kanal",
+          "composer": "Kompositeur",
+          "contributing_artist": "Bäidroenden Artist",
+          "directory": "Bibliothéik",
+          "episode": "Episode",
+          "game": "Spill",
+          "genre": "Genre",
+          "image": "Bild",
+          "movie": "Film",
+          "music": "Musek",
+          "playlist": "Ofspilllëscht",
+          "podcast": "Podcast",
+          "season": "Saison",
+          "track": "Piste",
+          "tv_show": "TV Sendung",
+          "url": "URL",
+          "video": "Video"
+        }
+      },
+      "calendar": { "my_calendars": "My Calendars", "today": "Today" },
+      "attributes": { "expansion_header": "Attributes" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "{domain} frësch lueden",
+            "core": "Location & customizations",
+            "group": "Groups, group entities, and notify services",
+            "automation": "Automatisme frësch lueden",
+            "script": "Skripte frësch lueden",
+            "scene": "Zeene frësch lueden",
+            "person": "Persoune frësch lueden",
+            "zone": "Zone frësch lueden",
+            "input_boolean": "Input booleans",
+            "input_text": "Agab Text  frësch lueden",
+            "input_number": "Agab Zuelen frësch lueden",
+            "input_datetime": "Agab Zäit-Datum frësch lueden",
+            "input_select": "Input selects",
+            "template": "Virlag Entitéite frësch lueden",
+            "universal": "Universell Medie Spiller Entitéite frësch lueden",
+            "rest": "Rest Entitéiten an Notifikatioun Servicer frësch lueden",
+            "command_line": "Kommando Zeilen Entitéite frësch lueden",
+            "filter": "Filter Entitéite frësch lueden",
+            "statistics": "Statistik Entitéite frësch lueden",
+            "generic": "Generesch IP Kamera Entitéite frësch lueden",
+            "generic_thermostat": "Generesch Thermostat Entitéite frësch lueden",
+            "homekit": "HomeKit frësch lueden",
+            "min_max": "Min/Max Entitéite frësch lueden",
+            "history_stats": "History stats entities",
+            "trend": "Trend entities",
+            "ping": "Ping binary sensor entities",
+            "filesize": "File size entities",
+            "telegram": "Telegram Notifikatioun Servicer frësch lueden",
+            "smtp": "SMTP Notifikatioun Servicer frësch lueden",
+            "mqtt": "Manuell konfiguréiert MQTT Entitéite frësch lueden",
+            "rpi_gpio": "Raspberry Pi GPIO Entitéite frësch lueden"
+          },
+          "server_control": {
+            "perform_action": "{action} Server",
+            "restart": "Restart",
+            "stop": "Stop"
+          },
+          "types": {
+            "reload": "Nei lueden",
+            "navigation": "Navigéieren",
+            "server_control": "Server"
+          },
+          "navigation": {
+            "logs": "Logs",
+            "automation": "Automatisme",
+            "script": "Skripte",
+            "integrations": "Integratioune",
+            "areas": "Beräicher",
+            "scene": "Zeene",
+            "helpers": "Helfer",
+            "tag": "Tags",
+            "person": "Persoune",
+            "devices": "Apparate",
+            "entities": "Entitéite",
+            "energy": "Energy",
+            "lovelace": "Lovelace Tableau de Bord",
+            "core": "Generell",
+            "zone": "Zone",
+            "users": "Benotzer",
+            "info": "Info",
+            "customize": "Personaliséierungen",
+            "blueprint": "Pläng",
+            "server_control": "Server Kontrolle",
+            "navigate_to": "Navigéieren zu {panel}"
+          }
+        },
+        "filter_placeholder": "Entitéite Filter"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant huet näischt héieren.",
+        "found": "Ech hunn folgendes fir iech fonnt:",
+        "error": "Ups, ee Feeler ass opgetrueden",
+        "how_can_i_help": "Wéi kann ech hëllefen?",
+        "label": "Tippt eng Fro an dréckt 'Enter'",
+        "label_voice": "Tippt an dréckt 'Enter' oder klick de Mikro fir ze schwätzen"
+      },
+      "generic": {
+        "cancel": "Ofbriechen",
+        "ok": "OK",
+        "default_confirmation_title": "Sécher?",
+        "close": "Zoumaachen"
+      },
+      "image_cropper": { "crop": "Kierzen" },
+      "more_info_control": {
+        "dismiss": "Dialog ofbriechen",
+        "settings": "Astellunge vun der Entitéit",
+        "edit": "Entitéit änneren",
+        "details": "Detailler",
+        "history": "Verlaf",
+        "last_changed": "Läscht Ännerung",
+        "last_updated": "Läscht mise à jour",
+        "script": {
+          "last_action": "Läscht Aktioun",
+          "last_triggered": "Läscht ausgeléist"
+        },
+        "sun": {
+          "elevation": "Héicht",
+          "rising": "Sonnenopgank",
+          "setting": "Sonnenënnergang"
+        },
+        "updater": { "title": "Instruktioune fir d'Mise à jour" },
+        "remote": { "activity": "Aktuel Aktivitéit" },
+        "restored": {
+          "not_provided": "Dës Entitéit ass fir de Momment net ereechbar an ass ee Weesekand  vun enger geläschter, geännerter oder futtisser Integratioun oder Apparat.",
+          "remove_intro": "Falls d'Entitéit net méi benotzt gëtt kënnt dir sie botzen andeems dir sie läscht.",
+          "remove_action": "Entitéit läschen",
+          "confirm_remove_title": "Entitéit läschen?",
+          "confirm_remove_text": "Sécher fir dës Entitéit ze läsche?"
+        },
+        "vacuum": {
+          "status": "Status",
+          "commands": "Staubsauger Kommandoen:",
+          "fan_speed": "Vitesse vum Ventilator",
+          "start": "Start",
+          "pause": "Pause",
+          "stop": "Stop",
+          "clean_spot": "Plaz botzen",
+          "locate": "Lokaliséieren",
+          "return_home": "Zeréck zur Statioun",
+          "start_pause": "Start/Pause"
+        },
+        "person": {
+          "create_zone": "Zone erstellen vun der aktueller Positioun"
+        },
+        "cover": {
+          "open_cover": "Paart opmaachen",
+          "close_cover": "Paart zoumaachen",
+          "open_tilt_cover": "Paart op Kipp stelle",
+          "close_tile_cover": "Close cover tilt",
+          "stop_cover": "Stop cover from moving"
+        }
+      },
+      "entity_registry": {
+        "settings": "Astellungen",
+        "control": "Kontroll",
+        "related": "Relatioun",
+        "dismiss": "Verwerfen",
+        "no_unique_id": "Dës Entitéit (\"{entity_id}\") huet keng eenzegaarteg ID, dofir kënnen hir Astellungen net am Benotzer Interface geréiert ginn. Kuck {faq_link} fir méi Detailer.",
+        "faq": "Dokumentatioun",
+        "info_customize": "You can overwrite some attributes in the {customize_link} section.",
+        "customize_link": "entity customizations",
+        "editor": {
+          "name": "Numm",
+          "icon": "Ikon",
+          "icon_error": "Ikonen sollten am format 'prefix:numm' sinn, Beispill: 'mdi:home'",
+          "entity_id": "ID vun der Entitéit",
+          "unavailable": "Dës Entitéit ass net erreechbar fir de Moment.",
+          "enabled_label": "Entitéit aktivéieren",
+          "enabled_cause": "Desaktivéiert duerch {cause}.",
+          "device_disabled": "Den Apparat vun dëser Entitéit ass déaktivéiert.",
+          "open_device_settings": "Apparat Astellungen opmachen",
+          "enabled_description": "Deaktivéiert Entitéiten ginn net am Home Assistant bäigesat.",
+          "enabled_delay_confirm": "Déi aktivéiert Entitéite ginn am Home Assistant an {Delay} Sekonnen dobäigesat",
+          "enabled_restart_confirm": "Start Home Assistant nei fir dës Entitéiten z'aktivéieren",
+          "delete": "Läschen",
+          "confirm_delete": "Sécher fir dës Entrée ze läsche?",
+          "update": "Aktualiséieren",
+          "note": "Note: dëst funktionéiert villäicht nach net mat all Integratioun.",
+          "advanced": "Avancéiert Astellungen",
+          "area": "Set entity area only",
+          "area_note": "By default the entities of a device are in the same area as the device. If you change the area of this entity, it will no longer follow the area of the device.",
+          "follow_device_area": "Beräich vum Apparat verfollegen",
+          "change_device_area": "Beräich vum Apparat änneren"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "{platform} Integratioun ass net gelueden. Setz et an deng Konfiguration dobäi mat  'default_config:' oder ''{platform}:''.",
+        "yaml_not_editable": "D'Astellunge vun dëser Entitéit kënnen net vun vum Benotzer Interface as  geännert ginn. Nëmmen Entitéiten déi iwwer den Benotzer Interface aus konfiguréiert sinn kënnen vun do aus geännert ginn.",
+        "required_error_msg": "Dëst Feld ass erfuerderlech",
+        "generic": { "name": "Numm", "icon": "Ikon" },
+        "input_datetime": {
+          "date": "Datum",
+          "time": "Zäit",
+          "datetime": "Datum an Zäit",
+          "mode": "Wat soll d'Angabe sinn?"
+        },
+        "input_text": {
+          "min": "Minimal Längt",
+          "max": "Maximal Längt",
+          "mode": "Affichage Modus",
+          "text": "Text",
+          "password": "Passwuert",
+          "pattern": "Regex Muster fir Client-Säiteg Validatioun"
+        },
+        "input_number": {
+          "min": "Minimale Wäert",
+          "max": "Maximale Wäert",
+          "mode": "Affichage Modus",
+          "box": "Angab Feld",
+          "slider": "Slider",
+          "step": "Schrëtt Gréisst",
+          "unit_of_measurement": "Moosseenheet"
+        },
+        "input_select": {
+          "options": "Optiounen",
+          "add_option": "Optioun dobäisetzen",
+          "no_options": "Et gi nach keng Optiounen.",
+          "add": "Dobäisetzen"
+        },
+        "counter": {
+          "minimum": "Minimale Wäert",
+          "maximum": "Maximale Wäert",
+          "initial": "Initial Wäert",
+          "restore": "Restauréiert de leschte bekannte Wäert wann Home Assistant start",
+          "step": "Schrëtt Gréisst"
+        },
+        "timer": { "duration": "Dauer" }
+      },
+      "options_flow": {
+        "form": { "header": "Optiounen" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "Optiounen erfollegräich gespäichert." }
+      },
+      "config_entry_system_options": {
+        "title": "System Optiounen fir {integration}",
+        "enable_new_entities_label": "Aktivéiert nei dobäigesate Entitéiten.",
+        "enable_new_entities_description": "Falls desaktivéiert, ginn nei entdeckten Entitéiten fir {integration} net automatesch zu Home Assistant dobäigesat.",
+        "enable_polling_label": "Enable polling for updates.",
+        "enable_polling_description": "If Home Assistant should automatically poll {integration} entities for updates.",
+        "restart_home_assistant": "You need to restart Home Assistant for your changes to take effect.",
+        "update": "Aktualiséieren"
+      },
+      "zha_reconfigure_device": {
+        "heading": "Apparat frësch konfiguréieren",
+        "configuring_alt": "Configuring",
+        "introduction": "Reconfigure a device on your Zigbee network. Use this feature if your device is not functioning correctly.",
+        "battery_device_warning": "You will need to wake battery powered devices before starting the reconfiguration process. Refer to your device's manual for instructions on how to wake the device.",
+        "run_in_background": "You can close this dialog and the reconfiguration will continue in the background.",
+        "start_reconfiguration": "Start Reconfiguration",
+        "in_progress": "The device is being reconfigured. This may take some time.",
+        "configuration_failed": "The device reconfiguration failed. Additional information may be available in the logs.",
+        "configuration_complete": "Device reconfiguration complete.",
+        "button_show": "Show Details",
+        "button_hide": "Hide Details",
+        "cluster_header": "Cluster",
+        "bind_header": "Binding",
+        "reporting_header": "Reporting",
+        "attribute": "Attribute",
+        "min_max_change": "min/max/change"
+      },
+      "zha_device_info": {
+        "manuf": "vun {manufacturer}",
+        "no_area": "Kee Beräich",
+        "device_signature": "Zigbee Apparat Signatur",
+        "device_children": "Zigbee Apparat Kanner",
+        "buttons": {
+          "add": "Apparater via dësen Apparat dobäisetzen",
+          "remove": "Apparat läschen",
+          "clusters": "Cluster verwalten",
+          "reconfigure": "Apparat frësch konfiguréieren",
+          "zigbee_information": "Zigbee Apparat Informatiounen",
+          "device_children": "Kanner uweisen",
+          "view_in_visualization": "View in Visualization"
+        },
+        "services": {
+          "reconfigure": "ZHA Apparat rekonfiguréieren (Apparat heelen). Benotzt dëst am Fall vu Problemer mam Apparat. Falls den Apparat duerch eng Batterie gespeist gëtt stellt sécher dass en un ass a Befeeler entgéint kann huelen",
+          "updateDeviceName": "Personaliséiert den Numm fir dësen Apparat an der Iwwersiicht vun den Apparaten.",
+          "remove": "Een Apparat vum Zigbee Reseau läschen.",
+          "zigbee_information": "Zigbee Informatioune vum Apparat uweisen."
+        },
+        "confirmations": { "remove": "Sécher fir den Apparat ze läsche?" },
+        "quirk": "Quirk",
+        "last_seen": "Fir d'läscht gesinn",
+        "power_source": "Energie Quell",
+        "unknown": "Onbekannt",
+        "zha_device_card": {
+          "device_name_placeholder": "Numm vum Apparat änneren"
+        }
+      },
+      "domain_toggler": {
+        "title": "Domäner ëmschalten",
+        "reset_entities": "Entitéite resetten"
+      },
+      "mqtt_device_debug_info": {
+        "title": "{device} debug Informatiounen",
+        "deserialize": "Probéieren MQTT Noriichten als JSON ze liesen",
+        "entities": "Entitéiten",
+        "no_entities": "Keng Entitéiten",
+        "no_triggers": "Keng Ausléiser",
+        "payload_display": "Payload uweisen",
+        "recent_messages": "{n} läscht erhaalen Noriicht(en)",
+        "show_as_yaml": "Als YAML uweisen",
+        "triggers": "Ausléiser"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\none {Sekonn}\nother {Sekonnen}\n}",
+      "minute": "{count} {count, plural,\n  one {Minutt}\n  other {Minutten}\n}",
+      "hour": "{count} {count, plural,\n  one {Stonn}\n  other {Stonnen}\n}",
+      "day": "{count} {count, plural,\none {Dag}\nother {Deeg}\n}",
+      "week": "{count} {count, plural,\none {Woch}\nother {Wochen}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "Keen Typ uginn.",
+        "error_detected": "Konfiguratiouns Feeler erkannt",
+        "editor_not_available": "Kee visuellen Editeur disponibel fir den Typ \"{type}\".",
+        "editor_not_supported": "Visuellen Editeur ass net ënnerstëtzt fir dës Konfiguratioun",
+        "edit_in_yaml_supported": "Du kanns nach ëmmer demg Konfiguratioun am YAML änneren.",
+        "key_missing": "Néidege Schlëssel \"{key}\" feelt.",
+        "key_not_expected": "Schlëssel \"{key}\" ass net erwaard oder vum visuellen Editeur ënnerstëtzt.",
+        "key_wrong_type": "De Wäert fir \"{key}\" ass net vum visuelle Editeur ënnerstëtzt. Mir ënnerstëtzen ({type_correct}) mee mir kruuten ({type_wrong}).",
+        "no_template_editor_support": "Modeller net ënnerstëtzt am Visuellen Editeur"
+      },
+      "supervisor": {
+        "title": "Could not load the Supervisor panel!",
+        "wait": "If you just started, make sure you have given the Supervisor enough time to start.",
+        "ask": "No Hëllef froen",
+        "reboot": "Try a reboot of the host",
+        "observer": "Check the Observer",
+        "system_health": "System Zoustand iwwerpréiwen"
+      }
+    },
+    "login-form": {
+      "password": "Passwuert",
+      "remember": "Verhalen",
+      "log_in": "Aloggen"
+    },
+    "notification_drawer": {
+      "click_to_configure": "Dréck de Knäppchen fir {entity} ze konfiguréieren",
+      "empty": "Keng Notifikatioune",
+      "title": "Notifikatioune",
+      "close": "Zoumaachen",
+      "dismiss_all": "Alles verwerfen"
+    },
+    "notification_toast": {
+      "service_call_failed": "Feeler beim opruffen vun {service}",
+      "connection_lost": "Verbindung verluer. Verbindung gëtt nees opgebaut...",
+      "started": "Home Assistant ass gestart!",
+      "starting": "Home Assistant start, et wäert nach net alles prett sinn bis et fäerdeg gestart ass.",
+      "wrapping_up_startup": "Wrapping up startup, not everything will be available until it is finished.",
+      "integration_starting": "Starting {integration}, not everything will be available until it is finished.",
+      "triggered": "{name} ausgeléist",
+      "dismiss": "Verwerfen"
+    },
+    "sidebar": {
+      "external_app_configuration": "App Konfiguratioun",
+      "sidebar_toggle": "Säite Kolonne ëmschalten",
+      "done": "Gemaach"
+    },
+    "panel": {
+      "error": {
+        "go_back": "Zeréck goen",
+        "supervisor": {
+          "ask": "No Hëllef froen",
+          "observer": "Observateur iwwerpréiwen",
+          "reboot": "Probéier ee Reboot vum Host",
+          "system_health": "System Zoustand iwwerpréiwen",
+          "title": "Konnt den Supervisor Panneau net lueden!",
+          "wait": "Wanns Du just gestart hues, stell sécher dass den Supervisor genuch Zäit huet fir ze starten."
+        }
+      },
+      "history": {
+        "ranges": {
+          "last_week": "Läscht Woch",
+          "this_week": "Dës Woch",
+          "today": "Haut",
+          "yesterday": "Gëschter"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "Läscht Woch",
+          "this_week": "Dës Woch",
+          "today": "Haut",
+          "yesterday": "Gëschter"
+        }
+      }
+    }
+  }
+}

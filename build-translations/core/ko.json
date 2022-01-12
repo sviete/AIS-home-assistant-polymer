@@ -1,0 +1,892 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "캘린더",
+    "config": "구성하기",
+    "states": "둘러보기",
+    "map": "지도",
+    "logbook": "로그북",
+    "history": "기록 그래프",
+    "mailbox": "메일함",
+    "shopping_list": "장보기 목록",
+    "developer_tools": "개발자 도구",
+    "media_browser": "미디어 브라우저",
+    "profile": "프로필"
+  },
+  "state": {
+    "default": {
+      "on": "켜기",
+      "off": "끄기",
+      "unknown": "알 수 없음",
+      "unavailable": "사용 불가"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "꺼짐", "on": "켜짐", "auto": "자동" },
+      "preset_mode": {
+        "none": "없음",
+        "eco": "절전",
+        "away": "외출",
+        "boost": "쾌속",
+        "comfort": "쾌적",
+        "home": "재실",
+        "sleep": "취침",
+        "activity": "활동"
+      },
+      "hvac_action": {
+        "off": "전원 끄기",
+        "heating": "난방",
+        "cooling": "냉방",
+        "drying": "제습",
+        "idle": "대기",
+        "fan": "송풍"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "일반",
+        "eco": "에코",
+        "away": "외출",
+        "boost": "쾌속",
+        "comfort": "쾌적",
+        "home": "재실",
+        "sleep": "취침",
+        "auto": "자동",
+        "baby": "아기"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "알수없음",
+      "unavailable": "사용불가",
+      "error": "오류",
+      "entity_not_found": "구성요소를 찾을 수 없음"
+    },
+    "alarm_control_panel": {
+      "armed": "경비 중",
+      "disarmed": "해제",
+      "armed_home": "경비 중",
+      "armed_away": "경비 중",
+      "armed_night": "경비 중",
+      "armed_custom_bypass": "경비 중",
+      "pending": "보류",
+      "arming": "경비 중",
+      "disarming": "해제",
+      "triggered": "작동됨"
+    },
+    "device_tracker": { "home": "재실", "not_home": "외출" },
+    "person": { "home": "재실", "not_home": "외출" }
+  },
+  "groups": {
+    "owner": "소유자",
+    "system-admin": "관리자",
+    "system-users": "사용자",
+    "system-read-only": "읽기 전용 사용자"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "사용자",
+      "integration": "통합 구성요소",
+      "config_entry": "구성 항목",
+      "device": "기기"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "로그인 상태를 유지하시겠습니까?",
+      "decline": "아니요",
+      "confirm": "예"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "비밀번호",
+        "clear_code": "지우기",
+        "disarm": "경비 해제",
+        "arm_home": "재실 경비",
+        "arm_away": "외출 경비",
+        "arm_night": "야간 경비",
+        "arm_custom_bypass": "사용자 우회"
+      },
+      "automation": {
+        "last_triggered": "최근 트리거 됨",
+        "trigger": "동작 실행"
+      },
+      "camera": { "not_available": "이미지 사용 불가" },
+      "climate": {
+        "currently": "현재 온도",
+        "on_off": "켜기 / 끄기",
+        "target_temperature": "희망 온도",
+        "target_temperature_entity": "{name} 희망 온도",
+        "target_temperature_mode": "{name} 희망 온도 {mode}",
+        "current_temperature": "{name} 현재 온도",
+        "heating": "{name} 난방중",
+        "cooling": "{name} 냉방중",
+        "high": "높음",
+        "low": "낮음",
+        "target_humidity": "희망 습도",
+        "operation": "운전 모드",
+        "fan_mode": "송풍 모드",
+        "swing_mode": "회전 모드",
+        "preset_mode": "프리셋",
+        "away_mode": "외출 모드",
+        "aux_heat": "보조 히터"
+      },
+      "counter": {
+        "actions": {
+          "increment": "증가",
+          "decrement": "감소",
+          "reset": "초기화"
+        }
+      },
+      "cover": { "position": "위치", "tilt_position": "기울기" },
+      "fan": {
+        "speed": "속도",
+        "preset_mode": "프리셋 모드",
+        "oscillate": "회전",
+        "direction": "방향",
+        "forward": "앞으로",
+        "reverse": "뒤로"
+      },
+      "humidifier": {
+        "humidity": "희망 습도",
+        "mode": "모드",
+        "target_humidity_entity": "{name} 희망 습도",
+        "on_entity": "{name} 작동"
+      },
+      "light": {
+        "brightness": "밝기",
+        "color_temperature": "색온도",
+        "white_value": "흰색 값",
+        "color_brightness": "색상 밝기",
+        "cold_white_value": "주광색 밝기",
+        "warm_white_value": "전구색 밝기",
+        "effect": "효과"
+      },
+      "lock": { "code": "비밀번호", "lock": "잠금", "unlock": "잠금 해제" },
+      "media_player": {
+        "source": "입력 소스",
+        "sound_mode": "사운드 모드",
+        "browse_media": "미디어 찾아보기",
+        "turn_on": "켜기",
+        "turn_off": "끄기",
+        "media_play": "재생",
+        "media_play_pause": "재생 / 일시정지",
+        "media_next_track": "다음",
+        "media_previous_track": "이전",
+        "text_to_speak": "텍스트 음성 변환 입력"
+      },
+      "persistent_notification": { "dismiss": "해제하기" },
+      "scene": { "activate": "활성화" },
+      "script": {
+        "run": "실행하기",
+        "cancel": "취소",
+        "cancel_multiple": "{number}개 취소하기"
+      },
+      "service": { "run": "실행하기" },
+      "timer": {
+        "actions": {
+          "start": "시작",
+          "pause": "일시정지",
+          "cancel": "취소",
+          "finish": "완료"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "청소 재개",
+          "return_to_base": "충전 복귀",
+          "start_cleaning": "청소 시작",
+          "turn_on": "끄기",
+          "turn_off": "켜기"
+        }
+      },
+      "water_heater": {
+        "currently": "현재 온도",
+        "on_off": "켜기 / 끄기",
+        "target_temperature": "희망 온도",
+        "operation": "운전",
+        "away_mode": "외출 모드"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "기압",
+          "humidity": "습도",
+          "temperature": "기온",
+          "visibility": "시정",
+          "wind_speed": "풍속",
+          "precipitation": "강수량"
+        },
+        "cardinal_direction": {
+          "e": "동",
+          "ene": "동북동",
+          "ese": "동남동",
+          "n": "북",
+          "ne": "북동",
+          "nne": "북북동",
+          "nw": "북서",
+          "nnw": "북북서",
+          "s": "남",
+          "se": "남동",
+          "sse": "남남동",
+          "ssw": "남남서",
+          "sw": "남서",
+          "w": "서",
+          "wnw": "서북서",
+          "wsw": "서남서"
+        },
+        "day": "주간",
+        "night": "야간",
+        "forecast": "일기 예보",
+        "high": "높음",
+        "low": "낮음"
+      }
+    },
+    "common": {
+      "and": "그리고",
+      "continue": "계속하기",
+      "previous": "이전",
+      "loading": "읽는 중",
+      "refresh": "새로고침",
+      "cancel": "취소",
+      "delete": "삭제하기",
+      "remove": "제거하기",
+      "enable": "활성화하기",
+      "disable": "비활성화하기",
+      "close": "닫기",
+      "leave": "나가기",
+      "stay": "머무르기",
+      "next": "다음",
+      "back": "뒤로가기",
+      "undo": "되돌리기",
+      "save": "저장하기",
+      "rename": "이름 변경",
+      "yes": "예",
+      "no": "아니오",
+      "not_now": "나중에",
+      "skip": "건너뛰기",
+      "menu": "메뉴",
+      "overflow_menu": "오버플로 메뉴",
+      "successfully_saved": "성공적으로 저장되었습니다",
+      "successfully_deleted": "성공적으로 삭제되었습니다",
+      "error_required": "필수 요소",
+      "copied": "복사되었습니다",
+      "copied_clipboard": "클립보드에 복사되었습니다"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "로그북 구성요소를 찾을 수 없습니다.",
+        "by": "트리거 요소: ",
+        "by_service": "트리거 요소: 서비스",
+        "show_trace": "추적 표시하기",
+        "retrieval_error": "로그북 항목 검색 중 오류",
+        "messages": {
+          "was_away": "이(가) 외출 상태로 감지되었습니다.",
+          "was_at_state": "이(가) {state}(으)로 감지되었습니다.",
+          "rose": "이(가) 졌습니다.",
+          "set": "이(가) 떴습니다.",
+          "was_low": "이(가) 낮은 상태가 되었습니다.",
+          "was_normal": "이(가) 정상 상태가 되었습니다.",
+          "was_connected": "이(가) 연결되었습니다.",
+          "was_disconnected": "이(가) 연결이 끊어졌습니다.",
+          "was_opened": "이(가) 열렸습니다.",
+          "was_closed": "이(가) 닫혔습니다.",
+          "is_opening": "이(가) 열리는 중입니다.",
+          "is_closing": "이(가) 닫히는 중입니다.",
+          "was_unlocked": "이(가) 잠금이 해제되었습니다.",
+          "was_locked": "이(가) 잠겼습니다.",
+          "was_plugged_in": "의 플러그가 꼽혔습니다.",
+          "was_unplugged": "의 플러그가 뽑혔습니다.",
+          "was_at_home": "이(가) 재실 상태로 감지되었습니다.",
+          "was_unsafe": "이(가) 안전하지 않은 상태가 되었습니다.",
+          "was_safe": "이(가) 안전한 상태가 되었습니다.",
+          "detected_device_class": "이(가) {device_class}을(를) 감지했습니다.",
+          "cleared_device_class": "이(가) 더 이상 {device_class}을(를) 감지하지 않습니다.",
+          "turned_off": "이(가) 꺼졌습니다.",
+          "turned_on": "이(가) 켜졌습니다.",
+          "changed_to_state": "이(가) {state}으(로) 변경되었습니다.",
+          "became_unavailable": "이(가) 사용 불가능 상태가 되었습니다."
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "구성요소",
+          "clear": "지우기",
+          "no_match": "일치하는 구성요소를 찾을 수 없습니다",
+          "show_entities": "구성요소 표시하기"
+        },
+        "entity-attribute-picker": {
+          "attribute": "속성",
+          "show_attributes": "속성 표시하기"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "이 영역을 포함하는 개별 기기 및 구성요소로 확장합니다. 확장 후에는 영역이 변경될 때 기기 및 구성요소를 업데이트하지 않습니다.",
+        "expand_device_id": "이 기기를 포함하는 개별 구성요소로 확장합니다. 확장 후에는 기기가 변경될 때 구성요소를 업데이트하지 않습니다.",
+        "remove_area_id": "영역 제거하기",
+        "remove_device_id": "기기 제거하기",
+        "remove_entity_id": "구성요소 제거하기",
+        "add_area_id": "영역 선택하기",
+        "add_device_id": "기기 선택하기",
+        "add_entity_id": "구성요소 선택하기"
+      },
+      "user-picker": {
+        "no_user": "사용자 없음",
+        "add_user": "사용자 추가하기",
+        "remove_user": "사용자 제거하기"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "블루프린트 선택하기",
+        "add_user": "사용자 추가하기",
+        "remove_user": "사용자 제거하기"
+      },
+      "device-picker": {
+        "clear": "지우기",
+        "toggle": "토글",
+        "show_devices": "기기 표시하기",
+        "no_devices": "기기가 존재하지 않습니다",
+        "no_match": "일치하는 기기를 찾을 수 없습니다",
+        "device": "기기",
+        "no_area": "영역 없음"
+      },
+      "area-picker": {
+        "clear": "지우기",
+        "show_areas": "영역 표시하기",
+        "area": "영역",
+        "add_new": "새로운 영역 추가하기",
+        "no_areas": "영역이 존재하지 않습니다",
+        "no_match": "일치하는 영역을 찾을 수 없습니다",
+        "add_dialog": {
+          "title": "새로운 영역 추가하기",
+          "text": "새로운 영역의 이름을 입력해주세요.",
+          "name": "이름",
+          "add": "추가하기",
+          "failed_create_area": "영역을 만들지 못했습니다."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "애드온",
+        "error": {
+          "no_supervisor": {
+            "title": "Supervisor가 없습니다",
+            "description": "Supervisor를 찾을 수 없으므로 애드온을 읽어 들일 수 없습니다."
+          },
+          "fetch_addons": {
+            "title": "애드온 가져오기 오류",
+            "description": "애드온을 가져오는 중 오류가 반환되었습니다."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "구성요소별 필터",
+        "filter_by_device": "기기별 필터",
+        "filter_by_area": "영역별 필터",
+        "filtered_by_entity": "구성요소: {entity_name}",
+        "filtered_by_device": "기기: {device_name}",
+        "filtered_by_area": "영역: {area_name}"
+      },
+      "picture-upload": {
+        "label": "그림",
+        "unsupported_format": "지원되지 않는 형식입니다. JPEG, PNG 또는 GIF 이미지를 선택해주세요."
+      },
+      "date-range-picker": {
+        "start_date": "시작 날짜",
+        "end_date": "종료 날짜",
+        "select": "선택",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "해당없음",
+        "just_now": "방금",
+        "duration": {
+          "second": "{count} {count, plural,\none{초}\nother{초}\n}",
+          "minute": "{count} {count, plural,\none{분}\nother{분}\n}",
+          "hour": "{count} {count, plural,\none{시간}\nother{시간}\n}",
+          "day": "{count} {count, plural,\none{일}\nother{일}\n}",
+          "week": "{count} {count, plural,\none{주}\nother{주}\n}"
+        },
+        "past_duration": {
+          "second": "{count} {count, plural,\n  one{초}\n  other{초}\n} 전",
+          "minute": "{count} {count, plural,\n  one{분}\n  other{분}\n} 전",
+          "hour": "{count} {count, plural,\n  one{시간}\n  other{시간}\n} 전",
+          "day": "{count} {count, plural,\n  one{일}\n  other{일}\n} 전",
+          "week": "{count} {count, plural,\n  one{주}\n  other{주}\n} 전"
+        },
+        "future_duration": {
+          "second": "{count} {count, plural,\n  one{초}\n  other{초}\n} 후",
+          "minute": "{count} {count, plural,\n  one{분}\n  other{분}\n} 후",
+          "hour": "{count} {count, plural,\n  one{시간}\n  other{시간}\n} 후",
+          "day": "{count} {count, plural,\n  one{일}\n  other{일}\n} 후",
+          "week": "{count} {count, plural,\n  one{주}\n  other{주}\n} 후"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "기록 그래프 통합 구성요소가 비활성화되었습니다",
+        "loading_history": "상태 기록 내용 읽는 중...",
+        "no_history_found": "상태 기록 내용이 없습니다."
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "서비스" },
+      "service-control": {
+        "required": "이 입력란은 필수 요소입니다",
+        "target": "대상",
+        "target_description": "이 서비스는 대상 영역, 기기 또는 구성요소로 무엇을 사용해야 합니까?",
+        "service_data": "서비스 데이터",
+        "integration_doc": "통합구성요소 설명서"
+      },
+      "related-items": {
+        "no_related_found": "관련 항목을 찾을 수 없습니다.",
+        "integration": "통합 구성요소",
+        "device": "기기",
+        "area": "영역",
+        "entity": "관련된 구성요소",
+        "group": "관련된 그룹",
+        "scene": "관련된 씬",
+        "script": "관련된 스크립트",
+        "automation": "관련된 자동화"
+      },
+      "data-table": {
+        "search": "검색",
+        "no-data": "데이터가 없습니다",
+        "filtering_by": "필터링",
+        "hidden": "{number}개 숨겨짐",
+        "clear": "지우기"
+      },
+      "media-browser": {
+        "pick": "선택",
+        "play": "재생",
+        "play-media": "미디어 재생",
+        "pick-media": "미디어 선택",
+        "no_items": "항목 없음",
+        "choose_player": "플레이어 선택하기",
+        "media-player-browser": "미디어 플레이어 브라우저",
+        "web-browser": "웹 브라우저",
+        "media_player": "미디어 플레이어",
+        "audio_not_supported": "브라우저가 오디오를 지원하지 않습니다.",
+        "video_not_supported": "브라우저가 비디오를 지원하지 않습니다.",
+        "media_not_supported": "브라우저 미디어 플레이어에서 이 유형의 미디어를 지원하지 않습니다",
+        "media_browsing_error": "미디어 탐색 오류",
+        "learn_adding_local_media": "{documentation}에서 미디어 추가에 대해 자세히 알아보세요.",
+        "local_media_files": "브라우저 또는 지원되는 미디어 플레이어에서 탐색하고 재생할 수 있도록 비디오, 오디오 및 이미지 파일을 미디어 디렉터리에 넣어주세요.",
+        "documentation": "관련 문서",
+        "no_local_media_found": "로컬 미디어를 찾을 수 없습니다",
+        "no_media_folder": "아직 생성된 미디어 디렉터리가 없는 것 같습니다.",
+        "setup_local_help": "로컬 미디어 설정 방법에 대한 {documentation}을(를) 확인해주세요.",
+        "class": {
+          "album": "앨범",
+          "app": "앱",
+          "artist": "아티스트",
+          "channel": "채널",
+          "composer": "작곡가",
+          "contributing_artist": "기여 아티스트",
+          "directory": "라이브러리",
+          "episode": "에피소드",
+          "game": "게임",
+          "genre": "장르",
+          "image": "이미지",
+          "movie": "영화",
+          "music": "음악",
+          "playlist": "재생 목록",
+          "podcast": "팟캐스트",
+          "season": "시즌",
+          "track": "트랙",
+          "tv_show": "TV 쇼",
+          "url": "URL",
+          "video": "비디오"
+        }
+      },
+      "calendar": { "my_calendars": "내 캘린더", "today": "오늘" },
+      "attributes": { "expansion_header": "속성" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "{domain}",
+            "core": "위치 및 사용자화",
+            "group": "그룹, 그룹 구성요소 및 알림 서비스",
+            "automation": "자동화",
+            "script": "스크립트",
+            "scene": "씬",
+            "person": "구성원",
+            "zone": "지역",
+            "input_boolean": "논리 입력",
+            "input_text": "문자 입력",
+            "input_number": "숫자 입력",
+            "input_datetime": "날짜/시간 입력",
+            "input_select": "선택 입력",
+            "template": "템플릿 구성요소",
+            "universal": "범용 미디어 플레이어 구성요소",
+            "rest": "REST 구성요소 및 알림 서비스",
+            "command_line": "명령줄 구성요소",
+            "filter": "필터 구성요소",
+            "statistics": "통계 구성요소",
+            "generic": "일반 IP 카메라 구성요소",
+            "generic_thermostat": "일반 온도 조절기 구성요소",
+            "homekit": "HomeKit",
+            "min_max": "최소/최대 구성요소",
+            "history_stats": "기록 통계 구성요소",
+            "trend": "추세 구성요소",
+            "ping": "Ping 이진 센서 구성요소",
+            "filesize": "파일 크기 구성요소",
+            "telegram": "Telegram 알림 서비스",
+            "smtp": "SMTP 알림 서비스",
+            "mqtt": "직접 구성한 MQTT 구성요소",
+            "rpi_gpio": "Raspberry Pi GPIO 구성요소"
+          },
+          "server_control": {
+            "perform_action": "서버 {action}",
+            "restart": "다시 시작하기",
+            "stop": "중지하기"
+          },
+          "types": {
+            "reload": "다시 읽어오기",
+            "navigation": "이동하기",
+            "server_control": "서버 제어하기"
+          },
+          "navigation": {
+            "logs": "로그",
+            "automation": "자동화",
+            "script": "스크립트",
+            "integrations": "통합 구성요소",
+            "areas": "영역",
+            "scene": "씬",
+            "helpers": "도우미",
+            "tag": "태그",
+            "person": "구성원",
+            "devices": "기기",
+            "entities": "구성요소",
+            "energy": "Energy",
+            "lovelace": "Lovelace 대시보드",
+            "core": "일반",
+            "zone": "지역",
+            "users": "사용자",
+            "info": "정보",
+            "customize": "사용자화",
+            "blueprint": "블루프린트",
+            "server_control": "서버 제어",
+            "navigate_to": "{panel}(으)로 이동하기"
+          }
+        },
+        "filter_placeholder": "구성요소 필터"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant가 아무 소리도 듣지 못했습니다",
+        "found": "다음을 찾았습니다:",
+        "error": "이런, 오류가 발생했습니다",
+        "how_can_i_help": "무엇을 도와드릴까요?",
+        "label": "질문을 입력하고 'Enter'를 눌러주세요",
+        "label_voice": "질문을 입력하고 'Enter'를 누르거나 마이크를 탭하여 말씀해보세요"
+      },
+      "generic": {
+        "cancel": "취소",
+        "ok": "확인",
+        "default_confirmation_title": "다시 한번 확인해주세요",
+        "close": "닫기"
+      },
+      "image_cropper": { "crop": "자르기" },
+      "more_info_control": {
+        "dismiss": "대화창 닫기",
+        "settings": "구성요소 설정내용",
+        "edit": "구성요소 편집하기",
+        "details": "세부 정보",
+        "history": "기록 내용",
+        "last_changed": "최근 변경 됨",
+        "last_updated": "최근 업데이트 됨",
+        "script": {
+          "last_action": "최근 동작",
+          "last_triggered": "최근 트리거 됨"
+        },
+        "sun": { "elevation": "고도", "rising": "해돋이", "setting": "해넘이" },
+        "updater": { "title": "업데이트 방법" },
+        "remote": { "activity": "현재 활동" },
+        "restored": {
+          "not_provided": "이 구성요소는 현재 사용할 수 없습니다. 기기의 남겨진 잔여 데이터 이거나 제거, 변경 또는 기능 장애가 있는 통합 구성요소일 수 있습니다.",
+          "remove_intro": "구성요소를 더 이상 사용하지 않는 경우, 이를 제거하여 정리할 수 있습니다.",
+          "remove_action": "구성요소 제거하기",
+          "confirm_remove_title": "구성요소를 제거하시겠습니까?",
+          "confirm_remove_text": "이 구성요소를 제거하시겠습니까?"
+        },
+        "vacuum": {
+          "status": "상태",
+          "commands": "청소기 조작 명령:",
+          "fan_speed": "팬 속도",
+          "start": "시작",
+          "pause": "일시정지",
+          "stop": "중지하기",
+          "clean_spot": "부분 청소",
+          "locate": "위치 이동",
+          "return_home": "충전 복귀",
+          "start_pause": "시작 / 일시정지"
+        },
+        "person": { "create_zone": "현재 위치로 지역 만들기" },
+        "cover": {
+          "open_cover": "열기",
+          "close_cover": "닫기",
+          "open_tilt_cover": "열기",
+          "close_tile_cover": "닫기",
+          "stop_cover": "멈추기"
+        }
+      },
+      "entity_registry": {
+        "settings": "설정 내용",
+        "control": "제어하기",
+        "related": "관련 내용",
+        "dismiss": "해제하기",
+        "no_unique_id": "이 구성요소 (\"{entity_id}\")은(는) 고유한 ID가 없으므로 UI에서 구성 내용을 관리할 수 없습니다. 자세한 내용은 {faq_link}을(를) 참조해주세요.",
+        "faq": "관련 문서",
+        "info_customize": "{customize_link} 섹션에서 일부 속성을 재정의 할 수 있습니다.",
+        "customize_link": "구성요소 사용자화",
+        "editor": {
+          "name": "이름",
+          "icon": "아이콘",
+          "icon_error": "아이콘은 접두사:아이콘이름 형식이어야 합니다. 예: mdi:home",
+          "entity_id": "구성요소 ID",
+          "unavailable": "이 구성요소는 현재 사용할 수 없습니다.",
+          "enabled_label": "구성요소 활성화",
+          "enabled_cause": "{cause}에 의해 비활성화되었습니다.",
+          "device_disabled": "이 구성요소의 기기가 비활성화되었습니다.",
+          "open_device_settings": "기기 설정 열기",
+          "enabled_description": "비활성화된 구성요소는 Home Assistant에 추가되지 않습니다.",
+          "enabled_delay_confirm": "활성화된 구성요소는 {delay}초 후에 Home Assistant에 추가됩니다",
+          "enabled_restart_confirm": "구성요소를 활성화하려면 Home Assistant를 다시 시작해주세요",
+          "delete": "삭제하기",
+          "confirm_delete": "이 구성요소를 제거하시겠습니까?",
+          "update": "업데이트",
+          "note": "참고: 모든 통합 구성요소에서 아직 작동하지 않을 수 있습니다.",
+          "advanced": "고급 설정",
+          "area": "구성 요소 영역만 설정하기",
+          "area_note": "기본적으로 기기의 구성요소는 기기와 동일한 영역에 있습니다. 이 구성요소의 영역을 변경하면 더 이상 기기의 영역을 따르지 않습니다.",
+          "follow_device_area": "기기 영역 따르기",
+          "change_device_area": "기기 영역 변경하기"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "{platform} 통합 구성요소가 로드되지 않았습니다. 'default_config:' 또는 \"{platform}:\"을 configuration.yaml에 추가해주세요.",
+        "yaml_not_editable": "이 구성요소의 설정은 UI에서 편집할 수 없습니다. UI에서 설정한 구성요소만 UI에서 구성할 수 있습니다.",
+        "required_error_msg": "이 입력란은 필수 요소입니다",
+        "generic": { "name": "이름", "icon": "아이콘" },
+        "input_datetime": {
+          "date": "날짜",
+          "time": "시간",
+          "datetime": "날짜와 시간",
+          "mode": "입력할 내용"
+        },
+        "input_text": {
+          "min": "최소 길이",
+          "max": "최대 길이",
+          "mode": "디스플레이 모드",
+          "text": "텍스트",
+          "password": "비밀번호",
+          "pattern": "클라이언트 측 검증을 위한 정규표현식"
+        },
+        "input_number": {
+          "min": "최솟값",
+          "max": "최댓값",
+          "mode": "디스플레이 모드",
+          "box": "입력란",
+          "slider": "슬라이더",
+          "step": "슬라이더 간격",
+          "unit_of_measurement": "측정 단위"
+        },
+        "input_select": {
+          "options": "옵션",
+          "add_option": "옵션 추가하기",
+          "no_options": "아직 옵션이 없습니다.",
+          "add": "추가하기"
+        },
+        "counter": {
+          "minimum": "최솟값",
+          "maximum": "최댓값",
+          "initial": "초깃값",
+          "restore": "Home Assistant가 시작될 때 최근 값으로 복원",
+          "step": "계수 간격"
+        },
+        "timer": { "duration": "기간" }
+      },
+      "options_flow": {
+        "form": { "header": "옵션" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "옵션이 성공적으로 저장되었습니다." }
+      },
+      "config_entry_system_options": {
+        "title": "{integration} 시스템 옵션",
+        "enable_new_entities_label": "새로 추가된 구성요소를 활성화합니다.",
+        "enable_new_entities_description": "비활성화한 경우 새로 발견된 {integration} 구성요소는 Home Assistant에 자동으로 추가되지 않습니다.",
+        "enable_polling_label": "업데이트를 위해 폴링을 활성화합니다.",
+        "enable_polling_description": "Home Assistant가 업데이트를 위해 {integration} 구성요소를 자동으로 폴링해야하는 경우.",
+        "restart_home_assistant": "변경 사항을 적용하려면 Home Assistant를 다시 시작해야합니다.",
+        "update": "업데이트"
+      },
+      "zha_reconfigure_device": {
+        "heading": "기기 재구성 중",
+        "configuring_alt": "구성",
+        "introduction": "Zigbee 네트워크에서 장치를 재구성합니다. 장치가 올바르게 작동하지 않는 경우에 이 기능을 사용하십시오.",
+        "battery_device_warning": "재구성하기 전에 배터리 전원 장치의 절전 모드를 해제해야 합니다. 절전 모드를 해제하는 방법은 기기 설명서를 참조하십시오.",
+        "run_in_background": "이 대화 상자를 닫을 수 있으며 재구성은 백그라운드에서 계속됩니다.",
+        "start_reconfiguration": "재구성 시작",
+        "in_progress": "장치가 재구성 중입니다. 시간이 좀 걸릴 수 있습니다.",
+        "configuration_failed": "장치 재구성에 실패했습니다. 로그에서 정보를 확인할 수 있습니다.",
+        "configuration_complete": "장치 재구성이 완료되었습니다.",
+        "button_show": "세부 정보 표시",
+        "button_hide": "세부 정보 숨기기",
+        "cluster_header": "클러스터",
+        "bind_header": "묶기",
+        "reporting_header": "보고",
+        "attribute": "속성",
+        "min_max_change": "최소/최대/변경"
+      },
+      "zha_device_info": {
+        "manuf": "{manufacturer} 제조",
+        "no_area": "영역 없음",
+        "device_signature": "Zigbee 기기 서명",
+        "device_children": "Zigbee 하위 기기",
+        "buttons": {
+          "add": "이 기기를 통해 하위 기기 추가하기",
+          "remove": "기기 제거하기",
+          "clusters": "클러스터 관리",
+          "reconfigure": "기기 재구성하기",
+          "zigbee_information": "Zigbee 기기 서명",
+          "device_children": "하위 기기 보기",
+          "view_in_visualization": "시각화에서보기"
+        },
+        "services": {
+          "reconfigure": "ZHA 기기를 다시 구성 합니다. (기기 복구). 기기에 문제가 있는 경우 사용해주세요. 기기가 배터리로 작동하는 경우, 이 서비스를 사용할 때 기기가 켜져있고 통신이 가능한 상태인지 확인해주세요.",
+          "updateDeviceName": "이 기기의 사용자 정의 이름을 기기 레지스트리에 설정합니다.",
+          "remove": "Zigbee 네트워크에서 기기를 제거해주세요.",
+          "zigbee_information": "기기에 대한 Zigbee 정보 보기."
+        },
+        "confirmations": { "remove": "이 기기를 제거하시겠습니까?" },
+        "quirk": "규격외 사양 표준화(Quirk)",
+        "last_seen": "마지막 확인",
+        "power_source": "전원",
+        "unknown": "알 수 없음",
+        "zha_device_card": { "device_name_placeholder": "기기 이름 변경" }
+      },
+      "domain_toggler": {
+        "title": "도메인 토글",
+        "reset_entities": "구성요소 재설정하기"
+      },
+      "mqtt_device_debug_info": {
+        "title": "{device} 디버그 정보",
+        "deserialize": "MQTT 메시지를 JSON 으로 구문 분석하기",
+        "entities": "구성요소",
+        "no_entities": "구성요소가 없습니다",
+        "no_triggers": "트리거가 없습니다",
+        "payload_display": "페이로드 표시",
+        "recent_messages": "{n}개의 최근 수신 메시지",
+        "show_as_yaml": "YAML로 표시하기",
+        "triggers": "트리거"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\none{초}\nother{초}\n}",
+      "minute": "{count} {count, plural,\none{분}\nother{분}\n}",
+      "hour": "{count} {count, plural,\none{시간}\nother{시간}\n}",
+      "day": "{count} {count, plural,\none{일}\nother{일}\n}",
+      "week": "{count} {count, plural,\none{주}\nother{주}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "유형이 제공되지 않았습니다.",
+        "error_detected": "구성 내용에 오류가 감지되었습니다",
+        "editor_not_available": "\"{type}\" 유형에 사용할 수 있는 비주얼 편집기가 없습니다.",
+        "editor_not_supported": "이 구성에 대해 비주얼 편집기가 지원되지 않습니다.",
+        "edit_in_yaml_supported": "YAML에서도 구성을 편집할 수 있습니다.",
+        "key_missing": "필수 키 \"{key}\"이(가) 없습니다.",
+        "key_not_expected": "비주얼 편집기에서 \"{key}\" 키는 예상되지 않거나 지원되지 않습니다.",
+        "key_wrong_type": "\"{key}\"에 제공된 값은 비주얼 편집기에서 지원되지 않습니다. ({type_correct})을(를) 지원하지만 ({type_wrong})을(를) 받았습니다.",
+        "no_template_editor_support": "비주얼 편집기에서 템플릿이 지원되지 않습니다"
+      },
+      "supervisor": {
+        "title": "Supervisor 패널을 불러올 수 없습니다!",
+        "wait": "방금 시작한 경우 Supervisor가 완전히 시작되기까지 잠시 기다려주세요.",
+        "ask": "문의하기",
+        "reboot": "호스트 재부팅 시도하기",
+        "observer": "Observer 확인하기",
+        "system_health": "시스템 상태 확인하기"
+      }
+    },
+    "login-form": {
+      "password": "비밀번호",
+      "remember": "자동로그인",
+      "log_in": "로그인"
+    },
+    "notification_drawer": {
+      "click_to_configure": "버튼을 클릭하여 {entity}을(를) 구성",
+      "empty": "알림 내용이 없습니다.",
+      "title": "알림",
+      "close": "닫기",
+      "dismiss_all": "모두 해제하기"
+    },
+    "notification_toast": {
+      "service_call_failed": "{service} 서비스를 호출하지 못했습니다.",
+      "connection_lost": "서버와 연결이 끊어졌습니다. 다시 연결하는 중...",
+      "started": "Home Assistant가 시작되었습니다!",
+      "starting": "Home Assistant가 시작됩니다. 완료될 때까지 일부 기능은 작동하지 않을 수 있습니다.",
+      "wrapping_up_startup": "시작을 마무리하는 중입니다. 완료될 때까지 일부 기능은 작동하지 않을 수 있습니다.",
+      "integration_starting": "{integration}을(를) 시작하는 중입니다. 완료될 때까지 일부 기능은 작동하지 않을 수 있습니다.",
+      "triggered": "{name}이(가) 트리거됨",
+      "dismiss": "해제하기"
+    },
+    "sidebar": {
+      "external_app_configuration": "앱 구성",
+      "sidebar_toggle": "사이드바 토글",
+      "done": "완료"
+    },
+    "panel": {
+      "error": {
+        "go_back": "뒤로가기",
+        "supervisor": {
+          "ask": "도움 요청하기",
+          "observer": "Observer 확인하기",
+          "reboot": "호스트 재부팅 시도하기",
+          "system_health": "시스템 상태 확인하기",
+          "title": "Supervisor 패널을 불러올 수 없습니다!",
+          "wait": "방금 시작한 경우 Supervisor가 완전히 시작되기까지 잠시 기다려주세요."
+        }
+      },
+      "history": {
+        "ranges": {
+          "last_week": "지난 주",
+          "this_week": "이번 주",
+          "today": "오늘",
+          "yesterday": "어제"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "지난 주",
+          "this_week": "이번 주",
+          "today": "오늘",
+          "yesterday": "어제"
+        }
+      }
+    }
+  }
+}

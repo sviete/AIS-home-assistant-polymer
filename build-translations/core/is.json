@@ -1,0 +1,883 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "Dagatal",
+    "config": "Stillingar",
+    "states": "Yfirlit",
+    "map": "Kort",
+    "logbook": "Breytingarsaga",
+    "history": "Saga",
+    "mailbox": "Pósthólf",
+    "shopping_list": "Innkaupalisti",
+    "developer_tools": "Þróunarverkfæri",
+    "media_browser": "Media Browser",
+    "profile": "Prófíll"
+  },
+  "state": {
+    "default": {
+      "on": "Á",
+      "off": "Slökkt",
+      "unknown": "Óþekkt",
+      "unavailable": "Ekki tiltækt"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "Af", "on": "Á", "auto": "Sjálfvirkt" },
+      "preset_mode": {
+        "none": "Ekkert",
+        "eco": "Sparnaður",
+        "away": "Fjarverandi",
+        "boost": "Uppörvun",
+        "comfort": "Þægindi",
+        "home": "Heima",
+        "sleep": "Svefn",
+        "activity": "Virkni"
+      },
+      "hvac_action": {
+        "off": "Slökkt",
+        "heating": "Kynding",
+        "cooling": "Kæling",
+        "drying": "Þurrkun",
+        "idle": "Aðgerðalaus",
+        "fan": "Vifta"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "Normal",
+        "eco": "Eco",
+        "away": "Fjarverandi",
+        "boost": "Boost",
+        "comfort": "Comfort",
+        "home": "Heima",
+        "sleep": "Sleep",
+        "auto": "Sjálfvirkt",
+        "baby": "Baby"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "Óþ.",
+      "unavailable": "Unavai",
+      "error": "Villa",
+      "entity_not_found": "Eining fannst ekki"
+    },
+    "alarm_control_panel": {
+      "armed": "Ekki á verði",
+      "disarmed": "Ekki á verði",
+      "armed_home": "Á verði",
+      "armed_away": "Á verði",
+      "armed_night": "Á verði",
+      "armed_custom_bypass": "Á verði",
+      "pending": "Í bið",
+      "arming": "set á vörð",
+      "disarming": "tek af verði",
+      "triggered": "Kveik"
+    },
+    "device_tracker": { "home": "Heima", "not_home": "Fjarverandi" },
+    "person": { "home": "Heima", "not_home": "Fjarverandi" }
+  },
+  "groups": {
+    "owner": "Eigandi",
+    "system-admin": "Stjórnendur",
+    "system-users": "Notendur",
+    "system-read-only": "Notendur með lesaðgang"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "Notandi",
+      "integration": "Samþætting",
+      "config_entry": "Config entry",
+      "device": "Tæki"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "Viltu vista þessa innskráningu?",
+      "decline": "Nei takk",
+      "confirm": "Vista innskráningu"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "Kóði",
+        "clear_code": "Hreinsa",
+        "disarm": "Taka af verði",
+        "arm_home": "Vörður heima",
+        "arm_away": "Vörður úti",
+        "arm_night": "Vörður nótt",
+        "arm_custom_bypass": "Sérsniðin hjáleið"
+      },
+      "automation": { "last_triggered": "Síðast kveikt", "trigger": "Kveikja" },
+      "camera": { "not_available": "Mynd ekki tiltæk" },
+      "climate": {
+        "currently": "Er núna",
+        "on_off": "Kveikt / slökkt",
+        "target_temperature": "Viðmiðunar hitastig",
+        "target_temperature_entity": "{name} target temperature",
+        "target_temperature_mode": "{name} target temperature {mode}",
+        "current_temperature": "{name} current temperature",
+        "heating": "{name} hitun",
+        "cooling": "{name} kæling",
+        "high": "high",
+        "low": "low",
+        "target_humidity": "Viðmiðunar rakastig",
+        "operation": "Aðgerð",
+        "fan_mode": "Viftuhamur",
+        "swing_mode": "Sveifluhamur",
+        "preset_mode": "Forstilling",
+        "away_mode": "Fjarverandi hamur",
+        "aux_heat": "Aux heat"
+      },
+      "counter": {
+        "actions": {
+          "increment": "increment",
+          "decrement": "decrement",
+          "reset": "endurstilla"
+        }
+      },
+      "cover": { "position": "Staðsetning", "tilt_position": "Hallastaða" },
+      "fan": {
+        "speed": "Hraði",
+        "preset_mode": "Preset Mode",
+        "oscillate": "Sveiflast",
+        "direction": "Snúningsátt",
+        "forward": "Áfram",
+        "reverse": "Afturábak"
+      },
+      "humidifier": {
+        "humidity": "Target humidity",
+        "mode": "Hamur",
+        "target_humidity_entity": "{name} target humidity",
+        "on_entity": "{name} í gangi"
+      },
+      "light": {
+        "brightness": "Birtustig",
+        "color_temperature": "Litastig",
+        "white_value": "Hvítt gildi",
+        "color_brightness": "Color brightness",
+        "cold_white_value": "Cold white brightness",
+        "warm_white_value": "Warm white brightness",
+        "effect": "Áhrif"
+      },
+      "lock": { "code": "Kóði", "lock": "Læsa", "unlock": "Aflæsa" },
+      "media_player": {
+        "source": "Uppruni",
+        "sound_mode": "Hljóðhamur",
+        "browse_media": "Browse media",
+        "turn_on": "Turn on",
+        "turn_off": "Turn off",
+        "media_play": "Play",
+        "media_play_pause": "Play/pause",
+        "media_next_track": "Next",
+        "media_previous_track": "Previous",
+        "text_to_speak": "Texti yfir í tal"
+      },
+      "persistent_notification": { "dismiss": "Vísa frá" },
+      "scene": { "activate": "Virkja" },
+      "script": {
+        "run": "Run",
+        "cancel": "Hætta við",
+        "cancel_multiple": "Hætta við {number}"
+      },
+      "service": { "run": "Keyra" },
+      "timer": {
+        "actions": {
+          "start": "byrja",
+          "pause": "hlé",
+          "cancel": "hætta við",
+          "finish": "lokið"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "Halda áfram að þrífa",
+          "return_to_base": "Fara aftur í bryggju",
+          "start_cleaning": "Byrja að þrífa",
+          "turn_on": "Kveikja á",
+          "turn_off": "Slökkva á"
+        }
+      },
+      "water_heater": {
+        "currently": "Er núna",
+        "on_off": "Kveikt / slökkt",
+        "target_temperature": "Viðmiðunarhitastig",
+        "operation": "Aðgerð",
+        "away_mode": "Fjarverandi hamur"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "Loftþrýstingur",
+          "humidity": "Rakastig",
+          "temperature": "Hitastig",
+          "visibility": "Skyggni",
+          "wind_speed": "Vindhraði",
+          "precipitation": "Úrkoma"
+        },
+        "cardinal_direction": {
+          "e": "A",
+          "ene": "ANA",
+          "ese": "ASA",
+          "n": "N",
+          "ne": "NA",
+          "nne": "NNA",
+          "nw": "NV",
+          "nnw": "NNV",
+          "s": "S",
+          "se": "SA",
+          "sse": "SSA",
+          "ssw": "SSV",
+          "sw": "SV",
+          "w": "V",
+          "wnw": "VNV",
+          "wsw": "VSV"
+        },
+        "day": "Dagur",
+        "night": "Nótt",
+        "forecast": "Spá",
+        "high": "High",
+        "low": "Low"
+      }
+    },
+    "common": {
+      "and": "og",
+      "continue": "Halda áfram",
+      "previous": "Fyrri",
+      "loading": "Hleð",
+      "refresh": "Endurnýja",
+      "cancel": "Hætta við",
+      "delete": "Eyða",
+      "remove": "Remove",
+      "enable": "Enable",
+      "disable": "Disable",
+      "close": "Loka",
+      "leave": "Leave",
+      "stay": "Stay",
+      "next": "Næsta",
+      "back": "Til baka",
+      "undo": "Afturkalla",
+      "save": "Vista",
+      "rename": "Endurnefna",
+      "yes": "Já",
+      "no": "Nei",
+      "not_now": "Ekki núna",
+      "skip": "Sleppa",
+      "menu": "Valmynd",
+      "overflow_menu": "Overflow menu",
+      "successfully_saved": "Successfully saved",
+      "successfully_deleted": "Successfully deleted",
+      "error_required": "Skilyrt",
+      "copied": "Copied",
+      "copied_clipboard": "Afritað á klemmuspjald"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "No logbook entries found.",
+        "by": "by",
+        "by_service": "by service",
+        "show_trace": "Show trace",
+        "retrieval_error": "Error during logbook entry retrieval",
+        "messages": {
+          "was_away": "was detected away",
+          "was_at_state": "was detected at {state}",
+          "rose": "rose",
+          "set": "set",
+          "was_low": "was low",
+          "was_normal": "was normal",
+          "was_connected": "was connected",
+          "was_disconnected": "was disconnected",
+          "was_opened": "var opnað",
+          "was_closed": "var lokað",
+          "is_opening": "is opening",
+          "is_closing": "is closing",
+          "was_unlocked": "was unlocked",
+          "was_locked": "was locked",
+          "was_plugged_in": "was plugged in",
+          "was_unplugged": "was unplugged",
+          "was_at_home": "was detected at home",
+          "was_unsafe": "was unsafe",
+          "was_safe": "was safe",
+          "detected_device_class": "detected {device_class}",
+          "cleared_device_class": "cleared (no {device_class} detected)",
+          "turned_off": "turned off",
+          "turned_on": "turned on",
+          "changed_to_state": "changed to {state}",
+          "became_unavailable": "became unavailable"
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "Eining",
+          "clear": "Hreinsa",
+          "no_match": "Engar samsvarandi einingar fundust",
+          "show_entities": "Show entities"
+        },
+        "entity-attribute-picker": {
+          "attribute": "Attribute",
+          "show_attributes": "Show attributes"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "Expand this area into the separate devices and entities that it contains. After expanding, it will not update the devices and entities when the area changes.",
+        "expand_device_id": "Expand this device into the separate entities that it contains. After expanding, it will not update the entities when the device changes.",
+        "remove_area_id": "Fjarlægja svæði",
+        "remove_device_id": "Fjarlægja tæki",
+        "remove_entity_id": "Fjarlægja einingu",
+        "add_area_id": "Velja svæði",
+        "add_device_id": "Velja tæki",
+        "add_entity_id": "Velja einingu"
+      },
+      "user-picker": {
+        "no_user": "No user",
+        "add_user": "Add user",
+        "remove_user": "Remove user"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Velja uppdrátt",
+        "add_user": "Bæta við notanda",
+        "remove_user": "Fjarlægja notanda"
+      },
+      "device-picker": {
+        "clear": "Hreinsa",
+        "toggle": "Toggle",
+        "show_devices": "Sýna tæki",
+        "no_devices": "Þú ert ekki með nein tæki",
+        "no_match": "Engin samsvarandi tæki fundust",
+        "device": "Tæki",
+        "no_area": "Ekkert svæði"
+      },
+      "area-picker": {
+        "clear": "Hreinsa",
+        "show_areas": "Birta svæði",
+        "area": "Svæði",
+        "add_new": "Add new area...",
+        "no_areas": "You don't have any areas",
+        "no_match": "No matching areas found",
+        "add_dialog": {
+          "title": "Add new area",
+          "text": "Enter the name of the new area.",
+          "name": "Nafn",
+          "add": "Bæta við",
+          "failed_create_area": "Ekki tókst að stofna svæði."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "Add-on",
+        "error": {
+          "no_supervisor": {
+            "title": "No Supervisor",
+            "description": "No Supervisor found, so add-ons could not be loaded."
+          },
+          "fetch_addons": {
+            "title": "Error fetching add-ons",
+            "description": "Fetching add-ons returned an error."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "Filter by entity",
+        "filter_by_device": "Filter by device",
+        "filter_by_area": "Filter by area",
+        "filtered_by_entity": "entity: {entity_name}",
+        "filtered_by_device": "device: {device_name}",
+        "filtered_by_area": "area: {area_name}"
+      },
+      "picture-upload": {
+        "label": "Picture",
+        "unsupported_format": "Unsupported format, please choose a JPEG, PNG or GIF image."
+      },
+      "date-range-picker": {
+        "start_date": "Upphafs dagsetning",
+        "end_date": "Loka dagsetning",
+        "select": "Velja",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Aldrei",
+        "just_now": "Rétt í þessu",
+        "duration": {
+          "second": "{count} {count, plural,\n  one {sekúnda}\n  other {sekúndur}\n}",
+          "minute": "{count} {count, plural,\n  one {mínúta}\n  other {mínútur}\n}",
+          "hour": "{count} {count, plural,\n  one {klukkutími}\n  other {klukkutímar}\n}",
+          "day": "{count} {count, plural,\n  one {dagur}\n  other {dagar}\n}",
+          "week": "{count} {count, plural,\n  one {vika}\n  other {vikur}\n}"
+        },
+        "past_duration": {
+          "second": "{count} {count, plural,\n  one {second}\n  other {seconds}\n} ago",
+          "minute": "{count} {count, plural,\n  one {minute}\n  other {minutes}\n} ago",
+          "hour": "{count} {count, plural,\n  one {hour}\n  other {hours}\n} ago",
+          "day": "{count} {count, plural,\n  one {day}\n  other {days}\n} ago",
+          "week": "{count} {count, plural,\n  one {week}\n  other {weeks}\n} ago"
+        },
+        "future_duration": {
+          "second": "In {count} {count, plural,\n  one {second}\n  other {seconds}\n}",
+          "minute": "In {count} {count, plural,\n  one {minute}\n  other {minutes}\n}",
+          "hour": "In {count} {count, plural,\n  one {hour}\n  other {hours}\n}",
+          "day": "In {count} {count, plural,\n  one {day}\n  other {days}\n}",
+          "week": "In {count} {count, plural,\n  one {week}\n  other {weeks}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "History integration disabled",
+        "loading_history": "Hleð stöðusögu...",
+        "no_history_found": "Engin stöðusaga fannst."
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "Þjónusta" },
+      "service-control": {
+        "required": "This field is required",
+        "target": "Targets",
+        "target_description": "What should this service use as targeted areas, devices or entities.",
+        "service_data": "Service data",
+        "integration_doc": "Integration documentation"
+      },
+      "related-items": {
+        "no_related_found": "No related items found.",
+        "integration": "Samþætting",
+        "device": "Tæki",
+        "area": "Svæði",
+        "entity": "Related entities",
+        "group": "Part of the following groups",
+        "scene": "Part of the following scenes",
+        "script": "Part of the following scripts",
+        "automation": "Part of the following automations"
+      },
+      "data-table": {
+        "search": "Leita",
+        "no-data": "No data",
+        "filtering_by": "Filtering by",
+        "hidden": "{number} hidden",
+        "clear": "Clear"
+      },
+      "media-browser": {
+        "pick": "Pick",
+        "play": "Play",
+        "play-media": "Play Media",
+        "pick-media": "Pick Media",
+        "no_items": "No items",
+        "choose_player": "Veldu spilara",
+        "media-player-browser": "Media Player Browser",
+        "web-browser": "Web Browser",
+        "media_player": "Media Player",
+        "audio_not_supported": "Your browser does not support the audio element.",
+        "video_not_supported": "Your browser does not support the video element.",
+        "media_not_supported": "The Browser Media Player does not support this type of media",
+        "media_browsing_error": "Media Browsing Error",
+        "learn_adding_local_media": "Learn more about adding media in the {documentation}.",
+        "local_media_files": "Place your video, audio and image files in the media directory to be able to browse and play them in the browser or on supported media players.",
+        "documentation": "documentation",
+        "no_local_media_found": "No local media found",
+        "no_media_folder": "It looks like you have not yet created a media directory.",
+        "setup_local_help": "Check the {documentation} on how to setup local media.",
+        "class": {
+          "album": "Album",
+          "app": "App",
+          "artist": "Artist",
+          "channel": "Channel",
+          "composer": "Composer",
+          "contributing_artist": "Contributing Artist",
+          "directory": "Library",
+          "episode": "Episode",
+          "game": "Game",
+          "genre": "Genre",
+          "image": "Image",
+          "movie": "Movie",
+          "music": "Tónlist",
+          "playlist": "Playlist",
+          "podcast": "Hlaðvarp",
+          "season": "Season",
+          "track": "Track",
+          "tv_show": "Sjónvarpsþáttur",
+          "url": "URL",
+          "video": "Video"
+        }
+      },
+      "calendar": { "my_calendars": "Dagatölin mín", "today": "Í dag" },
+      "attributes": { "expansion_header": "Attributes" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "{domain}",
+            "core": "Location & customizations",
+            "group": "Groups, group entities, and notify services",
+            "automation": "Automations",
+            "script": "Scripts",
+            "scene": "Scenes",
+            "person": "People",
+            "zone": "Zones",
+            "input_boolean": "Input booleans",
+            "input_text": "Input texts",
+            "input_number": "Input numbers",
+            "input_datetime": "Input date times",
+            "input_select": "Input selects",
+            "template": "Template entities",
+            "universal": "Universal media player entities",
+            "rest": "Rest entities and notify services",
+            "command_line": "Command line entities",
+            "filter": "Filter entities",
+            "statistics": "Statistics entities",
+            "generic": "Generic IP camera entities",
+            "generic_thermostat": "Generic thermostat entities",
+            "homekit": "Endurhlaða HomeKit",
+            "min_max": "Min/max entities",
+            "history_stats": "History stats entities",
+            "trend": "Trend entities",
+            "ping": "Ping binary sensor entities",
+            "filesize": "File size entities",
+            "telegram": "Telegram notify services",
+            "smtp": "SMTP notify services",
+            "mqtt": "Manually configured MQTT entities",
+            "rpi_gpio": "Raspberry Pi GPIO entities"
+          },
+          "server_control": {
+            "perform_action": "{action} server",
+            "restart": "Endurræsa",
+            "stop": "Stöðva"
+          },
+          "types": {
+            "reload": "Reload",
+            "navigation": "Navigate",
+            "server_control": "Server"
+          },
+          "navigation": {
+            "logs": "Atburðaskrá",
+            "automation": "Sjálfvirkni",
+            "script": "Skriftur",
+            "integrations": "Samþættingar",
+            "areas": "Svæði",
+            "scene": "Senur",
+            "helpers": "Hjálp",
+            "tag": "Tags",
+            "person": "Persónur",
+            "devices": "Tæki",
+            "entities": "Einingar",
+            "energy": "Energy",
+            "lovelace": "Skjáborð",
+            "core": "Almennt",
+            "zone": "Svæði",
+            "users": "Notendur",
+            "info": "Upplýsingar",
+            "customize": "Customizations",
+            "blueprint": "Uppdrættir",
+            "server_control": "Server Controls"
+          }
+        },
+        "filter_placeholder": "Entity Filter"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant did not hear anything",
+        "found": "Ég fann eftirfarandi fyrir þig:",
+        "error": "Úbbs, villa kom upp",
+        "how_can_i_help": "Hvernig get ég aðstoðað?",
+        "label": "Type a question and press 'Enter'",
+        "label_voice": "Type and press 'Enter' or tap the microphone to speak"
+      },
+      "generic": {
+        "cancel": "Hætta við",
+        "ok": "Í lagi",
+        "default_confirmation_title": "Ertu viss?",
+        "close": "loka"
+      },
+      "image_cropper": { "crop": "Crop" },
+      "more_info_control": {
+        "dismiss": "Dismiss dialog",
+        "settings": "Stillingar fyrir einingu",
+        "edit": "Breyta einingu",
+        "details": "Details",
+        "history": "Saga",
+        "last_changed": "Síðast breytt",
+        "last_updated": "Last updated",
+        "script": {
+          "last_action": "Síðasta aðgerð",
+          "last_triggered": "Síðast kveikt"
+        },
+        "sun": {
+          "elevation": "Hækkun",
+          "rising": "Upprisa",
+          "setting": "Stillingar"
+        },
+        "updater": { "title": "Uppfærslu leiðbeiningar" },
+        "remote": { "activity": "Núverandi verkþáttur" },
+        "restored": {
+          "not_provided": "This entity is currently unavailable and is an orphan to a removed, changed or dysfunctional integration or device.",
+          "remove_intro": "If the entity is no longer in use, you can clean it up by removing it.",
+          "remove_action": "Fjarlægja einingu",
+          "confirm_remove_title": "Fjarlægja einingu?",
+          "confirm_remove_text": "Are you sure you want to remove this entity?"
+        },
+        "vacuum": {
+          "status": "Staða",
+          "commands": "Vacuum cleaner commands:",
+          "fan_speed": "Fan speed",
+          "start": "Byrja",
+          "pause": "Hlé",
+          "stop": "Stöðva",
+          "clean_spot": "Clean spot",
+          "locate": "Staðsetja",
+          "return_home": "Return home",
+          "start_pause": "Start/Pause"
+        },
+        "person": { "create_zone": "Create zone from current location" },
+        "cover": {
+          "open_cover": "Opna kápu",
+          "close_cover": "Loka kápu",
+          "open_tilt_cover": "Open cover tilt",
+          "close_tile_cover": "Close cover tilt",
+          "stop_cover": "Stop cover from moving"
+        }
+      },
+      "entity_registry": {
+        "settings": "Stillingar",
+        "control": "Control",
+        "related": "Tengt",
+        "dismiss": "Vísa frá",
+        "no_unique_id": "This entity (\"{entity_id}\") does not have a unique ID, therefore its settings cannot be managed from the UI. See the {faq_link} for more detail.",
+        "faq": "documentation",
+        "info_customize": "You can overwrite some attributes in the {customize_link} section.",
+        "customize_link": "entity customizations",
+        "editor": {
+          "name": "Yfirskrifa nafn",
+          "icon": "Yfirskrifa táknmynd",
+          "icon_error": "Icons should be in the format 'prefix:iconname', e.g. 'mdi:home'",
+          "entity_id": "Kenni eingar",
+          "unavailable": "This entity is not currently available.",
+          "enabled_label": "Virkja einingu",
+          "enabled_cause": "Afvirkjað vegna {cause}.",
+          "device_disabled": "Tæki þessarar einingar er óvirkt.",
+          "open_device_settings": "Opna stillingar tækis",
+          "enabled_description": "Disabled entities will not be added to Home Assistant.",
+          "enabled_delay_confirm": "The enabled entities will be added to Home Assistant in {delay} seconds",
+          "enabled_restart_confirm": "Restart Home Assistant to finish enabling the entities",
+          "delete": "Eyða",
+          "confirm_delete": "Are you sure you want to delete this entry?",
+          "update": "Uppfæra",
+          "note": "Note: This might not work yet with all integrations.",
+          "advanced": "Ítarlegar stillingar",
+          "area": "Set entity area only",
+          "area_note": "By default the entities of a device are in the same area as the device. If you change the area of this entity, it will no longer follow the area of the device.",
+          "follow_device_area": "Follow device area",
+          "change_device_area": "Change device area"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "The {platform} integration is not loaded. Please add it to your configuration either by adding 'default_config:' or ''{platform}:''.",
+        "yaml_not_editable": "The settings of this entity cannot be edited from the UI. Only entities set up from the UI are configurable from the UI.",
+        "required_error_msg": "þetta er skilyrtur reitur",
+        "generic": { "name": "Nafn", "icon": "Táknmynd" },
+        "input_datetime": {
+          "date": "Dagsetning",
+          "time": "Tími",
+          "datetime": "Dagsetning og tími",
+          "mode": "What do you want to input"
+        },
+        "input_text": {
+          "min": "Lágmarkslengd",
+          "max": "Hámarkslengd",
+          "mode": "Birtingarmáti",
+          "text": "Texti",
+          "password": "Lykilorð",
+          "pattern": "Regex pattern for client-side validation"
+        },
+        "input_number": {
+          "min": "Lágmarksgildi",
+          "max": "Hámarksgildi",
+          "mode": "Birtingarmáti",
+          "box": "Innsláttarreitur",
+          "slider": "Slider",
+          "step": "Step size",
+          "unit_of_measurement": "Mælieining"
+        },
+        "input_select": {
+          "options": "Valkostir",
+          "add_option": "Bæta við valkosti",
+          "no_options": "There are no options yet.",
+          "add": "Bæta við"
+        },
+        "counter": {
+          "minimum": "Minimum value",
+          "maximum": "Maximum value",
+          "initial": "Initial value",
+          "restore": "Restore the last known value when Home Assistant starts",
+          "step": "Step size"
+        },
+        "timer": { "duration": "Duration" }
+      },
+      "options_flow": {
+        "form": { "header": "Valkostir" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "Options successfully saved." }
+      },
+      "config_entry_system_options": {
+        "title": "Kerfisvalkostir",
+        "enable_new_entities_label": "Virkja einingar sem nýlega var bætt við",
+        "enable_new_entities_description": "If newly discovered devices for {integration} should be automatically added.",
+        "enable_polling_label": "Enable polling for updates.",
+        "enable_polling_description": "If Home Assistant should automatically poll {integration} entities for updates.",
+        "restart_home_assistant": "You need to restart Home Assistant for your changes to take effect.",
+        "update": "Uppfæra"
+      },
+      "zha_reconfigure_device": {
+        "heading": "Reconfiguring device",
+        "configuring_alt": "Configuring",
+        "introduction": "Reconfigure a device on your Zigbee network. Use this feature if your device is not functioning correctly.",
+        "battery_device_warning": "You will need to wake battery powered devices before starting the reconfiguration process. Refer to your device's manual for instructions on how to wake the device.",
+        "run_in_background": "You can close this dialog and the reconfiguration will continue in the background.",
+        "start_reconfiguration": "Start Reconfiguration",
+        "in_progress": "The device is being reconfigured. This may take some time.",
+        "configuration_failed": "The device reconfiguration failed. Additional information may be available in the logs.",
+        "configuration_complete": "Device reconfiguration complete.",
+        "button_show": "Show Details",
+        "button_hide": "Hide Details",
+        "cluster_header": "Cluster",
+        "bind_header": "Binding",
+        "reporting_header": "Reporting",
+        "attribute": "Attribute",
+        "min_max_change": "min/max/change"
+      },
+      "zha_device_info": {
+        "manuf": "eftir {manufacturer}",
+        "no_area": "Ekkert svæði",
+        "device_signature": "Zigbee device signature",
+        "device_children": "Zigbee device children",
+        "buttons": {
+          "add": "Bæta við tækjum",
+          "remove": "Fjarlægja tæki",
+          "clusters": "Manage Clusters",
+          "reconfigure": "Endurstilla tæki",
+          "zigbee_information": "Zigbee device signature",
+          "device_children": "View Children",
+          "view_in_visualization": "View in Visualization"
+        },
+        "services": {
+          "reconfigure": "Reconfigure ZHA device (heal device). Use this if you are having issues with the device. If the device in question is a battery powered device please ensure it is awake and accepting commands when you use this service.",
+          "updateDeviceName": "Set a custom name for this device in the device registry.",
+          "remove": "Fjarlægja tæki af ZigBee neti.",
+          "zigbee_information": "View the Zigbee information for the device."
+        },
+        "confirmations": {
+          "remove": "Are you sure that you want to remove the device?"
+        },
+        "quirk": "Quirk",
+        "last_seen": "Síðast séð",
+        "power_source": "Orkugjafi",
+        "unknown": "Óþekkt",
+        "zha_device_card": { "device_name_placeholder": "Breyta nafni á tæki" }
+      },
+      "domain_toggler": {
+        "title": "Toggle Domains",
+        "reset_entities": "Reset Entities"
+      },
+      "mqtt_device_debug_info": {
+        "title": "{device} debug info",
+        "deserialize": "Reyni að flokka MQTT skilaboð sem JSON",
+        "entities": "Einingar",
+        "no_entities": "Engar einingar",
+        "no_triggers": "No triggers",
+        "payload_display": "Payload display",
+        "recent_messages": "{n} most recently received message(s)",
+        "show_as_yaml": "Birta sem YAML",
+        "triggers": "Triggers"
+      }
+    },
+    "duration": {
+      "second": "{count} {count, plural,\n  one {sekúnda}\n  other {sekúndur}\n}",
+      "minute": "{count} {count, plural,\n  one {mínúta}\n  other {mínútur}\n}",
+      "hour": "{count} {count, plural,\n  one {klukkutími}\n  other {klukkutímar}\n}",
+      "day": "{count} {count, plural,\n  one {dagur}\n  other {dagar}\n}",
+      "week": "{count} {count, plural,\n  one {vika}\n  other {vikur}\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "No type provided.",
+        "error_detected": "Villur fundust í stillingum",
+        "editor_not_available": "Enginn ritill er tiltækur fyrir gerð \"{type}\".",
+        "editor_not_supported": "Ritill er ekki studdur fyrir þessar stillingar",
+        "edit_in_yaml_supported": "Þú getur samt breytt stillingum þínum í YAML.",
+        "key_missing": "Nauðsynlegan lykil \"{key}\" vantar.",
+        "key_not_expected": "Ekki er búist við lyklinum \"{key}\" eða hann er ekki studdur af ritlinum.",
+        "key_wrong_type": "Uppgefið gildi fyrir \"{key}\" er ekki stutt af ritlinum. Við styðjum ({type_correct}) en fengum ({type_wrong}).",
+        "no_template_editor_support": "Templates not supported in visual editor"
+      },
+      "supervisor": {
+        "title": "Could not load the Supervisor panel!",
+        "wait": "If you just started, make sure you have given the Supervisor enough time to start.",
+        "ask": "Ask for help",
+        "reboot": "Try a reboot of the host",
+        "observer": "Check the Observer",
+        "system_health": "Check System Health"
+      }
+    },
+    "login-form": {
+      "password": "Lykilorð",
+      "remember": "Muna",
+      "log_in": "Skrá inn"
+    },
+    "notification_drawer": {
+      "click_to_configure": "Smelltu á hnappinn til að stilla {entity}",
+      "empty": "Engar tilkynningar",
+      "title": "Tilkynningar",
+      "close": "Loka",
+      "dismiss_all": "Dismiss all"
+    },
+    "notification_toast": {
+      "service_call_failed": "Ekki tókst að kalla á þjónustu {service}.",
+      "connection_lost": "Tenging tapaðist. Tengist aftur...",
+      "started": "Home Assistant has started!",
+      "starting": "Home Assistant is starting, not everything will be available until it is finished.",
+      "wrapping_up_startup": "Wrapping up startup, not everything will be available until it is finished.",
+      "integration_starting": "Starting {integration}, not everything will be available until it is finished.",
+      "triggered": "Triggered {name}",
+      "dismiss": "Dismiss"
+    },
+    "sidebar": {
+      "external_app_configuration": "Stillingar forrits",
+      "sidebar_toggle": "Sidebar Toggle",
+      "done": "Done"
+    },
+    "panel": {
+      "history": {
+        "ranges": {
+          "last_week": "Í síðustu viku",
+          "this_week": "Í þessari viku",
+          "today": "Í dag",
+          "yesterday": "Í gær"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "Í síðustu viku",
+          "this_week": "Í þessari viku",
+          "today": "Í dag",
+          "yesterday": "Í gær"
+        }
+      }
+    }
+  }
+}

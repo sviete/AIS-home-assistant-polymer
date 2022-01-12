@@ -1,21 +1,24 @@
+import "../../../../components/ha-dialog";
+import type { HaDialog } from "../../../../components/ha-dialog";
 import "@material/mwc-button";
-import "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
 import "@polymer/paper-input/paper-input";
 import type { PaperInputElement } from "@polymer/paper-input/paper-input";
-import { css, CSSResultGroup, html, LitElement, PropertyDeclarations } from "lit";
+import {
+  css,
+  CSSResultGroup,
+  html,
+  LitElement,
+  PropertyDeclarations,
+} from "lit";
 import { property } from "lit/decorators";
-import "../../../../components/dialog/ha-paper-dialog";
-import type { HaPaperDialog } from "../../../../components/dialog/ha-paper-dialog";
 import { HomeAssistant } from "../../../../types";
 import { haStyle } from "../../../../resources/styles";
 import { WebhookDialogParams } from "./show-dialog-manage-ais-cloudhook";
-
 
 const inputLabel =
   "Publiczny unikalny adres URL – kliknij, aby skopiować do schowka.";
 
 export class DialogManageAisCloudhook extends LitElement {
-  
   public hass!: HomeAssistant;
 
   @property() private _params?: WebhookDialogParams;
@@ -43,7 +46,7 @@ export class DialogManageAisCloudhook extends LitElement {
     const webhookUrl =
       "https://" + gateId + ".paczka.pro/api/webhook/" + webhook.webhook_id;
     return html`
-      <ha-paper-dialog with-backdrop>
+      <ha-dialog with-backdrop>
         <h2>Wywołanie zwrotne dla ${webhook.name}</h2>
         <div>
           <p>
@@ -51,21 +54,21 @@ export class DialogManageAisCloudhook extends LitElement {
             adresem URL:
           </p>
           <paper-input
-            label="${inputLabel}"
-            value="${webhookUrl}"
-            @click="${this._copyClipboard}"
-            @blur="${this._restoreLabel}"
+            .label=${inputLabel}
+            .value=${webhookUrl}
+            @click=${this._copyClipboard}
+            @blur=${this._restoreLabel}
           ></paper-input>
         </div>
 
         <div class="paper-dialog-buttons">
-          <mwc-button @click="${this._closeDialog}">ZAMKNIJ</mwc-button>
+          <mwc-button @click=${this._closeDialog}>ZAMKNIJ</mwc-button>
         </div>
-      </ha-paper-dialog>
+      </ha-dialog>
     `;
   }
 
-  private get _dialog(): HaPaperDialog {
+  private get _dialog(): HaDialog {
     return this.shadowRoot!.querySelector("ha-paper-dialog")!;
   }
 

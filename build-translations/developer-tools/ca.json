@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "Esdeveniments",
+            "description": "Crida un esdeveniment al bus d'esdeveniments.",
+            "documentation": "Documentació d'esdeveniments",
+            "type": "Tipus d'esdeveniment",
+            "data": "Dades de l'esdeveniment (en YAML, opcionals)",
+            "fire_event": "Crida esdeveniment",
+            "event_fired": "Esdeveniment {name} cridat",
+            "available_events": "Esdeveniments disponibles",
+            "count_listeners": " ({count} oient/s)",
+            "listen_to_events": "Escolta esdeveniments",
+            "listening_to": "Escoltant a",
+            "subscribe_to": "Esdeveniment al qual subscriure's",
+            "start_listening": "Comença a escoltar",
+            "stop_listening": "Deixa d'escoltar",
+            "alert_event_type": "El tipus d'esdeveniment és un camp obligatori",
+            "notification_event_fired": "Esdeveniment {type} disparat correctament!"
+          },
+          "services": {
+            "title": "Serveis",
+            "description": "L'eina Serveis et permet fer crides a qualsevol servei disponible a Home Assistant.",
+            "call_service": "Crida servei",
+            "column_parameter": "Paràmetre",
+            "column_description": "Descripció",
+            "column_example": "Exemple",
+            "fill_example_data": "Omple amb dades d'exemple",
+            "yaml_mode": "Vés al mode YAML",
+            "ui_mode": "Vés al mode d'interfície d'usuari",
+            "yaml_parameters": "Paràmetres només disponibles en mode YAML",
+            "all_parameters": "Tots els paràmetres disponibles",
+            "accepts_target": "Aquest servei accepta un objectiu, per exemple: `entity_id: light.bed_light`",
+            "no_template_ui_support": "La interfície d'usuari no admet plantilles, pots utilitzar l'editor YAML."
+          },
+          "states": {
+            "title": "Estats",
+            "description1": "Defineix la visualització de l'estat actual d'una entitat a Home Assistant.",
+            "description2": "Si l'entitat pertany a un dispositiu, no hi haurà cap comunicació amb el dispositiu.",
+            "entity": "Entitat",
+            "state": "Estat",
+            "attributes": "Atributs",
+            "state_attributes": "Atributs d'estats (en YAML, opcionals)",
+            "set_state": "Estableix estat",
+            "current_entities": "Entitats actuals",
+            "filter_entities": "Filtra entitats",
+            "filter_states": "Filtra estats",
+            "filter_attributes": "Filtra atributs",
+            "no_entities": "No hi ha entitats",
+            "more_info": "Més informació",
+            "alert_entity_field": "L'entitat és un camp obligatori",
+            "last_updated": "Última actualització",
+            "last_changed": "Últim canvi",
+            "copy_id": "Copia l'identificador al porta-retalls"
+          },
+          "templates": {
+            "title": "Plantilla",
+            "description": "Les plantilles es renderitzen mitjançant el motor Jinja2 amb algunes extensions específiques de Home Assistant.",
+            "editor": "Editor de plantilles",
+            "reset": "Restableix a la plantilla de demostració",
+            "result_type": "Tipus de resultat",
+            "jinja_documentation": "Documentació sobre plantilles amb Jinja2",
+            "template_extensions": "Extensions de plantilla de Home Assistant",
+            "unknown_error_template": "Error desconegut renderitzant plantilla",
+            "time": "Aquesta plantilla s'actualitza al començament de cada minut.",
+            "all_listeners": "Aquesta plantilla escolta a tots els esdeveniments de canvi d'estat.",
+            "no_listeners": "Aquesta plantilla no escolta cap esdeveniment i no s'actualitzarà automàticament.",
+            "listeners": "Aquesta plantilla escolta als següents esdeveniments de canvi d'estat:",
+            "entity": "Entitat",
+            "domain": "Domini"
+          }
+        }
+      }
+    }
+  }
+}

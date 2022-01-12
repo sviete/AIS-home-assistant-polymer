@@ -4,7 +4,6 @@ import "@polymer/paper-tabs/paper-tab";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
 import { navigate } from "../../common/navigate";
-import "../../components/ha-icon-button";
 import "../../components/ha-menu-button";
 import "../../components/ha-tabs";
 import "../../layouts/ha-app-layout";
@@ -44,27 +43,59 @@ class PanelDeveloperTools extends LitElement {
             @iron-activate=${this.handlePageSelected}
           >
             <paper-tab page-name="state">
-              ${this.hass.localize(
-                "ui.panel.developer-tools.tabs.states.title"
-              )}
+              <span style="color: #4a5963; text-align: center;"
+                ><ha-icon icon="hass:state-machine">></ha-icon><br />
+                ${this.hass.localize(
+                  "ui.panel.developer-tools.tabs.states.title"
+                )}
+              </span>
             </paper-tab>
             <paper-tab page-name="service">
-              ${this.hass.localize(
-                "ui.panel.developer-tools.tabs.services.title"
-              )}
+              <span style="color: #4d2ea4; text-align: center;"
+                ><ha-icon icon="hass:function-variant">></ha-icon><br />
+                ${this.hass.localize(
+                  "ui.panel.developer-tools.tabs.services.title"
+                )}
+              </span>
             </paper-tab>
             <paper-tab page-name="template">
-              ${this.hass.localize(
-                "ui.panel.developer-tools.tabs.templates.title"
-              )}
+              <span style="color: #0d47a1; text-align: center;"
+                ><ha-icon icon="hass:ninja">></ha-icon><br />
+                ${this.hass.localize(
+                  "ui.panel.developer-tools.tabs.templates.title"
+                )}</span
+              >
             </paper-tab>
             <paper-tab page-name="event">
-              ${this.hass.localize(
-                "ui.panel.developer-tools.tabs.events.title"
-              )}
+              <span style="color: #4c4c4c; text-align: center;"
+                ><ha-icon icon="hass:alert-decagram">></ha-icon><br />
+                ${this.hass.localize(
+                  "ui.panel.developer-tools.tabs.events.title"
+                )}
+              </span>
+            </paper-tab>
+            <paper-tab page-name="statistics">
+              <span style="color: #b1345c; text-align: center;"
+                ><ha-icon icon="hass:counter">></ha-icon><br />
+                ${this.hass.localize(
+                  "ui.panel.developer-tools.tabs.statistics.title"
+                )}
+              </span>
+            </paper-tab>
+            <paper-tab page-name="android">
+              <span style="color: green; text-align: center;"
+                ><ha-icon icon="hass:android">></ha-icon><br />Android</span
+              >
             </paper-tab>
             <paper-tab page-name="console">
-              Konsola
+              <span style="color: black; text-align: center;"
+                ><ha-icon icon="hass:console">></ha-icon><br />Terminal</span
+              >
+            </paper-tab>
+            <paper-tab page-name="webcmd">
+              <span style="color: blue; text-align: center;"
+                ><ha-icon icon="hass:folder-home">></ha-icon><br />Manager</span
+              >
             </paper-tab>
           </ha-tabs>
         </app-header>
@@ -100,7 +131,7 @@ class PanelDeveloperTools extends LitElement {
         }
         developer-tools-router {
           display: block;
-          height: calc(100vh - 112px);
+          height: calc(100vh - 104px);
         }
         ha-tabs {
           margin-left: max(env(safe-area-inset-left), 24px);

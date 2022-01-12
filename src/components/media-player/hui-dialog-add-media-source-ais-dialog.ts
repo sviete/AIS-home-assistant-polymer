@@ -1,19 +1,16 @@
+import "./../ha-radio";
+import "./../ha-icon";
 import "@material/mwc-button/mwc-button";
-import "@material/mwc-list/mwc-list";
-import "@material/mwc-list/mwc-list-item";
-import "@polymer/paper-item/paper-item";
-import "@polymer/paper-radio-group/paper-radio-group";
-import "@polymer/paper-radio-button/paper-radio-button";
 import "@polymer/paper-input/paper-input";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property, customElement } from "lit/decorators";
 import "../ha-circular-progress";
 import "../ha-chip-set";
 import "../ha-switch";
+import { HassEntity } from "home-assistant-js-websocket";
 import { createCloseHeading } from "../ha-dialog";
 import { haStyleDialog } from "../../resources/styles";
 import type { HomeAssistant } from "../../types";
-import { HassEntity } from "home-assistant-js-websocket";
 import {
   showAlertDialog,
   showConfirmationDialog,
@@ -89,9 +86,10 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
       this.hass.states["media_player.wbudowany_glosnik"].attributes
         .media_content_id
     ) {
-      this.mediaStreamUrl = this.hass.states[
-        "media_player.wbudowany_glosnik"
-      ].attributes.media_content_id;
+      this.mediaStreamUrl =
+        this.hass.states[
+          "media_player.wbudowany_glosnik"
+        ].attributes.media_content_id;
     } else {
       this.mediaStreamUrl = "";
     }
@@ -99,8 +97,8 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
     this.mediaShare = false;
 
     this.mediaChips = [];
-    const options = this.hass.states["input_select.radio_type"].attributes
-      .options;
+    const options =
+      this.hass.states["input_select.radio_type"].attributes.options;
     options.forEach((element: string) => {
       if (!element.startsWith("Moje") && !element.startsWith("Udostępnione")) {
         this.mediaChips.push(element || "");
@@ -144,25 +142,40 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
               </p>
 
               <label> Typ audio: </label>
-              <paper-radio-group
-                .selected=${this.mediaCategory}
-                .value=${this.mediaCategory}
-                @selected-changed=${this._mediaCategoryChanged}
-              >
-                <paper-radio-button name="radio">
-                  <ha-icon icon="mdi:radio"></ha-icon>
-                </paper-radio-button>
+              <div class="audio-types" id="audio_types">
+                <ha-radio
+                  name="audioType"
+                  .checked=${this.mediaCategory === "radio"}
+                  value="radio"
+                  @change=${this._mediaCategoryChanged}
+                ></ha-radio>
+                <ha-icon icon="mdi:radio"></ha-icon>
 
-                <paper-radio-button name="podcast">
-                  <ha-icon icon="mdi:podcast"></ha-icon>
-                </paper-radio-button>
-                <paper-radio-button name="audiobook">
-                  <ha-icon icon="mdi:book-music"></ha-icon>
-                </paper-radio-button>
-                <paper-radio-button name="music">
-                  <ha-icon icon="mdi:music"></ha-icon>
-                </paper-radio-button>
-              </paper-radio-group>
+                <ha-radio
+                  name="audioType"
+                  .checked=${this.mediaCategory === "podcast"}
+                  value="podcast"
+                  @change=${this._mediaCategoryChanged}
+                ></ha-radio>
+                <ha-icon icon="mdi:podcast"></ha-icon>
+
+                <ha-radio
+                  name="audioType"
+                  .checked=${this.mediaCategory === "audiobook"}
+                  value="audiobook"
+                  @change=${this._mediaCategoryChanged}
+                ></ha-radio>
+                <ha-icon icon="mdi:book-music"></ha-icon>
+
+                <ha-radio
+                  name="audioType"
+                  .checked=${this.mediaCategory === "music"}
+                  value="music"
+                  @change=${this._mediaCategoryChanged}
+                ></ha-radio>
+                <ha-icon icon="mdi:music"></ha-icon>
+              </div>
+
               <br />
               ${this.mediaCategory === "radio" ||
               this.mediaCategory === "podcast"
@@ -328,7 +341,7 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
   }
 
   private _mediaCategoryChanged(ev): void {
-    const newVal = ev.detail.value;
+    const newVal = ev.currentTarget.value;
     if (newVal !== this.mediaCategory) {
       this.mediaCategory = newVal;
       if (newVal === "radio") {
@@ -336,8 +349,8 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
         this.mediaTypePlaceholder = "Typ radia";
         this.mediaUrlPlaceholder = "Adres URL Strumienia";
         this.mediaChips = [];
-        const options = this.hass.states["input_select.radio_type"].attributes
-          .options;
+        const options =
+          this.hass.states["input_select.radio_type"].attributes.options;
         options.forEach((element) => {
           if (
             !element.startsWith("Moje") &&
@@ -351,8 +364,8 @@ export class HuiDialogAddMediaSourceAis extends LitElement {
         this.mediaTypePlaceholder = "Typ podcasta";
         this.mediaUrlPlaceholder = "Adres URL Kanału RSS (rss feed)";
         this.mediaChips = [];
-        const options = this.hass.states["input_select.podcast_type"].attributes
-          .options;
+        const options =
+          this.hass.states["input_select.podcast_type"].attributes.options;
         options.forEach((element) => {
           if (
             !element.startsWith("Moje") &&

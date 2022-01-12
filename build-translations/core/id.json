@@ -1,0 +1,896 @@
+{
+  "panel": {
+    "energy": "Energy",
+    "calendar": "Kalender",
+    "config": "Konfigurasi",
+    "states": "Ikhtisar",
+    "map": "Peta",
+    "logbook": "Catatan Log",
+    "history": "Riwayat",
+    "mailbox": "Kotak Pesan",
+    "shopping_list": "Daftar Belanja",
+    "developer_tools": "Alat Pengembang",
+    "media_browser": "Browser Media",
+    "profile": "Profil"
+  },
+  "state": {
+    "default": {
+      "on": "Nyala",
+      "off": "Mati",
+      "unknown": "Tidak diketahui",
+      "unavailable": "Tidak tersedia"
+    }
+  },
+  "state_attributes": {
+    "climate": {
+      "fan_mode": { "off": "Mati", "on": "Nyala", "auto": "Otomatis" },
+      "preset_mode": {
+        "none": "Tidak ada",
+        "eco": "Eco",
+        "away": "Keluar",
+        "boost": "Kencang",
+        "comfort": "Nyaman",
+        "home": "Rumah",
+        "sleep": "Tidur",
+        "activity": "Aktivitas"
+      },
+      "hvac_action": {
+        "off": "Mati",
+        "heating": "Memanaskan",
+        "cooling": "Mendinginkan",
+        "drying": "Mengeringkan",
+        "idle": "Diam",
+        "fan": "Kipas"
+      }
+    },
+    "humidifier": {
+      "mode": {
+        "normal": "Normal",
+        "eco": "Eco",
+        "away": "Keluar",
+        "boost": "Kencang",
+        "comfort": "Nyaman",
+        "home": "Rumah",
+        "sleep": "Tidur",
+        "auto": "Otomatis",
+        "baby": "Bayi"
+      }
+    }
+  },
+  "state_badge": {
+    "default": {
+      "unknown": "Tak Diketahui",
+      "unavailable": "Tak Tersedia",
+      "error": "Kesalahan",
+      "entity_not_found": "Entitas tidak ditemukan"
+    },
+    "alarm_control_panel": {
+      "armed": "Diaktifkan",
+      "disarmed": "Nonaktif",
+      "armed_home": "Diaktifkan",
+      "armed_away": "Diaktifkan",
+      "armed_night": "Diaktifkan",
+      "armed_custom_bypass": "Diaktifkan",
+      "pending": "Tunda",
+      "arming": "Mengaktifkan",
+      "disarming": "Nonaktif",
+      "triggered": "Picu"
+    },
+    "device_tracker": { "home": "Rumah", "not_home": "Keluar" },
+    "person": { "home": "Rumah", "not_home": "Keluar" }
+  },
+  "groups": {
+    "owner": "Pemilik",
+    "system-admin": "Administrator",
+    "system-users": "Pengguna",
+    "system-read-only": "Pengguna Hanya-Baca"
+  },
+  "config_entry": {
+    "disabled_by": {
+      "user": "Pengguna",
+      "integration": "Integrasi",
+      "config_entry": "Entri konfigurasi",
+      "device": "Perangkat"
+    }
+  },
+  "ui": {
+    "auth_store": {
+      "ask": "Ingin menyimpan login ini?",
+      "decline": "Tidak",
+      "confirm": "Ya"
+    },
+    "card": {
+      "alarm_control_panel": {
+        "code": "Kode",
+        "clear_code": "Hapus",
+        "disarm": "Nonaktifkan",
+        "arm_home": "Aktifkan utk di rumah",
+        "arm_away": "Aktifkan utk keluar",
+        "arm_night": "Aktifkan utk malam",
+        "arm_custom_bypass": "Diaktifkan khusus"
+      },
+      "automation": {
+        "last_triggered": "Terakhir terpicu",
+        "trigger": "Jalankan Aksi"
+      },
+      "camera": { "not_available": "Gambar tidak tersedia" },
+      "climate": {
+        "currently": "Saat ini",
+        "on_off": "Nyala/mati",
+        "target_temperature": "Target suhu",
+        "target_temperature_entity": "Target suhu {name}",
+        "target_temperature_mode": "Target suhu {name} {mode}",
+        "current_temperature": "Suhu {name} saat ini",
+        "heating": "Pemanasan {name}",
+        "cooling": "Pendinginan {name}",
+        "high": "tinggi",
+        "low": "rendah",
+        "target_humidity": "Target kelembaban",
+        "operation": "Operasi",
+        "fan_mode": "Mode kipas",
+        "swing_mode": "Mode ayunan",
+        "preset_mode": "Prasetel",
+        "away_mode": "Mode keluar rumah",
+        "aux_heat": "Pemanasan tambahan"
+      },
+      "counter": {
+        "actions": {
+          "increment": "naikkan",
+          "decrement": "turunkan",
+          "reset": "setel ulang"
+        }
+      },
+      "cover": { "position": "Posisi", "tilt_position": "Posisi kemiringan" },
+      "fan": {
+        "speed": "Kecepatan",
+        "preset_mode": "Mode Prasetel",
+        "oscillate": "Berayun",
+        "direction": "Arah",
+        "forward": "Depan",
+        "reverse": "Berlawanan"
+      },
+      "humidifier": {
+        "humidity": "Target kelembaban",
+        "mode": "Mode",
+        "target_humidity_entity": "Target kelembaban {name}",
+        "on_entity": "{name} nyala"
+      },
+      "light": {
+        "brightness": "Kecerahan",
+        "color_temperature": "Temperatur warna",
+        "white_value": "Kecerahan putih",
+        "color_brightness": "Kecerahan warna",
+        "cold_white_value": "Kecerahan putih dingin",
+        "warm_white_value": "Kecerahan putih hangat",
+        "effect": "Efek"
+      },
+      "lock": { "code": "Kode", "lock": "Kunci", "unlock": "Buka" },
+      "media_player": {
+        "source": "Sumber",
+        "sound_mode": "Mode suara",
+        "browse_media": "Jelajahi media",
+        "turn_on": "Nyalakan",
+        "turn_off": "Matikan",
+        "media_play": "Putar",
+        "media_play_pause": "Putar/jeda",
+        "media_next_track": "Berikutnya",
+        "media_previous_track": "Sebelumnya",
+        "text_to_speak": "Teks untuk diucapkan"
+      },
+      "persistent_notification": { "dismiss": "Tutup" },
+      "scene": { "activate": "Aktifkan" },
+      "script": {
+        "run": "Jalankan",
+        "cancel": "Batalkan",
+        "cancel_multiple": "Batalkan {number}"
+      },
+      "service": { "run": "Jalankan" },
+      "timer": {
+        "actions": {
+          "start": "mulai",
+          "pause": "jeda",
+          "cancel": "batalkan",
+          "finish": "selesai"
+        }
+      },
+      "vacuum": {
+        "actions": {
+          "resume_cleaning": "Lanjutkan pembersihan",
+          "return_to_base": "Kembali ke dock",
+          "start_cleaning": "Mulai membersihkan",
+          "turn_on": "Nyalakan",
+          "turn_off": "Matikan"
+        }
+      },
+      "water_heater": {
+        "currently": "Saat ini",
+        "on_off": "Nyala/mati",
+        "target_temperature": "Target suhu",
+        "operation": "Operasi",
+        "away_mode": "Mode keluar rumah"
+      },
+      "weather": {
+        "attributes": {
+          "air_pressure": "Tekanan udara",
+          "humidity": "Kelembaban",
+          "temperature": "Suhu",
+          "visibility": "Jarak pandang",
+          "wind_speed": "Kecepatan angin",
+          "precipitation": "Curah hujan"
+        },
+        "cardinal_direction": {
+          "e": "T",
+          "ene": "TTL",
+          "ese": "TTg",
+          "n": "U",
+          "ne": "TL",
+          "nne": "UTL",
+          "nw": "BL",
+          "nnw": "UBL",
+          "s": "S",
+          "se": "Tg",
+          "sse": "STg",
+          "ssw": "SBD",
+          "sw": "BD",
+          "w": "B",
+          "wnw": "BBL",
+          "wsw": "BBD"
+        },
+        "day": "Siang",
+        "night": "Malam",
+        "forecast": "Prakiraan",
+        "high": "Tinggi",
+        "low": "Rendah"
+      }
+    },
+    "common": {
+      "and": "dan",
+      "continue": "Lanjutkan",
+      "previous": "Sebelumnya",
+      "loading": "Memuat",
+      "refresh": "Segarkan",
+      "cancel": "Batalkan",
+      "delete": "Hapus",
+      "remove": "Hapus",
+      "enable": "Aktifkan",
+      "disable": "Nonaktifkan",
+      "close": "Tutup",
+      "leave": "Keluar",
+      "stay": "Tetap di sini",
+      "next": "Berikutnya",
+      "back": "Kembali",
+      "undo": "Urungkan",
+      "save": "Simpan",
+      "rename": "Ganti Nama",
+      "yes": "Ya",
+      "no": "Tidak",
+      "not_now": "Jangan sekarang",
+      "skip": "Lewatkan",
+      "menu": "Menu",
+      "overflow_menu": "Menu luapan",
+      "successfully_saved": "Berhasil disimpan",
+      "successfully_deleted": "Berhasil dihapus",
+      "error_required": "Wajib",
+      "copied": "Disalin",
+      "copied_clipboard": "Disalin ke papan klip"
+    },
+    "components": {
+      "logbook": {
+        "entries_not_found": "Tidak ada entri buku log yang ditemukan.",
+        "by": "oleh",
+        "by_service": "oleh layanan",
+        "show_trace": "Tampilkan jejak",
+        "retrieval_error": "Error during logbook entry retrieval",
+        "messages": {
+          "was_away": "terdeteksi keluar",
+          "was_at_state": "terdeteksi di {state}",
+          "rose": "terbit",
+          "set": "terbenam",
+          "was_low": "rendah",
+          "was_normal": "normal",
+          "was_connected": "telah terhubung",
+          "was_disconnected": "telah terputus",
+          "was_opened": "dibuka",
+          "was_closed": "telah ditutup",
+          "is_opening": "membuka",
+          "is_closing": "menutup",
+          "was_unlocked": "tidak terkunci",
+          "was_locked": "telah terkunci",
+          "was_plugged_in": "telah dicolokkan",
+          "was_unplugged": "telah dicabut",
+          "was_at_home": "terdeteksi di rumah",
+          "was_unsafe": "tidak aman",
+          "was_safe": "aman",
+          "detected_device_class": "terdeteksi {device_class}",
+          "cleared_device_class": "tidak ada (tidak ada {device_class} yang terdeteksi)",
+          "turned_off": "dimatikan",
+          "turned_on": "dinyalakan",
+          "changed_to_state": "berubah menjadi {state}",
+          "became_unavailable": "menjadi tidak tersedia"
+        }
+      },
+      "entity": {
+        "entity-picker": {
+          "entity": "Entitas",
+          "clear": "Hapus",
+          "no_match": "Tidak ditemukan entitas yang cocok",
+          "show_entities": "Tampilkan entitas"
+        },
+        "entity-attribute-picker": {
+          "attribute": "Atribut",
+          "show_attributes": "Tampilkan atribut"
+        }
+      },
+      "target-picker": {
+        "expand_area_id": "Bentangkan area ini ke masing-masing perangkat dan entitas yang ada di dalamnya. Setelah dibentangkan dan areanya berubah, perangkat dan entitas tidak akan turut diubah secara otomatis.",
+        "expand_device_id": "Bentangkan perangkat ini ke masing-masing entitas yang ada di dalamnya. Setelah dibentangkan dan perangkatnya berubah, entitas tidak akan turut diubah secara otomatis.",
+        "remove_area_id": "Hapus area",
+        "remove_device_id": "Hapus perangkat",
+        "remove_entity_id": "Hapus entitas",
+        "add_area_id": "Pilih area",
+        "add_device_id": "Pilih perangkat",
+        "add_entity_id": "Pilih entitas"
+      },
+      "user-picker": {
+        "no_user": "Tidak ada pengguna",
+        "add_user": "Tambahkan pengguna",
+        "remove_user": "Hapus pengguna"
+      },
+      "blueprint-picker": {
+        "select_blueprint": "Pilih Blueprint",
+        "add_user": "Tambahkan pengguna",
+        "remove_user": "Hapus pengguna"
+      },
+      "device-picker": {
+        "clear": "Hapus",
+        "toggle": "Alihkan",
+        "show_devices": "Tampilkan perangkat",
+        "no_devices": "Anda tidak memiliki perangkat apa pun",
+        "no_match": "Tidak ditemukan perangkat yang cocok",
+        "device": "Perangkat",
+        "no_area": "Tidak ada area"
+      },
+      "area-picker": {
+        "clear": "Bersihkan",
+        "show_areas": "Tampilkan area",
+        "area": "Area",
+        "add_new": "Tambahkan area baru…",
+        "no_areas": "Anda tidak memiliki area apa pun",
+        "no_match": "Tidak ada area yang cocok ditemukan",
+        "add_dialog": {
+          "title": "Tambahkan area baru",
+          "text": "Masukkan nama area baru.",
+          "name": "Nama",
+          "add": "Tambahkan",
+          "failed_create_area": "Gagal membuat area."
+        }
+      },
+      "statistic-picker": {
+        "statistic": "Statistic",
+        "no_statistics": "You don't have any statistics",
+        "no_match": "No matching statistics found",
+        "missing_entity": "Why is my entity not listed?",
+        "learn_more": "Learn more about statistics"
+      },
+      "addon-picker": {
+        "addon": "Add-on",
+        "error": {
+          "no_supervisor": {
+            "title": "Tidak ada Supervisor",
+            "description": "Tidak ada Supervisor ditemukan, sehingga add-on tidak dapat dimuat."
+          },
+          "fetch_addons": {
+            "title": "Terjadi kesalahan saat mengambil add-on",
+            "description": "Pengambilan add-on menjumpai kesalahan."
+          }
+        }
+      },
+      "related-filter-menu": {
+        "filter_by_entity": "Filter menurut entitas",
+        "filter_by_device": "Filter menurut perangkat",
+        "filter_by_area": "Filter menurut area",
+        "filtered_by_entity": "entitas: {entity_name}",
+        "filtered_by_device": "perangkat: {device_name}",
+        "filtered_by_area": "area: {area_name}"
+      },
+      "picture-upload": {
+        "label": "Gambar",
+        "unsupported_format": "Format tidak didukung, pilih gambar JPEG, PNG, atau GIF."
+      },
+      "date-range-picker": {
+        "start_date": "Tanggal mulai",
+        "end_date": "Tanggal akhir",
+        "select": "Pilih",
+        "ranges": {
+          "today": "Today",
+          "yesterday": "Yesterday",
+          "this_week": "This week",
+          "last_week": "Last week"
+        }
+      },
+      "relative_time": {
+        "never": "Tak pernah",
+        "just_now": "Baru saja",
+        "duration": {
+          "second": "{count} {count, plural,\n  one { detik }\n  other { detik }\n}",
+          "minute": "{count} {count, plural,\n  one { menit }\n  other { menit }\n}",
+          "hour": "{count} {count, plural,\n  one { jam }\n  other { jam }\n}",
+          "day": "{count} {count, plural,\n  one { hari }\n  other { hari }\n}",
+          "week": "{count} {count, plural,\n  one { minggu }\n  other { minggu }\n}"
+        },
+        "past_duration": {
+          "second": "{count} {count, plural,\n  one {detik}\n  other {detik}\n} lalu",
+          "minute": "{count} {count, plural,\n  one {menit}\n  other {menit}\n} lalu",
+          "hour": "{count} {count, plural,\n  one {jam}\n  other {jam}\n} lalu",
+          "day": "{count} {count, plural,\n  one {hari}\n  other {hari}\n} lalu",
+          "week": "{count} {count, plural,\n  one {minggu}\n  other {minggu}\n} lalu"
+        },
+        "future_duration": {
+          "second": "Dalam {count} {count, plural,\n  one {detik}\n  other {detik}\n}",
+          "minute": "Dalam {count} {count, plural,\n  one {menit}\n  other {menit}\n}",
+          "hour": "Dalam {count} {count, plural,\n  one {jam}\n  other {jam}\n}",
+          "day": "Dalam {count} {count, plural,\n  one {hari}\n  other {hari}\n}",
+          "week": "Dalam {count} {count, plural,\n  one {minggu}\n  other {minggu}\n}"
+        }
+      },
+      "history_charts": {
+        "history_disabled": "Integrasi riwayat dinonaktifkan",
+        "loading_history": "Memuat riwayat status…",
+        "no_history_found": "Tidak ada riwayat status ditemukan."
+      },
+      "statistics_charts": {
+        "loading_statistics": "Loading statistics...",
+        "no_statistics_found": "No statistics found.",
+        "statistic_types": {
+          "min": "min",
+          "max": "max",
+          "mean": "mean",
+          "sum": "sum"
+        }
+      },
+      "service-picker": { "service": "Layanan" },
+      "service-control": {
+        "required": "Bidang ini wajib diisi",
+        "target": "Target",
+        "target_description": "Yang harus digunakan layanan ini sebagai area, perangkat, atau entitas yang ditargetkan.",
+        "service_data": "Data layanan",
+        "integration_doc": "Dokumentasi integrasi"
+      },
+      "related-items": {
+        "no_related_found": "Tidak ditemukan item terkait.",
+        "integration": "Integrasi",
+        "device": "Perangkat",
+        "area": "Area",
+        "entity": "Entitas terkait",
+        "group": "Bagian dari grup berikut",
+        "scene": "Bagian dari scene berikut",
+        "script": "Bagian dari skrip berikut",
+        "automation": "Bagian dari otomasi berikut"
+      },
+      "data-table": {
+        "search": "Cari",
+        "no-data": "Tidak ada data",
+        "filtering_by": "Filter menurut",
+        "hidden": "{number} disembunyikan",
+        "clear": "Hapus"
+      },
+      "media-browser": {
+        "pick": "Pilih",
+        "play": "Putar",
+        "play-media": "Putar Media",
+        "pick-media": "Pilih Media",
+        "no_items": "Tidak ada item",
+        "choose_player": "Pilih Pemutar",
+        "media-player-browser": "Browser Pemutar Media",
+        "web-browser": "Browser Web",
+        "media_player": "Pemutar Media",
+        "audio_not_supported": "Browser Anda tidak mendukung elemen audio.",
+        "video_not_supported": "Browser Anda tidak mendukung elemen video.",
+        "media_not_supported": "Pemutar Media Browser tidak mendukung jenis media ini",
+        "media_browsing_error": "Kesalahan Browser Media",
+        "learn_adding_local_media": "Pelajari lebih lanjut tentang menambahkan media di {documentation}.",
+        "local_media_files": "Tempatkan file video, audio, dan gambar Anda di direktori media untuk dapat menelusuri dan memutarnya di browser atau pada pemutar media yang didukung.",
+        "documentation": "dokumentasi",
+        "no_local_media_found": "Tidak ditemukan media lokal",
+        "no_media_folder": "Sepertinya Anda belum membuat direktori media.",
+        "setup_local_help": "Periksa {documentation} tentang cara menyiapkan media lokal.",
+        "class": {
+          "album": "Album",
+          "app": "App",
+          "artist": "Artis",
+          "channel": "Kanal",
+          "composer": "Komposer",
+          "contributing_artist": "Artis yang Berkontribusi",
+          "directory": "Perpustakaan",
+          "episode": "Episode",
+          "game": "Game",
+          "genre": "Genre",
+          "image": "Gambar",
+          "movie": "Film",
+          "music": "Musik",
+          "playlist": "Daftar Putar",
+          "podcast": "Podcast",
+          "season": "Musim",
+          "track": "Lacak",
+          "tv_show": "Acara TV",
+          "url": "URL",
+          "video": "Video"
+        }
+      },
+      "calendar": { "my_calendars": "Kalender Saya", "today": "Hari ini" },
+      "attributes": { "expansion_header": "Attributes" }
+    },
+    "dialogs": {
+      "quick-bar": {
+        "commands": {
+          "reload": {
+            "reload": "Muat ulang {domain}",
+            "core": "Muat ulang lokasi & penyesuaian",
+            "group": "Muat ulang grup, entitas grup, dan layanan notifikasi grup",
+            "automation": "Muat ulang otomasi",
+            "script": "Muat ulang skrip",
+            "scene": "Muat ulang scene",
+            "person": "Muat ulang orang",
+            "zone": "Muat ulang zona",
+            "input_boolean": "Muat ulang input boolean",
+            "input_text": "Muat ulang input teks",
+            "input_number": "Muat ulang input bilangan",
+            "input_datetime": "Muat ulang input tanggal dan waktu",
+            "input_select": "Muat ulang input pilihan",
+            "template": "Muat ulang entitas templat",
+            "universal": "Muat ulang entitas pemutar media universal",
+            "rest": "Muat ulang entitas REST, dan layanan notifikasi REST",
+            "command_line": "Muat ulang entitas baris perintah",
+            "filter": "Muat ulang filter entitas",
+            "statistics": "Muat ulang entitas statistik",
+            "generic": "Muat ulang entitas kamera IP generik",
+            "generic_thermostat": "Muat ulang entitas termostat generik",
+            "homekit": "Muat ulang HomeKit",
+            "min_max": "Muat ulang entitas min/maks",
+            "history_stats": "Muat ulang entitas statistik riwayat",
+            "trend": "Muat ulang entitas tren",
+            "ping": "Muat ulang entitas sensor biner ping",
+            "filesize": "Muat ulang entitas ukuran file",
+            "telegram": "Muat ulang layanan notifikasi telegram",
+            "smtp": "Muat ulang layanan notifikasi SMTP",
+            "mqtt": "Muat ulang entitas MQTT yang dikonfigurasi secara manual",
+            "rpi_gpio": "Muat ulang entitas Raspberry Pi GPIO"
+          },
+          "server_control": {
+            "perform_action": "Server {action}",
+            "restart": "Mulai ulang",
+            "stop": "Hentikan"
+          },
+          "types": {
+            "reload": "Muat ulang",
+            "navigation": "Buka",
+            "server_control": "Server"
+          },
+          "navigation": {
+            "logs": "Log",
+            "automation": "Otomasi",
+            "script": "Skrip",
+            "integrations": "Integrasi",
+            "areas": "Area",
+            "scene": "Scene",
+            "helpers": "Pembantu",
+            "tag": "Tag",
+            "person": "Orang",
+            "devices": "Perangkat",
+            "entities": "Entitas",
+            "energy": "Energy",
+            "lovelace": "Dasbor Lovelace",
+            "core": "Umum",
+            "zone": "Zona",
+            "users": "Pengguna",
+            "info": "Info",
+            "customize": "Penyesuaian",
+            "blueprint": "Blueprint",
+            "server_control": "Kontrol Server",
+            "navigate_to": "Buka {panel}"
+          }
+        },
+        "filter_placeholder": "Filter Entitas"
+      },
+      "voice_command": {
+        "did_not_hear": "Home Assistant tidak mendengar apa-apa",
+        "found": "Saya menemukan yang berikut untuk Anda:",
+        "error": "Ups, kesalahan terjadi",
+        "how_can_i_help": "Bagaimana saya bisa membantu?",
+        "label": "Ketik pertanyaan dan tekan 'Enter'",
+        "label_voice": "Ketik dan tekan 'Enter' atau ketuk mikrofon untuk berbicara"
+      },
+      "generic": {
+        "cancel": "Batalkan",
+        "ok": "Oke",
+        "default_confirmation_title": "Yakin?",
+        "close": "tutup"
+      },
+      "image_cropper": { "crop": "Pangkas" },
+      "more_info_control": {
+        "dismiss": "Tutup dialog",
+        "settings": "Pengaturan entitas",
+        "edit": "Edit entitas",
+        "details": "Detail",
+        "history": "Riwayat",
+        "last_changed": "Terakhir diubah",
+        "last_updated": "Terakhir diperbarui",
+        "script": {
+          "last_action": "Aksi terakhir",
+          "last_triggered": "Terpicu terakhir"
+        },
+        "sun": {
+          "elevation": "Ketinggian",
+          "rising": "Terbit",
+          "setting": "Terbenam"
+        },
+        "updater": { "title": "Petunjuk Pembaruan" },
+        "remote": { "activity": "Aktivitas saat ini" },
+        "restored": {
+          "not_provided": "Entitas ini tidak tersedia saat ini dan merupakan yatim piatu untuk integrasi atau perangkat yang dihapus, diubah atau disfungsional.",
+          "remove_intro": "Jika entitas tidak lagi digunakan, Anda dapat membersihkannya dengan menghapusnya.",
+          "remove_action": "Hapus entitas",
+          "confirm_remove_title": "Hapus entitas?",
+          "confirm_remove_text": "Yakin ingin menghapus entitas ini?"
+        },
+        "vacuum": {
+          "status": "Status",
+          "commands": "Perintah penyedot debu:",
+          "fan_speed": "Kecepatan kipas",
+          "start": "Mulai",
+          "pause": "Jeda",
+          "stop": "Hentikan",
+          "clean_spot": "Bersihkan area tertentu",
+          "locate": "Temukan",
+          "return_home": "Kembali ke dok",
+          "start_pause": "Mulai/Jeda"
+        },
+        "person": { "create_zone": "Buat zona dari lokasi saat ini" },
+        "cover": {
+          "open_cover": "Buka penutup",
+          "close_cover": "Tutup penutup",
+          "open_tilt_cover": "Buka penutup",
+          "close_tile_cover": "Tutup penutup",
+          "stop_cover": "Hentikan gerakan penutup"
+        }
+      },
+      "entity_registry": {
+        "settings": "Setelan",
+        "control": "Kontrol",
+        "related": "Terkait",
+        "dismiss": "Tutup",
+        "no_unique_id": "Entitas ini (\"{entity_id}\") tidak memiliki ID unik, sehingga setelannya tidak dapat dikelola dari antarmuka. Lihat {faq_link} untuk detail lebih lanjut.",
+        "faq": "dokumentasi",
+        "info_customize": "Anda dapat menimpa beberapa atribut di bagian {customize_link}.",
+        "customize_link": "penyesuaian entitas",
+        "editor": {
+          "name": "Nama",
+          "icon": "Ikon",
+          "icon_error": "Ikon harus dalam format 'prefiks:namaikon', contoh: 'mdi:home'",
+          "entity_id": "ID Entitas",
+          "unavailable": "Entitas ini tidak tersedia saat ini.",
+          "enabled_label": "Aktifkan entitas",
+          "enabled_cause": "Dinonaktifkan oleh {cause}.",
+          "device_disabled": "Perangkat entitas ini dinonaktifkan.",
+          "open_device_settings": "Buka pengaturan perangkat",
+          "enabled_description": "Entitas yang dinonaktifkan tidak akan ditambahkan ke Home Assistant",
+          "enabled_delay_confirm": "Entitas yang diaktifkan akan ditambahkan ke Home Assistant dalam {delay} detik",
+          "enabled_restart_confirm": "Mulai ulang Home Assistant untuk mengaktifkan entitas",
+          "delete": "Hapus",
+          "confirm_delete": "Yakin ingin menghapus entri ini?",
+          "update": "Perbarui",
+          "note": "Catatan: Ini mungkin belum berfungsi dengan semua integrasi.",
+          "advanced": "Setelan tingkat lanjut",
+          "area": "Setel area entitas saja",
+          "area_note": "Secara default, entitas perangkat berada di area yang sama dengan perangkat. Jika Anda mengubah area entitas ini, area entitas tidak akan lagi mengikuti area perangkat.",
+          "follow_device_area": "Ikuti area perangkat",
+          "change_device_area": "Ubah area perangkat"
+        }
+      },
+      "helper_settings": {
+        "platform_not_loaded": "Integrasi {platform} tidak dimuat. Tambahkan ke konfigurasi Anda dengan menambahkan 'default_config:' atau ''{platform}:''.",
+        "yaml_not_editable": "Pengaturan entitas ini tidak dapat diedit dari antarmuka. Hanya entitas yang disiapkan lewat antarmuka yang dapat dikonfigurasi dari antarmuka.",
+        "required_error_msg": "Bidang ini wajib diisi",
+        "generic": { "name": "Nama", "icon": "Ikon" },
+        "input_datetime": {
+          "date": "Tanggal",
+          "time": "Waktu",
+          "datetime": "Tanggal dan waktu",
+          "mode": "Apa yang ingin Anda masukan"
+        },
+        "input_text": {
+          "min": "Panjang minimum",
+          "max": "Panjang maksimum",
+          "mode": "Mode tampilan",
+          "text": "Teks",
+          "password": "Kata sandi",
+          "pattern": "Pola ekspresi reguler untuk validasi sisi klien"
+        },
+        "input_number": {
+          "min": "Nilai minimum",
+          "max": "Nilai maksimum",
+          "mode": "Mode tampilan",
+          "box": "Bidang masukan",
+          "slider": "Penggeser",
+          "step": "Jumlah langkah",
+          "unit_of_measurement": "Satuan pengukuran"
+        },
+        "input_select": {
+          "options": "Opsi",
+          "add_option": "Tambahkan opsi",
+          "no_options": "Belum ada opsi.",
+          "add": "Tambahkan"
+        },
+        "counter": {
+          "minimum": "Nilai minimum",
+          "maximum": "Nilai maksimum",
+          "initial": "Nilai awal",
+          "restore": "Kembalikan nilai terakhir yang diketahui saat Home Assistant dimulai",
+          "step": "Jumlah langkah"
+        },
+        "timer": { "duration": "Durasi" }
+      },
+      "options_flow": {
+        "form": { "header": "Opsi" },
+        "loading": {
+          "loading_flow": "Please wait while the options for {integration} are being initialized",
+          "loading_step": "Loading next step for {integration}"
+        },
+        "success": { "description": "Opsi berhasil disimpan." }
+      },
+      "config_entry_system_options": {
+        "title": "Opsi Sistem untuk {integration}",
+        "enable_new_entities_label": "Aktifkan entitas yang baru ditambahkan.",
+        "enable_new_entities_description": "Jika dinonaktifkan, entitas yang baru ditemukan untuk {integration} tidak akan ditambahkan secara otomatis ke Home Assistant.",
+        "enable_polling_label": "Enable polling for updates.",
+        "enable_polling_description": "If Home Assistant should automatically poll {integration} entities for updates.",
+        "restart_home_assistant": "You need to restart Home Assistant for your changes to take effect.",
+        "update": "Perbarui"
+      },
+      "zha_reconfigure_device": {
+        "heading": "Mengonfigurasi ulang perangkat",
+        "configuring_alt": "Mengonfigurasi",
+        "introduction": "Konfigurasi ulang sebuah perangkat di jaringan Zigbee Anda. Gunakan fitur ini jika perangkat tersebut tidak berfungsi dengan benar.",
+        "battery_device_warning": "You will need to wake battery powered devices before starting the reconfiguration process. Refer to your device's manual for instructions on how to wake the device.",
+        "run_in_background": "Anda dapat menutup dialog ini dan konfigurasi ulang akan dilanjutkan di latar belakang.",
+        "start_reconfiguration": "Mulai Konfigurasi Ulang",
+        "in_progress": "Perangkat sedang dikonfigurasi ulang. Proses ini mungkin membutuhkan beberapa saat.",
+        "configuration_failed": "Konfigurasi ulang perangkat gagal. Informasi tambahan mungkin tersedia di log.",
+        "configuration_complete": "Konfigurasi ulang perangkat selesai.",
+        "button_show": "Tampilkan Detail",
+        "button_hide": "Sembunyikan Detail",
+        "cluster_header": "Klaster",
+        "bind_header": "Binding",
+        "reporting_header": "Pelaporan",
+        "attribute": "Atribut",
+        "min_max_change": "min/maks/perubahan"
+      },
+      "zha_device_info": {
+        "manuf": "oleh {manufacturer}",
+        "no_area": "Tidak Ada Area",
+        "device_signature": "Tanda tangan perangkat Zigbee",
+        "device_children": "Anakan perangkat Zigbee",
+        "buttons": {
+          "add": "Tambahkan Perangkat melalui perangkat ini",
+          "remove": "Hapus Perangkat",
+          "clusters": "Kelola Cluster",
+          "reconfigure": "Konfigurasi Ulang Perangkat",
+          "zigbee_information": "Tanda tangan perangkat Zigbee",
+          "device_children": "Lihat Anakan",
+          "view_in_visualization": "Tampilkan dalam Visualisasi"
+        },
+        "services": {
+          "reconfigure": "Konfigurasi ulang perangkat ZHA (pulihkan perangkat). Gunakan jika Anda mengalami masalah dengan perangkat. Jika perangkat yang dimaksud adalah perangkat bertenaga baterai, pastikan perangkat tersebut aktif dan menerima perintah saat Anda menggunakan layanan ini.",
+          "updateDeviceName": "Tetapkan nama khusus untuk perangkat ini di registri perangkat.",
+          "remove": "Hapus perangkat dari jaringan Zigbee.",
+          "zigbee_information": "Lihat informasi Zigbee perangkat."
+        },
+        "confirmations": { "remove": "Yakin ingin menghapus perangkat?" },
+        "quirk": "Kebiasaan",
+        "last_seen": "Terakhir Terlihat",
+        "power_source": "Sumber Daya",
+        "unknown": "Tidak diketahui",
+        "zha_device_card": { "device_name_placeholder": "Ubah nama perangkat" }
+      },
+      "domain_toggler": {
+        "title": "Alihkan Domain",
+        "reset_entities": "Atur Ulang Entitas"
+      },
+      "mqtt_device_debug_info": {
+        "title": "Informasi debug {device}",
+        "deserialize": "Mencoba mengurai pesan MQTT sebagai JSON",
+        "entities": "Entitas",
+        "no_entities": "Tidak ada entitas",
+        "no_triggers": "Tidak ada pemicu",
+        "payload_display": "Tampilan muatan",
+        "recent_messages": "{n} pesan yang diterima baru-baru ini",
+        "show_as_yaml": "Tampilkan sebagai YAML",
+        "triggers": "Pemicu"
+      }
+    },
+    "duration": {
+      "second": "{count}{count, plural,\n  one { detik }\n  other { detik }\n}",
+      "minute": "{count} {count, plural,\n  one { menit }\n  other { menit }\n}",
+      "hour": "{count} {count, plural,\n  one { jam }\n  other { jam }\n}",
+      "day": "{count}{count, plural,\n  one { hari }\n  other { hari }\n}",
+      "week": "{count}{count, plural,\n  one { minggu }\n  other { minggu }\n}"
+    },
+    "errors": {
+      "config": {
+        "no_type_provided": "Tidak ada tipe yang tersedia.",
+        "error_detected": "Kesalahan konfigurasi terdeteksi",
+        "editor_not_available": "Tidak ada editor visual yang tersedia untuk tipe \"{type}\".",
+        "editor_not_supported": "Editor visual tidak didukung untuk konfigurasi ini",
+        "edit_in_yaml_supported": "Anda masih dapat mengedit konfigurasi Anda di YAML.",
+        "key_missing": "Kunci yang diperlukan \"{key}\" tidak ada.",
+        "key_not_expected": "Kunci \"{key}\" tidak diharapkan atau tidak didukung oleh editor visual.",
+        "key_wrong_type": "Nilai yang disediakan untuk \"{key}\" tidak didukung oleh editor visual. Kami mendukung ({type_correct}) tetapi diterima ({type_wrong}).",
+        "no_template_editor_support": "Templat tidak didukung di editor visual"
+      },
+      "supervisor": {
+        "title": "Tidak dapat memuat panel Supervisor!",
+        "wait": "Jika Anda baru saja memulai, pastikan Anda telah memberikan cukup waktu kepada Supervisor untuk memulai.",
+        "ask": "Dapatkan bantuan",
+        "reboot": "Coba me-reboot host",
+        "observer": "Periksa Observer",
+        "system_health": "Periksa Kesehatan Sistem"
+      }
+    },
+    "login-form": {
+      "password": "Kata Sandi",
+      "remember": "Ingat",
+      "log_in": "Masuk"
+    },
+    "notification_drawer": {
+      "click_to_configure": "Klik tombol untuk mengonfigurasi {entity}",
+      "empty": "Tidak Ada Notifikasi",
+      "title": "Notifikasi",
+      "close": "Tutup",
+      "dismiss_all": "Tutup semua"
+    },
+    "notification_toast": {
+      "service_call_failed": "Gagal memanggil layanan {service}.",
+      "connection_lost": "Koneksi terputus. Menghubungkan kembali…",
+      "started": "Home Assistant telah dimulai!",
+      "starting": "Home Assistant sedang dimulai, belum semuanya akan tersedia hingga selesai.",
+      "wrapping_up_startup": "Menyelesaikan proses mulai, tidak semuanya akan tersedia hingga prosesnya selesai.",
+      "integration_starting": "Memulai {integration}, tidak semuanya akan tersedia hingga prosesnya selesai.",
+      "triggered": "Dipicu {name}",
+      "dismiss": "Tutup"
+    },
+    "sidebar": {
+      "external_app_configuration": "Konfigurasi Aplikasi",
+      "sidebar_toggle": "Alihkan Bilah Samping",
+      "done": "Selesai"
+    },
+    "panel": {
+      "error": {
+        "go_back": "Kembali",
+        "supervisor": {
+          "ask": "Dapatkan bantuan",
+          "observer": "Periksa Observer",
+          "reboot": "Coba me-reboot host",
+          "system_health": "Periksa Kesehatan Sistem",
+          "title": "Tidak dapat memuat panel Supervisor!",
+          "wait": "Jika Anda baru saja memulai, pastikan Anda telah memberikan cukup waktu kepada supervisor untuk memulai."
+        }
+      },
+      "history": {
+        "ranges": {
+          "last_week": "Minggu lalu",
+          "this_week": "Minggu ini",
+          "today": "Hari ini",
+          "yesterday": "Kemarin"
+        }
+      },
+      "logbook": {
+        "ranges": {
+          "last_week": "Minggu lalu",
+          "this_week": "Minggu ini",
+          "today": "Hari ini",
+          "yesterday": "Kemarin"
+        }
+      }
+    }
+  }
+}

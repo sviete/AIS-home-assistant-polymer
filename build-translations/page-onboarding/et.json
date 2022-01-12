@@ -1,0 +1,76 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Kas oled valmis oma kodu ellu äratama, oma privaatsust tagasi võitma ja ühinema ülemaailmse nokitsejate kogukonnaga?",
+        "next": "Järgmine",
+        "finish": "Lõpeta",
+        "user": {
+          "intro": "Alustame kasutajakonto loomisega.",
+          "required_field": "Nõutud",
+          "data": {
+            "name": "Nimi",
+            "username": "Kasutajanimi",
+            "password": "Salasõna",
+            "password_confirm": "Kinnita salasõna"
+          },
+          "create_account": "Loo konto",
+          "error": {
+            "required_fields": "Täida kõik nõutud väljad",
+            "password_not_match": "Salasõnad ei ühti"
+          }
+        },
+        "core-config": {
+          "intro": "Tere tulemast Home Assistant'i kasutama, {name}. Kuidas sa soovid oma kodu nimetada?",
+          "intro_location": "Soovime teada kus sa elad. See teave aitab teabe kuvamisel ja päikesepõhiste automatiseeringute loomisel. Neid andmeid ei jagata kunagi väljaspool teie võrku.",
+          "intro_location_detect": "Me saame aidata sul seda teavet leida, tehes ühekordse päringu välisele teenusele.",
+          "location_name": "Sinu Home Assistant paigalduse nimi",
+          "location_name_default": "Kodu",
+          "button_detect": "Tuvasta",
+          "finish": "Edasi"
+        },
+        "integration": {
+          "intro": "Seadmed ja teenused on Home Assistant'is esitatud sidumistena. Võid neid seadistada kohe või teha seda hiljem konfiguratsioonilehelt.",
+          "more_integrations": "Rohkem",
+          "finish": "Lõpeta"
+        },
+        "analytics": {
+          "finish": "Järgmine",
+          "intro": "Jaga oma Home Assistanti oleku teavet. Need andmed on avalikult saadaval aadressil {link}"
+        },
+        "restore": {
+          "description": "Teise võimalusena saad taastada eelmise varukoopia.",
+          "in_progress": "Toimub taastamine",
+          "show_log": "Kuva täielik logi",
+          "hide_log": "Peida täielik logi",
+          "full_snapshot": "Täielik varukoopia",
+          "partial_snapshot": "Osaline varukoopia",
+          "type": "Andmestiku tüüp",
+          "select_type": "Vali andmestiku tüüp",
+          "folders": "Kaustad",
+          "addons": "Lisandmoodulid",
+          "password_protection": "Salasõnaga kaitstud",
+          "password": "Salasõna",
+          "confirm_password": "Kinnita salasõna"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

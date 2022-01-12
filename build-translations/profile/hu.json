@@ -1,0 +1,148 @@
+{
+  "ui": {
+    "panel": {
+      "profile": {
+        "current_user": "Jelenleg {fullName} felhasználóként vagy bejelentkezve.",
+        "is_owner": "Tulajdonos vagy.",
+        "logout": "Kijelentkezés",
+        "logout_title": "Kijelentkezés?",
+        "logout_text": "Biztosan ki szeretnél jelentkezni?",
+        "force_narrow": {
+          "header": "Mindig rejtse el az oldalsávot",
+          "description": "Ez alapértelmezés szerint elrejti az oldalsávot, hasonlóan a mobil verzióhoz."
+        },
+        "customize_sidebar": {
+          "header": "A sorrend módosítása és elemek elrejtése az oldalsávról",
+          "description": "Az oldalsáv fejlécét is nyomva tarthatod a szerkesztési mód aktiválásához.",
+          "button": "Szerkesztés"
+        },
+        "vibrate": {
+          "header": "Rezgés",
+          "description": "Rezgés engedélyezése vagy tiltása ezen az eszközön az eszközök vezérlésekor."
+        },
+        "enable_shortcuts": {
+          "header": "Billentyűparancsok",
+          "description": "Engedélyezheted vagy letilthatod a felhasználói felület billentyűparancsait különböző műveletek végrehajtásához."
+        },
+        "suspend": {
+          "header": "Kapcsolat automatikus bontása",
+          "description": "Lezárjuk a kapcsolatot a szerverrel, ha 5 percig rejtve van a felület?"
+        },
+        "push_notifications": {
+          "header": "Push Értesítések",
+          "description": "Értesítések küldése erre az eszközre.",
+          "error_load_platform": "Állítsd be a notify.html5-t.",
+          "error_use_https": "Szükséges az SSL engedélyezése a felülethez.",
+          "push_notifications": "Push értesítések",
+          "link_promo": "Tudj meg többet",
+          "add_device_prompt": {
+            "title": "Mi legyen ennek az eszköznek a neve?",
+            "input_label": "Eszköz neve"
+          }
+        },
+        "language": {
+          "header": "Nyelv",
+          "link_promo": "Segíts a fordításban",
+          "dropdown_label": "Nyelv"
+        },
+        "number_format": {
+          "header": "Számformátum",
+          "dropdown_label": "Számformátum",
+          "description": "Válassza ki a számok formátumát.",
+          "formats": {
+            "language": "Automatikus (nyelvi beállítás használata)",
+            "system": "Használja a rendszer területi beállításait",
+            "comma_decimal": "1 234 567,89",
+            "decimal_comma": "1.234.567,89",
+            "space_comma": "1 234 567,89",
+            "none": "Nincs"
+          }
+        },
+        "time_format": {
+          "header": "Időformátum",
+          "dropdown_label": "Időformátum",
+          "description": "Válaszd ki az időformátumot.",
+          "formats": {
+            "12": "12 óra (AM/PM)",
+            "24": "24 óra",
+            "language": "Automatikus (nyelvi beállítás használata)",
+            "system": "Rendszer területi beállításainak használata"
+          }
+        },
+        "themes": {
+          "header": "Téma",
+          "error_no_theme": "Nincsenek elérhető témák.",
+          "link_promo": "Tudj meg többet a témákról",
+          "dropdown_label": "Téma",
+          "dark_mode": {
+            "auto": "Automatikus",
+            "light": "Világos",
+            "dark": "Sötét"
+          },
+          "primary_color": "Elsődleges szín",
+          "accent_color": "Kiemelő szín",
+          "reset": "Visszaállítás"
+        },
+        "dashboard": {
+          "header": "Irányítópult",
+          "description": "Válassz egy alapértelmezett irányítópultot ehhez az eszközhöz.",
+          "dropdown_label": "Irányítópult"
+        },
+        "change_password": {
+          "header": "Jelszó Módosítása",
+          "current_password": "Jelenlegi Jelszó",
+          "new_password": "Új Jelszó",
+          "confirm_new_password": "Új Jelszó Megerősítése",
+          "error_required": "Szükséges",
+          "submit": "Küldés",
+          "error_new_mismatch": "A megadott új jelszavak nem egyeznek",
+          "error_new_is_old": "Az új jelszónak különböznie kell az aktuális jelszótól",
+          "success": "A jelszó sikeresen módosíva lett"
+        },
+        "mfa": {
+          "header": "Többfaktoros Hitelesítési Modulok",
+          "disable": "Letilt",
+          "enable": "Engedélyez",
+          "confirm_disable": "Biztosan le szeretnéd tiltani {name}-t?"
+        },
+        "mfa_setup": {
+          "title_aborted": "Megszakítva",
+          "title_success": "Siker!",
+          "step_done": "{step} beállítás elvégezve",
+          "close": "Bezárás",
+          "submit": "Küldés"
+        },
+        "advanced_mode": {
+          "title": "Haladó üzemmód",
+          "description": "Haladó funkciók feloldása.",
+          "link_promo": "Tudj meg többet"
+        },
+        "refresh_tokens": {
+          "header": "Frissítési Tokenek",
+          "description": "Minden frissítési token egy bejelentkezési munkamenetet képvisel. A frissítési tokenek automatikusan eltávolításra kerülnek, amikor a kijelentkezésre kattintasz. Jelenleg a következő frissítési tokenek aktívak a fiókodban.",
+          "token_title": "{clientId} frissítési tokenje",
+          "created_at": "Létrehozva: {date}",
+          "last_used": "Utolsó használat ideje: {date}, helye: {location}",
+          "not_used": "Sosem használt",
+          "confirm_delete": "Biztosan törölni szeretnéd {name} frissítési tokenjét?",
+          "delete_failed": "Nem sikerült törölni a frissítési tokent.",
+          "current_token_tooltip": "Nem lehet törölni az aktuális frissítési tokent"
+        },
+        "long_lived_access_tokens": {
+          "header": "Hosszú Életű Hozzáférési Tokenek",
+          "description": "Hosszú életű hozzáférési tokenek létrehozásával engedélyezheted a szkriptjeid számára, hogy csatlakozzanak a Home Assistant példányodhoz. Minden token 10 évig érvényes a létrehozástól számítva. Jelenleg a következő hosszú életű hozzáférési tokenek aktívak.",
+          "learn_auth_requests": "Tudj meg többet a hitelesített kérelmek létrehozásáról.",
+          "created": "Létrehozva: {date}",
+          "confirm_delete": "Biztosan törölni szeretnéd {name} hozzáférési tokenjét?",
+          "delete_failed": "Nem sikerült törölni a hozzáférési tokent.",
+          "create": "Token Létrehozása",
+          "create_failed": "Nem sikerült létrehozni a hozzáférési tokent.",
+          "name": "Név",
+          "prompt_name": "Adj nevet a tokennek",
+          "prompt_copy_token": "Most másold ki a hozzáférési tokened! Erre később nem lesz lehetőséged.",
+          "empty_state": "Még nincsenek hosszú életű hozzáférési tokenjeid."
+        }
+      }
+    }
+  }
+}

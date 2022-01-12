@@ -1,6 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property } from "lit/decorators";
 import "../../../layouts/hass-tabs-subpage";
+import "../../../components/ha-logo-svg";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant, Route } from "../../../types";
 import { documentationUrl } from "../../../util/documentation-url";
@@ -36,14 +37,9 @@ class HaConfigInfo extends LitElement {
         .tabs=${configSections.general}
       >
         <div class="about">
-          <a href="https://www.ai-speaker.com" target="_blank" rel="noreferrer"
-            ><img
-              src="/static/icons/favicon-192x192.png"
-              height="192"
-              alt="${this.hass.localize(
-                "ui.panel.config.info.home_assistant_logo"
-              )}"
-          /></a>
+          <a href="https://ai-speaker.com" target="_blank" rel="noreferrer">
+            <ha-logo-svg title="AI-Speaker"> </ha-logo-svg>
+          </a>
           <br />
           <h2>AI-Speaker ${hass.connection.haVersion}</h2>
           <p>
@@ -55,7 +51,7 @@ class HaConfigInfo extends LitElement {
           </p>
           <p class="develop">
             <a
-              href="${documentationUrl(this.hass, "/developers/credits/")}"
+              href=${documentationUrl(this.hass, "/developers/credits/")}
               target="_blank"
               rel="noreferrer"
             >
@@ -119,8 +115,8 @@ class HaConfigInfo extends LitElement {
                     ${customUiList.map(
                       (item) => html`
                         <div>
-                          <a href="${item.url}" target="_blank"> ${item.name}</a
-                          >: ${item.version}
+                          <a href=${item.url} target="_blank"> ${item.name}</a>:
+                          ${item.version}
                         </div>
                       `
                     )}
@@ -189,6 +185,11 @@ class HaConfigInfo extends LitElement {
           max-width: 600px;
           margin: 0 auto;
           padding-bottom: 16px;
+        }
+        ha-logo-svg {
+          padding: 12px;
+          height: 180px;
+          width: 180px;
         }
       `,
     ];

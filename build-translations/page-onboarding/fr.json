@@ -1,0 +1,76 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Êtes-vous prêt à réveiller votre maison, à récupérer votre vie privée et à rejoindre une communauté mondiale de bricoleurs?",
+        "next": "Suivant",
+        "finish": "Terminer",
+        "user": {
+          "intro": "Commençons par créer un compte utilisateur.",
+          "required_field": "Requis",
+          "data": {
+            "name": "Nom",
+            "username": "Nom d'utilisateur",
+            "password": "Mot de passe",
+            "password_confirm": "Confirmez le mot de passe"
+          },
+          "create_account": "Créer un compte",
+          "error": {
+            "required_fields": "Remplissez tous les champs requis",
+            "password_not_match": "Les mots de passe ne correspondent pas"
+          }
+        },
+        "core-config": {
+          "intro": "Bonjour {name}, bienvenue dans Home Assistant. Comment voudriez-vous nommer votre maison?",
+          "intro_location": "Nous aimerions savoir où vous habitez. Ces informations vous aideront à afficher des informations et à configurer des automatisations basés sur le soleil. Ces données ne sont jamais partagées en dehors de votre réseau.",
+          "intro_location_detect": "Nous pouvons vous aider à renseigner ces informations en adressant une demande unique à un service externe.",
+          "location_name": "Nom de votre installation Home Assistant",
+          "location_name_default": "Maison",
+          "button_detect": "Détecter",
+          "finish": "Suivant"
+        },
+        "integration": {
+          "intro": "Les appareils et les services sont représentés dans Home Assistant sous forme d’intégrations. Vous pouvez les configurer maintenant ou le faire plus tard à partir de l'écran de configuration.",
+          "more_integrations": "Plus",
+          "finish": "Terminer"
+        },
+        "analytics": {
+          "finish": "Suivant",
+          "intro": "Partagez les analyses de votre instance. Ces données seront accessibles au public à l' {link}"
+        },
+        "restore": {
+          "description": "Vous pouvez également restaurer à partir d'un instantané précédent.",
+          "in_progress": "Restauration en cours",
+          "show_log": "Afficher le journal",
+          "hide_log": "Masquer le journal",
+          "full_snapshot": "Instantané complet",
+          "partial_snapshot": "Instantané partiel",
+          "type": "Type d'instantané",
+          "select_type": "Sélectionnez les éléments à restaurer",
+          "folders": "Dossiers",
+          "addons": "Modules complémentaires",
+          "password_protection": "Protection par mot de passe",
+          "password": "Mot de passe de l'instantané",
+          "confirm_password": "Confirmez le mot de passe de l'instantané"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

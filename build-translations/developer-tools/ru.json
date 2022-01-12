@@ -1,0 +1,79 @@
+{
+  "ui": {
+    "panel": {
+      "developer-tools": {
+        "tabs": {
+          "events": {
+            "title": "События",
+            "description": "Здесь Вы можете создать и отправить событие в Home Assistant.",
+            "documentation": "Узнайте больше о событиях.",
+            "type": "Событие",
+            "data": "Данные события в формате YAML (необязательно)",
+            "fire_event": "Создать событие",
+            "event_fired": "Событие {name} произошло в",
+            "available_events": "Доступные события",
+            "count_listeners": " (подписано: {count})",
+            "listen_to_events": "Подписаться на событие",
+            "listening_to": "Подписано на",
+            "subscribe_to": "Событие",
+            "start_listening": "Подписаться",
+            "stop_listening": "Отписаться",
+            "alert_event_type": "Укажите событие.",
+            "notification_event_fired": "Событие {type} создано успешно"
+          },
+          "services": {
+            "title": "Службы",
+            "description": "Здесь Вы можете вызвать любую службу Home Assistant из списка доступных.",
+            "call_service": "Вызвать службу",
+            "column_parameter": "Параметр",
+            "column_description": "Описание",
+            "column_example": "Пример",
+            "fill_example_data": "Заполнить данными из примера",
+            "yaml_mode": "Перейти в режим YAML",
+            "ui_mode": "Перейти в режим формы ввода",
+            "yaml_parameters": "Параметры доступны только в режиме YAML",
+            "all_parameters": "Все доступные параметры",
+            "accepts_target": "Эта служба принимает целевой объект, например: `entity_id: light.bed_light`",
+            "no_template_ui_support": "Пользовательский интерфейс не поддерживает шаблоны, используйте текстовый редактор YAML."
+          },
+          "states": {
+            "title": "Состояния",
+            "description1": "Здесь Вы можете вручную изменить отображение текущего состояния объекта в Home Assistant.",
+            "description2": "Если этот объект связан с устройством, фактической связи с этим устройством не будет.",
+            "entity": "Объект",
+            "state": "Состояние",
+            "attributes": "Атрибуты",
+            "state_attributes": "Атрибуты состояния в формате YAML (необязательно)",
+            "set_state": "Задать состояние",
+            "current_entities": "Список объектов",
+            "filter_entities": "Поиск",
+            "filter_states": "Поиск",
+            "filter_attributes": "Поиск",
+            "no_entities": "Не найдено",
+            "more_info": "Подробнее",
+            "alert_entity_field": "Укажите объект.",
+            "last_updated": "Последнее обновление",
+            "last_changed": "Последнее изменение",
+            "copy_id": "Скопировать ID в буфер обмена"
+          },
+          "templates": {
+            "title": "Шаблоны",
+            "description": "Здесь Вы можете протестировать поведение шаблонов. В Home Assistant используется шаблонизатор Jinja2 с некоторыми специальными расширениями.",
+            "editor": "Редактор шаблонов",
+            "reset": "Вернуться к демонстрационному шаблону",
+            "result_type": "Тип результата",
+            "jinja_documentation": "Узнайте больше о шаблонизаторе Jinja2",
+            "template_extensions": "Узнайте больше о шаблонах Home Assistant",
+            "unknown_error_template": "Неизвестная ошибка при визуализации шаблона.",
+            "time": "Этот шаблон обновляется в начале каждой минуты.",
+            "all_listeners": "Этот шаблон отслеживает все события изменения состояния.",
+            "no_listeners": "Этот шаблон не отслеживает никаких событий и не будет обновляться автоматически.",
+            "listeners": "Этот шаблон отслеживает следующие события изменения состояния:",
+            "entity": "Объект",
+            "domain": "Домен"
+          }
+        }
+      }
+    }
+  }
+}

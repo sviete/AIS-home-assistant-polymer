@@ -1,0 +1,76 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Готовы ли Вы разбудить свой дом, вернуть свою конфиденциальность и присоединиться к всемирному сообществу?",
+        "next": "Далее",
+        "finish": "Готово",
+        "user": {
+          "intro": "Давайте начнём с создания учётной записи пользователя.",
+          "required_field": "Обязательное поле",
+          "data": {
+            "name": "Имя",
+            "username": "Имя пользователя",
+            "password": "Пароль",
+            "password_confirm": "Подтвердите пароль"
+          },
+          "create_account": "Создать учётную запись",
+          "error": {
+            "required_fields": "Заполните все обязательные поля",
+            "password_not_match": "Пароли не совпадают"
+          }
+        },
+        "core-config": {
+          "intro": "Добро пожаловать, {name}! Как Вы хотите назвать свой Home Assistant?",
+          "intro_location": "Мы хотели бы знать, где Вы живете. Это поможет нам правильно отображать информацию и позволит Вам настраивать автоматизацию на основе данных о рассвете и закате. Эти данные никогда не будут переданы за пределы Вашей локальной сети.",
+          "intro_location_detect": "Мы можем помочь Вам заполнить эту информацию, сделав однократный запрос во внешнюю службу.",
+          "location_name": "Название для Вашего Home Assistant",
+          "location_name_default": "Home Assistant",
+          "button_detect": "Заполнить",
+          "finish": "Далее"
+        },
+        "integration": {
+          "intro": "Устройства и службы представлены в Home Assistant как интеграции. Вы можете добавить их сейчас или сделать это позже в разделе настроек.",
+          "more_integrations": "Ещё",
+          "finish": "Готово"
+        },
+        "analytics": {
+          "finish": "Далее",
+          "intro": "Поделитесь аналитикой из Вашего Home Assistant. Эти данные будут доступны для всех по адресу {link}."
+        },
+        "restore": {
+          "description": "Восстановить предыдущее состояние из снимка файловой системы (snapshot)",
+          "in_progress": "Восстановление системы",
+          "show_log": "Показать журнал",
+          "hide_log": "Скрыть журнал",
+          "full_snapshot": "Полный снимок",
+          "partial_snapshot": "Частичный снимок",
+          "type": "Тип снимка файловой системы:",
+          "select_type": "Выберите что нужно восстановить:",
+          "folders": "Папки",
+          "addons": "Дополнения",
+          "password_protection": "Защита паролем",
+          "password": "Пароль",
+          "confirm_password": "Подтверждение пароля"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

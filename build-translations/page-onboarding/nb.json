@@ -1,0 +1,76 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Er du klar til å ta kontroll over hjemmet ditt, gjenvinne ditt privatliv og bli med i et verdensomspennende samfunn av entusiaster?",
+        "next": "Neste",
+        "finish": "Fullfør",
+        "user": {
+          "intro": "La oss begynne med å opprette en brukerkonto.",
+          "required_field": "Kreves",
+          "data": {
+            "name": "Navn",
+            "username": "Brukernavn",
+            "password": "Passord",
+            "password_confirm": "Bekreft passord"
+          },
+          "create_account": "Opprett konto",
+          "error": {
+            "required_fields": "Fyll ut alle nødvendige felt",
+            "password_not_match": "Passordene er ikke like"
+          }
+        },
+        "core-config": {
+          "intro": "Hei {name}, velkommen til Home Assistant. Hva ønsker du å kalle hjemmet ditt?",
+          "intro_location": "Vi vil gjerne vite hvor du bor. Denne informasjonen vil bidra til å vise informasjon og sette opp automasjon basert på solen. Dette deles ikke ut av nettet ditt.",
+          "intro_location_detect": "Vi kan hjelpe deg med å fylle ut denne informasjonen ved å gjøre en engangsforespørsel til en ekstern tjeneste.",
+          "location_name": "Navn på installasjonen av Home Assistant",
+          "location_name_default": "Hjem",
+          "button_detect": "Oppdag",
+          "finish": "Neste"
+        },
+        "integration": {
+          "intro": "Enheter og tjenester er representert i Home Assistant som integrasjoner. Du kan sette dem opp nå eller gjøre det senere fra konfigurasjonen.",
+          "more_integrations": "Mer",
+          "finish": "Fullfør"
+        },
+        "analytics": {
+          "finish": "Neste",
+          "intro": "Del analyser fra forekomsten din. Disse dataene vil være offentlig tilgjengelige på {link}"
+        },
+        "restore": {
+          "description": "Alternativt kan du gjenopprette fra et forrige snapshot.",
+          "in_progress": "Gjenoppretting pågår",
+          "show_log": "Vis full logg",
+          "hide_log": "Skjul full logg",
+          "full_snapshot": "Full sikkerhetskopi",
+          "partial_snapshot": "Delvis sikkerhetskopi",
+          "type": "Type øyeblikksbilde",
+          "select_type": "Velg hva du vil gjenopprette",
+          "folders": "Mapper",
+          "addons": "Tillegg",
+          "password_protection": "Passordbeskyttelse",
+          "password": "Passord for øyeblikksbilde",
+          "confirm_password": "Bekreft passord for øyeblikksbilde"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

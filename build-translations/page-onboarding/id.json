@@ -1,0 +1,76 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Siap untuk membuat rumah Anda lebih hidup, merebut kembali privasi Anda, dan bergabung dengan komunitas pemikir di seluruh dunia?",
+        "next": "Berikutnya",
+        "finish": "Selesai",
+        "user": {
+          "intro": "Mari kita mulai dengan membuat akun pengguna.",
+          "required_field": "Wajib",
+          "data": {
+            "name": "Nama",
+            "username": "Nama Pengguna",
+            "password": "Kata Sandi",
+            "password_confirm": "Konfirmasi Kata Sandi"
+          },
+          "create_account": "Buat Akun",
+          "error": {
+            "required_fields": "Isi semua bidang yang wajib diisi",
+            "password_not_match": "Kata sandi tidak cocok"
+          }
+        },
+        "core-config": {
+          "intro": "Halo {name}, selamat datang di Home Assistant. Nama apa yang ingin diberikan untuk rumah Anda?",
+          "intro_location": "Kami ingin mengetahui tempat tinggal Anda. Informasi ini akan membantu menampilkan informasi dan menyiapkan otomasi berbasis matahari. Data ini tidak pernah dibagikan di luar jaringan Anda.",
+          "intro_location_detect": "Kami dapat membantu Anda mengisi informasi ini dengan membuat permintaan satu kali ke layanan eksternal.",
+          "location_name": "Beri nama instalasi Home Assistant Anda",
+          "location_name_default": "Rumah",
+          "button_detect": "Deteksi",
+          "finish": "Berikutnya"
+        },
+        "integration": {
+          "intro": "Perangkat dan layanan diwakili di Home Assistant sebagai integrasi. Anda dapat mengaturnya sekarang, atau melakukannya nanti dari layar konfigurasi.",
+          "more_integrations": "Lebih Lanjut",
+          "finish": "Selesai"
+        },
+        "analytics": {
+          "finish": "Berikutnya",
+          "intro": "Bagikan analitika dari instans Anda. Data ini akan tersedia untuk umum di {link}"
+        },
+        "restore": {
+          "description": "Atau, Anda dapat memulihkan dari snapshot sebelumnya.",
+          "in_progress": "Pemulihan sedang berlangsung",
+          "show_log": "Tampilkan log lengkap",
+          "hide_log": "Sembunyikan log lengkap",
+          "full_snapshot": "Full snapshot",
+          "partial_snapshot": "Partial snapshot",
+          "type": "Snapshot type",
+          "select_type": "Select what to restore",
+          "folders": "Folders",
+          "addons": "Add-ons",
+          "password_protection": "Password protection",
+          "password": "Snapshot password",
+          "confirm_password": "Confirm Snapshot password"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

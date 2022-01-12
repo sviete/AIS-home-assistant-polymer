@@ -1,0 +1,76 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "잠들어 있는 집을 깨우고 개인정보를 보호하며 전세계의 공돌이 커뮤니티에 가입 할 준비가 되셨나요?",
+        "next": "다음",
+        "finish": "완료",
+        "user": {
+          "intro": "사용자 계정을 만들어 시작합니다.",
+          "required_field": "필수 요소",
+          "data": {
+            "name": "이름",
+            "username": "사용자 이름",
+            "password": "비밀번호",
+            "password_confirm": "비밀번호 확인"
+          },
+          "create_account": "계정 만들기",
+          "error": {
+            "required_fields": "필수 입력란을 모두 채워주세요",
+            "password_not_match": "비밀번호가 일치하지 않습니다"
+          }
+        },
+        "core-config": {
+          "intro": "{name}님, 안녕하세요! Home Assistant에 오신 것을 환영합니다. 집에 어떤 이름을 지어주시겠어요?",
+          "intro_location": "현재 살고 계시는 위치를 알려주세요. 이는 태양 위치를 기반으로 하는 자동화를 설정하는데 도움이 됩니다. 위치 정보는 외부 네트워크와 절대 공유되지 않습니다.",
+          "intro_location_detect": "외부 서비스에 일회성 요청을 해서 위치 정보를 넣는데 도움을 드릴 수 있습니다.",
+          "location_name": "설치된 Home Assistant 이름",
+          "location_name_default": "집",
+          "button_detect": "탐색",
+          "finish": "다음"
+        },
+        "integration": {
+          "intro": "기기 및 서비스는 Home Assistant에서 통합 구성요소로 표시됩니다. 지금 설정하거나 나중에 구성 화면에서 설정할 수 있습니다.",
+          "more_integrations": "더보기",
+          "finish": "완료"
+        },
+        "analytics": {
+          "finish": "다음",
+          "intro": "인스턴스의 분석 내용을 공유합니다. 이 데이터는 {link}에서 공개적으로 사용될 수 있습니다"
+        },
+        "restore": {
+          "description": "이전 스냅숏에서 복원할 수 있습니다.",
+          "in_progress": "복원 중",
+          "show_log": "전체 로그 표시하기",
+          "hide_log": "전체 로그 숨기기",
+          "full_snapshot": "전체 스냅샷",
+          "partial_snapshot": "부분 스냅샷",
+          "type": "스냅샷 종류",
+          "select_type": "무엇을 복원할지 선택하세요",
+          "folders": "폴더",
+          "addons": "애드온",
+          "password_protection": "비밀번호 보호",
+          "password": "스냅샷 비밀번호",
+          "confirm_password": "스냅샷 비밀번호 확인"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "ui": {
+    "panel": {
+      "page-onboarding": {
+        "intro": "Er du klar til at vække dit hjem til live, genvinde dit privatliv og blive medlem af et verdensomspændende fællesskab af tinkerers?",
+        "next": "Næste",
+        "finish": "Afslut",
+        "user": {
+          "intro": "Lad os komme i gang ved at oprette en brugerkonto.",
+          "required_field": "Påkrævet",
+          "data": {
+            "name": "Navn",
+            "username": "Brugernavn",
+            "password": "Adgangskode",
+            "password_confirm": "Bekræft adgangskode"
+          },
+          "create_account": "Opret konto",
+          "error": {
+            "required_fields": "Udfyld alle obligatoriske felter",
+            "password_not_match": "Adgangskoderne er ikke ens"
+          }
+        },
+        "core-config": {
+          "intro": "Hej {name}, velkommen til Home Assistant. Hvordan vil du navngive dit hjem?",
+          "intro_location": "Vi vil gerne vide, hvor du bor. Disse oplysninger hjælper med at vise information og opsætte solbaserede automationer. Disse data deles aldrig uden for dit netværk.",
+          "intro_location_detect": "Vi kan hjælpe dig med at udfylde disse oplysninger ved at foretage en engangsforespørgsel til en ekstern tjeneste.",
+          "location_name": "Navn på din Home Assistant-installation",
+          "location_name_default": "Hjem",
+          "button_detect": "Detekter",
+          "finish": "Næste"
+        },
+        "integration": {
+          "intro": "Enheder og tjenester er repræsenteret i Home Assistant som integrationer. Du kan konfigurere dem nu eller gøre det senere fra konfigurationsskærmen.",
+          "more_integrations": "Mere",
+          "finish": "Afslut"
+        },
+        "analytics": {
+          "finish": "Næste",
+          "intro": "Del analysedata fra din installation. Delte data vil være offentligt tilgængelige på {link}"
+        },
+        "restore": {
+          "description": "Alternativt kan du gendanne fra et tidligere snapshot.",
+          "in_progress": "Gendannelse er i gang",
+          "show_log": "Vis den fulde log",
+          "hide_log": "Skjul fuld log",
+          "full_snapshot": "Fuld snapshot",
+          "partial_snapshot": "Delvis snapshot",
+          "type": "Snapshot type",
+          "select_type": "Vælg det der skal genetableres",
+          "folders": "Mappe",
+          "addons": "Tilføjelse",
+          "password_protection": "Kodeordsbeskyttelse",
+          "password": "Snapshot kodeord",
+          "confirm_password": "Bekræft Snapshot kodeord"
+        },
+        "ais-restore-backup": {
+          "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
+          "ais_restore_intro_step1": "Log in to the integrator portal:",
+          "ais_restore_intro_step2": "If you have password protected backup, enter the password:",
+          "ais_restore_intro_step3": "Select the gate from which you want to restore the configuration:",
+          "ais_restore_ok_info_step1": "Restoring configuration from backup... wait for restart",
+          "ais_restore_button": "RESTORE",
+          "ais_login": "Log in to AI-Speaker",
+          "ais_logout": "Log out from AI-Speaker"
+        },
+        "mob-integration": {
+          "h1": "Mobile App!",
+          "intro": "Enhance your Home Assistant experience by installing our official Android mobile app. Scan the code or click it:",
+          "mob_benefits": "With the application, you can control voice commands from your phone, receive notifications of events at home, control from outside the home, report your location to the gate, etc.. ",
+          "other_mob_apps": "You can also install other mobile application Home Assistant Companion:",
+          "finish": "Finish"
+        }
+      }
+    }
+  }
+}
