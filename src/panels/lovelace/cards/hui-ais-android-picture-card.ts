@@ -126,17 +126,19 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
     hammertime.on("tap", (ev) => {
       ev.preventDefault();
       const bcrStreamElement = ev.target.getBoundingClientRect();
-      console.log("1" + ev);
-      console.log(ev);
-      console.log("2" + ev);
-      console.log(ev.target);
-      console.log("3" + ev);
-      console.log(bcrStreamElement);
+
+      // console.log("1" + ev);
+      // console.log(ev);
+      // console.log("2" + ev);
+      // console.log(ev.target);
+      // console.log("3" + ev);
+      // console.log(bcrStreamElement);
+
       const ripple = document.createElement("div");
       ripple.className = "ripple2";
       ripple.style.left = `${ev.center.x - bcrStreamElement.x}px`;
       ripple.style.top = `${ev.center.y}px`;
-      divElement.appendChild(ripple);
+      divElement?.appendChild(ripple);
 
       const aisX = Math.floor(
         ((ev.center.x - bcrStreamElement.x) / bcrStreamElement.width) * 100
@@ -145,7 +147,7 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
         ((ev.center.y - bcrStreamElement.y) / bcrStreamElement.height) * 100
       );
       ripple.style.animation = "ripple-effect 0.4s  linear";
-      ripple.onanimationend = () => divElement.removeChild(ripple);
+      ripple.onanimationend = () => divElement?.removeChild(ripple);
 
       this._handleServiceCall("tap", aisX, aisY, 0, 0);
     });
@@ -254,16 +256,29 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
     const ripple = document.createElement("div");
     ripple.className = "ripple";
 
+    // console.log("1 ev");
+    // console.log(ev);
+    // console.log("2 target" );
+    // console.log(ev.target);
+    // console.log("3 bcrStreamElement");
+    // console.log(bcrStreamElement);
+    // console.log("4 ev.clientX ");
+    // console.log(ev.clientX);
+    // console.log("4 bcrStreamElement.left ");
+    // console.log(bcrStreamElement.left);
+    // console.log("5 ev.offsetX ");
+    // console.log(ev.offsetX);
+
     ripple.style.left = `${ev.clientX - bcrStreamElement.left}px`;
     ripple.style.top = `${ev.clientY}px`;
 
     const divElement = this.shadowRoot!.getElementById(
       this._config?.element_id + "_div"
     );
-    divElement.appendChild(ripple);
+    divElement?.appendChild(ripple);
 
     ripple.style.animation = "ripple-effect 0.4s  linear";
-    ripple.onanimationend = () => divElement.removeChild(ripple);
+    ripple.onanimationend = () => divElement?.removeChild(ripple);
 
     this._handleServiceCall("back", 0, 0, 0, 0);
   }
@@ -275,7 +290,7 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
     eX: number,
     eY: number
   ) {
-    this.hass.callService("ais_shell_command", "screen_stream_command", {
+    this.hass?.callService("ais_shell_command", "screen_stream_command", {
       name: name,
       sX: sX,
       sY: sY,
