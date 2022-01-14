@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="ais-dom-frontend",
-    version="20211229.5",
+    version="20211229.6",
     description="AIS dom frontend",
     url="https://ai-speaker.com",
     author="The Authors of the AI-Speaker.com project",
