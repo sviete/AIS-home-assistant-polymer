@@ -78,6 +78,9 @@ class HuiAisAndroidPictureCard extends LitElement implements LovelaceCard {
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
 
+    // run screen stream on android
+    this.hass?.callService("ais_shell_command", "start_screen_stream");
+
     const streamElement = this.shadowRoot!.getElementById(
       this._config?.element_id
     );
