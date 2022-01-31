@@ -3716,7 +3716,7 @@ __metadata:
   resolution: "@types/debug@npm:4.1.7"
   dependencies:
     "@types/ms": "*"
-  checksum: cd865a371a4b4184b3f8e25461338fef3134b37ffed983d471f4538c4da7974f661edb25f80b41f2a46f951c735a8163758c094e8bf0869e3abc1f32e85f064b
+  checksum: 0a7b89d8ed72526858f0b61c6fd81f477853e8c4415bb97f48b1b5545248d2ae389931680b94b393b993a7cfe893537a200647d93defe6d87159b96812305adc
   languageName: node
   linkType: hard
 
@@ -3957,7 +3957,7 @@ __metadata:
 "@types/ms@npm:*":
   version: 0.7.31
   resolution: "@types/ms@npm:0.7.31"
-  checksum: 7ff9798a408aaa371f3d0059f013d09b6eb471cd62019f35924301608f57279943b5d322f497f2ea9ae65477e2a47c26dfd8dd833a4352f883a8a86c051f7125
+  checksum: daadd354aedde024cce6f5aa873fefe7b71b22cd0e28632a69e8b677aeb48ae8caa1c60e5919bb781df040d116b01cb4316335167a3fc0ef6a63fa3614c0f6da
   languageName: node
   linkType: hard
 
@@ -3978,7 +3978,7 @@ __metadata:
 "@types/node@npm:^14.14.34":
   version: 14.17.6
   resolution: "@types/node@npm:14.17.6"
-  checksum: 4b2464f39d96be4fcdde7f4e8bb3c8b24e98ff908ca0cced997884d0dfbcc666b4b65a51b83dac92650508a1a2466e82eac2f926ddc3c0ae87bfff580dd324f6
+  checksum: 19b11f3c49689d1ffd2b7b534a49ab7daca18ce702cce9d9b5d28d60e79de94367339217f602053d0353170a9e02f7ad2d5cd796200977dc176d6d7ba376cf09
   languageName: node
   linkType: hard
 
@@ -10475,7 +10475,7 @@ fsevents@^1.2.7:
     debug: ^4.3.1
     events: ^3.3.0
     sdp-transform: ^2.14.1
-  checksum: b35bc1dbe2ab5bf77e7dde708e1812d7f762be60d9bd33da5cb5c0309a7b4e5185fd2b69c05c3b188f1c6ed666c41925804956fadbf948d3e91c9c0c026035fc
+  checksum: 3eb639639c3262fda1e2311533b821ecccffa5fba3b5235b8cd388e21dc2ec05a132441f7fafd9027578d4912e4c977912c424eeaada31c2e58cdc86c9f7d3b0
   languageName: node
   linkType: hard
 
@@ -13880,7 +13880,7 @@ fsevents@^1.2.7:
   resolution: "sdp-transform@npm:2.14.1"
   bin:
     sdp-verify: checker.js
-  checksum: f533b4ac09255e6cb79a6942715e77b537e28111fc97b106819ed16ca9acaed1a49d5da47392bf63b3f72cb4ca5ad7d79dd1f4972633ad2863c3b2d7664e950a
+  checksum: 8b3179786db1a0f1ebfdacb1ac0dfe2833e63e8c64b638884cec212455061d53beaa8d9c8bf76fdbd5f844b7885f3892adec27e87734cfbc2b3e5c65e18a489b
   languageName: node
   linkType: hard
 
