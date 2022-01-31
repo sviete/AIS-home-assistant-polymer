@@ -42,6 +42,8 @@ class DialogTagDetail
       this._id = "";
       this._name = "";
     }
+
+    this._generateQR();
   }
 
   public closeDialog(): void {
@@ -121,16 +123,9 @@ class DialogTagDetail
                     )}
                   </p>
                 </div>
-
-                <div id="qr">
-                  ${this._qrCode
-                    ? this._qrCode
-                    : html`
-                        <mwc-button @click=${this._generateQR}
-                          >Generuj kod QR
-                        </mwc-button>
-                      `}
-                </div>
+                ${this._qrCode
+                  ? html` <div id="qr">${this._qrCode}</div> `
+                  : ""}
               `
             : ``}
         </div>
@@ -220,10 +215,16 @@ class DialogTagDetail
 
   private async _generateQR() {
     const qrcode = await import("qrcode");
-    const canvas = await qrcode.toCanvas(`${this._params!.entry!.id}`, {
-      width: 180,
-      errorCorrectionLevel: "Q",
-    });
+    const canvas = await qrcode.toCanvas(
+      `https://www.home-assistant.io/tag/${this._params!.entry!.id}`,
+      {
+        width: 180,
+        errorCorrectionLevel: "Q",
+        color: {
+          light: "#fff",
+        },
+      }
+    );
     const context = canvas.getContext("2d");
 
     const imageObj = new Image();

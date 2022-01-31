@@ -17,6 +17,7 @@ import {
 import { Selector } from "../data/selector";
 import { PolymerChangedEvent } from "../polymer-types";
 import { HomeAssistant } from "../types";
+import { documentationUrl } from "../util/documentation-url";
 import "./ha-checkbox";
 import "./ha-icon-button";
 import "./ha-selector/ha-selector";
@@ -130,6 +131,33 @@ export class HaServiceControl extends LitElement {
       this._value = this.value;
     }
 
+    if (oldValue?.service !== this.value?.service) {
+      let updatedDefaultValue = false;
+      if (this._value && serviceData) {
+        // Set mandatory bools without a default value to false
+        this._value.data ??= {};
+        serviceData.fields.forEach((field) => {
+          if (
+            field.selector &&
+            field.required &&
+            field.default === undefined &&
+            "boolean" in field.selector &&
+            this._value!.data![field.key] === undefined
+          ) {
+            updatedDefaultValue = true;
+            this._value!.data![field.key] = false;
+          }
+        });
+      }
+      if (updatedDefaultValue) {
+        fireEvent(this, "value-changed", {
+          value: {
+            ...this._value,
+          },
+        });
+      }
+    }
+
     if (this._value?.data) {
       const yamlEditor = this._yamlEditor;
       if (yamlEditor && yamlEditor.value !== this._value.data) {
@@ -203,7 +231,12 @@ export class HaServiceControl extends LitElement {
         <p>${serviceData?.description}</p>
         ${this._manifest
           ? html` <a
-              href=${this._manifest.documentation}
+              href=${this._manifest.is_built_in
+                ? documentationUrl(
+                    this.hass,
+                    `/integrations/${this._manifest.domain}`
+                  )
+                : this._manifest.documentation}
               title=${this.hass.localize(
                 "ui.components.service-control.integration_doc"
               )}
