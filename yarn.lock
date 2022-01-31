@@ -9168,8 +9168,8 @@ fsevents@^1.2.7:
     "@thomasloven/round-slider": 0.5.4
     "@types/chromecast-caf-receiver": 5.0.12
     "@types/chromecast-caf-sender": ^1.0.3
-    "@types/hammerjs": ^2
     "@types/glob": ^7
+    "@types/hammerjs": ^2
     "@types/js-yaml": ^4
     "@types/leaflet": ^1
     "@types/leaflet-draw": ^1
