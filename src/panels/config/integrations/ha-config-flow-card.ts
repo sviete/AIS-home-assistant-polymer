@@ -1,6 +1,7 @@
 import { css, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
+import { mdiDotsVertical, mdiOpenInNew } from "@mdi/js";
 import { fireEvent } from "../../../common/dom/fire_event";
 import {
   ATTENTION_SOURCES,
@@ -14,6 +15,7 @@ import { showConfirmationDialog } from "../../../dialogs/generic/show-dialog-box
 import type { HomeAssistant } from "../../../types";
 import type { DataEntryFlowProgressExtended } from "./ha-config-integrations";
 import "./ha-integration-action-card";
+import { documentationUrl } from "../../../util/documentation-url";
 
 @customElement("ha-config-flow-card")
 export class HaConfigFlowCard extends LitElement {
@@ -50,17 +52,67 @@ export class HaConfigFlowCard extends LitElement {
             }`
           )}
         ></mwc-button>
-        ${DISCOVERY_SOURCES.includes(this.flow.context.source) &&
-        this.flow.context.unique_id
-          ? html`
-              <mwc-button
-                @click=${this._ignoreFlow}
-                .label=${this.hass.localize(
-                  "ui.panel.config.integrations.ignore.ignore"
+        <ha-button-menu corner="BOTTOM_START">
+          <ha-icon-button
+            slot="trigger"
+            .label=${this.hass.localize("ui.common.menu")}
+            .path=${mdiDotsVertical}
+          ></ha-icon-button>
+          ${this.flow.context.configuration_url
+            ? html`<a
+                href=${this.flow.context.configuration_url.replace(
+                  /^homeassistant:\/\//,
+                  ""
                 )}
-              ></mwc-button>
-            `
-          : ""}
+                rel="noreferrer"
+                target=${this.flow.context.configuration_url.startsWith(
+                  "homeassistant://"
+                )
+                  ? "_self"
+                  : "_blank"}
+              >
+                <mwc-list-item hasMeta>
+                  ${this.hass.localize(
+                    "ui.panel.config.integrations.config_entry.open_configuration_url"
+                  )}<ha-svg-icon
+                    slot="meta"
+                    .path=${mdiOpenInNew}
+                  ></ha-svg-icon>
+                </mwc-list-item>
+              </a>`
+            : ""}
+          ${this.manifest
+            ? html`<a
+                href=${this.manifest.is_built_in
+                  ? documentationUrl(
+                      this.hass,
+                      `/integrations/${this.manifest.domain}`
+                    )
+                  : this.manifest.documentation}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <mwc-list-item hasMeta>
+                  ${this.hass.localize(
+                    "ui.panel.config.integrations.config_entry.documentation"
+                  )}<ha-svg-icon
+                    slot="meta"
+                    .path=${mdiOpenInNew}
+                  ></ha-svg-icon>
+                </mwc-list-item>
+              </a>`
+            : ""}
+          ${DISCOVERY_SOURCES.includes(this.flow.context.source) &&
+          this.flow.context.unique_id
+            ? html`
+                <mwc-list-item @click=${this._ignoreFlow}>
+                  ${this.hass.localize(
+                    "ui.panel.config.integrations.ignore.ignore"
+                  )}
+                </mwc-list-item>
+              `
+            : ""}
+        </ha-button-menu>
       </ha-integration-action-card>
     `;
   }
@@ -113,6 +165,10 @@ export class HaConfigFlowCard extends LitElement {
     .discovered {
       --state-color: var(--primary-color);
       --text-on-state-color: var(--text-primary-color);
+    }
+    a {
+      text-decoration: none;
+      color: var(--primary-color);
     }
   `;
 }
