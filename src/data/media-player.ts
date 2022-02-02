@@ -403,8 +403,8 @@ export const computeMediaControls = (
   return buttons.length > 0 ? buttons : undefined;
 };
 
-export const formatMediaTime = (seconds: number): string => {
-  if (!seconds) {
+export const formatMediaTime = (seconds: number | undefined): string => {
+  if (seconds === undefined) {
     return "";
   }
 

@@ -1,14 +1,8 @@
-from setuptools import setup, find_packages
+"""
+Entry point for setuptools. Required for editable installs.
+TODO: Remove file after updating to pip 21.3
+"""
+from setuptools import setup
 
-setup(
-    name="ais-dom-frontend",
-    version="20220127.0",
-    description="AIS dom frontend",
-    url="https://ai-speaker.com",
-    author="The Authors of the AI-Speaker.com project",
-    author_email="info@ai-speaker.com",
-    license="Apache License 2.0",
-    packages=find_packages(include=["hass_frontend", "hass_frontend.*"]),
-    include_package_data=True,
-    zip_safe=False,
-)
+
+setup()
