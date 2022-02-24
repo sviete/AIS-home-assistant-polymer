@@ -94,7 +94,6 @@ const LAZY_LOAD_TYPES = {
     import("../cards/hui-ais-now-playing-poster-card"),
   "ais-light": () => import("../cards/hui-ais-light-card"),
   "ais-videoring": () => import("../cards/hui-ais-videoring-card"),
-  "ais-android-picture": () => import("../cards/hui-ais-android-picture-card"),
 };
 
 // This will not return an error card but will throw the error
