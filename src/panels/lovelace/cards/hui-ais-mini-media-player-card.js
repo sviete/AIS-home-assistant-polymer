@@ -5743,6 +5743,7 @@ found at http://polymer.github.io/PATENTS.txt
             toggle_power: !0,
             volume_step: null,
             tap_action: { action: "more-info" },
+            jump_amount: 10,
             ...t,
             hide: { ...ct, ...t.hide },
             speaker_group: {
@@ -5752,8 +5753,7 @@ found at http://polymer.github.io/PATENTS.txt
               ...t.sonos,
               ...t.speaker_group,
             },
-            shortcuts: { label: "Przekieruj media na", ...t.shortcuts },
-            jump_amount: 10,
+            shortcuts: { label: "Shortcuts...", ...t.shortcuts },
           };
           return (
             (e.max_volume = Number(e.max_volume) || 100),
@@ -6607,6 +6607,9 @@ found at http://polymer.github.io/PATENTS.txt
   ha-icon-button[inactive] {
     opacity: .5;
   }
+  ha-icon-button ha-icon {
+    display: flex;
+  }
 `;
       var Lt = (t, e, r, n, i) => {
           let o;
@@ -6818,6 +6821,18 @@ found at http://polymer.github.io/PATENTS.txt
           },
           state: { idle: "Inactivo", unavailable: "No disponible" },
           title: { speaker_management: "Gestión de grupo" },
+        },
+        zh: {
+          placeholder: { tts: "播放文本" },
+          label: {
+            leave: "退出",
+            ungroup: "取消组合",
+            group_all: "组合全部",
+            send: "发送",
+            master: "主要的",
+          },
+          state: { idle: "空闲", unavailable: "不可用" },
+          title: { speaker_management: "组合管理" },
         },
       };
       const Bt = (t, e) =>
@@ -7276,16 +7291,7 @@ found at http://polymer.github.io/PATENTS.txt
           render() {
             if (!this.show) return D``;
             const { active: t } = this,
-              e = this.list
-                ? D`
-      <mmp-dropdown class='mmp-shortcuts__dropdown'
-        @change=${this.handleShortcut}
-        .items=${this.list}
-        .label=${this.shortcuts.label}
-        .selected=${t}>
-      </mmp-dropdown>
-    `
-                : "",
+              e = this.list ? D` ` : "",
               r = this.buttons
                 ? D`
       <div class='mmp-shortcuts__buttons'>
@@ -7447,37 +7453,55 @@ found at http://polymer.github.io/PATENTS.txt
                 }),
                 ...e.data,
               };
-            e.language && (n.language = e.language),
-              "alexa" === e.platform
-                ? this.hass.callService("notify", "alexa_media", {
-                    message: r,
-                    data: { type: e.type || "tts", ...e.data },
-                    target: n.entity_id,
-                  })
-                : "sonos" === e.platform
-                ? this.hass.callService("script", "sonos_say", {
-                    sonos_entity: n.entity_id,
-                    volume: e.volume || 0.5,
-                    message: r,
-                    ...e.data,
-                  })
-                : "webos" === e.platform
-                ? this.hass.callService(
-                    "notify",
-                    n.entity_id.split(".").slice(-1)[0],
-                    { message: r, ...e.data }
-                  )
-                : "ga" === e.platform
-                ? this.hass.callService("notify", "ga_broadcast", {
-                    message: r,
-                    ...e.data,
-                  })
-                : "ais" === e.platform
-                ? this.hass.callService("ais_exo_player", "play_text_or_url", {
-                    text: r,
-                  })
-                : this.hass.callService("tts", e.platform + "_say", n),
-              t.stopPropagation();
+            switch ((e.language && (n.language = e.language), e.platform)) {
+              case "alexa":
+                this.hass.callService("notify", "alexa_media", {
+                  message: r,
+                  data: { type: e.type || "tts", ...e.data },
+                  target: n.entity_id,
+                });
+                break;
+              case "sonos":
+                this.hass.callService("script", "sonos_say", {
+                  sonos_entity: n.entity_id,
+                  volume: e.volume || 0.5,
+                  message: r,
+                  ...e.data,
+                });
+                break;
+              case "webos":
+                this.hass.callService(
+                  "notify",
+                  n.entity_id.split(".").slice(-1)[0],
+                  { message: r, ...e.data }
+                );
+                break;
+              case "ga":
+                this.hass.callService("notify", "ga_broadcast", {
+                  message: r,
+                  ...e.data,
+                });
+                break;
+              case "ais":
+                this.hass.callService("ais_exo_player", "play_text_or_url", {
+                  text: r,
+                });
+                break;
+              case "service": {
+                const [t, i] = (e.data.service || "").split("."),
+                  o = {
+                    [e.data.message_field || "message"]: r,
+                    entity_id: n.entity_id,
+                    ...(e.language ? { language: n.language } : {}),
+                    ...(e.data.service_data || {}),
+                  };
+                this.hass.callService(t, i, o);
+                break;
+              }
+              default:
+                this.hass.callService("tts", e.platform + "_say", n);
+            }
+            t.stopPropagation();
           }
           reset() {
             this.input.value = "";

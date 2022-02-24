@@ -46,13 +46,8 @@ export const aisAudioLovelace: LovelaceConfig = {
                     },
                   ],
                   columns: 2,
-                  list: [],
                 },
                 show_progress: true,
-                speaker_group: {
-                  platform: "ais",
-                  show_group_count: true,
-                },
                 tts: {
                   platform: "ais",
                 },
@@ -93,13 +88,8 @@ export const aisAudioLovelace: LovelaceConfig = {
                     },
                   ],
                   columns: 2,
-                  list: [],
                 },
                 show_progress: true,
-                speaker_group: {
-                  platform: "ais",
-                  show_group_count: true,
-                },
                 tts: {
                   platform: "ais",
                 },
