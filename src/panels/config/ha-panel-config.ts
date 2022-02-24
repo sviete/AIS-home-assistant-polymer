@@ -26,8 +26,6 @@ import {
   mdiWifi,
   mdiZWave,
 } from "@mdi/js";
-import "@polymer/paper-item/paper-item";
-import "@polymer/paper-item/paper-item-body";
 import { PolymerElement } from "@polymer/polymer";
 import { PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators";
