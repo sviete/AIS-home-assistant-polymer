@@ -6764,7 +6764,7 @@ found at http://polymer.github.io/PATENTS.txt
           title: { speaker_management: "Gruppestyring" },
         },
         pl: {
-          placeholder: { tts: "Wyślij media lub tekst do odtwarzaczy" },
+          placeholder: { tts: "Wyślij media lub tekst do odtwarzacza" },
           label: {
             leave: "Opuść",
             ungroup: "Usuń grupę",
@@ -6854,7 +6854,7 @@ found at http://polymer.github.io/PATENTS.txt
           }
           render() {
             return D`
-      <ha-switch 
+      <ha-switch
         .checked=${this.checked}
         ?disabled=${this.disabled}>
       </ha-switch>
@@ -8328,14 +8328,14 @@ found at http://polymer.github.io/PATENTS.txt
               ? D`
       <div class='card-config'>
         <div class='overall-config'>
-  
+
           <paper-dropdown-menu
             label="Entity (required)"
             .configValue="${"entity"}"
             @value-changed=${this.valueChanged}
             >
             <paper-listbox
-              slot="dropdown-content" 
+              slot="dropdown-content"
               .selected="${this.getMediaPlayerEntities.indexOf(
                 this._config.entity
               )}"
@@ -8387,7 +8387,7 @@ found at http://polymer.github.io/PATENTS.txt
               ></ha-switch>
             </ha-formfield>
           </div>
-          
+
           <div class="side-by-side">
             <paper-dropdown-menu
               label="Artwork"

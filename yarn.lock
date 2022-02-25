@@ -10577,6 +10577,19 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"jssip@npm:^3.8.0":
+  version: 3.9.0
+  resolution: "jssip@npm:3.9.0"
+  dependencies:
+    "@types/debug": ^4.1.5
+    "@types/node": ^14.14.34
+    debug: ^4.3.1
+    events: ^3.3.0
+    sdp-transform: ^2.14.1
+  checksum: 222456cef904eecfc870bba60cf3b5b2da90b8c31a06fc10eb3f9315f891ecd4774317ff6588a3c29416312b83485b031f3e4e7ed5065680893666df0475425f
+  languageName: node
+  linkType: hard
+
 "just-debounce@npm:^1.0.0":
   version: 1.0.0
   resolution: "just-debounce@npm:1.0.0"
