@@ -16,7 +16,8 @@ export type Selector =
   | SelectSelector
   | IconSelector
   | MediaSelector
-  | ThemeSelector;
+  | ThemeSelector
+  | LocationSelector;
 
 export interface EntitySelector {
   entity: {
@@ -168,6 +169,16 @@ export interface ThemeSelector {
 export interface MediaSelector {
   // eslint-disable-next-line @typescript-eslint/ban-types
   media: {};
+}
+
+export interface LocationSelector {
+  location: { radius?: boolean; icon?: string };
+}
+
+export interface LocationSelectorValue {
+  latitude: number;
+  longitude: number;
+  radius?: number;
 }
 
 export interface MediaSelectorValue {
