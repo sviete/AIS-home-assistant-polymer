@@ -194,6 +194,14 @@ class HaConfigDashboard extends LitElement {
                   ></ha-config-navigation>
                 `
               : ""}
+            <ha-card>
+              <ha-config-navigation
+                .hass=${this.hass}
+                .narrow=${this.narrow}
+                .showAdvanced=${this.showAdvanced}
+                .pages=${aisConfigSections.dashboard}
+              ></ha-config-navigation>
+            </ha-card>
             <ha-config-navigation
               .hass=${this.hass}
               .narrow=${this.narrow}
