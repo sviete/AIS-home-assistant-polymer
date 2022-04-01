@@ -33,6 +33,7 @@ import {
   fetchDiagnosticHandler,
   getDeviceDiagnosticsDownloadUrl,
   getConfigEntryDiagnosticsDownloadUrl,
+  DiagnosticInfo,
 } from "../../../data/diagnostics";
 import {
   EntityRegistryEntry,
@@ -222,22 +223,32 @@ export class HaConfigDevicePage extends LitElement {
     }
 
     let links = await Promise.all(
-      this._integrations(device, this.entries).map(async (entry) => {
-        if (entry.state !== "loaded") {
-          return false;
-        }
-        const info = await fetchDiagnosticHandler(this.hass, entry.domain);
+      this._integrations(device, this.entries).map(
+        async (entry): Promise<boolean | { link: string; domain: string }> => {
+          if (entry.state !== "loaded") {
+            return false;
+          }
+          let info: DiagnosticInfo;
+          try {
+            info = await fetchDiagnosticHandler(this.hass, entry.domain);
+          } catch (err: any) {
+            if (err.code === "not_found") {
+              return false;
+            }
+            throw err;
+          }
 
-        if (!info.handlers.device && !info.handlers.config_entry) {
-          return false;
+          if (!info.handlers.device && !info.handlers.config_entry) {
+            return false;
+          }
+          return {
+            link: info.handlers.device
+              ? getDeviceDiagnosticsDownloadUrl(entry.entry_id, this.deviceId)
+              : getConfigEntryDiagnosticsDownloadUrl(entry.entry_id),
+            domain: entry.domain,
+          };
         }
-        return {
-          link: info.handlers.device
-            ? getDeviceDiagnosticsDownloadUrl(entry.entry_id, this.deviceId)
-            : getConfigEntryDiagnosticsDownloadUrl(entry.entry_id),
-          domain: entry.domain,
-        };
-      })
+      )
     );
 
     links = links.filter(Boolean);
@@ -587,7 +598,7 @@ export class HaConfigDevicePage extends LitElement {
                       )}
                       .deviceName=${deviceName}
                       .entities=${entitiesByCategory[category]}
-                      .showDisabled=${device.disabled_by !== null}
+                      .showHidden=${device.disabled_by !== null}
                     >
                     </ha-device-entities-card>
                   `
@@ -930,36 +941,6 @@ export class HaConfigDevicePage extends LitElement {
           .hass=${this.hass}
           .device=${device}
         ></ha-device-actions-mqtt>
-      `);
-    }
-    if (domains.includes("ais_drives_service")) {
-      import(
-        "./device-detail/integration-elements/ais/ha-device-actions-ais-drive"
-      );
-      templates.push(html`
-        <div class="card-actions" slot="actions">
-          <ha-device-actions-ais-drive
-            .hass=${this.hass}
-            .device=${device}
-            .entities=${this.entities}
-          ></ha-device-actions-ais-drive>
-        </div>
-      `);
-    }
-    if (domains.includes("ozw")) {
-      import("./device-detail/integration-elements/ozw/ha-device-actions-ozw");
-      import("./device-detail/integration-elements/ozw/ha-device-info-ozw");
-      deviceInfo.push(html`
-        <ha-device-info-ozw
-          .hass=${this.hass}
-          .device=${device}
-        ></ha-device-info-ozw>
-      `);
-      deviceActions.push(html`
-        <ha-device-actions-ozw
-          .hass=${this.hass}
-          .device=${device}
-        ></ha-device-actions-ozw>
       `);
     }
     if (domains.includes("zha")) {
