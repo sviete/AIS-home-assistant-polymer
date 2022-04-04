@@ -170,6 +170,14 @@ class HaConfigDashboard extends LitElement {
               </ha-card>`
             : ""}
           <ha-card>
+            <ha-config-navigation
+              .hass=${this.hass}
+              .narrow=${this.narrow}
+              .showAdvanced=${this.showAdvanced}
+              .pages=${aisConfigSections.dashboard}
+            ></ha-config-navigation>
+          </ha-card>
+          <ha-card>
             ${this.narrow && canInstallUpdates.length
               ? html`<div class="title">
                   ${this.hass.localize("panel.config")}
@@ -194,15 +202,6 @@ class HaConfigDashboard extends LitElement {
                   ></ha-config-navigation>
                 `
               : ""}
-            <ha-card>
-              <ha-config-navigation
-                .hass=${this.hass}
-                .narrow=${this.narrow}
-                .showAdvanced=${this.showAdvanced}
-                .pages=${aisConfigSections.dashboard}
-              ></ha-config-navigation>
-              <br />
-            </ha-card>
             <ha-config-navigation
               .hass=${this.hass}
               .narrow=${this.narrow}
