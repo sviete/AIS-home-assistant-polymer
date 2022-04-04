@@ -7,7 +7,6 @@ import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 import "../../../components/ha-circular-progress";
 import "./ha-config-ais-dom-dashboard";
-import "../../../components/paper-time-input";
 import "../../../components/ha-button-menu";
 import "@material/mwc-list/mwc-list-item";
 import {
