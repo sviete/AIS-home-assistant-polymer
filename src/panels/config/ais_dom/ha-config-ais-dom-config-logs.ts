@@ -384,8 +384,8 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                           Wybór dysku do zapisu bazy danych: <br />
                           <ha-icon icon="mdi:usb-flash-drive"></ha-icon>
                           <mwc-select
-                            label-float="Silnik bazy danych"
-                            label="Silnik bazy danych"
+                            label-float="Dysk wymienny"
+                            label="Dysk wymienny"
                             .value=${this.dbDrive}
                             @selected=${this.dbDriveChanged}
                           >
@@ -595,8 +595,8 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                   @iron-select=${this.logDriveChanged}
                 > -->
               <mwc-select
-                label-float="Wybrany dysk"
-                label="Wybrany dysk"
+                label-float="Dysk wymienny"
+                label="Dysk wymienny"
                 .value=${this.logDrive}
                 @selected=${this.logDriveChanged}
               >
