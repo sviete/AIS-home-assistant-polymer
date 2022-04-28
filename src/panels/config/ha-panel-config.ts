@@ -53,6 +53,34 @@ declare global {
 export const configSections: { [name: string]: PageNavigation[] } = {
   dashboard: [
     {
+      path: "/config/ais_dom",
+      translationKey: "ais_dom",
+      iconPath: mdiMonitorSpeaker,
+      iconColor: "#E48629",
+      core: true,
+    },
+    {
+      path: "/config/ais_dom_devices",
+      translationKey: "ais_dom_devices",
+      iconPath: mdiWifi,
+      iconColor: "#ff5722",
+      core: true,
+    },
+    {
+      path: "/config/ais_dom_zigbee",
+      translationKey: "ais_dom_zigbee",
+      iconPath: mdiZigbee,
+      iconColor: "#ffd400",
+      core: true,
+    },
+    {
+      path: "/config/ais_dom_zwave",
+      translationKey: "ais_dom_zwave",
+      iconPath: mdiZWave,
+      iconColor: "#00bcd4",
+      core: true,
+    },
+    {
       path: "/config/integrations",
       translationKey: "devices",
       iconPath: mdiDevices,
@@ -340,43 +368,6 @@ export const configSections: { [name: string]: PageNavigation[] } = {
   ],
 };
 
-export const aisConfigSections: { [name: string]: PageNavigation[] } = {
-  dashboard: [
-    {
-      component: "ais_dom",
-      path: "/config/ais_dom",
-      translationKey: "ais_dom",
-      iconPath: mdiMonitorSpeaker,
-      iconColor: "#E48629",
-      core: true,
-    },
-    {
-      component: "ais_dom_devices",
-      path: "/config/ais_dom_devices",
-      translationKey: "ais_dom_devices",
-      iconPath: mdiWifi,
-      iconColor: "#ff5722",
-      core: true,
-    },
-    {
-      component: "ais_dom_zigbee",
-      path: "/config/ais_dom_zigbee",
-      translationKey: "ais_dom_zigbee",
-      iconPath: mdiZigbee,
-      iconColor: "#ffd400",
-      core: true,
-    },
-    {
-      component: "ais_dom_zwave",
-      path: "/config/ais_dom_zwave",
-      translationKey: "ais_dom_zwave",
-      iconPath: mdiZWave,
-      iconColor: "#00bcd4",
-      core: true,
-    },
-  ],
-};
-
 @customElement("ha-panel-config")
 class HaPanelConfig extends HassRouterPage {
   @property({ attribute: false }) public hass!: HomeAssistant;
@@ -415,10 +406,6 @@ class HaPanelConfig extends HassRouterPage {
       cloud: {
         tag: "ha-config-cloud",
         load: () => import("./cloud/ha-config-cloud"),
-      },
-      core: {
-        tag: "ha-config-core",
-        load: () => import("./core/ha-config-core"),
       },
       ais_dom: {
         tag: "ha-config-ais-dom-dashboard",

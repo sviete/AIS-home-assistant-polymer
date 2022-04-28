@@ -35,7 +35,7 @@ import { haStyle } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
 import { documentationUrl } from "../../../util/documentation-url";
 import "../ha-config-section";
-import { configSections, aisConfigSections } from "../ha-panel-config";
+import { configSections } from "../ha-panel-config";
 import "./ha-config-navigation";
 import "./ha-config-updates";
 

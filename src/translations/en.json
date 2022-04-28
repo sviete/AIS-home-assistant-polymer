@@ -1112,56 +1112,56 @@
             "introduction": "Here it is possible to configure your AIS Home Gateway. Not everything is possible to configure from the UI yet, but we're working on it."
           },
           "ais_dom": {
-            "title": " AIS Home Gateway Settings",
-            "description": "Manage your IoT and Audio gateway"
+            "main": " AIS Home Gateway Settings",
+            "secondary": "Manage your IoT and Audio gateway"
           },
           "ais_dom_devices": {
-            "title": "Configuration of Wifi devices",
-            "description": "Manage your devices with AIS dom software"
+            "main": "Configuration of Wifi devices",
+            "secondary": "Manage your devices with AIS dom software"
           },
           "ais_dom_zigbee": {
-            "title": "Configuration of AIS Zigbee",
-            "description": "Manage your zigbee devices"
+            "main": "Configuration of AIS Zigbee",
+            "secondary": "Manage your zigbee devices"
           },
           "ais_dom_zwave": {
-            "title": "Configuration of AIS ZWave",
-            "description": "Manage your ZWave devices"
+            "main": "Configuration of AIS ZWave",
+            "secondary": "Manage your ZWave devices"
           },
           "ais_dom_config_update": {
-            "title": "Gateway software",
-            "description": "System update, backup and synchronization with the Integrator Portal"
+            "main": "Gateway software",
+            "secondary": "System update, backup and synchronization with the Integrator Portal"
           },
           "ais_dom_config_wifi": {
-            "title": "WiFi network",
-            "description": "WiFi connection settings"
+            "main": "WiFi network",
+            "secondary": "WiFi connection settings"
           },
           "ais_dom_config_display": {
-            "title": "Screen",
-            "description": "Screen Settings"
+            "main": "Screen",
+            "secondary": "Screen Settings"
           },
           "ais_dom_config_tts": {
-            "title": "The assistant voice",
-            "description": "Voice assistant settings"
+            "main": "The assistant voice",
+            "secondary": "Voice assistant settings"
           },
           "ais_dom_config_night": {
-            "title": "Night mode",
-            "description": "Set the hours when the assistant should be quieter"
+            "main": "Night mode",
+            "secondary": "Set the hours when the assistant should be quieter"
           },
           "ais_dom_config_logs": {
-            "title": "Logs and recorder",
-            "description": "Configuration of logs and DB recorder"
+            "main": "Logs and recorder",
+            "secondary": "Configuration of logs and DB recorder"
           },
           "ais_dom_config_remote": {
-            "title": "Remote control",
-            "description": "Configuration of remote access to the gateway"
+            "main": "Remote control",
+            "secondary": "Configuration of remote access to the gateway"
           },
           "ais_dom_config_usb": {
-            "title": "USB devices",
-            "description": "Support for USB devices"
+            "main": "USB devices",
+            "secondary": "Support for USB devices"
           },
           "ais_dom_config_power": {
-            "title": "Stop the Gate",
-            "description": "Restart or turn off the gate"
+            "main": "Stop the Gate",
+            "secondary": "Restart or turn off the gate"
           },
           "devices": {
             "main": "Devices & Services",
