@@ -32,9 +32,11 @@ import "./types/ha-automation-action-condition";
 import "./types/ha-automation-action-delay";
 import "./types/ha-automation-action-device_id";
 import "./types/ha-automation-action-event";
+import "./types/ha-automation-action-if";
 import "./types/ha-automation-action-play_media";
 import "./types/ha-automation-action-repeat";
 import "./types/ha-automation-action-service";
+import "./types/ha-automation-action-stop";
 import "./types/ha-automation-action-wait_for_trigger";
 import "./types/ha-automation-action-wait_template";
 
@@ -49,7 +51,9 @@ const OPTIONS = [
   "wait_for_trigger",
   "repeat",
   "choose",
+  "if",
   "device_id",
+  "stop",
 ];
 
 const getType = (action: Action | undefined) => {
@@ -410,7 +414,7 @@ export default class HaAutomationActionRow extends LitElement {
           z-index: 3;
           --mdc-theme-text-primary-on-background: var(--primary-text-color);
         }
-        .rtl .card-menu {
+        :host-context([style*="direction: rtl;"]) .card-menu {
           right: initial;
           left: 16px;
         }

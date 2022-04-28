@@ -38,7 +38,7 @@ class ConfigAnalytics extends LitElement {
       : undefined;
 
     return html`
-      <ha-card header="Analytics">
+      <ha-card outlined>
         <div class="card-content">
           ${error ? html`<div class="error">${error}</div>` : ""}
           <p>
@@ -58,9 +58,9 @@ class ConfigAnalytics extends LitElement {
               "ui.panel.config.core.section.core.core_config.save_button"
             )}
           </mwc-button>
-          ${analyticsLearnMore(this.hass)}
         </div>
       </ha-card>
+      <div class="footer">${analyticsLearnMore(this.hass)}</div>
     `;
   }
 
@@ -116,6 +116,10 @@ class ConfigAnalytics extends LitElement {
           flex-direction: row-reverse;
           justify-content: space-between;
           align-items: center;
+        }
+        .footer {
+          padding: 32px 0 16px;
+          text-align: center;
         }
       `, // row-reverse so we tab first to "save"
     ];
