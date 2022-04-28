@@ -9,8 +9,8 @@ import {
 import { customElement, property, state } from "lit/decorators";
 import checkValidDate from "../../../common/datetime/check_valid_date";
 import { formatNumber } from "../../../common/number/format_number";
+import { formatAttributeValue } from "../../../data/entity_attributes";
 import { HomeAssistant } from "../../../types";
-import { formatAttributeValue } from "../../../util/hass-attributes-util";
 import { hasConfigOrEntityChanged } from "../common/has-changed";
 import "../components/hui-generic-entity-row";
 import "../components/hui-timestamp-display";
@@ -63,21 +63,20 @@ class HuiAttributeRow extends LitElement implements LovelaceRow {
 
     return html`
       <hui-generic-entity-row .hass=${this.hass} .config=${this._config}>
-        <div>
-          ${this._config.prefix}
-          ${this._config.format && checkValidDate(date)
-            ? html` <hui-timestamp-display
-                .hass=${this.hass}
-                .ts=${date}
-                .format=${this._config.format}
-              ></hui-timestamp-display>`
-            : typeof attribute === "number"
-            ? formatNumber(attribute, this.hass.locale)
-            : attribute !== undefined
-            ? formatAttributeValue(this.hass, attribute)
-            : "-"}
-          ${this._config.suffix}
-        </div>
+        ${this._config.prefix}
+        ${this._config.format && checkValidDate(date)
+          ? html` <hui-timestamp-display
+              .hass=${this.hass}
+              .ts=${date}
+              .format=${this._config.format}
+              capitalize
+            ></hui-timestamp-display>`
+          : typeof attribute === "number"
+          ? formatNumber(attribute, this.hass.locale)
+          : attribute !== undefined
+          ? formatAttributeValue(this.hass, attribute)
+          : "—"}
+        ${this._config.suffix}
       </hui-generic-entity-row>
     `;
   }

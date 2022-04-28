@@ -1,10 +1,9 @@
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
-import {property} from 'lit/decorators';
-import "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { property } from "lit/decorators";
 import "@polymer/paper-input/paper-input";
 import "@material/mwc-button";
 
-import "../../../../components/dialog/ha-paper-dialog";
+import "../../../../components/ha-dialog";
 import "../../../../components/entity/ha-entities-picker";
 import "../../../../components/user/ha-user-picker";
 import { PolymerChangedEvent } from "../../../../polymer-types";
@@ -22,7 +21,6 @@ class DialogPersonDetail extends LitElement {
 
   @property() private _submitting = false;
 
-
   public async showDialog(): Promise<void> {
     this._name = "";
     this._userId = undefined;
@@ -33,34 +31,28 @@ class DialogPersonDetail extends LitElement {
   protected render(): TemplateResult | void {
     const nameInvalid = this._name.trim() === "";
     return html`
-      <ha-paper-dialog with-backdrop opened @opened-changed="true">
-        <h2>
-          Nowy przycisk
-        </h2>
-        <paper-dialog-scrollable>
+      <ha-dialog with-backdrop opened @opened-changed="true">
+        <h2>Nowy przycisk</h2>
+        <ha-dialog>
           <div class="form">
             <paper-input
               .value=${this._name}
               @value-changed=${this._nameChanged}
-              label="${this.hass!.localize(
-                "ui.panel.config.person.detail.name"
-              )}"
-              error-message="${this.hass!.localize(
+              label=${this.hass!.localize("ui.panel.config.person.detail.name")}
+              error-message=${this.hass!.localize(
                 "ui.panel.config.person.detail.name_error_msg"
-              )}"
+              )}
               .invalid=${nameInvalid}
             ></paper-input>
             <ha-user-picker
-              label="${this.hass!.localize(
+              label=${this.hass!.localize(
                 "ui.panel.config.person.detail.linked_user"
-              )}"
+              )}
               .hass=${this.hass}
               .value=${this._userId}
               @value-changed=${this._userChanged}
             ></ha-user-picker>
-            <p>
-              22222
-            </p>
+            <p>22222</p>
             <ha-entities-picker
               .hass=${this.hass}
               .value=${this._deviceTrackers}
@@ -75,19 +67,18 @@ class DialogPersonDetail extends LitElement {
             >
             </ha-entities-picker>
           </div>
-        </paper-dialog-scrollable>
+        </ha-dialog>
         <div class="paper-dialog-buttons">
           <mwc-button
-            @click="${this._updateEntry}"
+            @click=${this._updateEntry}
             .disabled=${nameInvalid || this._submitting}
           >
             Dodaj
           </mwc-button>
         </div>
-      </ha-paper-dialog>
+      </ha-dialog>
     `;
   }
-
 
   private _nameChanged(ev: PolymerChangedEvent<string>) {
     this._name = ev.detail.value;

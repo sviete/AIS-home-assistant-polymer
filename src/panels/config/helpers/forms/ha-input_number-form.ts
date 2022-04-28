@@ -1,13 +1,14 @@
-import "@polymer/paper-input/paper-input";
-import "@polymer/paper-radio-button/paper-radio-button";
-import "@polymer/paper-radio-group/paper-radio-group";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { fireEvent } from "../../../../common/dom/fire_event";
-import "../../../../components/ha-icon-input";
+import "../../../../components/ha-icon-picker";
+import "../../../../components/ha-textfield";
 import { InputNumber } from "../../../../data/input_number";
 import { haStyle } from "../../../../resources/styles";
 import { HomeAssistant } from "../../../../types";
+import "../../../../components/ha-formfield";
+import "../../../../components/ha-radio";
+import type { HaRadio } from "../../../../components/ha-radio";
 
 @customElement("ha-input_number-form")
 class HaInputNumberForm extends LitElement {
@@ -72,10 +73,10 @@ class HaInputNumberForm extends LitElement {
 
     return html`
       <div class="form">
-        <paper-input
+        <ha-textfield
           .value=${this._name}
           .configValue=${"name"}
-          @value-changed=${this._valueChanged}
+          @input=${this._valueChanged}
           .label=${this.hass!.localize(
             "ui.dialogs.helper_settings.generic.name"
           )}
@@ -84,73 +85,82 @@ class HaInputNumberForm extends LitElement {
           )}
           .invalid=${nameInvalid}
           dialogInitialFocus
-        ></paper-input>
-        <ha-icon-input
+        ></ha-textfield>
+        <ha-icon-picker
           .value=${this._icon}
           .configValue=${"icon"}
           @value-changed=${this._valueChanged}
           .label=${this.hass!.localize(
             "ui.dialogs.helper_settings.generic.icon"
           )}
-        ></ha-icon-input>
-        <paper-input
+        ></ha-icon-picker>
+        <ha-textfield
           .value=${this._min}
           .configValue=${"min"}
           type="number"
-          @value-changed=${this._valueChanged}
+          @input=${this._valueChanged}
           .label=${this.hass!.localize(
             "ui.dialogs.helper_settings.input_number.min"
           )}
-        ></paper-input>
-        <paper-input
+        ></ha-textfield>
+        <ha-textfield
           .value=${this._max}
           .configValue=${"max"}
           type="number"
-          @value-changed=${this._valueChanged}
+          @input=${this._valueChanged}
           .label=${this.hass!.localize(
             "ui.dialogs.helper_settings.input_number.max"
           )}
-        ></paper-input>
+        ></ha-textfield>
         ${this.hass.userData?.showAdvanced
           ? html`
               <div class="layout horizontal center justified">
                 ${this.hass.localize(
                   "ui.dialogs.helper_settings.input_number.mode"
                 )}
-                <paper-radio-group
-                  .selected=${this._mode}
-                  @selected-changed=${this._modeChanged}
+                <ha-formfield
+                  .label=${this.hass.localize(
+                    "ui.dialogs.helper_settings.input_number.slider"
+                  )}
                 >
-                  <paper-radio-button name="slider">
-                    ${this.hass.localize(
-                      "ui.dialogs.helper_settings.input_number.slider"
-                    )}
-                  </paper-radio-button>
-                  <paper-radio-button name="box">
-                    ${this.hass.localize(
-                      "ui.dialogs.helper_settings.input_number.box"
-                    )}
-                  </paper-radio-button>
-                </paper-radio-group>
+                  <ha-radio
+                    name="mode"
+                    value="slider"
+                    .checked=${this._mode === "slider"}
+                    @change=${this._modeChanged}
+                  ></ha-radio>
+                </ha-formfield>
+                <ha-formfield
+                  .label=${this.hass.localize(
+                    "ui.dialogs.helper_settings.input_number.box"
+                  )}
+                >
+                  <ha-radio
+                    name="mode"
+                    value="box"
+                    .checked=${this._mode === "box"}
+                    @change=${this._modeChanged}
+                  ></ha-radio>
+                </ha-formfield>
               </div>
-              <paper-input
+              <ha-textfield
                 .value=${this._step}
                 .configValue=${"step"}
                 type="number"
-                @value-changed=${this._valueChanged}
+                @input=${this._valueChanged}
                 .label=${this.hass!.localize(
                   "ui.dialogs.helper_settings.input_number.step"
                 )}
-              ></paper-input>
+              ></ha-textfield>
 
-              <paper-input
-                .value=${this._unit_of_measurement}
+              <ha-textfield
+                .value=${this._unit_of_measurement || ""}
                 .configValue=${"unit_of_measurement"}
-                @value-changed=${this._valueChanged}
+                @input=${this._valueChanged}
                 .label=${this.hass!.localize(
                   "ui.dialogs.helper_settings.input_number.unit_of_measurement"
                 )}
-              ></paper-input>
+              ></ha-textfield>
             `
           : ""}
       </div>
@@ -159,7 +169,7 @@ class HaInputNumberForm extends LitElement {
 
   private _modeChanged(ev: CustomEvent) {
     fireEvent(this, "value-changed", {
-      value: { ...this._item, mode: ev.detail.value },
+      value: { ...this._item, mode: (ev.target as HaRadio).value },
     });
   }
 
@@ -171,7 +181,10 @@ class HaInputNumberForm extends LitElement {
     const target = ev.target as any;
     const configValue = target.configValue;
     const value =
-      target.type === "number" ? Number(ev.detail.value) : ev.detail.value;
+      target.type === "number"
+        ? Number(target.value)
+        : ev.detail?.value || target.value;
+
     if (this[`_${configValue}`] === value) {
       return;
     }
@@ -179,7 +192,7 @@ class HaInputNumberForm extends LitElement {
     if (value === undefined || value === "") {
       delete newValue[configValue];
     } else {
-      newValue[configValue] = ev.detail.value;
+      newValue[configValue] = value;
     }
     fireEvent(this, "value-changed", {
       value: newValue,
@@ -192,6 +205,11 @@ class HaInputNumberForm extends LitElement {
       css`
         .form {
           color: var(--primary-text-color);
+        }
+
+        ha-textfield {
+          display: block;
+          margin-bottom: 8px;
         }
       `,
     ];

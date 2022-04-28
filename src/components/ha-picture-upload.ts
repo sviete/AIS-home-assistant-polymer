@@ -1,6 +1,4 @@
-import "@material/mwc-icon-button/mwc-icon-button";
 import { mdiImagePlus } from "@mdi/js";
-import "@polymer/paper-input/paper-input-container";
 import { html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { fireEvent } from "../common/dom/fire_event";
@@ -13,7 +11,6 @@ import {
 import { HomeAssistant } from "../types";
 import "./ha-circular-progress";
 import "./ha-file-upload";
-import "./ha-svg-icon";
 
 @customElement("ha-picture-upload")
 export class HaPictureUpload extends LitElement {
@@ -36,12 +33,14 @@ export class HaPictureUpload extends LitElement {
   public render(): TemplateResult {
     return html`
       <ha-file-upload
+        .hass=${this.hass}
         .icon=${mdiImagePlus}
         .label=${this.label ||
         this.hass.localize("ui.components.picture-upload.label")}
         .uploading=${this._uploading}
         .value=${this.value ? html`<img .src=${this.value} />` : ""}
         @file-picked=${this._handleFilePicked}
+        @change=${this._handleFileCleared}
         accept="image/png, image/jpeg, image/gif"
       ></ha-file-upload>
     `;
@@ -55,6 +54,10 @@ export class HaPictureUpload extends LitElement {
     } else {
       this._uploadFile(file);
     }
+  }
+
+  private async _handleFileCleared() {
+    this.value = null;
   }
 
   private async _cropFile(file: File) {

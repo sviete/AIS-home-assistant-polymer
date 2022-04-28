@@ -25,7 +25,7 @@ The temperature is {{ my_test_json.temperature }} {{ my_test_json.unit }}.
 {% if is_state("sun.sun", "above_horizon") -%}
   The sun rose {{ relative_time(states.sun.sun.last_changed) }} ago.
 {%- else -%}
-  The sun will rise at {{ as_timestamp(strptime(state_attr("sun.sun", "next_rising"), "")) | timestamp_local }}.
+  The sun will rise at {{ as_timestamp(state_attr("sun.sun", "next_rising")) | timestamp_local }}.
 {%- endif %}
 
 For loop example getting entity values in the weather domain:
@@ -128,10 +128,13 @@ class HaPanelDevTemplate extends LitElement {
           </p>
           <ha-code-editor
             mode="jinja2"
+            .hass=${this.hass}
             .value=${this._template}
             .error=${this._error}
             autofocus
+            autocomplete-entities
             @value-changed=${this._templateChanged}
+            dir="ltr"
           ></ha-code-editor>
           <mwc-button @click=${this._restoreDemo}>
             ${this.hass.localize(
@@ -285,6 +288,12 @@ class HaPanelDevTemplate extends LitElement {
 
         .rendered.error {
           color: var(--error-color);
+        }
+
+        @media all and (max-width: 870px) {
+          .render-pane {
+            max-width: 100%;
+          }
         }
       `,
     ];

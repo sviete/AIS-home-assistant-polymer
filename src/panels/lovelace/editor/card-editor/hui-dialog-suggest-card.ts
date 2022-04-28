@@ -1,9 +1,7 @@
-import "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
 import deepFreeze from "deep-freeze";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, query, state } from "lit/decorators";
 import { fireEvent } from "../../../../common/dom/fire_event";
-import "../../../../components/dialog/ha-paper-dialog";
 import "../../../../components/ha-yaml-editor";
 import type { HaYamlEditor } from "../../../../components/ha-yaml-editor";
 import { LovelaceCardConfig } from "../../../../data/lovelace";
@@ -37,8 +35,9 @@ export class HuiDialogSuggestCard extends LitElement {
           entityId,
           this.hass.states[entityId],
         ]),
-        {},
-        true
+        {
+          title: params.cardTitle,
+        }
       );
     if (!Object.isFrozen(this._cardConfig)) {
       this._cardConfig = deepFreeze(this._cardConfig);
@@ -86,13 +85,18 @@ export class HuiDialogSuggestCard extends LitElement {
             ? html`
                 <div class="editor">
                   <ha-yaml-editor
+                    .hass=${this.hass}
                     .defaultValue=${this._cardConfig}
                   ></ha-yaml-editor>
                 </div>
               `
             : ""}
         </div>
-        <mwc-button slot="secondaryAction" @click=${this.closeDialog}>
+        <mwc-button
+          slot="secondaryAction"
+          @click=${this.closeDialog}
+          dialogInitialFocus
+        >
           ${this._params.yaml
             ? this.hass!.localize("ui.common.close")
             : this.hass!.localize("ui.common.cancel")}

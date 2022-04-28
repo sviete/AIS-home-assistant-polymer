@@ -1,60 +1,96 @@
-import {
-  externalForwardConnectionEvents,
-  externalForwardHaptics,
-} from "./external_events_forwarder";
-
 const CALLBACK_EXTERNAL_BUS = "externalBus";
 
 interface CommandInFlight {
   resolve: (data: any) => void;
-  reject: (err: ExternalError) => void;
+  reject: (err: EMError) => void;
 }
 
-export interface InternalMessage {
+export interface EMMessage {
   id?: number;
   type: string;
   payload?: unknown;
 }
 
-interface ExternalError {
+interface EMError {
   code: string;
   message: string;
 }
 
-interface ExternalMessageResult {
+interface EMMessageResultSuccess {
   id: number;
   type: "result";
   success: true;
   result: unknown;
 }
 
-interface ExternalMessageResultError {
+interface EMMessageResultError {
   id: number;
   type: "result";
   success: false;
-  error: ExternalError;
+  error: EMError;
 }
 
-type ExternalMessage = ExternalMessageResult | ExternalMessageResultError;
+interface EMExternalMessageRestart {
+  id: number;
+  type: "command";
+  command: "restart";
+}
+
+interface EMExternMessageShowNotifications {
+  id: number;
+  type: "command";
+  command: "notifications/show";
+}
+
+export type EMExternalMessageCommands =
+  | EMExternalMessageRestart
+  | EMExternMessageShowNotifications;
+
+type ExternalMessage =
+  | EMMessageResultSuccess
+  | EMMessageResultError
+  | EMExternalMessageCommands;
+
+type ExternalMessageHandler = (msg: EMExternalMessageCommands) => boolean;
+
+export interface ExternalConfig {
+  hasSettingsScreen: boolean;
+  hasSidebar: boolean;
+  canWriteTag: boolean;
+  hasExoPlayer: boolean;
+}
 
 export class ExternalMessaging {
-  public commands: { [msgId: number]: CommandInFlight } = {};
+  public config!: ExternalConfig;
 
-  public cache: Record<string, any> = {};
+  public commands: { [msgId: number]: CommandInFlight } = {};
 
   public msgId = 0;
 
-  public attach() {
-    externalForwardConnectionEvents(this);
-    externalForwardHaptics(this);
+  private _commandHandler?: ExternalMessageHandler;
+
+  public async attach() {
     window[CALLBACK_EXTERNAL_BUS] = (msg) => this.receiveMessage(msg);
+    window.addEventListener("connection-status", (ev) =>
+      this.fireMessage({
+        type: "connection-status",
+        payload: { event: ev.detail },
+      })
+    );
+    this.config = await this.sendMessage<ExternalConfig>({
+      type: "config/get",
+    });
+  }
+
+  public addCommandHandler(handler: ExternalMessageHandler) {
+    this._commandHandler = handler;
   }
 
   /**
    * Send message to external app that expects a response.
    * @param msg message to send
    */
-  public sendMessage<T>(msg: InternalMessage): Promise<T> {
+  public sendMessage<T>(msg: EMMessage): Promise<T> {
     const msgId = ++this.msgId;
     msg.id = msgId;
 
@@ -69,7 +105,9 @@ export class ExternalMessaging {
    * Send message to external app without expecting a response.
    * @param msg message to send
    */
-  public fireMessage(msg: InternalMessage) {
+  public fireMessage(
+    msg: EMMessage | EMMessageResultSuccess | EMMessageResultError
+  ) {
     if (!msg.id) {
       msg.id = ++this.msgId;
     }
@@ -80,6 +118,32 @@ export class ExternalMessaging {
     if (__DEV__) {
       // eslint-disable-next-line no-console
       console.log("Receiving message from external app", msg);
+    }
+
+    if (msg.type === "command") {
+      if (!this._commandHandler || !this._commandHandler(msg)) {
+        let code: string;
+        let message: string;
+        if (this._commandHandler) {
+          code = "not_ready";
+          message = "Command handler not ready";
+        } else {
+          code = "unknown_command";
+          message = `Unknown command ${msg.command}`;
+        }
+        // eslint-disable-next-line no-console
+        console.warn(message, msg);
+        this.fireMessage({
+          id: msg.id,
+          type: "result",
+          success: false,
+          error: {
+            code,
+            message,
+          },
+        });
+      }
+      return;
     }
 
     const pendingCmd = this.commands[msg.id];
@@ -99,7 +163,7 @@ export class ExternalMessaging {
     }
   }
 
-  protected _sendExternal(msg: InternalMessage) {
+  protected _sendExternal(msg: EMMessage) {
     if (__DEV__) {
       // eslint-disable-next-line no-console
       console.log("Sending message to external app", msg);

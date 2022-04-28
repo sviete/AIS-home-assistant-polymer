@@ -1,5 +1,4 @@
 import "@material/mwc-button/mwc-button";
-import "@material/mwc-icon-button";
 import "@material/mwc-list/mwc-list";
 import "@material/mwc-list/mwc-list-item";
 import "@material/mwc-tab";
@@ -16,9 +15,9 @@ import "../../../../src/components/ha-dialog";
 import "../../../../src/components/ha-expansion-panel";
 import "../../../../src/components/ha-formfield";
 import "../../../../src/components/ha-header-bar";
+import "../../../../src/components/ha-icon-button";
 import "../../../../src/components/ha-radio";
 import "../../../../src/components/ha-related-items";
-import "../../../../src/components/ha-svg-icon";
 import { extractApiErrorMessage } from "../../../../src/data/hassio/common";
 import {
   AccessPoints,
@@ -95,7 +94,7 @@ export class DialogHassioNetwork
         open
         scrimClickAction
         escapeKeyAction
-        .heading=${true}
+        .heading=${this.supervisor.localize("dialog.network.title")}
         hideActions
         @closed=${this.closeDialog}
       >
@@ -104,9 +103,12 @@ export class DialogHassioNetwork
             <span slot="title">
               ${this.supervisor.localize("dialog.network.title")}
             </span>
-            <mwc-icon-button slot="actionItems" dialogAction="cancel">
-              <ha-svg-icon .path=${mdiClose}></ha-svg-icon>
-            </mwc-icon-button>
+            <ha-icon-button
+              .label=${this.supervisor.localize("common.close")}
+              .path=${mdiClose}
+              slot="actionItems"
+              dialogAction="cancel"
+            ></ha-icon-button>
           </ha-header-bar>
           ${this._interfaces.length > 1
             ? html`<mwc-tab-bar
@@ -117,6 +119,7 @@ export class DialogHassioNetwork
                     html`<mwc-tab
                       .id=${device.interface}
                       .label=${device.interface}
+                      dialogInitialFocus
                     >
                     </mwc-tab>`
                 )}
@@ -313,6 +316,7 @@ export class DialogHassioNetwork
               value="auto"
               name="${version}method"
               .checked=${this._interface![version]?.method === "auto"}
+              dialogInitialFocus
             >
             </ha-radio>
           </ha-formfield>

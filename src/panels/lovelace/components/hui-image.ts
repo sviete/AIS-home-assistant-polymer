@@ -106,6 +106,9 @@ export class HuiImage extends LitElement {
       } else if (!this.hass!.connected) {
         this._stopUpdateCameraInterval();
         this._stopIntersectionObserver();
+        this._loadState = LoadState.Loading;
+        this._cameraImageSrc = undefined;
+        this._loadedImageSrc = undefined;
       }
     }
     if (changedProps.has("_imageVisible")) {
@@ -192,7 +195,7 @@ export class HuiImage extends LitElement {
             : undefined,
           backgroundImage:
             useRatio && this._loadedImageSrc
-              ? `url(${this._loadedImageSrc})`
+              ? `url("${this._loadedImageSrc}")`
               : undefined,
           filter:
             this._loadState === LoadState.Loaded || this.cameraView === "live"

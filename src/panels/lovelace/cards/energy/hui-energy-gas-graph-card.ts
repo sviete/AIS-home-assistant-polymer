@@ -26,7 +26,7 @@ import {
   rgb2hex,
   rgb2lab,
 } from "../../../../common/color/convert-color";
-import { labDarken } from "../../../../common/color/lab";
+import { labBrighten, labDarken } from "../../../../common/color/lab";
 import {
   EnergyData,
   getEnergyDataCollection,
@@ -41,10 +41,6 @@ import {
 } from "../../../../common/number/format_number";
 import { SubscribeMixin } from "../../../../mixins/subscribe-mixin";
 import { FrontendLocaleData } from "../../../../data/translation";
-import {
-  reduceSumStatisticsByMonth,
-  reduceSumStatisticsByDay,
-} from "../../../../data/history";
 import { formatTime } from "../../../../common/datetime/format_time";
 
 @customElement("hui-energy-gas-graph-card")
@@ -65,6 +61,8 @@ export class HuiEnergyGasGraphCard
   @state() private _end = endOfToday();
 
   @state() private _unit?: string;
+
+  protected hassSubscribeRequiredHostProps = ["_config"];
 
   public hassSubscribe(): UnsubscribeFunc[] {
     return [
@@ -110,8 +108,10 @@ export class HuiEnergyGasGraphCard
           ${!this._chartData.datasets.length
             ? html`<div class="no-data">
                 ${isToday(this._start)
-                  ? "There is no data to show. It can take up to 2 hours for new data to arrive after you configure your energy dashboard."
-                  : "There is no data for this period."}
+                  ? this.hass.localize("ui.panel.lovelace.cards.energy.no_data")
+                  : this.hass.localize(
+                      "ui.panel.lovelace.cards.energy.no_data_period"
+                    )}
               </div>`
             : ""}
         </div>
@@ -173,6 +173,7 @@ export class HuiEnergyGasGraphCard
             offset: true,
           },
           y: {
+            stacked: true,
             type: "linear",
             title: {
               display: true,
@@ -192,7 +193,7 @@ export class HuiEnergyGasGraphCard
                   return datasets[0].label;
                 }
                 const date = new Date(datasets[0].parsed.x);
-                return `${formatTime(date, locale)} - ${formatTime(
+                return `${formatTime(date, locale)} – ${formatTime(
                   addHours(date, 1),
                   locale
                 )}`;
@@ -244,19 +245,19 @@ export class HuiEnergyGasGraphCard
       .getPropertyValue("--energy-gas-color")
       .trim();
 
-    const dayDifference = differenceInDays(
-      energyData.end || new Date(),
-      energyData.start
-    );
-
     gasSources.forEach((source, idx) => {
       const data: ChartDataset<"bar" | "line">[] = [];
       const entity = this.hass.states[source.stat_energy_from];
 
-      const borderColor =
+      const modifiedColor =
         idx > 0
-          ? rgb2hex(lab2rgb(labDarken(rgb2lab(hex2rgb(gasColor)), idx)))
-          : gasColor;
+          ? this.hass.themes.darkMode
+            ? labBrighten(rgb2lab(hex2rgb(gasColor)), idx)
+            : labDarken(rgb2lab(hex2rgb(gasColor)), idx)
+          : undefined;
+      const borderColor = modifiedColor
+        ? rgb2hex(lab2rgb(modifiedColor))
+        : gasColor;
 
       let prevValue: number | null = null;
       let prevStart: string | null = null;
@@ -265,16 +266,7 @@ export class HuiEnergyGasGraphCard
 
       // Process gas consumption data.
       if (source.stat_energy_from in energyData.stats) {
-        const stats =
-          dayDifference > 35
-            ? reduceSumStatisticsByMonth(
-                energyData.stats[source.stat_energy_from]
-              )
-            : dayDifference > 2
-            ? reduceSumStatisticsByDay(
-                energyData.stats[source.stat_energy_from]
-              )
-            : energyData.stats[source.stat_energy_from];
+        const stats = energyData.stats[source.stat_energy_from];
 
         for (const point of stats) {
           if (point.sum === null) {
@@ -304,6 +296,7 @@ export class HuiEnergyGasGraphCard
           borderColor,
           backgroundColor: borderColor + "7F",
           data: gasConsumptionData,
+          stack: "gas",
         });
       }
 

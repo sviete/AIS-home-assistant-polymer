@@ -37,7 +37,10 @@ class HassioMarkdownDialog extends LitElement {
         @closed=${this.closeDialog}
         .heading=${createCloseHeading(this.hass, this.title)}
       >
-        <ha-markdown .content=${this.content || ""}></ha-markdown>
+        <ha-markdown
+          .content=${this.content || ""}
+          dialogInitialFocus
+        ></ha-markdown>
       </ha-dialog>
     `;
   }
@@ -47,11 +50,6 @@ class HassioMarkdownDialog extends LitElement {
       haStyleDialog,
       hassioStyle,
       css`
-        ha-paper-dialog {
-          min-width: 350px;
-          font-size: 14px;
-          border-radius: 2px;
-        }
         app-toolbar {
           margin: 0;
           padding: 0 16px;
@@ -62,19 +60,6 @@ class HassioMarkdownDialog extends LitElement {
           margin-left: 16px;
         }
         @media all and (max-width: 450px), all and (max-height: 500px) {
-          ha-paper-dialog {
-            max-height: 100%;
-          }
-          ha-paper-dialog::before {
-            content: "";
-            position: fixed;
-            z-index: -1;
-            top: 0px;
-            left: 0px;
-            right: 0px;
-            bottom: 0px;
-            background-color: inherit;
-          }
           app-toolbar {
             color: var(--text-primary-color);
             background-color: var(--primary-color);

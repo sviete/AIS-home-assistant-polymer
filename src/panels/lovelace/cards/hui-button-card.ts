@@ -26,7 +26,6 @@ import { computeDomain } from "../../../common/entity/compute_domain";
 import { computeStateDisplay } from "../../../common/entity/compute_state_display";
 import { computeStateDomain } from "../../../common/entity/compute_state_domain";
 import { computeStateName } from "../../../common/entity/compute_state_name";
-import { stateIcon } from "../../../common/entity/state_icon";
 import { isValidEntityId } from "../../../common/entity/valid_entity_id";
 import { iconColorCSS } from "../../../common/style/icon_color_css";
 import "../../../components/ha-card";
@@ -161,13 +160,17 @@ export class HuiButtonCard extends LitElement implements LovelaceCard {
           hasHold: hasAction(this._config!.hold_action),
           hasDoubleClick: hasAction(this._config!.double_tap_action),
         })}
+        role="button"
+        aria-label=${this._config.name ||
+        (stateObj ? computeStateName(stateObj) : "")}
         tabindex=${ifDefined(
           hasAction(this._config.tap_action) ? "0" : undefined
         )}
+        @keydown=${this._handleKeyDown}
       >
         ${this._config.show_icon
           ? html`
-              <ha-icon
+              <ha-state-icon
                 tabindex="-1"
                 data-domain=${ifDefined(
                   this._config.state_color && stateObj
@@ -177,8 +180,8 @@ export class HuiButtonCard extends LitElement implements LovelaceCard {
                 data-state=${ifDefined(
                   stateObj ? computeActiveState(stateObj) : undefined
                 )}
-                .icon=${this._config.icon ||
-                (stateObj ? stateIcon(stateObj) : "")}
+                .icon=${this._config.icon}
+                .state=${stateObj}
                 style=${styleMap({
                   filter: stateObj ? this._computeBrightness(stateObj) : "",
                   color: stateObj ? this._computeColor(stateObj) : "",
@@ -186,7 +189,7 @@ export class HuiButtonCard extends LitElement implements LovelaceCard {
                     ? this._config.icon_height
                     : "",
                 })}
-              ></ha-icon>
+              ></ha-state-icon>
             `
           : ""}
         ${this._config.show_name
@@ -231,6 +234,12 @@ export class HuiButtonCard extends LitElement implements LovelaceCard {
     return this._ripple;
   });
 
+  private _handleKeyDown(ev: KeyboardEvent) {
+    if (ev.key === "Enter" || ev.key === " ") {
+      handleAction(this, this.hass!, this._config!, "tap");
+    }
+  }
+
   @eventOptions({ passive: true })
   private handleRippleActivate(evt?: Event) {
     this._rippleHandlers.startPress(evt);
@@ -264,24 +273,25 @@ export class HuiButtonCard extends LitElement implements LovelaceCard {
           box-sizing: border-box;
           justify-content: center;
           position: relative;
+          overflow: hidden;
         }
 
         ha-card:focus {
           outline: none;
         }
 
-        ha-icon {
+        ha-state-icon {
           width: 40%;
           height: auto;
           color: var(--paper-item-icon-color, #727272);
           --mdc-icon-size: 100%;
         }
 
-        ha-icon + span {
+        ha-state-icon + span {
           margin-top: 8px;
         }
 
-        ha-icon,
+        ha-state-icon,
         span {
           outline: none;
         }

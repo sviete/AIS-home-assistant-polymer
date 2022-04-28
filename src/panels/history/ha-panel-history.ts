@@ -12,12 +12,18 @@ import {
 } from "date-fns";
 import { css, html, LitElement, PropertyValues } from "lit";
 import { property, state } from "lit/decorators";
+import { navigate } from "../../common/navigate";
+import {
+  createSearchParam,
+  extractSearchParam,
+} from "../../common/url/search-params";
 import { computeRTL } from "../../common/util/compute_rtl";
 import "../../components/chart/state-history-charts";
 import "../../components/entity/ha-entity-picker";
 import "../../components/ha-circular-progress";
 import "../../components/ha-date-range-picker";
 import type { DateRangePickerRanges } from "../../components/ha-date-range-picker";
+import "../../components/ha-icon-button";
 import "../../components/ha-menu-button";
 import { computeHistory, fetchDate } from "../../data/history";
 import "../../layouts/ha-app-layout";
@@ -65,17 +71,17 @@ class HaPanelHistory extends LitElement {
               .narrow=${this.narrow}
             ></ha-menu-button>
             <div main-title>${this.hass.localize("panel.history")}</div>
-            <mwc-icon-button
+            <ha-icon-button
               @click=${this._refreshHistory}
               .disabled=${this._isLoading}
-            >
-              <ha-svg-icon .path=${mdiRefresh}></ha-svg-icon>
-            </mwc-icon-button>
+              .path=${mdiRefresh}
+              .label=${this.hass.localize("ui.common.refresh")}
+            ></ha-icon-button>
           </app-toolbar>
         </app-header>
 
         <div class="flex content">
-          <div class="flex layout horizontal wrap">
+          <div class="filters">
             <ha-date-range-picker
               .hass=${this.hass}
               ?disabled=${this._isLoading}
@@ -135,6 +141,17 @@ class HaPanelHistory extends LitElement {
       [this.hass.localize("ui.components.date-range-picker.ranges.last_week")]:
         [addDays(weekStart, -7), addDays(weekEnd, -7)],
     };
+
+    this._entityId = extractSearchParam("entity_id") ?? "";
+
+    const startDate = extractSearchParam("start_date");
+    if (startDate) {
+      this._startDate = new Date(startDate);
+    }
+    const endDate = extractSearchParam("end_date");
+    if (endDate) {
+      this._endDate = new Date(endDate);
+    }
   }
 
   protected updated(changedProps: PropertyValues) {
@@ -182,10 +199,32 @@ class HaPanelHistory extends LitElement {
       endDate.setMilliseconds(endDate.getMilliseconds() - 1);
     }
     this._endDate = endDate;
+
+    this._updatePath();
   }
 
   private _entityPicked(ev) {
     this._entityId = ev.target.value;
+
+    this._updatePath();
+  }
+
+  private _updatePath() {
+    const params: Record<string, string> = {};
+
+    if (this._entityId) {
+      params.entity_id = this._entityId;
+    }
+
+    if (this._startDate) {
+      params.start_date = this._startDate.toISOString();
+    }
+
+    if (this._endDate) {
+      params.end_date = this._endDate.toISOString();
+    }
+
+    navigate(`/history?${createSearchParam(params)}`, { replace: true });
   }
 
   static get styles() {
@@ -206,6 +245,16 @@ class HaPanelHistory extends LitElement {
 
         .progress-wrapper {
           position: relative;
+        }
+
+        .filters {
+          display: flex;
+          align-items: flex-end;
+          padding: 8px 16px 0;
+        }
+
+        :host([narrow]) .filters {
+          flex-wrap: wrap;
         }
 
         ha-date-range-picker {

@@ -1,5 +1,5 @@
 import { atLeastVersion } from "../../common/config/version";
-import { HaFormSchema } from "../../components/ha-form/ha-form";
+import type { HaFormSchema } from "../../components/ha-form/types";
 import { HomeAssistant } from "../../types";
 import { SupervisorArch } from "../supervisor/supervisor";
 import {
@@ -84,9 +84,10 @@ export interface HassioAddonDetails extends HassioAddonInfo {
   options: Record<string, unknown>;
   privileged: any;
   protected: boolean;
-  rating: "1-6";
+  rating: "1-8";
   schema: HaFormSchema[] | null;
   services_role: string[];
+  signed: boolean;
   slug: string;
   startup: AddonStartup;
   stdin: boolean;
@@ -302,7 +303,8 @@ export const installHassioAddon = async (
 
 export const updateHassioAddon = async (
   hass: HomeAssistant,
-  slug: string
+  slug: string,
+  backup: boolean
 ): Promise<void> => {
   if (atLeastVersion(hass.config.version, 2021, 2, 4)) {
     await hass.callWS({
@@ -310,11 +312,13 @@ export const updateHassioAddon = async (
       endpoint: `/store/addons/${slug}/update`,
       method: "post",
       timeout: null,
+      data: { backup },
     });
   } else {
     await hass.callApi<HassioResponse<void>>(
       "POST",
-      `hassio/addons/${slug}/update`
+      `hassio/addons/${slug}/update`,
+      { backup }
     );
   }
 };

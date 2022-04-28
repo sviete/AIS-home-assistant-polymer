@@ -1,10 +1,10 @@
 import { ChartData, ChartDataset, ChartOptions } from "chart.js";
 import {
-  startOfToday,
+  addHours,
+  differenceInDays,
   endOfToday,
   isToday,
-  differenceInDays,
-  addHours,
+  startOfToday,
 } from "date-fns";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
@@ -17,8 +17,7 @@ import {
   rgb2hex,
   rgb2lab,
 } from "../../../../common/color/convert-color";
-import { hexBlend } from "../../../../common/color/hex";
-import { labDarken } from "../../../../common/color/lab";
+import { labBrighten, labDarken } from "../../../../common/color/lab";
 import { formatTime } from "../../../../common/datetime/format_time";
 import { computeStateName } from "../../../../common/entity/compute_state_name";
 import {
@@ -28,10 +27,6 @@ import {
 import "../../../../components/chart/ha-chart-base";
 import "../../../../components/ha-card";
 import { EnergyData, getEnergyDataCollection } from "../../../../data/energy";
-import {
-  reduceSumStatisticsByDay,
-  reduceSumStatisticsByMonth,
-} from "../../../../data/history";
 import { FrontendLocaleData } from "../../../../data/translation";
 import { SubscribeMixin } from "../../../../mixins/subscribe-mixin";
 import { HomeAssistant } from "../../../../types";
@@ -54,6 +49,8 @@ export class HuiEnergyUsageGraphCard
   @state() private _start = startOfToday();
 
   @state() private _end = endOfToday();
+
+  protected hassSubscribeRequiredHostProps = ["_config"];
 
   public hassSubscribe(): UnsubscribeFunc[] {
     return [
@@ -98,8 +95,10 @@ export class HuiEnergyUsageGraphCard
           ${!this._chartData.datasets.some((dataset) => dataset.data.length)
             ? html`<div class="no-data">
                 ${isToday(this._start)
-                  ? "There is no data to show. It can take up to 2 hours for new data to arrive after you configure your energy dashboard."
-                  : "There is no data for this period."}
+                  ? this.hass.localize("ui.panel.lovelace.cards.energy.no_data")
+                  : this.hass.localize(
+                      "ui.panel.lovelace.cards.energy.no_data_period"
+                    )}
               </div>`
             : ""}
         </div>
@@ -180,7 +179,7 @@ export class HuiEnergyUsageGraphCard
                   return datasets[0].label;
                 }
                 const date = new Date(datasets[0].parsed.x);
-                return `${formatTime(date, locale)} - ${formatTime(
+                return `${formatTime(date, locale)} – ${formatTime(
                   addHours(date, 1),
                   locale
                 )}`;
@@ -204,16 +203,16 @@ export class HuiEnergyUsageGraphCard
                 }
                 return [
                   totalConsumed
-                    ? `Total consumed: ${formatNumber(
-                        totalConsumed,
-                        locale
-                      )} kWh`
+                    ? this.hass.localize(
+                        "ui.panel.lovelace.cards.energy.energy_usage_graph.total_consumed",
+                        { num: formatNumber(totalConsumed, locale) }
+                      )
                     : "",
                   totalReturned
-                    ? `Total returned: ${formatNumber(
-                        totalReturned,
-                        locale
-                      )} kWh`
+                    ? this.hass.localize(
+                        "ui.panel.lovelace.cards.energyenergy_usage_graph.total_returned",
+                        { num: formatNumber(totalReturned, locale) }
+                      )
                     : "",
                 ].filter(Boolean);
               },
@@ -297,11 +296,6 @@ export class HuiEnergyUsageGraphCard
       }
     }
 
-    const dayDifference = differenceInDays(
-      energyData.end || new Date(),
-      energyData.start
-    );
-
     this._start = energyData.start;
     this._end = energyData.end || endOfToday();
 
@@ -344,14 +338,16 @@ export class HuiEnergyUsageGraphCard
         .trim(),
     };
     const labels = {
-      used_grid: "Combined from grid",
-      used_solar: "Consumed solar",
-      used_battery: "Consumed battery",
+      used_grid: this.hass.localize(
+        "ui.panel.lovelace.cards.energy.energy_usage_graph.combined_from_grid"
+      ),
+      used_solar: this.hass.localize(
+        "ui.panel.lovelace.cards.energy.energy_usage_graph.consumed_solar"
+      ),
+      used_battery: this.hass.localize(
+        "ui.panel.lovelace.cards.energy.energy_usage_graph.consumed_battery"
+      ),
     };
-
-    const backgroundColor = computedStyles
-      .getPropertyValue("--card-background-color")
-      .trim();
 
     Object.entries(statistics).forEach(([key, statIds]) => {
       const sum = [
@@ -365,12 +361,7 @@ export class HuiEnergyUsageGraphCard
       const totalStats: { [start: string]: number } = {};
       const sets: { [statId: string]: { [start: string]: number } } = {};
       statIds!.forEach((id) => {
-        const stats =
-          dayDifference > 35
-            ? reduceSumStatisticsByMonth(energyData.stats[id])
-            : dayDifference > 2
-            ? reduceSumStatisticsByDay(energyData.stats[id])
-            : energyData.stats[id];
+        const stats = energyData.stats[id];
         if (!stats) {
           return;
         }
@@ -488,10 +479,16 @@ export class HuiEnergyUsageGraphCard
       Object.entries(sources).forEach(([statId, source], idx) => {
         const data: ChartDataset<"bar">[] = [];
         const entity = this.hass.states[statId];
-        const borderColor =
+
+        const modifiedColor =
           idx > 0
-            ? rgb2hex(lab2rgb(labDarken(rgb2lab(hex2rgb(colors[type])), idx)))
-            : colors[type];
+            ? this.hass.themes.darkMode
+              ? labBrighten(rgb2lab(hex2rgb(colors[type])), idx)
+              : labDarken(rgb2lab(hex2rgb(colors[type])), idx)
+            : undefined;
+        const borderColor = modifiedColor
+          ? rgb2hex(lab2rgb(modifiedColor))
+          : colors[type];
 
         data.push({
           label:
@@ -507,7 +504,7 @@ export class HuiEnergyUsageGraphCard
               ? Object.keys(combinedData).length
               : idx + 1,
           borderColor,
-          backgroundColor: hexBlend(borderColor, backgroundColor, 50),
+          backgroundColor: borderColor + "7F",
           stack: "stack",
           data: [],
         });

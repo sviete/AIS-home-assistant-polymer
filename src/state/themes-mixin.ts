@@ -44,10 +44,12 @@ export default <T extends Constructor<HassBaseEl>>(superClass: T) =>
             default_theme: "default",
             default_dark_theme: null,
             themes: {},
-            darkMode: false,
+            darkMode: true,
+            theme: "default",
           },
-          "default",
-          { dark: true }
+          undefined,
+          undefined,
+          true
         );
       }
     }
@@ -89,12 +91,16 @@ export default <T extends Constructor<HassBaseEl>>(superClass: T) =>
       }
 
       themeSettings = { ...this.hass.selectedTheme, dark: darkMode };
+      this._updateHass({
+        themes: { ...this.hass.themes!, theme: themeName },
+      });
 
       applyThemesOnElement(
         document.documentElement,
         this.hass.themes,
         themeName,
-        themeSettings
+        themeSettings,
+        true
       );
 
       if (darkMode !== this.hass.themes.darkMode) {
@@ -132,5 +138,7 @@ export default <T extends Constructor<HassBaseEl>>(superClass: T) =>
           (themeMeta.getAttribute("default-content") as string);
         themeMeta.setAttribute("content", themeColor);
       }
+
+      this.hass!.auth.external?.fireMessage({ type: "theme-update" });
     }
   };

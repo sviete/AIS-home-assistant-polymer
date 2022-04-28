@@ -9,8 +9,6 @@ import {
 } from "@mdi/js";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import "@polymer/paper-dropdown-menu/paper-dropdown-menu-light";
-import "@polymer/paper-input/paper-textarea";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import {
   css,
@@ -114,7 +112,7 @@ export class HaAutomationEditor extends KeyboardShortcutMixin(LitElement) {
         .narrow=${this.narrow}
         .route=${this.route}
         .backCallback=${this._backTapped}
-        .tabs=${configSections.automation}
+        .tabs=${configSections.automations}
       >
         <ha-button-menu
           corner="BOTTOM_START"
@@ -122,12 +120,11 @@ export class HaAutomationEditor extends KeyboardShortcutMixin(LitElement) {
           @action=${this._handleMenuAction}
           activatable
         >
-          <mwc-icon-button
+          <ha-icon-button
             slot="trigger"
-            .title=${this.hass.localize("ui.common.menu")}
-            .label=${this.hass.localize("ui.common.overflow_menu")}
-            ><ha-svg-icon path=${mdiDotsVertical}></ha-svg-icon>
-          </mwc-icon-button>
+            .label=${this.hass.localize("ui.common.menu")}
+            .path=${mdiDotsVertical}
+          ></ha-icon-button>
 
           <mwc-list-item
             aria-label=${this.hass.localize(
@@ -203,7 +200,7 @@ export class HaAutomationEditor extends KeyboardShortcutMixin(LitElement) {
         ${this._config
           ? html`
               ${this.narrow
-                ? html` <span slot="header">${this._config?.alias}</span> `
+                ? html`<span slot="header">${this._config?.alias}</span>`
                 : ""}
               <div
                 class="content ${classMap({
@@ -212,27 +209,31 @@ export class HaAutomationEditor extends KeyboardShortcutMixin(LitElement) {
                 @subscribe-automation-config=${this._subscribeAutomationConfig}
               >
                 ${this._errors
-                  ? html` <div class="errors">${this._errors}</div> `
+                  ? html`<div class="errors">${this._errors}</div>`
                   : ""}
                 ${this._mode === "gui"
                   ? html`
                       ${"use_blueprint" in this._config
-                        ? html`<blueprint-automation-editor
-                            .hass=${this.hass}
-                            .narrow=${this.narrow}
-                            .isWide=${this.isWide}
-                            .stateObj=${stateObj}
-                            .config=${this._config}
-                            @value-changed=${this._valueChanged}
-                          ></blueprint-automation-editor>`
-                        : html`<manual-automation-editor
-                            .hass=${this.hass}
-                            .narrow=${this.narrow}
-                            .isWide=${this.isWide}
-                            .stateObj=${stateObj}
-                            .config=${this._config}
-                            @value-changed=${this._valueChanged}
-                          ></manual-automation-editor>`}
+                        ? html`
+                            <blueprint-automation-editor
+                              .hass=${this.hass}
+                              .narrow=${this.narrow}
+                              .isWide=${this.isWide}
+                              .stateObj=${stateObj}
+                              .config=${this._config}
+                              @value-changed=${this._valueChanged}
+                            ></blueprint-automation-editor>
+                          `
+                        : html`
+                            <manual-automation-editor
+                              .hass=${this.hass}
+                              .narrow=${this.narrow}
+                              .isWide=${this.isWide}
+                              .stateObj=${stateObj}
+                              .config=${this._config}
+                              @value-changed=${this._valueChanged}
+                            ></manual-automation-editor>
+                          `}
                     `
                   : this._mode === "yaml"
                   ? html`
@@ -270,6 +271,7 @@ export class HaAutomationEditor extends KeyboardShortcutMixin(LitElement) {
                           `
                         : ``}
                       <ha-yaml-editor
+                        .hass=${this.hass}
                         .defaultValue=${this._preprocessYaml()}
                         @value-changed=${this._yamlChanged}
                       ></ha-yaml-editor>
@@ -465,7 +467,7 @@ export class HaAutomationEditor extends KeyboardShortcutMixin(LitElement) {
       ) {
         return;
       }
-      // Wait for dialog to complate closing
+      // Wait for dialog to complete closing
       await new Promise((resolve) => setTimeout(resolve, 0));
     }
     showAutomationEditor({

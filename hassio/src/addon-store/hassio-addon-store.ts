@@ -1,4 +1,3 @@
-import "@material/mwc-icon-button/mwc-icon-button";
 import { ActionDetail } from "@material/mwc-list/mwc-list-foundation";
 import "@material/mwc-list/mwc-list-item";
 import { mdiDotsVertical } from "@mdi/js";
@@ -15,10 +14,10 @@ import memoizeOne from "memoize-one";
 import { atLeastVersion } from "../../../src/common/config/version";
 import { fireEvent } from "../../../src/common/dom/fire_event";
 import { navigate } from "../../../src/common/navigate";
-import "../../../src/common/search/search-input";
+import "../../../src/components/search-input";
 import { extractSearchParam } from "../../../src/common/url/search-params";
 import "../../../src/components/ha-button-menu";
-import "../../../src/components/ha-svg-icon";
+import "../../../src/components/ha-icon-button";
 import {
   HassioAddonInfo,
   HassioAddonRepository,
@@ -26,11 +25,10 @@ import {
 } from "../../../src/data/hassio/addon";
 import { Supervisor } from "../../../src/data/supervisor/supervisor";
 import "../../../src/layouts/hass-loading-screen";
-import "../../../src/layouts/hass-tabs-subpage";
+import "../../../src/layouts/hass-subpage";
 import { HomeAssistant, Route } from "../../../src/types";
 import { showRegistriesDialog } from "../dialogs/registries/show-dialog-registries";
 import { showRepositoriesDialog } from "../dialogs/repositories/show-dialog-repositories";
-import { supervisorTabs } from "../hassio-tabs";
 import "./hassio-addon-repository";
 
 const sortRepos = (a: HassioAddonRepository, b: HassioAddonRepository) => {
@@ -77,29 +75,27 @@ class HassioAddonStore extends LitElement {
     }
 
     return html`
-      <hass-tabs-subpage
+      <hass-subpage
         .hass=${this.hass}
-        .localizeFunc=${this.supervisor.localize}
         .narrow=${this.narrow}
         .route=${this.route}
-        .tabs=${supervisorTabs}
-        main-page
-        supervisor
+        .header=${this.supervisor.localize("panel.store")}
       >
-        <span slot="header"> ${this.supervisor.localize("panel.store")} </span>
         <ha-button-menu
           corner="BOTTOM_START"
           slot="toolbar-icon"
           @action=${this._handleAction}
         >
-          <mwc-icon-button slot="trigger" alt="menu">
-            <ha-svg-icon .path=${mdiDotsVertical}></ha-svg-icon>
-          </mwc-icon-button>
+          <ha-icon-button
+            .label=${this.supervisor.localize("common.menu")}
+            .path=${mdiDotsVertical}
+            slot="trigger"
+          ></ha-icon-button>
           <mwc-list-item>
             ${this.supervisor.localize("store.repositories")}
           </mwc-list-item>
           <mwc-list-item>
-            ${this.supervisor.localize("common.reload")}
+            ${this.supervisor.localize("store.check_updates")}
           </mwc-list-item>
           ${this.hass.userData?.showAdvanced &&
           atLeastVersion(this.hass.config.version, 0, 117)
@@ -113,8 +109,7 @@ class HassioAddonStore extends LitElement {
           : html`
               <div class="search">
                 <search-input
-                  no-label-float
-                  no-underline
+                  .hass=${this.hass}
                   .filter=${this._filter}
                   @value-changed=${this._filterChanged}
                 ></search-input>
@@ -131,7 +126,7 @@ class HassioAddonStore extends LitElement {
               </div>
             `
           : ""}
-      </hass-tabs-subpage>
+      </hass-subpage>
     `;
   }
 
@@ -224,13 +219,14 @@ class HassioAddonStore extends LitElement {
         margin-top: 24px;
       }
       .search {
-        padding: 0 16px;
-        background: var(--sidebar-background-color);
-        border-bottom: 1px solid var(--divider-color);
+        position: sticky;
+        top: 0;
+        z-index: 2;
       }
-      .search search-input {
-        position: relative;
-        top: 2px;
+      search-input {
+        display: block;
+        --mdc-text-field-fill-color: var(--sidebar-background-color);
+        --mdc-text-field-idle-line-color: var(--divider-color);
       }
       .advanced {
         padding: 12px;

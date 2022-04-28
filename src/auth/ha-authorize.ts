@@ -107,10 +107,12 @@ class HaAuthorize extends litLocalizeLiteMixin(LitElement) {
           default_theme: "default",
           default_dark_theme: null,
           themes: {},
-          darkMode: false,
+          darkMode: true,
+          theme: "default",
         },
-        "default",
-        { dark: true }
+        undefined,
+        undefined,
+        true
       );
     }
 
@@ -173,6 +175,10 @@ class HaAuthorize extends litLocalizeLiteMixin(LitElement) {
       ha-pick-auth-provider {
         display: block;
         margin-top: 48px;
+      }
+      ha-auth-flow {
+        display: block;
+        margin-top: 24px;
       }
     `;
   }

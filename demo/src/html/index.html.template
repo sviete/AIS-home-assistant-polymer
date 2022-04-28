@@ -63,6 +63,16 @@
     />
     <title>AI-Speaker Demo</title>
     <style>
+      html {
+        background-color: var(--primary-background-color, #fafafa);
+        color: var(--primary-text-color, #212121);
+      }
+      @media (prefers-color-scheme: dark) {
+        html {
+          background-color: var(--primary-background-color, #111111);
+          color: var(--primary-text-color, #e1e1e1);
+        }
+      }
       body {
         font-family: Roboto, Noto, sans-serif;
         -moz-osx-font-smoothing: grayscale;
@@ -72,17 +82,31 @@
         margin: 0;
         padding: 0;
       }
-      #ha-init-skeleton::before {
-        display: block;
-        content: "";
-        height: 64px;
-        background-color: #FF9800;
+      #ha-launch-screen {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      #ha-launch-screen svg {
+        width: 170px;
+        flex-shrink: 0;
+      }
+      #ha-launch-screen .ha-launch-screen-spacer {
+        flex: 1;
       }
     </style>
   </head>
   <body>
-    <div id="ha-init-skeleton"></div>
+    <div id="ha-launch-screen">
+      <div class="ha-launch-screen-spacer"></div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="200mm" height="200mm" viewBox="0 0 200 320" version="1.1"><defs><filter id="a" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="b" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="c" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="d" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="e" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="f" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter></defs><g fill-rule="evenodd" stroke="#fff" stroke-width=".511" stroke-miterlimit="4" stroke-dasharray="0 5.616" stroke-dashoffset="7.56" stroke-opacity="1"><path d="M39.429 22.429C21.226 22.429 6.57 40.774 6.57 63.56v183.153h65.715V63.56c0-22.787-14.654-41.132-32.857-41.132z" transform="translate(46.109 57.663) scale(.39179)" opacity="1" fill="#d04400" fill-opacity=".929" filter="url(#a)"/><path d="M39.429 14.025C21.226 14.025 6.57 32.37 6.57 55.157v98.868h61.354c1.479 0 2.933.089 4.361.246V55.157c0-22.787-14.654-41.132-32.857-41.132z" transform="translate(92.823 93.978) scale(.39179)" opacity="1" fill="#f69562" fill-opacity="1" filter="url(#b)"/><path d="M39.429 8C21.226 8 6.57 26.346 6.57 49.133V88h65.715V49.133C72.286 26.346 57.632 8 39.43 8z" transform="translate(140.432 119.846) scale(.39179)" opacity="1" fill="#ffbd77" fill-opacity="1" filter="url(#c)"/><path d="M39.429 22.429C21.226 22.429 6.57 40.774 6.57 63.56v183.153h65.715V63.56c0-22.787-14.654-41.132-32.857-41.132z" transform="matrix(.39179 0 0 -.39179 46.109 267.13)" opacity="1" fill="#d04400" fill-opacity=".929" filter="url(#d)"/><path d="M39.429 14.025C21.226 14.025 6.57 32.37 6.57 55.157v98.868h61.354c1.479 0 2.933.089 4.361.246V55.157c0-22.787-14.654-41.132-32.857-41.132z" transform="matrix(.39179 0 0 -.39179 92.823 230.716)" opacity="1" fill="#f69562" fill-opacity="1" filter="url(#e)"/><path d="M39.429 8C21.226 8 6.57 26.346 6.57 49.133V88h65.715V49.133C72.286 26.346 57.632 8 39.43 8z" transform="matrix(.39179 0 0 -.39179 140.432 204.472)" opacity="1" fill="#ffbd77" fill-opacity="1" filter="url(#f)"/></g></svg>
+      <div id="ha-launch-screen-info-box" class="ha-launch-screen-spacer"></div>
+    </div>
+
     <ha-demo></ha-demo>
+
     <%= renderTemplate('_js_base') %>
     <%= renderTemplate('_preload_roboto') %>
 

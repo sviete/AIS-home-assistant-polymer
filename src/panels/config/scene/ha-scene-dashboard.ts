@@ -1,4 +1,3 @@
-import "@material/mwc-icon-button";
 import {
   mdiHelpCircle,
   mdiInformationOutline,
@@ -14,11 +13,11 @@ import { ifDefined } from "lit/directives/if-defined";
 import memoizeOne from "memoize-one";
 import { fireEvent } from "../../../common/dom/fire_event";
 import { computeStateName } from "../../../common/entity/compute_state_name";
-import { stateIcon } from "../../../common/entity/state_icon";
 import { DataTableColumnContainer } from "../../../components/data-table/ha-data-table";
 import "../../../components/ha-button-related-filter-menu";
 import "../../../components/ha-fab";
-import "../../../components/ha-icon";
+import "../../../components/ha-icon-button";
+import "../../../components/ha-state-icon";
 import "../../../components/ha-svg-icon";
 import { forwardHaptic } from "../../../data/haptics";
 import { activateScene, SceneEntity } from "../../../data/scene";
@@ -60,7 +59,6 @@ class HaSceneDashboard extends LitElement {
       ).map((scene) => ({
         ...scene,
         name: computeStateName(scene),
-        icon: stateIcon(scene),
       }));
     }
   );
@@ -69,24 +67,28 @@ class HaSceneDashboard extends LitElement {
     (_language): DataTableColumnContainer => ({
       activate: {
         title: "",
+        label: this.hass.localize(
+          "ui.panel.config.scene.picker.headers.activate"
+        ),
         type: "icon-button",
         template: (_toggle, scene) =>
           html`
-            <mwc-icon-button
+            <ha-icon-button
               .scene=${scene}
-              title=${this.hass.localize(
+              .label=${this.hass.localize(
                 "ui.panel.config.scene.picker.activate_scene"
               )}
+              .path=${mdiPlay}
               @click=${this._activateScene}
-            >
-              <ha-svg-icon .path=${mdiPlay}></ha-svg-icon>
-            </mwc-icon-button>
+            ></ha-icon-button>
           `,
       },
       icon: {
         title: "",
+        label: this.hass.localize("ui.panel.config.scene.picker.headers.state"),
         type: "icon",
-        template: (icon) => html` <ha-icon .icon=${icon}></ha-icon> `,
+        template: (_, scene) =>
+          html` <ha-state-icon .state=${scene}></ha-state-icon> `,
       },
       name: {
         title: this.hass.localize("ui.panel.config.scene.picker.headers.name"),
@@ -97,21 +99,24 @@ class HaSceneDashboard extends LitElement {
       },
       info: {
         title: "",
+        label: this.hass.localize(
+          "ui.panel.config.scene.picker.headers.show_info"
+        ),
         type: "icon-button",
         template: (_info, scene) => html`
-          <mwc-icon-button
+          <ha-icon-button
             .scene=${scene}
             @click=${this._showInfo}
-            title=${this.hass.localize(
+            .label=${this.hass.localize(
               "ui.panel.config.scene.picker.show_info_scene"
             )}
-          >
-            <ha-svg-icon .path=${mdiInformationOutline}></ha-svg-icon>
-          </mwc-icon-button>
+            .path=${mdiInformationOutline}
+          ></ha-icon-button>
         `,
       },
       edit: {
         title: "",
+        label: this.hass.localize("ui.panel.config.scene.picker.headers.edit"),
         type: "icon-button",
         template: (_info, scene: any) => html`
           <a
@@ -121,16 +126,13 @@ class HaSceneDashboard extends LitElement {
                 : undefined
             )}
           >
-            <mwc-icon-button
+            <ha-icon-button
               .disabled=${!scene.attributes.id}
-              title=${this.hass.localize(
+              .label=${this.hass.localize(
                 "ui.panel.config.scene.picker.edit_scene"
               )}
-            >
-              <ha-svg-icon
-                .path=${scene.attributes.id ? mdiPencil : mdiPencilOff}
-              ></ha-svg-icon>
-            </mwc-icon-button>
+              .path=${scene.attributes.id ? mdiPencil : mdiPencilOff}
+            ></ha-icon-button>
           </a>
           ${!scene.attributes.id
             ? html`
@@ -153,7 +155,7 @@ class HaSceneDashboard extends LitElement {
         .narrow=${this.narrow}
         back-path="/config"
         .route=${this.route}
-        .tabs=${configSections.automation}
+        .tabs=${configSections.automations}
         .columns=${this._columns(this.hass.language)}
         id="entity_id"
         .data=${this._scenes(this.scenes, this._filteredScenes)}
@@ -164,9 +166,12 @@ class HaSceneDashboard extends LitElement {
         @clear-filter=${this._clearFilter}
         hasFab
       >
-        <mwc-icon-button slot="toolbar-icon" @click=${this._showHelp}>
-          <ha-svg-icon .path=${mdiHelpCircle}></ha-svg-icon>
-        </mwc-icon-button>
+        <ha-icon-button
+          slot="toolbar-icon"
+          @click=${this._showHelp}
+          .label=${this.hass.localize("ui.common.help")}
+          .path=${mdiHelpCircle}
+        ></ha-icon-button>
         <ha-button-related-filter-menu
           slot="filter-menu"
           corner="BOTTOM_START"

@@ -6,7 +6,7 @@ import {
   ScatterDataPoint,
 } from "chart.js";
 import { getRelativePosition } from "chart.js/helpers";
-import { addHours } from "date-fns";
+import { addHours, differenceInDays } from "date-fns";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, query, state } from "lit/decorators";
@@ -48,6 +48,8 @@ export class HuiEnergyDevicesGraphCard
   @state() private _chartData: ChartData = { datasets: [] };
 
   @query("ha-chart-base") private _chart?: HaChartBase;
+
+  protected hassSubscribeRequiredHostProps = ["_config"];
 
   public hassSubscribe(): UnsubscribeFunc[] {
     return [
@@ -155,14 +157,35 @@ export class HuiEnergyDevicesGraphCard
   );
 
   private async _getStatistics(energyData: EnergyData): Promise<void> {
+    const dayDifference = differenceInDays(
+      energyData.end || new Date(),
+      energyData.start
+    );
+
     this._data = await fetchStatistics(
       this.hass,
       addHours(energyData.start, -1),
       energyData.end,
       energyData.prefs.device_consumption.map(
         (device) => device.stat_consumption
-      )
+      ),
+      dayDifference > 35 ? "month" : dayDifference > 2 ? "day" : "hour"
     );
+
+    const startMinHour = addHours(energyData.start, -1);
+
+    Object.values(this._data).forEach((stat) => {
+      // if the start of the first value is after the requested period, we have the first data point, and should add a zero point
+      if (stat.length && new Date(stat[0].start) > startMinHour) {
+        stat.unshift({
+          ...stat[0],
+          start: startMinHour.toISOString(),
+          end: startMinHour.toISOString(),
+          sum: 0,
+          state: 0,
+        });
+      }
+    });
 
     const data: Array<ChartDataset<"bar", ParsedDataType<"bar">>["data"]> = [];
     const borderColor: string[] = [];
@@ -170,7 +193,9 @@ export class HuiEnergyDevicesGraphCard
 
     const datasets: ChartDataset<"bar", ParsedDataType<"bar">[]>[] = [
       {
-        label: "Energy usage",
+        label: this.hass.localize(
+          "ui.panel.lovelace.cards.energy.energy_devices_graph.energy_usage"
+        ),
         borderColor,
         backgroundColor,
         data,

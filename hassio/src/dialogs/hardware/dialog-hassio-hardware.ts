@@ -3,10 +3,11 @@ import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { fireEvent } from "../../../../src/common/dom/fire_event";
-import "../../../../src/common/search/search-input";
+import "../../../../src/components/search-input";
 import { stringCompare } from "../../../../src/common/string/compare";
 import "../../../../src/components/ha-dialog";
 import "../../../../src/components/ha-expansion-panel";
+import "../../../../src/components/ha-icon-button";
 import { HassioHardwareInfo } from "../../../../src/data/hassio/hardware";
 import { dump } from "../../../../src/resources/js-yaml-dump";
 import { haStyle, haStyleDialog } from "../../../../src/resources/styles";
@@ -38,8 +39,8 @@ class HassioHardwareDialog extends LitElement {
 
   @state() private _filter?: string;
 
-  public showDialog(params: HassioHardwareDialogParams) {
-    this._dialogParams = params;
+  public showDialog(dialogParams: HassioHardwareDialogParams) {
+    this._dialogParams = dialogParams;
   }
 
   public closeDialog() {
@@ -64,18 +65,21 @@ class HassioHardwareDialog extends LitElement {
         scrimClickAction
         hideActions
         @closed=${this.closeDialog}
-        .heading=${true}
+        .heading=${this._dialogParams.supervisor.localize(
+          "dialog.hardware.title"
+        )}
       >
         <div class="header" slot="heading">
           <h2>
             ${this._dialogParams.supervisor.localize("dialog.hardware.title")}
           </h2>
-          <mwc-icon-button dialogAction="close">
-            <ha-svg-icon .path=${mdiClose}></ha-svg-icon>
-          </mwc-icon-button>
+          <ha-icon-button
+            .label=${this._dialogParams.supervisor.localize("common.close")}
+            .path=${mdiClose}
+            dialogAction="close"
+          ></ha-icon-button>
           <search-input
-            autofocus
-            no-label-float
+            .hass=${this.hass}
             .filter=${this._filter}
             @value-changed=${this._handleSearchChange}
             .label=${this._dialogParams.supervisor.localize(
@@ -141,7 +145,7 @@ class HassioHardwareDialog extends LitElement {
       haStyle,
       haStyleDialog,
       css`
-        mwc-icon-button {
+        ha-icon-button {
           position: absolute;
           right: 16px;
           top: 10px;
@@ -172,7 +176,7 @@ class HassioHardwareDialog extends LitElement {
           padding: 0.2em 0.4em;
         }
         search-input {
-          margin: 0 16px;
+          margin: 8px 16px 0;
           display: block;
         }
         .device-property {

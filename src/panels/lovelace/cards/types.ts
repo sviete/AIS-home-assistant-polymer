@@ -76,11 +76,18 @@ export interface EntitiesCardConfig extends LovelaceCardConfig {
   state_color?: boolean;
 }
 
+export interface AreaCardConfig extends LovelaceCardConfig {
+  area: string;
+  navigation_path?: string;
+  show_camera?: boolean;
+}
+
 export interface ButtonCardConfig extends LovelaceCardConfig {
   entity?: string;
   name?: string;
   show_name?: boolean;
   icon?: string;
+  icon_height?: string;
   show_icon?: boolean;
   theme?: string;
   tap_action?: ActionConfig;
@@ -277,6 +284,7 @@ export interface StatisticsGraphCardConfig extends LovelaceCardConfig {
   title?: string;
   entities: Array<EntityConfig | string>;
   days_to_show?: number;
+  period?: "5minute" | "hour" | "day" | "month";
   stat_types?: StatisticType | StatisticType[];
   chart_type?: "line" | "bar";
 }
@@ -387,6 +395,7 @@ export interface ThermostatCardConfig extends LovelaceCardConfig {
 export interface WeatherForecastCardConfig extends LovelaceCardConfig {
   entity: string;
   name?: string;
+  show_current?: boolean;
   show_forecast?: boolean;
   secondary_info_attribute?: string;
   theme?: string;

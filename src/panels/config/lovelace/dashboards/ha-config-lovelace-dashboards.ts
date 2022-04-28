@@ -1,8 +1,15 @@
-import { mdiPlus } from "@mdi/js";
+import {
+  mdiCheck,
+  mdiCheckCircleOutline,
+  mdiOpenInNew,
+  mdiPlus,
+} from "@mdi/js";
 import "@polymer/paper-tooltip/paper-tooltip";
 import { html, LitElement, PropertyValues, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators";
+import { ifDefined } from "lit/directives/if-defined";
 import memoize from "memoize-one";
+import { isComponentLoaded } from "../../../../common/config/is_component_loaded";
 import { navigate } from "../../../../common/navigate";
 import { stringCompare } from "../../../../common/string/compare";
 import {
@@ -46,10 +53,23 @@ export class HaConfigLovelaceDashboards extends LitElement {
       const columns: DataTableColumnContainer = {
         icon: {
           title: "",
+          label: this.hass.localize(
+            "ui.panel.config.lovelace.dashboards.picker.headers.icon"
+          ),
           type: "icon",
-          template: (icon) =>
+          template: (icon, dashboard) =>
             icon
-              ? html` <ha-icon slot="item-icon" .icon=${icon}></ha-icon> `
+              ? html`
+                  <ha-icon
+                    slot="item-icon"
+                    .icon=${icon}
+                    style=${ifDefined(
+                      dashboard.iconColor
+                        ? `color: ${dashboard.iconColor}`
+                        : undefined
+                    )}
+                  ></ha-icon>
+                `
               : html``,
         },
         title: {
@@ -58,17 +78,16 @@ export class HaConfigLovelaceDashboards extends LitElement {
           ),
           sortable: true,
           filterable: true,
-          direction: "asc",
           grows: true,
           template: (title, dashboard: any) => {
             const titleTemplate = html`
               ${title}
               ${dashboard.default
                 ? html`
-                    <ha-icon
+                    <ha-svg-icon
                       style="padding-left: 10px;"
-                      icon="hass:check-circle-outline"
-                    ></ha-icon>
+                      .path=${mdiCheckCircleOutline}
+                    ></ha-svg-icon>
                     <paper-tooltip animation-delay="0">
                       ${this.hass.localize(
                         `ui.panel.config.lovelace.dashboards.default_dashboard`
@@ -84,7 +103,7 @@ export class HaConfigLovelaceDashboards extends LitElement {
                     ${this.hass.localize(
                       `ui.panel.config.lovelace.dashboards.conf_mode.${dashboard.mode}`
                     )}${dashboard.filename
-                      ? html` - ${dashboard.filename} `
+                      ? html` – ${dashboard.filename} `
                       : ""}
                   </div>
                 `
@@ -127,8 +146,8 @@ export class HaConfigLovelaceDashboards extends LitElement {
           width: "100px",
           template: (requireAdmin: boolean) =>
             requireAdmin
-              ? html` <ha-icon icon="hass:check"></ha-icon> `
-              : html` - `,
+              ? html`<ha-svg-icon .path=${mdiCheck}></ha-svg-icon>`
+              : html`—`,
         };
         columns.show_in_sidebar = {
           title: this.hass.localize(
@@ -137,21 +156,29 @@ export class HaConfigLovelaceDashboards extends LitElement {
           type: "icon",
           width: "121px",
           template: (sidebar) =>
-            sidebar ? html` <ha-icon icon="hass:check"></ha-icon> ` : html` - `,
+            sidebar
+              ? html`<ha-svg-icon .path=${mdiCheck}></ha-svg-icon>`
+              : html`—`,
         };
       }
 
       columns.url_path = {
         title: "",
+        label: this.hass.localize(
+          "ui.panel.config.lovelace.dashboards.picker.headers.url"
+        ),
         filterable: true,
         width: "100px",
         template: (urlPath) =>
           narrow
             ? html`
                 <ha-icon-button
-                  icon="hass:open-in-new"
+                  .path=${mdiOpenInNew}
                   .urlPath=${urlPath}
                   @click=${this._navigate}
+                  .label=${this.hass.localize(
+                    "ui.panel.config.lovelace.dashboards.picker.open"
+                  )}
                 ></ha-icon-button>
               `
             : html`
@@ -173,23 +200,41 @@ export class HaConfigLovelaceDashboards extends LitElement {
     ).mode;
     const defaultUrlPath = this.hass.defaultPanel;
     const isDefault = defaultUrlPath === "lovelace";
-    return [
+    const result: Record<string, any>[] = [
       {
         icon: "hass:view-dashboard",
         title: this.hass.localize("panel.states"),
         default: isDefault,
-        sidebar: isDefault,
+        show_in_sidebar: isDefault,
         require_admin: false,
         url_path: "lovelace",
         mode: defaultMode,
         filename: defaultMode === "yaml" ? "ui-lovelace.yaml" : "",
+        iconColor: "var(--primary-color)",
       },
-      ...dashboards.map((dashboard) => ({
-        filename: "",
-        ...dashboard,
-        default: defaultUrlPath === dashboard.url_path,
-      })),
     ];
+    if (isComponentLoaded(this.hass, "energy")) {
+      result.push({
+        icon: "hass:lightning-bolt",
+        title: this.hass.localize(`ui.panel.config.dashboard.energy.title`),
+        show_in_sidebar: true,
+        mode: "storage",
+        url_path: "energy",
+        filename: "",
+        iconColor: "var(--label-badge-yellow)",
+      });
+    }
+
+    result.push(
+      ...dashboards
+        .sort((a, b) => stringCompare(a.title, b.title))
+        .map((dashboard) => ({
+          filename: "",
+          ...dashboard,
+          default: defaultUrlPath === dashboard.url_path,
+        }))
+    );
+    return result;
   });
 
   protected render(): TemplateResult {
@@ -245,6 +290,11 @@ export class HaConfigLovelaceDashboards extends LitElement {
 
   private _editDashboard(ev: CustomEvent) {
     const urlPath = (ev.detail as RowClickedEvent).id;
+
+    if (urlPath === "energy") {
+      navigate("/config/energy");
+      return;
+    }
     const dashboard = this._dashboards.find((res) => res.url_path === urlPath);
     this._openDialog(dashboard, urlPath);
   }

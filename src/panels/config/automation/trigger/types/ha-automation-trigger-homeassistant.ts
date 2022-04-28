@@ -1,60 +1,76 @@
-import "@polymer/paper-radio-button/paper-radio-button";
-import "@polymer/paper-radio-group/paper-radio-group";
-import type { PaperRadioGroupElement } from "@polymer/paper-radio-group/paper-radio-group";
-import { html, LitElement } from "lit";
+import "../../../../../components/ha-form/ha-form";
+import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators";
+import memoizeOne from "memoize-one";
 import { fireEvent } from "../../../../../common/dom/fire_event";
 import type { HassTrigger } from "../../../../../data/automation";
 import type { HomeAssistant } from "../../../../../types";
+import type { HaFormSchema } from "../../../../../components/ha-form/types";
+import type { LocalizeFunc } from "../../../../../common/translations/localize";
 
 @customElement("ha-automation-trigger-homeassistant")
-export default class HaHassTrigger extends LitElement {
+export class HaHassTrigger extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @property() public trigger!: HassTrigger;
+  @property({ attribute: false }) public trigger!: HassTrigger;
+
+  private _schema = memoizeOne((localize: LocalizeFunc) => [
+    {
+      name: "event",
+      type: "select",
+      required: true,
+      options: [
+        [
+          "start",
+          localize(
+            "ui.panel.config.automation.editor.triggers.type.homeassistant.start"
+          ),
+        ],
+        [
+          "shutdown",
+          localize(
+            "ui.panel.config.automation.editor.triggers.type.homeassistant.shutdown"
+          ),
+        ],
+      ],
+    },
+  ]);
 
   public static get defaultConfig() {
     return {
-      event: "start",
+      event: "start" as HassTrigger["event"],
     };
   }
 
   protected render() {
-    const { event } = this.trigger;
     return html`
-      <label id="eventlabel">
-        ${this.hass.localize(
-          "ui.panel.config.automation.editor.triggers.type.homeassistant.event"
-        )}
-      </label>
-      <paper-radio-group
-        .selected=${event}
-        aria-labelledby="eventlabel"
-        @paper-radio-group-changed=${this._radioGroupPicked}
-      >
-        <paper-radio-button name="start">
-          ${this.hass.localize(
-            "ui.panel.config.automation.editor.triggers.type.homeassistant.start"
-          )}
-        </paper-radio-button>
-        <paper-radio-button name="shutdown">
-          ${this.hass.localize(
-            "ui.panel.config.automation.editor.triggers.type.homeassistant.shutdown"
-          )}
-        </paper-radio-button>
-      </paper-radio-group>
+      <ha-form
+        .schema=${this._schema(this.hass.localize)}
+        .data=${this.trigger}
+        .hass=${this.hass}
+        .computeLabel=${this._computeLabelCallback}
+        @value-changed=${this._valueChanged}
+      ></ha-form>
     `;
   }
 
-  private _radioGroupPicked(ev) {
+  private _valueChanged(ev: CustomEvent): void {
     ev.stopPropagation();
-    fireEvent(this, "value-changed", {
-      value: {
-        ...this.trigger,
-        event: (ev.target as PaperRadioGroupElement).selected,
-      },
-    });
+    const newTrigger = ev.detail.value;
+    fireEvent(this, "value-changed", { value: newTrigger });
   }
+
+  private _computeLabelCallback = (schema: HaFormSchema): string =>
+    this.hass.localize(
+      `ui.panel.config.automation.editor.triggers.type.geo_location.${schema.name}`
+    );
+
+  static styles = css`
+    label {
+      display: flex;
+      align-items: center;
+    }
+  `;
 }
 
 declare global {

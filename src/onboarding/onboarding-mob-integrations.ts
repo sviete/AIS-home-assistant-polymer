@@ -1,6 +1,6 @@
 import "@material/mwc-button/mwc-button";
-import {css, CSSResultGroup, html, LitElement, TemplateResult} from "lit";
-import {property, customElement} from 'lit/decorators';
+import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { property, customElement } from "lit/decorators";
 import { fireEvent } from "../common/dom/fire_event";
 import { LocalizeFunc } from "../common/translations/localize";
 import { HomeAssistant } from "../types";
@@ -37,7 +37,10 @@ class OnboardingMobIntegrations extends LitElement {
       </p>
       <div class="scanCode">
         <a href="https://play.google.com/store/apps/details?id=pl.sviete.dom">
-          <img src="/static/ais_dom/link-to-mob-app.png" style="width:50%" />
+          <img
+            src="/static/ais_dom/get_app_for_tablet.png"
+            style="max-width:100%"
+          />
         </a>
       </div>
       <p>
@@ -47,9 +50,7 @@ class OnboardingMobIntegrations extends LitElement {
       </p>
       <div class="row">
         <div class="column">
-          <a
-            href="https://apps.apple.com/us/app/home-assistant/id1099568401?mt=8"
-          >
+          <a href="https://apps.apple.com/app/id1586990045">
             <img
               src="/static/ais_dom/download_on_the_app_store.png"
               alt="Apple App Store"
@@ -58,9 +59,7 @@ class OnboardingMobIntegrations extends LitElement {
           </a>
         </div>
         <div class="column">
-          <a
-            href="https://play.google.com/store/apps/details?id=io.homeassistant.companion.android"
-          >
+          <a href="https://play.google.com/store/apps/details?id=com.ais.mob">
             <img
               src="/static/ais_dom/get_it_on_google_play.png"
               alt="Google Play"

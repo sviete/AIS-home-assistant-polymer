@@ -5,6 +5,7 @@ import {
   computeDeviceName,
   DeviceRegistryEntry,
 } from "../../../../data/device_registry";
+import { haStyle } from "../../../../resources/styles";
 import { HomeAssistant } from "../../../../types";
 import { loadDeviceRegistryDetailDialog } from "../device-registry-detail/show-dialog-device-registry-detail";
 
@@ -23,7 +24,15 @@ export class HaDeviceCard extends LitElement {
   protected render(): TemplateResult {
     return html`
       <ha-card
-        .header=${this.hass.localize("ui.panel.config.devices.device_info")}
+        .header=${this.hass.localize(
+          "ui.panel.config.devices.device_info",
+          "type",
+          this.hass.localize(
+            `ui.panel.config.devices.type.${
+              this.device.entry_type || "device"
+            }_heading`
+          )
+        )}
       >
         <div class="card-content">
           ${this.device.model
@@ -47,10 +56,13 @@ export class HaDeviceCard extends LitElement {
                     "ui.panel.config.integrations.config_entry.via"
                   )}
                   <span class="hub"
-                    >${this._computeDeviceName(
-                      this.devices,
-                      this.device.via_device_id
-                    )}</span
+                    ><a
+                      href="/config/devices/device/${this.device.via_device_id}"
+                      >${this._computeDeviceName(
+                        this.devices,
+                        this.device.via_device_id
+                      )}</a
+                    ></span
                   >
                 </div>
               `
@@ -59,9 +71,25 @@ export class HaDeviceCard extends LitElement {
             ? html`
                 <div class="extra-info">
                   ${this.hass.localize(
-                    "ui.panel.config.integrations.config_entry.firmware",
+                    `ui.panel.config.integrations.config_entry.${
+                      this.device.entry_type === "service" &&
+                      !this.device.hw_version
+                        ? "version"
+                        : "firmware"
+                    }`,
                     "version",
                     this.device.sw_version
+                  )}
+                </div>
+              `
+            : ""}
+          ${this.device.hw_version
+            ? html`
+                <div class="extra-info">
+                  ${this.hass.localize(
+                    "ui.panel.config.integrations.config_entry.hardware",
+                    "version",
+                    this.device.hw_version
                   )}
                 </div>
               `
@@ -82,35 +110,38 @@ export class HaDeviceCard extends LitElement {
     const device = devices.find((dev) => dev.id === deviceId);
     return device
       ? computeDeviceName(device, this.hass)
-      : `(${this.hass.localize(
-          "ui.panel.config.integrations.config_entry.device_unavailable"
-        )})`;
+      : `<${this.hass.localize(
+          "ui.panel.config.integrations.config_entry.unknown_via_device"
+        )}>`;
   }
 
   static get styles(): CSSResultGroup {
-    return css`
-      :host {
-        display: block;
-      }
-      ha-card {
-        flex: 1 0 100%;
-        min-width: 0;
-      }
-      .device {
-        width: 30%;
-      }
-      .area {
-        color: var(--primary-text-color);
-      }
-      .extra-info {
-        margin-top: 8px;
-        word-wrap: break-word;
-      }
-      .manuf,
-      .entity-id,
-      .model {
-        color: var(--secondary-text-color);
-      }
-    `;
+    return [
+      haStyle,
+      css`
+        :host {
+          display: block;
+        }
+        ha-card {
+          flex: 1 0 100%;
+          min-width: 0;
+        }
+        .device {
+          width: 30%;
+        }
+        .area {
+          color: var(--primary-text-color);
+        }
+        .extra-info {
+          margin-top: 8px;
+          word-wrap: break-word;
+        }
+        .manuf,
+        .model {
+          color: var(--secondary-text-color);
+          word-wrap: break-word;
+        }
+      `,
+    ];
   }
 }

@@ -69,7 +69,10 @@ export class SideBarView extends LitElement implements LovelaceViewElement {
       this._createCards();
     }
 
-    if (!changedProperties.has("lovelace")) {
+    if (
+      !changedProperties.has("lovelace") &&
+      !changedProperties.has("_config")
+    ) {
       return;
     }
 
@@ -156,7 +159,7 @@ export class SideBarView extends LitElement implements LovelaceViewElement {
         element.lovelace = this.lovelace;
         element.path = [this.index!, idx];
         card.editMode = true;
-        const movePositionButton = document.createElement("mwc-icon-button");
+        const movePositionButton = document.createElement("ha-icon-button");
         movePositionButton.slot = "buttons";
         const moveIcon = document.createElement("ha-svg-icon");
         moveIcon.path =

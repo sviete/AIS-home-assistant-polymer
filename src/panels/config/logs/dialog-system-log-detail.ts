@@ -1,12 +1,13 @@
-import "@material/mwc-icon-button/mwc-icon-button";
-import { mdiClose, mdiContentCopy, mdiPackageVariant } from "@mdi/js";
+import { mdiClose, mdiContentCopy } from "@mdi/js";
 import "@polymer/paper-tooltip/paper-tooltip";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property, state } from "lit/decorators";
 import { fireEvent } from "../../../common/dom/fire_event";
 import { copyToClipboard } from "../../../common/util/copy-clipboard";
+import "../../../components/ha-alert";
 import "../../../components/ha-dialog";
 import "../../../components/ha-header-bar";
+import "../../../components/ha-icon-button";
 import "../../../components/ha-svg-icon";
 import {
   domainToName,
@@ -20,6 +21,7 @@ import {
 } from "../../../data/system_log";
 import { haStyleDialog } from "../../../resources/styles";
 import type { HomeAssistant } from "../../../types";
+import { documentationUrl } from "../../../util/documentation-url";
 import { showToast } from "../../../util/toast";
 import type { SystemLogDetailDialogParams } from "./show-dialog-system-log-detail";
 import { formatSystemLogTime } from "./util";
@@ -64,39 +66,45 @@ class DialogSystemLogDetail extends LitElement {
     const showDocumentation =
       this._manifest &&
       (this._manifest.is_built_in ||
-        // Custom components with our offical docs should not link to our docs
+        // Custom components with our official docs should not link to our docs
         !this._manifest.documentation.includes("://www.home-assistant.io"));
 
+    const title = this.hass.localize(
+      "ui.panel.config.logs.details",
+      "level",
+      html`<span class=${item.level.toLowerCase()}
+        >${this.hass.localize(
+          "ui.panel.config.logs.level." + item.level.toLowerCase()
+        )}</span
+      >`
+    );
+
     return html`
-      <ha-dialog open @closed=${this.closeDialog} hideActions .heading=${true}>
+      <ha-dialog open @closed=${this.closeDialog} hideActions .heading=${title}>
         <ha-header-bar slot="heading">
-          <mwc-icon-button slot="navigationIcon" dialogAction="cancel">
-            <ha-svg-icon .path=${mdiClose}></ha-svg-icon>
-          </mwc-icon-button>
-          <span slot="title">
-            ${this.hass.localize(
-              "ui.panel.config.logs.details",
-              "level",
-              html`<span class=${item.level.toLowerCase()}
-                >${this.hass.localize(
-                  "ui.panel.config.logs.level." + item.level.toLowerCase()
-                )}</span
-              >`
-            )}
-          </span>
-          <mwc-icon-button id="copy" @click=${this._copyLog} slot="actionItems">
-            <ha-svg-icon .path=${mdiContentCopy}></ha-svg-icon>
-          </mwc-icon-button>
+          <ha-icon-button
+            slot="navigationIcon"
+            dialogAction="cancel"
+            .label=${this.hass.localize("ui.common.close")}
+            .path=${mdiClose}
+          ></ha-icon-button>
+          <span slot="title"> ${title} </span>
+          <ha-icon-button
+            id="copy"
+            @click=${this._copyLog}
+            slot="actionItems"
+            .label=${this.hass.localize("ui.panel.config.logs.copy")}
+            .path=${mdiContentCopy}
+          ></ha-icon-button>
         </ha-header-bar>
         ${this.isCustomIntegration
-          ? html`<div class="custom">
-              <ha-svg-icon .path=${mdiPackageVariant}></ha-svg-icon>
+          ? html`<ha-alert alert-type="warning">
               ${this.hass.localize(
                 "ui.panel.config.logs.error_from_custom_integration"
               )}
-            </div>`
+            </ha-alert>`
           : ""}
-        <div class="contents">
+        <div class="contents" tabindex="-1" dialogInitialFocus>
           <p>
             Logger: ${item.name}<br />
             Source: ${item.source.join(":")}
@@ -110,7 +118,12 @@ class DialogSystemLogDetail extends LitElement {
                     ? ""
                     : html`
                         (<a
-                          href=${this._manifest.documentation}
+                          href=${this._manifest.is_built_in
+                            ? documentationUrl(
+                                this.hass,
+                                `/integrations/${this._manifest.domain}`
+                              )
+                            : this._manifest.documentation}
                           target="_blank"
                           rel="noreferrer"
                           >documentation</a
@@ -208,12 +221,13 @@ class DialogSystemLogDetail extends LitElement {
           margin-bottom: 0;
           font-family: var(--code-font-family, monospace);
         }
-        .custom {
-          padding: 8px 16px;
-          background-color: var(--warning-color);
+        ha-alert {
+          display: block;
+          margin: -4px 0;
         }
         .contents {
           padding: 16px;
+          outline: none;
         }
         .error {
           color: var(--error-color);

@@ -1,7 +1,7 @@
 import type { ChartData, ChartDataset, ChartOptions } from "chart.js";
 import { html, LitElement, PropertyValues } from "lit";
 import { property, state } from "lit/decorators";
-import { getColorByIndex } from "../../common/color/colors";
+import { getGraphColorByIndex } from "../../common/color/colors";
 import {
   formatNumber,
   numberFormatToLocale,
@@ -164,7 +164,7 @@ class StateHistoryChartLine extends LitElement {
       const pushData = (timestamp: Date, datavalues: any[] | null) => {
         if (!datavalues) return;
         if (timestamp > endTime) {
-          // Drop datapoints that are after the requested endTime. This could happen if
+          // Drop data points that are after the requested endTime. This could happen if
           // endTime is "now" and client time is not in sync with server time.
           return;
         }
@@ -183,14 +183,9 @@ class StateHistoryChartLine extends LitElement {
         prevValues = datavalues;
       };
 
-      const addDataSet = (
-        nameY: string,
-        step = false,
-        fill = false,
-        color?: string
-      ) => {
+      const addDataSet = (nameY: string, fill = false, color?: string) => {
         if (!color) {
-          color = getColorByIndex(colorIndex);
+          color = getGraphColorByIndex(colorIndex, computedStyles);
           colorIndex++;
         }
         data.push({
@@ -198,7 +193,7 @@ class StateHistoryChartLine extends LitElement {
           fill: fill ? "origin" : false,
           borderColor: color,
           backgroundColor: color + "7F",
-          stepped: step ? "before" : false,
+          stepped: "before",
           pointRadius: 0,
           data: [],
         });
@@ -239,13 +234,11 @@ class StateHistoryChartLine extends LitElement {
         addDataSet(
           `${this.hass.localize("ui.card.climate.current_temperature", {
             name: name,
-          })}`,
-          true
+          })}`
         );
         if (hasHeat) {
           addDataSet(
             `${this.hass.localize("ui.card.climate.heating", { name: name })}`,
-            true,
             true,
             computedStyles.getPropertyValue("--state-climate-heat-color")
           );
@@ -255,7 +248,6 @@ class StateHistoryChartLine extends LitElement {
         if (hasCool) {
           addDataSet(
             `${this.hass.localize("ui.card.climate.cooling", { name: name })}`,
-            true,
             true,
             computedStyles.getPropertyValue("--state-climate-cool-color")
           );
@@ -268,22 +260,19 @@ class StateHistoryChartLine extends LitElement {
             `${this.hass.localize("ui.card.climate.target_temperature_mode", {
               name: name,
               mode: this.hass.localize("ui.card.climate.high"),
-            })}`,
-            true
+            })}`
           );
           addDataSet(
             `${this.hass.localize("ui.card.climate.target_temperature_mode", {
               name: name,
               mode: this.hass.localize("ui.card.climate.low"),
-            })}`,
-            true
+            })}`
           );
         } else {
           addDataSet(
             `${this.hass.localize("ui.card.climate.target_temperature_entity", {
               name: name,
-            })}`,
-            true
+            })}`
           );
         }
 
@@ -318,14 +307,12 @@ class StateHistoryChartLine extends LitElement {
         addDataSet(
           `${this.hass.localize("ui.card.humidifier.target_humidity_entity", {
             name: name,
-          })}`,
-          true
+          })}`
         );
         addDataSet(
           `${this.hass.localize("ui.card.humidifier.on_entity", {
             name: name,
           })}`,
-          true,
           true
         );
 
@@ -337,9 +324,7 @@ class StateHistoryChartLine extends LitElement {
           pushData(new Date(entityState.last_changed), series);
         });
       } else {
-        // Only disable interpolation for sensors
-        const isStep = domain === "sensor";
-        addDataSet(name, isStep);
+        addDataSet(name);
 
         let lastValue: number;
         let lastDate: Date;

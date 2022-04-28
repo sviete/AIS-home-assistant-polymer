@@ -1,4 +1,3 @@
-import "@material/mwc-icon-button";
 import {
   mdiCog,
   mdiContentDuplicate,
@@ -12,6 +11,7 @@ import memoizeOne from "memoize-one";
 import { DataTableColumnContainer } from "../../../components/data-table/ha-data-table";
 import "../../../components/ha-card";
 import "../../../components/ha-fab";
+import "../../../components/ha-icon-button";
 import "../../../components/ha-relative-time";
 import { showAutomationEditor, TagTrigger } from "../../../data/automation";
 import {
@@ -28,7 +28,6 @@ import {
   showAlertDialog,
   showConfirmationDialog,
 } from "../../../dialogs/generic/show-dialog-box";
-import { getExternalConfig } from "../../../external_app/external_config";
 import "../../../layouts/hass-tabs-subpage-data-table";
 import { SubscribeMixin } from "../../../mixins/subscribe-mixin";
 import { HomeAssistant, Route } from "../../../types";
@@ -53,17 +52,16 @@ export class HaConfigTags extends SubscribeMixin(LitElement) {
 
   @state() private _tags: Tag[] = [];
 
-  @state() private _canWriteTags = false;
+  private get _canWriteTags() {
+    return this.hass.auth.external?.config.canWriteTag;
+  }
 
   private _columns = memoizeOne(
-    (
-      narrow: boolean,
-      canWriteTags: boolean,
-      _language
-    ): DataTableColumnContainer => {
+    (narrow: boolean, _language): DataTableColumnContainer => {
       const columns: DataTableColumnContainer = {
         icon: {
           title: "",
+          label: this.hass.localize("ui.panel.config.tag.headers.icon"),
           type: "icon",
           template: (_icon, tag) => html`<tag-image .tag=${tag}></tag-image>`,
         },
@@ -103,40 +101,38 @@ export class HaConfigTags extends SubscribeMixin(LitElement) {
           `,
         };
       }
-      if (canWriteTags) {
+      if (this._canWriteTags) {
         columns.write = {
           title: "",
+          label: this.hass.localize("ui.panel.config.tag.headers.write"),
           type: "icon-button",
-          template: (_write, tag: any) => html` <mwc-icon-button
+          template: (_write, tag: any) => html` <ha-icon-button
             .tag=${tag}
             @click=${this._handleWriteClick}
-            title=${this.hass.localize("ui.panel.config.tag.write")}
-          >
-            <ha-svg-icon .path=${mdiContentDuplicate}></ha-svg-icon>
-          </mwc-icon-button>`,
+            .label=${this.hass.localize("ui.panel.config.tag.write")}
+            .path=${mdiContentDuplicate}
+          ></ha-icon-button>`,
         };
       }
       columns.automation = {
         title: "",
         type: "icon-button",
-        template: (_automation, tag: any) => html` <mwc-icon-button
+        template: (_automation, tag: any) => html` <ha-icon-button
           .tag=${tag}
           @click=${this._handleAutomationClick}
-          title=${this.hass.localize("ui.panel.config.tag.create_automation")}
-        >
-          <ha-svg-icon .path=${mdiRobot}></ha-svg-icon>
-        </mwc-icon-button>`,
+          .label=${this.hass.localize("ui.panel.config.tag.create_automation")}
+          .path=${mdiRobot}
+        ></ha-icon-button>`,
       };
       columns.edit = {
         title: "",
         type: "icon-button",
-        template: (_settings, tag: any) => html` <mwc-icon-button
+        template: (_settings, tag: any) => html` <ha-icon-button
           .tag=${tag}
           @click=${this._handleEditClick}
-          title=${this.hass.localize("ui.panel.config.tag.edit")}
-        >
-          <ha-svg-icon .path=${mdiCog}></ha-svg-icon>
-        </mwc-icon-button>`,
+          .label=${this.hass.localize("ui.panel.config.tag.edit")}
+          .path=${mdiCog}
+        ></ha-icon-button>`,
       };
       return columns;
     }
@@ -155,11 +151,6 @@ export class HaConfigTags extends SubscribeMixin(LitElement) {
   protected firstUpdated(changedProperties: PropertyValues) {
     super.firstUpdated(changedProperties);
     this._fetchTags();
-    if (this.hass && this.hass.auth.external) {
-      getExternalConfig(this.hass.auth.external).then((conf) => {
-        this._canWriteTags = conf.canWriteTag;
-      });
-    }
   }
 
   protected hassSubscribe() {
@@ -183,19 +174,18 @@ export class HaConfigTags extends SubscribeMixin(LitElement) {
         .narrow=${this.narrow}
         back-path="/config"
         .route=${this.route}
-        .tabs=${configSections.experiences}
-        .columns=${this._columns(
-          this.narrow,
-          this._canWriteTags,
-          this.hass.language
-        )}
+        .tabs=${configSections.tags}
+        .columns=${this._columns(this.narrow, this.hass.language)}
         .data=${this._data(this._tags)}
         .noDataText=${this.hass.localize("ui.panel.config.tag.no_tags")}
         hasFab
       >
-        <mwc-icon-button slot="toolbar-icon" @click=${this._showHelp}>
-          <ha-svg-icon .path=${mdiHelpCircle}></ha-svg-icon>
-        </mwc-icon-button>
+        <ha-icon-button
+          slot="toolbar-icon"
+          @click=${this._showHelp}
+          .label=${this.hass.localize("ui.common.help")}
+          .path=${mdiHelpCircle}
+        ></ha-icon-button>
         <ha-fab
           slot="fab"
           .label=${this.hass.localize("ui.panel.config.tag.add_tag")}

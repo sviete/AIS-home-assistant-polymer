@@ -10,7 +10,7 @@ module.exports.ignorePackages = ({ latestBuild }) => [
 ];
 
 // Files from NPM packages that we should replace with empty file
-module.exports.emptyPackages = ({ latestBuild }) =>
+module.exports.emptyPackages = ({ latestBuild, isHassioBuild }) =>
   [
     // Contains all color definitions for all material color sets.
     // We don't use it
@@ -28,6 +28,15 @@ module.exports.emptyPackages = ({ latestBuild }) =>
       ),
     // This polyfill is loaded in workers to support ES5, filter it out.
     latestBuild && require.resolve("proxy-polyfill/src/index.js"),
+    // Icons in supervisor conflict with icons in HA so we don't load.
+    isHassioBuild &&
+      require.resolve(
+        path.resolve(paths.polymer_dir, "src/components/ha-icon.ts")
+      ),
+    isHassioBuild &&
+      require.resolve(
+        path.resolve(paths.polymer_dir, "src/components/ha-icon-picker.ts")
+      ),
   ].filter(Boolean);
 
 module.exports.definedVars = ({ isProdBuild, latestBuild, defineOverlay }) => ({
@@ -165,6 +174,7 @@ module.exports.config = {
   cast({ isProdBuild, latestBuild }) {
     const entry = {
       launcher: path.resolve(paths.cast_dir, "src/launcher/entrypoint.ts"),
+      media: path.resolve(paths.cast_dir, "src/media/entrypoint.ts"),
     };
 
     if (latestBuild) {
@@ -195,6 +205,7 @@ module.exports.config = {
       publicPath: publicPath(latestBuild, paths.hassio_publicPath),
       isProdBuild,
       latestBuild,
+      isHassioBuild: true,
       defineOverlay: {
         __SUPERVISOR__: true,
       },
@@ -210,6 +221,9 @@ module.exports.config = {
       publicPath: publicPath(latestBuild),
       isProdBuild,
       latestBuild,
+      defineOverlay: {
+        __DEMO__: true,
+      },
     };
   },
 };

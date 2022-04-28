@@ -1,20 +1,6 @@
-import "@material/mwc-icon-button/mwc-icon-button";
-import { mdiCheck, mdiClose, mdiMenuDown, mdiMenuUp } from "@mdi/js";
-import "@polymer/paper-input/paper-input";
-import "@polymer/paper-item/paper-item";
-import "@polymer/paper-item/paper-item-body";
-import "@polymer/paper-listbox/paper-listbox";
-import "@vaadin/vaadin-combo-box/theme/material/vaadin-combo-box-light";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
-import {
-  css,
-  CSSResultGroup,
-  html,
-  LitElement,
-  PropertyValues,
-  TemplateResult,
-} from "lit";
-import { ComboBoxLitRenderer, comboBoxRenderer } from "lit-vaadin-helpers";
+import { html, LitElement, PropertyValues, TemplateResult } from "lit";
+import { ComboBoxLitRenderer } from "lit-vaadin-helpers";
 import { customElement, property, query, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
 import memoizeOne from "memoize-one";
@@ -42,37 +28,18 @@ import { SubscribeMixin } from "../mixins/subscribe-mixin";
 import { PolymerChangedEvent } from "../polymer-types";
 import { HomeAssistant } from "../types";
 import type { HaDevicePickerDeviceFilterFunc } from "./device/ha-device-picker";
+import "./ha-combo-box";
+import type { HaComboBox } from "./ha-combo-box";
+import "./ha-icon-button";
 import "./ha-svg-icon";
 
 const rowRenderer: ComboBoxLitRenderer<AreaRegistryEntry> = (
   item
-  // eslint-disable-next-line lit/prefer-static-styles
-) => html`<style>
-    paper-item {
-      padding: 0;
-      margin: -10px;
-      margin-left: 0;
-    }
-    #content {
-      display: flex;
-      align-items: center;
-    }
-    ha-svg-icon {
-      padding-left: 2px;
-      margin-right: -2px;
-      color: var(--secondary-text-color);
-    }
-    :host(:not([selected])) ha-svg-icon {
-      display: none;
-    }
-    :host([selected]) paper-item {
-      margin-left: 10px;
-    }
-  </style>
-  <ha-svg-icon .path=${mdiCheck}></ha-svg-icon>
-  <paper-item class=${classMap({ "add-new": item.area_id === "add_new" })}>
-    <paper-item-body two-line>${item.name}</paper-item-body>
-  </paper-item>`;
+) => html`<mwc-list-item
+  class=${classMap({ "add-new": item.area_id === "add_new" })}
+>
+  ${item.name}
+</mwc-list-item>`;
 
 @customElement("ha-area-picker")
 export class HaAreaPicker extends SubscribeMixin(LitElement) {
@@ -81,6 +48,8 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
   @property() public label?: string;
 
   @property() public value?: string;
+
+  @property() public helper?: string;
 
   @property() public placeholder?: string;
 
@@ -117,6 +86,8 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
 
   @property({ type: Boolean }) public disabled?: boolean;
 
+  @property({ type: Boolean }) public required?: boolean;
+
   @state() private _areas?: AreaRegistryEntry[];
 
   @state() private _devices?: DeviceRegistryEntry[];
@@ -125,7 +96,9 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
 
   @state() private _opened?: boolean;
 
-  @query("vaadin-combo-box-light", true) public comboBox!: HTMLElement;
+  @query("ha-combo-box", true) public comboBox!: HaComboBox;
+
+  private _filter?: string;
 
   private _init = false;
 
@@ -145,13 +118,13 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
 
   public open() {
     this.updateComplete.then(() => {
-      (this.shadowRoot?.querySelector("vaadin-combo-box-light") as any)?.open();
+      this.comboBox?.open();
     });
   }
 
   public focus() {
     this.updateComplete.then(() => {
-      this.shadowRoot?.querySelector("paper-input")?.focus();
+      this.comboBox?.focus();
     });
   }
 
@@ -170,8 +143,9 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
       if (!areas.length) {
         return [
           {
-            area_id: "",
+            area_id: "no_areas",
             name: this.hass.localize("ui.components.area-picker.no_areas"),
+            picture: null,
           },
         ];
       }
@@ -293,8 +267,9 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
       if (!outputAreas.length) {
         outputAreas = [
           {
-            area_id: "",
+            area_id: "no_areas",
             name: this.hass.localize("ui.components.area-picker.no_match"),
+            picture: null,
           },
         ];
       }
@@ -306,6 +281,7 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
             {
               area_id: "add_new",
               name: this.hass.localize("ui.components.area-picker.add_new"),
+              picture: null,
             },
           ];
     }
@@ -336,56 +312,27 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
       return html``;
     }
     return html`
-      <vaadin-combo-box-light
+      <ha-combo-box
+        .hass=${this.hass}
+        .helper=${this.helper}
         item-value-path="area_id"
         item-id-path="area_id"
         item-label-path="name"
-        .value=${this._value}
+        .value=${this.value}
         .disabled=${this.disabled}
-        ${comboBoxRenderer(rowRenderer)}
+        .required=${this.required}
+        .label=${this.label === undefined && this.hass
+          ? this.hass.localize("ui.components.area-picker.area")
+          : this.label}
+        .placeholder=${this.placeholder
+          ? this._area(this.placeholder)?.name
+          : undefined}
+        .renderer=${rowRenderer}
+        @filter-changed=${this._filterChanged}
         @opened-changed=${this._openedChanged}
         @value-changed=${this._areaChanged}
       >
-        <paper-input
-          .label=${this.label === undefined && this.hass
-            ? this.hass.localize("ui.components.area-picker.area")
-            : this.label}
-          .placeholder=${this.placeholder
-            ? this._area(this.placeholder)?.name
-            : undefined}
-          .disabled=${this.disabled}
-          class="input"
-          autocapitalize="none"
-          autocomplete="off"
-          autocorrect="off"
-          spellcheck="false"
-        >
-          ${this.value
-            ? html`
-                <mwc-icon-button
-                  .label=${this.hass.localize(
-                    "ui.components.area-picker.clear"
-                  )}
-                  slot="suffix"
-                  class="clear-button"
-                  @click=${this._clearValue}
-                >
-                  <ha-svg-icon .path=${mdiClose}></ha-svg-icon>
-                </mwc-icon-button>
-              `
-            : ""}
-
-          <mwc-icon-button
-            .label=${this.hass.localize("ui.components.area-picker.toggle")}
-            slot="suffix"
-            class="toggle-button"
-          >
-            <ha-svg-icon
-              .path=${this._opened ? mdiMenuUp : mdiMenuDown}
-            ></ha-svg-icon>
-          </mwc-icon-button>
-        </paper-input>
-      </vaadin-combo-box-light>
+      </ha-combo-box>
     `;
   }
 
@@ -393,9 +340,29 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
     this._areas?.find((area) => area.area_id === areaId)
   );
 
-  private _clearValue(ev: Event) {
-    ev.stopPropagation();
-    this._setValue("");
+  private _filterChanged(ev: CustomEvent): void {
+    this._filter = ev.detail.value;
+    if (!this._filter) {
+      this.comboBox.filteredItems = this.comboBox.items;
+      return;
+    }
+    // @ts-ignore
+    if (!this.noAdd && this.comboBox._comboBox.filteredItems?.length === 0) {
+      this.comboBox.filteredItems = [
+        {
+          area_id: "add_new_suggestion",
+          name: this.hass.localize(
+            "ui.components.area-picker.add_new_sugestion",
+            { name: this._filter }
+          ),
+          picture: null,
+        },
+      ];
+    } else {
+      this.comboBox.filteredItems = this.comboBox.items?.filter((item) =>
+        item.name.toLowerCase().includes(this._filter!.toLowerCase())
+      );
+    }
   }
 
   private get _value() {
@@ -407,9 +374,14 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
   }
 
   private _areaChanged(ev: PolymerChangedEvent<string>) {
-    const newValue = ev.detail.value;
+    ev.stopPropagation();
+    let newValue = ev.detail.value;
 
-    if (newValue !== "add_new") {
+    if (newValue === "no_areas") {
+      newValue = "";
+    }
+
+    if (!["add_new_suggestion", "add_new"].includes(newValue)) {
       if (newValue !== this._value) {
         this._setValue(newValue);
       }
@@ -426,6 +398,8 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
       inputLabel: this.hass.localize(
         "ui.components.area-picker.add_dialog.name"
       ),
+      defaultValue:
+        newValue === "add_new_suggestion" ? this._filter : undefined,
       confirm: async (name) => {
         if (!name) {
           return;
@@ -435,12 +409,26 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
             name,
           });
           this._areas = [...this._areas!, area];
+          (this.comboBox as any).items = this._getAreas(
+            this._areas!,
+            this._devices!,
+            this._entities!,
+            this.includeDomains,
+            this.excludeDomains,
+            this.includeDeviceClasses,
+            this.deviceFilter,
+            this.entityFilter,
+            this.noAdd
+          );
+          await this.updateComplete;
+          await this.comboBox.updateComplete;
           this._setValue(area.area_id);
         } catch (err: any) {
           showAlertDialog(this, {
-            text: this.hass.localize(
+            title: this.hass.localize(
               "ui.components.area-picker.add_dialog.failed_create_area"
             ),
+            text: err.message,
           });
         }
       },
@@ -453,19 +441,6 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
       fireEvent(this, "value-changed", { value });
       fireEvent(this, "change");
     }, 0);
-  }
-
-  static get styles(): CSSResultGroup {
-    return css`
-      paper-input > mwc-icon-button {
-        --mdc-icon-button-size: 24px;
-        padding: 2px;
-        color: var(--secondary-text-color);
-      }
-      [hidden] {
-        display: none;
-      }
-    `;
   }
 }
 

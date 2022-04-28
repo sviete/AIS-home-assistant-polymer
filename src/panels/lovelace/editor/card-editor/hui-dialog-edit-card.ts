@@ -8,13 +8,14 @@ import {
   PropertyValues,
   TemplateResult,
 } from "lit";
-import { customElement, property, state, query } from "lit/decorators";
+import { customElement, property, query, state } from "lit/decorators";
 import type { HASSDomEvent } from "../../../../common/dom/fire_event";
 import { fireEvent } from "../../../../common/dom/fire_event";
 import { computeRTLDirection } from "../../../../common/util/compute_rtl";
 import "../../../../components/ha-circular-progress";
 import "../../../../components/ha-dialog";
 import "../../../../components/ha-header-bar";
+import "../../../../components/ha-icon-button";
 import type {
   LovelaceCardConfig,
   LovelaceViewConfig,
@@ -74,6 +75,8 @@ export class HuiDialogEditCard
 
   @state() private _dirty = false;
 
+  @state() private _isEscapeEnabled = true;
+
   public async showDialog(params: EditCardDialogParams): Promise<void> {
     this._params = params;
     this._GUImode = true;
@@ -92,6 +95,9 @@ export class HuiDialogEditCard
   }
 
   public closeDialog(): boolean {
+    this._isEscapeEnabled = true;
+    window.removeEventListener("dialog-closed", this._enableEscapeKeyClose);
+    window.removeEventListener("hass-more-info", this._disableEscapeKeyClose);
     if (this._dirty) {
       this._confirmCancel();
       return false;
@@ -123,6 +129,16 @@ export class HuiDialogEditCard
       );
     }
   }
+
+  private _enableEscapeKeyClose = (ev: any) => {
+    if (ev.detail.dialog === "ha-more-info-dialog") {
+      this._isEscapeEnabled = true;
+    }
+  };
+
+  private _disableEscapeKeyClose = () => {
+    this._isEscapeEnabled = false;
+  };
 
   protected render(): TemplateResult {
     if (!this._params) {
@@ -156,10 +172,11 @@ export class HuiDialogEditCard
       <ha-dialog
         open
         scrimClickAction
+        .escapeKeyAction=${this._isEscapeEnabled ? undefined : ""}
         @keydown=${this._ignoreKeydown}
         @closed=${this._cancel}
         @opened=${this._opened}
-        .heading=${true}
+        .heading=${heading}
       >
         <div slot="heading">
           <ha-header-bar>
@@ -175,9 +192,7 @@ export class HuiDialogEditCard
                     rel="noreferrer"
                     dir=${computeRTLDirection(this.hass)}
                   >
-                    <mwc-icon-button>
-                      <ha-svg-icon .path=${mdiHelpCircle}></ha-svg-icon>
-                    </mwc-icon-button>
+                    <ha-icon-button .path=${mdiHelpCircle}></ha-icon-button>
                   </a>
                 `
               : ""}
@@ -192,6 +207,7 @@ export class HuiDialogEditCard
               @config-changed=${this._handleConfigChanged}
               @GUImode-changed=${this._handleGUIModeChanged}
               @editor-save=${this._save}
+              dialogInitialFocus
             ></hui-card-element-editor>
           </div>
           <div class="element-preview">
@@ -227,10 +243,10 @@ export class HuiDialogEditCard
             `
           : ""}
         <div slot="primaryAction" @click=${this._save}>
-          <mwc-button @click=${this._cancel}>
+          <mwc-button @click=${this._cancel} dialogInitialFocus>
             ${this.hass!.localize("ui.common.cancel")}
           </mwc-button>
-          ${this._cardConfig !== undefined
+          ${this._cardConfig !== undefined && this._dirty
             ? html`
                 <mwc-button
                   ?disabled=${!this._canSave || this._saving}
@@ -244,9 +260,7 @@ export class HuiDialogEditCard
                           size="small"
                         ></ha-circular-progress>
                       `
-                    : this._dirty
-                    ? this.hass!.localize("ui.common.save")
-                    : this.hass!.localize("ui.common.close")}
+                    : this.hass!.localize("ui.common.save")}
                 </mwc-button>
               `
             : ``}
@@ -281,6 +295,8 @@ export class HuiDialogEditCard
   }
 
   private _opened() {
+    window.addEventListener("dialog-closed", this._enableEscapeKeyClose);
+    window.addEventListener("hass-more-info", this._disableEscapeKeyClose);
     this._cardEditorEl?.focusYamlEditor();
   }
 

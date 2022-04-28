@@ -8,13 +8,12 @@ import {
   Node,
 } from "vis-network/peer/esm/vis-network";
 import { navigate } from "../../../../../common/navigate";
-import "../../../../../common/search/search-input";
+import "../../../../../components/search-input";
 import "../../../../../components/device/ha-device-picker";
 import "../../../../../components/ha-button-menu";
 import "../../../../../components/ha-checkbox";
 import type { HaCheckbox } from "../../../../../components/ha-checkbox";
 import "../../../../../components/ha-formfield";
-import "../../../../../components/ha-svg-icon";
 import { DeviceRegistryEntry } from "../../../../../data/device_registry";
 import {
   fetchDevices,
@@ -59,6 +58,8 @@ export class ZHANetworkVisualizationPage extends LitElement {
   private _filter?: string;
 
   private _autoZoom = true;
+
+  private _enablePhysics = true;
 
   protected firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
@@ -142,8 +143,7 @@ export class ZHANetworkVisualizationPage extends LitElement {
           ? html`
               <div slot="header">
                 <search-input
-                  no-label-float
-                  no-underline
+                  .hass=${this.hass}
                   class="header"
                   @value-changed=${this._handleSearchChange}
                   .filter=${this._filter}
@@ -158,8 +158,7 @@ export class ZHANetworkVisualizationPage extends LitElement {
         <div class="header">
           ${!this.narrow
             ? html`<search-input
-                no-label-float
-                no-underline
+                .hass=${this.hass}
                 @value-changed=${this._handleSearchChange}
                 .filter=${this._filter}
                 .label=${this.hass.localize(
@@ -183,11 +182,21 @@ export class ZHANetworkVisualizationPage extends LitElement {
               )}
             >
               <ha-checkbox
-                @change=${this._handleCheckboxChange}
+                @change=${this._handleAutoZoomCheckboxChange}
                 .checked=${this._autoZoom}
               >
               </ha-checkbox>
             </ha-formfield>
+            <ha-formfield
+              .label=${this.hass!.localize(
+                "ui.panel.config.zha.visualization.enable_physics"
+              )}
+              ><ha-checkbox
+                @change=${this._handlePhysicsCheckboxChange}
+                .checked=${this._enablePhysics}
+              >
+              </ha-checkbox
+            ></ha-formfield>
             <mwc-button @click=${this._refreshTopology}>
               ${this.hass!.localize(
                 "ui.panel.config.zha.visualization.refresh_topology"
@@ -232,11 +241,11 @@ export class ZHANetworkVisualizationPage extends LitElement {
               from: device.ieee,
               to: neighbor.ieee,
               label: neighbor.lqi + "",
-              color: this._getLQI(neighbor.lqi),
+              color: this._getLQI(parseInt(neighbor.lqi)),
             });
           } else {
             edges[idx].color = this._getLQI(
-              (parseInt(edges[idx].label!) + neighbor.lqi) / 2
+              (parseInt(edges[idx].label!) + parseInt(neighbor.lqi)) / 2
             );
             edges[idx].label += "/" + neighbor.lqi;
           }
@@ -373,8 +382,26 @@ export class ZHANetworkVisualizationPage extends LitElement {
     return false;
   };
 
-  private _handleCheckboxChange(ev: Event) {
+  private _handleAutoZoomCheckboxChange(ev: Event) {
     this._autoZoom = (ev.target as HaCheckbox).checked;
+  }
+
+  private _handlePhysicsCheckboxChange(ev: Event) {
+    this._enablePhysics = (ev.target as HaCheckbox).checked;
+
+    this._network!.setOptions(
+      this._enablePhysics
+        ? {
+            physics: {
+              barnesHut: {
+                springConstant: 0,
+                avoidOverlap: 10,
+                damping: 0.09,
+              },
+            },
+          }
+        : { physics: false }
+    );
   }
 
   static get styles(): CSSResultGroup {
@@ -409,19 +436,15 @@ export class ZHANetworkVisualizationPage extends LitElement {
 
         search-input {
           flex: 1;
+          display: block;
         }
 
         search-input.header {
-          display: block;
-          position: relative;
-          top: -2px;
           color: var(--secondary-text-color);
         }
 
         ha-device-picker {
           flex: 1;
-          position: relative;
-          top: -4px;
         }
 
         .controls {

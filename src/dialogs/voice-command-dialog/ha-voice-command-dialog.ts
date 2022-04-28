@@ -1,8 +1,6 @@
 /* eslint-disable lit/prefer-static-styles */
-import "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
-import type { PaperDialogScrollableElement } from "@polymer/paper-dialog-scrollable/paper-dialog-scrollable";
-import "@polymer/paper-input/paper-input";
-import type { PaperInputElement } from "@polymer/paper-input/paper-input";
+import "@material/mwc-button/mwc-button";
+import { mdiMicrophone } from "@mdi/js";
 import {
   css,
   CSSResultGroup,
@@ -11,13 +9,16 @@ import {
   PropertyValues,
   TemplateResult,
 } from "lit";
-import { customElement, property, state, query } from "lit/decorators";
+import { customElement, property, query, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
 import { fireEvent } from "../../common/dom/fire_event";
 import { SpeechRecognition } from "../../common/dom/speech-recognition";
 import { uid } from "../../common/util/uid";
-import "../../components/dialog/ha-paper-dialog";
+import "../../components/ha-dialog";
+import type { HaDialog } from "../../components/ha-dialog";
 import "../../components/ha-icon-button";
+import "../../components/ha-textfield";
+import type { HaTextField } from "../../components/ha-textfield";
 import {
   AgentInfo,
   getAgentInfo,
@@ -55,7 +56,7 @@ export class HaVoiceCommandDialog extends LitElement {
 
   @state() private _agentInfo?: AgentInfo;
 
-  @query("#messages", true) private messages!: PaperDialogScrollableElement;
+  @query("ha-dialog", true) private _dialog!: HaDialog;
 
   private recognition!: SpeechRecognition;
 
@@ -69,74 +70,42 @@ export class HaVoiceCommandDialog extends LitElement {
     this._agentInfo = await getAgentInfo(this.hass);
   }
 
+  public async closeDialog(): Promise<void> {
+    this._opened = false;
+    if (this.recognition) {
+      this.recognition.abort();
+    }
+    fireEvent(this, "dialog-closed", { dialog: this.localName });
+  }
+
   protected render(): TemplateResult {
-    // CSS custom property mixins only work in render https://github.com/Polymer/lit-element/issues/633
+    if (!this._opened) {
+      return html``;
+    }
     return html`
-      <style>
-        paper-dialog-scrollable {
-          --paper-dialog-scrollable: {
-            -webkit-overflow-scrolling: auto;
-            max-height: 50vh !important;
-          }
-        }
-
-        paper-dialog-scrollable.can-scroll {
-          --paper-dialog-scrollable: {
-            -webkit-overflow-scrolling: touch;
-            max-height: 50vh !important;
-          }
-        }
-
-        @media all and (max-width: 450px), all and (max-height: 500px) {
-          paper-dialog-scrollable {
-            --paper-dialog-scrollable: {
-              -webkit-overflow-scrolling: auto;
-              max-height: calc(100vh - 175px) !important;
-            }
-          }
-
-          paper-dialog-scrollable.can-scroll {
-            --paper-dialog-scrollable: {
-              -webkit-overflow-scrolling: touch;
-              max-height: calc(100vh - 175px) !important;
-            }
-          }
-        }
-      </style>
-      <ha-paper-dialog
-        with-backdrop
-        .opened=${this._opened}
-        @opened-changed=${this._openedChanged}
-      >
-        ${this._agentInfo && this._agentInfo.onboarding
-          ? html`
-              <div class="onboarding">
-                ${this._agentInfo.onboarding.text}
-                <div class="side-by-side" @click=${this._completeOnboarding}>
-                  <a
-                    class="button"
-                    href=${this._agentInfo.onboarding.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    ><mwc-button unelevated
-                      >${this.hass.localize("ui.common.yes")}!</mwc-button
-                    ></a
-                  >
-                  <mwc-button outlined
-                    >${this.hass.localize("ui.common.no")}</mwc-button
-                  >
+      <ha-dialog open @closed=${this.closeDialog}>
+        <div>
+          ${this._agentInfo && this._agentInfo.onboarding
+            ? html`
+                <div class="onboarding">
+                  ${this._agentInfo.onboarding.text}
+                  <div class="side-by-side" @click=${this._completeOnboarding}>
+                    <a
+                      class="button"
+                      href=${this._agentInfo.onboarding.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      ><mwc-button unelevated
+                        >${this.hass.localize("ui.common.yes")}!</mwc-button
+                      ></a
+                    >
+                    <mwc-button outlined
+                      >${this.hass.localize("ui.common.no")}</mwc-button
+                    >
+                  </div>
                 </div>
-              </div>
-            `
-          : ""}
-        <paper-dialog-scrollable
-          id="messages"
-          class=${classMap({
-            "top-border": Boolean(
-              this._agentInfo && this._agentInfo.onboarding
-            ),
-          })}
-        >
+              `
+            : ""}
           ${this._conversation.map(
             (message) => html`
               <div class=${this._computeMessageClasses(message)}>
@@ -156,9 +125,9 @@ export class HaVoiceCommandDialog extends LitElement {
                 </div>
               `
             : ""}
-        </paper-dialog-scrollable>
-        <div class="input">
-          <paper-input
+        </div>
+        <div class="input" slot="primaryAction">
+          <ha-textfield
             @keyup=${this._handleKeyUp}
             .label=${this.hass.localize(
               `ui.dialogs.voice_command.${
@@ -167,11 +136,12 @@ export class HaVoiceCommandDialog extends LitElement {
                   : "label"
               }`
             )}
-            autofocus
+            dialogInitialFocus
+            iconTrailing
           >
             ${SpeechRecognition && location.protocol === "https:"
               ? html`
-                  <span suffix="" slot="suffix">
+                  <span slot="trailingIcon">
                     ${this.results
                       ? html`
                           <div class="bouncer">
@@ -181,14 +151,14 @@ export class HaVoiceCommandDialog extends LitElement {
                         `
                       : ""}
                     <ha-icon-button
-                      icon="hass:microphone"
+                      .path=${mdiMicrophone}
                       @click=${this._toggleListening}
                     >
                     </ha-icon-button>
                   </span>
                 `
               : ""}
-          </paper-input>
+          </ha-textfield>
           ${this._agentInfo && this._agentInfo.attribution
             ? html`
                 <a
@@ -201,7 +171,7 @@ export class HaVoiceCommandDialog extends LitElement {
               `
             : ""}
         </div>
-      </ha-paper-dialog>
+      </ha-dialog>
     `;
   }
 
@@ -228,7 +198,7 @@ export class HaVoiceCommandDialog extends LitElement {
   }
 
   private _handleKeyUp(ev: KeyboardEvent) {
-    const input = ev.target as PaperInputElement;
+    const input = ev.target as HaTextField;
     if (ev.keyCode === 13 && input.value) {
       this._processText(input.value);
       input.value = "";
@@ -347,18 +317,7 @@ export class HaVoiceCommandDialog extends LitElement {
   }
 
   private _scrollMessagesBottom() {
-    this.messages.scrollTarget.scrollTop =
-      this.messages.scrollTarget.scrollHeight;
-    if (this.messages.scrollTarget.scrollTop === 0) {
-      fireEvent(this.messages, "iron-resize");
-    }
-  }
-
-  private _openedChanged(ev: CustomEvent) {
-    this._opened = ev.detail.value;
-    if (!this._opened && this.recognition) {
-      this.recognition.abort();
-    }
+    this._dialog.scrollToPos(0, 99999);
   }
 
   private _computeMessageClasses(message: Message) {
@@ -369,24 +328,22 @@ export class HaVoiceCommandDialog extends LitElement {
     return [
       haStyleDialog,
       css`
-        :host {
-          z-index: 103;
-        }
-
         ha-icon-button {
           color: var(--secondary-text-color);
+          margin-right: -24px;
         }
 
         ha-icon-button[active] {
           color: var(--primary-color);
         }
 
-        .input {
-          margin: 0 0 16px 0;
+        ha-dialog {
+          --primary-action-button-flex: 1;
+          --secondary-action-button-flex: 0;
+          --mdc-dialog-max-width: 450px;
         }
-
-        ha-paper-dialog {
-          width: 450px;
+        ha-textfield {
+          display: block;
         }
         a.button {
           text-decoration: none;
@@ -395,16 +352,7 @@ export class HaVoiceCommandDialog extends LitElement {
           width: 100%;
         }
         .onboarding {
-          padding: 0 24px;
-        }
-        paper-dialog-scrollable.top-border::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 1px;
-          background: var(--divider-color);
+          border-bottom: 1px solid var(--divider-color);
         }
         .side-by-side {
           display: flex;
@@ -464,7 +412,6 @@ export class HaVoiceCommandDialog extends LitElement {
           width: 48px;
           height: 48px;
           position: absolute;
-          top: 0;
         }
         .double-bounce1,
         .double-bounce2 {

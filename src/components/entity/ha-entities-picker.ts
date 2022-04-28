@@ -1,5 +1,5 @@
 import type { HassEntity } from "home-assistant-js-websocket";
-import { html, LitElement, TemplateResult } from "lit";
+import { css, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
 import { fireEvent } from "../../common/dom/fire_event";
 import { isValidEntityId } from "../../common/entity/valid_entity_id";
@@ -13,6 +13,10 @@ class HaEntitiesPickerLight extends LitElement {
   @property({ attribute: false }) public hass?: HomeAssistant;
 
   @property({ type: Array }) public value?: string[];
+
+  @property({ type: Boolean }) public required?: boolean;
+
+  @property() public helper?: string;
 
   /**
    * Show entities from specific domains.
@@ -46,10 +50,28 @@ class HaEntitiesPickerLight extends LitElement {
   @property({ type: Array, attribute: "include-unit-of-measurement" })
   public includeUnitOfMeasurement?: string[];
 
+  /**
+   * List of allowed entities to show. Will ignore all other filters.
+   * @type {Array}
+   * @attr include-entities
+   */
+  @property({ type: Array, attribute: "include-entities" })
+  public includeEntities?: string[];
+
+  /**
+   * List of entities to be excluded.
+   * @type {Array}
+   * @attr exclude-entities
+   */
+  @property({ type: Array, attribute: "exclude-entities" })
+  public excludeEntities?: string[];
+
   @property({ attribute: "picked-entity-label" })
   public pickedEntityLabel?: string;
 
   @property({ attribute: "pick-entity-label" }) public pickEntityLabel?: string;
+
+  @property() public entityFilter?: HaEntityPickerEntityFilterFunc;
 
   protected render(): TemplateResult {
     if (!this.hass) {
@@ -67,6 +89,8 @@ class HaEntitiesPickerLight extends LitElement {
               .hass=${this.hass}
               .includeDomains=${this.includeDomains}
               .excludeDomains=${this.excludeDomains}
+              .includeEntities=${this.includeEntities}
+              .excludeEntities=${this.excludeEntities}
               .includeDeviceClasses=${this.includeDeviceClasses}
               .includeUnitOfMeasurement=${this.includeUnitOfMeasurement}
               .entityFilter=${this._entityFilter}
@@ -82,10 +106,14 @@ class HaEntitiesPickerLight extends LitElement {
           .hass=${this.hass}
           .includeDomains=${this.includeDomains}
           .excludeDomains=${this.excludeDomains}
+          .includeEntities=${this.includeEntities}
+          .excludeEntities=${this.excludeEntities}
           .includeDeviceClasses=${this.includeDeviceClasses}
           .includeUnitOfMeasurement=${this.includeUnitOfMeasurement}
           .entityFilter=${this._entityFilter}
           .label=${this.pickEntityLabel}
+          .helper=${this.helper}
+          .required=${this.required && !currentEntities.length}
           @value-changed=${this._addEntity}
         ></ha-entity-picker>
       </div>
@@ -94,7 +122,9 @@ class HaEntitiesPickerLight extends LitElement {
 
   private _entityFilter: HaEntityPickerEntityFilterFunc = (
     stateObj: HassEntity
-  ) => !this.value || !this.value.includes(stateObj.entity_id);
+  ) =>
+    (!this.value || !this.value.includes(stateObj.entity_id)) &&
+    (!this.entityFilter || this.entityFilter(stateObj));
 
   private get _currentEntities() {
     return this.value || [];
@@ -114,7 +144,7 @@ class HaEntitiesPickerLight extends LitElement {
     const newValue = event.detail.value;
     if (
       newValue === curValue ||
-      (newValue !== "" && !isValidEntityId(newValue))
+      (newValue !== undefined && !isValidEntityId(newValue))
     ) {
       return;
     }
@@ -145,6 +175,12 @@ class HaEntitiesPickerLight extends LitElement {
 
     this._updateEntities([...currentEntities, toAdd]);
   }
+
+  static override styles = css`
+    div {
+      margin-top: 8px;
+    }
+  `;
 }
 
 declare global {

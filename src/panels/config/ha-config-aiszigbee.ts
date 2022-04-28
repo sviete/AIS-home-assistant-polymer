@@ -1,7 +1,15 @@
 import "@material/mwc-list/mwc-list-item";
 import "../../components/ha-button-menu";
-import {css, CSSResultArray, html, LitElement, PropertyValues, TemplateResult} from "lit";
-import {customElement, property} from 'lit/decorators';
+import {
+  css,
+  CSSResultArray,
+  html,
+  LitElement,
+  PropertyValues,
+  TemplateResult,
+} from "lit";
+import { customElement, property } from "lit/decorators";
+import { mdiDotsVertical } from "@mdi/js";
 import { loadTokens } from "../../common/auth/token_storage";
 import "../../layouts/hass-loading-screen";
 import "../../layouts/hass-subpage";
@@ -14,7 +22,6 @@ import {
   showAisFileDialog,
   HaAisFileDialogParams,
 } from "../../dialogs/ais-files/show-dialog-ais-file";
-import { mdiDotsVertical } from "@mdi/js";
 
 @customElement("ha-config-aiszigbee")
 class ConfigAisZigbee extends LitElement {

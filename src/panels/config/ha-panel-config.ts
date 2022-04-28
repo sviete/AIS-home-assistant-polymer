@@ -1,6 +1,9 @@
 import {
   mdiAccount,
+  mdiBackupRestore,
   mdiBadgeAccountHorizontal,
+  mdiCellphoneCog,
+  mdiCog,
   mdiDevices,
   mdiHomeAssistant,
   mdiInformation,
@@ -10,7 +13,6 @@ import {
   mdiNfcVariant,
   mdiPalette,
   mdiPaletteSwatch,
-  mdiPencil,
   mdiPuzzle,
   mdiRobot,
   mdiScriptText,
@@ -25,8 +27,6 @@ import {
   mdiWifi,
   mdiZWave,
 } from "@mdi/js";
-import "@polymer/paper-item/paper-item";
-import "@polymer/paper-item/paper-item-body";
 import { PolymerElement } from "@polymer/polymer";
 import { PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators";
@@ -42,16 +42,98 @@ declare global {
   // for fire event
   interface HASSDomEvents {
     "ha-refresh-cloud-status": undefined;
+    "ha-refresh-supervisor": undefined;
   }
 }
 
 export const configSections: { [name: string]: PageNavigation[] } = {
-  integrations: [
+  dashboard: [
+    {
+      path: "/config/integrations",
+      translationKey: "devices",
+      iconPath: mdiDevices,
+      iconColor: "#0D47A1",
+      core: true,
+    },
+    {
+      path: "/config/automation",
+      translationKey: "automations",
+      iconPath: mdiRobot,
+      iconColor: "#518C43",
+      core: true,
+    },
+    {
+      path: "/config/blueprint",
+      translationKey: "blueprints",
+      iconPath: mdiPaletteSwatch,
+      iconColor: "#64B5F6",
+      component: "blueprint",
+    },
+    {
+      path: "/config/backup",
+      translationKey: "backup",
+      iconPath: mdiBackupRestore,
+      iconColor: "#4084CD",
+      component: "backup",
+    },
+    {
+      path: "/hassio",
+      translationKey: "supervisor",
+      iconPath: mdiHomeAssistant,
+      iconColor: "#4084CD",
+      component: "hassio",
+    },
+    {
+      path: "/config/lovelace/dashboards",
+      translationKey: "dashboards",
+      iconPath: mdiViewDashboard,
+      iconColor: "#B1345C",
+      component: "lovelace",
+    },
+    {
+      path: "/config/tags",
+      translationKey: "tags",
+      iconPath: mdiNfcVariant,
+      iconColor: "#616161",
+      component: "tag",
+    },
+    {
+      path: "/config/person",
+      translationKey: "people",
+      iconPath: mdiAccount,
+      iconColor: "#E48629",
+      components: ["person", "zone", "users"],
+    },
+    {
+      path: "#external-app-configuration",
+      translationKey: "companion",
+      iconPath: mdiCellphoneCog,
+      iconColor: "#8E24AA",
+    },
+    {
+      path: "/config/server_control",
+      translationKey: "settings",
+      iconPath: mdiCog,
+      iconColor: "#4A5963",
+      core: true,
+    },
+  ],
+  backup: [
+    {
+      path: "/config/backup",
+      translationKey: "ui.panel.config.backup.caption",
+      iconPath: mdiBackupRestore,
+      iconColor: "#4084CD",
+      component: "backup",
+    },
+  ],
+  devices: [
     {
       component: "integrations",
       path: "/config/integrations",
       translationKey: "ui.panel.config.integrations.caption",
       iconPath: mdiPuzzle,
+      iconColor: "#2D338F",
       core: true,
     },
     {
@@ -59,6 +141,7 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       path: "/config/devices",
       translationKey: "ui.panel.config.devices.caption",
       iconPath: mdiDevices,
+      iconColor: "#2D338F",
       core: true,
     },
     {
@@ -66,6 +149,7 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       path: "/config/entities",
       translationKey: "ui.panel.config.entities.caption",
       iconPath: mdiShape,
+      iconColor: "#2D338F",
       core: true,
     },
     {
@@ -73,56 +157,67 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       path: "/config/areas",
       translationKey: "ui.panel.config.areas.caption",
       iconPath: mdiSofa,
+      iconColor: "#2D338F",
       core: true,
     },
   ],
-  automation: [
-    {
-      component: "blueprint",
-      path: "/config/blueprint",
-      translationKey: "ui.panel.config.blueprint.caption",
-      iconPath: mdiPaletteSwatch,
-    },
+  automations: [
     {
       component: "automation",
       path: "/config/automation",
       translationKey: "ui.panel.config.automation.caption",
       iconPath: mdiRobot,
+      iconColor: "#518C43",
     },
     {
       component: "scene",
       path: "/config/scene",
       translationKey: "ui.panel.config.scene.caption",
       iconPath: mdiPalette,
+      iconColor: "#518C43",
     },
     {
       component: "script",
       path: "/config/script",
       translationKey: "ui.panel.config.script.caption",
       iconPath: mdiScriptText,
+      iconColor: "#518C43",
     },
-  ],
-  helpers: [
     {
       component: "helpers",
       path: "/config/helpers",
       translationKey: "ui.panel.config.helpers.caption",
       iconPath: mdiTools,
+      iconColor: "#4D2EA4",
       core: true,
     },
   ],
-  experiences: [
+  blueprints: [
+    {
+      component: "blueprint",
+      path: "/config/blueprint",
+      translationKey: "ui.panel.config.blueprint.caption",
+      iconPath: mdiPaletteSwatch,
+      iconColor: "#518C43",
+    },
+  ],
+  tags: [
     {
       component: "tag",
       path: "/config/tags",
       translationKey: "ui.panel.config.tag.caption",
       iconPath: mdiNfcVariant,
+      iconColor: "#616161",
     },
+  ],
+  // Not used as a tab, but this way it will stay in the quick bar
+  energy: [
     {
       component: "energy",
       path: "/config/energy",
       translationKey: "ui.panel.config.energy.caption",
       iconPath: mdiLightningBolt,
+      iconColor: "#F1C447",
     },
   ],
   lovelace: [
@@ -131,6 +226,7 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       path: "/config/lovelace/dashboards",
       translationKey: "ui.panel.config.lovelace.caption",
       iconPath: mdiViewDashboard,
+      iconColor: "#B1345C",
     },
   ],
   persons: [
@@ -139,18 +235,21 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       path: "/config/person",
       translationKey: "ui.panel.config.person.caption",
       iconPath: mdiAccount,
+      iconColor: "#E48629",
     },
     {
       component: "zone",
       path: "/config/zone",
       translationKey: "ui.panel.config.zone.caption",
       iconPath: mdiMapMarkerRadius,
+      iconColor: "#E48629",
     },
     {
       component: "users",
       path: "/config/users",
       translationKey: "ui.panel.config.users.caption",
       iconPath: mdiBadgeAccountHorizontal,
+      iconColor: "#E48629",
       core: true,
       advancedOnly: true,
     },
@@ -161,6 +260,7 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       path: "/config/core",
       translationKey: "ui.panel.config.core.caption",
       iconPath: mdiHomeAssistant,
+      iconColor: "#4A5963",
       core: true,
     },
     {
@@ -168,6 +268,7 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       path: "/config/server_control",
       translationKey: "ui.panel.config.server_control.caption",
       iconPath: mdiServer,
+      iconColor: "#4A5963",
       core: true,
     },
     {
@@ -175,6 +276,7 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       path: "/config/logs",
       translationKey: "ui.panel.config.logs.caption",
       iconPath: mdiMathLog,
+      iconColor: "#4A5963",
       core: true,
     },
     {
@@ -182,49 +284,44 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       path: "/config/info",
       translationKey: "ui.panel.config.info.caption",
       iconPath: mdiInformation,
+      iconColor: "#4A5963",
       core: true,
-    },
-  ],
-  advanced: [
-    {
-      component: "customize",
-      path: "/config/customize",
-      translationKey: "ui.panel.config.customize.caption",
-      iconPath: mdiPencil,
-      core: true,
-      advancedOnly: true,
     },
   ],
 };
 
 export const aisConfigSections: { [name: string]: PageNavigation[] } = {
-  integrations: [
+  dashboard: [
     {
       component: "ais_dom",
       path: "/config/ais_dom",
-      translationKey: "ui.panel.config.ais_dom.caption",
+      translationKey: "ais_dom",
       iconPath: mdiMonitorSpeaker,
+      iconColor: "#E48629",
       core: true,
     },
     {
       component: "ais_dom_devices",
       path: "/config/ais_dom_devices",
-      translationKey: "ui.panel.config.ais_dom_devices.caption",
+      translationKey: "ais_dom_devices",
       iconPath: mdiWifi,
+      iconColor: "#ff5722",
       core: true,
     },
     {
       component: "ais_dom_zigbee",
       path: "/config/ais_dom_zigbee",
-      translationKey: "ui.panel.config.ais_dom_zigbee.caption",
+      translationKey: "ais_dom_zigbee",
       iconPath: mdiZigbee,
+      iconColor: "#ffd400",
       core: true,
     },
     {
       component: "ais_dom_zwave",
       path: "/config/ais_dom_zwave",
-      translationKey: "ui.panel.config.ais_dom_zwave.caption",
+      translationKey: "ais_dom_zwave",
       iconPath: mdiZWave,
+      iconColor: "#00bcd4",
       core: true,
     },
   ],
@@ -248,6 +345,10 @@ class HaPanelConfig extends HassRouterPage {
       automation: {
         tag: "ha-config-automation",
         load: () => import("./automation/ha-config-automation"),
+      },
+      backup: {
+        tag: "ha-config-backup",
+        load: () => import("./backup/ha-config-backup"),
       },
       blueprint: {
         tag: "ha-config-blueprint",
@@ -340,10 +441,8 @@ class HaPanelConfig extends HassRouterPage {
         tag: "ha-config-info",
         load: () => import("./info/ha-config-info"),
       },
-      customize: {
-        tag: "ha-config-customize",
-        load: () => import("./customize/ha-config-customize"),
-      },
+      // customize was removed in 2021.12, fallback to dashboard
+      customize: "dashboard",
       dashboard: {
         tag: "ha-config-dashboard",
         load: () => import("./dashboard/ha-config-dashboard"),
@@ -395,20 +494,10 @@ class HaPanelConfig extends HassRouterPage {
             "./integrations/integration-panels/zha/zha-config-dashboard-router"
           ),
       },
-      zwave: {
-        tag: "zwave-config-router",
-        load: () =>
-          import("./integrations/integration-panels/zwave/zwave-config-router"),
-      },
       mqtt: {
         tag: "mqtt-config-panel",
         load: () =>
           import("./integrations/integration-panels/mqtt/mqtt-config-panel"),
-      },
-      ozw: {
-        tag: "ozw-config-router",
-        load: () =>
-          import("./integrations/integration-panels/ozw/ozw-config-router"),
       },
       zwave_js: {
         tag: "zwave_js-config-router",
@@ -454,7 +543,13 @@ class HaPanelConfig extends HassRouterPage {
     this.hass.loadBackendTranslation("title");
     if (isComponentLoaded(this.hass, "cloud")) {
       this._updateCloudStatus();
+      this.addEventListener("connection-status", (ev) => {
+        if (ev.detail === "connected") {
+          this._updateCloudStatus();
+        }
+      });
     }
+
     this.addEventListener("ha-refresh-cloud-status", () =>
       this._updateCloudStatus()
     );

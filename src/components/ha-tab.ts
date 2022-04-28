@@ -42,9 +42,7 @@ export class HaTab extends LitElement {
         @keydown=${this._handleKeyDown}
       >
         ${this.narrow ? html`<slot name="icon"></slot>` : ""}
-        ${!this.narrow || this.active
-          ? html`<span class="name">${this.name}</span>`
-          : ""}
+        <span class="name">${this.name}</span>
         ${this._shouldRenderRipple ? html`<mwc-ripple></mwc-ripple>` : ""}
       </div>
     `;
@@ -96,6 +94,7 @@ export class HaTab extends LitElement {
         box-sizing: border-box;
         align-items: center;
         justify-content: center;
+        width: 100%;
         height: var(--header-height);
         cursor: pointer;
         position: relative;
@@ -104,6 +103,9 @@ export class HaTab extends LitElement {
 
       .name {
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
       }
 
       :host([active]) {
@@ -119,6 +121,10 @@ export class HaTab extends LitElement {
         display: flex;
         justify-content: center;
         overflow: hidden;
+      }
+
+      :host([narrow]) div {
+        padding: 0 4px;
       }
     `;
   }

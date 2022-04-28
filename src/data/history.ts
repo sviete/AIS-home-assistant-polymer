@@ -1,5 +1,5 @@
-import { addDays, addMonths, startOfDay, startOfMonth } from "date-fns";
 import { HassEntity } from "home-assistant-js-websocket";
+import { computeDomain } from "../common/entity/compute_domain";
 import { computeStateDisplay } from "../common/entity/compute_state_display";
 import { computeStateDomain } from "../common/entity/compute_state_domain";
 import { computeStateName } from "../common/entity/compute_state_name";
@@ -8,6 +8,13 @@ import { HomeAssistant } from "../types";
 import { FrontendLocaleData } from "./translation";
 
 const DOMAINS_USE_LAST_UPDATED = ["climate", "humidifier", "water_heater"];
+const NEED_ATTRIBUTE_DOMAINS = [
+  "climate",
+  "humidifier",
+  "input_datetime",
+  "thermostat",
+  "water_heater",
+];
 const LINE_ATTRIBUTES_TO_KEEP = [
   "temperature",
   "current_temperature",
@@ -63,6 +70,7 @@ export interface Statistics {
 export interface StatisticValue {
   statistic_id: string;
   start: string;
+  end: string;
   last_reset: string | null;
   max: number | null;
   mean: number | null;
@@ -74,14 +82,30 @@ export interface StatisticValue {
 export interface StatisticsMetaData {
   unit_of_measurement: string;
   statistic_id: string;
+  source: string;
+  name?: string | null;
+  has_sum: boolean;
+  has_mean: boolean;
 }
 
 export type StatisticsValidationResult =
+  | StatisticsValidationResultNoState
   | StatisticsValidationResultEntityNotRecorded
+  | StatisticsValidationResultEntityNoLongerRecorded
   | StatisticsValidationResultUnsupportedStateClass
   | StatisticsValidationResultUnitsChanged
   | StatisticsValidationResultUnsupportedUnitMetadata
   | StatisticsValidationResultUnsupportedUnitState;
+
+export interface StatisticsValidationResultNoState {
+  type: "no_state";
+  data: { statistic_id: string };
+}
+
+export interface StatisticsValidationResultEntityNoLongerRecorded {
+  type: "entity_no_longer_recorded";
+  data: { statistic_id: string };
+}
 
 export interface StatisticsValidationResultEntityNotRecorded {
   type: "entity_not_recorded";
@@ -117,6 +141,13 @@ export interface StatisticsValidationResults {
   [statisticId: string]: StatisticsValidationResult[];
 }
 
+export const entityIdHistoryNeedsAttributes = (
+  hass: HomeAssistant,
+  entityId: string
+) =>
+  !hass.states[entityId] ||
+  NEED_ATTRIBUTE_DOMAINS.includes(computeDomain(entityId));
+
 export const fetchRecent = (
   hass: HomeAssistant,
   entityId: string,
@@ -124,7 +155,8 @@ export const fetchRecent = (
   endTime: Date,
   skipInitialState = false,
   significantChangesOnly?: boolean,
-  minimalResponse = true
+  minimalResponse = true,
+  noAttributes?: boolean
 ): Promise<HassEntity[][]> => {
   let url = "history/period";
   if (startTime) {
@@ -143,7 +175,9 @@ export const fetchRecent = (
   if (minimalResponse) {
     url += "&minimal_response";
   }
-
+  if (noAttributes) {
+    url += "&no_attributes";
+  }
   return hass.callApi("GET", url);
 };
 
@@ -157,6 +191,10 @@ export const fetchDate = (
     "GET",
     `history/period/${startTime.toISOString()}?end_time=${endTime.toISOString()}&minimal_response${
       entityId ? `&filter_entity_id=${entityId}` : ``
+    }${
+      entityId && !entityIdHistoryNeedsAttributes(hass, entityId)
+        ? `&no_attributes`
+        : ``
     }`
   );
 
@@ -264,6 +302,10 @@ const processLineChartEntities = (
   };
 };
 
+const stateUsesUnits = (state: HassEntity) =>
+  "unit_of_measurement" in state.attributes ||
+  "state_class" in state.attributes;
+
 export const computeHistory = (
   hass: HomeAssistant,
   stateHistory: HassEntity[][],
@@ -280,16 +322,18 @@ export const computeHistory = (
       return;
     }
 
-    const stateWithUnitorStateClass = stateInfo.find(
-      (state) =>
-        state.attributes &&
-        ("unit_of_measurement" in state.attributes ||
-          "state_class" in state.attributes)
-    );
+    const entityId = stateInfo[0].entity_id;
+    const currentState =
+      entityId in hass.states ? hass.states[entityId] : undefined;
+    const stateWithUnitorStateClass =
+      !currentState &&
+      stateInfo.find((state) => state.attributes && stateUsesUnits(state));
 
     let unit: string | undefined;
 
-    if (stateWithUnitorStateClass) {
+    if (currentState && stateUsesUnits(currentState)) {
+      unit = currentState.attributes.unit_of_measurement || " ";
+    } else if (stateWithUnitorStateClass) {
       unit = stateWithUnitorStateClass.attributes.unit_of_measurement || " ";
     } else {
       unit = {
@@ -299,7 +343,7 @@ export const computeHistory = (
         input_number: "#",
         number: "#",
         water_heater: hass.config.unit_system.temperature,
-      }[computeStateDomain(stateInfo[0])];
+      }[computeDomain(entityId)];
     }
 
     if (!unit) {
@@ -331,12 +375,21 @@ export const getStatisticIds = (
     statistic_type,
   });
 
+export const getStatisticMetadata = (
+  hass: HomeAssistant,
+  statistic_ids?: string[]
+) =>
+  hass.callWS<StatisticsMetaData[]>({
+    type: "recorder/get_statistics_metadata",
+    statistic_ids,
+  });
+
 export const fetchStatistics = (
   hass: HomeAssistant,
   startTime: Date,
   endTime?: Date,
   statistic_ids?: string[],
-  period: "hour" | "5minute" = "hour"
+  period: "5minute" | "hour" | "day" | "month" = "hour"
 ) =>
   hass.callWS<Statistics>({
     type: "history/statistics_during_period",
@@ -415,150 +468,15 @@ export const statisticsHaveType = (
   type: StatisticType
 ) => stats.some((stat) => stat[type] !== null);
 
-// Merge the growth of multiple sum statistics into one
-const mergeSumGrowthStatistics = (stats: StatisticValue[][]) => {
-  const result = {};
-
-  stats.forEach((stat) => {
-    if (stat.length === 0) {
-      return;
-    }
-    let prevSum: number | null = null;
-    stat.forEach((statVal) => {
-      if (statVal.sum === null) {
-        return;
-      }
-      if (prevSum === null) {
-        prevSum = statVal.sum;
-        return;
-      }
-      const growth = statVal.sum - prevSum;
-      if (statVal.start in result) {
-        result[statVal.start] += growth;
-      } else {
-        result[statVal.start] = growth;
-      }
-      prevSum = statVal.sum;
-    });
+export const adjustStatisticsSum = (
+  hass: HomeAssistant,
+  statistic_id: string,
+  start_time: string,
+  adjustment: number
+): Promise<void> =>
+  hass.callWS({
+    type: "recorder/adjust_sum_statistics",
+    statistic_id,
+    start_time,
+    adjustment,
   });
-
-  return result;
-};
-
-/**
- * Get the growth of a statistic over the given period while applying a
- * per-period percentage.
- */
-export const calculateStatisticsSumGrowthWithPercentage = (
-  percentageStat: StatisticValue[],
-  sumStats: StatisticValue[][]
-): number | null => {
-  let sum: number | null = null;
-
-  if (sumStats.length === 0 || percentageStat.length === 0) {
-    return null;
-  }
-
-  const sumGrowthToProcess = mergeSumGrowthStatistics(sumStats);
-
-  percentageStat.forEach((percentageStatValue) => {
-    const sumGrowth = sumGrowthToProcess[percentageStatValue.start];
-    if (sumGrowth === undefined) {
-      return;
-    }
-    if (sum === null) {
-      sum = sumGrowth * (percentageStatValue.mean! / 100);
-    } else {
-      sum += sumGrowth * (percentageStatValue.mean! / 100);
-    }
-  });
-
-  return sum;
-};
-
-export const reduceSumStatisticsByDay = (
-  values: StatisticValue[]
-): StatisticValue[] => {
-  if (!values?.length) {
-    return [];
-  }
-  const result: StatisticValue[] = [];
-  if (
-    values.length > 1 &&
-    new Date(values[0].start).getDate() === new Date(values[1].start).getDate()
-  ) {
-    // add init value if the first value isn't end of previous period
-    result.push({
-      ...values[0]!,
-      start: startOfDay(addDays(new Date(values[0].start), -1)).toISOString(),
-    });
-  }
-  let lastValue: StatisticValue;
-  let prevDate: number | undefined;
-  for (const value of values) {
-    const date = new Date(value.start).getDate();
-    if (prevDate === undefined) {
-      prevDate = date;
-    }
-    if (prevDate !== date) {
-      // Last value of the day
-      result.push({
-        ...lastValue!,
-        start: startOfDay(new Date(lastValue!.start)).toISOString(),
-      });
-      prevDate = date;
-    }
-    lastValue = value;
-  }
-  // Add final value
-  result.push({
-    ...lastValue!,
-    start: startOfDay(new Date(lastValue!.start)).toISOString(),
-  });
-  return result;
-};
-
-export const reduceSumStatisticsByMonth = (
-  values: StatisticValue[]
-): StatisticValue[] => {
-  if (!values?.length) {
-    return [];
-  }
-  const result: StatisticValue[] = [];
-  if (
-    values.length > 1 &&
-    new Date(values[0].start).getMonth() ===
-      new Date(values[1].start).getMonth()
-  ) {
-    // add init value if the first value isn't end of previous period
-    result.push({
-      ...values[0]!,
-      start: startOfMonth(
-        addMonths(new Date(values[0].start), -1)
-      ).toISOString(),
-    });
-  }
-  let lastValue: StatisticValue;
-  let prevMonth: number | undefined;
-  for (const value of values) {
-    const month = new Date(value.start).getMonth();
-    if (prevMonth === undefined) {
-      prevMonth = month;
-    }
-    if (prevMonth !== month) {
-      // Last value of the month
-      result.push({
-        ...lastValue!,
-        start: startOfMonth(new Date(lastValue!.start)).toISOString(),
-      });
-      prevMonth = month;
-    }
-    lastValue = value;
-  }
-  // Add final value
-  result.push({
-    ...lastValue!,
-    start: startOfMonth(new Date(lastValue!.start)).toISOString(),
-  });
-  return result;
-};

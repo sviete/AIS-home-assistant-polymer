@@ -9,7 +9,7 @@ import "../../../../src/components/buttons/ha-progress-button";
 import "../../../../src/components/ha-alert";
 import "../../../../src/components/ha-button-menu";
 import "../../../../src/components/ha-header-bar";
-import "../../../../src/components/ha-svg-icon";
+import "../../../../src/components/ha-icon-button";
 import { getSignedPath } from "../../../../src/data/auth";
 import { extractApiErrorMessage } from "../../../../src/data/hassio/common";
 import {
@@ -35,7 +35,7 @@ class HassioBackupDialog
   extends LitElement
   implements HassDialog<HassioBackupDialogParams>
 {
-  @property({ attribute: false }) public hass!: HomeAssistant;
+  @property({ attribute: false }) public hass?: HomeAssistant;
 
   @state() private _error?: string;
 
@@ -48,9 +48,9 @@ class HassioBackupDialog
   @query("supervisor-backup-content")
   private _backupContent!: SupervisorBackupContent;
 
-  public async showDialog(params: HassioBackupDialogParams) {
-    this._backup = await fetchHassioBackupInfo(this.hass, params.slug);
-    this._dialogParams = params;
+  public async showDialog(dialogParams: HassioBackupDialogParams) {
+    this._backup = await fetchHassioBackupInfo(this.hass, dialogParams.slug);
+    this._dialogParams = dialogParams;
     this._restoringBackup = false;
   }
 
@@ -71,14 +71,17 @@ class HassioBackupDialog
         open
         scrimClickAction
         @closed=${this.closeDialog}
-        .heading=${true}
+        .heading=${this._backup.name}
       >
         <div slot="heading">
           <ha-header-bar>
             <span slot="title">${this._backup.name}</span>
-            <mwc-icon-button slot="actionItems" dialogAction="cancel">
-              <ha-svg-icon .path=${mdiClose}></ha-svg-icon>
-            </mwc-icon-button>
+            <ha-icon-button
+              .label=${this.hass?.localize("ui.common.close") || "Close"}
+              .path=${mdiClose}
+              slot="actionItems"
+              dialogAction="cancel"
+            ></ha-icon-button>
           </ha-header-bar>
         </div>
         ${this._restoringBackup
@@ -89,6 +92,7 @@ class HassioBackupDialog
               .backup=${this._backup}
               .onboarding=${this._dialogParams.onboarding || false}
               .localize=${this._dialogParams.localize}
+              dialogInitialFocus
             >
             </supervisor-backup-content>`}
         ${this._error
@@ -110,11 +114,21 @@ class HassioBackupDialog
               @action=${this._handleMenuAction}
               @closed=${stopPropagation}
             >
-              <mwc-icon-button slot="trigger" alt="menu">
-                <ha-svg-icon .path=${mdiDotsVertical}></ha-svg-icon>
-              </mwc-icon-button>
-              <mwc-list-item>Download Backup</mwc-list-item>
-              <mwc-list-item class="error">Delete Backup</mwc-list-item>
+              <ha-icon-button
+                .label=${this.hass!.localize("ui.common.menu") || "Menu"}
+                .path=${mdiDotsVertical}
+                slot="trigger"
+              ></ha-icon-button>
+              <mwc-list-item
+                >${this._dialogParams.supervisor?.localize(
+                  "backup.download_backup"
+                )}</mwc-list-item
+              >
+              <mwc-list-item class="error"
+                >${this._dialogParams.supervisor?.localize(
+                  "backup.delete_backup_title"
+                )}</mwc-list-item
+              >
             </ha-button-menu>`
           : ""}
       </ha-dialog>
@@ -126,9 +140,6 @@ class HassioBackupDialog
       haStyle,
       haStyleDialog,
       css`
-        ha-svg-icon {
-          color: var(--primary-text-color);
-        }
         ha-circular-progress {
           display: block;
           text-align: center;
@@ -138,6 +149,9 @@ class HassioBackupDialog
           --mdc-theme-primary: var(--mdc-theme-surface);
           flex-shrink: 0;
           display: block;
+        }
+        ha-icon-button {
+          color: var(--secondary-text-color);
         }
       `,
     ];
@@ -187,25 +201,23 @@ class HassioBackupDialog
     }
 
     if (!this._dialogParams?.onboarding) {
-      this.hass
-        .callApi(
-          "POST",
+      this.hass!.callApi(
+        "POST",
 
-          `hassio/${
-            atLeastVersion(this.hass.config.version, 2021, 9)
-              ? "backups"
-              : "snapshots"
-          }/${this._backup!.slug}/restore/partial`,
-          backupDetails
-        )
-        .then(
-          () => {
-            this.closeDialog();
-          },
-          (error) => {
-            this._error = error.body.message;
-          }
-        );
+        `hassio/${
+          atLeastVersion(this.hass!.config.version, 2021, 9)
+            ? "backups"
+            : "snapshots"
+        }/${this._backup!.slug}/restore/partial`,
+        backupDetails
+      ).then(
+        () => {
+          this.closeDialog();
+        },
+        (error) => {
+          this._error = error.body.message;
+        }
+      );
     } else {
       fireEvent(this, "restoring");
       fetch(`/api/hassio/backups/${this._backup!.slug}/restore/partial`, {
@@ -239,24 +251,22 @@ class HassioBackupDialog
     }
 
     if (!this._dialogParams?.onboarding) {
-      this.hass
-        .callApi(
-          "POST",
-          `hassio/${
-            atLeastVersion(this.hass.config.version, 2021, 9)
-              ? "backups"
-              : "snapshots"
-          }/${this._backup!.slug}/restore/full`,
-          backupDetails
-        )
-        .then(
-          () => {
-            this.closeDialog();
-          },
-          (error) => {
-            this._error = error.body.message;
-          }
-        );
+      this.hass!.callApi(
+        "POST",
+        `hassio/${
+          atLeastVersion(this.hass!.config.version, 2021, 9)
+            ? "backups"
+            : "snapshots"
+        }/${this._backup!.slug}/restore/full`,
+        backupDetails
+      ).then(
+        () => {
+          this.closeDialog();
+        },
+        (error) => {
+          this._error = error.body.message;
+        }
+      );
     } else {
       fireEvent(this, "restoring");
       fetch(`/api/hassio/backups/${this._backup!.slug}/restore/full`, {
@@ -278,36 +288,33 @@ class HassioBackupDialog
       return;
     }
 
-    this.hass
-
-      .callApi(
-        atLeastVersion(this.hass.config.version, 2021, 9) ? "DELETE" : "POST",
-        `hassio/${
-          atLeastVersion(this.hass.config.version, 2021, 9)
-            ? `backups/${this._backup!.slug}`
-            : `snapshots/${this._backup!.slug}/remove`
-        }`
-      )
-      .then(
-        () => {
-          if (this._dialogParams!.onDelete) {
-            this._dialogParams!.onDelete();
-          }
-          this.closeDialog();
-        },
-        (error) => {
-          this._error = error.body.message;
+    this.hass!.callApi(
+      atLeastVersion(this.hass!.config.version, 2021, 9) ? "DELETE" : "POST",
+      `hassio/${
+        atLeastVersion(this.hass!.config.version, 2021, 9)
+          ? `backups/${this._backup!.slug}`
+          : `snapshots/${this._backup!.slug}/remove`
+      }`
+    ).then(
+      () => {
+        if (this._dialogParams!.onDelete) {
+          this._dialogParams!.onDelete();
         }
-      );
+        this.closeDialog();
+      },
+      (error) => {
+        this._error = error.body.message;
+      }
+    );
   }
 
   private async _downloadClicked() {
     let signedPath: { path: string };
     try {
       signedPath = await getSignedPath(
-        this.hass,
+        this.hass!,
         `/api/hassio/${
-          atLeastVersion(this.hass.config.version, 2021, 9)
+          atLeastVersion(this.hass!.config.version, 2021, 9)
             ? "backups"
             : "snapshots"
         }/${this._backup!.slug}/download`
@@ -332,7 +339,6 @@ class HassioBackupDialog
     }
 
     fileDownload(
-      this,
       signedPath.path,
       `home_assistant_backup_${slugify(this._computeName)}.tar`
     );

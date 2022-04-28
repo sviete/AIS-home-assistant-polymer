@@ -11,10 +11,10 @@ import {
 import { property, state, query } from "lit/decorators";
 import { fireEvent } from "../../../common/dom/fire_event";
 import { handleStructError } from "../../../common/structs/handle-errors";
-import { computeRTL } from "../../../common/util/compute_rtl";
 import { deepEqual } from "../../../common/util/deep-equal";
 import "../../../components/ha-circular-progress";
 import "../../../components/ha-code-editor";
+import "../../../components/ha-alert";
 import type { HaCodeEditor } from "../../../components/ha-code-editor";
 import type {
   LovelaceCardConfig,
@@ -197,11 +197,13 @@ export abstract class HuiElementEditor<T> extends LitElement {
                 <ha-code-editor
                   mode="yaml"
                   autofocus
+                  autocomplete-entities
+                  .hass=${this.hass}
                   .value=${this.yaml}
                   .error=${Boolean(this._errors)}
-                  .rtl=${computeRTL(this.hass)}
                   @value-changed=${this._handleYAMLChanged}
                   @keydown=${this._ignoreKeydown}
+                  dir="ltr"
                 ></ha-code-editor>
               </div>
             `}
@@ -229,9 +231,12 @@ export abstract class HuiElementEditor<T> extends LitElement {
           : ""}
         ${this.hasWarning
           ? html`
-              <div class="warning">
-                ${this.hass.localize("ui.errors.config.editor_not_supported")}:
-                <br />
+              <ha-alert
+                alert-type="warning"
+                .title="${this.hass.localize(
+                  "ui.errors.config.editor_not_supported"
+                )}:"
+              >
                 ${this._warnings!.length > 0 && this._warnings![0] !== undefined
                   ? html` <ul>
                       ${this._warnings!.map(
@@ -240,7 +245,7 @@ export abstract class HuiElementEditor<T> extends LitElement {
                     </ul>`
                   : ""}
                 ${this.hass.localize("ui.errors.config.edit_in_yaml_supported")}
-              </div>
+              </ha-alert>
             `
           : ""}
       </div>
@@ -330,6 +335,7 @@ export abstract class HuiElementEditor<T> extends LitElement {
           );
         }
       } else {
+        this._guiSupported = false;
         this.GUImode = false;
       }
     } catch (err: any) {

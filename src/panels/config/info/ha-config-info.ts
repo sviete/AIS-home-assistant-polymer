@@ -1,6 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property } from "lit/decorators";
 import "../../../layouts/hass-tabs-subpage";
+import "../../../components/ha-logo-svg";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant, Route } from "../../../types";
 import { documentationUrl } from "../../../util/documentation-url";
@@ -36,14 +37,9 @@ class HaConfigInfo extends LitElement {
         .tabs=${configSections.general}
       >
         <div class="about">
-          <a href="https://www.ai-speaker.com" target="_blank" rel="noreferrer"
-            ><img
-              src="/static/icons/favicon-192x192.png"
-              height="192"
-              alt=${this.hass.localize(
-                "ui.panel.config.info.home_assistant_logo"
-              )}
-          /></a>
+          <a href="https://ai-speaker.com" target="_blank" rel="noreferrer">
+            <ha-logo-svg title="AI-Speaker"> </ha-logo-svg>
+          </a>
           <br />
           <h2>AI-Speaker ${hass.connection.haVersion}</h2>
           <p>
@@ -84,24 +80,20 @@ class HaConfigInfo extends LitElement {
             <a href="https://www.python.org" target="_blank" rel="noreferrer"
               >Python 3</a
             >,
+            <a href="https://lit.dev" target="_blank" rel="noreferrer">Lit</a>,
+            ${this.hass.localize("ui.panel.config.info.icons_by")}
             <a
-              href="https://www.polymer-project.org"
-              target="_blank"
-              rel="noreferrer"
-              >Polymer</a
-            >, ${this.hass.localize("ui.panel.config.info.icons_by")}
-            <a
-              href="https://www.google.com/design/icons/"
+              href="https://fonts.google.com/icons?selected=Material+Icons"
               target="_blank"
               rel="noreferrer"
               >Google</a
             >
             ${this.hass.localize("ui.common.and")}
             <a
-              href="https://MaterialDesignIcons.com"
+              href="https://materialdesignicons.com/"
               target="_blank"
               rel="noreferrer"
-              >MaterialDesignIcons.com</a
+              >Material Design Icons</a
             >.
           </p>
           <p>
@@ -129,7 +121,7 @@ class HaConfigInfo extends LitElement {
               : ""}
           </p>
         </div>
-        <div class="content">
+        <div>
           <system-health-card .hass=${this.hass}></system-health-card>
           <integrations-card
             .hass=${this.hass}
@@ -162,10 +154,6 @@ class HaConfigInfo extends LitElement {
           -moz-user-select: initial;
         }
 
-        .content {
-          direction: ltr;
-        }
-
         .about {
           text-align: center;
           line-height: 2em;
@@ -189,6 +177,11 @@ class HaConfigInfo extends LitElement {
           max-width: 600px;
           margin: 0 auto;
           padding-bottom: 16px;
+        }
+        ha-logo-svg {
+          padding: 12px;
+          height: 180px;
+          width: 180px;
         }
       `,
     ];

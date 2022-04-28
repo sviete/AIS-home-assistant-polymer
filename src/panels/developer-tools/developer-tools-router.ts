@@ -41,9 +41,17 @@ class DeveloperToolsRouter extends HassRouterPage {
         tag: "developer-tools-statistics",
         load: () => import("./statistics/developer-tools-statistics"),
       },
+      android: {
+        tag: "developer-tools-android",
+        load: () => import("./android/developer-tools-android"),
+      },
       console: {
         tag: "developer-tools-console",
         load: () => import("./console/developer-tools-console"),
+      },
+      webcmd: {
+        tag: "developer-tools-webcmd",
+        load: () => import("./webcmd/developer-tools-webcmd"),
       },
     },
   };

@@ -24,10 +24,13 @@ export interface PageNavigation {
   path: string;
   translationKey?: string;
   component?: string;
+  components?: string[];
   name?: string;
   core?: boolean;
   advancedOnly?: boolean;
   iconPath?: string;
+  description?: string;
+  iconColor?: string;
   info?: any;
 }
 
@@ -85,7 +88,7 @@ class HassTabsSubpage extends LitElement {
             <a href=${page.path}>
               <ha-tab
                 .hass=${this.hass}
-                .active=${page === activeTab}
+                .active=${page.path === activeTab?.path}
                 .narrow=${this.narrow}
                 .name=${page.translationKey
                   ? localizeFunc(page.translationKey)
@@ -234,6 +237,12 @@ class HassTabsSubpage extends LitElement {
       #tabbar {
         display: flex;
         font-size: 14px;
+        overflow: hidden;
+      }
+
+      #tabbar > a {
+        overflow: hidden;
+        max-width: 45%;
       }
 
       #tabbar.bottom-bar {
@@ -263,6 +272,7 @@ class HassTabsSubpage extends LitElement {
       ha-menu-button,
       ha-icon-button-arrow-prev,
       ::slotted([slot="toolbar-icon"]) {
+        display: flex;
         flex-shrink: 0;
         pointer-events: auto;
         color: var(--sidebar-icon-color);

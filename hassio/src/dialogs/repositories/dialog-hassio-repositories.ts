@@ -1,6 +1,6 @@
+import "@polymer/paper-tooltip/paper-tooltip";
 import "@material/mwc-button/mwc-button";
-import "@material/mwc-icon-button/mwc-icon-button";
-import { mdiDelete } from "@mdi/js";
+import { mdiDelete, mdiDeleteOff } from "@mdi/js";
 import "@polymer/paper-input/paper-input";
 import type { PaperInputElement } from "@polymer/paper-input/paper-input";
 import "@polymer/paper-item/paper-item";
@@ -13,9 +13,10 @@ import { caseInsensitiveStringCompare } from "../../../../src/common/string/comp
 import "../../../../src/components/ha-alert";
 import "../../../../src/components/ha-circular-progress";
 import { createCloseHeading } from "../../../../src/components/ha-dialog";
-import "../../../../src/components/ha-svg-icon";
+import "../../../../src/components/ha-icon-button";
 import {
   fetchHassioAddonsInfo,
+  HassioAddonInfo,
   HassioAddonRepository,
 } from "../../../../src/data/hassio/addon";
 import { extractApiErrorMessage } from "../../../../src/data/hassio/common";
@@ -61,11 +62,24 @@ class HassioRepositoriesDialog extends LitElement {
       .sort((a, b) => caseInsensitiveStringCompare(a.name, b.name))
   );
 
+  private _filteredUsedRepositories = memoizeOne(
+    (repos: HassioAddonRepository[], addons: HassioAddonInfo[]) =>
+      repos
+        .filter((repo) =>
+          addons.some((addon) => addon.repository === repo.slug)
+        )
+        .map((repo) => repo.slug)
+  );
+
   protected render(): TemplateResult {
     if (!this._dialogParams?.supervisor || this._repositories === undefined) {
       return html``;
     }
     const repositories = this._filteredRepositories(this._repositories);
+    const usedRepositories = this._filteredUsedRepositories(
+      repositories,
+      this._dialogParams.supervisor.supervisor.addons
+    );
     return html`
       <ha-dialog
         .open=${this._opened}
@@ -90,19 +104,35 @@ class HassioRepositoriesDialog extends LitElement {
                       <div secondary>${repo.maintainer}</div>
                       <div secondary>${repo.url}</div>
                     </paper-item-body>
-                    <mwc-icon-button
-                      .slug=${repo.slug}
-                      .title=${this._dialogParams!.supervisor.localize(
-                        "dialog.repositories.remove"
-                      )}
-                      @click=${this._removeRepository}
-                    >
-                      <ha-svg-icon .path=${mdiDelete}></ha-svg-icon>
-                    </mwc-icon-button>
+                    <div class="delete">
+                      <ha-icon-button
+                        .label=${this._dialogParams!.supervisor.localize(
+                          "dialog.repositories.remove"
+                        )}
+                        .disabled=${usedRepositories.includes(repo.slug)}
+                        .slug=${repo.slug}
+                        .path=${usedRepositories.includes(repo.slug)
+                          ? mdiDeleteOff
+                          : mdiDelete}
+                        @click=${this._removeRepository}
+                      >
+                      </ha-icon-button>
+                      <paper-tooltip
+                        animation-delay="0"
+                        position="bottom"
+                        offset="1"
+                      >
+                        ${this._dialogParams!.supervisor.localize(
+                          usedRepositories.includes(repo.slug)
+                            ? "dialog.repositories.used"
+                            : "dialog.repositories.remove"
+                        )}
+                      </paper-tooltip>
+                    </div>
                   </paper-item>
                 `
               )
-            : html` <paper-item> No repositories </paper-item> `}
+            : html`<paper-item> No repositories </paper-item>`}
           <div class="layout horizontal bottom">
             <paper-input
               class="flex-auto"
@@ -112,6 +142,7 @@ class HassioRepositoriesDialog extends LitElement {
                 "dialog.repositories.add"
               )}
               @keydown=${this._handleKeyAdd}
+              dialogInitialFocus
             ></paper-input>
             <mwc-button @click=${this._addRepository}>
               ${this._processing
@@ -158,6 +189,9 @@ class HassioRepositoriesDialog extends LitElement {
           display: block;
           margin: 32px;
           text-align: center;
+        }
+        div.delete ha-icon-button {
+          color: var(--error-color);
         }
       `,
     ];

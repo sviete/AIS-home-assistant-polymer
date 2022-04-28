@@ -1,13 +1,11 @@
 import "@material/mwc-button";
-import "@polymer/paper-dropdown-menu/paper-dropdown-menu-light";
-import "@polymer/paper-item/paper-item";
-import "@polymer/paper-listbox/paper-listbox";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
 import { fireEvent } from "../../common/dom/fire_event";
 import "../../components/ha-area-picker";
 import { DataEntryFlowStepCreateEntry } from "../../data/data_entry_flow";
 import {
+  computeDeviceName,
   DeviceRegistryEntry,
   updateDeviceRegistryEntry,
 } from "../../data/device_registry";
@@ -50,7 +48,7 @@ class StepFlowCreateEntry extends LitElement {
                     html`
                       <div class="device">
                         <div>
-                          <b>${device.name}</b><br />
+                          <b>${computeDeviceName(device, this.hass)}</b><br />
                           ${device.model} (${device.manufacturer})
                         </div>
                         <ha-area-picker
@@ -120,13 +118,6 @@ class StepFlowCreateEntry extends LitElement {
         }
         .buttons > *:last-child {
           margin-left: auto;
-        }
-        paper-dropdown-menu-light {
-          cursor: pointer;
-        }
-        paper-item {
-          cursor: pointer;
-          white-space: nowrap;
         }
         @media all and (max-width: 450px), all and (max-height: 500px) {
           .device {

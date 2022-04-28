@@ -1,7 +1,6 @@
-import "@polymer/paper-dropdown-menu/paper-dropdown-menu";
+import "@material/mwc-list/mwc-list-item";
+import { mdiHelpCircle } from "@mdi/js";
 import "@polymer/paper-input/paper-input";
-import "@polymer/paper-item/paper-item";
-import "@polymer/paper-listbox/paper-listbox";
 import {
   css,
   CSSResultGroup,
@@ -11,9 +10,11 @@ import {
   TemplateResult,
 } from "lit";
 import { property, state } from "lit/decorators";
+import { stopPropagation } from "../../../../../common/dom/stop_propagation";
 import "../../../../../components/buttons/ha-call-service-button";
 import "../../../../../components/ha-card";
 import "../../../../../components/ha-icon-button";
+import "../../../../../components/ha-select";
 import "../../../../../components/ha-service-description";
 import {
   Cluster,
@@ -25,11 +26,7 @@ import { haStyle } from "../../../../../resources/styles";
 import { HomeAssistant } from "../../../../../types";
 import "../../../ha-config-section";
 import { formatAsPaddedHex } from "./functions";
-import {
-  ChangeEvent,
-  IssueCommandServiceData,
-  ItemSelectedEvent,
-} from "./types";
+import { ChangeEvent, IssueCommandServiceData } from "./types";
 
 export class ZHAClusterCommands extends LitElement {
   @property({ attribute: false }) public hass?: HomeAssistant;
@@ -44,7 +41,7 @@ export class ZHAClusterCommands extends LitElement {
 
   @state() private _commands: Command[] = [];
 
-  @state() private _selectedCommandIndex = -1;
+  @state() private _selectedCommandId?: number;
 
   @state() private _manufacturerCodeOverride?: number;
 
@@ -54,7 +51,7 @@ export class ZHAClusterCommands extends LitElement {
   protected updated(changedProperties: PropertyValues): void {
     if (changedProperties.has("selectedCluster")) {
       this._commands = [];
-      this._selectedCommandIndex = -1;
+      this._selectedCommandId = undefined;
       this._fetchCommandsForCluster();
     }
     super.update(changedProperties);
@@ -72,7 +69,8 @@ export class ZHAClusterCommands extends LitElement {
           <ha-icon-button
             class="toggle-help-icon"
             @click=${this._onHelpTap}
-            icon="hass:help-circle"
+            .path=${mdiHelpCircle}
+            .label=${this.hass!.localize("ui.common.help")}
           >
           </ha-icon-button>
         </div>
@@ -84,29 +82,25 @@ export class ZHAClusterCommands extends LitElement {
 
         <ha-card class="content">
           <div class="command-picker">
-            <paper-dropdown-menu
-              label=${this.hass!.localize(
+            <ha-select
+              .label=${this.hass!.localize(
                 "ui.panel.config.zha.cluster_commands.commands_of_cluster"
               )}
               class="menu"
+              .value=${String(this._selectedCommandId)}
+              @selected=${this._selectedCommandChanged}
+              @closed=${stopPropagation}
+              fixedMenuPosition
+              naturalMenuWidth
             >
-              <paper-listbox
-                slot="dropdown-content"
-                .selected=${this._selectedCommandIndex}
-                @iron-select=${this._selectedCommandChanged}
-              >
-                ${this._commands.map(
-                  (entry) => html`
-                    <paper-item
-                      >${entry.name +
-                      " (id: " +
-                      formatAsPaddedHex(entry.id) +
-                      ")"}</paper-item
-                    >
-                  `
-                )}
-              </paper-listbox>
-            </paper-dropdown-menu>
+              ${this._commands.map(
+                (entry) => html`
+                  <mwc-list-item .value=${String(entry.id)}>
+                    ${entry.name + " (id: " + formatAsPaddedHex(entry.id) + ")"}
+                  </mwc-list-item>
+                `
+              )}
+            </ha-select>
           </div>
           ${this._showHelp
             ? html`
@@ -117,7 +111,7 @@ export class ZHAClusterCommands extends LitElement {
                 </div>
               `
             : ""}
-          ${this._selectedCommandIndex !== -1
+          ${this._selectedCommandId !== undefined
             ? html`
                 <div class="input-text">
                   <paper-input
@@ -185,8 +179,10 @@ export class ZHAClusterCommands extends LitElement {
       endpoint_id: this.selectedCluster!.endpoint_id,
       cluster_id: this.selectedCluster!.id,
       cluster_type: this.selectedCluster!.type,
-      command: this._commands[this._selectedCommandIndex].id,
-      command_type: this._commands[this._selectedCommandIndex].type,
+      command: this._selectedCommandId!,
+      command_type: this._commands.find(
+        (command) => command.id === this._selectedCommandId
+      )!.type,
     };
   }
 
@@ -200,8 +196,8 @@ export class ZHAClusterCommands extends LitElement {
     this._showHelp = !this._showHelp;
   }
 
-  private _selectedCommandChanged(event: ItemSelectedEvent): void {
-    this._selectedCommandIndex = event.target!.selected;
+  private _selectedCommandChanged(event): void {
+    this._selectedCommandId = Number(event.target.value);
     this._issueClusterCommandServiceData =
       this._computeIssueClusterCommandServiceData();
   }
@@ -210,6 +206,9 @@ export class ZHAClusterCommands extends LitElement {
     return [
       haStyle,
       css`
+        ha-select {
+          margin-top: 16px;
+        }
         .menu {
           width: 100%;
         }

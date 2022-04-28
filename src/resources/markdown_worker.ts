@@ -1,6 +1,6 @@
 // To use comlink under ES5
 import { expose } from "comlink";
-import marked from "marked";
+import { marked } from "marked";
 import "proxy-polyfill";
 import { filterXSS, getDefaultWhiteList } from "xss";
 
@@ -10,6 +10,28 @@ interface WhiteList {
 
 let whiteListNormal: WhiteList | undefined;
 let whiteListSvg: WhiteList | undefined;
+
+// Override the default `onTagAttr` behavior to only render
+// our markdown checkboxes.
+// Returning undefined causes the default measure to be taken
+// in the xss library.
+const onTagAttr = (
+  tag: string,
+  name: string,
+  value: string
+): string | undefined => {
+  if (tag === "input") {
+    if (
+      (name === "type" && value === "checkbox") ||
+      name === "checked" ||
+      name === "disabled"
+    ) {
+      return undefined;
+    }
+    return "";
+  }
+  return undefined;
+};
 
 const renderMarkdown = (
   content: string,
@@ -22,8 +44,10 @@ const renderMarkdown = (
   if (!whiteListNormal) {
     whiteListNormal = {
       ...(getDefaultWhiteList() as WhiteList),
+      input: ["type", "disabled", "checked"],
       "ha-icon": ["icon"],
       "ha-svg-icon": ["path"],
+      "ha-alert": ["alert-type", "title"],
     };
   }
 
@@ -45,6 +69,7 @@ const renderMarkdown = (
 
   return filterXSS(marked(content, markedOptions), {
     whiteList,
+    onTagAttr,
   });
 };
 

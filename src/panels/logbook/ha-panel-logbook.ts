@@ -1,9 +1,6 @@
 import { mdiRefresh } from "@mdi/js";
-import "@material/mwc-icon-button";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import { css, html, LitElement, PropertyValues } from "lit";
-import { customElement, property, state } from "lit/decorators";
 import {
   addDays,
   endOfToday,
@@ -13,13 +10,21 @@ import {
   startOfWeek,
   startOfYesterday,
 } from "date-fns";
+import { css, html, LitElement, PropertyValues } from "lit";
+import { customElement, property, state } from "lit/decorators";
 import { isComponentLoaded } from "../../common/config/is_component_loaded";
 import { computeStateDomain } from "../../common/entity/compute_state_domain";
+import { navigate } from "../../common/navigate";
+import {
+  createSearchParam,
+  extractSearchParam,
+} from "../../common/url/search-params";
 import { computeRTL } from "../../common/util/compute_rtl";
 import "../../components/entity/ha-entity-picker";
 import "../../components/ha-circular-progress";
 import "../../components/ha-date-range-picker";
 import type { DateRangePickerRanges } from "../../components/ha-date-range-picker";
+import "../../components/ha-icon-button";
 import "../../components/ha-menu-button";
 import {
   clearLogbookCache,
@@ -82,12 +87,12 @@ export class HaPanelLogbook extends LitElement {
               .narrow=${this.narrow}
             ></ha-menu-button>
             <div main-title>${this.hass.localize("panel.logbook")}</div>
-            <mwc-icon-button
+            <ha-icon-button
               @click=${this._refreshLogbook}
+              .path=${mdiRefresh}
+              .label=${this.hass!.localize("ui.common.refresh")}
               .disabled=${this._isLoading}
-            >
-              <ha-svg-icon .path=${mdiRefresh}></ha-svg-icon>
-            </mwc-icon-button>
+            ></ha-icon-button>
           </app-toolbar>
         </app-header>
 
@@ -158,6 +163,17 @@ export class HaPanelLogbook extends LitElement {
       [this.hass.localize("ui.components.date-range-picker.ranges.last_week")]:
         [addDays(weekStart, -7), addDays(weekEnd, -7)],
     };
+
+    this._entityId = extractSearchParam("entity_id") ?? "";
+
+    const startDate = extractSearchParam("start_date");
+    if (startDate) {
+      this._startDate = new Date(startDate);
+    }
+    const endDate = extractSearchParam("end_date");
+    if (endDate) {
+      this._endDate = new Date(endDate);
+    }
   }
 
   protected updated(changedProps: PropertyValues<this>) {
@@ -215,10 +231,32 @@ export class HaPanelLogbook extends LitElement {
       endDate.setMilliseconds(endDate.getMilliseconds() - 1);
     }
     this._endDate = endDate;
+
+    this._updatePath();
   }
 
   private _entityPicked(ev) {
     this._entityId = ev.target.value;
+
+    this._updatePath();
+  }
+
+  private _updatePath() {
+    const params: Record<string, string> = {};
+
+    if (this._entityId) {
+      params.entity_id = this._entityId;
+    }
+
+    if (this._startDate) {
+      params.start_date = this._startDate.toISOString();
+    }
+
+    if (this._endDate) {
+      params.end_date = this._endDate.toISOString();
+    }
+
+    navigate(`/logbook?${createSearchParam(params)}`, { replace: true });
   }
 
   private _refreshLogbook() {
@@ -297,7 +335,7 @@ export class HaPanelLogbook extends LitElement {
         .filters {
           display: flex;
           align-items: flex-end;
-          padding: 0 16px;
+          padding: 8px 16px 0;
         }
 
         :host([narrow]) .filters {

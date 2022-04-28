@@ -1,9 +1,11 @@
-import "@polymer/paper-dropdown-menu/paper-dropdown-menu";
-import "@polymer/paper-listbox/paper-listbox";
+import "@material/mwc-list/mwc-list-item";
 import { mdiDownload } from "@mdi/js";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import { css, CSSResultArray, html, LitElement } from "lit";
-import { customElement, property, state, query } from "lit/decorators";
+import { customElement, property, query, state } from "lit/decorators";
+import { capitalizeFirstLetter } from "../../../../../common/string/capitalize-first-letter";
+import "../../../../../components/ha-icon-button";
+import "../../../../../components/ha-select";
 import {
   fetchZWaveJSLogConfig,
   setZWaveJSLogLevel,
@@ -16,7 +18,6 @@ import { haStyle } from "../../../../../resources/styles";
 import { HomeAssistant, Route } from "../../../../../types";
 import { fileDownload } from "../../../../../util/file_download";
 import { configTabs } from "./zwave_js-config-router";
-import { capitalizeFirstLetter } from "../../../../../common/string/capitalize-first-letter";
 
 @customElement("zwave_js-logs")
 class ZWaveJSLogs extends SubscribeMixin(LitElement) {
@@ -76,37 +77,30 @@ class ZWaveJSLogs extends SubscribeMixin(LitElement) {
             <div class="card-content">
               ${this._logConfig
                 ? html`
-                    <paper-dropdown-menu
-                      dynamic-align
+                    <ha-select
                       .label=${this.hass.localize(
                         "ui.panel.config.zwave_js.logs.log_level"
                       )}
+                      .value=${this._logConfig.level}
+                      @selected=${this._dropdownSelected}
                     >
-                      <paper-listbox
-                        slot="dropdown-content"
-                        .selected=${this._logConfig.level}
-                        attr-for-selected="value"
-                        @iron-select=${this._dropdownSelected}
-                      >
-                        <paper-item value="error">Error</paper-item>
-                        <paper-item value="warn">Warn</paper-item>
-                        <paper-item value="info">Info</paper-item>
-                        <paper-item value="verbose">Verbose</paper-item>
-                        <paper-item value="debug">Debug</paper-item>
-                        <paper-item value="silly">Silly</paper-item>
-                      </paper-listbox>
-                    </paper-dropdown-menu>
+                      <mwc-list-item value="error">Error</mwc-list-item>
+                      <mwc-list-item value="warn">Warn</mwc-list-item>
+                      <mwc-list-item value="info">Info</mwc-list-item>
+                      <mwc-list-item value="verbose">Verbose</mwc-list-item>
+                      <mwc-list-item value="debug">Debug</mwc-list-item>
+                      <mwc-list-item value="silly">Silly</mwc-list-item>
+                    </ha-select>
                   `
                 : ""}
             </div>
-            <mwc-icon-button
+            <ha-icon-button
               .label=${this.hass.localize(
                 "ui.panel.config.zwave_js.logs.download_logs"
               )}
               @click=${this._downloadLogs}
-            >
-              <ha-svg-icon .path=${mdiDownload}></ha-svg-icon>
-            </mwc-icon-button>
+              .path=${mdiDownload}
+            ></ha-icon-button>
           </ha-card>
           <textarea readonly></textarea>
         </div>
@@ -131,7 +125,6 @@ class ZWaveJSLogs extends SubscribeMixin(LitElement) {
 
   private _downloadLogs() {
     fileDownload(
-      this,
       `data:text/plain;charset=utf-8,${encodeURIComponent(
         this._textarea!.value
       )}`,
@@ -143,7 +136,7 @@ class ZWaveJSLogs extends SubscribeMixin(LitElement) {
     if (ev.target === undefined || this._logConfig === undefined) {
       return;
     }
-    const selected = ev.target.selected;
+    const selected = ev.target.value;
     if (this._logConfig.level === selected) {
       return;
     }

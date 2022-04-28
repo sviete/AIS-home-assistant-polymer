@@ -1,3 +1,4 @@
+// Caution before editing - For latest builds, this module is replaced with emptiness and thus not imported (see build-scripts/bundle.js)
 import "core-js";
 import "regenerator-runtime/runtime";
 import "lit/polyfill-support";
@@ -13,6 +14,7 @@ import "@formatjs/intl-relativetimeformat/polyfill";
 import "@formatjs/intl-relativetimeformat/locale-data/en";
 import "@formatjs/intl-datetimeformat/polyfill";
 import "@formatjs/intl-datetimeformat/locale-data/en";
+import "@formatjs/intl-datetimeformat/add-all-tz";
 
 // To use comlink under ES5
 import "proxy-polyfill";

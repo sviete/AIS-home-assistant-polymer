@@ -16,9 +16,13 @@ export class HaObjectSelector extends LitElement {
 
   @property({ type: Boolean }) public disabled = false;
 
+  @property({ type: Boolean }) public required = true;
+
   protected render() {
     return html`<ha-yaml-editor
-      .disabled=${this.disabled}
+      .hass=${this.hass}
+      .readonly=${this.disabled}
+      .required=${this.required}
       .placeholder=${this.placeholder}
       .defaultValue=${this.value}
       @value-changed=${this._handleChange}

@@ -20,6 +20,7 @@ export interface HassioBackup {
   slug: string;
   date: string;
   name: string;
+  size: number;
   type: "full" | "partial";
   protected: boolean;
   content: BackupContent;
@@ -79,7 +80,7 @@ export const fetchHassioBackups = async (
 };
 
 export const fetchHassioBackupInfo = async (
-  hass: HomeAssistant,
+  hass: HomeAssistant | undefined,
   backup: string
 ): Promise<HassioBackupDetail> => {
   if (hass) {
@@ -202,7 +203,7 @@ export const createHassioPartialBackup = async (
 };
 
 export const uploadBackup = async (
-  hass: HomeAssistant,
+  hass: HomeAssistant | undefined,
   file: File
 ): Promise<HassioResponse<HassioBackup>> => {
   const fd = new FormData();

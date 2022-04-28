@@ -1,20 +1,106 @@
-import { mdiCloudLock } from "@mdi/js";
+import type { ActionDetail } from "@material/mwc-list";
+import "@material/mwc-list/mwc-list-item";
+import {
+  mdiCloudLock,
+  mdiDotsVertical,
+  mdiLightbulbOutline,
+  mdiMagnify,
+  mdiNewBox,
+} from "@mdi/js";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
-import { customElement, property } from "lit/decorators";
+import type { HassEntities } from "home-assistant-js-websocket";
+import {
+  css,
+  CSSResultGroup,
+  html,
+  LitElement,
+  PropertyValues,
+  TemplateResult,
+} from "lit";
+import { customElement, property, state } from "lit/decorators";
+import memoizeOne from "memoize-one";
 import { isComponentLoaded } from "../../../common/config/is_component_loaded";
+import { computeStateDomain } from "../../../common/entity/compute_state_domain";
+import { caseInsensitiveStringCompare } from "../../../common/string/compare";
+import "../../../components/ha-button-menu";
 import "../../../components/ha-card";
+import "../../../components/ha-icon-button";
 import "../../../components/ha-icon-next";
 import "../../../components/ha-menu-button";
 import "../../../components/ha-svg-icon";
 import { CloudStatus } from "../../../data/cloud";
+import { updateCanInstall, UpdateEntity } from "../../../data/update";
+import { showAlertDialog } from "../../../dialogs/generic/show-dialog-box";
+import { showQuickBar } from "../../../dialogs/quick-bar/show-dialog-quick-bar";
 import "../../../layouts/ha-app-layout";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
+import { documentationUrl } from "../../../util/documentation-url";
+import { showToast } from "../../../util/toast";
 import "../ha-config-section";
 import { configSections, aisConfigSections } from "../ha-panel-config";
 import "./ha-config-navigation";
+import "./ha-config-updates";
+
+const randomTip = (hass: HomeAssistant) => {
+  const weighted: string[] = [];
+  const tips = [
+    {
+      content: hass.localize(
+        "ui.panel.config.tips.join",
+        "forums",
+        html`<a
+          href="https://community.home-assistant.io"
+          target="_blank"
+          rel="noreferrer"
+          >Forums</a
+        >`,
+        "twitter",
+        html`<a
+          href=${documentationUrl(hass, `/twitter`)}
+          target="_blank"
+          rel="noreferrer"
+          >Twitter</a
+        >`,
+        "discord",
+        html`<a
+          href=${documentationUrl(hass, `/join-chat`)}
+          target="_blank"
+          rel="noreferrer"
+          >Chat</a
+        >`,
+        "blog",
+        html`<a
+          href=${documentationUrl(hass, `/blog`)}
+          target="_blank"
+          rel="noreferrer"
+          >Blog</a
+        >`,
+        "newsletter",
+        html`<span class="keep-together"
+          ><a
+            href=${documentationUrl(hass, `/newsletter`)}
+            target="_blank"
+            rel="noreferrer"
+            >Newsletter</a
+          >
+          <ha-svg-icon class="new" .path=${mdiNewBox}></ha-svg-icon
+        ></span>`
+      ),
+      weight: 2,
+    },
+    { content: hass.localize("ui.dialogs.quick-bar.key_c_hint"), weight: 1 },
+  ];
+
+  tips.forEach((tip) => {
+    for (let i = 0; i < tip.weight; i++) {
+      weighted.push(tip.content);
+    }
+  });
+
+  return weighted[Math.floor(Math.random() * weighted.length)];
+};
 
 @customElement("ha-config-dashboard")
 class HaConfigDashboard extends LitElement {
@@ -29,76 +115,14 @@ class HaConfigDashboard extends LitElement {
 
   @property() public showAdvanced!: boolean;
 
+  @state() private _tip?: string;
+
+  private _notifyUpdates = false;
+
   protected render(): TemplateResult {
-    const content = html` <ha-config-section
-      .narrow=${this.narrow}
-      .isWide=${this.isWide}
-    >
-      <div slot="header">${this.hass.localize("ui.panel.config.header")}</div>
-
-      <div slot="introduction">
-        ${this.hass.localize("ui.panel.config.introduction")}
-      </div>
-
-      ${Object.values(aisConfigSections).map(
-        (section) => html`
-          <ha-card>
-            <ha-config-navigation
-              .hass=${this.hass}
-              .showAdvanced=${this.showAdvanced}
-              .pages=${section}
-            ></ha-config-navigation>
-          </ha-card>
-        `
-      )}
-      ${this.cloudStatus && isComponentLoaded(this.hass, "cloud")
-        ? html`
-            <ha-card>
-              <ha-config-navigation
-                .hass=${this.hass}
-                .showAdvanced=${this.showAdvanced}
-                .pages=${[
-                  {
-                    component: "cloud",
-                    path: "/config/cloud",
-                    name: "Home Assistant Cloud",
-                    info: this.cloudStatus,
-                    iconPath: mdiCloudLock,
-                  },
-                ]}
-              ></ha-config-navigation>
-            </ha-card>
-          `
-        : ""}
-      ${Object.values(configSections).map(
-        (section) => html`
-          <ha-card>
-            <ha-config-navigation
-              .hass=${this.hass}
-              .showAdvanced=${this.showAdvanced}
-              .pages=${section}
-            ></ha-config-navigation>
-          </ha-card>
-        `
-      )}
-      ${!this.showAdvanced
-        ? html`
-            <div class="promo-advanced">
-              ${this.hass.localize("ui.panel.config.advanced_mode.hint_enable")}
-              <a href="/profile"
-                >${this.hass.localize(
-                  "ui.panel.config.advanced_mode.link_profile_page"
-                )}</a
-              >.
-            </div>
-          `
-        : ""}
-    </ha-config-section>`;
-
-    if (!this.narrow && this.hass.dockedSidebar !== "always_hidden") {
-      return content;
-    }
-
+    const canInstallUpdates = this._filterUpdateEntitiesWithInstall(
+      this.hass.states
+    );
     return html`
       <ha-app-layout>
         <app-header fixed slot="header">
@@ -107,29 +131,203 @@ class HaConfigDashboard extends LitElement {
               .hass=${this.hass}
               .narrow=${this.narrow}
             ></ha-menu-button>
+            <div main-title>${this.hass.localize("panel.config")}</div>
+            <ha-icon-button
+              .label=${this.hass.localize("ui.dialogs.quick-bar.title")}
+              .path=${mdiMagnify}
+              @click=${this._showQuickBar}
+            ></ha-icon-button>
+            <ha-button-menu
+              corner="BOTTOM_START"
+              @action=${this._handleMenuAction}
+              activatable
+            >
+              <ha-icon-button
+                slot="trigger"
+                .label=${this.hass.localize("ui.common.menu")}
+                .path=${mdiDotsVertical}
+              ></ha-icon-button>
+
+              <mwc-list-item>
+                ${this.hass.localize("ui.panel.config.updates.check_updates")}
+              </mwc-list-item>
+            </ha-button-menu>
           </app-toolbar>
         </app-header>
 
-        ${content}
+        <ha-config-section
+          .narrow=${this.narrow}
+          .isWide=${this.isWide}
+          full-width
+        >
+          ${canInstallUpdates.length
+            ? html`<ha-card>
+                <ha-config-updates
+                  .hass=${this.hass}
+                  .narrow=${this.narrow}
+                  .updateEntities=${canInstallUpdates}
+                ></ha-config-updates>
+              </ha-card>`
+            : ""}
+          <ha-card>
+            <ha-config-navigation
+              .hass=${this.hass}
+              .narrow=${this.narrow}
+              .showAdvanced=${this.showAdvanced}
+              .pages=${aisConfigSections.dashboard}
+            ></ha-config-navigation>
+          </ha-card>
+          <ha-card>
+            ${this.narrow && canInstallUpdates.length
+              ? html`<div class="title">
+                  ${this.hass.localize("panel.config")}
+                </div>`
+              : ""}
+            ${this.cloudStatus && isComponentLoaded(this.hass, "cloud")
+              ? html`
+                  <ha-config-navigation
+                    .hass=${this.hass}
+                    .narrow=${this.narrow}
+                    .showAdvanced=${this.showAdvanced}
+                    .pages=${[
+                      {
+                        component: "cloud",
+                        path: "/config/cloud",
+                        name: "Home Assistant Cloud",
+                        info: this.cloudStatus,
+                        iconPath: mdiCloudLock,
+                        iconColor: "#3B808E",
+                      },
+                    ]}
+                  ></ha-config-navigation>
+                `
+              : ""}
+            <ha-config-navigation
+              .hass=${this.hass}
+              .narrow=${this.narrow}
+              .showAdvanced=${this.showAdvanced}
+              .pages=${configSections.dashboard}
+            ></ha-config-navigation>
+          </ha-card>
+          <div class="tips">
+            <ha-svg-icon .path=${mdiLightbulbOutline}></ha-svg-icon>
+            <span class="tip-word">Tip!</span>
+            <span class="text">${this._tip}</span>
+          </div>
+        </ha-config-section>
       </ha-app-layout>
     `;
+  }
+
+  protected override updated(changedProps: PropertyValues): void {
+    super.updated(changedProps);
+
+    if (!this._tip && changedProps.has("hass")) {
+      this._tip = randomTip(this.hass);
+    }
+
+    if (!changedProps.has("hass") || !this._notifyUpdates) {
+      return;
+    }
+    this._notifyUpdates = false;
+    if (this._filterUpdateEntitiesWithInstall(this.hass.states).length) {
+      showToast(this, {
+        message: this.hass.localize(
+          "ui.panel.config.updates.updates_refreshed"
+        ),
+      });
+    } else {
+      showToast(this, {
+        message: this.hass.localize("ui.panel.config.updates.no_new_updates"),
+      });
+    }
+  }
+
+  private _filterUpdateEntities = memoizeOne((entities: HassEntities) =>
+    (
+      Object.values(entities).filter(
+        (entity) => computeStateDomain(entity) === "update"
+      ) as UpdateEntity[]
+    ).sort((a, b) => {
+      if (a.attributes.title === "Home Assistant Core") {
+        return -3;
+      }
+      if (b.attributes.title === "Home Assistant Core") {
+        return 3;
+      }
+      if (a.attributes.title === "Home Assistant Operating System") {
+        return -2;
+      }
+      if (b.attributes.title === "Home Assistant Operating System") {
+        return 2;
+      }
+      if (a.attributes.title === "Home Assistant Supervisor") {
+        return -1;
+      }
+      if (b.attributes.title === "Home Assistant Supervisor") {
+        return 1;
+      }
+      return caseInsensitiveStringCompare(
+        a.attributes.title || a.attributes.friendly_name || "",
+        b.attributes.title || b.attributes.friendly_name || ""
+      );
+    })
+  );
+
+  private _filterUpdateEntitiesWithInstall = memoizeOne(
+    (entities: HassEntities) =>
+      this._filterUpdateEntities(entities).filter((entity) =>
+        updateCanInstall(entity)
+      )
+  );
+
+  private _showQuickBar(): void {
+    showQuickBar(this, {
+      commandMode: true,
+      hint: this.hass.localize("ui.dialogs.quick-bar.key_c_hint"),
+    });
+  }
+
+  private async _handleMenuAction(ev: CustomEvent<ActionDetail>) {
+    const _entities = this._filterUpdateEntities(this.hass.states).map(
+      (entity) => entity.entity_id
+    );
+    switch (ev.detail.index) {
+      case 0:
+        if (_entities.length) {
+          this._notifyUpdates = true;
+          await this.hass.callService("homeassistant", "update_entity", {
+            entity_id: _entities,
+          });
+          return;
+        }
+        showAlertDialog(this, {
+          title: this.hass.localize(
+            "ui.panel.config.updates.no_update_entities.title"
+          ),
+          text: this.hass.localize(
+            "ui.panel.config.updates.no_update_entities.description"
+          ),
+          warning: true,
+        });
+        break;
+    }
   }
 
   static get styles(): CSSResultGroup {
     return [
       haStyle,
       css`
-        app-header {
-          --app-header-background-color: var(--primary-color);
-        }
         ha-card:last-child {
-          margin-bottom: 24px;
+          margin-bottom: env(safe-area-inset-bottom);
+        }
+        :host(:not([narrow])) ha-card:last-child {
+          margin-bottom: max(24px, env(safe-area-inset-bottom));
         }
         ha-config-section {
-          margin-top: -12px;
-        }
-        :host([narrow]) ha-config-section {
-          margin-top: -20px;
+          margin: auto;
+          margin-top: -32px;
+          max-width: 600px;
         }
         ha-card {
           overflow: hidden;
@@ -138,13 +336,39 @@ class HaConfigDashboard extends LitElement {
           text-decoration: none;
           color: var(--primary-text-color);
         }
-        .promo-advanced {
-          text-align: center;
-          color: var(--secondary-text-color);
-          margin-bottom: 24px;
+        .title {
+          font-size: 16px;
+          padding: 16px;
+          padding-bottom: 0;
         }
-        .promo-advanced a {
+        :host([narrow]) ha-card {
+          border-radius: 0;
+          box-shadow: unset;
+        }
+
+        :host([narrow]) ha-config-section {
+          margin-top: -42px;
+        }
+
+        .tips {
+          text-align: center;
+          margin-bottom: max(env(safe-area-inset-bottom), 8px);
+        }
+
+        .tips .text {
           color: var(--secondary-text-color);
+        }
+
+        .tip-word {
+          font-weight: 500;
+        }
+
+        .new {
+          color: var(--primary-color);
+        }
+
+        .keep-together {
+          display: inline-block;
         }
       `,
     ];

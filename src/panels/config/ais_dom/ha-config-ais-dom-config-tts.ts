@@ -7,7 +7,6 @@ import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-dashboard";
 import { fireEvent } from "../../../common/dom/fire_event";
-import "../../../components/paper-time-input";
 import "../../../components/ha-button-menu";
 import "@material/mwc-list/mwc-list-item";
 import {
@@ -149,25 +148,28 @@ class HaConfigAisDomConfigTts extends LitElement {
               </div>
               <div class="card-actions person-actions">
                 <div @click=${this.tuneVoiceTone}>
-                  <ha-icon-button
-                    class="user-button"
-                    icon="hass:tune"
-                  ></ha-icon-button
-                  ><mwc-button>Ton mowy</mwc-button>
+                  <mwc-button>
+                    <ha-icon class="user-button" icon="hass:tune"></ha-icon
+                    >&nbsp; Ton mowy</mwc-button
+                  >
                 </div>
                 <div @click=${this.tuneVoiceSpeed}>
-                  <ha-icon-button
-                    class="user-button"
-                    icon="hass:play-speed"
-                  ></ha-icon-button
-                  ><mwc-button>Szybkość mowy</mwc-button>
+                  <mwc-button>
+                    <ha-icon
+                      class="user-button"
+                      icon="hass:play-speed"
+                    ></ha-icon
+                    >&nbsp; Szybkość mowy
+                  </mwc-button>
                 </div>
                 <div @click=${this._openAisWelcomeText}>
-                  <ha-icon-button
-                    class="user-button"
-                    icon="hass:file-document-edit-outline"
-                  ></ha-icon-button
-                  ><mwc-button>Welcome.txt</mwc-button>
+                  <mwc-button>
+                    <ha-icon
+                      class="user-button"
+                      icon="hass:file-document-edit-outline"
+                    ></ha-icon
+                    >&nbsp; Welcome.txt</mwc-button
+                  >
                 </div>
               </div>
             </ha-card>

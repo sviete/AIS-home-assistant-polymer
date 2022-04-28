@@ -1,5 +1,5 @@
-import "@polymer/paper-item/paper-item";
-import "@polymer/paper-listbox/paper-listbox";
+import "@material/mwc-list/mwc-list-item";
+import { mdiPalette } from "@mdi/js";
 import {
   css,
   CSSResultGroup,
@@ -10,13 +10,14 @@ import {
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
+import { stopPropagation } from "../../../common/dom/stop_propagation";
 import { supportsFeature } from "../../../common/entity/supports-feature";
 import "../../../components/ha-attributes";
 import "../../../components/ha-button-toggle-group";
 import "../../../components/ha-color-picker";
 import "../../../components/ha-icon-button";
 import "../../../components/ha-labeled-slider";
-import "../../../components/ha-paper-dropdown-menu";
+import "../../../components/ha-select";
 import {
   getLightCurrentModeRgbColor,
   LightColorModes,
@@ -142,7 +143,7 @@ class MoreInfoLight extends LitElement {
                       >
                       </ha-color-picker>
                       <ha-icon-button
-                        icon="hass:palette"
+                        .path=${mdiPalette}
                         @click=${this._segmentClick}
                         class="segmentationButton"
                       ></ha-icon-button>
@@ -207,23 +208,22 @@ class MoreInfoLight extends LitElement {
               this.stateObj!.attributes.effect_list?.length
                 ? html`
                     <hr />
-                    <ha-paper-dropdown-menu
+                    <ha-select
                       .label=${this.hass.localize("ui.card.light.effect")}
+                      .value=${this.stateObj.attributes.effect || ""}
+                      fixedMenuPosition
+                      naturalMenuWidth
+                      @selected=${this._effectChanged}
+                      @closed=${stopPropagation}
                     >
-                      <paper-listbox
-                        slot="dropdown-content"
-                        .selected=${this.stateObj.attributes.effect || ""}
-                        @iron-select=${this._effectChanged}
-                        attr-for-selected="item-name"
-                        >${this.stateObj.attributes.effect_list.map(
-                          (effect: string) => html`
-                            <paper-item .itemName=${effect}
-                              >${effect}</paper-item
-                            >
-                          `
-                        )}
-                      </paper-listbox>
-                    </ha-paper-dropdown-menu>
+                      ${this.stateObj.attributes.effect_list.map(
+                        (effect: string) => html`
+                          <mwc-list-item .value=${effect}>
+                            ${effect}
+                          </mwc-list-item>
+                        `
+                      )}
+                    </ha-select>
                   `
                 : ""}
             `
@@ -320,8 +320,8 @@ class MoreInfoLight extends LitElement {
     this._mode = ev.detail.value;
   }
 
-  private _effectChanged(ev: CustomEvent) {
-    const newVal = ev.detail.item.itemName;
+  private _effectChanged(ev) {
+    const newVal = ev.target.value;
 
     if (!newVal || this.stateObj!.attributes.effect === newVal) {
       return;
@@ -613,10 +613,6 @@ class MoreInfoLight extends LitElement {
         top: 5%;
         left: 0;
         color: var(--secondary-text-color);
-      }
-
-      paper-item {
-        cursor: pointer;
       }
 
       hr {

@@ -1,6 +1,4 @@
 import { mdiDrag, mdiNotificationClearAll, mdiPlus, mdiSort } from "@mdi/js";
-import "@polymer/paper-checkbox/paper-checkbox";
-import { PaperInputElement } from "@polymer/paper-input/paper-input";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import {
   css,
@@ -16,7 +14,9 @@ import { guard } from "lit/directives/guard";
 import { repeat } from "lit/directives/repeat";
 import { applyThemesOnElement } from "../../../common/dom/apply_themes_on_element";
 import "../../../components/ha-card";
-import "../../../components/ha-icon";
+import "../../../components/ha-svg-icon";
+import "../../../components/ha-checkbox";
+import "../../../components/ha-textfield";
 import {
   addItem,
   clearItems,
@@ -29,6 +29,7 @@ import { SubscribeMixin } from "../../../mixins/subscribe-mixin";
 import { HomeAssistant } from "../../../types";
 import { LovelaceCard, LovelaceCardEditor } from "../types";
 import { SensorCardConfig, ShoppingListCardConfig } from "./types";
+import type { HaTextField } from "../../../components/ha-textfield";
 
 let Sortable;
 
@@ -123,14 +124,13 @@ class HuiShoppingListCard
             @click=${this._addItem}
           >
           </ha-svg-icon>
-          <paper-input
-            no-label-float
+          <ha-textfield
             class="addBox"
-            placeholder=${this.hass!.localize(
+            .placeholder=${this.hass!.localize(
               "ui.panel.lovelace.cards.shopping-list.add_item"
             )}
             @keydown=${this._addKeyPress}
-          ></paper-input>
+          ></ha-textfield>
           <ha-svg-icon
             class="reorderButton"
             .path=${mdiSort}
@@ -178,18 +178,18 @@ class HuiShoppingListCard
                 (item) =>
                   html`
                     <div class="editRow">
-                      <paper-checkbox
+                      <ha-checkbox
                         tabindex="0"
-                        ?checked=${item.complete}
+                        .checked=${item.complete}
                         .itemId=${item.id}
-                        @click=${this._completeItem}
-                      ></paper-checkbox>
-                      <paper-input
-                        no-label-float
+                        @change=${this._completeItem}
+                      ></ha-checkbox>
+                      <ha-textfield
+                        class="item"
                         .value=${item.name}
                         .itemId=${item.id}
                         @change=${this._saveEdit}
-                      ></paper-input>
+                      ></ha-textfield>
                     </div>
                   `
               )}
@@ -207,18 +207,18 @@ class HuiShoppingListCard
         (item) =>
           html`
             <div class="editRow" item-id=${item.id}>
-              <paper-checkbox
+              <ha-checkbox
                 tabindex="0"
-                ?checked=${item.complete}
+                .checked=${item.complete}
                 .itemId=${item.id}
-                @click=${this._completeItem}
-              ></paper-checkbox>
-              <paper-input
-                no-label-float
+                @change=${this._completeItem}
+              ></ha-checkbox>
+              <ha-textfield
+                class="item"
                 .value=${item.name}
                 .itemId=${item.id}
                 @change=${this._saveEdit}
-              ></paper-input>
+              ></ha-textfield>
               ${this._reordering
                 ? html`
                     <ha-svg-icon
@@ -275,8 +275,8 @@ class HuiShoppingListCard
     }
   }
 
-  private get _newItem(): PaperInputElement {
-    return this.shadowRoot!.querySelector(".addBox") as PaperInputElement;
+  private get _newItem(): HaTextField {
+    return this.shadowRoot!.querySelector(".addBox") as HaTextField;
   }
 
   private _addItem(ev): void {
@@ -366,9 +366,8 @@ class HuiShoppingListCard
         align-items: center;
       }
 
-      .addRow ha-icon {
-        color: var(--secondary-text-color);
-        --mdc-icon-size: 26px;
+      .item {
+        margin-top: 8px;
       }
 
       .addButton {
@@ -381,13 +380,11 @@ class HuiShoppingListCard
         cursor: pointer;
       }
 
-      paper-checkbox {
-        padding-left: 4px;
-        padding-right: 20px;
-        --paper-checkbox-label-spacing: 0px;
+      ha-checkbox {
+        margin-left: -12px;
       }
 
-      paper-input {
+      ha-textfield {
         flex-grow: 1;
       }
 

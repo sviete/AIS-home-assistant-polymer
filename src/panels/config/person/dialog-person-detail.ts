@@ -1,5 +1,4 @@
 import "@material/mwc-button";
-import "@polymer/paper-input/paper-input";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
@@ -7,6 +6,7 @@ import { computeRTLDirection } from "../../../common/util/compute_rtl";
 import "../../../components/entity/ha-entities-picker";
 import { createCloseHeading } from "../../../components/ha-dialog";
 import "../../../components/ha-formfield";
+import "../../../components/ha-textfield";
 import "../../../components/ha-picture-upload";
 import type { HaPictureUpload } from "../../../components/ha-picture-upload";
 import { adminChangePassword } from "../../../data/auth";
@@ -51,6 +51,8 @@ class DialogPersonDetail extends LitElement {
 
   @state() private _isAdmin?: boolean;
 
+  @state() private _localOnly?: boolean;
+
   @state() private _deviceTrackers!: string[];
 
   @state() private _picture!: string | null;
@@ -83,12 +85,14 @@ class DialogPersonDetail extends LitElement {
         ? this._params.users.find((user) => user.id === this._userId)
         : undefined;
       this._isAdmin = this._user?.group_ids.includes(SYSTEM_GROUP_ID_ADMIN);
+      this._localOnly = this._user?.local_only;
     } else {
       this._personExists = false;
       this._name = "";
       this._userId = undefined;
       this._user = undefined;
       this._isAdmin = undefined;
+      this._localOnly = undefined;
       this._deviceTrackers = [];
       this._picture = null;
     }
@@ -116,17 +120,17 @@ class DialogPersonDetail extends LitElement {
         <div>
           ${this._error ? html` <div class="error">${this._error}</div> ` : ""}
           <div class="form">
-            <paper-input
+            <ha-textfield
               dialogInitialFocus
               .value=${this._name}
-              @value-changed=${this._nameChanged}
+              @input=${this._nameChanged}
               label=${this.hass!.localize("ui.panel.config.person.detail.name")}
               error-message=${this.hass!.localize(
                 "ui.panel.config.person.detail.name_error_msg"
               )}
               required
               auto-validate
-            ></paper-input>
+            ></ha-textfield>
             <ha-picture-upload
               .hass=${this.hass}
               .value=${this._picture}
@@ -152,19 +156,31 @@ class DialogPersonDetail extends LitElement {
 
             ${this._user
               ? html`<ha-formfield
-                  .label=${this.hass.localize(
-                    "ui.panel.config.person.detail.admin"
-                  )}
-                  .dir=${computeRTLDirection(this.hass)}
-                >
-                  <ha-switch
-                    .disabled=${this._user.system_generated ||
-                    this._user.is_owner}
-                    .checked=${this._isAdmin}
-                    @change=${this._adminChanged}
+                    .label=${this.hass.localize(
+                      "ui.panel.config.person.detail.local_only"
+                    )}
+                    .dir=${computeRTLDirection(this.hass)}
                   >
-                  </ha-switch>
-                </ha-formfield>`
+                    <ha-switch
+                      .checked=${this._localOnly}
+                      @change=${this._localOnlyChanged}
+                    >
+                    </ha-switch>
+                  </ha-formfield>
+                  <ha-formfield
+                    .label=${this.hass.localize(
+                      "ui.panel.config.person.detail.admin"
+                    )}
+                    .dir=${computeRTLDirection(this.hass)}
+                  >
+                    <ha-switch
+                      .disabled=${this._user.system_generated ||
+                      this._user.is_owner}
+                      .checked=${this._isAdmin}
+                      @change=${this._adminChanged}
+                    >
+                    </ha-switch>
+                  </ha-formfield>`
               : ""}
             ${this._deviceTrackersAvailable(this.hass)
               ? html`
@@ -261,13 +277,17 @@ class DialogPersonDetail extends LitElement {
     this._params = undefined;
   }
 
-  private _nameChanged(ev: PolymerChangedEvent<string>) {
+  private _nameChanged(ev) {
     this._error = undefined;
-    this._name = ev.detail.value;
+    this._name = ev.target.value;
   }
 
-  private async _adminChanged(ev): Promise<void> {
+  private _adminChanged(ev): void {
     this._isAdmin = ev.target.checked;
+  }
+
+  private _localOnlyChanged(ev): void {
+    this._localOnly = ev.target.checked;
   }
 
   private async _allowLoginChanged(ev): Promise<void> {
@@ -281,6 +301,7 @@ class DialogPersonDetail extends LitElement {
             this._user = user;
             this._userId = user.id;
             this._isAdmin = user.group_ids.includes(SYSTEM_GROUP_ID_ADMIN);
+            this._localOnly = user.local_only;
             this._params?.refreshUsers();
           }
         },
@@ -373,13 +394,16 @@ class DialogPersonDetail extends LitElement {
     try {
       if (
         (this._userId && this._name !== this._params!.entry?.name) ||
-        this._isAdmin !== this._user?.group_ids.includes(SYSTEM_GROUP_ID_ADMIN)
+        this._isAdmin !==
+          this._user?.group_ids.includes(SYSTEM_GROUP_ID_ADMIN) ||
+        this._localOnly !== this._user?.local_only
       ) {
         await updateUser(this.hass!, this._userId!, {
           name: this._name.trim(),
           group_ids: [
             this._isAdmin ? SYSTEM_GROUP_ID_ADMIN : SYSTEM_GROUP_ID_USER,
           ],
+          local_only: this._localOnly,
         });
         this._params?.refreshUsers();
       }
@@ -436,8 +460,12 @@ class DialogPersonDetail extends LitElement {
         .form {
           padding-bottom: 24px;
         }
-        ha-picture-upload {
+        ha-picture-upload,
+        ha-textfield {
           display: block;
+        }
+        ha-picture-upload {
+          margin-top: 16px;
         }
         ha-formfield {
           display: block;

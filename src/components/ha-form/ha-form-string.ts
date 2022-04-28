@@ -1,16 +1,22 @@
-import "@material/mwc-icon-button/mwc-icon-button";
 import { mdiEye, mdiEyeOff } from "@mdi/js";
-import "@polymer/paper-input/paper-input";
-import type { PaperInputElement } from "@polymer/paper-input/paper-input";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
-import { customElement, property, state, query } from "lit/decorators";
+import {
+  css,
+  CSSResultGroup,
+  html,
+  LitElement,
+  PropertyValues,
+  TemplateResult,
+} from "lit";
+import { customElement, property, query, state } from "lit/decorators";
 import { fireEvent } from "../../common/dom/fire_event";
-import "../ha-svg-icon";
+import "../ha-icon-button";
+import "../ha-textfield";
+import type { HaTextField } from "../ha-textfield";
 import type {
   HaFormElement,
   HaFormStringData,
   HaFormStringSchema,
-} from "./ha-form";
+} from "./types";
 
 const MASKED_FIELDS = ["password", "secret", "token"];
 
@@ -22,11 +28,13 @@ export class HaFormString extends LitElement implements HaFormElement {
 
   @property() public label!: string;
 
-  @property() public suffix!: string;
+  @property() public helper?: string;
+
+  @property({ type: Boolean }) public disabled = false;
 
   @state() private _unmaskedPassword = false;
 
-  @query("paper-input") private _input?: HTMLElement;
+  @query("ha-textfield") private _input?: HaTextField;
 
   public focus(): void {
     if (this._input) {
@@ -35,40 +43,45 @@ export class HaFormString extends LitElement implements HaFormElement {
   }
 
   protected render(): TemplateResult {
-    return MASKED_FIELDS.some((field) => this.schema.name.includes(field))
-      ? html`
-          <paper-input
-            .type=${this._unmaskedPassword ? "text" : "password"}
-            .label=${this.label}
-            .value=${this.data}
-            .required=${this.schema.required}
-            .autoValidate=${this.schema.required}
-            @value-changed=${this._valueChanged}
-          >
-            <mwc-icon-button
-              toggles
-              slot="suffix"
-              id="iconButton"
-              title="Click to toggle between masked and clear password"
-              @click=${this._toggleUnmaskedPassword}
-              tabindex="-1"
-              ><ha-svg-icon
-                .path=${this._unmaskedPassword ? mdiEyeOff : mdiEye}
-              ></ha-svg-icon>
-            </mwc-icon-button>
-          </paper-input>
-        `
-      : html`
-          <paper-input
-            .type=${this._stringType}
-            .label=${this.label}
-            .value=${this.data}
-            .required=${this.schema.required}
-            .autoValidate=${this.schema.required}
-            error-message="Required"
-            @value-changed=${this._valueChanged}
-          ></paper-input>
-        `;
+    const isPassword = MASKED_FIELDS.some((field) =>
+      this.schema.name.includes(field)
+    );
+    return html`
+      <ha-textfield
+        .type=${!isPassword
+          ? this._stringType
+          : this._unmaskedPassword
+          ? "text"
+          : "password"}
+        .label=${this.label}
+        .value=${this.data || ""}
+        .helper=${this.helper}
+        helperPersistent
+        .disabled=${this.disabled}
+        .required=${this.schema.required}
+        .autoValidate=${this.schema.required}
+        .suffix=${isPassword
+          ? // reserve some space for the icon.
+            html`<div style="width: 24px"></div>`
+          : this.schema.description?.suffix}
+        .validationMessage=${this.schema.required ? "Required" : undefined}
+        @input=${this._valueChanged}
+      ></ha-textfield>
+      ${isPassword
+        ? html`<ha-icon-button
+            toggles
+            .label=${`${this._unmaskedPassword ? "Hide" : "Show"} password`}
+            @click=${this._toggleUnmaskedPassword}
+            .path=${this._unmaskedPassword ? mdiEyeOff : mdiEye}
+          ></ha-icon-button>`
+        : ""}
+    `;
+  }
+
+  protected updated(changedProps: PropertyValues): void {
+    if (changedProps.has("schema")) {
+      this.toggleAttribute("own-margin", !!this.schema.required);
+    }
   }
 
   private _toggleUnmaskedPassword(): void {
@@ -76,9 +89,12 @@ export class HaFormString extends LitElement implements HaFormElement {
   }
 
   private _valueChanged(ev: Event): void {
-    const value = (ev.target as PaperInputElement).value;
+    let value: string | undefined = (ev.target as HaTextField).value;
     if (this.data === value) {
       return;
+    }
+    if (value === "" && !this.schema.required) {
+      value = undefined;
     }
     fireEvent(this, "value-changed", {
       value,
@@ -99,7 +115,20 @@ export class HaFormString extends LitElement implements HaFormElement {
 
   static get styles(): CSSResultGroup {
     return css`
-      mwc-icon-button {
+      :host {
+        display: block;
+        position: relative;
+      }
+      :host([own-margin]) {
+        margin-bottom: 5px;
+      }
+      ha-textfield {
+        display: block;
+      }
+      ha-icon-button {
+        position: absolute;
+        top: 1em;
+        right: 12px;
         --mdc-icon-button-size: 24px;
         color: var(--secondary-text-color);
       }

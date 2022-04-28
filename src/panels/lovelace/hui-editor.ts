@@ -1,5 +1,6 @@
 import { undoDepth } from "@codemirror/history";
 import "@material/mwc-button";
+import { mdiClose } from "@mdi/js";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
 import { dump, load } from "js-yaml";
@@ -14,12 +15,10 @@ import {
 import { customElement, property, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
 import { array, assert, object, optional, string, type } from "superstruct";
-import { computeRTL } from "../../common/util/compute_rtl";
 import { deepEqual } from "../../common/util/deep-equal";
 import "../../components/ha-circular-progress";
 import "../../components/ha-code-editor";
 import type { HaCodeEditor } from "../../components/ha-code-editor";
-import "../../components/ha-icon";
 import "../../components/ha-icon-button";
 import type { LovelaceConfig } from "../../data/lovelace";
 import {
@@ -55,8 +54,9 @@ class LovelaceFullConfigEditor extends LitElement {
         <app-header slot="header">
           <app-toolbar>
             <ha-icon-button
-              icon="hass:close"
+              .path=${mdiClose}
               @click=${this._closeEditor}
+              .label=${this.hass!.localize("ui.common.close")}
             ></ha-icon-button>
             <div main-title>
               ${this.hass!.localize(
@@ -91,10 +91,11 @@ class LovelaceFullConfigEditor extends LitElement {
           <ha-code-editor
             mode="yaml"
             autofocus
-            .rtl=${computeRTL(this.hass)}
+            autocomplete-entities
             .hass=${this.hass}
             @value-changed=${this._yamlChanged}
             @editor-save=${this._handleSave}
+            dir="ltr"
           >
           </ha-code-editor>
         </div>
@@ -147,8 +148,8 @@ class LovelaceFullConfigEditor extends LitElement {
         }
 
         app-toolbar {
-          background-color: var(--dark-background-color, #455a64);
-          color: var(--dark-text-color);
+          background-color: var(--app-header-edit-background-color, #455a64);
+          color: var(--app-header-edit-text-color, #fff);
         }
 
         mwc-button[disabled] {

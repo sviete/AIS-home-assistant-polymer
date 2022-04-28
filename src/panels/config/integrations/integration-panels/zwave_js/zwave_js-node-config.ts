@@ -1,14 +1,11 @@
 import "@material/mwc-button/mwc-button";
-import "@material/mwc-icon-button/mwc-icon-button";
+import "@material/mwc-list/mwc-list-item";
 import {
   mdiCheckCircle,
   mdiCircle,
   mdiCloseCircle,
   mdiProgressClock,
 } from "@mdi/js";
-import "@polymer/paper-dropdown-menu/paper-dropdown-menu";
-import "@polymer/paper-item/paper-item";
-import "@polymer/paper-listbox/paper-listbox";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import {
   css,
@@ -22,20 +19,23 @@ import { customElement, property, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
 import memoizeOne from "memoize-one";
 import { debounce } from "../../../../../common/util/debounce";
+import "../../../../../components/ha-alert";
 import "../../../../../components/ha-card";
 import "../../../../../components/ha-icon-next";
+import "../../../../../components/ha-select";
 import "../../../../../components/ha-settings-row";
 import "../../../../../components/ha-svg-icon";
 import "../../../../../components/ha-switch";
+import "../../../../../components/ha-textfield";
 import {
   computeDeviceName,
   DeviceRegistryEntry,
   subscribeDeviceRegistry,
 } from "../../../../../data/device_registry";
 import {
-  fetchNodeConfigParameters,
-  fetchNodeMetadata,
-  setNodeConfigParameter,
+  fetchZwaveNodeConfigParameters,
+  fetchZwaveNodeMetadata,
+  setZwaveNodeConfigParameter,
   ZWaveJSNodeConfigParams,
   ZwaveJSNodeMetadata,
   ZWaveJSSetConfigParamResult,
@@ -131,7 +131,7 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
       ></hass-error-screen>`;
     }
 
-    if (!this._config) {
+    if (!this._config || !this._nodeMetadata) {
       return html`<hass-loading-screen></hass-loading-screen>`;
     }
 
@@ -179,20 +179,27 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
               </em>
             </p>
           </div>
-          <ha-card>
-            ${this._config
-              ? html`
-                  ${Object.entries(this._config).map(
-                    ([id, item]) => html` <ha-settings-row
-                      class="config-item"
-                      .configId=${id}
-                      .narrow=${this.narrow}
-                    >
-                      ${this._generateConfigBox(id, item)}
-                    </ha-settings-row>`
+          ${this._nodeMetadata.comments.length > 0
+            ? html`
+                <div>
+                  ${this._nodeMetadata.comments.map(
+                    (comment) => html`<ha-alert .alertType=${comment.level}>
+                      ${comment.text}
+                    </ha-alert>`
                   )}
-                `
-              : ``}
+                </div>
+              `
+            : ``}
+          <ha-card>
+            ${Object.entries(this._config).map(
+              ([id, item]) => html` <ha-settings-row
+                class="config-item"
+                .configId=${id}
+                .narrow=${this.narrow}
+              >
+                ${this._generateConfigBox(id, item)}
+              </ha-settings-row>`
+            )}
           </ha-card>
         </ha-config-section>
       </hass-tabs-subpage>
@@ -267,7 +274,7 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
 
     if (item.configuration_value_type === "manual_entry") {
       return html`${labelAndDescription}
-        <paper-input
+        <ha-textfield
           type="number"
           .value=${item.value}
           .min=${item.metadata.min}
@@ -276,38 +283,32 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
           .propertyKey=${item.property_key}
           .key=${id}
           .disabled=${!item.metadata.writeable}
-          @value-changed=${this._numericInputChanged}
+          @input=${this._numericInputChanged}
         >
           ${item.metadata.unit
             ? html`<span slot="suffix">${item.metadata.unit}</span>`
             : ""}
-        </paper-input> `;
+        </ha-textfield>`;
     }
 
     if (item.configuration_value_type === "enumerated") {
       return html`
         ${labelAndDescription}
         <div class="flex">
-          <paper-dropdown-menu
-            dynamic-align
+          <ha-select
             .disabled=${!item.metadata.writeable}
+            .value=${item.value?.toString()}
+            .key=${id}
+            .property=${item.property}
+            .propertyKey=${item.property_key}
+            @selected=${this._dropdownSelected}
           >
-            <paper-listbox
-              slot="dropdown-content"
-              .selected=${item.value}
-              attr-for-selected="value"
-              .key=${id}
-              .property=${item.property}
-              .propertyKey=${item.property_key}
-              @iron-select=${this._dropdownSelected}
-            >
-              ${Object.entries(item.metadata.states).map(
-                ([key, entityState]) => html`
-                  <paper-item .value=${key}>${entityState}</paper-item>
-                `
-              )}
-            </paper-listbox>
-          </paper-dropdown-menu>
+            ${Object.entries(item.metadata.states).map(
+              ([key, entityState]) => html`
+                <mwc-list-item .value=${key}>${entityState}</mwc-list-item>
+              `
+            )}
+          </ha-select>
         </div>
       `;
     }
@@ -326,6 +327,9 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
       return false;
     }
     if (!("states" in item.metadata)) {
+      return false;
+    }
+    if (Object.keys(item.metadata.states).length !== 2) {
       return false;
     }
     if (!(0 in item.metadata.states) || !(1 in item.metadata.states)) {
@@ -349,12 +353,12 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
     if (ev.target === undefined || this._config![ev.target.key] === undefined) {
       return;
     }
-    if (this._config![ev.target.key].value === ev.target.selected) {
+    if (this._config![ev.target.key].value?.toString() === ev.target.value) {
       return;
     }
     this.setResult(ev.target.key, undefined);
 
-    this._updateConfigParameter(ev.target, Number(ev.target.selected));
+    this._updateConfigParameter(ev.target, Number(ev.target.value));
   }
 
   private debouncedUpdate = debounce((target, value) => {
@@ -378,7 +382,7 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
   private async _updateConfigParameter(target, value) {
     const nodeId = getNodeId(this._device!);
     try {
-      const result = await setNodeConfigParameter(
+      const result = await setZwaveNodeConfigParameter(
         this.hass,
         this.configEntryId!,
         nodeId!,
@@ -430,8 +434,8 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
     }
 
     [this._nodeMetadata, this._config] = await Promise.all([
-      fetchNodeMetadata(this.hass, this.configEntryId, nodeId!),
-      fetchNodeConfigParameters(this.hass, this.configEntryId, nodeId!),
+      fetchZwaveNodeMetadata(this.hass, this.configEntryId, nodeId!),
+      fetchZwaveNodeConfigParameters(this.hass, this.configEntryId, nodeId!),
     ]);
   }
 
@@ -460,7 +464,7 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
         }
 
         .flex .config-label,
-        .flex paper-dropdown-menu {
+        .flex ha-select {
           flex: 1;
         }
 
@@ -497,7 +501,7 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
           font-size: 1.3em;
         }
 
-        :host(:not([narrow])) ha-settings-row paper-input {
+        :host(:not([narrow])) ha-settings-row ha-textfield {
           width: 30%;
           text-align: right;
         }

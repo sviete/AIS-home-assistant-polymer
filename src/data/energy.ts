@@ -1,5 +1,6 @@
 import {
   addHours,
+  differenceInDays,
   endOfToday,
   endOfYesterday,
   startOfToday,
@@ -11,7 +12,12 @@ import { subscribeOne } from "../common/util/subscribe-one";
 import { HomeAssistant } from "../types";
 import { ConfigEntry, getConfigEntries } from "./config_entries";
 import { subscribeEntityRegistry } from "./entity_registry";
-import { fetchStatistics, Statistics } from "./history";
+import {
+  fetchStatistics,
+  Statistics,
+  StatisticsMetaData,
+  getStatisticMetadata,
+} from "./history";
 
 const energyCollectionKeys: (string | undefined)[] = [];
 
@@ -135,6 +141,7 @@ export interface GasSourceTypeEnergyPreference {
   entity_energy_from: string | null;
   entity_energy_price: string | null;
   number_energy_price: number | null;
+  unit_of_measurement?: string | null;
 }
 
 type EnergySource =
@@ -191,6 +198,27 @@ export const saveEnergyPreferences = async (
   return newPrefs;
 };
 
+export interface FossilEnergyConsumption {
+  [date: string]: number;
+}
+
+export const getFossilEnergyConsumption = async (
+  hass: HomeAssistant,
+  startTime: Date,
+  energy_statistic_ids: string[],
+  co2_statistic_id: string,
+  endTime?: Date,
+  period: "5minute" | "hour" | "day" | "month" = "hour"
+) =>
+  hass.callWS<FossilEnergyConsumption>({
+    type: "energy/fossil_energy_consumption",
+    start_time: startTime.toISOString(),
+    end_time: endTime?.toISOString(),
+    energy_statistic_ids,
+    co2_statistic_id,
+    period,
+  });
+
 interface EnergySourceByType {
   grid?: GridSourceTypeEnergyPreference[];
   solar?: SolarSourceTypeEnergyPreference[];
@@ -209,6 +237,7 @@ export interface EnergyData {
   stats: Statistics;
   co2SignalConfigEntry?: ConfigEntry;
   co2SignalEntity?: string;
+  fossilEnergyConsumption?: FossilEnergyConsumption;
 }
 
 const getEnergyData = async (
@@ -218,14 +247,14 @@ const getEnergyData = async (
   end?: Date
 ): Promise<EnergyData> => {
   const [configEntries, entityRegistryEntries, info] = await Promise.all([
-    getConfigEntries(hass),
+    getConfigEntries(hass, { domain: "co2signal" }),
     subscribeOne(hass.connection, subscribeEntityRegistry),
     getEnergyInfo(hass),
   ]);
 
-  const co2SignalConfigEntry = configEntries.find(
-    (entry) => entry.domain === "co2signal"
-  );
+  const co2SignalConfigEntry = configEntries.length
+    ? configEntries[0]
+    : undefined;
 
   let co2SignalEntity: string | undefined;
 
@@ -246,11 +275,17 @@ const getEnergyData = async (
     }
   }
 
+  const consumptionStatIDs: string[] = [];
   const statIDs: string[] = [];
-
-  if (co2SignalEntity !== undefined) {
-    statIDs.push(co2SignalEntity);
-  }
+  const gasSources: GasSourceTypeEnergyPreference[] =
+    prefs.energy_sources.filter(
+      (source) => source.type === "gas"
+    ) as GasSourceTypeEnergyPreference[];
+  const gasStatisticIdsWithMeta: StatisticsMetaData[] =
+    await getStatisticMetadata(
+      hass,
+      gasSources.map((source) => source.stat_energy_from)
+    );
 
   for (const source of prefs.energy_sources) {
     if (source.type === "solar") {
@@ -260,6 +295,20 @@ const getEnergyData = async (
 
     if (source.type === "gas") {
       statIDs.push(source.stat_energy_from);
+      const entity = hass.states[source.stat_energy_from];
+      if (!entity) {
+        for (const statisticIdWithMeta of gasStatisticIdsWithMeta) {
+          if (
+            statisticIdWithMeta?.statistic_id === source.stat_energy_from &&
+            statisticIdWithMeta?.unit_of_measurement
+          ) {
+            source.unit_of_measurement =
+              statisticIdWithMeta?.unit_of_measurement === "Wh"
+                ? "kWh"
+                : statisticIdWithMeta?.unit_of_measurement;
+          }
+        }
+      }
       if (source.stat_cost) {
         statIDs.push(source.stat_cost);
       }
@@ -278,6 +327,7 @@ const getEnergyData = async (
 
     // grid source
     for (const flowFrom of source.flow_from) {
+      consumptionStatIDs.push(flowFrom.stat_energy_from);
       statIDs.push(flowFrom.stat_energy_from);
       if (flowFrom.stat_cost) {
         statIDs.push(flowFrom.stat_cost);
@@ -299,7 +349,44 @@ const getEnergyData = async (
     }
   }
 
-  const stats = await fetchStatistics(hass!, addHours(start, -1), end, statIDs); // Subtract 1 hour from start to get starting point data
+  const dayDifference = differenceInDays(end || new Date(), start);
+
+  // Subtract 1 hour from start to get starting point data
+  const startMinHour = addHours(start, -1);
+
+  const stats = await fetchStatistics(
+    hass!,
+    startMinHour,
+    end,
+    statIDs,
+    dayDifference > 35 ? "month" : dayDifference > 2 ? "day" : "hour"
+  );
+
+  let fossilEnergyConsumption: FossilEnergyConsumption | undefined;
+
+  if (co2SignalEntity !== undefined) {
+    fossilEnergyConsumption = await getFossilEnergyConsumption(
+      hass!,
+      start,
+      consumptionStatIDs,
+      co2SignalEntity,
+      end,
+      dayDifference > 35 ? "month" : dayDifference > 2 ? "day" : "hour"
+    );
+  }
+
+  Object.values(stats).forEach((stat) => {
+    // if the start of the first value is after the requested period, we have the first data point, and should add a zero point
+    if (stat.length && new Date(stat[0].start) > startMinHour) {
+      stat.unshift({
+        ...stat[0],
+        start: startMinHour.toISOString(),
+        end: startMinHour.toISOString(),
+        sum: 0,
+        state: 0,
+      });
+    }
+  });
 
   const data = {
     start,
@@ -309,6 +396,7 @@ const getEnergyData = async (
     stats,
     co2SignalConfigEntry,
     co2SignalEntity,
+    fossilEnergyConsumption,
   };
 
   return data;
@@ -499,6 +587,9 @@ export const getEnergyGasUnit = (
       return entity.attributes.unit_of_measurement === "Wh"
         ? "kWh"
         : entity.attributes.unit_of_measurement;
+    }
+    if (source.unit_of_measurement) {
+      return source.unit_of_measurement;
     }
   }
   return undefined;

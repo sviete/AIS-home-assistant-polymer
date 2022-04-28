@@ -12,12 +12,12 @@ export interface Zone {
 }
 
 export interface ZoneMutableParams {
-  icon: string;
+  name: string;
+  icon?: string;
   latitude: number;
   longitude: number;
-  name: string;
-  passive: boolean;
-  radius: number;
+  passive?: boolean;
+  radius?: number;
 }
 
 export const fetchZones = (hass: HomeAssistant) =>

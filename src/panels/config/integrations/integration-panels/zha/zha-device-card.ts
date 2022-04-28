@@ -1,5 +1,4 @@
 import "@polymer/paper-input/paper-input";
-import "@polymer/paper-listbox/paper-listbox";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import memoizeOne from "memoize-one";
@@ -218,9 +217,11 @@ class ZHADeviceCard extends SubscribeMixin(LitElement) {
         .device .manuf {
           color: var(--secondary-text-color);
           margin-bottom: 20px;
+          word-wrap: break-word;
         }
         .extra-info {
           margin-top: 8px;
+          word-wrap: break-word;
         }
         state-badge {
           cursor: pointer;
