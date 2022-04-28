@@ -170,11 +170,12 @@ class PanelMediaBrowser extends LitElement {
         media_content_id: undefined,
       },
       ...navigateIdsEncoded.map((navigateId) => {
-        const [media_content_type, media_content_id] =
-          decodeURIComponent(navigateId).split(",");
+        const decoded = decodeURIComponent(navigateId);
+        // Don't use split because media_content_id could contain commas
+        const delimiter = decoded.indexOf(",");
         return {
-          media_content_type,
-          media_content_id,
+          media_content_type: decoded.substring(0, delimiter),
+          media_content_id: decoded.substring(delimiter + 1),
         };
       }),
     ];
@@ -277,6 +278,7 @@ class PanelMediaBrowser extends LitElement {
 
         ha-media-player-browse {
           height: calc(100vh - (100px + var(--header-height)));
+          direction: ltr;
         }
 
         :host([narrow]) ha-media-player-browse {

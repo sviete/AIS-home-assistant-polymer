@@ -1044,6 +1044,8 @@ class HaSidebar extends LitElement {
 
         .notification-badge,
         .configuration-badge {
+          left: calc(var(--app-drawer-width) - 42px);
+          position: absolute;
           min-width: 20px;
           box-sizing: border-box;
           border-radius: 50%;
@@ -1053,9 +1055,6 @@ class HaSidebar extends LitElement {
           text-align: center;
           padding: 0px 6px;
           color: var(--text-accent-color, var(--text-primary-color));
-        }
-        .configuration-badge {
-          background-color: var(--primary-color);
         }
         ha-svg-icon + .notification-badge,
         ha-svg-icon + .configuration-badge {

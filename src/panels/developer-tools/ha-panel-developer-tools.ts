@@ -97,6 +97,9 @@ class PanelDeveloperTools extends LitElement {
                 ><ha-icon icon="hass:folder-home">></ha-icon><br />Manager</span
               >
             </paper-tab>
+            <paper-tab page-name="yaml">
+              ${this.hass.localize("ui.panel.developer-tools.tabs.yaml.title")}
+            </paper-tab>
           </ha-tabs>
         </app-header>
         <developer-tools-router

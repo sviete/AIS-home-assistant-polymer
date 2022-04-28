@@ -194,9 +194,22 @@ export interface ChooseAction {
   default?: Action | Action[];
 }
 
+export interface IfAction {
+  alias?: string;
+  if: string | Condition[];
+  then: Action | Action[];
+  else?: Action | Action[];
+}
+
 export interface VariablesAction {
   alias?: string;
   variables: Record<string, unknown>;
+}
+
+export interface StopAction {
+  alias?: string;
+  stop: string;
+  error?: boolean;
 }
 
 interface UnknownAction {
@@ -215,8 +228,10 @@ export type Action =
   | WaitForTriggerAction
   | RepeatAction
   | ChooseAction
+  | IfAction
   | VariablesAction
   | PlayMediaAction
+  | StopAction
   | UnknownAction;
 
 export interface ActionTypes {
@@ -228,10 +243,12 @@ export interface ActionTypes {
   activate_scene: SceneAction;
   repeat: RepeatAction;
   choose: ChooseAction;
+  if: IfAction;
   wait_for_trigger: WaitForTriggerAction;
   variables: VariablesAction;
   service: ServiceAction;
   play_media: PlayMediaAction;
+  stop: StopAction;
   unknown: UnknownAction;
 }
 
@@ -299,11 +316,17 @@ export const getActionType = (action: Action): ActionType => {
   if ("choose" in action) {
     return "choose";
   }
+  if ("if" in action) {
+    return "if";
+  }
   if ("wait_for_trigger" in action) {
     return "wait_for_trigger";
   }
   if ("variables" in action) {
     return "variables";
+  }
+  if ("stop" in action) {
+    return "stop";
   }
   if ("service" in action) {
     if ("metadata" in action) {
