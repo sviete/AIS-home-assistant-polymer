@@ -1550,7 +1550,7 @@
                 "unit_system_metric": "Metric",
                 "imperial_example": "Fahrenheit, pounds",
                 "metric_example": "Celsius, kilograms",
-                "find_currency_value": "Find your value",
+                "find_currency_value": "Find my value",
                 "save_button": "Save",
                 "currency": "Currency",
                 "edit_location": "Edit location",
@@ -1576,7 +1576,7 @@
           "caption": "Hardware",
           "available_hardware": {
             "failed_to_get": "Failed to get available hardware",
-            "title": "Available hardware",
+            "title": "All Hardware",
             "subsystem": "Subsystem",
             "device_path": "Device path",
             "id": "ID",
@@ -1732,7 +1732,7 @@
             "introduction": "The automation editor allows you to create and edit automations. Please follow the link below to read the instructions to make sure that you have configured Home Assistant correctly.",
             "learn_more": "Learn more about automations",
             "pick_automation": "Pick automation to edit",
-            "no_automations": "We couldn’t find any automations",
+            "no_automations": "We couldn't find any automations",
             "add_automation": "Create automation",
             "only_editable": "Only automations in automations.yaml are editable.",
             "dev_only_editable": "Only automations that have a unique ID assigned are debuggable.",
@@ -2018,6 +2018,9 @@
               "run_action_error": "Error running action",
               "run_action_success": "Action run successfully",
               "duplicate": "[%key:ui::panel::config::automation::editor::triggers::duplicate%]",
+              "enable": "Enable",
+              "disable": "Disable",
+              "disabled": "Disabled",
               "delete": "[%key:ui::panel::mailbox::delete_button%]",
               "delete_confirm": "[%key:ui::panel::config::automation::editor::triggers::delete_confirm%]",
               "unsupported_action": "No visual editor support for action: {action}",
@@ -2107,6 +2110,9 @@
                   "label": "Stop",
                   "stop": "Reason for stopping",
                   "error": "Stop because of an unexpected error"
+                },
+                "parallel": {
+                  "label": "Run in parallel"
                 }
               }
             }
@@ -3221,8 +3227,10 @@
           "supervisor_stats": "Supervisor Stats"
         },
         "system_dashboard": {
-          "confirm_restart": "Are you sure you want to restart Home Assistant?",
+          "confirm_restart_text": "Restarting Home Assistant will stop all your active dashboards, automations and scripts.",
+          "confirm_restart_title": "Restart Home Assistant?",
           "restart_homeassistant": "Restart Home Assistant",
+          "restart_homeassistant_short": "Restart",
           "restart_error": "Failed to restart Home Assistant"
         }
       },
@@ -4324,10 +4332,9 @@
               },
               "server_management": {
                 "heading": "Home Assistant",
-                "introduction": "Restarting Home Assistant will stop your dashboard and automations. After the reboot, each configuration will be reloaded.",
+                "confirm_restart_text": "Restarting Home Assistant will stop all your active dashboards, automations and scripts.",
+                "confirm_restart_title": "Restart Home Assistant?",
                 "restart": "Restart",
-                "restart_home_assistant": "Restart Home Assistant",
-                "confirm_restart": "Are you sure you want to restart Home Assistant?",
                 "stop": "Stop",
                 "confirm_stop": "Are you sure you want to stop Home Assistant?",
                 "restart_error": "Failed to restart Home Assistant"
