@@ -18,7 +18,13 @@ import {
 import { computeObjectId } from "../common/entity/compute_object_id";
 import { navigate } from "../common/navigate";
 import { HomeAssistant } from "../types";
-import { Condition, Trigger } from "./automation";
+import {
+  Condition,
+  ShorthandAndCondition,
+  ShorthandNotCondition,
+  ShorthandOrCondition,
+  Trigger,
+} from "./automation";
 import { BlueprintInput } from "./blueprint";
 
 export const MODES = ["single", "restart", "queued", "parallel"] as const;
@@ -159,7 +165,7 @@ export interface PlayMediaAction extends BaseAction {
 }
 
 export interface RepeatAction extends BaseAction {
-  repeat: CountRepeat | WhileRepeat | UntilRepeat;
+  repeat: CountRepeat | WhileRepeat | UntilRepeat | ForEachRepeat;
 }
 
 interface BaseRepeat extends BaseAction {
@@ -176,6 +182,10 @@ export interface WhileRepeat extends BaseRepeat {
 
 export interface UntilRepeat extends BaseRepeat {
   until: Condition[];
+}
+
+export interface ForEachRepeat extends BaseRepeat {
+  for_each: string | any[];
 }
 
 export interface ChooseActionChoice extends BaseAction {
@@ -204,7 +214,7 @@ export interface StopAction extends BaseAction {
 }
 
 export interface ParallelAction extends BaseAction {
-  parallel: Action | Action[];
+  parallel: ManualScriptConfig | Action | (ManualScriptConfig | Action)[];
 }
 
 interface UnknownAction extends BaseAction {
@@ -216,6 +226,9 @@ export type Action =
   | DeviceAction
   | ServiceAction
   | Condition
+  | ShorthandAndCondition
+  | ShorthandOrCondition
+  | ShorthandNotCondition
   | DelayAction
   | SceneAction
   | WaitAction
@@ -294,7 +307,7 @@ export const getActionType = (action: Action): ActionType => {
   if ("wait_template" in action) {
     return "wait_template";
   }
-  if ("condition" in action) {
+  if (["condition", "and", "or", "not"].some((key) => key in action)) {
     return "check_condition";
   }
   if ("event" in action) {

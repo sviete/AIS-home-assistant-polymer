@@ -2,7 +2,7 @@
   "panel": {
     "energy": "Energy",
     "calendar": "Calendar",
-    "config": "Configuration",
+    "config": "Settings",
     "states": "Overview",
     "map": "Map",
     "logbook": "Logbook",
@@ -676,18 +676,30 @@
             "areas": "[%key:ui::panel::config::areas::caption%]",
             "scene": "[%key:ui::panel::config::scene::caption%]",
             "helpers": "[%key:ui::panel::config::helpers::caption%]",
-            "tag": "[%key:ui::panel::config::tag::caption%]",
+            "tags": "[%key:ui::panel::config::tag::caption%]",
             "person": "[%key:ui::panel::config::person::caption%]",
             "devices": "[%key:ui::panel::config::devices::caption%]",
             "entities": "[%key:ui::panel::config::entities::caption%]",
             "energy": "Energy Configuration",
             "lovelace": "[%key:ui::panel::config::lovelace::caption%]",
-            "core": "[%key:ui::panel::config::core::caption%]",
             "zone": "[%key:ui::panel::config::zone::caption%]",
             "users": "[%key:ui::panel::config::users::caption%]",
             "info": "[%key:ui::panel::config::info::caption%]",
+            "network": "[%key:ui::panel::config::network::caption%]",
+            "updates": "[%key:ui::panel::config::updates::caption%]",
+            "hardware": "[%key:ui::panel::config::hardware::caption%]",
+            "storage": "[%key:ui::panel::config::storage::caption%]",
+            "general": "[%key:ui::panel::config::core::caption%]",
+            "backups": "[%key:ui::panel::config::backup::caption%]",
+            "backup": "[%key:ui::panel::config::backup::caption%]",
+            "analytics": "[%key:ui::panel::config::analytics::caption%]",
+            "system_health": "[%key:ui::panel::config::system_health::caption%]",
             "blueprint": "[%key:ui::panel::config::blueprint::caption%]",
-            "server_control": "[%key:ui::panel::developer-tools::tabs::yaml::title%]"
+            "server_control": "[%key:ui::panel::developer-tools::tabs::yaml::title%]",
+            "system": "[%key:ui::panel::config::dashboard::system::main%]",
+            "addon_dashboard": "Add-on Dashboard",
+            "addon_store": "Add-on Store",
+            "addon_info": "{addon} Info"
           }
         },
         "filter_placeholder": "Entity Filter",
@@ -1189,7 +1201,7 @@
           },
           "tags": {
             "main": "Tags",
-            "secondary": "Manage NFC tags and QR codes"
+            "secondary": "Setup NFC tags and QR codes"
           },
           "people": {
             "main": "People",
@@ -1209,7 +1221,7 @@
           },
           "about": {
             "main": "About",
-            "secondary": "Version, loaded integrations and links to documentation"
+            "secondary": "Version information, credits and more"
           }
         },
         "common": {
@@ -1220,6 +1232,7 @@
         },
         "updates": {
           "caption": "Updates",
+          "description": "Manage updates of Home Assistant, Add-ons and devices",
           "no_updates": "No updates available",
           "no_update_entities": {
             "title": "Unable to check for updates",
@@ -1278,6 +1291,8 @@
         },
         "backup": {
           "caption": "Backups",
+          "description": "Last backup {relative_time}",
+          "description_no_backup": "Manage backups and restore Home Assistant to a previous state",
           "create_backup": "[%key:supervisor::backup::create_backup%]",
           "creating_backup": "Backup is currently being created",
           "download_backup": "[%key:supervisor::backup::download_backup%]",
@@ -1532,7 +1547,7 @@
         },
         "core": {
           "caption": "General",
-          "description": "Location, network and analytics",
+          "description": "Name, Timezone and locale settings",
           "section": {
             "core": {
               "header": "General Configuration",
@@ -1574,6 +1589,7 @@
         },
         "hardware": {
           "caption": "Hardware",
+          "description": "Configure your hub and connected hardware",
           "available_hardware": {
             "failed_to_get": "Failed to get available hardware",
             "title": "All Hardware",
@@ -1608,7 +1624,6 @@
           "frontend_version": "Frontend version: {version} - {type}",
           "custom_uis": "Custom UIs:",
           "system_health_error": "System Health component is not loaded. Add 'system_health:' to configuration.yaml",
-          "integrations": "Integrations",
           "documentation": "Documentation",
           "issues": "Issues",
           "setup_time": "Setup time",
@@ -1619,7 +1634,7 @@
         },
         "logs": {
           "caption": "Logs",
-          "description": "View the Home Assistant logs",
+          "description": "View and search logs to diagnose issues",
           "details": "Log Details ({level})",
           "search": "Search logs",
           "failed_get_logs": "Failed to get {provider} logs, {error}",
@@ -2288,7 +2303,7 @@
           }
         },
         "cloud": {
-          "description_login": "Logged in as {email}",
+          "description_login": "Logged in and connected",
           "description_not_login": "Not logged in",
           "description_features": "Control home when away and integrate with Alexa and Google Assistant",
           "login": {
@@ -3180,10 +3195,14 @@
           "join": "Join the community on our {forums}, {twitter}, {discord}, {blog} or {newsletter}"
         },
         "analytics": {
-          "caption": "Analytics"
+          "caption": "Analytics",
+          "description": "Learn how to share data to better the Open Home"
         },
         "network": {
           "caption": "Network",
+          "description": "External access {state}",
+          "enabled": "enabled",
+          "disabled": "disabled",
           "supervisor": {
             "title": "Configure network interfaces",
             "connected_to": "Connected to {ssid}",
@@ -3204,6 +3223,7 @@
         },
         "storage": {
           "caption": "Storage",
+          "description": "{percent_used} used - {free_space} free",
           "used_space": "Used Space",
           "emmc_lifetime_used": "eMMC Lifetime Used",
           "datadisk": {
@@ -3221,15 +3241,16 @@
         },
         "system_health": {
           "caption": "System Health",
-          "cpu_usage": "Process Usage",
+          "description": "Status, Stats and Integration startup time",
+          "cpu_usage": "Processor Usage",
           "ram_usage": "Memory Usage",
           "core_stats": "Core Stats",
-          "supervisor_stats": "Supervisor Stats"
+          "supervisor_stats": "Supervisor Stats",
+          "integration_start_time": "Integration Startup Time"
         },
         "system_dashboard": {
           "confirm_restart_text": "Restarting Home Assistant will stop all your active dashboards, automations and scripts.",
           "confirm_restart_title": "Restart Home Assistant?",
-          "restart_homeassistant": "Restart Home Assistant",
           "restart_homeassistant_short": "Restart",
           "restart_error": "Failed to restart Home Assistant"
         }
@@ -3372,6 +3393,7 @@
         "menu": {
           "configure_ui": "Edit Dashboard",
           "help": "Help",
+          "search": "Search",
           "start_conversation": "Start conversation",
           "reload_resources": "Reload resources",
           "exit_edit_mode": "Done",
@@ -4283,7 +4305,7 @@
             "adjust_sum": "Adjust sum"
           },
           "yaml": {
-            "title": "YAML Configuration",
+            "title": "YAML",
             "section": {
               "validation": {
                 "heading": "Configuration validation",
@@ -4625,6 +4647,7 @@
       "cancel": "[%key:ui::common::cancel%]",
       "yes": "[%key:ui::common::yes%]",
       "no": "[%key:ui::common::no%]",
+      "add": "[%key:supervisor::dialog::repositories::add%]",
       "description": "Description",
       "failed_to_restart_name": "Failed to restart {name}",
       "failed_to_update_name": "Failed to update {name}",
@@ -4694,8 +4717,11 @@
     "my": {
       "not_supported": "[%key:ui::panel::my::not_supported%]",
       "faq_link": "[%key:ui::panel::my::faq_link%]",
+      "add_addon_repository_title": "Missing add-on repository",
+      "add_addon_repository_description": "The addon ''{addon}'' is a part of the add-on repository ''{repository}'', this repository is missing on your system, do you want to add that now?",
       "error": "[%key:ui::panel::my::error%]",
       "error_addon_not_found": "Add-on not found",
+      "error_repository_not_found": "The required repository for this Add-on was not found",
       "error_addon_not_started": "The requested add-on is not running. Please start it first",
       "error_addon_not_installed": "The requested add-on is not installed. Please install it first",
       "error_addon_no_ingress": "The requested add-on does not support ingress"

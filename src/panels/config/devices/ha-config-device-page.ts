@@ -609,7 +609,7 @@ export class HaConfigDevicePage extends LitElement {
             ${
               isComponentLoaded(this.hass, "automation")
                 ? html`
-                    <ha-card>
+                    <ha-card outlined>
                       <h1 class="card-header">
                         ${this.hass.localize(
                           "ui.panel.config.devices.automation.automations_heading"
@@ -703,7 +703,7 @@ export class HaConfigDevicePage extends LitElement {
             ${
               isComponentLoaded(this.hass, "scene") && entities.length
                 ? html`
-                    <ha-card>
+                    <ha-card outlined>
                       <h1 class="card-header">
                         ${this.hass.localize(
                           "ui.panel.config.devices.scene.scenes_heading"
@@ -801,7 +801,7 @@ export class HaConfigDevicePage extends LitElement {
               ${
                 isComponentLoaded(this.hass, "script")
                   ? html`
-                      <ha-card>
+                      <ha-card outlined>
                         <h1 class="card-header">
                           ${this.hass.localize(
                             "ui.panel.config.devices.script.scripts_heading"
