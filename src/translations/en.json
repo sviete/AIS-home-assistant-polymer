@@ -1112,56 +1112,56 @@
             "introduction": "Here it is possible to configure your AIS Home Gateway. Not everything is possible to configure from the UI yet, but we're working on it."
           },
           "ais_dom": {
-            "main": " AIS Home Gateway Settings",
-            "secondary": "Manage your IoT and Audio gateway"
+            "main": " AIS ustawienia bramki AIoT",
+            "secondary": "Zarządzaj swoją bramą IoT i Audio"
           },
           "ais_dom_devices": {
-            "main": "Configuration of Wifi devices",
-            "secondary": "Manage your devices with AIS dom software"
+            "main": "Konfiguracja urządzeń Wifi",
+            "secondary": "Zarządzaj swoimi urządzeniami z oprogramowaniem AIS dom"
           },
           "ais_dom_zigbee": {
-            "main": "Configuration of AIS Zigbee",
-            "secondary": "Manage your zigbee devices"
+            "main": "Konfiguracja Zigbee2MQTT",
+            "secondary": "Zarządzaj swoimi urządzeniami zigbee"
           },
           "ais_dom_zwave": {
-            "main": "Configuration of AIS ZWave",
-            "secondary": "Manage your ZWave devices"
+            "main": "Konfiguracja ZWaveJS",
+            "secondary": "Zarządzaj swoimi urządzeniami ZWave"
           },
           "ais_dom_config_update": {
-            "main": "Gateway software",
-            "secondary": "System update, backup and synchronization with the Integrator Portal"
+            "main": "Oprogramowanie bramki",
+            "secondary": "Aktualizacja systemu, backup i synchronizacja z Portalem Integratora"
           },
           "ais_dom_config_wifi": {
-            "main": "WiFi network",
-            "secondary": "WiFi connection settings"
+            "main": "Sieć WiFi",
+            "secondary": "Ustawienia WiFi"
           },
           "ais_dom_config_display": {
-            "main": "Screen",
-            "secondary": "Screen Settings"
+            "main": "Ekran",
+            "secondary": "Ustawienia ekranu"
           },
           "ais_dom_config_tts": {
-            "main": "The assistant voice",
-            "secondary": "Voice assistant settings"
+            "main": "Głos asystenta",
+            "secondary": "Ustawienia głosu asystenta"
           },
           "ais_dom_config_night": {
-            "main": "Night mode",
-            "secondary": "Set the hours when the assistant should be quieter"
+            "main": "Tryb nocny",
+            "secondary": "Ustaw godziny, w których asystent powinien być ciszej"
           },
           "ais_dom_config_logs": {
-            "main": "Logs and recorder",
-            "secondary": "Configuration of logs and DB recorder"
+            "main": "Logi i baza danych",
+            "secondary": "Konfiguracja logów i rejestratora DB"
           },
           "ais_dom_config_remote": {
-            "main": "Remote control",
-            "secondary": "Configuration of remote access to the gateway"
+            "main": "Zdalny dostęp",
+            "secondary": "Konfiguracja zdalnego dostępu do bramki"
           },
           "ais_dom_config_usb": {
-            "main": "USB devices",
-            "secondary": "Support for USB devices"
+            "main": "Urządzenia USB",
+            "secondary": "Wsparcie dla urządzeń USB"
           },
           "ais_dom_config_power": {
-            "main": "Stop the Gate",
-            "secondary": "Restart or turn off the gate"
+            "main": "Zatrzymaj bramkę",
+            "secondary": "Uruchom ponownie lub wyłącz bramę"
           },
           "devices": {
             "main": "Devices & Services",
