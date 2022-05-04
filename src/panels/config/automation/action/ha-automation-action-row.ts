@@ -65,6 +65,9 @@ const getType = (action: Action | undefined) => {
   if ("service" in action || "scene" in action) {
     return getActionType(action);
   }
+  if (["and", "or", "not"].some((key) => key in action)) {
+    return "condition";
+  }
   return OPTIONS.find((option) => option in action);
 };
 
@@ -161,7 +164,7 @@ export default class HaAutomationActionRow extends LitElement {
     const yamlMode = this._yamlMode;
 
     return html`
-      <ha-card>
+      <ha-card outlined>
         ${this.action.enabled === false
           ? html`<div class="disabled-bar">
               ${this.hass.localize(
