@@ -87,6 +87,7 @@ export interface ButtonCardConfig extends LovelaceCardConfig {
   name?: string;
   show_name?: boolean;
   icon?: string;
+  icon_height?: string;
   show_icon?: boolean;
   theme?: string;
   tap_action?: ActionConfig;
@@ -175,6 +176,11 @@ export interface SeverityConfig {
   red?: number;
 }
 
+export interface GaugeSegment {
+  from: number;
+  color: string;
+}
+
 export interface GaugeCardConfig extends LovelaceCardConfig {
   entity: string;
   name?: string;
@@ -184,6 +190,7 @@ export interface GaugeCardConfig extends LovelaceCardConfig {
   severity?: SeverityConfig;
   theme?: string;
   needle?: boolean;
+  segments?: GaugeSegment[];
 }
 
 export interface ConfigEntity extends EntityConfig {
@@ -283,6 +290,7 @@ export interface StatisticsGraphCardConfig extends LovelaceCardConfig {
   title?: string;
   entities: Array<EntityConfig | string>;
   days_to_show?: number;
+  period?: "5minute" | "hour" | "day" | "month";
   stat_types?: StatisticType | StatisticType[];
   chart_type?: "line" | "bar";
 }

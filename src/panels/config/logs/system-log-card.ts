@@ -2,6 +2,7 @@ import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators";
+import memoizeOne from "memoize-one";
 import "../../../components/buttons/ha-call-service-button";
 import "../../../components/buttons/ha-progress-button";
 import "../../../components/ha-card";
@@ -17,10 +18,13 @@ import {
 import { HomeAssistant } from "../../../types";
 import { showSystemLogDetailDialog } from "./show-dialog-system-log-detail";
 import { formatSystemLogTime } from "./util";
+import { computeRTLDirection } from "../../../common/util/compute_rtl";
 
 @customElement("system-log-card")
 export class SystemLogCard extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
+
+  @property() public filter = "";
 
   public loaded = false;
 
@@ -31,13 +35,48 @@ export class SystemLogCard extends LitElement {
     this._items = await fetchSystemLog(this.hass!);
   }
 
+  private _timestamp(item: LoggedError): string {
+    return formatSystemLogTime(item.timestamp, this.hass!.locale);
+  }
+
+  private _multipleMessages(item: LoggedError): string {
+    return this.hass.localize(
+      "ui.panel.config.logs.multiple_messages",
+      "time",
+      formatSystemLogTime(item.first_occurred, this.hass!.locale),
+      "counter",
+      item.count
+    );
+  }
+
+  private _getFilteredItems = memoizeOne(
+    (items: LoggedError[], filter: string) =>
+      items.filter((item: LoggedError) => {
+        if (filter) {
+          return (
+            item.message.some((message: string) =>
+              message.toLowerCase().includes(filter)
+            ) ||
+            item.source[0].toLowerCase().includes(filter) ||
+            item.name.toLowerCase().includes(filter) ||
+            this._timestamp(item).toLowerCase().includes(filter) ||
+            this._multipleMessages(item).toLowerCase().includes(filter)
+          );
+        }
+        return item;
+      })
+  );
+
   protected render(): TemplateResult {
-    const integrations = this._items
-      ? this._items.map((item) => getLoggedErrorIntegration(item))
+    const filteredItems = this._items
+      ? this._getFilteredItems(this._items, this.filter.toLowerCase())
+      : [];
+    const integrations = filteredItems.length
+      ? filteredItems.map((item) => getLoggedErrorIntegration(item))
       : [];
     return html`
       <div class="system-log-intro">
-        <ha-card>
+        <ha-card outlined>
           ${this._items === undefined
             ? html`
                 <div class="loading-container">
@@ -51,17 +90,21 @@ export class SystemLogCard extends LitElement {
                         ${this.hass.localize("ui.panel.config.logs.no_issues")}
                       </div>
                     `
-                  : this._items.map(
+                  : filteredItems.length === 0 && this.filter
+                  ? html`<div class="card-content">
+                      ${this.hass.localize(
+                        "ui.panel.config.logs.no_issues_search",
+                        "term",
+                        this.filter
+                      )}
+                    </div>`
+                  : filteredItems.map(
                       (item, idx) => html`
                         <paper-item @click=${this._openLog} .logItem=${item}>
                           <paper-item-body two-line>
                             <div class="row">${item.message[0]}</div>
                             <div secondary>
-                              ${formatSystemLogTime(
-                                item.timestamp,
-                                this.hass!.locale
-                              )}
-                              –
+                              ${this._timestamp(item)} –
                               ${html`(<span class=${item.level.toLowerCase()}
                                   >${this.hass.localize(
                                     "ui.panel.config.logs.level." +
@@ -81,19 +124,7 @@ export class SystemLogCard extends LitElement {
                                   }`
                                 : item.source[0]}
                               ${item.count > 1
-                                ? html`
-                                    -
-                                    ${this.hass.localize(
-                                      "ui.panel.config.logs.multiple_messages",
-                                      "time",
-                                      formatSystemLogTime(
-                                        item.first_occurred,
-                                        this.hass!.locale
-                                      ),
-                                      "counter",
-                                      item.count
-                                    )}
-                                  `
+                                ? html` - ${this._multipleMessages(item)} `
                                 : html``}
                             </div>
                           </paper-item-body>
@@ -101,7 +132,7 @@ export class SystemLogCard extends LitElement {
                       `
                     )}
 
-                <div class="card-actions">
+                <div class="card-actions" dir=${computeRTLDirection(this.hass)}>
                   <ha-call-service-button
                     .hass=${this.hass}
                     domain="system_log"
@@ -173,6 +204,10 @@ export class SystemLogCard extends LitElement {
 
       .warning {
         color: var(--warning-color);
+      }
+
+      :host-context([style*="direction: rtl;"]) .card-actions {
+        direction: rtl;
       }
     `;
   }

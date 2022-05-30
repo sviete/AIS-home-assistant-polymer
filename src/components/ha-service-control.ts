@@ -17,6 +17,7 @@ import {
 import { Selector } from "../data/selector";
 import { PolymerChangedEvent } from "../polymer-types";
 import { HomeAssistant } from "../types";
+import { documentationUrl } from "../util/documentation-url";
 import "./ha-checkbox";
 import "./ha-icon-button";
 import "./ha-selector/ha-selector";
@@ -66,7 +67,7 @@ export class HaServiceControl extends LitElement {
 
   @query("ha-yaml-editor") private _yamlEditor?: HaYamlEditor;
 
-  protected updated(changedProperties: PropertyValues<this>) {
+  protected willUpdate(changedProperties: PropertyValues<this>) {
     if (!changedProperties.has("value")) {
       return;
     }
@@ -128,6 +129,35 @@ export class HaServiceControl extends LitElement {
       delete this._value.data!.area_id;
     } else {
       this._value = this.value;
+    }
+
+    if (oldValue?.service !== this.value?.service) {
+      let updatedDefaultValue = false;
+      if (this._value && serviceData) {
+        // Set mandatory bools without a default value to false
+        if (!this._value.data) {
+          this._value.data = {};
+        }
+        serviceData.fields.forEach((field) => {
+          if (
+            field.selector &&
+            field.required &&
+            field.default === undefined &&
+            "boolean" in field.selector &&
+            this._value!.data![field.key] === undefined
+          ) {
+            updatedDefaultValue = true;
+            this._value!.data![field.key] = false;
+          }
+        });
+      }
+      if (updatedDefaultValue) {
+        fireEvent(this, "value-changed", {
+          value: {
+            ...this._value,
+          },
+        });
+      }
     }
 
     if (this._value?.data) {
@@ -203,7 +233,12 @@ export class HaServiceControl extends LitElement {
         <p>${serviceData?.description}</p>
         ${this._manifest
           ? html` <a
-              href=${this._manifest.documentation}
+              href=${this._manifest.is_built_in
+                ? documentationUrl(
+                    this.hass,
+                    `/integrations/${this._manifest.domain}`
+                  )
+                : this._manifest.documentation}
               title=${this.hass.localize(
                 "ui.components.service-control.integration_doc"
               )}
@@ -251,6 +286,7 @@ export class HaServiceControl extends LitElement {
         : ""}
       ${shouldRenderServiceDataYaml
         ? html`<ha-yaml-editor
+            .hass=${this.hass}
             .label=${this.hass.localize(
               "ui.components.service-control.service_data"
             )}
@@ -435,6 +471,8 @@ export class HaServiceControl extends LitElement {
       }
       ha-settings-row {
         --paper-time-input-justify-content: flex-end;
+        --settings-row-content-width: 100%;
+        --settings-row-prefix-display: contents;
         border-top: var(
           --service-control-items-border-top,
           1px solid var(--divider-color)
@@ -452,12 +490,6 @@ export class HaServiceControl extends LitElement {
       p {
         margin: var(--service-control-padding, 0 16px);
         padding: 16px 0;
-      }
-      :host(:not([narrow])) ha-settings-row paper-input {
-        width: 60%;
-      }
-      :host(:not([narrow])) ha-settings-row ha-selector {
-        width: 60%;
       }
       .checkbox-spacer {
         width: 32px;

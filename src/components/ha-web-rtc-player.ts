@@ -43,7 +43,7 @@ class HaWebRtcPlayer extends LitElement {
 
   private _remoteStream?: MediaStream;
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     if (this._error) {
       return html`<ha-alert alert-type="error">${this._error}</ha-alert>`;
     }
@@ -58,12 +58,19 @@ class HaWebRtcPlayer extends LitElement {
     `;
   }
 
-  public disconnectedCallback() {
+  public override connectedCallback() {
+    super.connectedCallback();
+    if (this.hasUpdated) {
+      this._startWebRtc();
+    }
+  }
+
+  public override disconnectedCallback() {
     super.disconnectedCallback();
     this._cleanUp();
   }
 
-  protected updated(changedProperties: PropertyValues<this>) {
+  protected override updated(changedProperties: PropertyValues<this>) {
     if (!changedProperties.has("entityid")) {
       return;
     }
@@ -136,9 +143,8 @@ class HaWebRtcPlayer extends LitElement {
       this._remoteStream = undefined;
     }
     if (this._videoEl) {
-      const videoEl = this._videoEl;
-      videoEl.removeAttribute("src");
-      videoEl.load();
+      this._videoEl.removeAttribute("src");
+      this._videoEl.load();
     }
     if (this._peerConnection) {
       this._peerConnection.close();

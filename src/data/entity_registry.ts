@@ -1,6 +1,7 @@
 import { Connection, createCollection } from "home-assistant-js-websocket";
 import { Store } from "home-assistant-js-websocket/dist/store";
 import { computeStateName } from "../common/entity/compute_state_name";
+import { caseInsensitiveStringCompare } from "../common/string/compare";
 import { debounce } from "../common/util/debounce";
 import { HomeAssistant } from "../types";
 
@@ -13,6 +14,7 @@ export interface EntityRegistryEntry {
   device_id: string | null;
   area_id: string | null;
   disabled_by: string | null;
+  hidden_by: string | null;
   entity_category: "config" | "diagnostic" | null;
 }
 
@@ -37,7 +39,12 @@ export interface EntityRegistryEntryUpdateParams {
   device_class?: string | null;
   area_id?: string | null;
   disabled_by?: string | null;
+  hidden_by: string | null;
   new_entity_id?: string;
+  options_domain?: string;
+  options?: {
+    unit_of_measurement?: string | null;
+  };
 }
 
 export const findBatteryEntity = (
@@ -132,4 +139,9 @@ export const subscribeEntityRegistry = (
     subscribeEntityRegistryUpdates,
     conn,
     onChange
+  );
+
+export const sortEntityRegistryByName = (entries: EntityRegistryEntry[]) =>
+  entries.sort((entry1, entry2) =>
+    caseInsensitiveStringCompare(entry1.name || "", entry2.name || "")
   );

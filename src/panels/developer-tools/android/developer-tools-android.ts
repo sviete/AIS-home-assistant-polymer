@@ -17,6 +17,8 @@ class HaPanelDevAndroid extends LitElement {
 
     this.url =
       window.location.protocol + "//" + window.location.hostname + ":9966";
+    // for ais test
+    //this.url = "http://192.168.6.122:9966";
     this.localConection = true;
     if (
       window.location.hostname.startsWith("dom-") ||

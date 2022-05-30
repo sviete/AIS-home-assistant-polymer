@@ -1,4 +1,3 @@
-import "@material/mwc-list/mwc-list-item";
 import type { RequestSelectedDetail } from "@material/mwc-list/mwc-list-item";
 import { mdiCancel, mdiFilterVariant, mdiPlus } from "@mdi/js";
 import "@polymer/paper-tooltip/paper-tooltip";
@@ -19,6 +18,7 @@ import "../../../components/entity/ha-battery-icon";
 import "../../../components/ha-button-menu";
 import "../../../components/ha-fab";
 import "../../../components/ha-icon-button";
+import "../../../components/ha-check-list-item";
 import { AreaRegistryEntry } from "../../../data/area_registry";
 import { ConfigEntry } from "../../../data/config_entries";
 import {
@@ -67,7 +67,7 @@ export class HaConfigDeviceDashboard extends LitElement {
 
   @state() private _showDisabled = false;
 
-  @state() private _filter = "";
+  @state() private _filter: string = history.state?.filter || "";
 
   @state() private _numHiddenDevices = 0;
 
@@ -197,7 +197,10 @@ export class HaConfigDeviceDashboard extends LitElement {
         ),
         model: device.model || "<unknown>",
         manufacturer: device.manufacturer || "<unknown>",
-        area: device.area_id ? areaLookup[device.area_id].name : undefined,
+        area:
+          device.area_id && areaLookup[device.area_id]
+            ? areaLookup[device.area_id].name
+            : "—",
         integration: device.config_entries.length
           ? device.config_entries
               .filter((entId) => entId in entryLookup)
@@ -207,7 +210,9 @@ export class HaConfigDeviceDashboard extends LitElement {
                   entryLookup[entId].domain
               )
               .join(", ")
-          : "No integration",
+          : this.hass.localize(
+              "ui.panel.config.devices.data_table.no_integration"
+            ),
         battery_entity: [
           this._batteryEntity(device.id, deviceEntityLookup),
           this._batteryChargingEntity(device.id, deviceEntityLookup),
@@ -318,12 +323,15 @@ export class HaConfigDeviceDashboard extends LitElement {
                   .batteryChargingStateObj=${batteryCharging}
                 ></ha-battery-icon>
               `
-            : html` - `;
+            : html`—`;
         },
       };
       if (showDisabled) {
         columns.disabled_by = {
           title: "",
+          label: this.hass.localize(
+            "ui.panel.config.devices.data_table.disabled_by"
+          ),
           type: "icon",
           template: (disabled_by) =>
             disabled_by
@@ -336,7 +344,7 @@ export class HaConfigDeviceDashboard extends LitElement {
                     ${this.hass.localize("ui.panel.config.devices.disabled")}
                   </paper-tooltip>
                 </div>`
-              : "",
+              : "—",
         };
       }
       return columns;
@@ -433,19 +441,22 @@ export class HaConfigDeviceDashboard extends LitElement {
             )}
             .path=${mdiFilterVariant}
           ></ha-icon-button>
-          <mwc-list-item
+          ${this.narrow && activeFilters?.length
+            ? html`<mwc-list-item @click=${this._clearFilter}
+                >${this.hass.localize("ui.components.data-table.filtering_by")}
+                ${activeFilters.join(", ")}
+                <span class="clear">Clear</span></mwc-list-item
+              >`
+            : ""}
+          <ha-check-list-item
+            left
             @request-selected=${this._showDisabledChanged}
-            graphic="control"
             .selected=${this._showDisabled}
           >
-            <ha-checkbox
-              slot="graphic"
-              .checked=${this._showDisabled}
-            ></ha-checkbox>
             ${this.hass!.localize(
               "ui.panel.config.devices.picker.filter.show_disabled"
             )}
-          </mwc-list-item>
+          </ha-check-list-item>
         </ha-button-menu>
       </hass-tabs-subpage-data-table>
     `;
@@ -488,6 +499,7 @@ export class HaConfigDeviceDashboard extends LitElement {
 
   private _handleSearchChange(ev: CustomEvent) {
     this._filter = ev.detail.value;
+    history.replaceState({ filter: this._filter }, "");
   }
 
   private _clearFilter() {
@@ -519,7 +531,12 @@ export class HaConfigDeviceDashboard extends LitElement {
     return [
       css`
         ha-button-menu {
-          margin: 0 -8px 0 8px;
+          margin-left: 8px;
+        }
+        .clear {
+          color: var(--primary-color);
+          padding-left: 8px;
+          text-transform: uppercase;
         }
       `,
       haStyle,

@@ -6,7 +6,7 @@ import "@polymer/paper-item/paper-icon-item";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
 import "@polymer/paper-listbox/paper-listbox";
-import "@polymer/paper-dropdown-menu/paper-dropdown-menu-light";
+import "@material/mwc-select";
 import "@material/mwc-list/mwc-list-item";
 import "@polymer/paper-input/paper-textarea";
 import "../../components/ha-button-menu";
@@ -227,27 +227,29 @@ export class HaPanelAisTts extends LitElement {
                 ></paper-textarea>
                 ${this.hass.user!.is_admin
                   ? html`
-                      <div class="AisTtsLang">
-                        <paper-dropdown-menu-light
-                          label="Głos"
-                          style="margin-left: 30px; width:250px;"
-                          .disabled=${this._play_counting}
-                        >
-                          <paper-listbox
+                      <!-- <paper-listbox
                             slot="dropdown-content"
                             attr-for-selected="voice"
                             .selected=${this._selectedVoice}
                             @iron-select=${this._setVoice}
-                          >
-                            ${voices.map(
-                              (voice) => html`
-                                <paper-item voice=${voice.key}
-                                  >${voice.name}</paper-item
-                                >
-                              `
-                            )}
-                          </paper-listbox>
-                        </paper-dropdown-menu-light>
+                          > -->
+                      <div class="AisTtsLang">
+                        <mwc-select
+                          label="Głos"
+                          style="margin-left: 30px; width:250px;"
+                          .disabled=${this._play_counting}
+                          attr-for-selected="voice"
+                          .value=${this._selectedVoice}
+                          @selected=${this._setVoice}
+                        >
+                          ${voices.map(
+                            (voice) => html`
+                              <mwc-list-item value=${voice.key}
+                                >${voice.key}</mwc-list-item
+                              >
+                            `
+                          )}
+                        </mwc-select>
                         <label
                           class="label-is-floating"
                           style=" font-size: 12px; color: var(--primary-color);"

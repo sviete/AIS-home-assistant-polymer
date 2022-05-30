@@ -8,10 +8,17 @@ import { describeCondition, describeTrigger } from "./automation_i18n";
 import {
   ActionType,
   ActionTypes,
+  ChooseAction,
   DelayAction,
+  DeviceAction,
   EventAction,
   getActionType,
+  IfAction,
+  ParallelAction,
+  PlayMediaAction,
+  RepeatAction,
   SceneAction,
+  StopAction,
   VariablesAction,
   WaitForTriggerAction,
 } from "./script";
@@ -104,9 +111,30 @@ export const describeAction = <T extends ActionType>(
 
   if (actionType === "activate_scene") {
     const config = action as SceneAction;
-    const sceneStateObj = hass.states[config.scene];
+    let entityId: string | undefined;
+    if ("scene" in config) {
+      entityId = config.scene;
+    } else {
+      entityId = config.target?.entity_id || config.entity_id;
+    }
+    const sceneStateObj = entityId ? hass.states[entityId] : undefined;
     return `Activate scene ${
-      sceneStateObj ? computeStateName(sceneStateObj) : config.scene
+      sceneStateObj
+        ? computeStateName(sceneStateObj)
+        : "scene" in config
+        ? config.scene
+        : config.target?.entity_id || config.entity_id
+    }`;
+  }
+
+  if (actionType === "play_media") {
+    const config = action as PlayMediaAction;
+    const entityId = config.target?.entity_id || config.entity_id;
+    const mediaStateObj = entityId ? hass.states[entityId] : undefined;
+    return `Play ${config.metadata.title || config.data.media_content_id} on ${
+      mediaStateObj
+        ? computeStateName(mediaStateObj)
+        : config.target?.entity_id || config.entity_id
     }`;
   }
 
@@ -136,6 +164,96 @@ export const describeAction = <T extends ActionType>(
 
   if (actionType === "check_condition") {
     return `Test ${describeCondition(action as Condition)}`;
+  }
+
+  if (actionType === "stop") {
+    const config = action as StopAction;
+    return `Stopped${config.stop ? ` because: ${config.stop}` : ""}`;
+  }
+
+  if (actionType === "if") {
+    const config = action as IfAction;
+    return `If ${
+      typeof config.if === "string"
+        ? config.if
+        : ensureArray(config.if)
+            .map((condition) => describeCondition(condition))
+            .join(", ")
+    } then ${ensureArray(config.then).map((thenAction) =>
+      describeAction(hass, thenAction)
+    )}${
+      config.else
+        ? ` else ${ensureArray(config.else).map((elseAction) =>
+            describeAction(hass, elseAction)
+          )}`
+        : ""
+    }`;
+  }
+
+  if (actionType === "choose") {
+    const config = action as ChooseAction;
+    return config.choose
+      ? `If ${ensureArray(config.choose)
+          .map(
+            (chooseAction) =>
+              `${
+                typeof chooseAction.conditions === "string"
+                  ? chooseAction.conditions
+                  : ensureArray(chooseAction.conditions)
+                      .map((condition) => describeCondition(condition))
+                      .join(", ")
+              } then ${ensureArray(chooseAction.sequence)
+                .map((chooseSeq) => describeAction(hass, chooseSeq))
+                .join(", ")}`
+          )
+          .join(", else if ")}${
+          config.default
+            ? `. If none match: ${ensureArray(config.default)
+                .map((dAction) => describeAction(hass, dAction))
+                .join(", ")}`
+            : ""
+        }`
+      : "Choose";
+  }
+
+  if (actionType === "repeat") {
+    const config = action as RepeatAction;
+    return `Repeat ${ensureArray(config.repeat.sequence).map((repeatAction) =>
+      describeAction(hass, repeatAction)
+    )} ${"count" in config.repeat ? `${config.repeat.count} times` : ""}${
+      "while" in config.repeat
+        ? `while ${ensureArray(config.repeat.while)
+            .map((condition) => describeCondition(condition))
+            .join(", ")} is true`
+        : "until" in config.repeat
+        ? `until ${ensureArray(config.repeat.until)
+            .map((condition) => describeCondition(condition))
+            .join(", ")} is true`
+        : "for_each" in config.repeat
+        ? `for every item: ${ensureArray(config.repeat.for_each)
+            .map((item) => JSON.stringify(item))
+            .join(", ")}`
+        : ""
+    }`;
+  }
+
+  if (actionType === "check_condition") {
+    return `Test ${describeCondition(action as Condition)}`;
+  }
+
+  if (actionType === "device_action") {
+    const config = action as DeviceAction;
+    const stateObj = hass.states[config.entity_id as string];
+    return `${config.type || "Perform action with"} ${
+      stateObj ? computeStateName(stateObj) : config.entity_id
+    }`;
+  }
+
+  if (actionType === "parallel") {
+    const config = action as ParallelAction;
+    return `Run in parallel: ${ensureArray(config.parallel)
+      .map((pAction) => describeAction(hass, pAction))
+      .join(", ")}`;
   }
 
   return actionType;

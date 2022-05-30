@@ -1,4 +1,4 @@
-import { Layout1d, scroll } from "@lit-labs/virtualizer";
+import "@lit-labs/virtualizer";
 import {
   css,
   CSSResultGroup,
@@ -15,6 +15,7 @@ import { formatTimeWithSeconds } from "../../common/datetime/format_time";
 import { restoreScroll } from "../../common/decorators/restore-scroll";
 import { fireEvent } from "../../common/dom/fire_event";
 import { computeDomain } from "../../common/entity/compute_domain";
+import { domainIcon } from "../../common/entity/domain_icon";
 import { computeRTL, emitRTLDirection } from "../../common/util/compute_rtl";
 import "../../components/entity/state-badge";
 import "../../components/ha-circular-progress";
@@ -96,12 +97,13 @@ class HaLogbook extends LitElement {
         @scroll=${this._saveScrollPos}
       >
         ${this.virtualize
-          ? scroll({
-              items: this.entries,
-              layout: Layout1d,
-              renderItem: (item: LogbookEntry, index) =>
-                this._renderLogbookItem(item, index),
-            })
+          ? html`<lit-virtualizer
+              scroller
+              class="ha-scrollbar"
+              .items=${this.entries}
+              .renderItem=${this._renderLogbookItem}
+            >
+            </lit-virtualizer>`
           : this.entries.map((item, index) =>
               this._renderLogbookItem(item, index)
             )}
@@ -109,11 +111,11 @@ class HaLogbook extends LitElement {
     `;
   }
 
-  private _renderLogbookItem(
+  private _renderLogbookItem = (
     item: LogbookEntry,
-    index?: number
-  ): TemplateResult {
-    if (index === undefined) {
+    index: number
+  ): TemplateResult => {
+    if (!item || index === undefined) {
       return html``;
     }
 
@@ -150,7 +152,10 @@ class HaLogbook extends LitElement {
                 html`
                   <state-badge
                     .hass=${this.hass}
-                    .overrideIcon=${item.icon}
+                    .overrideIcon=${item.icon ||
+                    (item.domain && !stateObj
+                      ? domainIcon(item.domain!)
+                      : undefined)}
                     .overrideImage=${DOMAINS_WITH_DYNAMIC_PICTURE.has(domain)
                       ? ""
                       : stateObj?.attributes.entity_picture_local ||
@@ -235,7 +240,7 @@ class HaLogbook extends LitElement {
         </div>
       </div>
     `;
-  }
+  };
 
   @eventOptions({ passive: true })
   private _saveScrollPos(e: Event) {
@@ -358,8 +363,13 @@ class HaLogbook extends LitElement {
           max-height: var(--logbook-max-height);
         }
 
-        :host([virtualize]) .container {
+        .container,
+        lit-virtualizer {
           height: 100%;
+        }
+
+        lit-virtualizer {
+          contain: size layout !important;
         }
 
         .narrow .entry {

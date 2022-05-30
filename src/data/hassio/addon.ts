@@ -21,7 +21,8 @@ export type AddonState = "started" | "stopped" | null;
 export type AddonRepository = "core" | "local" | string;
 
 interface AddonTranslations {
-  [key: string]: Record<string, Record<string, Record<string, string>>>;
+  network?: Record<string, string>;
+  configuration?: Record<string, { name?: string; description?: string }>;
 }
 
 export interface HassioAddonInfo {
@@ -84,13 +85,14 @@ export interface HassioAddonDetails extends HassioAddonInfo {
   options: Record<string, unknown>;
   privileged: any;
   protected: boolean;
-  rating: "1-6";
+  rating: "1-8";
   schema: HaFormSchema[] | null;
   services_role: string[];
+  signed: boolean;
   slug: string;
   startup: AddonStartup;
   stdin: boolean;
-  translations: AddonTranslations;
+  translations: Record<string, AddonTranslations>;
   watchdog: null | boolean;
   webui: null | string;
 }
@@ -302,7 +304,8 @@ export const installHassioAddon = async (
 
 export const updateHassioAddon = async (
   hass: HomeAssistant,
-  slug: string
+  slug: string,
+  backup: boolean
 ): Promise<void> => {
   if (atLeastVersion(hass.config.version, 2021, 2, 4)) {
     await hass.callWS({
@@ -310,11 +313,13 @@ export const updateHassioAddon = async (
       endpoint: `/store/addons/${slug}/update`,
       method: "post",
       timeout: null,
+      data: { backup },
     });
   } else {
     await hass.callApi<HassioResponse<void>>(
       "POST",
-      `hassio/addons/${slug}/update`
+      `hassio/addons/${slug}/update`,
+      { backup }
     );
   }
 };

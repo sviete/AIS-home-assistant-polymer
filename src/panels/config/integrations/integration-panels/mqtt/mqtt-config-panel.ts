@@ -78,8 +78,11 @@ class HaPanelDevMqtt extends LitElement {
               <p>${this.hass.localize("ui.panel.config.mqtt.payload")}</p>
               <ha-code-editor
                 mode="jinja2"
+                autocomplete-entities
+                .hass=${this.hass}
                 .value=${this.payload}
                 @value-changed=${this._handlePayload}
+                dir="ltr"
               ></ha-code-editor>
             </div>
             <div class="card-actions">
@@ -127,7 +130,9 @@ class HaPanelDevMqtt extends LitElement {
       return;
     }
     const configEntryId = searchParams.get("config_entry") as string;
-    const configEntries = await getConfigEntries(this.hass);
+    const configEntries = await getConfigEntries(this.hass, {
+      domain: "mqtt",
+    });
     const configEntry = configEntries.find(
       (entry) => entry.entry_id === configEntryId
     );

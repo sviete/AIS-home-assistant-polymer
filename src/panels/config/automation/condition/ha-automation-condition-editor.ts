@@ -1,15 +1,15 @@
-import { CSSResultGroup, html, LitElement } from "lit";
+import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators";
-import "@material/mwc-select";
-import type { Select } from "@material/mwc-select";
 import memoizeOne from "memoize-one";
 import { dynamicElement } from "../../../../common/dom/dynamic-element-directive";
 import { fireEvent } from "../../../../common/dom/fire_event";
 import { stringCompare } from "../../../../common/string/compare";
-import { LocalizeFunc } from "../../../../common/translations/localize";
-import "../../../../components/ha-card";
+import type { LocalizeFunc } from "../../../../common/translations/localize";
+import "../../../../components/ha-select";
+import type { HaSelect } from "../../../../components/ha-select";
 import "../../../../components/ha-yaml-editor";
 import type { Condition } from "../../../../data/automation";
+import { expandConditionWithShorthand } from "../../../../data/automation";
 import { haStyle } from "../../../../resources/styles";
 import type { HomeAssistant } from "../../../../types";
 import "./types/ha-automation-condition-and";
@@ -42,9 +42,13 @@ const OPTIONS = [
 export default class HaAutomationConditionEditor extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @property() public condition!: Condition;
+  @property() condition!: Condition;
 
   @property() public yamlMode = false;
+
+  private _processedCondition = memoizeOne((condition) =>
+    expandConditionWithShorthand(condition)
+  );
 
   private _processedTypes = memoizeOne(
     (localize: LocalizeFunc): [string, string][] =>
@@ -60,7 +64,8 @@ export default class HaAutomationConditionEditor extends LitElement {
   );
 
   protected render() {
-    const selected = OPTIONS.indexOf(this.condition.condition);
+    const condition = this._processedCondition(this.condition);
+    const selected = OPTIONS.indexOf(condition.condition);
     const yamlMode = this.yamlMode || selected === -1;
     return html`
       ${yamlMode
@@ -70,7 +75,7 @@ export default class HaAutomationConditionEditor extends LitElement {
                   ${this.hass.localize(
                     "ui.panel.config.automation.editor.conditions.unsupported_condition",
                     "condition",
-                    this.condition.condition
+                    condition.condition
                   )}
                 `
               : ""}
@@ -80,16 +85,17 @@ export default class HaAutomationConditionEditor extends LitElement {
               )}
             </h2>
             <ha-yaml-editor
+              .hass=${this.hass}
               .defaultValue=${this.condition}
               @value-changed=${this._onYamlChange}
             ></ha-yaml-editor>
           `
         : html`
-            <mwc-select
+            <ha-select
               .label=${this.hass.localize(
                 "ui.panel.config.automation.editor.conditions.type_select"
               )}
-              .value=${this.condition.condition}
+              .value=${condition.condition}
               naturalMenuWidth
               @selected=${this._typeChanged}
             >
@@ -98,12 +104,12 @@ export default class HaAutomationConditionEditor extends LitElement {
                   <mwc-list-item .value=${opt}>${label}</mwc-list-item>
                 `
               )}
-            </mwc-select>
+            </ha-select>
 
             <div>
               ${dynamicElement(
-                `ha-automation-condition-${this.condition.condition}`,
-                { hass: this.hass, condition: this.condition }
+                `ha-automation-condition-${condition.condition}`,
+                { hass: this.hass, condition: condition }
               )}
             </div>
           `}
@@ -111,7 +117,7 @@ export default class HaAutomationConditionEditor extends LitElement {
   }
 
   private _typeChanged(ev: CustomEvent) {
-    const type = (ev.target as Select).value;
+    const type = (ev.target as HaSelect).value;
 
     if (!type) {
       return;
@@ -123,7 +129,7 @@ export default class HaAutomationConditionEditor extends LitElement {
       defaultConfig: Omit<Condition, "condition">;
     };
 
-    if (type !== this.condition.condition) {
+    if (type !== this._processedCondition(this.condition).condition) {
       fireEvent(this, "value-changed", {
         value: {
           condition: type,
@@ -142,9 +148,14 @@ export default class HaAutomationConditionEditor extends LitElement {
     fireEvent(this, "value-changed", { value: ev.detail.value, yaml: true });
   }
 
-  static get styles(): CSSResultGroup {
-    return haStyle;
-  }
+  static styles = [
+    haStyle,
+    css`
+      ha-select {
+        margin-bottom: 24px;
+      }
+    `,
+  ];
 }
 
 declare global {

@@ -1,12 +1,19 @@
 import { HassEntity } from "home-assistant-js-websocket";
 import { UNAVAILABLE, UNKNOWN } from "../../data/entity";
 import { FrontendLocaleData } from "../../data/translation";
+import {
+  updateIsInstalling,
+  UpdateEntity,
+  UPDATE_SUPPORT_PROGRESS,
+} from "../../data/update";
 import { formatDate } from "../datetime/format_date";
 import { formatDateTime } from "../datetime/format_date_time";
 import { formatTime } from "../datetime/format_time";
 import { formatNumber, isNumericState } from "../number/format_number";
 import { LocalizeFunc } from "../translations/localize";
 import { computeStateDomain } from "./compute_state_domain";
+import { supportsFeature } from "./supports-feature";
+import { formatDuration, UNIT_TO_SECOND_CONVERT } from "../datetime/duration";
 
 export const computeStateDisplay = (
   localize: LocalizeFunc,
@@ -22,11 +29,27 @@ export const computeStateDisplay = (
 
   // Entities with a `unit_of_measurement` or `state_class` are numeric values and should use `formatNumber`
   if (isNumericState(stateObj)) {
+    // state is duration
+    if (
+      stateObj.attributes.device_class === "duration" &&
+      stateObj.attributes.unit_of_measurement &&
+      UNIT_TO_SECOND_CONVERT[stateObj.attributes.unit_of_measurement]
+    ) {
+      try {
+        return formatDuration(
+          compareState,
+          stateObj.attributes.unit_of_measurement
+        );
+      } catch (_err) {
+        // fallback to default
+      }
+    }
     if (stateObj.attributes.device_class === "monetary") {
       try {
         return formatNumber(compareState, locale, {
           style: "currency",
           currency: stateObj.attributes.unit_of_measurement,
+          minimumFractionDigits: 2,
         });
       } catch (_err) {
         // fallback to default
@@ -43,7 +66,7 @@ export const computeStateDisplay = (
 
   if (domain === "input_datetime") {
     if (state !== undefined) {
-      // If trying to display an explicit state, need to parse the explict state to `Date` then format.
+      // If trying to display an explicit state, need to parse the explicit state to `Date` then format.
       // Attributes aren't available, we have to use `state`.
       try {
         const components = state.split(" ");
@@ -119,9 +142,37 @@ export const computeStateDisplay = (
   // state of button is a timestamp
   if (
     domain === "button" ||
+    domain === "input_button" ||
+    domain === "scene" ||
     (domain === "sensor" && stateObj.attributes.device_class === "timestamp")
   ) {
-    return formatDateTime(new Date(compareState), locale);
+    try {
+      return formatDateTime(new Date(compareState), locale);
+    } catch (_err) {
+      return compareState;
+    }
+  }
+
+  if (domain === "update") {
+    // When updating, and entity does not support % show "Installing"
+    // When updating, and entity does support % show "Installing (xx%)"
+    // When update available, show the version
+    // When the latest version is skipped, show the latest version
+    // When update is not available, show "Up-to-date"
+    // When update is not available and there is no latest_version show "Unavailable"
+    return compareState === "on"
+      ? updateIsInstalling(stateObj as UpdateEntity)
+        ? supportsFeature(stateObj, UPDATE_SUPPORT_PROGRESS)
+          ? localize("ui.card.update.installing_with_progress", {
+              progress: stateObj.attributes.in_progress,
+            })
+          : localize("ui.card.update.installing")
+        : stateObj.attributes.latest_version
+      : stateObj.attributes.skipped_version ===
+        stateObj.attributes.latest_version
+      ? stateObj.attributes.latest_version ??
+        localize("state.default.unavailable")
+      : localize("ui.card.update.up_to_date");
   }
 
   return (

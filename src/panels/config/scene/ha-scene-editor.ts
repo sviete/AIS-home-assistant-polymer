@@ -28,12 +28,13 @@ import { navigate } from "../../../common/navigate";
 import { computeRTL } from "../../../common/util/compute_rtl";
 import "../../../components/device/ha-device-picker";
 import "../../../components/entity/ha-entities-picker";
+import "../../../components/ha-area-picker";
 import "../../../components/ha-card";
 import "../../../components/ha-fab";
 import "../../../components/ha-icon-button";
 import "../../../components/ha-icon-picker";
-import "../../../components/ha-area-picker";
 import "../../../components/ha-svg-icon";
+import "../../../components/ha-textfield";
 import {
   computeDeviceName,
   DeviceRegistryEntry,
@@ -286,16 +287,16 @@ export class HaSceneEditor extends SubscribeMixin(
                       "ui.panel.config.scene.editor.introduction"
                     )}
                   </div>
-                  <ha-card>
+                  <ha-card outlined>
                     <div class="card-content">
-                      <paper-input
+                      <ha-textfield
                         .value=${this._config.name}
                         .name=${"name"}
-                        @value-changed=${this._valueChanged}
-                        label=${this.hass.localize(
+                        @change=${this._valueChanged}
+                        .label=${this.hass.localize(
                           "ui.panel.config.scene.editor.name"
                         )}
-                      ></paper-input>
+                      ></ha-textfield>
                       <ha-icon-picker
                         .label=${this.hass.localize(
                           "ui.panel.config.scene.editor.icon"
@@ -334,7 +335,7 @@ export class HaSceneEditor extends SubscribeMixin(
                   ${devices.map(
                     (device) =>
                       html`
-                        <ha-card>
+                        <ha-card outlined>
                           <h1 class="card-header">
                             ${device.name}
                             <ha-icon-button
@@ -372,6 +373,7 @@ export class HaSceneEditor extends SubscribeMixin(
                   )}
 
                   <ha-card
+                    outlined
                     .header=${this.hass.localize(
                       "ui.panel.config.scene.editor.devices.add"
                     )}
@@ -404,6 +406,7 @@ export class HaSceneEditor extends SubscribeMixin(
                         ${entities.length
                           ? html`
                               <ha-card
+                                outlined
                                 class="entities"
                                 .header=${this.hass.localize(
                                   "ui.panel.config.scene.editor.entities.without_device"
@@ -444,6 +447,7 @@ export class HaSceneEditor extends SubscribeMixin(
                           : ""}
 
                         <ha-card
+                          outlined
                           header=${this.hass.localize(
                             "ui.panel.config.scene.editor.entities.add"
                           )}
@@ -701,14 +705,14 @@ export class HaSceneEditor extends SubscribeMixin(
     this._dirty = true;
   }
 
-  private _valueChanged(ev: CustomEvent) {
+  private _valueChanged(ev: Event) {
     ev.stopPropagation();
     const target = ev.target as any;
     const name = target.name;
     if (!name) {
       return;
     }
-    let newVal = ev.detail.value;
+    let newVal = (ev as CustomEvent).detail?.value ?? target.value;
     if (target.type === "number") {
       newVal = Number(newVal);
     }
@@ -983,6 +987,15 @@ export class HaSceneEditor extends SubscribeMixin(
         }
         ha-fab.saving {
           opacity: var(--light-disabled-opacity);
+        }
+        ha-icon-picker,
+        ha-area-picker,
+        ha-entity-picker {
+          display: block;
+          margin-top: 8px;
+        }
+        ha-textfield {
+          display: block;
         }
       `,
     ];

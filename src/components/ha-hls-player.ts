@@ -9,7 +9,6 @@ import {
 } from "lit";
 import { customElement, property, query, state } from "lit/decorators";
 import { nextRender } from "../common/util/render-status";
-import { getExternalConfig } from "../external_app/external_config";
 import type { HomeAssistant } from "../types";
 import "./ha-alert";
 
@@ -44,33 +43,47 @@ class HaHLSPlayer extends LitElement {
 
   @state() private _error?: string;
 
+  @state() private _errorIsFatal = false;
+
   private _hlsPolyfillInstance?: HlsLite;
 
   private _exoPlayer = false;
 
+  private static streamCount = 0;
+
   public connectedCallback() {
     super.connectedCallback();
+    HaHLSPlayer.streamCount += 1;
     if (this.hasUpdated) {
+      this._resetError();
       this._startHls();
     }
   }
 
   public disconnectedCallback() {
     super.disconnectedCallback();
+    HaHLSPlayer.streamCount -= 1;
     this._cleanUp();
   }
 
   protected render(): TemplateResult {
-    if (this._error) {
-      return html`<ha-alert alert-type="error">${this._error}</ha-alert>`;
-    }
     return html`
-      <video
-        ?autoplay=${this.autoPlay}
-        .muted=${this.muted}
-        ?playsinline=${this.playsInline}
-        ?controls=${this.controls}
-      ></video>
+      ${this._error
+        ? html`<ha-alert
+            alert-type="error"
+            class=${this._errorIsFatal ? "fatal" : "retry"}
+          >
+            ${this._error}
+          </ha-alert>`
+        : ""}
+      ${!this._errorIsFatal
+        ? html`<video
+            ?autoplay=${this.autoPlay}
+            .muted=${this.muted}
+            ?playsinline=${this.playsInline}
+            ?controls=${this.controls}
+          ></video>`
+        : ""}
     `;
   }
 
@@ -84,22 +97,11 @@ class HaHLSPlayer extends LitElement {
     }
 
     this._cleanUp();
+    this._resetError();
     this._startHls();
   }
 
-  private async _getUseExoPlayer(): Promise<boolean> {
-    if (!this.hass!.auth.external || !this.allowExoPlayer) {
-      return false;
-    }
-    const externalConfig = await getExternalConfig(this.hass!.auth.external);
-    return externalConfig && externalConfig.hasExoPlayer;
-  }
-
   private async _startHls(): Promise<void> {
-    this._error = undefined;
-
-    const videoEl = this._videoEl;
-    const useExoPlayerPromise = this._getUseExoPlayer();
     const masterPlaylistPromise = fetch(this.url);
 
     const Hls: typeof HlsType = (await import("hls.js/dist/hls.light.min"))
@@ -113,17 +115,18 @@ class HaHLSPlayer extends LitElement {
 
     if (!hlsSupported) {
       hlsSupported =
-        videoEl.canPlayType("application/vnd.apple.mpegurl") !== "";
+        this._videoEl.canPlayType("application/vnd.apple.mpegurl") !== "";
     }
 
     if (!hlsSupported) {
-      this._error = this.hass.localize(
-        "ui.components.media-browser.video_not_supported"
+      this._setFatalError(
+        this.hass.localize("ui.components.media-browser.video_not_supported")
       );
       return;
     }
 
-    const useExoPlayer = await useExoPlayerPromise;
+    const useExoPlayer =
+      this.allowExoPlayer && this.hass.auth.external?.config.hasExoPlayer;
     const masterPlaylist = await (await masterPlaylistPromise).text();
 
     if (!this.isConnected) {
@@ -151,9 +154,9 @@ class HaHLSPlayer extends LitElement {
     if (useExoPlayer && match !== null && match[1] !== undefined) {
       this._renderHLSExoPlayer(playlist_url);
     } else if (Hls.isSupported()) {
-      this._renderHLSPolyfill(videoEl, Hls, playlist_url);
+      this._renderHLSPolyfill(this._videoEl, Hls, playlist_url);
     } else {
-      this._renderHLSNative(videoEl, playlist_url);
+      this._renderHLSNative(this._videoEl, playlist_url);
     }
   }
 
@@ -187,6 +190,28 @@ class HaHLSPlayer extends LitElement {
     });
   };
 
+  private _isLLHLSSupported(): boolean {
+    // LL-HLS keeps multiple requests in flight, which can run into browser limitations without
+    // an http/2 proxy to pipeline requests. However, a small number of streams active at
+    // once should be OK.
+    // The stream count may be incremented multiple times before this function is called to check
+    // the count e.g. when loading a page with many streams on it. The race can work in our favor
+    // so we now have a better idea on if we'll use too many browser connections later.
+    if (HaHLSPlayer.streamCount <= 2) {
+      return true;
+    }
+    if (
+      !("performance" in window) ||
+      performance.getEntriesByType("resource").length === 0
+    ) {
+      return false;
+    }
+    const perfEntry = performance.getEntriesByType(
+      "resource"
+    )[0] as PerformanceResourceTiming;
+    return "nextHopProtocol" in perfEntry && perfEntry.nextHopProtocol === "h2";
+  }
+
   private async _renderHLSPolyfill(
     videoEl: HTMLVideoElement,
     Hls: typeof HlsType,
@@ -198,13 +223,21 @@ class HaHLSPlayer extends LitElement {
       manifestLoadingTimeOut: 30000,
       levelLoadingTimeOut: 30000,
       maxLiveSyncPlaybackRate: 2,
+      lowLatencyMode: this._isLLHLSSupported(),
     });
     this._hlsPolyfillInstance = hls;
     hls.attachMedia(videoEl);
     hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+      this._resetError();
       hls.loadSource(url);
     });
-    hls.on(Hls.Events.ERROR, (_, data: any) => {
+    hls.on(Hls.Events.FRAG_LOADED, (_event, _data: any) => {
+      this._resetError();
+    });
+    hls.on(Hls.Events.ERROR, (_event, data: any) => {
+      // Some errors are recovered automatically by the hls player itself, and the others handled
+      // in this function require special actions to recover. Errors retried in this function
+      // are done with backoff to not cause unecessary failures.
       if (!data.fatal) {
         return;
       }
@@ -224,22 +257,22 @@ class HaHLSPlayer extends LitElement {
                 error += " (" + data.response.code + ")";
               }
             }
-            this._error = error;
-            return;
+            this._setRetryableError(error);
+            break;
           }
           case Hls.ErrorDetails.MANIFEST_LOAD_TIMEOUT:
-            this._error = "Timeout while starting stream";
-            return;
+            this._setRetryableError("Timeout while starting stream");
+            break;
           default:
-            this._error = "Unknown stream network error (" + data.details + ")";
-            return;
+            this._setRetryableError("Stream network error");
+            break;
         }
-        this._error = "Error with media stream contents (" + data.details + ")";
+        hls.startLoad();
       } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-        this._error = "Error with media stream contents (" + data.details + ")";
+        this._setRetryableError("Error with media stream contents");
+        hls.recoverMediaError();
       } else {
-        this._error =
-          "Unknown error with stream (" + data.type + ", " + data.details + ")";
+        this._setFatalError("Error playing stream");
       }
     });
   }
@@ -261,9 +294,25 @@ class HaHLSPlayer extends LitElement {
       this.hass!.auth.external!.fireMessage({ type: "exoplayer/stop" });
       this._exoPlayer = false;
     }
-    const videoEl = this._videoEl;
-    videoEl.removeAttribute("src");
-    videoEl.load();
+    if (this._videoEl) {
+      this._videoEl.removeAttribute("src");
+      this._videoEl.load();
+    }
+  }
+
+  private _resetError() {
+    this._error = undefined;
+    this._errorIsFatal = false;
+  }
+
+  private _setFatalError(errorMessage: string) {
+    this._error = errorMessage;
+    this._errorIsFatal = true;
+  }
+
+  private _setRetryableError(errorMessage: string) {
+    this._error = errorMessage;
+    this._errorIsFatal = false;
   }
 
   static get styles(): CSSResultGroup {
@@ -278,9 +327,13 @@ class HaHLSPlayer extends LitElement {
         max-height: var(--video-max-height, calc(100vh - 97px));
       }
 
-      ha-alert {
+      .fatal {
         display: block;
         padding: 100px 16px;
+      }
+
+      .retry {
+        display: block;
       }
     `;
   }

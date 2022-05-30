@@ -24,9 +24,11 @@ import "../../../components/ha-state-icon";
 import { showMediaBrowserDialog } from "../../../components/media-player/show-media-browser-dialog";
 import { UNAVAILABLE_STATES } from "../../../data/entity";
 import {
+  cleanupMediaTitle,
   computeMediaControls,
   computeMediaDescription,
   getCurrentProgress,
+  handleMediaControlClick,
   MediaPickedEvent,
   MediaPlayerEntity,
   SUPPORT_BROWSE_MEDIA,
@@ -173,7 +175,7 @@ export class HuiMediaControlCard extends LitElement implements LovelaceCard {
       UNAVAILABLE_STATES.includes(entityState) ||
       (entityState === "off" && !supportsFeature(stateObj, SUPPORT_TURN_ON));
     const hasNoImage = !this._image;
-    const controls = computeMediaControls(stateObj);
+    const controls = computeMediaControls(stateObj, false);
     const showControls =
       controls &&
       (!this._veryNarrow ||
@@ -182,6 +184,7 @@ export class HuiMediaControlCard extends LitElement implements LovelaceCard {
         entityState === "on");
 
     const mediaDescription = computeMediaDescription(stateObj);
+    const mediaTitleClean = cleanupMediaTitle(stateObj.attributes.media_title);
 
     return html`
       <ha-card>
@@ -244,24 +247,21 @@ export class HuiMediaControlCard extends LitElement implements LovelaceCard {
             </div>
           </div>
           ${!isUnavailable &&
-          (mediaDescription || stateObj.attributes.media_title || showControls)
+          (mediaDescription || mediaTitleClean || showControls)
             ? html`
                 <div>
                   <div class="title-controls">
-                    ${!mediaDescription && !stateObj.attributes.media_title
+                    ${!mediaDescription && !mediaTitleClean
                       ? ""
                       : html`
                           <div class="media-info">
                             <hui-marquee
-                              .text=${stateObj.attributes.media_title ||
-                              mediaDescription}
+                              .text=${mediaTitleClean || mediaDescription}
                               .active=${this._marqueeActive}
                               @mouseover=${this._marqueeMouseOver}
                               @mouseleave=${this._marqueeMouseLeave}
                             ></hui-marquee>
-                            ${!stateObj.attributes.media_title
-                              ? ""
-                              : mediaDescription}
+                            ${!mediaTitleClean ? "" : mediaDescription}
                           </div>
                         `}
                     ${!showControls
@@ -505,10 +505,11 @@ export class HuiMediaControlCard extends LitElement implements LovelaceCard {
   }
 
   private _handleClick(e: MouseEvent): void {
-    const action = (e.currentTarget! as HTMLElement).getAttribute("action")!;
-    this.hass!.callService("media_player", action, {
-      entity_id: this._config!.entity,
-    });
+    handleMediaControlClick(
+      this.hass!,
+      this._stateObj!,
+      (e.currentTarget as HTMLElement).getAttribute("action")!
+    );
   }
 
   private _updateProgressBar(): void {

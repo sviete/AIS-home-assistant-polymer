@@ -1,11 +1,11 @@
-import "@material/mwc-textfield/mwc-textfield";
-import type { TextField } from "@material/mwc-textfield/mwc-textfield";
 import { css, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, query, state } from "lit/decorators";
 import { fireEvent } from "../../../../common/dom/fire_event";
 import "../../../../components/buttons/ha-progress-button";
 import "../../../../components/ha-alert";
 import "../../../../components/ha-card";
+import "../../../../components/ha-textfield";
+import type { HaTextField } from "../../../../components/ha-textfield";
 import { cloudRegister, cloudResendVerification } from "../../../../data/cloud";
 import "../../../../layouts/hass-subpage";
 import { haStyle } from "../../../../resources/styles";
@@ -28,9 +28,9 @@ export class CloudRegister extends LitElement {
 
   @state() private _error?: string;
 
-  @query("#email", true) private _emailField!: TextField;
+  @query("#email", true) private _emailField!: HaTextField;
 
-  @query("#password", true) private _passwordField!: TextField;
+  @query("#password", true) private _passwordField!: HaTextField;
 
   protected render(): TemplateResult {
     return html`
@@ -121,6 +121,7 @@ export class CloudRegister extends LitElement {
               </ul>
             </div>
             <ha-card
+              outlined
               .header=${this.hass.localize(
                 "ui.panel.config.cloud.register.create_account"
               )}
@@ -128,7 +129,7 @@ export class CloudRegister extends LitElement {
                 ${this._error
                   ? html`<ha-alert alert-type="error">${this._error}</ha-alert>`
                   : ""}
-                <mwc-textfield
+                <ha-textfield
                   autofocus
                   id="email"
                   .label=${this.hass.localize(
@@ -141,8 +142,8 @@ export class CloudRegister extends LitElement {
                   validationMessage=${this.hass.localize(
                     "ui.panel.config.cloud.register.email_error_msg"
                   )}
-                ></mwc-textfield>
-                <mwc-textfield
+                ></ha-textfield>
+                <ha-textfield
                   id="password"
                   label="Password"
                   .value=${this._password}
@@ -153,7 +154,7 @@ export class CloudRegister extends LitElement {
                   validationMessage=${this.hass.localize(
                     "ui.panel.config.cloud.register.password_error_msg"
                   )}
-                ></mwc-textfield>
+                ></ha-textfield>
               </div>
               <div class="card-actions">
                 <ha-progress-button
@@ -265,9 +266,6 @@ export class CloudRegister extends LitElement {
         }
         a {
           color: var(--primary-color);
-        }
-        paper-item {
-          cursor: pointer;
         }
         h1 {
           margin: 0;

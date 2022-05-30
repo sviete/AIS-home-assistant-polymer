@@ -1,5 +1,4 @@
 import "@material/mwc-button";
-import "@polymer/paper-item/paper-item-body";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
 import { fireEvent } from "../../../../common/dom/fire_event";
@@ -35,6 +34,7 @@ export class CloudRemotePref extends LitElement {
     if (!remote_certificate) {
       return html`
         <ha-card
+          outlined
           header=${this.hass.localize(
             "ui.panel.config.cloud.account.remote.title"
           )}
@@ -50,6 +50,7 @@ export class CloudRemotePref extends LitElement {
 
     return html`
       <ha-card
+        outlined
         header=${this.hass.localize(
           "ui.panel.config.cloud.account.remote.title"
         )}

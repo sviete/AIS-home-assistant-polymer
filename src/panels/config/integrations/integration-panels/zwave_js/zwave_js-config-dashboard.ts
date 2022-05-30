@@ -14,14 +14,16 @@ import "../../../../../components/ha-icon-button";
 import "../../../../../components/ha-fab";
 import "../../../../../components/ha-icon-next";
 import "../../../../../components/ha-svg-icon";
-import { getSignedPath } from "../../../../../data/auth";
 import {
   fetchZwaveDataCollectionStatus,
   fetchZwaveNetworkStatus,
   fetchZwaveNodeStatus,
   fetchZwaveProvisioningEntries,
-  NodeStatus,
+  InclusionState,
   setZwaveDataCollectionPreference,
+  stopZwaveExclusion,
+  stopZwaveInclusion,
+  ZWaveJSClient,
   ZWaveJSNetwork,
   ZWaveJSNodeStatus,
   ZwaveJSProvisioningEntry,
@@ -31,14 +33,9 @@ import {
   getConfigEntries,
   ERROR_STATES,
 } from "../../../../../data/config_entries";
-import {
-  showAlertDialog,
-  showConfirmationDialog,
-} from "../../../../../dialogs/generic/show-dialog-box";
 import "../../../../../layouts/hass-tabs-subpage";
 import { haStyle } from "../../../../../resources/styles";
 import type { HomeAssistant, Route } from "../../../../../types";
-import { fileDownload } from "../../../../../util/file_download";
 import "../../../ha-config-section";
 import { showZWaveJSAddNodeDialog } from "./show-dialog-zwave_js-add-node";
 import { showZWaveJSHealNetworkDialog } from "./show-dialog-zwave_js-heal-network";
@@ -67,7 +64,7 @@ class ZWaveJSConfigDashboard extends LitElement {
 
   @state() private _provisioningEntries?: ZwaveJSProvisioningEntry[];
 
-  @state() private _status = "unknown";
+  @state() private _status?: ZWaveJSClient["state"];
 
   @state() private _icon = mdiCircle;
 
@@ -114,13 +111,38 @@ class ZWaveJSConfigDashboard extends LitElement {
               "ui.panel.config.zwave_js.dashboard.introduction"
             )}
           </div>
+          ${this._network &&
+          this._status === "connected" &&
+          (this._network?.controller.inclusion_state ===
+            InclusionState.Including ||
+            this._network?.controller.inclusion_state ===
+              InclusionState.Excluding)
+            ? html`
+                <ha-alert alert-type="info">
+                  ${this.hass.localize(
+                    `ui.panel.config.zwave_js.common.in_progress_inclusion_exclusion`
+                  )}
+                  <mwc-button
+                    slot="action"
+                    .label=${this.hass.localize(
+                      `ui.panel.config.zwave_js.common.cancel_inclusion_exclusion`
+                    )}
+                    @click=${this._network?.controller.inclusion_state ===
+                    InclusionState.Including
+                      ? this._cancelInclusion
+                      : this._cancelExclusion}
+                  >
+                  </mwc-button>
+                </ha-alert>
+              `
+            : ""}
           ${this._network
             ? html`
                 <ha-card class="content network-status">
                   <div class="card-content">
                     <div class="heading">
                       <div class="icon">
-                        ${this._status === "connecting"
+                        ${this._status === "disconnected"
                           ? html`<ha-circular-progress
                               active
                             ></ha-circular-progress>`
@@ -128,13 +150,13 @@ class ZWaveJSConfigDashboard extends LitElement {
                               <ha-svg-icon
                                 .path=${this._icon}
                                 class="network-status-icon ${classMap({
-                                  [this._status]: true,
+                                  [this._status!]: true,
                                 })}"
                                 slot="item-icon"
                               ></ha-svg-icon>
                             `}
                       </div>
-                      ${this._status !== "connecting"
+                      ${this._status !== "disconnected"
                         ? html`
                             <div class="details">
                               ${this.hass.localize(
@@ -213,16 +235,12 @@ class ZWaveJSConfigDashboard extends LitElement {
                   </div>
                   <div class="card-actions">
                     <mwc-button
-                      @click=${this._dumpDebugClicked}
-                      .disabled=${this._status === "connecting"}
-                    >
-                      ${this.hass.localize(
-                        "ui.panel.config.zwave_js.dashboard.dump_debug"
-                      )}
-                    </mwc-button>
-                    <mwc-button
                       @click=${this._removeNodeClicked}
-                      .disabled=${this._status === "connecting"}
+                      .disabled=${this._status !== "connected" ||
+                      (this._network?.controller.inclusion_state !==
+                        InclusionState.Idle &&
+                        this._network?.controller.inclusion_state !==
+                          InclusionState.SmartStart)}
                     >
                       ${this.hass.localize(
                         "ui.panel.config.zwave_js.common.remove_node"
@@ -230,16 +248,13 @@ class ZWaveJSConfigDashboard extends LitElement {
                     </mwc-button>
                     <mwc-button
                       @click=${this._healNetworkClicked}
-                      .disabled=${this._status === "connecting"}
+                      .disabled=${this._status === "disconnected"}
                     >
                       ${this.hass.localize(
                         "ui.panel.config.zwave_js.common.heal_network"
                       )}
                     </mwc-button>
-                    <mwc-button
-                      @click=${this._openOptionFlow}
-                      .disabled=${this._status === "connecting"}
-                    >
+                    <mwc-button @click=${this._openOptionFlow}>
                       ${this.hass.localize(
                         "ui.panel.config.zwave_js.common.reconfigure_server"
                       )}
@@ -287,10 +302,13 @@ class ZWaveJSConfigDashboard extends LitElement {
           .label=${this.hass.localize(
             "ui.panel.config.zwave_js.common.add_node"
           )}
-          .disabled=${this._status === "connecting"}
           extended
           ?rtl=${computeRTL(this.hass)}
           @click=${this._addNodeClicked}
+          .disabled=${this._status !== "connected" ||
+          (this._network?.controller.inclusion_state !== InclusionState.Idle &&
+            this._network?.controller.inclusion_state !==
+              InclusionState.SmartStart)}
         >
           <ha-svg-icon slot="icon" .path=${mdiPlus}></ha-svg-icon>
         </ha-fab>
@@ -333,7 +351,7 @@ class ZWaveJSConfigDashboard extends LitElement {
       } else {
         stateTextExtra = html`
           <br />
-          <a href="/config/logs"
+          <a href="/config/logs?filter=zwave_js"
             >${this.hass.localize(
               "ui.panel.config.integrations.config_entry.check_the_logs"
             )}</a
@@ -366,7 +384,9 @@ class ZWaveJSConfigDashboard extends LitElement {
     if (!this.configEntryId) {
       return;
     }
-    const configEntries = await getConfigEntries(this.hass);
+    const configEntries = await getConfigEntries(this.hass, {
+      domain: "zwave_js",
+    });
     this._configEntry = configEntries.find(
       (entry) => entry.entry_id === this.configEntryId!
     );
@@ -427,6 +447,16 @@ class ZWaveJSConfigDashboard extends LitElement {
     });
   }
 
+  private async _cancelInclusion() {
+    stopZwaveInclusion(this.hass!, this.configEntryId!);
+    await this._fetchData();
+  }
+
+  private async _cancelExclusion() {
+    stopZwaveExclusion(this.hass!, this.configEntryId!);
+    await this._fetchData();
+  }
+
   private _dataCollectionToggled(ev) {
     setZwaveDataCollectionPreference(
       this.hass!,
@@ -439,65 +469,13 @@ class ZWaveJSConfigDashboard extends LitElement {
     if (!this.configEntryId) {
       return;
     }
-    const configEntries = await getConfigEntries(this.hass);
+    const configEntries = await getConfigEntries(this.hass, {
+      domain: "zwave_js",
+    });
     const configEntry = configEntries.find(
       (entry) => entry.entry_id === this.configEntryId
     );
     showOptionsFlowDialog(this, configEntry!);
-  }
-
-  private async _dumpDebugClicked() {
-    await this._fetchNodeStatus();
-
-    const notReadyNodes = this._nodes?.filter((node) => !node.ready);
-    const deadNodes = this._nodes?.filter(
-      (node) => node.status === NodeStatus.Dead
-    );
-
-    if (deadNodes?.length) {
-      await showAlertDialog(this, {
-        title: this.hass.localize(
-          "ui.panel.config.zwave_js.dashboard.dump_dead_nodes_title"
-        ),
-        text: this.hass.localize(
-          "ui.panel.config.zwave_js.dashboard.dump_dead_nodes_text"
-        ),
-      });
-    }
-
-    if (
-      notReadyNodes?.length &&
-      notReadyNodes.length !== deadNodes?.length &&
-      !(await showConfirmationDialog(this, {
-        title: this.hass.localize(
-          "ui.panel.config.zwave_js.dashboard.dump_not_ready_title"
-        ),
-        text: this.hass.localize(
-          "ui.panel.config.zwave_js.dashboard.dump_not_ready_text"
-        ),
-        confirmText: this.hass.localize(
-          "ui.panel.config.zwave_js.dashboard.dump_not_ready_confirm"
-        ),
-      }))
-    ) {
-      return;
-    }
-
-    let signedPath: { path: string };
-    try {
-      signedPath = await getSignedPath(
-        this.hass,
-        `/api/zwave_js/dump/${this.configEntryId}`
-      );
-    } catch (err: any) {
-      showAlertDialog(this, {
-        title: "Error",
-        text: err.error || err.body || err,
-      });
-      return;
-    }
-
-    fileDownload(this, signedPath.path, `zwave_js_dump.jsonl`);
   }
 
   static get styles(): CSSResultGroup {

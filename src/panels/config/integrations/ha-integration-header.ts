@@ -91,7 +91,7 @@ export class HaIntegrationHeader extends LitElement {
           @load=${this._onImageLoad}
         />
         <div class="info">
-          <div class="primary">${primary}</div>
+          <div class="primary" role="heading">${primary}</div>
           ${secondary ? html`<div class="secondary">${secondary}</div>` : ""}
         </div>
 
@@ -142,6 +142,10 @@ export class HaIntegrationHeader extends LitElement {
       margin-top: 16px;
       width: 40px;
       height: 40px;
+    }
+    :host-context([style*="direction: rtl;"]) .header img {
+      margin-right: auto !important;
+      margin-left: 16px;
     }
     .header .info {
       flex: 1;

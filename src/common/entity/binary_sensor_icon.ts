@@ -21,21 +21,24 @@ import {
   mdiLockOpen,
   mdiMusicNote,
   mdiMusicNoteOff,
+  mdiMotionSensor,
+  mdiMotionSensorOff,
   mdiPackage,
   mdiPackageUp,
   mdiPlay,
   mdiPowerPlug,
   mdiPowerPlugOff,
   mdiRadioboxBlank,
-  mdiRun,
-  mdiSmoke,
   mdiSnowflake,
+  mdiSmokeDetector,
+  mdiSmokeDetectorAlert,
+  mdiSmokeDetectorVariant,
+  mdiSmokeDetectorVariantAlert,
   mdiSquare,
   mdiSquareOutline,
   mdiStop,
   mdiThermometer,
   mdiVibrate,
-  mdiWalk,
   mdiWater,
   mdiWaterOff,
   mdiWindowClosed,
@@ -52,6 +55,8 @@ export const binarySensorIcon = (state?: string, stateObj?: HassEntity) => {
       return is_off ? mdiBattery : mdiBatteryOutline;
     case "battery_charging":
       return is_off ? mdiBattery : mdiBatteryCharging;
+    case "carbon_monoxide":
+      return is_off ? mdiSmokeDetector : mdiSmokeDetectorAlert;
     case "cold":
       return is_off ? mdiThermometer : mdiSnowflake;
     case "connectivity":
@@ -68,7 +73,7 @@ export const binarySensorIcon = (state?: string, stateObj?: HassEntity) => {
     case "tamper":
       return is_off ? mdiCheckCircle : mdiAlertCircle;
     case "smoke":
-      return is_off ? mdiCheckCircle : mdiSmoke;
+      return is_off ? mdiSmokeDetectorVariant : mdiSmokeDetectorVariantAlert;
     case "heat":
       return is_off ? mdiThermometer : mdiFire;
     case "light":
@@ -78,7 +83,7 @@ export const binarySensorIcon = (state?: string, stateObj?: HassEntity) => {
     case "moisture":
       return is_off ? mdiWaterOff : mdiWater;
     case "motion":
-      return is_off ? mdiWalk : mdiRun;
+      return is_off ? mdiMotionSensorOff : mdiMotionSensor;
     case "occupancy":
       return is_off ? mdiHomeOutline : mdiHome;
     case "opening":

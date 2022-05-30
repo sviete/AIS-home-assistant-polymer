@@ -50,6 +50,8 @@ export class HuiEnergyUsageGraphCard
 
   @state() private _end = endOfToday();
 
+  protected hassSubscribeRequiredHostProps = ["_config"];
+
   public hassSubscribe(): UnsubscribeFunc[] {
     return [
       getEnergyDataCollection(this.hass, {
@@ -177,7 +179,7 @@ export class HuiEnergyUsageGraphCard
                   return datasets[0].label;
                 }
                 const date = new Date(datasets[0].parsed.x);
-                return `${formatTime(date, locale)} - ${formatTime(
+                return `${formatTime(date, locale)} – ${formatTime(
                   addHours(date, 1),
                   locale
                 )}`;

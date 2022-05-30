@@ -114,6 +114,11 @@ export class HaTracePathDetails extends LitElement {
           const { path, timestamp, result, error, changed_variables, ...rest } =
             trace as any;
 
+          if (result?.enabled === false) {
+            return html`This node was disabled and skipped during execution so
+            no further trace information is available.`;
+          }
+
           return html`
             ${curPath === this.selected.path
               ? ""
@@ -150,6 +155,7 @@ export class HaTracePathDetails extends LitElement {
       ? html`<ha-code-editor
           .value=${dump(config).trimRight()}
           readOnly
+          dir="ltr"
         ></ha-code-editor>`
       : "Unable to find config";
   }

@@ -7,7 +7,6 @@ import "../../../resources/ha-style";
 
 import "./ha-config-ais-dom-dashboard";
 import { fireEvent } from "../../../common/dom/fire_event";
-import "../../../components/paper-time-input";
 import "../../../components/ha-button-menu";
 import "@material/mwc-list/mwc-list-item";
 import {

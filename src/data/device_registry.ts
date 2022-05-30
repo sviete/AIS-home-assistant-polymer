@@ -1,5 +1,7 @@
 import { Connection, createCollection } from "home-assistant-js-websocket";
+import { Store } from "home-assistant-js-websocket/dist/store";
 import { computeStateName } from "../common/entity/compute_state_name";
+import { caseInsensitiveStringCompare } from "../common/string/compare";
 import { debounce } from "../common/util/debounce";
 import { HomeAssistant } from "../types";
 import { EntityRegistryEntry } from "./entity_registry";
@@ -54,7 +56,13 @@ export const computeDeviceName = (
   device.name_by_user ||
   device.name ||
   (entities && fallbackDeviceName(hass, entities)) ||
-  hass.localize("ui.panel.config.devices.unnamed_device");
+  hass.localize(
+    "ui.panel.config.devices.unnamed_device",
+    "type",
+    hass.localize(
+      `ui.panel.config.devices.type.${device.entry_type || "device"}`
+    )
+  );
 
 export const devicesInArea = (devices: DeviceRegistryEntry[], areaId: string) =>
   devices.filter((device) => device.area_id === areaId);
@@ -70,12 +78,26 @@ export const updateDeviceRegistryEntry = (
     ...updates,
   });
 
-export const fetchDeviceRegistry = (conn) =>
-  conn.sendMessagePromise({
+export const removeConfigEntryFromDevice = (
+  hass: HomeAssistant,
+  deviceId: string,
+  configEntryId: string
+) =>
+  hass.callWS<DeviceRegistryEntry>({
+    type: "config/device_registry/remove_config_entry",
+    device_id: deviceId,
+    config_entry_id: configEntryId,
+  });
+
+export const fetchDeviceRegistry = (conn: Connection) =>
+  conn.sendMessagePromise<DeviceRegistryEntry[]>({
     type: "config/device_registry/list",
   });
 
-const subscribeDeviceRegistryUpdates = (conn, store) =>
+const subscribeDeviceRegistryUpdates = (
+  conn: Connection,
+  store: Store<DeviceRegistryEntry[]>
+) =>
   conn.subscribeEvents(
     debounce(
       () =>
@@ -98,4 +120,9 @@ export const subscribeDeviceRegistry = (
     subscribeDeviceRegistryUpdates,
     conn,
     onChange
+  );
+
+export const sortDeviceRegistryByName = (entries: DeviceRegistryEntry[]) =>
+  entries.sort((entry1, entry2) =>
+    caseInsensitiveStringCompare(entry1.name || "", entry2.name || "")
   );

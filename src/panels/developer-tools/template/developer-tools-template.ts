@@ -128,10 +128,13 @@ class HaPanelDevTemplate extends LitElement {
           </p>
           <ha-code-editor
             mode="jinja2"
+            .hass=${this.hass}
             .value=${this._template}
             .error=${this._error}
             autofocus
+            autocomplete-entities
             @value-changed=${this._templateChanged}
+            dir="ltr"
           ></ha-code-editor>
           <mwc-button @click=${this._restoreDemo}>
             ${this.hass.localize(
@@ -286,6 +289,12 @@ class HaPanelDevTemplate extends LitElement {
         .rendered.error {
           color: var(--error-color);
         }
+
+        @media all and (max-width: 870px) {
+          .render-pane {
+            max-width: 100%;
+          }
+        }
       `,
     ];
   }
@@ -320,6 +329,7 @@ class HaPanelDevTemplate extends LitElement {
         {
           template: this._template,
           timeout: 3,
+          strict: true,
         }
       );
       await this._unsubRenderTemplate;
