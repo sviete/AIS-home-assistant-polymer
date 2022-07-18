@@ -140,7 +140,6 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
     this._fetchOnboardingSteps();
-    this._fetchInstallationType();
     import("./onboarding-integrations");
     import("./onboarding-core-config");
     import("./onboarding-mob-integrations");
@@ -242,6 +241,9 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
         });
         history.replaceState(null, "", location.pathname);
         await this._connectHass(auth);
+      } else {
+        // User creating screen needs to know the installation type.
+        this._fetchInstallationType();
       }
 
       this._steps = steps;

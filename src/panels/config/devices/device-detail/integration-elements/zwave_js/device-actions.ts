@@ -1,10 +1,17 @@
 import { getConfigEntries } from "../../../../../../data/config_entries";
 import { DeviceRegistryEntry } from "../../../../../../data/device_registry";
-import { fetchZwaveNodeStatus } from "../../../../../../data/zwave_js";
+import {
+  fetchZwaveIsAnyFirmwareUpdateInProgress,
+  fetchZwaveNodeIsFirmwareUpdateInProgress,
+  fetchZwaveNodeStatus,
+} from "../../../../../../data/zwave_js";
+import { showConfirmationDialog } from "../../../../../../dialogs/generic/show-dialog-box";
 import type { HomeAssistant } from "../../../../../../types";
 import { showZWaveJSHealNodeDialog } from "../../../../integrations/integration-panels/zwave_js/show-dialog-zwave_js-heal-node";
+import { showZWaveJSNodeStatisticsDialog } from "../../../../integrations/integration-panels/zwave_js/show-dialog-zwave_js-node-statistics";
 import { showZWaveJSReinterviewNodeDialog } from "../../../../integrations/integration-panels/zwave_js/show-dialog-zwave_js-reinterview-node";
 import { showZWaveJSRemoveFailedNodeDialog } from "../../../../integrations/integration-panels/zwave_js/show-dialog-zwave_js-remove-failed-node";
+import { showZWaveJUpdateFirmwareNodeDialog } from "../../../../integrations/integration-panels/zwave_js/show-dialog-zwave_js-update-firmware-node";
 import type { DeviceAction } from "../../../ha-config-device-page";
 
 export const getZwaveDeviceActions = async (
@@ -26,13 +33,13 @@ export const getZwaveDeviceActions = async (
 
   const entryId = configEntry.entry_id;
 
-  const node = await fetchZwaveNodeStatus(hass, device.id);
+  const nodeStatus = await fetchZwaveNodeStatus(hass, device.id);
 
-  if (!node || node.is_controller_node) {
+  if (!nodeStatus || nodeStatus.is_controller_node) {
     return [];
   }
 
-  return [
+  const actions = [
     {
       label: hass.localize(
         "ui.panel.config.zwave_js.device_info.device_config"
@@ -52,7 +59,7 @@ export const getZwaveDeviceActions = async (
       label: hass.localize("ui.panel.config.zwave_js.device_info.heal_node"),
       action: () =>
         showZWaveJSHealNodeDialog(el, {
-          device: device,
+          device,
         }),
     },
     {
@@ -64,5 +71,56 @@ export const getZwaveDeviceActions = async (
           device_id: device.id,
         }),
     },
+    {
+      label: hass.localize(
+        "ui.panel.config.zwave_js.device_info.node_statistics"
+      ),
+      action: () =>
+        showZWaveJSNodeStatisticsDialog(el, {
+          device,
+        }),
+    },
   ];
+
+  if (!nodeStatus.ready) {
+    return actions;
+  }
+
+  const [isAnyFirmwareUpdateInProgress, isNodeFirmwareUpdateInProgress] =
+    await Promise.all([
+      fetchZwaveIsAnyFirmwareUpdateInProgress(hass, entryId),
+      fetchZwaveNodeIsFirmwareUpdateInProgress(hass, device.id),
+    ]);
+
+  if (!isAnyFirmwareUpdateInProgress || isNodeFirmwareUpdateInProgress) {
+    actions.push({
+      label: hass.localize(
+        "ui.panel.config.zwave_js.device_info.update_firmware"
+      ),
+      action: async () => {
+        if (
+          isNodeFirmwareUpdateInProgress ||
+          (await fetchZwaveNodeIsFirmwareUpdateInProgress(hass, device.id))
+        ) {
+          showZWaveJUpdateFirmwareNodeDialog(el, {
+            device,
+          });
+        } else if (
+          await showConfirmationDialog(el, {
+            text: hass.localize(
+              "ui.panel.config.zwave_js.update_firmware.warning"
+            ),
+            dismissText: hass.localize("ui.common.no"),
+            confirmText: hass.localize("ui.common.yes"),
+          })
+        ) {
+          showZWaveJUpdateFirmwareNodeDialog(el, {
+            device,
+          });
+        }
+      },
+    });
+  }
+
+  return actions;
 };

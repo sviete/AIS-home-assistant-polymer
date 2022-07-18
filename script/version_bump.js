@@ -24,10 +24,15 @@ function auto(version) {
   return patch(version);
 }
 
+function nightly() {
+  return `${today()}.dev`;
+}
+
 const methods = {
   patch,
   today,
   auto,
+  nightly,
 };
 
 async function main(args) {
