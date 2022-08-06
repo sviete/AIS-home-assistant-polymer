@@ -1,9 +1,9 @@
-import "../ha-icon-picker";
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators";
-import { HomeAssistant } from "../../types";
-import { IconSelector } from "../../data/selector";
 import { fireEvent } from "../../common/dom/fire_event";
+import { IconSelector } from "../../data/selector";
+import { HomeAssistant } from "../../types";
+import "../ha-icon-picker";
 
 @customElement("ha-selector-icon")
 export class HaIconSelector extends LitElement {
@@ -15,13 +15,20 @@ export class HaIconSelector extends LitElement {
 
   @property() public label?: string;
 
+  @property() public helper?: string;
+
   @property({ type: Boolean, reflect: true }) public disabled = false;
+
+  @property({ type: Boolean }) public required = true;
 
   protected render() {
     return html`
       <ha-icon-picker
         .label=${this.label}
         .value=${this.value}
+        .required=${this.required}
+        .disabled=${this.disabled}
+        .helper=${this.helper}
         .fallbackPath=${this.selector.icon.fallbackPath}
         .placeholder=${this.selector.icon.placeholder}
         @value-changed=${this._valueChanged}

@@ -51,7 +51,7 @@ export class EnergyGasSettings extends LitElement {
     });
 
     return html`
-      <ha-card>
+      <ha-card outlined>
         <h1 class="card-header">
           <ha-svg-icon .path=${mdiFire}></ha-svg-icon>
           ${this.hass.localize("ui.panel.config.energy.gas.title")}
@@ -94,10 +94,16 @@ export class EnergyGasSettings extends LitElement {
                     : source.stat_energy_from}</span
                 >
                 <ha-icon-button
+                  .label=${this.hass.localize(
+                    "ui.panel.config.energy.gas.edit_gas_source"
+                  )}
                   @click=${this._editSource}
                   .path=${mdiPencil}
                 ></ha-icon-button>
                 <ha-icon-button
+                  .label=${this.hass.localize(
+                    "ui.panel.config.energy.gas.delete_gas_source"
+                  )}
                   @click=${this._deleteSource}
                   .path=${mdiDelete}
                 ></ha-icon-button>
@@ -121,6 +127,7 @@ export class EnergyGasSettings extends LitElement {
     showEnergySettingsGasDialog(this, {
       unit: getEnergyGasUnitCategory(this.hass, this.preferences),
       saveCallback: async (source) => {
+        delete source.unit_of_measurement;
         await this._savePreferences({
           ...this.preferences,
           energy_sources: this.preferences.energy_sources.concat(source),

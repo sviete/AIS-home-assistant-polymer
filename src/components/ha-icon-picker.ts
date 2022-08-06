@@ -31,6 +31,8 @@ export class HaIconPicker extends LitElement {
 
   @property() public label?: string;
 
+  @property() public helper?: string;
+
   @property() public placeholder?: string;
 
   @property() public fallbackPath?: string;
@@ -38,6 +40,8 @@ export class HaIconPicker extends LitElement {
   @property({ attribute: "error-message" }) public errorMessage?: string;
 
   @property({ type: Boolean }) public disabled = false;
+
+  @property({ type: Boolean }) public required = false;
 
   @property({ type: Boolean }) public invalid = false;
 
@@ -55,7 +59,9 @@ export class HaIconPicker extends LitElement {
         allow-custom-value
         .filteredItems=${iconItems}
         .label=${this.label}
+        .helper=${this.helper}
         .disabled=${this.disabled}
+        .required=${this.required}
         .placeholder=${this.placeholder}
         .errorMessage=${this.errorMessage}
         .invalid=${this.invalid}

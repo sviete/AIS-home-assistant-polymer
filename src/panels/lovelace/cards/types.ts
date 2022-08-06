@@ -54,7 +54,9 @@ export interface EntitiesCardEntityConfig extends EntityConfig {
     | "brightness";
   action_name?: string;
   service?: string;
+  // "service_data" is kept for backwards compatibility. Replaced by "data".
   service_data?: Record<string, unknown>;
+  data?: Record<string, unknown>;
   url?: string;
   tap_action?: ActionConfig;
   hold_action?: ActionConfig;
@@ -95,6 +97,10 @@ export interface ButtonCardConfig extends LovelaceCardConfig {
   double_tap_action?: ActionConfig;
   state_color?: boolean;
   show_state?: boolean;
+}
+
+export interface EnergyCardBaseConfig extends LovelaceCardConfig {
+  collection_key?: string;
 }
 
 export interface EnergySummaryCardConfig extends LovelaceCardConfig {
@@ -176,6 +182,12 @@ export interface SeverityConfig {
   red?: number;
 }
 
+export interface GaugeSegment {
+  from: number;
+  color: string;
+  label?: string;
+}
+
 export interface GaugeCardConfig extends LovelaceCardConfig {
   entity: string;
   name?: string;
@@ -185,6 +197,7 @@ export interface GaugeCardConfig extends LovelaceCardConfig {
   severity?: SeverityConfig;
   theme?: string;
   needle?: boolean;
+  segments?: GaugeSegment[];
 }
 
 export interface ConfigEntity extends EntityConfig {
@@ -252,6 +265,7 @@ export interface MapCardConfig extends LovelaceCardConfig {
   type: "map";
   title?: string;
   aspect_ratio?: string;
+  auto_fit?: boolean;
   default_zoom?: number;
   entities?: Array<EntityConfig | string>;
   hours_to_show?: number;

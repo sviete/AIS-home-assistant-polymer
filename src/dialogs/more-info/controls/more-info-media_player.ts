@@ -11,7 +11,6 @@ import {
 } from "@mdi/js";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
-import { isComponentLoaded } from "../../../common/config/is_component_loaded";
 import { stopPropagation } from "../../../common/dom/stop_propagation";
 import { supportsFeature } from "../../../common/entity/supports-feature";
 import { computeRTLDirection } from "../../../common/util/compute_rtl";
@@ -23,10 +22,11 @@ import { showMediaBrowserDialog } from "../../../components/media-player/show-me
 import { UNAVAILABLE, UNKNOWN } from "../../../data/entity";
 import {
   computeMediaControls,
+  handleMediaControlClick,
   MediaPickedEvent,
   MediaPlayerEntity,
+  mediaPlayerPlayMedia,
   SUPPORT_BROWSE_MEDIA,
-  SUPPORT_PLAY_MEDIA,
   SUPPORT_SELECT_SOUND_MODE,
   SUPPORT_SELECT_SOURCE,
   SUPPORT_VOLUME_BUTTONS,
@@ -47,7 +47,7 @@ class MoreInfoMediaPlayer extends LitElement {
     }
 
     const stateObj = this.stateObj;
-    const controls = computeMediaControls(stateObj);
+    const controls = computeMediaControls(stateObj, true);
 
     return html`
       <div class="controls">
@@ -77,6 +77,7 @@ class MoreInfoMediaPlayer extends LitElement {
                 @click=${this._showBrowseMedia}
               >
                 <ha-svg-icon
+                  class="browse-media-icon"
                   .path=${mdiPlayBoxMultiple}
                   slot="icon"
                 ></ha-svg-icon>
@@ -95,6 +96,13 @@ class MoreInfoMediaPlayer extends LitElement {
                       .path=${stateObj.attributes.is_volume_muted
                         ? mdiVolumeOff
                         : mdiVolumeHigh}
+                      .label=${this.hass.localize(
+                        `ui.card.media_player.${
+                          stateObj.attributes.is_volume_muted
+                            ? "media_volume_unmute"
+                            : "media_volume_mute"
+                        }`
+                      )}
                       @click=${this._toggleMute}
                     ></ha-icon-button>
                   `
@@ -104,11 +112,17 @@ class MoreInfoMediaPlayer extends LitElement {
                     <ha-icon-button
                       action="volume_down"
                       .path=${mdiVolumeMinus}
+                      .label=${this.hass.localize(
+                        "ui.card.media_player.media_volume_down"
+                      )}
                       @click=${this._handleClick}
                     ></ha-icon-button>
                     <ha-icon-button
                       action="volume_up"
                       .path=${mdiVolumePlus}
+                      .label=${this.hass.localize(
+                        "ui.card.media_player.media_volume_up"
+                      )}
                       @click=${this._handleClick}
                     ></ha-icon-button>
                   `
@@ -176,14 +190,6 @@ class MoreInfoMediaPlayer extends LitElement {
             </div>
           `
         : ""}
-      ${isComponentLoaded(this.hass, "tts") &&
-      supportsFeature(stateObj, SUPPORT_PLAY_MEDIA)
-        ? html`
-            <div class="tts">
-              Text to speech has moved to the media browser.
-            </div>
-          `
-        : ""}
     `;
   }
 
@@ -197,12 +203,24 @@ class MoreInfoMediaPlayer extends LitElement {
 
       .controls {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         --mdc-theme-primary: currentColor;
+        direction: ltr;
       }
 
       .basic-controls {
+        display: inline-flex;
         flex-grow: 1;
+      }
+
+      .volume {
+        direction: ltr;
+      }
+
+      .source-input,
+      .sound-input {
+        direction: var(--direction);
       }
 
       .volume,
@@ -217,6 +235,9 @@ class MoreInfoMediaPlayer extends LitElement {
       .sound-input ha-select {
         margin-left: 10px;
         flex-grow: 1;
+        margin-inline-start: 10px;
+        margin-inline-end: initial;
+        direction: var(--direction);
       }
 
       .tts {
@@ -227,16 +248,18 @@ class MoreInfoMediaPlayer extends LitElement {
       mwc-button > ha-svg-icon {
         vertical-align: text-bottom;
       }
+
+      .browse-media-icon {
+        margin-left: 8px;
+      }
     `;
   }
 
   private _handleClick(e: MouseEvent): void {
-    this.hass!.callService(
-      "media_player",
-      (e.currentTarget! as HTMLElement).getAttribute("action")!,
-      {
-        entity_id: this.stateObj!.entity_id,
-      }
+    handleMediaControlClick(
+      this.hass!,
+      this.stateObj!,
+      (e.currentTarget as HTMLElement).getAttribute("action")!
     );
   }
 
@@ -286,18 +309,12 @@ class MoreInfoMediaPlayer extends LitElement {
       action: "play",
       entityId: this.stateObj!.entity_id,
       mediaPickedCallback: (pickedMedia: MediaPickedEvent) =>
-        this._playMedia(
+        mediaPlayerPlayMedia(
+          this.hass,
+          this.stateObj!.entity_id,
           pickedMedia.item.media_content_id,
           pickedMedia.item.media_content_type
         ),
-    });
-  }
-
-  private _playMedia(media_content_id: string, media_content_type: string) {
-    this.hass!.callService("media_player", "play_media", {
-      entity_id: this.stateObj!.entity_id,
-      media_content_id,
-      media_content_type,
     });
   }
 }

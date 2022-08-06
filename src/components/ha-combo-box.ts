@@ -1,13 +1,17 @@
 import "@material/mwc-list/mwc-list-item";
 import { mdiClose, mdiMenuDown, mdiMenuUp } from "@mdi/js";
 import "@vaadin/combo-box/theme/material/vaadin-combo-box-light";
-import type { ComboBoxLight } from "@vaadin/combo-box/vaadin-combo-box-light";
+import type {
+  ComboBoxLight,
+  ComboBoxLightFilterChangedEvent,
+  ComboBoxLightOpenedChangedEvent,
+  ComboBoxLightValueChangedEvent,
+} from "@vaadin/combo-box/vaadin-combo-box-light";
 import { registerStyles } from "@vaadin/vaadin-themable-mixin/register-styles";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { ComboBoxLitRenderer, comboBoxRenderer } from "lit-vaadin-helpers";
 import { customElement, property, query } from "lit/decorators";
 import { fireEvent } from "../common/dom/fire_event";
-import { PolymerChangedEvent } from "../polymer-types";
 import { HomeAssistant } from "../types";
 import "./ha-icon-button";
 import "./ha-textfield";
@@ -64,6 +68,8 @@ export class HaComboBox extends LitElement {
 
   @property() public validationMessage?: string;
 
+  @property() public helper?: string;
+
   @property({ attribute: "error-message" }) public errorMessage?: string;
 
   @property({ type: Boolean }) public invalid?: boolean;
@@ -87,10 +93,14 @@ export class HaComboBox extends LitElement {
 
   @property({ type: Boolean }) public disabled?: boolean;
 
+  @property({ type: Boolean }) public required?: boolean;
+
   @property({ type: Boolean, reflect: true, attribute: "opened" })
   private _opened?: boolean;
 
   @query("vaadin-combo-box-light", true) private _comboBox!: ComboBoxLight;
+
+  private _overlayMutationObserver?: MutationObserver;
 
   public open() {
     this.updateComplete.then(() => {
@@ -104,8 +114,20 @@ export class HaComboBox extends LitElement {
     });
   }
 
+  public disconnectedCallback() {
+    super.disconnectedCallback();
+    if (this._overlayMutationObserver) {
+      this._overlayMutationObserver.disconnect();
+      this._overlayMutationObserver = undefined;
+    }
+  }
+
   public get selectedItem() {
     return this._comboBox.selectedItem;
+  }
+
+  public setInputValue(value: string) {
+    this._comboBox.value = value;
   }
 
   protected render(): TemplateResult {
@@ -114,11 +136,12 @@ export class HaComboBox extends LitElement {
         .itemValuePath=${this.itemValuePath}
         .itemIdPath=${this.itemIdPath}
         .itemLabelPath=${this.itemLabelPath}
-        .value=${this.value || ""}
         .items=${this.items}
+        .value=${this.value || ""}
         .filteredItems=${this.filteredItems}
         .allowCustomValue=${this.allowCustomValue}
         .disabled=${this.disabled}
+        .required=${this.required}
         ${comboBoxRenderer(this.renderer || this._defaultRowRenderer)}
         @opened-changed=${this._openedChanged}
         @filter-changed=${this._filterChanged}
@@ -129,6 +152,7 @@ export class HaComboBox extends LitElement {
           .label=${this.label}
           .placeholder=${this.placeholder}
           .disabled=${this.disabled}
+          .required=${this.required}
           .validationMessage=${this.validationMessage}
           .errorMessage=${this.errorMessage}
           class="input"
@@ -139,6 +163,8 @@ export class HaComboBox extends LitElement {
           .suffix=${html`<div style="width: 28px;"></div>`}
           .icon=${this.icon}
           .invalid=${this.invalid}
+          .helper=${this.helper}
+          helperPersistent
         >
           <slot name="icon" slot="leadingIcon"></slot>
         </ha-textfield>
@@ -181,21 +207,64 @@ export class HaComboBox extends LitElement {
     }
   }
 
-  private _openedChanged(ev: PolymerChangedEvent<boolean>) {
+  private _openedChanged(ev: ComboBoxLightOpenedChangedEvent) {
+    const opened = ev.detail.value;
     // delay this so we can handle click event before setting _opened
     setTimeout(() => {
-      this._opened = ev.detail.value;
+      this._opened = opened;
     }, 0);
     // @ts-ignore
     fireEvent(this, ev.type, ev.detail);
+
+    if (
+      opened &&
+      "MutationObserver" in window &&
+      !this._overlayMutationObserver
+    ) {
+      const overlay = document.querySelector<HTMLElement>(
+        "vaadin-combo-box-overlay"
+      );
+
+      if (!overlay) {
+        return;
+      }
+
+      this._overlayMutationObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (
+            mutation.type === "attributes" &&
+            mutation.attributeName === "inert"
+          ) {
+            this._overlayMutationObserver?.disconnect();
+            this._overlayMutationObserver = undefined;
+            // @ts-expect-error
+            overlay.inert = false;
+          } else if (mutation.type === "childList") {
+            mutation.removedNodes.forEach((node) => {
+              if (node.nodeName === "VAADIN-COMBO-BOX-OVERLAY") {
+                this._overlayMutationObserver?.disconnect();
+                this._overlayMutationObserver = undefined;
+              }
+            });
+          }
+        });
+      });
+
+      this._overlayMutationObserver.observe(overlay, {
+        attributes: true,
+      });
+      this._overlayMutationObserver.observe(document.body, {
+        childList: true,
+      });
+    }
   }
 
-  private _filterChanged(ev: PolymerChangedEvent<string>) {
+  private _filterChanged(ev: ComboBoxLightFilterChangedEvent) {
     // @ts-ignore
     fireEvent(this, ev.type, ev.detail, { composed: false });
   }
 
-  private _valueChanged(ev: PolymerChangedEvent<string>) {
+  private _valueChanged(ev: ComboBoxLightValueChangedEvent) {
     ev.stopPropagation();
     const newValue = ev.detail.value;
 
@@ -229,6 +298,9 @@ export class HaComboBox extends LitElement {
       .toggle-button {
         right: 12px;
         top: -10px;
+        inset-inline-start: initial;
+        inset-inline-end: 12px;
+        direction: var(--direction);
       }
       :host([opened]) .toggle-button {
         color: var(--primary-color);
@@ -237,6 +309,9 @@ export class HaComboBox extends LitElement {
         --mdc-icon-size: 20px;
         top: -7px;
         right: 36px;
+        inset-inline-start: initial;
+        inset-inline-end: 36px;
+        direction: var(--direction);
       }
     `;
   }

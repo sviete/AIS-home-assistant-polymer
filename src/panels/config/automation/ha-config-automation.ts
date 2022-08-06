@@ -61,6 +61,7 @@ class HaConfigAutomation extends HassRouterPage {
       Object.values(states).filter(
         (entity) =>
           computeStateDomain(entity) === "automation" &&
+          !entity.attributes.restored &&
           // hide internal ais dom automations
           !entity.entity_id.startsWith("automation.ais_")
       ) as AutomationEntity[]
@@ -90,7 +91,7 @@ class HaConfigAutomation extends HassRouterPage {
       (!changedProps || changedProps.has("route")) &&
       this._currentPage !== "dashboard"
     ) {
-      const automationId = this.routeTail.path.substr(1);
+      const automationId = decodeURIComponent(this.routeTail.path.substr(1));
       pageEl.automationId = automationId === "new" ? null : automationId;
     }
   }

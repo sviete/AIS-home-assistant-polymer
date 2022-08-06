@@ -52,6 +52,8 @@ export class HaDevicePicker extends SubscribeMixin(LitElement) {
 
   @property() public value?: string;
 
+  @property() public helper?: string;
+
   @property() public devices?: DeviceRegistryEntry[];
 
   @property() public areas?: AreaRegistryEntry[];
@@ -85,6 +87,8 @@ export class HaDevicePicker extends SubscribeMixin(LitElement) {
   @property() public deviceFilter?: HaDevicePickerDeviceFilterFunc;
 
   @property({ type: Boolean }) public disabled?: boolean;
+
+  @property({ type: Boolean }) public required?: boolean;
 
   @state() private _opened?: boolean;
 
@@ -194,9 +198,10 @@ export class HaDevicePicker extends SubscribeMixin(LitElement) {
           this.hass,
           deviceEntityLookup[device.id]
         ),
-        area: device.area_id
-          ? areaLookup[device.area_id].name
-          : this.hass.localize("ui.components.device-picker.no_area"),
+        area:
+          device.area_id && areaLookup[device.area_id]
+            ? areaLookup[device.area_id].name
+            : this.hass.localize("ui.components.device-picker.no_area"),
       }));
       if (!outputDevices.length) {
         return [
@@ -267,8 +272,10 @@ export class HaDevicePicker extends SubscribeMixin(LitElement) {
           ? this.hass.localize("ui.components.device-picker.device")
           : this.label}
         .value=${this._value}
+        .helper=${this.helper}
         .renderer=${rowRenderer}
         .disabled=${this.disabled}
+        .required=${this.required}
         item-value-path="id"
         item-label-path="name"
         @opened-changed=${this._openedChanged}

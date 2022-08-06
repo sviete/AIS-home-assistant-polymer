@@ -31,13 +31,17 @@ export class HaYamlEditor extends LitElement {
 
   @property() public label?: string;
 
+  @property({ type: Boolean }) public readOnly = false;
+
+  @property({ type: Boolean }) public required = false;
+
   @state() private _yaml = "";
 
   public setValue(value): void {
     try {
       this._yaml =
         value && !isEmpty(value)
-          ? dump(value, { schema: this.yamlSchema })
+          ? dump(value, { schema: this.yamlSchema, quotingType: '"' })
           : "";
     } catch (err: any) {
       // eslint-disable-next-line no-console
@@ -57,12 +61,16 @@ export class HaYamlEditor extends LitElement {
       return html``;
     }
     return html`
-      ${this.label ? html`<p>${this.label}</p>` : ""}
+      ${this.label
+        ? html`<p>${this.label}${this.required ? " *" : ""}</p>`
+        : ""}
       <ha-code-editor
         .hass=${this.hass}
         .value=${this._yaml}
+        .readOnly=${this.readOnly}
         mode="yaml"
         autocomplete-entities
+        autocomplete-icons
         .error=${this.isValid === false}
         @value-changed=${this._onChange}
         dir="ltr"

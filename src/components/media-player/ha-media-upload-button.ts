@@ -119,6 +119,12 @@ class MediaUploadButton extends LitElement {
     ha-circular-progress[slot="icon"] {
       vertical-align: middle;
     }
+
+    ha-svg-icon[slot="icon"] {
+      margin-inline-start: 0px;
+      margin-inline-end: 8px;
+      direction: var(--direction);
+    }
   `;
 }
 

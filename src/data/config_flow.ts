@@ -6,16 +6,17 @@ import { DataEntryFlowProgress, DataEntryFlowStep } from "./data_entry_flow";
 import { domainToName } from "./integration";
 
 export const DISCOVERY_SOURCES = [
-  "usb",
-  "unignore",
+  "bluetooth",
   "dhcp",
-  "homekit",
-  "ssdp",
-  "zeroconf",
   "discovery",
+  "hassio",
+  "homekit",
   "integration_discovery",
   "mqtt",
-  "hassio",
+  "ssdp",
+  "unignore",
+  "usb",
+  "zeroconf",
 ];
 
 export const ATTENTION_SOURCES = ["reauth"];
@@ -65,8 +66,14 @@ export const ignoreConfigFlow = (
 export const deleteConfigFlow = (hass: HomeAssistant, flowId: string) =>
   hass.callApi("DELETE", `config/config_entries/flow/${flowId}`);
 
-export const getConfigFlowHandlers = (hass: HomeAssistant) =>
-  hass.callApi<string[]>("GET", "config/config_entries/flow_handlers");
+export const getConfigFlowHandlers = (
+  hass: HomeAssistant,
+  type?: "helper" | "integration"
+) =>
+  hass.callApi<string[]>(
+    "GET",
+    `config/config_entries/flow_handlers${type ? `?type=${type}` : ""}`
+  );
 
 export const fetchConfigFlowInProgress = (
   conn: Connection

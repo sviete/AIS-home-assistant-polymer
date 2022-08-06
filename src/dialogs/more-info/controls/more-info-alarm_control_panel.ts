@@ -12,7 +12,7 @@ import {
 import type { HomeAssistant } from "../../../types";
 
 const BUTTONS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "clear"];
-const ARM_ACTIONS = ["arm_away", "arm_home"];
+const ARM_ACTIONS = ["arm_home", "arm_away"];
 const DISARM_ACTIONS = ["disarm"];
 
 @customElement("more-info-alarm_control_panel")
@@ -37,7 +37,7 @@ export class MoreInfoAlarmControlPanel extends LitElement {
                 id="alarmCode"
                 .label=${this.hass.localize("ui.card.alarm_control_panel.code")}
                 type="password"
-                .inputmode=${this.stateObj.attributes.code_format ===
+                .inputMode=${this.stateObj.attributes.code_format ===
                 FORMAT_NUMBER
                   ? "numeric"
                   : "text"}

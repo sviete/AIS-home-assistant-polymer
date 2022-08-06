@@ -1,26 +1,25 @@
 import "@material/mwc-button";
 import "@material/mwc-list/mwc-list-item";
-import type { ActionDetail } from "@material/mwc-list";
 import "@polymer/paper-item/paper-item-body";
-import { mdiDotsVertical } from "@mdi/js";
-import { LitElement, css, html, PropertyValues } from "lit";
+import { css, html, LitElement, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { formatDateTime } from "../../../../common/datetime/format_date_time";
 import { fireEvent } from "../../../../common/dom/fire_event";
 import { computeRTLDirection } from "../../../../common/util/compute_rtl";
-import "../../../../components/buttons/ha-call-api-button";
-import "../../../../components/ha-card";
-import "../../../../components/ha-alert";
-import "../../../../components/ha-button-menu";
-import "../../../../components/ha-icon-button";
 import { debounce } from "../../../../common/util/debounce";
+import "../../../../components/buttons/ha-call-api-button";
+import "../../../../components/ha-alert";
+import "../../../../components/ha-card";
 import {
   cloudLogout,
   CloudStatusLoggedIn,
   fetchCloudSubscriptionInfo,
   SubscriptionInfo,
 } from "../../../../data/cloud";
+import { showConfirmationDialog } from "../../../../dialogs/generic/show-dialog-box";
 import "../../../../layouts/hass-subpage";
+import { SubscribeMixin } from "../../../../mixins/subscribe-mixin";
+import { haStyle } from "../../../../resources/styles";
 import { HomeAssistant } from "../../../../types";
 import "../../ha-config-section";
 import "./cloud-alexa-pref";
@@ -28,8 +27,6 @@ import "./cloud-google-pref";
 import "./cloud-remote-pref";
 import "./cloud-tts-pref";
 import "./cloud-webhooks";
-import { SubscribeMixin } from "../../../../mixins/subscribe-mixin";
-import { showConfirmationDialog } from "../../../../dialogs/generic/show-dialog-box";
 
 @customElement("cloud-account")
 export class CloudAccount extends SubscribeMixin(LitElement) {
@@ -52,23 +49,6 @@ export class CloudAccount extends SubscribeMixin(LitElement) {
         .narrow=${this.narrow}
         header="Home Assistant Cloud"
       >
-        <ha-button-menu
-          slot="toolbar-icon"
-          corner="BOTTOM_START"
-          @action=${this._handleMenuAction}
-          activatable
-        >
-          <ha-icon-button
-            slot="trigger"
-            .label=${this.hass.localize("ui.common.menu")}
-            .path=${mdiDotsVertical}
-          ></ha-icon-button>
-
-          <mwc-list-item>
-            ${this.hass.localize("ui.panel.config.cloud.account.sign_out")}
-          </mwc-list-item>
-        </ha-button-menu>
-
         <div class="content">
           <ha-config-section .isWide=${this.isWide}>
             <span slot="header">Home Assistant Cloud</span>
@@ -81,13 +61,17 @@ export class CloudAccount extends SubscribeMixin(LitElement) {
             </div>
 
             <ha-card
+              outlined
               .header=${this.hass.localize(
                 "ui.panel.config.cloud.account.nabu_casa_account"
               )}
             >
               <div class="account-row">
                 <paper-item-body two-line>
-                  ${this.cloudStatus.email}
+                  ${this.cloudStatus.email.replace(
+                    /(\w{3})[\w.-]+@([\w.]+\w)/,
+                    "$1***@$2"
+                  )}
                   <div secondary class="wrap">
                     ${this._subscription
                       ? this._subscription.human_description.replace(
@@ -152,6 +136,11 @@ export class CloudAccount extends SubscribeMixin(LitElement) {
                     )}
                   </mwc-button>
                 </a>
+                <mwc-button @click=${this._signOut} class="warning">
+                  ${this.hass.localize(
+                    "ui.panel.config.cloud.account.sign_out"
+                  )}
+                </mwc-button>
               </div>
             </ha-card>
           </ha-config-section>
@@ -210,6 +199,7 @@ export class CloudAccount extends SubscribeMixin(LitElement) {
 
             <cloud-webhooks
               .hass=${this.hass}
+              .narrow=${this.narrow}
               .cloudStatus=${this.cloudStatus}
               dir=${this._rtlDirection}
             ></cloud-webhooks>
@@ -274,18 +264,15 @@ export class CloudAccount extends SubscribeMixin(LitElement) {
     }
   }
 
-  private async _handleMenuAction(ev: CustomEvent<ActionDetail>) {
-    switch (ev.detail.index) {
-      case 0:
-        showConfirmationDialog(this, {
-          text: this.hass.localize(
-            "ui.panel.config.cloud.account.sign_out_confirm"
-          ),
-          confirmText: this.hass!.localize("ui.common.yes"),
-          dismissText: this.hass!.localize("ui.common.no"),
-          confirm: () => this._logoutFromCloud(),
-        });
-    }
+  private async _signOut() {
+    showConfirmationDialog(this, {
+      text: this.hass.localize(
+        "ui.panel.config.cloud.account.sign_out_confirm"
+      ),
+      confirmText: this.hass!.localize("ui.common.yes"),
+      dismissText: this.hass!.localize("ui.common.no"),
+      confirm: () => this._logoutFromCloud(),
+    });
   }
 
   private async _logoutFromCloud() {
@@ -298,41 +285,39 @@ export class CloudAccount extends SubscribeMixin(LitElement) {
   }
 
   static get styles() {
-    return css`
-      [slot="introduction"] {
-        margin: -1em 0;
-      }
-      [slot="introduction"] a {
-        color: var(--primary-color);
-      }
-      .content {
-        padding-bottom: 24px;
-      }
-      .account-row {
-        display: flex;
-        padding: 0 16px;
-      }
-      .card-actions {
-        display: flex;
-        flex-direction: row-reverse;
-      }
-      .card-actions a {
-        text-decoration: none;
-      }
-      mwc-button {
-        align-self: center;
-      }
-      .wrap {
-        white-space: normal;
-      }
-      .status {
-        text-transform: capitalize;
-        padding: 16px;
-      }
-      a {
-        color: var(--primary-color);
-      }
-    `;
+    return [
+      haStyle,
+      css`
+        [slot="introduction"] {
+          margin: -1em 0;
+        }
+        [slot="introduction"] a {
+          color: var(--primary-color);
+        }
+        .content {
+          padding-bottom: 24px;
+        }
+        .account-row {
+          display: flex;
+          padding: 0 16px;
+        }
+        .card-actions {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: space-between;
+        }
+        mwc-button {
+          align-self: center;
+        }
+        .wrap {
+          white-space: normal;
+        }
+        .status {
+          text-transform: capitalize;
+          padding: 16px;
+        }
+      `,
+    ];
   }
 }
 

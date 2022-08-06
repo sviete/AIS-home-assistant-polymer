@@ -14,23 +14,30 @@ import { styleMap } from "lit/directives/style-map";
 import memoizeOne from "memoize-one";
 import { isComponentLoaded } from "../../common/config/is_component_loaded";
 import { fireEvent } from "../../common/dom/fire_event";
+import { protocolIntegrationPicked } from "../../common/integrations/protocolIntegrationPicked";
 import { navigate } from "../../common/navigate";
-import "../../components/search-input";
 import { caseInsensitiveStringCompare } from "../../common/string/compare";
 import { LocalizeFunc } from "../../common/translations/localize";
 import "../../components/ha-icon-next";
-import { getConfigEntries } from "../../data/config_entries";
+import "../../components/search-input";
 import { domainToName } from "../../data/integration";
-import { showZWaveJSAddNodeDialog } from "../../panels/config/integrations/integration-panels/zwave_js/show-dialog-zwave_js-add-node";
+import { haStyleScrollbar } from "../../resources/styles";
 import { HomeAssistant } from "../../types";
 import { brandsUrl } from "../../util/brands-url";
 import { documentationUrl } from "../../util/documentation-url";
+import { showConfirmationDialog } from "../generic/show-dialog-box";
+import { FlowHandlers } from "./show-dialog-data-entry-flow";
 import { configFlowContentStyles } from "./styles";
 
 interface HandlerObj {
   name: string;
   slug: string;
   is_add?: boolean;
+  is_helper?: boolean;
+}
+
+export interface SupportedBrandObj extends HandlerObj {
+  supported_flows: string[];
 }
 
 declare global {
@@ -46,7 +53,7 @@ declare global {
 class StepFlowPickHandler extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @property({ attribute: false }) public handlers!: string[];
+  @property({ attribute: false }) public handlers!: FlowHandlers;
 
   @property() public initialFilter?: string;
 
@@ -57,11 +64,26 @@ class StepFlowPickHandler extends LitElement {
   private _height?: number;
 
   private _filterHandlers = memoizeOne(
-    (h: string[], filter?: string, _localize?: LocalizeFunc) => {
-      const handlers: HandlerObj[] = h.map((handler) => ({
-        name: domainToName(this.hass.localize, handler),
-        slug: handler,
-      }));
+    (
+      h: FlowHandlers,
+      filter?: string,
+      _localize?: LocalizeFunc
+    ): [(HandlerObj | SupportedBrandObj)[], HandlerObj[]] => {
+      const integrations: (HandlerObj | SupportedBrandObj)[] =
+        h.integrations.map((handler) => ({
+          name: domainToName(this.hass.localize, handler),
+          slug: handler,
+        }));
+
+      for (const [domain, domainBrands] of Object.entries(h.supportedBrands)) {
+        for (const [slug, name] of Object.entries(domainBrands)) {
+          integrations.push({
+            slug,
+            name,
+            supported_flows: [domain],
+          });
+        }
+      }
 
       if (filter) {
         const options: Fuse.IFuseOptions<HandlerObj> = {
@@ -70,17 +92,31 @@ class StepFlowPickHandler extends LitElement {
           minMatchCharLength: 2,
           threshold: 0.2,
         };
-        const fuse = new Fuse(handlers, options);
-        return fuse.search(filter).map((result) => result.item);
+        const helpers: HandlerObj[] = h.helpers.map((handler) => ({
+          name: domainToName(this.hass.localize, handler),
+          slug: handler,
+          is_helper: true,
+        }));
+        return [
+          new Fuse(integrations, options)
+            .search(filter)
+            .map((result) => result.item),
+          new Fuse(helpers, options)
+            .search(filter)
+            .map((result) => result.item),
+        ];
       }
-      return handlers.sort((a, b) =>
-        caseInsensitiveStringCompare(a.name, b.name)
-      );
+      return [
+        integrations.sort((a, b) =>
+          caseInsensitiveStringCompare(a.name, b.name)
+        ),
+        [],
+      ];
     }
   );
 
   protected render(): TemplateResult {
-    const handlers = this._getHandlers();
+    const [integrations, helpers] = this._getHandlers();
 
     const addDeviceRows: HandlerObj[] = ["zha", "zwave_js"]
       .filter((domain) => isComponentLoaded(this.hass, domain))
@@ -108,6 +144,7 @@ class StepFlowPickHandler extends LitElement {
           width: `${this._width}px`,
           height: `${this._height}px`,
         })}
+        class="ha-scrollbar"
       >
         ${addDeviceRows.length
           ? html`
@@ -115,8 +152,8 @@ class StepFlowPickHandler extends LitElement {
               <li divider padded class="divider" role="separator"></li>
             `
           : ""}
-        ${handlers.length
-          ? handlers.map((handler) => this._renderRow(handler))
+        ${integrations.length
+          ? integrations.map((handler) => this._renderRow(handler))
           : html`
               <p>
                 ${this.hass.localize(
@@ -139,6 +176,12 @@ class StepFlowPickHandler extends LitElement {
                 >.
               </p>
             `}
+        ${helpers.length
+          ? html`
+              <li divider padded class="divider" role="separator"></li>
+              ${helpers.map((handler) => this._renderRow(handler))}
+            `
+          : ""}
       </mwc-list>
     `;
   }
@@ -162,7 +205,7 @@ class StepFlowPickHandler extends LitElement {
           })}
           referrerpolicy="no-referrer"
         />
-        <span>${handler.name}</span>
+        <span>${handler.name} ${handler.is_helper ? " (helper)" : ""}</span>
         ${handler.is_add ? "" : html`<ha-icon-next slot="meta"></ha-icon-next>`}
       </mwc-list-item>
     `;
@@ -212,32 +255,55 @@ class StepFlowPickHandler extends LitElement {
   }
 
   private async _handlerPicked(ev) {
-    const handler: HandlerObj = ev.currentTarget.handler;
+    const handler: HandlerObj | SupportedBrandObj = ev.currentTarget.handler;
 
     if (handler.is_add) {
-      if (handler.slug === "zwave_js") {
-        const entries = await getConfigEntries(this.hass);
-        const entry = entries.find((ent) => ent.domain === "zwave_js");
+      this._handleAddPicked(handler.slug);
+      return;
+    }
 
-        if (!entry) {
-          return;
-        }
-
-        showZWaveJSAddNodeDialog(this, {
-          entry_id: entry.entry_id,
-        });
-      } else if (handler.slug === "zha") {
-        navigate("/config/zha/add");
-      }
-
+    if (handler.is_helper) {
+      navigate(`/config/helpers/add?domain=${handler.slug}`);
       // This closes dialog.
       fireEvent(this, "flow-update");
+      return;
+    }
+
+    if ("supported_flows" in handler) {
+      const slug = handler.supported_flows[0];
+
+      showConfirmationDialog(this, {
+        text: this.hass.localize(
+          "ui.panel.config.integrations.config_flow.supported_brand_flow",
+          {
+            supported_brand: handler.name,
+            flow_domain_name: domainToName(this.hass.localize, slug),
+          }
+        ),
+        confirm: () => {
+          if (["zha", "zwave_js"].includes(slug)) {
+            this._handleAddPicked(slug);
+            return;
+          }
+
+          fireEvent(this, "handler-picked", {
+            handler: slug,
+          });
+        },
+      });
+
       return;
     }
 
     fireEvent(this, "handler-picked", {
       handler: handler.slug,
     });
+  }
+
+  private async _handleAddPicked(slug: string): Promise<void> {
+    await protocolIntegrationPicked(this, this.hass, slug);
+    // This closes dialog.
+    fireEvent(this, "flow-update");
   }
 
   private _maybeSubmit(ev: KeyboardEvent) {
@@ -249,7 +315,7 @@ class StepFlowPickHandler extends LitElement {
 
     if (handlers.length > 0) {
       fireEvent(this, "handler-picked", {
-        handler: handlers[0].slug,
+        handler: handlers[0][0].slug,
       });
     }
   }
@@ -257,6 +323,7 @@ class StepFlowPickHandler extends LitElement {
   static get styles(): CSSResultGroup {
     return [
       configFlowContentStyles,
+      haStyleScrollbar,
       css`
         img {
           width: 40px;
@@ -277,7 +344,8 @@ class StepFlowPickHandler extends LitElement {
           border-bottom-color: var(--divider-color);
         }
         h2 {
-          padding-right: 66px;
+          padding-inline-end: 66px;
+          direction: var(--direction);
         }
         @media all and (max-height: 900px) {
           mwc-list {

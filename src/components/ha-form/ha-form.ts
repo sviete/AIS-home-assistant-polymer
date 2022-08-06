@@ -77,7 +77,7 @@ export class HaForm extends LitElement implements HaFormElement {
 
   protected render(): TemplateResult {
     return html`
-      <div class="root">
+      <div class="root" part="root">
         ${this.error && this.error.base
           ? html`
               <ha-alert alert-type="error">
@@ -106,6 +106,7 @@ export class HaForm extends LitElement implements HaFormElement {
                   .disabled=${this.disabled}
                   .helper=${this._computeHelper(item)}
                   .required=${item.required || false}
+                  .context=${this._generateContext(item)}
                 ></ha-selector>`
               : dynamicElement(`ha-form-${item.type}`, {
                   schema: item,
@@ -115,11 +116,26 @@ export class HaForm extends LitElement implements HaFormElement {
                   hass: this.hass,
                   computeLabel: this.computeLabel,
                   computeHelper: this.computeHelper,
+                  context: this._generateContext(item),
                 })}
           `;
         })}
       </div>
     `;
+  }
+
+  private _generateContext(
+    schema: HaFormSchema
+  ): Record<string, any> | undefined {
+    if (!schema.context) {
+      return undefined;
+    }
+
+    const context = {};
+    for (const [context_key, data_key] of Object.entries(schema.context)) {
+      context[context_key] = this.data[data_key];
+    }
+    return context;
   }
 
   protected createRenderRoot() {
@@ -157,7 +173,6 @@ export class HaForm extends LitElement implements HaFormElement {
   }
 
   static get styles(): CSSResultGroup {
-    // .root has overflow: auto to avoid margin collapse
     return css`
       .root {
         margin-bottom: -24px;

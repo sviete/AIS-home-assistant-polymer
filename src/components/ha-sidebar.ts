@@ -21,6 +21,7 @@ import "@polymer/paper-item/paper-icon-item";
 import type { PaperIconItemElement } from "@polymer/paper-item/paper-icon-item";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-listbox/paper-listbox";
+import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import {
   css,
   CSSResult,
@@ -36,14 +37,17 @@ import memoizeOne from "memoize-one";
 import { LocalStorage } from "../common/decorators/local-storage";
 import { fireEvent } from "../common/dom/fire_event";
 import { toggleAttribute } from "../common/dom/toggle_attribute";
-import { computeDomain } from "../common/entity/compute_domain";
 import { stringCompare } from "../common/string/compare";
 import { computeRTL } from "../common/util/compute_rtl";
+import { throttle } from "../common/util/throttle";
 import { ActionHandlerDetail } from "../data/lovelace";
 import {
   PersistentNotification,
   subscribeNotifications,
 } from "../data/persistent_notification";
+import { subscribeRepairsIssueRegistry } from "../data/repairs";
+import { updateCanInstall, UpdateEntity } from "../data/update";
+import { SubscribeMixin } from "../mixins/subscribe-mixin";
 import { actionHandler } from "../panels/lovelace/common/directives/action-handler-directive";
 import { haStyleScrollbar } from "../resources/styles";
 import type { HomeAssistant, PanelInfo, Route } from "../types";
@@ -73,7 +77,6 @@ const SORT_VALUE_URL_PATHS = {
 
 const PANEL_ICONS = {
   calendar: mdiCalendar,
-  config: mdiCog,
   "developer-tools": mdiHammer,
   energy: mdiLightningBolt,
   history: mdiChartBox,
@@ -182,7 +185,7 @@ const computePanels = memoizeOne(
 let Sortable;
 
 @customElement("ha-sidebar")
-class HaSidebar extends LitElement {
+class HaSidebar extends SubscribeMixin(LitElement) {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property({ type: Boolean, reflect: true }) public narrow!: boolean;
@@ -194,6 +197,10 @@ class HaSidebar extends LitElement {
   @property({ type: Boolean }) public editMode = false;
 
   @state() private _notifications?: PersistentNotification[];
+
+  @state() private _updatesCount = 0;
+
+  @state() private _issuesCount = 0;
 
   @state() private _renderEmptySortable = false;
 
@@ -216,6 +223,16 @@ class HaSidebar extends LitElement {
   private _hiddenPanels: string[] = [];
 
   private _sortable?;
+
+  public hassSubscribe(): UnsubscribeFunc[] {
+    return [
+      subscribeRepairsIssueRegistry(this.hass.connection!, (repairs) => {
+        this._issuesCount = repairs.issues.filter(
+          (issue) => !issue.ignored
+        ).length;
+      }),
+    ];
+  }
 
   protected render() {
     if (!this.hass) {
@@ -240,6 +257,8 @@ class HaSidebar extends LitElement {
       changedProps.has("narrow") ||
       changedProps.has("alwaysExpand") ||
       changedProps.has("_externalConfig") ||
+      changedProps.has("_updatesCount") ||
+      changedProps.has("_issuesCount") ||
       changedProps.has("_notifications") ||
       changedProps.has("editMode") ||
       changedProps.has("_renderEmptySortable") ||
@@ -295,6 +314,8 @@ class HaSidebar extends LitElement {
       toggleAttribute(this, "rtl", computeRTL(this.hass));
     }
 
+    this._calculateCounts();
+
     if (!SUPPORT_SCROLL_IF_NEEDED) {
       return;
     }
@@ -306,6 +327,21 @@ class HaSidebar extends LitElement {
       }
     }
   }
+
+  private _calculateCounts = throttle(() => {
+    let updateCount = 0;
+
+    for (const entityId of Object.keys(this.hass.states)) {
+      if (
+        entityId.startsWith("update.") &&
+        updateCanInstall(this.hass.states[entityId] as UpdateEntity)
+      ) {
+        updateCount++;
+      }
+    }
+
+    this._updatesCount = updateCount;
+  }, 5000);
 
   private _renderHeader() {
     return html`<div
@@ -392,35 +428,37 @@ class HaSidebar extends LitElement {
     icon?: string | null,
     iconPath?: string | null
   ) {
-    return html`
-      <a
-        role="option"
-        href=${`/${urlPath}`}
-        data-panel=${urlPath}
-        tabindex="-1"
-        @mouseenter=${this._itemMouseEnter}
-        @mouseleave=${this._itemMouseLeave}
-      >
-        <paper-icon-item>
-          ${iconPath
-            ? html`<ha-svg-icon
-                slot="item-icon"
-                .path=${iconPath}
-              ></ha-svg-icon>`
-            : html`<ha-icon slot="item-icon" .icon=${icon}></ha-icon>`}
-          <span class="item-text">${title}</span>
-        </paper-icon-item>
-        ${this.editMode
-          ? html`<ha-icon-button
-              .label=${this.hass.localize("ui.sidebar.hide_panel")}
-              .path=${mdiClose}
-              class="hide-panel"
-              .panel=${urlPath}
-              @click=${this._hidePanel}
-            ></ha-icon-button>`
-          : ""}
-      </a>
-    `;
+    return urlPath === "config"
+      ? this._renderConfiguration(title)
+      : html`
+          <a
+            role="option"
+            href=${`/${urlPath}`}
+            data-panel=${urlPath}
+            tabindex="-1"
+            @mouseenter=${this._itemMouseEnter}
+            @mouseleave=${this._itemMouseLeave}
+          >
+            <paper-icon-item>
+              ${iconPath
+                ? html`<ha-svg-icon
+                    slot="item-icon"
+                    .path=${iconPath}
+                  ></ha-svg-icon>`
+                : html`<ha-icon slot="item-icon" .icon=${icon}></ha-icon>`}
+              <span class="item-text">${title}</span>
+            </paper-icon-item>
+            ${this.editMode
+              ? html`<ha-icon-button
+                  .label=${this.hass.localize("ui.sidebar.hide_panel")}
+                  .path=${mdiClose}
+                  class="hide-panel"
+                  .panel=${urlPath}
+                  @click=${this._hidePanel}
+                ></ha-icon-button>`
+              : ""}
+          </a>
+        `;
   }
 
   private _renderPanelsEdit(beforeSpacer: PanelInfo[]) {
@@ -482,15 +520,42 @@ class HaSidebar extends LitElement {
     return html`<div class="spacer" disabled></div>`;
   }
 
+  private _renderConfiguration(title: string | null) {
+    return html`<a
+      class="configuration-container"
+      role="option"
+      href="/config"
+      data-panel="config"
+      tabindex="-1"
+      @mouseenter=${this._itemMouseEnter}
+      @mouseleave=${this._itemMouseLeave}
+    >
+      <paper-icon-item class="configuration" role="option">
+        <ha-svg-icon slot="item-icon" .path=${mdiCog}></ha-svg-icon>
+        ${!this.alwaysExpand &&
+        (this._updatesCount > 0 || this._issuesCount > 0)
+          ? html`
+              <span class="configuration-badge" slot="item-icon">
+                ${this._updatesCount + this._issuesCount}
+              </span>
+            `
+          : ""}
+        <span class="item-text">${title}</span>
+        ${this.alwaysExpand && (this._updatesCount > 0 || this._issuesCount > 0)
+          ? html`
+              <span class="configuration-badge"
+                >${this._updatesCount + this._issuesCount}</span
+              >
+            `
+          : ""}
+      </paper-icon-item>
+    </a>`;
+  }
+
   private _renderNotifications() {
-    let notificationCount = this._notifications
+    const notificationCount = this._notifications
       ? this._notifications.length
       : 0;
-    for (const entityId in this.hass.states) {
-      if (computeDomain(entityId) === "configurator") {
-        notificationCount++;
-      }
-    }
 
     return html`<div
       class="notifications-container"
@@ -958,18 +1023,21 @@ class HaSidebar extends LitElement {
           height: 1px;
           background-color: var(--divider-color);
         }
-        .notifications-container {
+        .notifications-container,
+        .configuration-container {
           display: flex;
           margin-left: env(safe-area-inset-left);
         }
-        :host([rtl]) .notifications-container {
+        :host([rtl]) .notifications-container,
+        :host([rtl]) .configuration-container {
           margin-left: initial;
           margin-right: env(safe-area-inset-right);
         }
         .notifications {
           cursor: pointer;
         }
-        .notifications .item-text {
+        .notifications .item-text,
+        .configuration .item-text {
           flex: 1;
         }
         .profile {
@@ -993,7 +1061,10 @@ class HaSidebar extends LitElement {
           margin-right: 8px;
         }
 
-        .notification-badge {
+        .notification-badge,
+        .configuration-badge {
+          left: calc(var(--app-drawer-width) - 42px);
+          position: absolute;
           min-width: 20px;
           box-sizing: border-box;
           border-radius: 50%;
@@ -1004,7 +1075,8 @@ class HaSidebar extends LitElement {
           padding: 0px 6px;
           color: var(--text-accent-color, var(--text-primary-color));
         }
-        ha-svg-icon + .notification-badge {
+        ha-svg-icon + .notification-badge,
+        ha-svg-icon + .configuration-badge {
           position: absolute;
           bottom: 14px;
           left: 26px;

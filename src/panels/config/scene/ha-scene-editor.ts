@@ -55,6 +55,7 @@ import {
   SceneConfig,
   SceneEntities,
   SceneEntity,
+  SceneMetaData,
   SCENE_IGNORED_DOMAINS,
   showSceneEditor,
 } from "../../../data/scene";
@@ -106,6 +107,8 @@ export class HaSceneEditor extends SubscribeMixin(
 
   @state() private _entities: string[] = [];
 
+  private _single_entities: string[] = [];
+
   @state() private _devices: string[] = [];
 
   @state()
@@ -120,7 +123,7 @@ export class HaSceneEditor extends SubscribeMixin(
 
   private _unsubscribeEvents?: () => void;
 
-  @state() private _deviceEntityLookup: DeviceEntitiesLookup = {};
+  private _deviceEntityLookup: DeviceEntitiesLookup = {};
 
   private _activateContextId?: string;
 
@@ -287,7 +290,7 @@ export class HaSceneEditor extends SubscribeMixin(
                       "ui.panel.config.scene.editor.introduction"
                     )}
                   </div>
-                  <ha-card>
+                  <ha-card outlined>
                     <div class="card-content">
                       <ha-textfield
                         .value=${this._config.name}
@@ -335,7 +338,7 @@ export class HaSceneEditor extends SubscribeMixin(
                   ${devices.map(
                     (device) =>
                       html`
-                        <ha-card>
+                        <ha-card outlined>
                           <h1 class="card-header">
                             ${device.name}
                             <ha-icon-button
@@ -373,6 +376,7 @@ export class HaSceneEditor extends SubscribeMixin(
                   )}
 
                   <ha-card
+                    outlined
                     .header=${this.hass.localize(
                       "ui.panel.config.scene.editor.devices.add"
                     )}
@@ -405,6 +409,7 @@ export class HaSceneEditor extends SubscribeMixin(
                         ${entities.length
                           ? html`
                               <ha-card
+                                outlined
                                 class="entities"
                                 .header=${this.hass.localize(
                                   "ui.panel.config.scene.editor.entities.without_device"
@@ -445,6 +450,7 @@ export class HaSceneEditor extends SubscribeMixin(
                           : ""}
 
                         <ha-card
+                          outlined
                           header=${this.hass.localize(
                             "ui.panel.config.scene.editor.entities.add"
                           )}
@@ -516,9 +522,11 @@ export class HaSceneEditor extends SubscribeMixin(
     }
 
     if (changedProps.has("_entityRegistryEntries")) {
+      this._deviceEntityLookup = {};
       for (const entity of this._entityRegistryEntries) {
         if (
           !entity.device_id ||
+          entity.entity_category ||
           SCENE_IGNORED_DOMAINS.includes(computeDomain(entity.entity_id))
         ) {
           continue;
@@ -526,13 +534,10 @@ export class HaSceneEditor extends SubscribeMixin(
         if (!(entity.device_id in this._deviceEntityLookup)) {
           this._deviceEntityLookup[entity.device_id] = [];
         }
-        if (
-          !this._deviceEntityLookup[entity.device_id].includes(entity.entity_id)
-        ) {
-          this._deviceEntityLookup[entity.device_id].push(entity.entity_id);
-        }
+        this._deviceEntityLookup[entity.device_id].push(entity.entity_id);
         if (
           this._entities.includes(entity.entity_id) &&
+          !this._single_entities.includes(entity.device_id) &&
           !this._devices.includes(entity.device_id)
         ) {
           this._devices = [...this._devices, entity.device_id];
@@ -621,20 +626,38 @@ export class HaSceneEditor extends SubscribeMixin(
   private _initEntities(config: SceneConfig) {
     this._entities = Object.keys(config.entities);
     this._entities.forEach((entity) => this._storeState(entity));
+    this._single_entities = [];
 
     const filteredEntityReg = this._entityRegistryEntries.filter((entityReg) =>
       this._entities.includes(entityReg.entity_id)
     );
-    this._devices = [];
+    const newDevices: string[] = [];
+
+    if (config.metadata) {
+      Object.keys(config.entities).forEach((entity) => {
+        if (
+          !this._single_entities.includes(entity) &&
+          config.metadata![entity]?.entity_only
+        ) {
+          this._single_entities.push(entity);
+        }
+      });
+    }
 
     for (const entityReg of filteredEntityReg) {
       if (!entityReg.device_id) {
         continue;
       }
-      if (!this._devices.includes(entityReg.device_id)) {
-        this._devices = [...this._devices, entityReg.device_id];
+      const entityMetaData = config.metadata?.[entityReg.entity_id];
+      if (
+        !newDevices.includes(entityReg.device_id) &&
+        !entityMetaData?.entity_only
+      ) {
+        newDevices.push(entityReg.device_id);
       }
     }
+
+    this._devices = newDevices;
   }
 
   private _entityPicked(ev: CustomEvent) {
@@ -643,18 +666,9 @@ export class HaSceneEditor extends SubscribeMixin(
     if (this._entities.includes(entityId)) {
       return;
     }
-    const entityRegistry = this._entityRegistryEntries.find(
-      (entityReg) => entityReg.entity_id === entityId
-    );
-    if (
-      entityRegistry?.device_id &&
-      !this._devices.includes(entityRegistry.device_id)
-    ) {
-      this._pickDevice(entityRegistry.device_id);
-    } else {
-      this._entities = [...this._entities, entityId];
-      this._storeState(entityId);
-    }
+    this._entities = [...this._entities, entityId];
+    this._single_entities.push(entityId);
+    this._storeState(entityId);
     this._dirty = true;
   }
 
@@ -662,6 +676,9 @@ export class HaSceneEditor extends SubscribeMixin(
     ev.stopPropagation();
     const deleteEntityId = (ev.target as any).entityId;
     this._entities = this._entities.filter(
+      (entityId) => entityId !== deleteEntityId
+    );
+    this._single_entities = this._single_entities.filter(
       (entityId) => entityId !== deleteEntityId
     );
     this._dirty = true;
@@ -812,6 +829,24 @@ export class HaSceneEditor extends SubscribeMixin(
     );
   }
 
+  private _calculateMetaData(): SceneMetaData {
+    const output: SceneMetaData = {};
+
+    for (const entityId of this._single_entities) {
+      const entityState = this._getCurrentState(entityId);
+
+      if (!entityState) {
+        continue;
+      }
+
+      output[entityId] = {
+        entity_only: true,
+      };
+    }
+
+    return output;
+  }
+
   private _calculateStates(): SceneEntities {
     const output: SceneEntities = {};
     this._entities.forEach((entityId) => {
@@ -844,7 +879,11 @@ export class HaSceneEditor extends SubscribeMixin(
 
   private async _saveScene(): Promise<void> {
     const id = !this.sceneId ? "" + Date.now() : this.sceneId!;
-    this._config = { ...this._config!, entities: this._calculateStates() };
+    this._config = {
+      ...this._config!,
+      entities: this._calculateStates(),
+      metadata: this._calculateMetaData(),
+    };
     try {
       this._saving = true;
       await saveScene(this.hass, id, this._config);

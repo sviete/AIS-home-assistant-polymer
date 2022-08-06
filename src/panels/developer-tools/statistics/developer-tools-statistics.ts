@@ -1,4 +1,5 @@
 import "@material/mwc-button/mwc-button";
+import { mdiSlopeUphill } from "@mdi/js";
 import { HassEntity, UnsubscribeFunc } from "home-assistant-js-websocket";
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators";
@@ -22,6 +23,7 @@ import {
 import { SubscribeMixin } from "../../../mixins/subscribe-mixin";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
+import { showStatisticsAdjustSumDialog } from "./show-dialog-statistics-adjust-sum";
 import { showFixStatisticsUnitsChangedDialog } from "./show-dialog-statistics-fix-units-changed";
 import { showFixStatisticsUnsupportedUnitMetadataDialog } from "./show-dialog-statistics-fix-unsupported-unit-meta";
 
@@ -101,6 +103,9 @@ class HaPanelDevStatistics extends SubscribeMixin(LitElement) {
       },
       fix: {
         title: "",
+        label: this.hass.localize(
+          "ui.panel.developer-tools.tabs.statistics.fix_issue.fix"
+        ),
         template: (_, data: any) =>
           html`${data.issues
             ? html`<mwc-button @click=${this._fixIssue} .data=${data.issues}>
@@ -108,8 +113,26 @@ class HaPanelDevStatistics extends SubscribeMixin(LitElement) {
                   "ui.panel.developer-tools.tabs.statistics.fix_issue.fix"
                 )}
               </mwc-button>`
-            : ""}`,
+            : "—"}`,
         width: "113px",
+      },
+      actions: {
+        title: "",
+        label: localize("ui.panel.developer-tools.tabs.statistics.adjust_sum"),
+        type: "icon-button",
+        template: (_info, statistic: StatisticsMetaData) =>
+          statistic.has_sum
+            ? html`
+                <ha-icon-button
+                  .label=${localize(
+                    "ui.panel.developer-tools.tabs.statistics.adjust_sum"
+                  )}
+                  .path=${mdiSlopeUphill}
+                  .statistic=${statistic}
+                  @click=${this._showStatisticsAdjustSumDialog}
+                ></ha-icon-button>
+              `
+            : "",
       },
     })
   );
@@ -125,6 +148,13 @@ class HaPanelDevStatistics extends SubscribeMixin(LitElement) {
         @row-click=${this._rowClicked}
       ></ha-data-table>
     `;
+  }
+
+  private _showStatisticsAdjustSumDialog(ev) {
+    ev.stopPropagation();
+    showStatisticsAdjustSumDialog(this, {
+      statistic: ev.currentTarget.statistic,
+    });
   }
 
   private _rowClicked(ev) {
@@ -185,6 +215,8 @@ class HaPanelDevStatistics extends SubscribeMixin(LitElement) {
           source: "",
           state: this.hass.states[statisticId],
           issues: issues[statisticId],
+          has_mean: false,
+          has_sum: false,
         });
       }
     });
@@ -249,7 +281,7 @@ class HaPanelDevStatistics extends SubscribeMixin(LitElement) {
         });
         break;
       case "unsupported_state_class":
-        showAlertDialog(this, {
+        showConfirmationDialog(this, {
           title: "Unsupported state class",
           text: html`The state class of this entity, ${issue.data.state_class}
             is not supported. <br />Statistics can not be generated until this
@@ -264,7 +296,15 @@ class HaPanelDevStatistics extends SubscribeMixin(LitElement) {
               rel="noreferrer noopener"
             >
               developer documentation</a
-            >.`,
+            >. If the state class has permanently changed, you may want to
+            remove the long term statistics of it from your database.<br /><br />Do
+            you want to permanently remove the long term statistics of
+            ${issue.data.statistic_id} from your database?`,
+          confirmText: this.hass.localize("ui.common.remove"),
+          confirm: async () => {
+            await clearStatistics(this.hass, [issue.data.statistic_id]);
+            this._validateStatistics();
+          },
         });
         break;
       case "unsupported_unit_metadata":
