@@ -32,13 +32,6 @@ interface AddonCheckboxItem extends CheckboxItem {
 
 const _computeFolders = (folders): CheckboxItem[] => {
   const list: CheckboxItem[] = [];
-  if (folders.includes("homeassistant")) {
-    list.push({
-      slug: "homeassistant",
-      name: "Home Assistant configuration",
-      checked: false,
-    });
-  }
   if (folders.includes("ssl")) {
     list.push({ slug: "ssl", name: "SSL", checked: false });
   }
@@ -100,10 +93,10 @@ export class SupervisorBackupContent extends LitElement {
       this.folders = _computeFolders(
         this.backup
           ? this.backup.folders
-          : ["homeassistant", "ssl", "share", "media", "addons/local"]
+          : ["ssl", "share", "media", "addons/local"]
       );
       this.addons = _computeAddons(
-        this.backup ? this.backup.addons : this.supervisor?.supervisor.addons
+        this.backup ? this.backup.addons : this.supervisor?.addon.addons
       );
       this.backupType = this.backup?.type || "full";
       this.backupName = this.backup?.name || "";
@@ -175,23 +168,24 @@ export class SupervisorBackupContent extends LitElement {
         : ""}
       ${this.backupType === "partial"
         ? html`<div class="partial-picker">
-            <ha-formfield
-              .label=${html`<supervisor-formfield-label
-                label="Home Assistant"
-                .iconPath=${mdiHomeAssistant}
-                .version=${this.backup
-                  ? this.backup.homeassistant
-                  : this.hass.config.version}
-              >
-              </supervisor-formfield-label>`}
-            >
-              <ha-checkbox
-                .checked=${this.homeAssistant}
-                @click=${this.toggleHomeAssistant}
-              >
-              </ha-checkbox>
-            </ha-formfield>
-
+            ${this.backup?.homeassistant
+              ? html`<ha-formfield
+                  .label=${html`<supervisor-formfield-label
+                    label="Home Assistant"
+                    .iconPath=${mdiHomeAssistant}
+                    .version=${this.backup
+                      ? this.backup.homeassistant
+                      : this.hass.config.version}
+                  >
+                  </supervisor-formfield-label>`}
+                >
+                  <ha-checkbox
+                    .checked=${this.homeAssistant}
+                    @change=${this.toggleHomeAssistant}
+                  >
+                  </ha-checkbox>
+                </ha-formfield>`
+              : ""}
             ${foldersSection?.templates.length
               ? html`
                   <ha-formfield

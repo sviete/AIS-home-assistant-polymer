@@ -69,7 +69,7 @@ export class HaChooseAction extends LitElement implements ActionElement {
           </div>
         </ha-card>`
       )}
-      <ha-card>
+      <ha-card outlined>
         <div class="card-actions add-card">
           <mwc-button @click=${this._addOption}>
             ${this.hass.localize(
@@ -164,6 +164,9 @@ export class HaChooseAction extends LitElement implements ActionElement {
           position: absolute;
           right: 0;
           padding: 4px;
+        }
+        ha-form::part(root) {
+          overflow: visible;
         }
       `,
     ];

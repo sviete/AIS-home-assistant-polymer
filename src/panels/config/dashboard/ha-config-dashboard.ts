@@ -1,14 +1,9 @@
-import {
-  mdiCloudLock,
-  mdiDotsVertical,
-  mdiLightbulbOutline,
-  mdiMagnify,
-  mdiNewBox,
-} from "@mdi/js";
-import "@material/mwc-list/mwc-list-item";
 import type { ActionDetail } from "@material/mwc-list";
+import "@material/mwc-list/mwc-list-item";
+import { mdiCloudLock, mdiDotsVertical, mdiMagnify } from "@mdi/js";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
+import { HassEntities, UnsubscribeFunc } from "home-assistant-js-websocket";
 import {
   css,
   CSSResultGroup,
@@ -18,34 +13,42 @@ import {
   TemplateResult,
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
+import memoizeOne from "memoize-one";
 import { isComponentLoaded } from "../../../common/config/is_component_loaded";
-import "../../../components/ha-card";
-import "../../../components/ha-icon-next";
-import "../../../components/ha-icon-button";
-import "../../../components/ha-menu-button";
 import "../../../components/ha-button-menu";
+import "../../../components/ha-card";
+import "../../../components/ha-icon-button";
+import "../../../components/ha-icon-next";
+import "../../../components/ha-menu-button";
 import "../../../components/ha-svg-icon";
+import "../../../components/ha-tip";
 import { CloudStatus } from "../../../data/cloud";
 import {
-  refreshSupervisorAvailableUpdates,
-  SupervisorAvailableUpdates,
-} from "../../../data/supervisor/root";
+  RepairsIssue,
+  severitySort,
+  subscribeRepairsIssueRegistry,
+} from "../../../data/repairs";
+import {
+  checkForEntityUpdates,
+  filterUpdateEntitiesWithInstall,
+  UpdateEntity,
+} from "../../../data/update";
 import { showQuickBar } from "../../../dialogs/quick-bar/show-dialog-quick-bar";
 import "../../../layouts/ha-app-layout";
+import { PageNavigation } from "../../../layouts/hass-tabs-subpage";
+import { SubscribeMixin } from "../../../mixins/subscribe-mixin";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
+import { documentationUrl } from "../../../util/documentation-url";
 import "../ha-config-section";
 import { configSections, aisConfigSections } from "../ha-panel-config";
+import "../repairs/ha-config-repairs";
 import "./ha-config-navigation";
 import "./ha-config-updates";
-import { fireEvent } from "../../../common/dom/fire_event";
-import { showAlertDialog } from "../../../dialogs/generic/show-dialog-box";
-import { showToast } from "../../../util/toast";
-import { documentationUrl } from "../../../util/documentation-url";
 
-const randomTip = (hass: HomeAssistant) => {
+const randomTip = (hass: HomeAssistant, narrow: boolean) => {
   const weighted: string[] = [];
-  const tips = [
+  let tips = [
     {
       content: hass.localize(
         "ui.panel.config.tips.join",
@@ -85,13 +88,18 @@ const randomTip = (hass: HomeAssistant) => {
             rel="noreferrer"
             >Newsletter</a
           >
-          <ha-svg-icon class="new" .path=${mdiNewBox}></ha-svg-icon
-        ></span>`
+        </span>`
       ),
       weight: 2,
+      narrow: true,
     },
-    { content: hass.localize("ui.dialogs.quick-bar.key_c_hint"), weight: 1 },
+    { content: hass.localize("ui.tips.key_c_hint"), weight: 1, narrow: false },
+    { content: hass.localize("ui.tips.key_m_hint"), weight: 1, narrow: false },
   ];
+
+  if (narrow) {
+    tips = tips.filter((tip) => tip.narrow);
+  }
 
   tips.forEach((tip) => {
     for (let i = 0; i < tip.weight; i++) {
@@ -103,7 +111,7 @@ const randomTip = (hass: HomeAssistant) => {
 };
 
 @customElement("ha-config-dashboard")
-class HaConfigDashboard extends LitElement {
+class HaConfigDashboard extends SubscribeMixin(LitElement) {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property({ type: Boolean, reflect: true })
@@ -113,16 +121,58 @@ class HaConfigDashboard extends LitElement {
 
   @property() public cloudStatus?: CloudStatus;
 
-  // null means not available
-  @property() public supervisorUpdates?: SupervisorAvailableUpdates[] | null;
-
   @property() public showAdvanced!: boolean;
 
   @state() private _tip?: string;
 
-  private _notifyUpdates = false;
+  @state() private _repairsIssues: { issues: RepairsIssue[]; total: number } = {
+    issues: [],
+    total: 0,
+  };
+
+  private _pages = memoizeOne((clouStatus, isLoaded) => {
+    const pages: PageNavigation[] = [];
+    if (clouStatus && isLoaded) {
+      pages.push({
+        component: "cloud",
+        path: "/config/cloud",
+        name: "Home Assistant Cloud",
+        info: this.cloudStatus,
+        iconPath: mdiCloudLock,
+        iconColor: "#3B808E",
+      });
+    }
+    return [...pages, ...configSections.dashboard];
+  });
+
+  public hassSubscribe(): UnsubscribeFunc[] {
+    return [
+      subscribeRepairsIssueRegistry(this.hass.connection!, (repairs) => {
+        const repairsIssues = repairs.issues.filter((issue) => !issue.ignored);
+
+        this._repairsIssues = {
+          issues: repairsIssues
+            .sort((a, b) => severitySort[a.severity] - severitySort[b.severity])
+            .slice(0, repairsIssues.length === 3 ? repairsIssues.length : 2),
+          total: repairsIssues.length,
+        };
+
+        const integrations: Set<string> = new Set();
+        for (const issue of this._repairsIssues.issues) {
+          integrations.add(issue.domain);
+        }
+        this.hass.loadBackendTranslation("issues", [...integrations]);
+      }),
+    ];
+  }
 
   protected render(): TemplateResult {
+    const { updates: canInstallUpdates, total: totalUpdates } =
+      this._filterUpdateEntitiesWithInstall(this.hass.states);
+
+    const { issues: repairsIssues, total: totalRepairIssues } =
+      this._repairsIssues;
+
     return html`
       <ha-app-layout>
         <app-header fixed slot="header">
@@ -160,66 +210,82 @@ class HaConfigDashboard extends LitElement {
           .isWide=${this.isWide}
           full-width
         >
-          ${this.supervisorUpdates === undefined
-            ? // Hide everything until updates loaded
-              html``
-            : html`${this.supervisorUpdates?.length
-                  ? html`<ha-card>
+          ${repairsIssues.length || canInstallUpdates.length
+            ? html`<ha-card outlined>
+                ${repairsIssues.length
+                  ? html`
+                      <ha-config-repairs
+                        .hass=${this.hass}
+                        .narrow=${this.narrow}
+                        .total=${totalRepairIssues}
+                        .repairsIssues=${repairsIssues}
+                      ></ha-config-repairs>
+                      ${totalRepairIssues > repairsIssues.length
+                        ? html`
+                            <a class="button" href="/config/repairs">
+                              ${this.hass.localize(
+                                "ui.panel.config.repairs.more_repairs",
+                                {
+                                  count:
+                                    totalRepairIssues - repairsIssues.length,
+                                }
+                              )}
+                            </a>
+                          `
+                        : ""}
+                    `
+                  : ""}
+                ${repairsIssues.length && canInstallUpdates.length
+                  ? html`<hr />`
+                  : ""}
+                ${canInstallUpdates.length
+                  ? html`
                       <ha-config-updates
                         .hass=${this.hass}
                         .narrow=${this.narrow}
-                        .supervisorUpdates=${this.supervisorUpdates}
+                        .total=${totalUpdates}
+                        .updateEntities=${canInstallUpdates}
                       ></ha-config-updates>
-                    </ha-card>`
+                      ${totalUpdates > canInstallUpdates.length
+                        ? html`
+                            <a class="button" href="/config/updates">
+                              ${this.hass.localize(
+                                "ui.panel.config.updates.more_updates",
+                                {
+                                  count:
+                                    totalUpdates - canInstallUpdates.length,
+                                }
+                              )}
+                            </a>
+                          `
+                        : ""}
+                    `
                   : ""}
-                <ha-card>
-                  ${this.narrow
-                    ? html`<div class="title">Konfiguracja bramki AIS dom</div>`
-                    : ""}
-                  <ha-config-navigation
-                    .hass=${this.hass}
-                    .narrow=${this.narrow}
-                    .showAdvanced=${this.showAdvanced}
-                    .pages=${aisConfigSections.dashboard}
-                  ></ha-config-navigation>
-                </ha-card>
-                <ha-card>
-                  ${this.narrow && this.supervisorUpdates?.length
-                    ? html`<div class="title">
-                        ${this.hass.localize("panel.config")}
-                      </div>`
-                    : ""}
-                  ${this.cloudStatus && isComponentLoaded(this.hass, "cloud")
-                    ? html`
-                        <ha-config-navigation
-                          .hass=${this.hass}
-                          .narrow=${this.narrow}
-                          .showAdvanced=${this.showAdvanced}
-                          .pages=${[
-                            {
-                              component: "cloud",
-                              path: "/config/cloud",
-                              name: "Home Assistant Cloud",
-                              info: this.cloudStatus,
-                              iconPath: mdiCloudLock,
-                              iconColor: "#3B808E",
-                            },
-                          ]}
-                        ></ha-config-navigation>
-                      `
-                    : ""}
-                  <ha-config-navigation
-                    .hass=${this.hass}
-                    .narrow=${this.narrow}
-                    .showAdvanced=${this.showAdvanced}
-                    .pages=${configSections.dashboard}
-                  ></ha-config-navigation>
-                </ha-card>`}
-          <div class="tips">
-            <ha-svg-icon .path=${mdiLightbulbOutline}></ha-svg-icon>
-            <span class="tip-word">Tip!</span>
-            <span class="text">${this._tip}</span>
-          </div>
+              </ha-card>`
+            : ""}
+          <ha-card>
+            ${this.narrow
+              ? html`<div class="title">Konfiguracja bramki AIS dom</div>`
+              : ""}
+            <ha-config-navigation
+              .hass=${this.hass}
+              .narrow=${this.narrow}
+              .showAdvanced=${this.showAdvanced}
+              .pages=${aisConfigSections.dashboard}
+            ></ha-config-navigation>
+          </ha-card>
+          <ha-card outlined>
+            <ha-config-navigation
+              .hass=${this.hass}
+              .narrow=${this.narrow}
+              .showAdvanced=${this.showAdvanced}
+              .pages=${this._pages(
+                this.cloudStatus,
+                isComponentLoaded(this.hass, "cloud")
+              )}
+            ></ha-config-navigation>
+          </ha-card>
+          <ha-tip>${this._tip}</ha-tip>
         </ha-config-section>
       </ha-app-layout>
     `;
@@ -229,25 +295,20 @@ class HaConfigDashboard extends LitElement {
     super.updated(changedProps);
 
     if (!this._tip && changedProps.has("hass")) {
-      this._tip = randomTip(this.hass);
-    }
-
-    if (!changedProps.has("supervisorUpdates") || !this._notifyUpdates) {
-      return;
-    }
-    this._notifyUpdates = false;
-    if (this.supervisorUpdates?.length) {
-      showToast(this, {
-        message: this.hass.localize(
-          "ui.panel.config.updates.updates_refreshed"
-        ),
-      });
-    } else {
-      showToast(this, {
-        message: this.hass.localize("ui.panel.config.updates.no_new_updates"),
-      });
+      this._tip = randomTip(this.hass, this.narrow);
     }
   }
+
+  private _filterUpdateEntitiesWithInstall = memoizeOne(
+    (entities: HassEntities): { updates: UpdateEntity[]; total: number } => {
+      const updates = filterUpdateEntitiesWithInstall(entities);
+
+      return {
+        updates: updates.slice(0, updates.length === 3 ? updates.length : 2),
+        total: updates.length,
+      };
+    }
+  );
 
   private _showQuickBar(): void {
     showQuickBar(this, {
@@ -259,21 +320,7 @@ class HaConfigDashboard extends LitElement {
   private async _handleMenuAction(ev: CustomEvent<ActionDetail>) {
     switch (ev.detail.index) {
       case 0:
-        if (isComponentLoaded(this.hass, "hassio")) {
-          this._notifyUpdates = true;
-          await refreshSupervisorAvailableUpdates(this.hass);
-          fireEvent(this, "ha-refresh-supervisor");
-          return;
-        }
-        showAlertDialog(this, {
-          title: this.hass.localize(
-            "ui.panel.config.updates.check_unavailable.title"
-          ),
-          text: this.hass.localize(
-            "ui.panel.config.updates.check_unavailable.description"
-          ),
-          warning: true,
-        });
+        checkForEntityUpdates(this, this.hass);
         break;
     }
   }
@@ -300,31 +347,33 @@ class HaConfigDashboard extends LitElement {
           text-decoration: none;
           color: var(--primary-text-color);
         }
+        a.button {
+          display: inline-block;
+          color: var(--primary-text-color);
+          padding: 6px 16px;
+          margin: 8px 16px 16px 16px;
+          border-radius: 32px;
+          border: 1px solid var(--divider-color);
+        }
         .title {
           font-size: 16px;
           padding: 16px;
           padding-bottom: 0;
         }
-        :host([narrow]) ha-card {
-          border-radius: 0;
-          box-shadow: unset;
+
+        @media all and (max-width: 600px) {
+          ha-card {
+            border-width: 1px 0;
+            border-radius: 0;
+            box-shadow: unset;
+          }
+          ha-config-section {
+            margin-top: -42px;
+          }
         }
 
-        :host([narrow]) ha-config-section {
-          margin-top: -42px;
-        }
-
-        .tips {
-          text-align: center;
+        ha-tip {
           margin-bottom: max(env(safe-area-inset-bottom), 8px);
-        }
-
-        .tips .text {
-          color: var(--secondary-text-color);
-        }
-
-        .tip-word {
-          font-weight: 500;
         }
 
         .new {
@@ -333,6 +382,16 @@ class HaConfigDashboard extends LitElement {
 
         .keep-together {
           display: inline-block;
+        }
+
+        hr {
+          height: 1px;
+          background-color: var(
+            --ha-card-border-color,
+            var(--divider-color, #e0e0e0)
+          );
+          border: none;
+          margin-top: 0;
         }
       `,
     ];

@@ -7,14 +7,22 @@ import {
   DataEntryFlowStepCreateEntry,
   DataEntryFlowStepExternal,
   DataEntryFlowStepForm,
+  DataEntryFlowStepMenu,
   DataEntryFlowStepProgress,
 } from "../../data/data_entry_flow";
-import { HomeAssistant } from "../../types";
+import type { IntegrationManifest } from "../../data/integration";
+import type { SupportedBrandHandler } from "../../data/supported_brands";
+import type { HomeAssistant } from "../../types";
 
+export interface FlowHandlers {
+  integrations: string[];
+  helpers: string[];
+  supportedBrands: Record<string, SupportedBrandHandler>;
+}
 export interface FlowConfig {
   loadDevicesAndAreas: boolean;
 
-  getFlowHandlers?: (hass: HomeAssistant) => Promise<string[]>;
+  getFlowHandlers?: (hass: HomeAssistant) => Promise<FlowHandlers>;
 
   createFlow(hass: HomeAssistant, handler: string): Promise<DataEntryFlowStep>;
 
@@ -44,6 +52,12 @@ export interface FlowConfig {
   ): TemplateResult | "";
 
   renderShowFormStepFieldLabel(
+    hass: HomeAssistant,
+    step: DataEntryFlowStepForm,
+    field: HaFormSchema
+  ): string;
+
+  renderShowFormStepFieldHelper(
     hass: HomeAssistant,
     step: DataEntryFlowStepForm,
     field: HaFormSchema
@@ -80,6 +94,19 @@ export interface FlowConfig {
     step: DataEntryFlowStepProgress
   ): TemplateResult | "";
 
+  renderMenuHeader(hass: HomeAssistant, step: DataEntryFlowStepMenu): string;
+
+  renderMenuDescription(
+    hass: HomeAssistant,
+    step: DataEntryFlowStepMenu
+  ): TemplateResult | "";
+
+  renderMenuOption(
+    hass: HomeAssistant,
+    step: DataEntryFlowStepMenu,
+    option: string
+  ): string;
+
   renderLoadingDescription(
     hass: HomeAssistant,
     loadingReason: LoadingReason,
@@ -98,12 +125,15 @@ export interface DataEntryFlowDialogParams {
   startFlowHandler?: string;
   searchQuery?: string;
   continueFlowId?: string;
+  manifest?: IntegrationManifest | null;
+  domain?: string;
   dialogClosedCallback?: (params: {
     flowFinished: boolean;
     entryId?: string;
   }) => void;
   flowConfig: FlowConfig;
   showAdvanced?: boolean;
+  dialogParentElement?: HTMLElement;
 }
 
 export const loadDataEntryFlowDialog = () => import("./dialog-data-entry-flow");
@@ -119,6 +149,7 @@ export const showFlowDialog = (
     dialogParams: {
       ...dialogParams,
       flowConfig,
+      dialogParentElement: element,
     },
   });
 };

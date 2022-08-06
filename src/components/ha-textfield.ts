@@ -57,6 +57,14 @@ export class HaTextField extends TextFieldBase {
       .mdc-text-field__affix--suffix {
         padding-left: var(--text-field-suffix-padding-left, 12px);
         padding-right: var(--text-field-suffix-padding-right, 0px);
+        padding-inline-start: var(--text-field-suffix-padding-left, 12px);
+        padding-inline-end: var(--text-field-suffix-padding-right, 0px);
+        direction: var(--direction);
+      }
+      .mdc-text-field--with-leading-icon {
+        padding-inline-start: var(--text-field-suffix-padding-left, 0px);
+        padding-inline-end: var(--text-field-suffix-padding-right, 16px);
+        direction: var(--direction);
       }
 
       .mdc-text-field:not(.mdc-text-field--disabled)
@@ -68,8 +76,14 @@ export class HaTextField extends TextFieldBase {
         color: var(--secondary-text-color);
       }
 
+      .mdc-text-field__icon--leading {
+        margin-inline-start: 16px;
+        margin-inline-end: 8px;
+        direction: var(--direction);
+      }
+
       input {
-        text-align: var(--text-field-text-align);
+        text-align: var(--text-field-text-align, start);
       }
 
       /* Chrome, Safari, Edge, Opera */
@@ -91,7 +105,41 @@ export class HaTextField extends TextFieldBase {
       .mdc-text-field {
         overflow: var(--text-field-overflow);
       }
+
+      .mdc-floating-label {
+        inset-inline-start: 16px !important;
+        inset-inline-end: initial !important;
+        transform-origin: var(--float-start);
+        direction: var(--direction);
+        transform-origin: var(--float-start);
+      }
+
+      .mdc-text-field--with-leading-icon.mdc-text-field--filled
+        .mdc-floating-label {
+        max-width: calc(100% - 48px);
+        inset-inline-start: 48px !important;
+        inset-inline-end: initial !important;
+        direction: var(--direction);
+      }
+
+      .mdc-text-field__input[type="number"] {
+        direction: var(--direction);
+      }
     `,
+    // safari workaround - must be explicit
+    document.dir === "rtl"
+      ? css`
+          .mdc-text-field__affix--suffix,
+          .mdc-text-field--with-leading-icon,
+          .mdc-text-field__icon--leading,
+          .mdc-floating-label,
+          .mdc-text-field--with-leading-icon.mdc-text-field--filled
+            .mdc-floating-label,
+          .mdc-text-field__input[type="number"] {
+            direction: rtl;
+          }
+        `
+      : css``,
   ];
 }
 

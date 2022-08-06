@@ -24,13 +24,15 @@ class StateCardInputNumber extends mixinBehaviors(
           @apply --paper-font-body1;
           color: var(--primary-text-color);
 
-          text-align: right;
-          line-height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: end;
         }
         .sliderstate {
           min-width: 45px;
         }
-        ha-slider[hidden] {
+        ha-slider[hidden],
+        ha-textfield[hidden] {
           display: none !important;
         }
         ha-textfield {

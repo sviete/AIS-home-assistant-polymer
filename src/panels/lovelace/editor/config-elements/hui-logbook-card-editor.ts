@@ -17,6 +17,7 @@ import type { HomeAssistant } from "../../../../types";
 import type { LogbookCardConfig } from "../../cards/types";
 import type { LovelaceCardEditor } from "../../types";
 import { baseLovelaceCardConfig } from "../structs/base-card-struct";
+import { filterLogbookCompatibleEntities } from "../../../../data/logbook";
 
 const cardConfigStruct = assign(
   baseLovelaceCardConfig,
@@ -81,6 +82,7 @@ export class HuiLogbookCardEditor
       <ha-entities-picker
         .hass=${this.hass}
         .value=${this._entities}
+        .entityFilter=${filterLogbookCompatibleEntities}
         @value-changed=${this._entitiesChanged}
       >
       </ha-entities-picker>
@@ -96,11 +98,24 @@ export class HuiLogbookCardEditor
     fireEvent(this, "config-changed", { config: ev.detail.value });
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema) =>
-    this.hass!.localize(
-      `ui.panel.lovelace.editor.card.generic.${schema.name}`
-    ) ||
-    this.hass!.localize(`ui.panel.lovelace.editor.card.logbook.${schema.name}`);
+  private _computeLabelCallback = (schema: HaFormSchema) => {
+    if (schema.name === "theme") {
+      return `${this.hass!.localize(
+        "ui.panel.lovelace.editor.card.generic.theme"
+      )} (${this.hass!.localize(
+        "ui.panel.lovelace.editor.card.config.optional"
+      )})`;
+    }
+
+    return (
+      this.hass!.localize(
+        `ui.panel.lovelace.editor.card.generic.${schema.name}`
+      ) ||
+      this.hass!.localize(
+        `ui.panel.lovelace.editor.card.logbook.${schema.name}`
+      )
+    );
+  };
 }
 
 declare global {

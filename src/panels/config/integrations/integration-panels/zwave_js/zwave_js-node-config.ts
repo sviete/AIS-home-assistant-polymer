@@ -19,6 +19,7 @@ import { customElement, property, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
 import memoizeOne from "memoize-one";
 import { debounce } from "../../../../../common/util/debounce";
+import "../../../../../components/ha-alert";
 import "../../../../../components/ha-card";
 import "../../../../../components/ha-icon-next";
 import "../../../../../components/ha-select";
@@ -58,19 +59,6 @@ const getDevice = memoizeOne(
     entries?: DeviceRegistryEntry[]
   ): DeviceRegistryEntry | undefined =>
     entries?.find((device) => device.id === deviceId)
-);
-
-const getNodeId = memoizeOne(
-  (device: DeviceRegistryEntry): number | undefined => {
-    const identifier = device.identifiers.find(
-      (ident) => ident[0] === "zwave_js"
-    );
-    if (!identifier) {
-      return undefined;
-    }
-
-    return parseInt(identifier[1].split("-")[1]);
-  }
 );
 
 @customElement("zwave_js-node-config")
@@ -130,7 +118,7 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
       ></hass-error-screen>`;
     }
 
-    if (!this._config) {
+    if (!this._config || !this._nodeMetadata) {
       return html`<hass-loading-screen></hass-loading-screen>`;
     }
 
@@ -179,19 +167,15 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
             </p>
           </div>
           <ha-card>
-            ${this._config
-              ? html`
-                  ${Object.entries(this._config).map(
-                    ([id, item]) => html` <ha-settings-row
-                      class="config-item"
-                      .configId=${id}
-                      .narrow=${this.narrow}
-                    >
-                      ${this._generateConfigBox(id, item)}
-                    </ha-settings-row>`
-                  )}
-                `
-              : ``}
+            ${Object.entries(this._config).map(
+              ([id, item]) => html` <ha-settings-row
+                class="config-item"
+                .configId=${id}
+                .narrow=${this.narrow}
+              >
+                ${this._generateConfigBox(id, item)}
+              </ha-settings-row>`
+            )}
           </ha-card>
         </ha-config-section>
       </hass-tabs-subpage>
@@ -206,7 +190,9 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
         <br />
         <span>${item.property}</span>
       </span>
-      <span slot="heading">${item.metadata.label}</span>
+      <span slot="heading" .title=${item.metadata.label}>
+        ${item.metadata.label}
+      </span>
       <span slot="description">
         ${item.metadata.description}
         ${item.metadata.description !== null && !item.metadata.writeable
@@ -372,12 +358,10 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
   }
 
   private async _updateConfigParameter(target, value) {
-    const nodeId = getNodeId(this._device!);
     try {
       const result = await setZwaveNodeConfigParameter(
         this.hass,
-        this.configEntryId!,
-        nodeId!,
+        this._device!.id,
         target.property,
         value,
         target.propertyKey ? target.propertyKey : undefined
@@ -419,15 +403,9 @@ class ZWaveJSNodeConfig extends SubscribeMixin(LitElement) {
       return;
     }
 
-    const nodeId = getNodeId(device);
-    if (!nodeId) {
-      this._error = "device_not_found";
-      return;
-    }
-
     [this._nodeMetadata, this._config] = await Promise.all([
-      fetchZwaveNodeMetadata(this.hass, this.configEntryId, nodeId!),
-      fetchZwaveNodeConfigParameters(this.hass, this.configEntryId, nodeId!),
+      fetchZwaveNodeMetadata(this.hass, device.id),
+      fetchZwaveNodeConfigParameters(this.hass, device.id),
     ]);
   }
 

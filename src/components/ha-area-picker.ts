@@ -28,8 +28,8 @@ import { SubscribeMixin } from "../mixins/subscribe-mixin";
 import { PolymerChangedEvent } from "../polymer-types";
 import { HomeAssistant } from "../types";
 import type { HaDevicePickerDeviceFilterFunc } from "./device/ha-device-picker";
-import type { HaComboBox } from "./ha-combo-box";
 import "./ha-combo-box";
+import type { HaComboBox } from "./ha-combo-box";
 import "./ha-icon-button";
 import "./ha-svg-icon";
 
@@ -48,6 +48,8 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
   @property() public label?: string;
 
   @property() public value?: string;
+
+  @property() public helper?: string;
 
   @property() public placeholder?: string;
 
@@ -83,6 +85,8 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
   @property() public entityFilter?: (entity: EntityRegistryEntry) => boolean;
 
   @property({ type: Boolean }) public disabled?: boolean;
+
+  @property({ type: Boolean }) public required?: boolean;
 
   @state() private _areas?: AreaRegistryEntry[];
 
@@ -310,11 +314,13 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
     return html`
       <ha-combo-box
         .hass=${this.hass}
+        .helper=${this.helper}
         item-value-path="area_id"
         item-id-path="area_id"
         item-label-path="name"
         .value=${this.value}
         .disabled=${this.disabled}
+        .required=${this.required}
         .label=${this.label === undefined && this.hass
           ? this.hass.localize("ui.components.area-picker.area")
           : this.label}
@@ -403,7 +409,7 @@ export class HaAreaPicker extends SubscribeMixin(LitElement) {
             name,
           });
           this._areas = [...this._areas!, area];
-          (this.comboBox as any).items = this._getAreas(
+          (this.comboBox as any).filteredItems = this._getAreas(
             this._areas!,
             this._devices!,
             this._entities!,

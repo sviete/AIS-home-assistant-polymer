@@ -4,7 +4,7 @@ import {
   addMonths,
   differenceInHours,
   endOfDay,
-} from "date-fns";
+} from "date-fns/esm";
 import { HassEntity } from "home-assistant-js-websocket";
 import { StatisticValue } from "../../../src/data/history";
 import { MockHomeAssistant } from "../../../src/fake_data/provide_hass";
@@ -466,6 +466,7 @@ export const mockHistory = (mockHass: MockHomeAssistant) => {
       return results;
     }
   );
+  mockHass.mockWS("recorder/get_statistics_metadata", () => []);
   mockHass.mockWS("history/list_statistic_ids", () => []);
   mockHass.mockWS(
     "history/statistics_during_period",

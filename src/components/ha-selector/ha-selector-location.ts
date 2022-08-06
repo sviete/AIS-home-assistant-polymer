@@ -1,4 +1,4 @@
-import { html, LitElement } from "lit";
+import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { fireEvent } from "../../common/dom/fire_event";
@@ -6,7 +6,6 @@ import type {
   LocationSelector,
   LocationSelectorValue,
 } from "../../data/selector";
-import "../../panels/lovelace/components/hui-theme-select-editor";
 import type { HomeAssistant } from "../../types";
 import type { MarkerLocation } from "../map/ha-locations-editor";
 import "../map/ha-locations-editor";
@@ -21,6 +20,8 @@ export class HaLocationSelector extends LitElement {
 
   @property() public label?: string;
 
+  @property() public helper?: string;
+
   @property({ type: Boolean, reflect: true }) public disabled = false;
 
   protected render() {
@@ -28,6 +29,7 @@ export class HaLocationSelector extends LitElement {
       <ha-locations-editor
         class="flex"
         .hass=${this.hass}
+        .helper=${this.helper}
         .locations=${this._location(this.selector, this.value)}
         @location-updated=${this._locationChanged}
         @radius-updated=${this._radiusChanged}
@@ -52,7 +54,10 @@ export class HaLocationSelector extends LitElement {
           longitude: value?.longitude || this.hass.config.longitude,
           radius: selector.location.radius ? value?.radius || 1000 : undefined,
           radius_color: zoneRadiusColor,
-          icon: selector.location.icon,
+          icon:
+            selector.location.icon || selector.location.radius
+              ? "mdi:map-marker-radius"
+              : "mdi:map-marker",
           location_editable: true,
           radius_editable: true,
         },
@@ -71,6 +76,13 @@ export class HaLocationSelector extends LitElement {
     const radius = ev.detail.radius;
     fireEvent(this, "value-changed", { value: { ...this.value, radius } });
   }
+
+  static styles = css`
+    :host {
+      display: block;
+      height: 400px;
+    }
+  `;
 }
 
 declare global {

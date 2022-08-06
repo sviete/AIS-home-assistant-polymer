@@ -302,12 +302,22 @@ class DialogMediaManage extends LitElement {
           --mdc-theme-primary: var(--mdc-theme-on-primary);
         }
 
+        mwc-list {
+          direction: ltr;
+        }
+
         .danger {
           --mdc-theme-primary: var(--error-color);
         }
 
         ha-svg-icon[slot="icon"] {
           vertical-align: middle;
+        }
+
+        ha-svg-icon[slot="icon"] {
+          margin-inline-start: 0px !important;
+          margin-inline-end: 8px !important;
+          direction: var(--direction);
         }
 
         .refresh {

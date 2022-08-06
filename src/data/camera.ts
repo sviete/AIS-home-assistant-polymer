@@ -2,7 +2,7 @@ import {
   HassEntityAttributeBase,
   HassEntityBase,
 } from "home-assistant-js-websocket";
-import { timeCachePromiseFunc } from "../common/util/time-cache-function-promise";
+import { timeCacheEntityPromiseFunc } from "../common/util/time-cache-entity-promise-func";
 import { HomeAssistant } from "../types";
 import { getSignedPath } from "./auth";
 
@@ -41,6 +41,12 @@ export interface WebRtcAnswer {
   answer: string;
 }
 
+export const cameraUrlWithWidthHeight = (
+  base_url: string,
+  width: number,
+  height: number
+) => `${base_url}&width=${width}&height=${height}`;
+
 export const computeMJPEGStreamUrl = (entity: CameraEntity) =>
   `/api/camera_proxy_stream/${entity.entity_id}?token=${entity.attributes.access_token}`;
 
@@ -50,14 +56,14 @@ export const fetchThumbnailUrlWithCache = async (
   width: number,
   height: number
 ) => {
-  const base_url = await timeCachePromiseFunc(
+  const base_url = await timeCacheEntityPromiseFunc(
     "_cameraTmbUrl",
     9000,
     fetchThumbnailUrl,
     hass,
     entityId
   );
-  return `${base_url}&width=${width}&height=${height}`;
+  return cameraUrlWithWidthHeight(base_url, width, height);
 };
 
 export const fetchThumbnailUrl = async (

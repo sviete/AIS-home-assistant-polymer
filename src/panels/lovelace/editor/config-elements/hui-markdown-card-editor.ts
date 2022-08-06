@@ -20,7 +20,7 @@ const cardConfigStruct = assign(
 
 const SCHEMA: HaFormSchema[] = [
   { name: "title", selector: { text: {} } },
-  { name: "content", required: true, selector: { text: { multiline: true } } },
+  { name: "content", required: true, selector: { template: {} } },
   { name: "theme", selector: { theme: {} } },
 ];
 
@@ -58,13 +58,23 @@ export class HuiMarkdownCardEditor
     fireEvent(this, "config-changed", { config: ev.detail.value });
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema) =>
-    this.hass!.localize(
-      `ui.panel.lovelace.editor.card.generic.${schema.name}`
-    ) ||
-    this.hass!.localize(
-      `ui.panel.lovelace.editor.card.markdown.${schema.name}`
+  private _computeLabelCallback = (schema: HaFormSchema) => {
+    if (schema.name === "theme") {
+      return `${this.hass!.localize(
+        "ui.panel.lovelace.editor.card.generic.theme"
+      )} (${this.hass!.localize(
+        "ui.panel.lovelace.editor.card.config.optional"
+      )})`;
+    }
+    return (
+      this.hass!.localize(
+        `ui.panel.lovelace.editor.card.generic.${schema.name}`
+      ) ||
+      this.hass!.localize(
+        `ui.panel.lovelace.editor.card.markdown.${schema.name}`
+      )
     );
+  };
 }
 
 declare global {

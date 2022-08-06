@@ -75,7 +75,7 @@ export class SystemLogCard extends LitElement {
       : [];
     return html`
       <div class="system-log-intro">
-        <ha-card>
+        <ha-card outlined>
           ${this._items === undefined
             ? html`
                 <div class="loading-container">
@@ -85,7 +85,7 @@ export class SystemLogCard extends LitElement {
             : html`
                 ${this._items.length === 0
                   ? html`
-                      <div class="card-content">
+                      <div class="card-content empty-content">
                         ${this.hass.localize("ui.panel.config.logs.no_issues")}
                       </div>
                     `
@@ -102,7 +102,7 @@ export class SystemLogCard extends LitElement {
                         <paper-item @click=${this._openLog} .logItem=${item}>
                           <paper-item-body two-line>
                             <div class="row">${item.message[0]}</div>
-                            <div secondary>
+                            <div class="row-secondary" secondary>
                               ${this._timestamp(item)} –
                               ${html`(<span class=${item.level.toLowerCase()}
                                   >${this.hass.localize(
@@ -203,6 +203,16 @@ export class SystemLogCard extends LitElement {
 
       .warning {
         color: var(--warning-color);
+      }
+
+      .card-actions,
+      .empty-content {
+        direction: var(--direction);
+      }
+
+      .row-secondary {
+        direction: var(--direction);
+        text-align: left;
       }
     `;
   }

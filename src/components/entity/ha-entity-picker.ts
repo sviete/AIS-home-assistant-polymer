@@ -7,6 +7,7 @@ import memoizeOne from "memoize-one";
 import { fireEvent } from "../../common/dom/fire_event";
 import { computeDomain } from "../../common/entity/compute_domain";
 import { computeStateName } from "../../common/entity/compute_state_name";
+import { caseInsensitiveStringCompare } from "../../common/string/compare";
 import { PolymerChangedEvent } from "../../polymer-types";
 import { HomeAssistant } from "../../types";
 import "../ha-combo-box";
@@ -15,18 +16,22 @@ import "../ha-icon-button";
 import "../ha-svg-icon";
 import "./state-badge";
 
-export type HaEntityPickerEntityFilterFunc = (entityId: HassEntity) => boolean;
+interface HassEntityWithCachedName extends HassEntity {
+  friendly_name: string;
+}
+
+export type HaEntityPickerEntityFilterFunc = (entity: HassEntity) => boolean;
 
 // eslint-disable-next-line lit/prefer-static-styles
-const rowRenderer: ComboBoxLitRenderer<HassEntity & { friendly_name: string }> =
-  (item) =>
-    html`<mwc-list-item graphic="avatar" .twoline=${!!item.entity_id}>
-      ${item.state
-        ? html`<state-badge slot="graphic" .stateObj=${item}></state-badge>`
-        : ""}
-      <span>${item.friendly_name}</span>
-      <span slot="secondary">${item.entity_id}</span>
-    </mwc-list-item>`;
+const rowRenderer: ComboBoxLitRenderer<HassEntityWithCachedName> = (item) =>
+  html`<mwc-list-item graphic="avatar" .twoline=${!!item.entity_id}>
+    ${item.state
+      ? html`<state-badge slot="graphic" .stateObj=${item}></state-badge>`
+      : ""}
+    <span>${item.friendly_name}</span>
+    <span slot="secondary">${item.entity_id}</span>
+  </mwc-list-item>`;
+
 @customElement("ha-entity-picker")
 export class HaEntityPicker extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
@@ -35,12 +40,16 @@ export class HaEntityPicker extends LitElement {
 
   @property({ type: Boolean }) public disabled?: boolean;
 
+  @property({ type: Boolean }) public required?: boolean;
+
   @property({ type: Boolean, attribute: "allow-custom-entity" })
   public allowCustomEntity;
 
   @property() public label?: string;
 
   @property() public value?: string;
+
+  @property() public helper?: string;
 
   /**
    * Show entities from specific domains.
@@ -74,6 +83,22 @@ export class HaEntityPicker extends LitElement {
   @property({ type: Array, attribute: "include-unit-of-measurement" })
   public includeUnitOfMeasurement?: string[];
 
+  /**
+   * List of allowed entities to show. Will ignore all other filters.
+   * @type {Array}
+   * @attr include-entities
+   */
+  @property({ type: Array, attribute: "include-entities" })
+  public includeEntities?: string[];
+
+  /**
+   * List of entities to be excluded.
+   * @type {Array}
+   * @attr exclude-entities
+   */
+  @property({ type: Array, attribute: "exclude-entities" })
+  public excludeEntities?: string[];
+
   @property() public entityFilter?: HaEntityPickerEntityFilterFunc;
 
   @property({ type: Boolean }) public hideClearIcon = false;
@@ -96,7 +121,7 @@ export class HaEntityPicker extends LitElement {
 
   private _initedStates = false;
 
-  private _states: HassEntity[] = [];
+  private _states: HassEntityWithCachedName[] = [];
 
   private _getStates = memoizeOne(
     (
@@ -106,9 +131,11 @@ export class HaEntityPicker extends LitElement {
       excludeDomains: this["excludeDomains"],
       entityFilter: this["entityFilter"],
       includeDeviceClasses: this["includeDeviceClasses"],
-      includeUnitOfMeasurement: this["includeUnitOfMeasurement"]
-    ) => {
-      let states: HassEntity[] = [];
+      includeUnitOfMeasurement: this["includeUnitOfMeasurement"],
+      includeEntities: this["includeEntities"],
+      excludeEntities: this["excludeEntities"]
+    ): HassEntityWithCachedName[] => {
+      let states: HassEntityWithCachedName[] = [];
 
       if (!hass) {
         return [];
@@ -122,7 +149,7 @@ export class HaEntityPicker extends LitElement {
             state: "",
             last_changed: "",
             last_updated: "",
-            context: { id: "", user_id: null },
+            context: { id: "", user_id: null, parent_id: null },
             friendly_name: this.hass!.localize(
               "ui.components.entity.entity-picker.no_entities"
             ),
@@ -134,6 +161,30 @@ export class HaEntityPicker extends LitElement {
             },
           },
         ];
+      }
+
+      if (includeEntities) {
+        entityIds = entityIds.filter((entityId) =>
+          this.includeEntities!.includes(entityId)
+        );
+
+        return entityIds
+          .map((key) => ({
+            ...hass!.states[key],
+            friendly_name: computeStateName(hass!.states[key]) || key,
+          }))
+          .sort((entityA, entityB) =>
+            caseInsensitiveStringCompare(
+              entityA.friendly_name,
+              entityB.friendly_name
+            )
+          );
+      }
+
+      if (excludeEntities) {
+        entityIds = entityIds.filter(
+          (entityId) => !excludeEntities!.includes(entityId)
+        );
       }
 
       if (includeDomains) {
@@ -148,10 +199,17 @@ export class HaEntityPicker extends LitElement {
         );
       }
 
-      states = entityIds.sort().map((key) => ({
-        ...hass!.states[key],
-        friendly_name: computeStateName(hass!.states[key]) || key,
-      }));
+      states = entityIds
+        .map((key) => ({
+          ...hass!.states[key],
+          friendly_name: computeStateName(hass!.states[key]) || key,
+        }))
+        .sort((entityA, entityB) =>
+          caseInsensitiveStringCompare(
+            entityA.friendly_name,
+            entityB.friendly_name
+          )
+        );
 
       if (includeDeviceClasses) {
         states = states.filter(
@@ -190,7 +248,7 @@ export class HaEntityPicker extends LitElement {
             state: "",
             last_changed: "",
             last_updated: "",
-            context: { id: "", user_id: null },
+            context: { id: "", user_id: null, parent_id: null },
             friendly_name: this.hass!.localize(
               "ui.components.entity.entity-picker.no_match"
             ),
@@ -228,7 +286,9 @@ export class HaEntityPicker extends LitElement {
         this.excludeDomains,
         this.entityFilter,
         this.includeDeviceClasses,
-        this.includeUnitOfMeasurement
+        this.includeUnitOfMeasurement,
+        this.includeEntities,
+        this.excludeEntities
       );
       if (this._initedStates) {
         (this.comboBox as any).filteredItems = this._states;
@@ -247,9 +307,11 @@ export class HaEntityPicker extends LitElement {
         .label=${this.label === undefined
           ? this.hass.localize("ui.components.entity.entity-picker.entity")
           : this.label}
+        .helper=${this.helper}
         .allowCustomValue=${this.allowCustomEntity}
         .filteredItems=${this._states}
         .renderer=${rowRenderer}
+        .required=${this.required}
         @opened-changed=${this._openedChanged}
         @value-changed=${this._valueChanged}
         @filter-changed=${this._filterChanged}

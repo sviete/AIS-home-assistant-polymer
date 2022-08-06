@@ -287,9 +287,7 @@ export class HaServiceControl extends LitElement {
       ${shouldRenderServiceDataYaml
         ? html`<ha-yaml-editor
             .hass=${this.hass}
-            .label=${this.hass.localize(
-              "ui.components.service-control.service_data"
-            )}
+            .label=${this.hass.localize("ui.components.service-control.data")}
             .name=${"data"}
             .defaultValue=${this._value?.data}
             @value-changed=${this._dataChanged}
@@ -471,6 +469,8 @@ export class HaServiceControl extends LitElement {
       }
       ha-settings-row {
         --paper-time-input-justify-content: flex-end;
+        --settings-row-content-width: 100%;
+        --settings-row-prefix-display: contents;
         border-top: var(
           --service-control-items-border-top,
           1px solid var(--divider-color)
@@ -488,9 +488,6 @@ export class HaServiceControl extends LitElement {
       p {
         margin: var(--service-control-padding, 0 16px);
         padding: 16px 0;
-      }
-      :host(:not([narrow])) ha-settings-row ha-selector {
-        width: 60%;
       }
       .checkbox-spacer {
         width: 32px;

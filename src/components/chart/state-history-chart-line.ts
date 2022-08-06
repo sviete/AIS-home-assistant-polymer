@@ -8,7 +8,7 @@ import {
 } from "../../common/number/format_number";
 import { LineChartEntity, LineChartState } from "../../data/history";
 import { HomeAssistant } from "../../types";
-import "./ha-chart-base";
+import { MIN_TIME_BETWEEN_UPDATES } from "./ha-chart-base";
 
 const safeParseFloat = (value) => {
   const parsed = parseFloat(value);
@@ -28,11 +28,13 @@ class StateHistoryChartLine extends LitElement {
 
   @property({ type: Boolean }) public isSingleDevice = false;
 
-  @property({ attribute: false }) public endTime?: Date;
+  @property({ attribute: false }) public endTime!: Date;
 
   @state() private _chartData?: ChartData<"line">;
 
-  @state() private _chartOptions?: ChartOptions<"line">;
+  @state() private _chartOptions?: ChartOptions;
+
+  private _chartTime: Date = new Date();
 
   protected render() {
     return html`
@@ -57,6 +59,7 @@ class StateHistoryChartLine extends LitElement {
                 locale: this.hass.locale,
               },
             },
+            suggestedMax: this.endTime,
             ticks: {
               maxRotation: 0,
               sampleSize: 5,
@@ -120,7 +123,13 @@ class StateHistoryChartLine extends LitElement {
         locale: numberFormatToLocale(this.hass.locale),
       };
     }
-    if (changedProps.has("data")) {
+    if (
+      changedProps.has("data") ||
+      this._chartTime <
+        new Date(this.endTime.getTime() - MIN_TIME_BETWEEN_UPDATES)
+    ) {
+      // If the line is more than 5 minutes old, re-gen it
+      // so the X axis grows even if there is no new data
       this._generateData();
     }
   }
@@ -130,28 +139,12 @@ class StateHistoryChartLine extends LitElement {
     const computedStyles = getComputedStyle(this);
     const entityStates = this.data;
     const datasets: ChartDataset<"line">[] = [];
-    let endTime: Date;
-
     if (entityStates.length === 0) {
       return;
     }
 
-    endTime =
-      this.endTime ||
-      // Get the highest date from the last date of each device
-      new Date(
-        Math.max(
-          ...entityStates.map((devSts) =>
-            new Date(
-              devSts.states[devSts.states.length - 1].last_changed
-            ).getTime()
-          )
-        )
-      );
-    if (endTime > new Date()) {
-      endTime = new Date();
-    }
-
+    this._chartTime = new Date();
+    const endTime = this.endTime;
     const names = this.names || {};
     entityStates.forEach((states) => {
       const domain = states.domain;

@@ -28,6 +28,8 @@ export class HaFormString extends LitElement implements HaFormElement {
 
   @property() public label!: string;
 
+  @property() public helper?: string;
+
   @property({ type: Boolean }) public disabled = false;
 
   @state() private _unmaskedPassword = false;
@@ -53,6 +55,8 @@ export class HaFormString extends LitElement implements HaFormElement {
           : "password"}
         .label=${this.label}
         .value=${this.data || ""}
+        .helper=${this.helper}
+        helperPersistent
         .disabled=${this.disabled}
         .required=${this.schema.required}
         .autoValidate=${this.schema.required}
@@ -127,6 +131,12 @@ export class HaFormString extends LitElement implements HaFormElement {
         right: 12px;
         --mdc-icon-button-size: 24px;
         color: var(--secondary-text-color);
+      }
+
+      ha-icon-button {
+        inset-inline-start: initial;
+        inset-inline-end: 12px;
+        direction: var(--direction);
       }
     `;
   }

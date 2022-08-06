@@ -14,6 +14,12 @@ class HaEntitiesPickerLight extends LitElement {
 
   @property({ type: Array }) public value?: string[];
 
+  @property({ type: Boolean }) public disabled?: boolean;
+
+  @property({ type: Boolean }) public required?: boolean;
+
+  @property() public helper?: string;
+
   /**
    * Show entities from specific domains.
    * @type {string}
@@ -46,10 +52,28 @@ class HaEntitiesPickerLight extends LitElement {
   @property({ type: Array, attribute: "include-unit-of-measurement" })
   public includeUnitOfMeasurement?: string[];
 
+  /**
+   * List of allowed entities to show. Will ignore all other filters.
+   * @type {Array}
+   * @attr include-entities
+   */
+  @property({ type: Array, attribute: "include-entities" })
+  public includeEntities?: string[];
+
+  /**
+   * List of entities to be excluded.
+   * @type {Array}
+   * @attr exclude-entities
+   */
+  @property({ type: Array, attribute: "exclude-entities" })
+  public excludeEntities?: string[];
+
   @property({ attribute: "picked-entity-label" })
   public pickedEntityLabel?: string;
 
   @property({ attribute: "pick-entity-label" }) public pickEntityLabel?: string;
+
+  @property() public entityFilter?: HaEntityPickerEntityFilterFunc;
 
   protected render(): TemplateResult {
     if (!this.hass) {
@@ -67,11 +91,14 @@ class HaEntitiesPickerLight extends LitElement {
               .hass=${this.hass}
               .includeDomains=${this.includeDomains}
               .excludeDomains=${this.excludeDomains}
+              .includeEntities=${this.includeEntities}
+              .excludeEntities=${this.excludeEntities}
               .includeDeviceClasses=${this.includeDeviceClasses}
               .includeUnitOfMeasurement=${this.includeUnitOfMeasurement}
               .entityFilter=${this._entityFilter}
               .value=${entityId}
               .label=${this.pickedEntityLabel}
+              .disabled=${this.disabled}
               @value-changed=${this._entityChanged}
             ></ha-entity-picker>
           </div>
@@ -79,13 +106,19 @@ class HaEntitiesPickerLight extends LitElement {
       )}
       <div>
         <ha-entity-picker
+          allow-custom-entity
           .hass=${this.hass}
           .includeDomains=${this.includeDomains}
           .excludeDomains=${this.excludeDomains}
+          .includeEntities=${this.includeEntities}
+          .excludeEntities=${this.excludeEntities}
           .includeDeviceClasses=${this.includeDeviceClasses}
           .includeUnitOfMeasurement=${this.includeUnitOfMeasurement}
           .entityFilter=${this._entityFilter}
           .label=${this.pickEntityLabel}
+          .helper=${this.helper}
+          .disabled=${this.disabled}
+          .required=${this.required && !currentEntities.length}
           @value-changed=${this._addEntity}
         ></ha-entity-picker>
       </div>
@@ -94,7 +127,9 @@ class HaEntitiesPickerLight extends LitElement {
 
   private _entityFilter: HaEntityPickerEntityFilterFunc = (
     stateObj: HassEntity
-  ) => !this.value || !this.value.includes(stateObj.entity_id);
+  ) =>
+    (!this.value || !this.value.includes(stateObj.entity_id)) &&
+    (!this.entityFilter || this.entityFilter(stateObj));
 
   private get _currentEntities() {
     return this.value || [];
