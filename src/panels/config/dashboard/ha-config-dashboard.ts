@@ -41,7 +41,7 @@ import { haStyle } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
 import { documentationUrl } from "../../../util/documentation-url";
 import "../ha-config-section";
-import { configSections, aisConfigSections } from "../ha-panel-config";
+import { configSections } from "../ha-panel-config";
 import "../repairs/ha-config-repairs";
 import "./ha-config-navigation";
 import "./ha-config-updates";
@@ -263,17 +263,6 @@ class HaConfigDashboard extends SubscribeMixin(LitElement) {
                   : ""}
               </ha-card>`
             : ""}
-          <ha-card>
-            ${this.narrow
-              ? html`<div class="title">Konfiguracja bramki AIS dom</div>`
-              : ""}
-            <ha-config-navigation
-              .hass=${this.hass}
-              .narrow=${this.narrow}
-              .showAdvanced=${this.showAdvanced}
-              .pages=${aisConfigSections.dashboard}
-            ></ha-config-navigation>
-          </ha-card>
           <ha-card outlined>
             <ha-config-navigation
               .hass=${this.hass}

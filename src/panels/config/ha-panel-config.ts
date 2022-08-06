@@ -406,10 +406,6 @@ class HaPanelConfig extends HassRouterPage {
         tag: "ha-config-cloud",
         load: () => import("./cloud/ha-config-cloud"),
       },
-      core: {
-        tag: "ha-config-core",
-        load: () => import("./core/ha-config-core"),
-      },
       ais_dom: {
         tag: "ha-config-ais-dom-dashboard",
         load: () => import("./ais_dom/ha-config-ais-dom-dashboard"),
