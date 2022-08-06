@@ -3,7 +3,7 @@ requires = ["setuptools~=62.3", "wheel~=0.37.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name         = "home-assistant-frontend"
+name         = "ais-dom-frontend"
 version      = "20220802.0"
 license      = {text = "Apache-2.0"}
 description  = "The Home Assistant frontend"

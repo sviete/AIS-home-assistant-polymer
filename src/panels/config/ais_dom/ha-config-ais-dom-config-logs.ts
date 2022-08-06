@@ -17,11 +17,9 @@ import { HomeAssistant } from "../../../types";
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
 import "./ha-config-ais-dom-dashboard";
-import "../../../components/ha-paper-dropdown-menu";
 import "../../../components/ha-switch";
-import "@polymer/paper-dropdown-menu/paper-dropdown-menu";
-import "@polymer/paper-item/paper-item";
-import "@polymer/paper-listbox/paper-listbox";
+import "@material/mwc-select";
+import "@material/mwc-list/mwc-list-item";
 import "../../../components/buttons/ha-call-service-button";
 import "../../../components/ha-icon";
 import "../../../components/ha-circular-progress";
@@ -314,34 +312,29 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                     Wybór silnika bazy danych:
                     <br />
                     <ha-icon icon="mdi:database"></ha-icon>
-                    <ha-paper-dropdown-menu
+
+                    <mwc-select
                       label-float="Silnik bazy danych"
-                      dynamic-align=""
                       label="Silnik bazy danych"
+                      .value=${this.dbEngine}
+                      @selected=${this.dbEngineChanged}
                     >
-                      <paper-listbox
-                        attr-for-selected="item-name"
-                        slot="dropdown-content"
-                        selected=${this.dbEngine}
-                        @iron-select=${this.dbEngineChanged}
+                      <mwc-list-item value="-">-</mwc-list-item>
+                      <mwc-list-item value="SQLite (memory)"
+                        >SQLite (memory)</mwc-list-item
                       >
-                        <paper-item item-name="-">-</paper-item>
-                        <paper-item item-name="SQLite (memory)"
-                          >SQLite (memory)</paper-item
-                        >
-                        <paper-item item-name="SQLite (file)"
-                          >SQLite (file)</paper-item
-                        >
-                        <paper-item item-name="PostgreSQL (local)"
-                          >PostgreSQL (local)</paper-item
-                        >
-                        <paper-item item-name="MariaDB">MariaDB</paper-item>
-                        <paper-item item-name="MySQL">MySQL</paper-item>
-                        <paper-item item-name="PostgreSQL"
-                          >PostgreSQL</paper-item
-                        >
-                      </paper-listbox>
-                    </ha-paper-dropdown-menu>
+                      <mwc-list-item value="SQLite (file)"
+                        >SQLite (file)</mwc-list-item
+                      >
+                      <mwc-list-item value="PostgreSQL (local)"
+                        >PostgreSQL (local)</mwc-list-item
+                      >
+                      <mwc-list-item value="MariaDB">MariaDB</mwc-list-item>
+                      <mwc-list-item value="MySQL">MySQL</mwc-list-item>
+                      <mwc-list-item value="PostgreSQL"
+                        >PostgreSQL</mwc-list-item
+                      >
+                    </mwc-select>
                   </div>
 
                   <!-- MEMORY -->
@@ -390,33 +383,23 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                         <div class="card-content">
                           Wybór dysku do zapisu bazy danych: <br />
                           <ha-icon icon="mdi:usb-flash-drive"></ha-icon>
-                          <ha-paper-dropdown-menu
-                            label-float="Wybrany dysk"
-                            dynamic-align=""
-                            label="Dyski wymienne"
+                          <mwc-select
+                            label-float="Dysk wymienny"
+                            label="Dysk wymienny"
+                            .value=${this.dbDrive}
+                            @selected=${this.dbDriveChanged}
                           >
-                            <paper-listbox
-                              slot="dropdown-content"
-                              attr-for-selected="item-name"
-                              .selected=${this.dbDrive}
-                              @iron-select=${this.dbDriveChanged}
-                            >
-                              ${this.hass.states[
-                                "input_select.ais_usb_flash_drives"
-                              ].attributes.options!.map(
-                                (item: string) =>
-                                  html`
-                                    <paper-item
-                                      .itemName=${item}
-                                      .itemValue=${item}
-                                    >
-                                      ${item}
-                                    </paper-item>
-                                  `
-                              )}
-                            </paper-listbox>
-                          </ha-paper-dropdown-menu>
-                          <br /><br />
+                            ${this.hass.states[
+                              "input_select.ais_usb_flash_drives"
+                            ].attributes.options!.map(
+                              (item: string) =>
+                                html`
+                                  <mwc-list-item .value=${item}>
+                                    ${item}
+                                  </mwc-list-item>
+                                `
+                            )} </mwc-select
+                          >> <br /><br />
                         </div>
                       `
                     : html``}
@@ -570,7 +553,8 @@ class HaConfigAisDomConfiglLogs extends LitElement {
             </div>
             <div class="card-content">
               <ha-icon icon="mdi:bug-check"></ha-icon>
-              <ha-paper-dropdown-menu
+
+              <!-- <ha-paper-dropdown-menu
                 label-float="Poziom logowania"
                 dynamic-align=""
                 label="Poziomy logowania"
@@ -580,21 +564,26 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                   attr-for-selected="item-name"
                   .selected=${this.logLevel}
                   @iron-select=${this.logLevelChanged}
-                >
-                  <paper-item item-name="critical">critical</paper-item>
-                  <paper-item item-name="error">error</paper-item>
-                  <paper-item item-name="warning">warning</paper-item>
-                  <paper-item item-name="info">info</paper-item>
-                  <paper-item item-name="debug">debug</paper-item>
-                </paper-listbox>
-              </ha-paper-dropdown-menu>
+                > -->
+              <mwc-select
+                label-float="Poziomy logowania"
+                label="Poziomy logowania"
+                .value=${this.logLevel}
+                @selected=${this.logLevelChanged}
+              >
+                <mwc-list-item value="critical">critical</mwc-list-item>
+                <mwc-list-item value="error">error</mwc-list-item>
+                <mwc-list-item value="warning">warning</mwc-list-item>
+                <mwc-list-item value="info">info</mwc-list-item>
+                <mwc-list-item value="debug">debug</mwc-list-item>
+              </mwc-select>
               <br />
 
               Jeśli chcesz zapisywać logi trwale do pliku, wybierz dysk wymienny
               (USB, SD card) na którym będą zapisywane logi: <br />
               <ha-icon icon="mdi:usb-flash-drive"></ha-icon>
 
-              <ha-paper-dropdown-menu
+              <!-- <ha-paper-dropdown-menu
                 label-float="Wybrany dysk"
                 dynamic-align=""
                 label="Dyski wymienne"
@@ -604,19 +593,22 @@ class HaConfigAisDomConfiglLogs extends LitElement {
                   attr-for-selected="item-name"
                   .selected=${this.logDrive}
                   @iron-select=${this.logDriveChanged}
-                >
-                  ${this.hass.states[
-                    "input_select.ais_usb_flash_drives"
-                  ].attributes.options!.map(
-                    (item: string) =>
-                      html`
-                        <paper-item .itemName=${item} .itemValue=${item}>
-                          ${item}
-                        </paper-item>
-                      `
-                  )}
-                </paper-listbox>
-              </ha-paper-dropdown-menu>
+                > -->
+              <mwc-select
+                label-float="Dysk wymienny"
+                label="Dysk wymienny"
+                .value=${this.logDrive}
+                @selected=${this.logDriveChanged}
+              >
+                ${this.hass.states[
+                  "input_select.ais_usb_flash_drives"
+                ].attributes.options!.map(
+                  (item: string) =>
+                    html`
+                      <mwc-list-item .value=${item}> ${item}</mwc-list-item>
+                    `
+                )}
+              </mwc-select>
 
               <br /><br />
               ${!this.isNotSeleced(this.logDrive)
@@ -668,7 +660,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
   }
 
   private logDriveChanged(ev) {
-    const newValue = ev.target!.selected;
+    const newValue = ev.target!.selected.value;
     if (newValue !== this.logDrive) {
       this.logDrive = newValue;
       if (!this.isNotSeleced(this.logDrive)) {
@@ -682,7 +674,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
   }
 
   private logLevelChanged(ev) {
-    const newValue = ev.target!.selected;
+    const newValue = ev.target!.selected.value;
     if (newValue !== this.logLevel) {
       this.logLevel = newValue;
       this.logModeInfo = "Poziom logowania: " + this.logLevel;
@@ -753,7 +745,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
   }
 
   private dbEngineChanged(ev) {
-    const newVal = ev.target!.selected;
+    const newVal = ev.target!.selected.value;
     if (newVal !== this.dbEngine) {
       this.dbEngine = newVal;
       if (this.isNotSeleced(newVal)) {
@@ -771,7 +763,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
   }
 
   private dbDriveChanged(ev) {
-    const newVal = ev.target!.selected;
+    const newVal = ev.target!.selected.value;
     if (newVal !== this.dbDrive) {
       this.dbDrive = newVal;
     }
