@@ -149,11 +149,15 @@ export const getMyRedirects = (hasSupervisor: boolean): Redirects => ({
   logs: {
     redirect: "/config/logs",
   },
+  repairs: {
+    component: "repairs",
+    redirect: "/config/repairs",
+  },
   info: {
     redirect: "/config/info",
   },
   system_health: {
-    redirect: "/config/system_health",
+    redirect: "/config/repairs?dialog=system-health",
   },
   hardware: {
     redirect: "/config/hardware",
@@ -215,6 +219,15 @@ export const getMyRedirects = (hasSupervisor: boolean): Redirects => ({
   supervisor_info: {
     // Moved from Supervisor panel in 2022.5
     redirect: "/config/info",
+  },
+  hacs_repository: {
+    component: "hacs",
+    redirect: "/hacs/_my_redirect/hacs_repository",
+    params: {
+      owner: "string",
+      repository: "string",
+      category: "string?",
+    },
   },
 });
 

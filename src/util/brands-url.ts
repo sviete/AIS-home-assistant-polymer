@@ -15,13 +15,10 @@ export interface HardwareBrandsOptions {
 export const brandsUrl = (options: BrandsOptions): string => {
   if (options.domain.startsWith("ais_")) {
     return `https://ai-speaker.com/images/brands/${options.domain}/${options.type}.png`;
-  } else {
-    return `https://brands.home-assistant.io/${
-      options.useFallback ? "_/" : ""
-    }${options.domain}/${options.darkOptimized ? "dark_" : ""}${
-      options.type
-    }.png`;
   }
+  return `https://brands.home-assistant.io/${options.useFallback ? "_/" : ""}${
+    options.domain
+  }/${options.darkOptimized ? "dark_" : ""}${options.type}.png`;
 };
 
 export const hardwareBrandsUrl = (options: HardwareBrandsOptions): string =>

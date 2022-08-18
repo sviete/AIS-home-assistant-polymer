@@ -41,10 +41,6 @@ class DeveloperToolsRouter extends HassRouterPage {
         tag: "developer-tools-statistics",
         load: () => import("./statistics/developer-tools-statistics"),
       },
-      yaml: {
-        tag: "developer-yaml-config",
-        load: () => import("./yaml_configuration/developer-yaml-config"),
-      },
       android: {
         tag: "developer-tools-android",
         load: () => import("./android/developer-tools-android"),
@@ -56,6 +52,10 @@ class DeveloperToolsRouter extends HassRouterPage {
       webcmd: {
         tag: "developer-tools-webcmd",
         load: () => import("./webcmd/developer-tools-webcmd"),
+      },
+      yaml: {
+        tag: "developer-yaml-config",
+        load: () => import("./yaml_configuration/developer-yaml-config"),
       },
     },
   };
