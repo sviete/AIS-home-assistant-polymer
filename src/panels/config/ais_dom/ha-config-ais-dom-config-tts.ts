@@ -229,7 +229,7 @@ class HaConfigAisDomConfigTts extends LitElement {
   }
 
   async _openAisWelcomeText() {
-    const filePath = "/data/data/pl.sviete.dom/files/home/AIS/ais_welcome.txt";
+    const filePath = "/data/data/com.termux/files/home/AIS/ais_welcome.txt";
     const file = await this.hass.callApi<string>("POST", "ais_file/read", {
       filePath: filePath,
     });

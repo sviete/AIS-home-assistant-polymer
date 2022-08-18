@@ -142,7 +142,7 @@ class HaPanelDevMqtt extends LitElement {
 
   private async _openMosquittoFile() {
     const filePath =
-      "/data/data/pl.sviete.dom/files/usr/etc/mosquitto/mosquitto.conf";
+      "/data/data/com.termux/files/usr/etc/mosquitto/mosquitto.conf";
     const file = await this.hass.callApi<string>("POST", "ais_file/read", {
       filePath: filePath,
     });

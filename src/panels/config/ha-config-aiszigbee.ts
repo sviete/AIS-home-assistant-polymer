@@ -136,7 +136,7 @@ class ConfigAisZigbee extends LitElement {
 
   private async _openZigbee2MqttFileConfig() {
     const filePath =
-      "/data/data/pl.sviete.dom/files/home/zigbee2mqtt/data/configuration.yaml";
+      "/data/data/com.termux/files/home/zigbee2mqtt/data/configuration.yaml";
     const file = await this.hass.callApi<string>("POST", "ais_file/read", {
       filePath: filePath,
     });
