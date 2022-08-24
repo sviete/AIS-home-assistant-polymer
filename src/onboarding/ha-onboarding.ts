@@ -277,7 +277,7 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
       // We do nothing
     } else if (stepResult.type === "integration") {
       // We do nothing
-      this._loading = false;
+      // this._loading = false;
     } else if (stepResult.type === "mob_integration") {
       this._loading = true;
 
