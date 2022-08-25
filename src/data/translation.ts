@@ -38,7 +38,9 @@ export type TranslationCategory =
   | "device_automation"
   | "mfa_setup"
   | "system_health"
-  | "device_class";
+  | "device_class"
+  | "application_credentials"
+  | "issues";
 
 export const fetchTranslationPreferences = (hass: HomeAssistant) =>
   fetchFrontendUserData(hass.connection, "language");
@@ -52,7 +54,7 @@ export const getHassTranslations = async (
   hass: HomeAssistant,
   language: string,
   category: TranslationCategory,
-  integration?: string,
+  integration?: string | string[],
   config_flow?: boolean
 ): Promise<Record<string, unknown>> => {
   const result = await hass.callWS<{ resources: Record<string, unknown> }>({

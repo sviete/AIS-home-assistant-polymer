@@ -133,6 +133,7 @@ class HaPanelDevTemplate extends LitElement {
             .error=${this._error}
             autofocus
             autocomplete-entities
+            autocomplete-icons
             @value-changed=${this._templateChanged}
             dir="ltr"
           ></ha-code-editor>
@@ -248,7 +249,6 @@ class HaPanelDevTemplate extends LitElement {
 
         .content {
           padding: 16px;
-          direction: ltr;
         }
 
         .edit-pane {
@@ -280,6 +280,7 @@ class HaPanelDevTemplate extends LitElement {
           white-space: pre-wrap;
           background-color: var(--secondary-background-color);
           padding: 8px;
+          direction: ltr;
         }
 
         .all_listeners {

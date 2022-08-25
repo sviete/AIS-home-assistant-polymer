@@ -168,7 +168,7 @@ class HaConfigAisDomControl extends LitElement {
 
   private async _openCloudflareFileConfig() {
     const filePath =
-      "/data/data/pl.sviete.dom/files/home/.cloudflared/config.yaml";
+      "/data/data/com.termux/files/home/.cloudflared/config.yaml";
     const file = await this.hass.callApi<string>("POST", "ais_file/read", {
       filePath: filePath,
     });

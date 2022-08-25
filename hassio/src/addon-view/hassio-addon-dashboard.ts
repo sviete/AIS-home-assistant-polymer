@@ -12,12 +12,17 @@ import { navigate } from "../../../src/common/navigate";
 import { extractSearchParam } from "../../../src/common/url/search-params";
 import "../../../src/components/ha-circular-progress";
 import {
+  fetchAddonInfo,
   fetchHassioAddonInfo,
   fetchHassioAddonsInfo,
   HassioAddonDetails,
 } from "../../../src/data/hassio/addon";
 import { extractApiErrorMessage } from "../../../src/data/hassio/common";
-import { setSupervisorOption } from "../../../src/data/hassio/supervisor";
+import {
+  addStoreRepository,
+  fetchSupervisorStore,
+  StoreAddonDetails,
+} from "../../../src/data/supervisor/store";
 import { Supervisor } from "../../../src/data/supervisor/supervisor";
 import { showConfirmationDialog } from "../../../src/dialogs/generic/show-dialog-box";
 import "../../../src/layouts/hass-error-screen";
@@ -42,7 +47,9 @@ class HassioAddonDashboard extends LitElement {
 
   @property({ attribute: false }) public route!: Route;
 
-  @property({ attribute: false }) public addon?: HassioAddonDetails;
+  @property({ attribute: false }) public addon?:
+    | HassioAddonDetails
+    | StoreAddonDetails;
 
   @property({ type: Boolean }) public narrow!: boolean;
 
@@ -169,38 +176,35 @@ class HassioAddonDashboard extends LitElement {
     if (this.route.path === "") {
       const requestedAddon = extractSearchParam("addon");
       const requestedAddonRepository = extractSearchParam("repository_url");
-      if (
-        requestedAddonRepository &&
-        !this.supervisor.supervisor.addons_repositories.find(
-          (repo) => repo === requestedAddonRepository
-        )
-      ) {
+      if (requestedAddonRepository) {
+        const storeInfo = await fetchSupervisorStore(this.hass);
         if (
-          !(await showConfirmationDialog(this, {
-            title: this.supervisor.localize("my.add_addon_repository_title"),
-            text: this.supervisor.localize(
-              "my.add_addon_repository_description",
-              { addon: requestedAddon, repository: requestedAddonRepository }
-            ),
-            confirmText: this.supervisor.localize("common.add"),
-            dismissText: this.supervisor.localize("common.cancel"),
-          }))
+          !storeInfo.repositories.find(
+            (repo) => repo.source === requestedAddonRepository
+          )
         ) {
-          this._error = this.supervisor.localize(
-            "my.error_repository_not_found"
-          );
-          return;
-        }
+          if (
+            !(await showConfirmationDialog(this, {
+              title: this.supervisor.localize("my.add_addon_repository_title"),
+              text: this.supervisor.localize(
+                "my.add_addon_repository_description",
+                { addon: requestedAddon, repository: requestedAddonRepository }
+              ),
+              confirmText: this.supervisor.localize("common.add"),
+              dismissText: this.supervisor.localize("common.cancel"),
+            }))
+          ) {
+            this._error = this.supervisor.localize(
+              "my.error_repository_not_found"
+            );
+            return;
+          }
 
-        try {
-          await setSupervisorOption(this.hass, {
-            addons_repositories: [
-              ...this.supervisor.supervisor.addons_repositories,
-              requestedAddonRepository,
-            ],
-          });
-        } catch (err: any) {
-          this._error = extractApiErrorMessage(err);
+          try {
+            await addStoreRepository(this.hass, requestedAddonRepository);
+          } catch (err: any) {
+            this._error = extractApiErrorMessage(err);
+          }
         }
       }
 
@@ -240,6 +244,8 @@ class HassioAddonDashboard extends LitElement {
 
     if (path === "uninstall") {
       window.history.back();
+    } else if (path === "install") {
+      this.addon = await fetchHassioAddonInfo(this.hass, this.addon!.slug);
     } else {
       await this._routeDataChanged();
     }
@@ -257,8 +263,7 @@ class HassioAddonDashboard extends LitElement {
       return;
     }
     try {
-      const addoninfo = await fetchHassioAddonInfo(this.hass, addon);
-      this.addon = addoninfo;
+      this.addon = await fetchAddonInfo(this.hass, this.supervisor, addon);
     } catch (err: any) {
       this._error = `Error fetching addon info: ${extractApiErrorMessage(err)}`;
       this.addon = undefined;

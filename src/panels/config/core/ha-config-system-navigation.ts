@@ -8,7 +8,7 @@ import "../../../components/ha-navigation-list";
 import "../../../components/ha-tip";
 import { BackupContent, fetchBackupInfo } from "../../../data/backup";
 import { CloudStatus, fetchCloudStatus } from "../../../data/cloud";
-import { BOARD_NAMES } from "../../../data/hardware";
+import { BOARD_NAMES, HardwareInfo } from "../../../data/hardware";
 import { fetchHassioBackups, HassioBackup } from "../../../data/hassio/backup";
 import {
   fetchHassioHassOsInfo,
@@ -139,12 +139,6 @@ class HaConfigSystemNavigation extends LitElement {
               hasSecondary
             ></ha-navigation-list>
           </ha-card>
-          ${this.hass.userData?.showAdvanced
-            ? html`<ha-tip>
-                Looking for YAML Configuration? It has moved to
-                <a href="/developer-tools/yaml">Developer Tools</a>
-              </ha-tip>`
-            : ""}
         </ha-config-section>
       </hass-subpage>
     `;
@@ -156,8 +150,8 @@ class HaConfigSystemNavigation extends LitElement {
     this._fetchNetworkStatus();
     const isHassioLoaded = isComponentLoaded(this.hass, "hassio");
     this._fetchBackupInfo(isHassioLoaded);
+    this._fetchHardwareInfo(isHassioLoaded);
     if (isHassioLoaded) {
-      this._fetchHardwareInfo();
       this._fetchStorageInfo();
     }
   }
@@ -189,9 +183,11 @@ class HaConfigSystemNavigation extends LitElement {
   private async _fetchBackupInfo(isHassioLoaded: boolean) {
     const backups: BackupContent[] | HassioBackup[] = isHassioLoaded
       ? await fetchHassioBackups(this.hass)
-      : await fetchBackupInfo(this.hass).then(
+      : isComponentLoaded(this.hass, "backup")
+      ? await fetchBackupInfo(this.hass).then(
           (backupData) => backupData.backups
-        );
+        )
+      : [];
 
     if (backups.length > 0) {
       this._latestBackupDate = (backups as any[]).reduce((a, b) =>
@@ -200,10 +196,17 @@ class HaConfigSystemNavigation extends LitElement {
     }
   }
 
-  private async _fetchHardwareInfo() {
-    const osData: HassioHassOSInfo = await fetchHassioHassOsInfo(this.hass);
-    if (osData.board) {
-      this._boardName = BOARD_NAMES[osData.board];
+  private async _fetchHardwareInfo(isHassioLoaded: boolean) {
+    if (isComponentLoaded(this.hass, "hardware")) {
+      const hardwareInfo: HardwareInfo = await this.hass.callWS({
+        type: "hardware/info",
+      });
+      this._boardName = hardwareInfo?.hardware?.[0].name;
+    } else if (isHassioLoaded) {
+      const osData: HassioHassOSInfo = await fetchHassioHassOsInfo(this.hass);
+      if (osData.board) {
+        this._boardName = BOARD_NAMES[osData.board];
+      }
     }
   }
 
@@ -218,14 +221,13 @@ class HaConfigSystemNavigation extends LitElement {
 
   private async _fetchNetworkStatus() {
     if (isComponentLoaded(this.hass, "cloud")) {
-      fetchCloudStatus(this.hass).then((cloudStatus) => {
-        if (cloudStatus.logged_in) {
-          this._externalAccess = true;
-        }
-      });
-    } else {
-      this._externalAccess = this.hass.config.external_url !== null;
+      const cloudStatus = await fetchCloudStatus(this.hass);
+      if (cloudStatus.logged_in) {
+        this._externalAccess = true;
+        return;
+      }
     }
+    this._externalAccess = this.hass.config.external_url !== null;
   }
 
   static get styles(): CSSResultGroup {

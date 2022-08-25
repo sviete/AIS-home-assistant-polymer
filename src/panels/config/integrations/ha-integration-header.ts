@@ -12,13 +12,13 @@ import { brandsUrl } from "../../../util/brands-url";
 export class HaIntegrationHeader extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @property() public banner!: string;
+  @property() public banner?: string;
 
   @property() public localizedDomainName?: string;
 
   @property() public domain!: string;
 
-  @property() public label!: string;
+  @property() public label?: string;
 
   @property({ attribute: false }) public manifest?: IntegrationManifest;
 
@@ -135,17 +135,19 @@ export class HaIntegrationHeader extends LitElement {
     .header {
       display: flex;
       position: relative;
-      padding: 0 8px 8px 16px;
+      padding-top: 0px;
+      padding-bottom: 8px;
+      padding-inline-start: 16px;
+      padding-inline-end: 8px;
+      direction: var(--direction);
     }
     .header img {
-      margin-right: 16px;
       margin-top: 16px;
+      margin-inline-start: initial;
+      margin-inline-end: 16px;
       width: 40px;
       height: 40px;
-    }
-    :host-context([style*="direction: rtl;"]) .header img {
-      margin-right: auto !important;
-      margin-left: 16px;
+      direction: var(--direction);
     }
     .header .info {
       flex: 1;

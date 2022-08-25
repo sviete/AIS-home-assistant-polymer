@@ -344,8 +344,17 @@
       },
       "logbook": {
         "entries_not_found": "No logbook events found.",
-        "by": "by",
-        "by_service": "by service",
+        "triggered_by": "triggered by",
+        "triggered_by_automation": "triggered by automation",
+        "triggered_by_script": "triggered by script",
+        "triggered_by_service": "triggered by service",
+        "triggered_by_numeric_state_of": "triggered by numeric state of",
+        "triggered_by_state_of": "triggered by state of",
+        "triggered_by_event": "triggered by event",
+        "triggered_by_time": "triggered by time",
+        "triggered_by_time_pattern": "triggered by time pattern",
+        "triggered_by_homeassistant_stopping": "triggered by Home Assistant stopping",
+        "triggered_by_homeassistant_starting": "triggered by Home Assistant starting",
         "show_trace": "[%key:ui::panel::config::automation::editor::show_trace%]",
         "retrieval_error": "Could not load logbook",
         "messages": {
@@ -414,9 +423,7 @@
         "remove_user": "Remove user"
       },
       "blueprint-picker": {
-        "select_blueprint": "Select a Blueprint",
-        "add_user": "Add user",
-        "remove_user": "Remove user"
+        "select_blueprint": "Select a Blueprint"
       },
       "device-picker": {
         "clear": "Clear",
@@ -512,7 +519,7 @@
         "required": "This field is required",
         "target": "Targets",
         "target_description": "What should this service use as targeted areas, devices or entities.",
-        "service_data": "Service data",
+        "data": "Service data",
         "integration_doc": "Integration documentation"
       },
       "related-items": {
@@ -570,7 +577,7 @@
           "title": "Media Management",
           "manage": "Manage",
           "no_items": "No media items found",
-          "folders_not_supported": "Folders can not be managed via the UI.",
+          "folders_not_supported": "Folders cannot be managed via the UI.",
           "highlight_button": "Click here to upload your first media",
           "upload_failed": "Upload failed: {reason}",
           "add_media": "Add Media",
@@ -600,7 +607,8 @@
           "tv_show": "TV Show",
           "url": "URL",
           "video": "Video"
-        }
+        },
+        "media_player_unavailable": "The selected media player is unavailable."
       },
       "calendar": {
         "my_calendars": "My Calendars",
@@ -801,6 +809,11 @@
           "icon_error": "Icons should be in the format 'prefix:iconname', e.g. 'mdi:home'",
           "entity_id": "Entity ID",
           "unit_of_measurement": "Unit of Measurement",
+          "precipitation_unit": "Precipitation unit",
+          "pressure_unit": "Barometric pressure unit",
+          "temperature_unit": "Temperature unit",
+          "visibility_unit": "Visibility unit",
+          "wind_speed_unit": "Wind speed unit",
           "device_class": "Show as",
           "device_classes": {
             "binary_sensor": {
@@ -844,6 +857,10 @@
               "curtain": "Curtain",
               "damper": "Damper",
               "shutter": "Shutter"
+            },
+            "switch": {
+              "outlet": "Outlet",
+              "switch": "Switch"
             }
           },
           "unavailable": "This entity is unavailable.",
@@ -870,7 +887,9 @@
           "area_note": "By default the entities of a device are in the same area as the device. If you change the area of this entity, it will no longer follow the area of the device.",
           "follow_device_area": "Follow device area",
           "change_device_area": "Change device area",
-          "configure_state": "{integration} options"
+          "configure_state": "{integration} options",
+          "preload_stream": "Preload camera stream",
+          "preload_stream_description": "This keeps the camera stream open in the background so it shows quicker. Warning! This is device intensive."
         }
       },
       "helper_settings": {
@@ -934,6 +953,18 @@
           "description": "Options successfully saved."
         }
       },
+      "repair_flow": {
+        "form": {
+          "header": "Repair issue"
+        },
+        "loading": {
+          "loading_flow": "Please wait while the repair for {integration} is being initialized",
+          "loading_step": "[%key:ui::panel::config::integrations::config_flow::loading::loading_step%]"
+        },
+        "success": {
+          "description": "The issue is repaired!"
+        }
+      },
       "config_entry_system_options": {
         "title": "System Options for {integration}",
         "enable_new_entities_label": "Enable newly added entities.",
@@ -994,7 +1025,7 @@
       },
       "domain_toggler": {
         "title": "Toggle Domains",
-        "reset_entities": "Reset Entities"
+        "reset_entities": "Reset Entity overrides"
       },
       "mqtt_device_debug_info": {
         "title": "{device} debug info",
@@ -1201,7 +1232,7 @@
           },
           "tags": {
             "main": "Tags",
-            "secondary": "Setup NFC tags and QR codes"
+            "secondary": "Set up NFC tags and QR codes"
           },
           "people": {
             "main": "People",
@@ -1244,13 +1275,36 @@
           "title": "{count} {count, plural,\n  one {update}\n  other {updates}\n}",
           "unable_to_fetch": "Unable to load updates",
           "version_available": "Version {version_available} is available",
-          "more_updates": "+{count} updates",
+          "more_updates": "Show all updates",
           "show": "show",
-          "show_skipped": "Show skipped",
-          "hide_skipped": "Hide skipped",
+          "show_skipped": "Show skipped updates",
           "join_beta": "[%key:supervisor::system::supervisor::join_beta_action%]",
           "leave_beta": "[%key:supervisor::system::supervisor::leave_beta_action%]",
           "skipped": "Skipped"
+        },
+        "repairs": {
+          "caption": "Repairs",
+          "description": "Find and fix issues with your Home Assistant instance",
+          "title": "{count} {count, plural,\n  one {repair}\n  other {repairs}\n}",
+          "no_repairs": "There are currently no repairs available",
+          "more_repairs": "Show all repairs",
+          "show_ignored": "Show ignored repairs",
+          "critical": "Critical",
+          "error": "Error",
+          "warning": "Warning",
+          "system_information": "System information",
+          "integration_startup_time": "Integration startup time",
+          "copy": "Copy",
+          "dialog": {
+            "title": "Repair",
+            "fix": "Repair",
+            "learn": "Learn more",
+            "ignore": "Ignore",
+            "unignore": "Unignore",
+            "breaks_in_version": "This stops working in version {version}. Please address before upgrading.",
+            "ignored_in_version_short": "Ignored in version {version}",
+            "ignored_in_version": "This issue was ignored in version {version}."
+          }
         },
         "areas": {
           "caption": "Areas",
@@ -1359,10 +1413,15 @@
             "sub": "Configure the amount of energy that you consume from the grid and, if you produce energy, give back to the grid. This allows Home Assistant to track your whole home energy usage.",
             "learn_more": "More information on how to get started.",
             "grid_consumption": "Grid consumption",
+            "edit_consumption": "Edit consumption",
+            "delete_consumption": "Delete consumption",
             "add_consumption": "Add consumption",
             "return_to_grid": "Return to grid",
+            "edit_return": "Edit return",
+            "delete_return": "Delete return",
             "add_return": "Add return",
             "grid_carbon_footprint": "Grid carbon footprint",
+            "remove_co2_signal": "Remove CO2 signal integration",
             "add_co2_signal": "Add CO2 signal integration",
             "flow_dialog": {
               "from": {
@@ -1400,6 +1459,8 @@
             "sub": "Let Home Assistant monitor your solar panels and give you insight on their performance.",
             "learn_more": "More information on how to get started.",
             "solar_production": "Solar production",
+            "edit_solar_production": "Edit solar production",
+            "delete_solar_production": "Delete solar production",
             "add_solar_production": "Add solar production",
             "stat_production": "Your solar energy production",
             "stat_return_to_grid": "Solar energy returned to the grid",
@@ -1419,6 +1480,8 @@
             "sub": "If you have a battery system, you can configure it to monitor how much energy was stored and used from your battery.",
             "learn_more": "More information on how to get started.",
             "battery_systems": "Battery systems",
+            "edit_battery_system": "Edit battery system",
+            "delete_battery_system": "Delete battery system",
             "add_battery_system": "Add battery system",
             "dialog": {
               "header": "Configure battery system",
@@ -1431,6 +1494,8 @@
             "sub": "Let Home Assistant monitor your gas usage.",
             "learn_more": "More information on how to get started.",
             "gas_consumption": "Gas consumption",
+            "edit_gas_source": "Edit gas source",
+            "delete_gas_source": "Delete gas source",
             "add_gas_source": "Add gas source",
             "dialog": {
               "header": "Configure gas consumption",
@@ -1536,13 +1601,13 @@
               "type": "Type",
               "editable": "Editable"
             },
-            "add_helper": "Add helper",
+            "create_helper": "Create helper",
             "no_helpers": "Looks like you don't have any helpers yet!"
           },
           "dialog": {
             "create": "Create",
-            "add_helper": "Add helper",
-            "add_platform": "Add {platform}"
+            "create_helper": "Create helper",
+            "create_platform": "Create {platform}"
           }
         },
         "core": {
@@ -1580,6 +1645,7 @@
           "internal_url_label": "Local Network",
           "external_url_label": "Internet",
           "external_use_ha_cloud": "Use Home Assistant Cloud",
+          "manage_ha_cloud": "Manage Home Assistant Cloud",
           "external_get_ha_cloud": "Access from anywhere, add Google & Alexa easily",
           "ha_cloud_remote_not_enabled": "Your Home Assistant Cloud remote connection is currently not enabled.",
           "enable_remote": "[%key:ui::common::enable%]",
@@ -1593,18 +1659,23 @@
           "available_hardware": {
             "failed_to_get": "Failed to get available hardware",
             "title": "All Hardware",
+            "search": "Search hardware",
             "subsystem": "Subsystem",
             "device_path": "Device path",
             "id": "ID",
             "attributes": "Attributes"
           },
           "reboot_host": "Reboot host",
+          "rebooting_host": "Rebooting host",
           "reboot_host_confirm": "Are you sure you want to reboot your host?",
           "failed_to_reboot_host": "Failed to reboot host",
           "shutdown_host": "Shutdown host",
+          "host_shutting_down": "Host shutting down",
           "shutdown_host_confirm": "Are you sure you want to shutdown your host?",
           "failed_to_shutdown_host": "Failed to shutdown host",
-          "board": "Board"
+          "board": "Board",
+          "documentation": "Documentation",
+          "documentation_description": "Find extra information about your device"
         },
         "info": {
           "caption": "About",
@@ -1613,7 +1684,6 @@
           "copy_github": "For GitHub",
           "description": "Version, loaded integrations and links to documentation",
           "home_assistant_logo": "Home Assistant logo",
-          "path_configuration": "Path to configuration.yaml: {path}",
           "developed_by": "Developed by a bunch of awesome people.",
           "license": "Published under the Apache 2.0 license",
           "source": "Source:",
@@ -1621,7 +1691,7 @@
           "frontend": "frontend-ui",
           "built_using": "Built using",
           "icons_by": "Icons by",
-          "frontend_version": "Frontend version: {version} - {type}",
+          "frontend_version": "Frontend {version} - {type}",
           "custom_uis": "Custom UIs:",
           "system_health_error": "System Health component is not loaded. Add 'system_health:' to configuration.yaml",
           "documentation": "Documentation",
@@ -1630,6 +1700,15 @@
           "system_health": {
             "manage": "Manage",
             "more_info": "more info"
+          },
+          "items": {
+            "change_log": "Change Log",
+            "thanks": "Thanks To",
+            "merch": "Merchandise",
+            "feature": "Feature Requests",
+            "bug": "Bug Reports",
+            "help": "Help",
+            "license": "License"
           }
         },
         "logs": {
@@ -1640,7 +1719,7 @@
           "failed_get_logs": "Failed to get {provider} logs, {error}",
           "no_issues_search": "No issues found for search term ''{term}''",
           "load_logs": "Load Full Logs",
-          "loading_log": "Loading error log…",
+          "loading_log": "Loading full log…",
           "no_errors": "No errors have been reported",
           "no_issues": "There are no new issues!",
           "clear": "Clear",
@@ -1838,7 +1917,10 @@
                   "label": "Calendar",
                   "event": "[%key:ui::panel::config::automation::editor::triggers::type::homeassistant::event%]",
                   "start": "Event Start",
-                  "end": "Event End"
+                  "end": "Event End",
+                  "offset": "Offset (optional)",
+                  "before": "Before",
+                  "after": "After"
                 },
                 "device": {
                   "label": "Device",
@@ -2288,15 +2370,14 @@
             "area": "Area",
             "devices": {
               "header": "Devices",
-              "introduction": "Add the devices that you want to be included in your scene. Set all the devices to the state you want for this scene.",
+              "introduction": "Add the devices that you want to be included in your scene. Set all entities in each device to the state you want for this scene.",
               "add": "Add a device",
               "delete": "Delete device"
             },
             "entities": {
               "header": "Entities",
-              "introduction": "Entities that do not belong to a device can be set here.",
-              "without_device": "Entities without device",
-              "device_entities": "If you add an entity that belongs to a device, the device will be added.",
+              "introduction": "Individual entities can be added here.",
+              "without_device": "Entities",
               "add": "Add an entity",
               "delete": "Delete entity"
             }
@@ -2396,9 +2477,10 @@
               "reconnecting": "Not connected. Trying to reconnect.",
               "access_is_being_prepared": "Remote control is being prepared. We will notify you when it's ready.",
               "info": "Home Assistant Cloud provides a secure remote connection to your instance while away from home.",
-              "instance_is_available": "Your instance is available at",
-              "instance_will_be_available": "Your instance will be available at",
+              "instance_is_available": "Your instance is available at your",
+              "instance_will_be_available": "Your instance will be available at your",
               "link_learn_how_it_works": "Learn how it works",
+              "nabu_casa_url": "Nabu Casa URL",
               "certificate_info": "Certificate Info"
             },
             "alexa": {
@@ -2453,15 +2535,16 @@
           },
           "alexa": {
             "title": "Alexa",
-            "banner": "Editing which entities are exposed via this UI is disabled because you have configured entity filters in configuration.yaml.",
-            "exposed_entities": "Exposed entities",
-            "not_exposed_entities": "Not exposed entities",
-            "manage_domains": "Manage domains",
-            "expose_entity": "Expose entity",
-            "dont_expose_entity": "Don't expose entity",
-            "follow_domain": "Follow domain",
-            "exposed": "{selected} exposed",
-            "not_exposed": "{selected} not exposed",
+            "banner": "[%key:ui::panel::config::cloud::google::banner%]",
+            "exposed_entities": "[%key:ui::panel::config::cloud::google::exposed_entities%]",
+            "not_exposed_entities": "[%key:ui::panel::config::cloud::google::not_exposed_entities%]",
+            "manage_defaults": "[%key:ui::panel::config::cloud::google::manage_defaults%]",
+            "manage_defaults_dialog_description": "[%key:ui::panel::config::cloud::google::manage_defaults_dialog_description%]",
+            "expose_entity": "[%key:ui::panel::config::cloud::google::expose_entity%]",
+            "dont_expose_entity": "[%key:ui::panel::config::cloud::google::dont_expose_entity%]",
+            "follow_domain": "[%key:ui::panel::config::cloud::google::follow_domain%]",
+            "exposed": "[%key:ui::panel::config::cloud::google::exposed%]",
+            "not_exposed": "[%key:ui::panel::config::cloud::google::not_exposed%]",
             "expose": "Expose to Alexa"
           },
           "dialog_certificate": {
@@ -2478,7 +2561,8 @@
             "banner": "Editing which entities are exposed via this UI is disabled because you have configured entity filters in configuration.yaml.",
             "exposed_entities": "Exposed entities",
             "not_exposed_entities": "Not exposed entities",
-            "manage_domains": "Manage domains",
+            "manage_defaults": "Manage defaults",
+            "manage_defaults_dialog_description": "Entities can be exposed by default based on their type.",
             "expose_entity": "Expose entity",
             "dont_expose_entity": "Don't expose entity",
             "follow_domain": "Follow domain",
@@ -2856,7 +2940,12 @@
             },
             "error": "Error",
             "could_not_load": "Config flow could not be loaded",
-            "not_loaded": "The integration could not be loaded, try to restart Home Assistant."
+            "not_loaded": "The integration could not be loaded, try to restart Home Assistant.",
+            "missing_credentials": "Setting up {integration} requires configuring application credentials. Do you want to do that now?",
+            "supported_brand_flow": "Support for {supported_brand} devices is provided by {flow_domain_name}. Do you want to continue?",
+            "missing_zwave_zigbee": "To add a {integration} device, you first need {supported_hardware_link} and the {integration} integration set up. If you already have the hardware then you can proceed with the setup of {integration}.",
+            "supported_hardware": "supported hardware",
+            "proceed": "Proceed"
           }
         },
         "users": {
@@ -2910,6 +2999,33 @@
             "password_not_match": "Passwords don't match",
             "local_only": "Local only",
             "create": "Create"
+          }
+        },
+        "application_credentials": {
+          "caption": "Application Credentials",
+          "description": "Manage the OAuth Application Credentials used by Integrations",
+          "editor": {
+            "caption": "Add Application Credential",
+            "create": "Create",
+            "domain": "Integration",
+            "name": "Name",
+            "client_id": "OAuth Client ID",
+            "client_secret": "OAuth Client Secret"
+          },
+          "picker": {
+            "add_application_credential": "Add Application Credential",
+            "headers": {
+              "name": "Name",
+              "client_id": "OAuth Client ID",
+              "application": "Integration"
+            },
+            "remove_selected": {
+              "button": "Remove selected",
+              "confirm_title": "Do you want to remove {number} {number, plural,\n  one {credential}\n  other {credentials}\n}?",
+              "confirm_text": "Application Credentials in use by an integration may not be removed.",
+              "error_title": "Removing Application Credential failed"
+            },
+            "selected": "{number} selected"
           }
         },
         "mqtt": {
@@ -3045,7 +3161,46 @@
             "server_url": "Server URL",
             "devices": "{count} {count, plural,\n  one {device}\n  other {devices}\n}",
             "provisioned_devices": "Provisioned devices",
-            "not_ready": "{count} not ready"
+            "not_ready": "{count} not ready",
+            "statistics": {
+              "title": "Controller Statistics",
+              "messages_tx": {
+                "label": "Messages TX",
+                "tooltip": "Number of messages successfully sent to the controller"
+              },
+              "messages_rx": {
+                "label": "Messages RX",
+                "tooltip": "Number of messages successfully received by the controller"
+              },
+              "messages_dropped_tx": {
+                "label": "Dropped Messages TX",
+                "tooltip": "Number of messages from the controller that were dropped by the host"
+              },
+              "messages_dropped_rx": {
+                "label": "Dropped Messages RX",
+                "tooltip": "Number of outgoing messages that were dropped because they could not be sent"
+              },
+              "nak": {
+                "label": "NAK",
+                "tooltip": "Number of messages that the controller did not accept"
+              },
+              "can": {
+                "label": "CAN",
+                "tooltip": "Number of collisions while sending a message to the controller"
+              },
+              "timeout_ack": {
+                "label": "Timeout ACK",
+                "tooltip": "Number of transmission attempts where an ACK was missing from the controller"
+              },
+              "timeout_response": {
+                "label": "Timeout Response",
+                "tooltip": "Number of transmission attempts where the controller response did not come in time"
+              },
+              "timeout_callback": {
+                "label": "Timeout Callback",
+                "tooltip": "Number of transmission attempts where the controller callback did not come in time"
+              }
+            }
           },
           "device_info": {
             "zwave_info": "Z-Wave Info",
@@ -3055,10 +3210,91 @@
             "reinterview_device": "Re-interview Device",
             "heal_node": "Heal Device",
             "remove_failed": "Remove Failed Device",
+            "update_firmware": "Update Device Firmware",
             "highest_security": "Highest Security",
             "unknown": "Unknown",
             "zwave_plus": "Z-Wave Plus",
-            "zwave_plus_version": "Version {version}"
+            "zwave_plus_version": "Version {version}",
+            "node_statistics": "Show Device Statistics"
+          },
+          "node_statistics": {
+            "title": "Device Statistics",
+            "commands_tx": {
+              "label": "Commands TX",
+              "tooltip": "# of commands successfully sent to the node"
+            },
+            "commands_rx": {
+              "label": "Commands RX",
+              "tooltip": "# of commands received from the node, including responses to sent commands"
+            },
+            "commands_dropped_tx": {
+              "label": "Commands Dropped TX",
+              "tooltip": "# of outgoing commands that were dropped because they could not be sent"
+            },
+            "commands_dropped_rx": {
+              "label": "Commands Dropped RX",
+              "tooltip": "# of commands from the node that were dropped by the host"
+            },
+            "timeout_response": {
+              "label": "Timeout Response",
+              "tooltip": "# of Get-type commands where the node's response did not come in time"
+            },
+            "rtt": {
+              "label": "RTT",
+              "tooltip": "Average round-trip-time in ms of commands to this node"
+            },
+            "rssi": {
+              "label": "RSSI",
+              "tooltip": "Average RSSI in dBm of frames received by this node"
+            },
+            "lwr": "Last Working Route",
+            "nlwr": "Next to Last Working Route"
+          },
+          "route_statistics": {
+            "protocol": {
+              "label": "Protocol",
+              "tooltip": "The protocol for this route",
+              "protocol_data_rate": {
+                "ZWave_9k6": "Z-Wave",
+                "ZWave_40k": "Z-Wave",
+                "ZWave_100k": "Z-Wave",
+                "LongRange_100k": "Z-Wave Long Range"
+              }
+            },
+            "data_rate": {
+              "label": "Data Rate",
+              "tooltip": "The used data rate for this route",
+              "protocol_data_rate": {
+                "ZWave_9k6": "9.6 kbps",
+                "ZWave_40k": "40 kbps",
+                "ZWave_100k": "100 kbps",
+                "LongRange_100k": "100 kbps"
+              }
+            },
+            "repeaters": {
+              "label": "Repeaters + RSSI",
+              "tooltip": "Which nodes are repeaters for this route and their RSSI",
+              "repeaters": "Repeater Device",
+              "rssi": "RSSI",
+              "direct": "None, direct connection"
+            },
+            "rssi": {
+              "label": "RSSI",
+              "tooltip": "The RSSI of the ACK frame received by the controller"
+            },
+            "route_failed_between": {
+              "label": "Route Failed Between",
+              "tooltip": "The nodes between which the transmission failed most recently",
+              "not_applicable": "N/A"
+            }
+          },
+          "rssi": {
+            "unit": "dBm",
+            "rssi_error": {
+              "NotAvailable": "Not available",
+              "ReceiverSaturated": "Receiver saturated",
+              "NoSignalDetected": "No signal detected"
+            }
           },
           "node_config": {
             "header": "Z-Wave Device Configuration",
@@ -3181,6 +3417,43 @@
             "healing_complete": "{device} has been healed.",
             "in_progress": "{device} healing is in progress.",
             "network_heal_in_progress": "A Z-Wave network heal is already in progress. Please wait for it to finish before healing an individual device."
+          },
+          "update_firmware": {
+            "title": "Update Device Firmware",
+            "warning": "WARNING: Firmware updates can brick your device if you do not correctly follow the manufacturer's guidance. The Home Assistant and Z-Wave JS teams do not take any responsibility for any damages to your device as a result of the firmware update and will not be able to help you if you brick your device. Would you still like to continue?",
+            "introduction": "Select the firmware file you would like to use to update {device}.",
+            "upload_firmware": "Upload Firmware",
+            "firmware_target_intro": "Select the firmware target (0 for the Z-Wave chip, ≥1 for other chips if they exist) for this update, or uncheck the box to have the driver attempt to figure it out from the firmware file.",
+            "firmware_target": "Firmware Target (chip)",
+            "upload_failed": "Upload Failed",
+            "begin_update": "Begin Firmware Update",
+            "queued": "The firmware update is ready to be sent to {device} but the device is asleep, wake the device to start the update.",
+            "close_queued": "If you close this dialog, the update will continue to be queued in the background and start automatically once the device wakes up.",
+            "awake": "The firmware update should start being sent to {device} shortly.",
+            "close": "If you close this dialog, the update will continue in the background.",
+            "in_progress": "The firmware update on {device} is in progress ({progress}%).",
+            "abort": "Abort Firmware Update",
+            "abort_failed": "Abort Failed",
+            "confirm_abort": "Are you sure you want to abort the firmware update on {device}?",
+            "finished_status": {
+              "ok": "Successfully updated firmware on {device}: {message}.",
+              "error": "Unable to update firmware on {device}: {message}.",
+              "try_again": "To attempt the firmware update again, select the new firmware file you would like to use.",
+              "done": "The firmware update is complete! If you want to attempt another firmware update on this device, please wait until it gets re-interviewed.",
+              "Error_Timeout": "Timed Out",
+              "Error_Checksum": "Checksum Error",
+              "Error_TransmissionFailed": "Transmission Failed",
+              "Error_InvalidManufacturerID": "Invalid Manufacturer ID",
+              "Error_InvalidFirmwareID": "Invalid Firmware ID",
+              "Error_InvalidFirmwareTarget": "Invalid Firmware Target",
+              "Error_InvalidHeaderInformation": "Invalid Header Information",
+              "Error_InvalidHeaderFormat": "Invalid Header Format",
+              "Error_InsufficientMemory": "Insufficient Memory",
+              "Error_InvalidHardwareVersion": "Invalid Hardware Version",
+              "OK_WaitingForActivation": "Waiting for Activiation",
+              "OK_NoRestart": "No Restart",
+              "OK_RestartPending": "Restart Pending"
+            }
           },
           "logs": {
             "title": "Z-Wave JS Logs",
@@ -3326,6 +3599,8 @@
               "source": "Source",
               "energy": "Energy",
               "cost": "Cost",
+              "previous_energy": "Previous Energy",
+              "previous_cost": "Previous Cost",
               "battery_total": "Battery total",
               "total_costs": "Total costs"
             },
@@ -3358,7 +3633,8 @@
               "go_to_energy_dashboard": "Go to the energy dashboard"
             },
             "energy_devices_graph": {
-              "energy_usage": "Energy usage"
+              "energy_usage": "Energy usage",
+              "previous_energy_usage": "Previous energy usage"
             },
             "carbon_consumed_gauge": {
               "card_indicates_energy_used": "This card indicates how much of the energy consumed by your home was generated using non-fossil fuels like solar, wind and nuclear. The higher, the better!",
@@ -3830,7 +4106,8 @@
             "month": "Month",
             "year": "Year",
             "previous": "Previous",
-            "next": "Next"
+            "next": "Next",
+            "compare": "Compare Data"
           }
         },
         "reload_lovelace": "Reload UI"
@@ -4442,6 +4719,9 @@
         }
       },
       "energy": {
+        "compare": {
+          "info": "You are comparing the period {start} with the period {end}"
+        },
         "setup": {
           "next": "Next",
           "back": "Back",
@@ -4461,6 +4741,11 @@
           "energy_sources_table_title": "Sources",
           "energy_devices_graph_title": "Monitor individual devices"
         }
+      },
+      "history": {
+        "start_search": "Start by selecting an area, device or entity above",
+        "add_all": "Add all entities",
+        "remove_all": "Remove all selections"
       }
     },
     "tips": {

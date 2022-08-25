@@ -12,10 +12,12 @@ import {
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
+import { isComponentLoaded } from "../../../common/config/is_component_loaded";
 import { fireEvent } from "../../../common/dom/fire_event";
 import { stopPropagation } from "../../../common/dom/stop_propagation";
 import { computeDomain } from "../../../common/entity/compute_domain";
 import { domainIcon } from "../../../common/entity/domain_icon";
+import { supportsFeature } from "../../../common/entity/supports-feature";
 import { stringCompare } from "../../../common/string/compare";
 import { LocalizeFunc } from "../../../common/translations/localize";
 import "../../../components/ha-alert";
@@ -24,8 +26,17 @@ import "../../../components/ha-expansion-panel";
 import "../../../components/ha-icon-picker";
 import "../../../components/ha-radio";
 import "../../../components/ha-select";
+import "../../../components/ha-settings-row";
 import "../../../components/ha-switch";
+import type { HaSwitch } from "../../../components/ha-switch";
 import "../../../components/ha-textfield";
+import {
+  CameraPreferences,
+  CAMERA_SUPPORT_STREAM,
+  fetchCameraPrefs,
+  STREAM_TYPE_HLS,
+  updateCameraPrefs,
+} from "../../../data/camera";
 import {
   ConfigEntry,
   deleteConfigEntry,
@@ -42,6 +53,7 @@ import {
   updateDeviceRegistryEntry,
 } from "../../../data/device_registry";
 import {
+  EntityRegistryEntry,
   EntityRegistryEntryUpdateParams,
   ExtEntityRegistryEntry,
   fetchEntityRegistry,
@@ -94,9 +106,21 @@ const OVERRIDE_DEVICE_CLASSES = {
   ],
 };
 
+const OVERRIDE_NUMBER_UNITS = {
+  temperature: ["°C", "°F", "K"],
+};
+
 const OVERRIDE_SENSOR_UNITS = {
   temperature: ["°C", "°F", "K"],
   pressure: ["hPa", "Pa", "kPa", "bar", "cbar", "mbar", "mmHg", "inHg", "psi"],
+};
+
+const OVERRIDE_WEATHER_UNITS = {
+  precipitation: ["mm", "in"],
+  pressure: ["hPa", "mbar", "mmHg", "inHg"],
+  temperature: ["°C", "°F"],
+  visibility: ["km", "mi"],
+  wind_speed: ["ft/s", "km/h", "kn", "mph", "m/s"],
 };
 
 const SWITCH_AS_DOMAINS = ["cover", "fan", "light", "lock", "siren"];
@@ -105,7 +129,7 @@ const SWITCH_AS_DOMAINS = ["cover", "fan", "light", "lock", "siren"];
 export class EntityRegistrySettings extends SubscribeMixin(LitElement) {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @property() public entry!: ExtEntityRegistryEntry;
+  @property({ type: Object }) public entry!: ExtEntityRegistryEntry;
 
   @state() private _name!: string;
 
@@ -119,9 +143,9 @@ export class EntityRegistrySettings extends SubscribeMixin(LitElement) {
 
   @state() private _areaId?: string | null;
 
-  @state() private _disabledBy!: string | null;
+  @state() private _disabledBy!: EntityRegistryEntry["disabled_by"];
 
-  @state() private _hiddenBy!: string | null;
+  @state() private _hiddenBy!: EntityRegistryEntry["hidden_by"];
 
   @state() private _device?: DeviceRegistryEntry;
 
@@ -129,9 +153,21 @@ export class EntityRegistrySettings extends SubscribeMixin(LitElement) {
 
   @state() private _unit_of_measurement?: string | null;
 
+  @state() private _precipitation_unit?: string | null;
+
+  @state() private _pressure_unit?: string | null;
+
+  @state() private _temperature_unit?: string | null;
+
+  @state() private _visibility_unit?: string | null;
+
+  @state() private _wind_speed_unit?: string | null;
+
   @state() private _error?: string;
 
   @state() private _submitting?: boolean;
+
+  @state() private _cameraPrefs?: CameraPreferences;
 
   private _origEntityId!: string;
 
@@ -190,10 +226,34 @@ export class EntityRegistrySettings extends SubscribeMixin(LitElement) {
 
     const domain = computeDomain(this.entry.entity_id);
 
-    if (domain === "sensor") {
+    if (domain === "camera" && isComponentLoaded(this.hass, "stream")) {
+      const stateObj: HassEntity | undefined =
+        this.hass.states[this.entry.entity_id];
+      if (
+        stateObj &&
+        supportsFeature(stateObj, CAMERA_SUPPORT_STREAM) &&
+        // The stream component for HLS streams supports a server-side pre-load
+        // option that client initiated WebRTC streams do not
+        stateObj.attributes.frontend_stream_type === STREAM_TYPE_HLS
+      ) {
+        this._fetchCameraPrefs();
+      }
+    }
+
+    if (domain === "number" || domain === "sensor") {
       const stateObj: HassEntity | undefined =
         this.hass.states[this.entry.entity_id];
       this._unit_of_measurement = stateObj?.attributes?.unit_of_measurement;
+    }
+
+    if (domain === "weather") {
+      const stateObj: HassEntity | undefined =
+        this.hass.states[this.entry.entity_id];
+      this._precipitation_unit = stateObj?.attributes?.precipitation_unit;
+      this._pressure_unit = stateObj?.attributes?.pressure_unit;
+      this._temperature_unit = stateObj?.attributes?.temperature_unit;
+      this._visibility_unit = stateObj?.attributes?.visibility_unit;
+      this._wind_speed_unit = stateObj?.attributes?.wind_speed_unit;
     }
 
     const deviceClasses: string[][] = OVERRIDE_DEVICE_CLASSES[domain];
@@ -306,7 +366,33 @@ export class EntityRegistrySettings extends SubscribeMixin(LitElement) {
               </ha-select>
             `
           : ""}
-        ${this._deviceClass &&
+        ${domain === "number" &&
+        this._deviceClass &&
+        stateObj?.attributes.unit_of_measurement &&
+        OVERRIDE_NUMBER_UNITS[this._deviceClass]?.includes(
+          stateObj?.attributes.unit_of_measurement
+        )
+          ? html`
+              <ha-select
+                .label=${this.hass.localize(
+                  "ui.dialogs.entity_registry.editor.unit_of_measurement"
+                )}
+                .value=${stateObj.attributes.unit_of_measurement}
+                naturalMenuWidth
+                fixedMenuPosition
+                @selected=${this._unitChanged}
+                @closed=${stopPropagation}
+              >
+                ${OVERRIDE_NUMBER_UNITS[this._deviceClass].map(
+                  (unit: string) => html`
+                    <mwc-list-item .value=${unit}>${unit}</mwc-list-item>
+                  `
+                )}
+              </ha-select>
+            `
+          : ""}
+        ${domain === "sensor" &&
+        this._deviceClass &&
         stateObj?.attributes.unit_of_measurement &&
         OVERRIDE_SENSOR_UNITS[this._deviceClass]?.includes(
           stateObj?.attributes.unit_of_measurement
@@ -330,6 +416,90 @@ export class EntityRegistrySettings extends SubscribeMixin(LitElement) {
               </ha-select>
             `
           : ""}
+        ${domain === "weather"
+          ? html`
+              <ha-select
+                .label=${this.hass.localize(
+                  "ui.dialogs.entity_registry.editor.precipitation_unit"
+                )}
+                .value=${this._precipitation_unit}
+                naturalMenuWidth
+                fixedMenuPosition
+                @selected=${this._precipitationUnitChanged}
+                @closed=${stopPropagation}
+              >
+                ${OVERRIDE_WEATHER_UNITS.precipitation.map(
+                  (unit: string) => html`
+                    <mwc-list-item .value=${unit}>${unit}</mwc-list-item>
+                  `
+                )}
+              </ha-select>
+              <ha-select
+                .label=${this.hass.localize(
+                  "ui.dialogs.entity_registry.editor.pressure_unit"
+                )}
+                .value=${this._pressure_unit}
+                naturalMenuWidth
+                fixedMenuPosition
+                @selected=${this._pressureUnitChanged}
+                @closed=${stopPropagation}
+              >
+                ${OVERRIDE_WEATHER_UNITS.pressure.map(
+                  (unit: string) => html`
+                    <mwc-list-item .value=${unit}>${unit}</mwc-list-item>
+                  `
+                )}
+              </ha-select>
+              <ha-select
+                .label=${this.hass.localize(
+                  "ui.dialogs.entity_registry.editor.temperature_unit"
+                )}
+                .value=${this._temperature_unit}
+                naturalMenuWidth
+                fixedMenuPosition
+                @selected=${this._temperatureUnitChanged}
+                @closed=${stopPropagation}
+              >
+                ${OVERRIDE_WEATHER_UNITS.temperature.map(
+                  (unit: string) => html`
+                    <mwc-list-item .value=${unit}>${unit}</mwc-list-item>
+                  `
+                )}
+              </ha-select>
+              <ha-select
+                .label=${this.hass.localize(
+                  "ui.dialogs.entity_registry.editor.visibility_unit"
+                )}
+                .value=${this._visibility_unit}
+                naturalMenuWidth
+                fixedMenuPosition
+                @selected=${this._visibilityUnitChanged}
+                @closed=${stopPropagation}
+              >
+                ${OVERRIDE_WEATHER_UNITS.visibility.map(
+                  (unit: string) => html`
+                    <mwc-list-item .value=${unit}>${unit}</mwc-list-item>
+                  `
+                )}
+              </ha-select>
+              <ha-select
+                .label=${this.hass.localize(
+                  "ui.dialogs.entity_registry.editor.wind_speed_unit"
+                )}
+                .value=${this._wind_speed_unit}
+                naturalMenuWidth
+                fixedMenuPosition
+                @selected=${this._windSpeedUnitChanged}
+                @closed=${stopPropagation}
+              >
+                ${OVERRIDE_WEATHER_UNITS.wind_speed.map(
+                  (unit: string) => html`
+                    <mwc-list-item .value=${unit}>${unit}</mwc-list-item>
+                  `
+                )}
+              </ha-select>
+            `
+          : ""}
         ${domain === "switch"
           ? html`<ha-select
               .label=${this.hass.localize(
@@ -340,9 +510,23 @@ export class EntityRegistrySettings extends SubscribeMixin(LitElement) {
               @selected=${this._switchAsChanged}
               @closed=${stopPropagation}
             >
-              <mwc-list-item value="switch" selected>
-                ${domainToName(this.hass.localize, "switch")}</mwc-list-item
+              <mwc-list-item
+                value="switch"
+                .selected=${!this._deviceClass ||
+                this._deviceClass === "switch"}
               >
+                ${this.hass.localize(
+                  "ui.dialogs.entity_registry.editor.device_classes.switch.switch"
+                )}
+              </mwc-list-item>
+              <mwc-list-item
+                value="outlet"
+                .selected=${this._deviceClass === "outlet"}
+              >
+                ${this.hass.localize(
+                  "ui.dialogs.entity_registry.editor.device_classes.switch.outlet"
+                )}
+              </mwc-list-item>
               <li divider role="separator"></li>
               ${this._switchAsDomainsSorted(
                 SWITCH_AS_DOMAINS,
@@ -392,7 +576,27 @@ export class EntityRegistrySettings extends SubscribeMixin(LitElement) {
               @value-changed=${this._areaPicked}
             ></ha-area-picker>`
           : ""}
-
+        ${this._cameraPrefs
+          ? html`
+              <ha-settings-row>
+                <span slot="heading"
+                  >${this.hass.localize(
+                    "ui.dialogs.entity_registry.editor.preload_stream"
+                  )}</span
+                >
+                <span slot="description"
+                  >${this.hass.localize(
+                    "ui.dialogs.entity_registry.editor.preload_stream_description"
+                  )}</span
+                >
+                <ha-switch
+                  .checked=${this._cameraPrefs.preload_stream}
+                  @change=${this._handleCameraPrefsChanged}
+                >
+                </ha-switch>
+              </ha-settings-row>
+            `
+          : ""}
         <ha-expansion-panel
           .header=${this.hass.localize(
             "ui.dialogs.entity_registry.editor.advanced"
@@ -427,9 +631,10 @@ export class EntityRegistrySettings extends SubscribeMixin(LitElement) {
                 name="hiddendisabled"
                 value="enabled"
                 .checked=${!this._hiddenBy && !this._disabledBy}
-                .disabled=${(this._hiddenBy && this._hiddenBy !== "user") ||
-                this._device?.disabled_by ||
-                (this._disabledBy &&
+                .disabled=${(this._hiddenBy !== null &&
+                  this._hiddenBy !== "user") ||
+                !!this._device?.disabled_by ||
+                (this._disabledBy !== null &&
                   this._disabledBy !== "user" &&
                   this._disabledBy !== "integration")}
                 @change=${this._viewStatusChanged}
@@ -566,16 +771,69 @@ export class EntityRegistrySettings extends SubscribeMixin(LitElement) {
     this._unit_of_measurement = ev.target.value;
   }
 
+  private _precipitationUnitChanged(ev): void {
+    this._error = undefined;
+    this._precipitation_unit = ev.target.value;
+  }
+
+  private _pressureUnitChanged(ev): void {
+    this._error = undefined;
+    this._pressure_unit = ev.target.value;
+  }
+
+  private _temperatureUnitChanged(ev): void {
+    this._error = undefined;
+    this._temperature_unit = ev.target.value;
+  }
+
+  private _visibilityUnitChanged(ev): void {
+    this._error = undefined;
+    this._visibility_unit = ev.target.value;
+  }
+
+  private _windSpeedUnitChanged(ev): void {
+    this._error = undefined;
+    this._wind_speed_unit = ev.target.value;
+  }
+
   private _switchAsChanged(ev): void {
     if (ev.target.value === "") {
       return;
     }
-    this._switchAs = ev.target.value;
+
+    // If value is "outlet" that means the user kept the "switch" domain, but actually changed
+    // the device_class of the switch to "outlet".
+    const switchAs = ev.target.value === "outlet" ? "switch" : ev.target.value;
+    this._switchAs = switchAs;
+
+    if (ev.target.value === "outlet" || ev.target.value === "switch") {
+      this._deviceClass = ev.target.value;
+    }
   }
 
   private _areaPicked(ev: CustomEvent) {
     this._error = undefined;
     this._areaId = ev.detail.value;
+  }
+
+  private async _fetchCameraPrefs() {
+    this._cameraPrefs = await fetchCameraPrefs(this.hass, this.entry.entity_id);
+  }
+
+  private async _handleCameraPrefsChanged(ev) {
+    const checkbox = ev.currentTarget as HaSwitch;
+    try {
+      this._cameraPrefs = await updateCameraPrefs(
+        this.hass,
+        this.entry.entity_id,
+        {
+          preload_stream: checkbox.checked!,
+        }
+      );
+    } catch (err: any) {
+      showAlertDialog(this, { text: err.message });
+      checkbox.checked = !checkbox.checked;
+    }
   }
 
   private _viewStatusChanged(ev: CustomEvent): void {
@@ -634,11 +892,28 @@ export class EntityRegistrySettings extends SubscribeMixin(LitElement) {
       params.hidden_by = this._hiddenBy;
     }
     if (
-      domain === "sensor" &&
+      (domain === "number" || domain === "number") &&
       stateObj?.attributes?.unit_of_measurement !== this._unit_of_measurement
     ) {
-      params.options_domain = "sensor";
+      params.options_domain = domain;
       params.options = { unit_of_measurement: this._unit_of_measurement };
+    }
+    if (
+      domain === "weather" &&
+      (stateObj?.attributes?.precipitation_unit !== this._precipitation_unit ||
+        stateObj?.attributes?.pressure_unit !== this._pressure_unit ||
+        stateObj?.attributes?.temperature_unit !== this._temperature_unit ||
+        stateObj?.attributes?.visbility_unit !== this._visibility_unit ||
+        stateObj?.attributes?.wind_speed_unit !== this._wind_speed_unit)
+    ) {
+      params.options_domain = "weather";
+      params.options = {
+        precipitation_unit: this._precipitation_unit,
+        pressure_unit: this._pressure_unit,
+        temperature_unit: this._temperature_unit,
+        visibility_unit: this._visibility_unit,
+        wind_speed_unit: this._wind_speed_unit,
+      };
     }
     try {
       const result = await updateEntityRegistryEntry(
@@ -779,12 +1054,10 @@ export class EntityRegistrySettings extends SubscribeMixin(LitElement) {
           bottom: 0;
           width: 100%;
           box-sizing: border-box;
-          border-top: 1px solid
-            var(--mdc-dialog-scroll-divider-color, rgba(0, 0, 0, 0.12));
           display: flex;
-          justify-content: space-between;
-          padding: 8px;
-          padding-bottom: max(env(safe-area-inset-bottom), 8px);
+          padding: 0 24px 24px 24px;
+          justify-content: flex-end;
+          padding-bottom: max(env(safe-area-inset-bottom), 24px);
           background-color: var(--mdc-theme-surface, #fff);
         }
         ha-select {
@@ -793,6 +1066,12 @@ export class EntityRegistrySettings extends SubscribeMixin(LitElement) {
         }
         ha-switch {
           margin-right: 16px;
+        }
+        ha-settings-row {
+          padding: 0;
+        }
+        ha-settings-row ha-switch {
+          margin-right: 0;
         }
         ha-textfield {
           display: block;

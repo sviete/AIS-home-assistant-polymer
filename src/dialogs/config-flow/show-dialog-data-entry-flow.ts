@@ -10,12 +10,14 @@ import {
   DataEntryFlowStepMenu,
   DataEntryFlowStepProgress,
 } from "../../data/data_entry_flow";
-import { IntegrationManifest } from "../../data/integration";
-import { HomeAssistant } from "../../types";
+import type { IntegrationManifest } from "../../data/integration";
+import type { SupportedBrandHandler } from "../../data/supported_brands";
+import type { HomeAssistant } from "../../types";
 
 export interface FlowHandlers {
   integrations: string[];
   helpers: string[];
+  supportedBrands: Record<string, SupportedBrandHandler>;
 }
 export interface FlowConfig {
   loadDevicesAndAreas: boolean;
@@ -131,6 +133,7 @@ export interface DataEntryFlowDialogParams {
   }) => void;
   flowConfig: FlowConfig;
   showAdvanced?: boolean;
+  dialogParentElement?: HTMLElement;
 }
 
 export const loadDataEntryFlowDialog = () => import("./dialog-data-entry-flow");
@@ -146,6 +149,7 @@ export const showFlowDialog = (
     dialogParams: {
       ...dialogParams,
       flowConfig,
+      dialogParentElement: element,
     },
   });
 };

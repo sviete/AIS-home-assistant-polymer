@@ -1,5 +1,6 @@
 import "@polymer/paper-item";
 import "@polymer/paper-item/paper-icon-item";
+import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
@@ -104,11 +105,8 @@ class StepFlowPickFlow extends LitElement {
           margin: 16px 0;
         }
         h2 {
-          padding-right: 66px;
-        }
-        :host-context([style*="direction: rtl;"]) h2 {
-          padding-right: auto !important;
-          padding-left: 66px !important;
+          padding-inline-end: 66px;
+          direction: var(--direction);
         }
         @media all and (max-height: 900px) {
           div {

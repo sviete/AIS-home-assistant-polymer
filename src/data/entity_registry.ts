@@ -13,15 +13,16 @@ export interface EntityRegistryEntry {
   config_entry_id: string | null;
   device_id: string | null;
   area_id: string | null;
-  disabled_by: string | null;
-  hidden_by: string | null;
+  disabled_by: "user" | "device" | "integration" | "config_entry" | null;
+  hidden_by: Exclude<EntityRegistryEntry["disabled_by"], "config_entry">;
   entity_category: "config" | "diagnostic" | null;
+  has_entity_name: boolean;
+  original_name?: string;
 }
 
 export interface ExtEntityRegistryEntry extends EntityRegistryEntry {
   unique_id: string;
   capabilities: Record<string, unknown>;
-  original_name?: string;
   original_icon?: string;
   device_class?: string;
   original_device_class?: string;
@@ -33,6 +34,22 @@ export interface UpdateEntityRegistryEntryResult {
   require_restart?: boolean;
 }
 
+export interface SensorEntityOptions {
+  unit_of_measurement?: string | null;
+}
+
+export interface NumberEntityOptions {
+  unit_of_measurement?: string | null;
+}
+
+export interface WeatherEntityOptions {
+  precipitation_unit?: string | null;
+  pressure_unit?: string | null;
+  temperature_unit?: string | null;
+  visibility_unit?: string | null;
+  wind_speed_unit?: string | null;
+}
+
 export interface EntityRegistryEntryUpdateParams {
   name?: string | null;
   icon?: string | null;
@@ -42,9 +59,7 @@ export interface EntityRegistryEntryUpdateParams {
   hidden_by: string | null;
   new_entity_id?: string;
   options_domain?: string;
-  options?: {
-    unit_of_measurement?: string | null;
-  };
+  options?: SensorEntityOptions | WeatherEntityOptions;
 }
 
 export const findBatteryEntity = (
@@ -145,3 +160,16 @@ export const sortEntityRegistryByName = (entries: EntityRegistryEntry[]) =>
   entries.sort((entry1, entry2) =>
     caseInsensitiveStringCompare(entry1.name || "", entry2.name || "")
   );
+
+export const getEntityPlatformLookup = (
+  entities: EntityRegistryEntry[]
+): Record<string, string> => {
+  const entityLookup = {};
+  for (const confEnt of entities) {
+    if (!confEnt.platform) {
+      continue;
+    }
+    entityLookup[confEnt.entity_id] = confEnt.platform;
+  }
+  return entityLookup;
+};

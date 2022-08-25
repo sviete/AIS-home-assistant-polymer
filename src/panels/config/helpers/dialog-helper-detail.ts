@@ -1,4 +1,5 @@
 import "@material/mwc-button/mwc-button";
+import { RequestSelectedDetail } from "@material/mwc-list/mwc-list-item-base";
 import "@polymer/paper-item/paper-icon-item";
 import "@polymer/paper-tooltip/paper-tooltip";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
@@ -6,8 +7,9 @@ import { customElement, property, query, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
 import { isComponentLoaded } from "../../../common/config/is_component_loaded";
 import { dynamicElement } from "../../../common/dom/dynamic-element-directive";
-import "../../../components/ha-dialog";
+import { shouldHandleRequestSelectedEvent } from "../../../common/mwc/handle-request-selected-event";
 import "../../../components/ha-circular-progress";
+import "../../../components/ha-dialog";
 import { getConfigFlowHandlers } from "../../../data/config_flow";
 import { createCounter } from "../../../data/counter";
 import { createInputBoolean } from "../../../data/input_boolean";
@@ -16,10 +18,12 @@ import { createInputDateTime } from "../../../data/input_datetime";
 import { createInputNumber } from "../../../data/input_number";
 import { createInputSelect } from "../../../data/input_select";
 import { createInputText } from "../../../data/input_text";
+import { domainToName } from "../../../data/integration";
 import { createTimer } from "../../../data/timer";
 import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
 import { haStyleDialog } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
+import { brandsUrl } from "../../../util/brands-url";
 import { Helper } from "./const";
 import "./forms/ha-counter-form";
 import "./forms/ha-input_boolean-form";
@@ -29,9 +33,7 @@ import "./forms/ha-input_number-form";
 import "./forms/ha-input_select-form";
 import "./forms/ha-input_text-form";
 import "./forms/ha-timer-form";
-import { domainToName } from "../../../data/integration";
 import type { ShowDialogHelperDetailParams } from "./show-dialog-helper-detail";
-import { brandsUrl } from "../../../util/brands-url";
 
 const HELPERS = {
   input_boolean: createInputBoolean,
@@ -81,11 +83,15 @@ export class DialogHelperDetail extends LitElement {
 
   public closeDialog(): void {
     this._opened = false;
-    this._error = "";
+    this._error = undefined;
+    this._domain = undefined;
     this._params = undefined;
   }
 
   protected render(): TemplateResult {
+    if (!this._opened) {
+      return html``;
+    }
     let content: TemplateResult;
 
     if (this._domain) {
@@ -133,45 +139,54 @@ export class DialogHelperDetail extends LitElement {
       items.sort((a, b) => a[1].localeCompare(b[1]));
 
       content = html`
-        ${items.map(([domain, label]) => {
-          // Only OG helpers need to be loaded prior adding one
-          const isLoaded =
-            !(domain in HELPERS) || isComponentLoaded(this.hass, domain);
-          return html`
-            <mwc-list-item
-              .disabled=${!isLoaded}
-              .domain=${domain}
-              @click=${this._domainPicked}
-              @keydown=${this._handleEnter}
-              dialogInitialFocus
-              graphic="icon"
-            >
-              <img
-                slot="graphic"
-                loading="lazy"
-                src=${brandsUrl({
-                  domain,
-                  type: "icon",
-                  useFallback: true,
-                  darkOptimized: this.hass.themes?.darkMode,
-                })}
-                referrerpolicy="no-referrer"
-              />
-              <span class="item-text"> ${label} </span>
-            </mwc-list-item>
-            ${!isLoaded
-              ? html`
-                  <paper-tooltip animation-delay="0"
-                    >${this.hass.localize(
-                      "ui.dialogs.helper_settings.platform_not_loaded",
-                      "platform",
-                      domain
-                    )}</paper-tooltip
-                  >
-                `
-              : ""}
-          `;
-        })}
+        <mwc-list
+          innerRole="listbox"
+          itemRoles="option"
+          innerAriaLabel=${this.hass.localize(
+            "ui.panel.config.helpers.dialog.create_helper"
+          )}
+          rootTabbable
+          dialogInitialFocus
+        >
+          ${items.map(([domain, label]) => {
+            // Only OG helpers need to be loaded prior adding one
+            const isLoaded =
+              !(domain in HELPERS) || isComponentLoaded(this.hass, domain);
+            return html`
+              <mwc-list-item
+                .disabled=${!isLoaded}
+                .domain=${domain}
+                @request-selected=${this._domainPicked}
+                graphic="icon"
+              >
+                <img
+                  slot="graphic"
+                  loading="lazy"
+                  src=${brandsUrl({
+                    domain,
+                    type: "icon",
+                    useFallback: true,
+                    darkOptimized: this.hass.themes?.darkMode,
+                  })}
+                  aria-hidden="true"
+                  referrerpolicy="no-referrer"
+                />
+                <span class="item-text"> ${label} </span>
+              </mwc-list-item>
+              ${!isLoaded
+                ? html`
+                    <paper-tooltip animation-delay="0"
+                      >${this.hass.localize(
+                        "ui.dialogs.helper_settings.platform_not_loaded",
+                        "platform",
+                        domain
+                      )}</paper-tooltip
+                    >
+                  `
+                : ""}
+            `;
+          })}
+        </mwc-list>
         <mwc-button slot="primaryAction" @click=${this.closeDialog}>
           ${this.hass!.localize("ui.common.cancel")}
         </mwc-button>
@@ -180,20 +195,20 @@ export class DialogHelperDetail extends LitElement {
 
     return html`
       <ha-dialog
-        .open=${this._opened}
+        open
         @closed=${this.closeDialog}
         class=${classMap({ "button-left": !this._domain })}
         scrimClickAction
         escapeKeyAction
         .heading=${this._domain
           ? this.hass.localize(
-              "ui.panel.config.helpers.dialog.add_platform",
+              "ui.panel.config.helpers.dialog.create_platform",
               "platform",
               this.hass.localize(
                 `ui.panel.config.helpers.types.${this._domain}`
               ) || this._domain
             )
-          : this.hass.localize("ui.panel.config.helpers.dialog.add_helper")}
+          : this.hass.localize("ui.panel.config.helpers.dialog.create_helper")}
       >
         ${content}
       </ha-dialog>
@@ -220,16 +235,10 @@ export class DialogHelperDetail extends LitElement {
     }
   }
 
-  private _handleEnter(ev: KeyboardEvent) {
-    if (ev.keyCode !== 13) {
+  private _domainPicked(ev: CustomEvent<RequestSelectedDetail>): void {
+    if (!shouldHandleRequestSelectedEvent(ev)) {
       return;
     }
-    ev.stopPropagation();
-    ev.preventDefault();
-    this._domainPicked(ev);
-  }
-
-  private _domainPicked(ev: Event): void {
     const domain = (ev.currentTarget! as any).domain;
 
     if (domain in HELPERS) {

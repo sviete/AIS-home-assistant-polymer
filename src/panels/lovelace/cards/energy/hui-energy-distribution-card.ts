@@ -315,7 +315,11 @@ class HuiEnergyDistrubutionCard
                         ${formatNumber(gasUsage || 0, this.hass.locale, {
                           maximumFractionDigits: 1,
                         })}
-                        ${getEnergyGasUnit(this.hass, prefs) || "m³"}
+                        ${getEnergyGasUnit(
+                          this.hass,
+                          prefs,
+                          this._data.statsMetadata
+                        ) || "m³"}
                       </div>
                       <svg width="80" height="30">
                         <path d="M40 0 v30" id="gas" />
@@ -485,8 +489,8 @@ class HuiEnergyDistrubutionCard
                       <ha-svg-icon
                         class="small"
                         .path=${mdiArrowUp}
-                      ></ha-svg-icon>
-                      ${formatNumber(totalBatteryOut || 0, this.hass.locale, {
+                      ></ha-svg-icon
+                      >${formatNumber(totalBatteryOut || 0, this.hass.locale, {
                         maximumFractionDigits: 1,
                       })}
                       kWh</span
@@ -693,8 +697,12 @@ class HuiEnergyDistrubutionCard
     :host {
       --mdc-icon-size: 24px;
     }
+    ha-card {
+      min-width: 210px;
+    }
     .card-content {
       position: relative;
+      direction: ltr;
     }
     .lines {
       position: absolute;

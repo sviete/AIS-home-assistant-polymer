@@ -18,7 +18,6 @@ import {
 import { HomeAssistant } from "../../../types";
 import { showSystemLogDetailDialog } from "./show-dialog-system-log-detail";
 import { formatSystemLogTime } from "./util";
-import { computeRTLDirection } from "../../../common/util/compute_rtl";
 
 @customElement("system-log-card")
 export class SystemLogCard extends LitElement {
@@ -86,7 +85,7 @@ export class SystemLogCard extends LitElement {
             : html`
                 ${this._items.length === 0
                   ? html`
-                      <div class="card-content">
+                      <div class="card-content empty-content">
                         ${this.hass.localize("ui.panel.config.logs.no_issues")}
                       </div>
                     `
@@ -103,7 +102,7 @@ export class SystemLogCard extends LitElement {
                         <paper-item @click=${this._openLog} .logItem=${item}>
                           <paper-item-body two-line>
                             <div class="row">${item.message[0]}</div>
-                            <div secondary>
+                            <div class="row-secondary" secondary>
                               ${this._timestamp(item)} –
                               ${html`(<span class=${item.level.toLowerCase()}
                                   >${this.hass.localize(
@@ -132,7 +131,7 @@ export class SystemLogCard extends LitElement {
                       `
                     )}
 
-                <div class="card-actions" dir=${computeRTLDirection(this.hass)}>
+                <div class="card-actions">
                   <ha-call-service-button
                     .hass=${this.hass}
                     domain="system_log"
@@ -206,8 +205,14 @@ export class SystemLogCard extends LitElement {
         color: var(--warning-color);
       }
 
-      :host-context([style*="direction: rtl;"]) .card-actions {
-        direction: rtl;
+      .card-actions,
+      .empty-content {
+        direction: var(--direction);
+      }
+
+      .row-secondary {
+        direction: var(--direction);
+        text-align: left;
       }
     `;
   }

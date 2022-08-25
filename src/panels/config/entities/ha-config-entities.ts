@@ -15,6 +15,7 @@ import { HassEntity, UnsubscribeFunc } from "home-assistant-js-websocket";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, query, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
+import { ifDefined } from "lit/directives/if-defined";
 import { styleMap } from "lit/directives/style-map";
 import memoize from "memoize-one";
 import type { HASSDomEvent } from "../../../common/dom/fire_event";
@@ -61,6 +62,7 @@ import { SubscribeMixin } from "../../../mixins/subscribe-mixin";
 import { haStyle } from "../../../resources/styles";
 import type { HomeAssistant, Route } from "../../../types";
 import { configSections } from "../ha-panel-config";
+import "../integrations/ha-integration-overflow-menu";
 import { DialogEntityEditor } from "./dialog-entity-editor";
 import {
   loadEntityEditorDialog,
@@ -84,11 +86,11 @@ export interface EntityRow extends StateEntity {
 export class HaConfigEntities extends SubscribeMixin(LitElement) {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @property() public isWide!: boolean;
+  @property({ type: Boolean }) public isWide!: boolean;
 
-  @property() public narrow!: boolean;
+  @property({ type: Boolean }) public narrow!: boolean;
 
-  @property() public route!: Route;
+  @property({ attribute: false }) public route!: Route;
 
   @state() private _entities?: EntityRegistryEntry[];
 
@@ -173,7 +175,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         type: "icon",
         template: (_, entry: EntityRow) => html`
           <ha-state-icon
-            .title=${entry.entity?.state}
+            title=${ifDefined(entry.entity?.state)}
             slot="item-icon"
             .state=${entry.entity}
           ></ha-state-icon>
@@ -236,12 +238,10 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         hidden: narrow || !showDisabled,
         filterable: true,
         width: "15%",
-        template: (disabled_by) =>
-          this.hass.localize(
-            `ui.panel.config.devices.disabled_by.${disabled_by}`
-          ) ||
-          disabled_by ||
-          "—",
+        template: (disabled_by: EntityRegistryEntry["disabled_by"]) =>
+          disabled_by === null
+            ? "—"
+            : this.hass.localize(`config_entry.disabled_by.${disabled_by}`),
       },
       status: {
         title: this.hass.localize(
@@ -534,6 +534,10 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         id="entity_id"
         .hasFab=${includeZHAFab}
       >
+        <ha-integration-overflow-menu
+          .hass=${this.hass}
+          slot="toolbar-icon"
+        ></ha-integration-overflow-menu>
         ${this._selectedEntities.length
           ? html`
               <div
@@ -739,6 +743,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
           readonly: true,
           selectable: false,
           entity_category: null,
+          has_entity_name: false,
         });
       }
       if (changed) {
@@ -979,6 +984,8 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         .selected-txt {
           font-weight: bold;
           padding-left: 16px;
+          padding-inline-start: 16px;
+          direction: var(--direction);
         }
         .table-header .selected-txt {
           margin-top: 20px;
@@ -988,6 +995,8 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         }
         .header-toolbar .header-btns {
           margin-right: -12px;
+          margin-inline-end: -12px;
+          direction: var(--direction);
         }
         .header-btns {
           display: flex;
@@ -1002,9 +1011,17 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         .clear {
           color: var(--primary-color);
           padding-left: 8px;
+          padding-inline-start: 8px;
           text-transform: uppercase;
+          direction: var(--direction);
         }
       `,
     ];
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "ha-config-entities": HaConfigEntities;
   }
 }

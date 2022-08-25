@@ -28,6 +28,7 @@ import { fireEvent } from "../../common/dom/fire_event";
 import { computeRTLDirection } from "../../common/util/compute_rtl";
 import { debounce } from "../../common/util/debounce";
 import { getSignedPath } from "../../data/auth";
+import { UNAVAILABLE_STATES } from "../../data/entity";
 import type { MediaPlayerItem } from "../../data/media-player";
 import {
   browseMediaPlayer,
@@ -42,9 +43,14 @@ import { showAlertDialog } from "../../dialogs/generic/show-dialog-box";
 import { installResizeObserver } from "../../panels/lovelace/common/install-resize-observer";
 import { haStyle } from "../../resources/styles";
 import type { HomeAssistant } from "../../types";
-import { brandsUrl, extractDomainFromBrandUrl } from "../../util/brands-url";
+import {
+  brandsUrl,
+  extractDomainFromBrandUrl,
+  isBrandUrl,
+} from "../../util/brands-url";
 import { documentationUrl } from "../../util/documentation-url";
 import "../entity/ha-entity-picker";
+import "../ha-alert";
 import "../ha-button-menu";
 import "../ha-card";
 import "../ha-circular-progress";
@@ -110,9 +116,6 @@ export class HaMediaPlayerBrowse extends LitElement {
 
   private _resizeObserver?: ResizeObserver;
 
-  // @ts-ignore
-  private _intersectionObserver?: IntersectionObserver;
-
   public connectedCallback(): void {
     super.connectedCallback();
     this.updateComplete.then(() => this._attachResizeObserver());
@@ -121,9 +124,6 @@ export class HaMediaPlayerBrowse extends LitElement {
   public disconnectedCallback(): void {
     if (this._resizeObserver) {
       this._resizeObserver.disconnect();
-    }
-    if (this._intersectionObserver) {
-      this._intersectionObserver.disconnect();
     }
   }
 
@@ -246,6 +246,16 @@ export class HaMediaPlayerBrowse extends LitElement {
             ],
             replace: true,
           });
+        } else if (
+          err.code === "entity_not_found" &&
+          UNAVAILABLE_STATES.includes(this.hass.states[this.entityId]?.state)
+        ) {
+          this._setError({
+            message: this.hass.localize(
+              `ui.components.media-browser.media_player_unavailable`
+            ),
+            code: "entity_not_found",
+          });
         } else {
           this._setError(err);
         }
@@ -305,7 +315,11 @@ export class HaMediaPlayerBrowse extends LitElement {
   protected render(): TemplateResult {
     if (this._error) {
       return html`
-        <div class="container">${this._renderError(this._error)}</div>
+        <div class="container">
+          <ha-alert alert-type="error">
+            ${this._renderError(this._error)}
+          </ha-alert>
+        </div>
       `;
     }
 
@@ -420,7 +434,9 @@ export class HaMediaPlayerBrowse extends LitElement {
               this._error
                 ? html`
                     <div class="container">
-                      ${this._renderError(this._error)}
+                      <ha-alert alert-type="error">
+                        ${this._renderError(this._error)}
+                      </ha-alert>
                     </div>
                   `
                 : isTTSMediaSource(currentItem.media_content_id)
@@ -463,7 +479,10 @@ export class HaMediaPlayerBrowse extends LitElement {
                       .layout=${grid({
                         itemSize: {
                           width: "175px",
-                          height: "225px",
+                          height:
+                            childrenMediaClass.thumbnail_ratio === "portrait"
+                              ? "312px"
+                              : "225px",
                         },
                         gap: "16px",
                         flex: { preserve: "aspect-ratio" },
@@ -545,6 +564,8 @@ export class HaMediaPlayerBrowse extends LitElement {
                   <div
                     class="${["app", "directory"].includes(child.media_class)
                       ? "centered-image"
+                      : ""} ${isBrandUrl(child.thumbnail)
+                      ? "brand-image"
                       : ""} image"
                     style="background-image: ${until(backgroundImage, "")}"
                   ></div>
@@ -643,7 +664,7 @@ export class HaMediaPlayerBrowse extends LitElement {
       return (await getSignedPath(this.hass, thumbnailUrl)).path;
     }
 
-    if (thumbnailUrl.startsWith("https://brands.home-assistant.io")) {
+    if (isBrandUrl(thumbnailUrl)) {
       // The backend is not aware of the theme used by the users,
       // so we rewrite the URL to show a proper icon
       thumbnailUrl = brandsUrl({
@@ -1030,6 +1051,10 @@ export class HaMediaPlayerBrowse extends LitElement {
         .centered-image {
           margin: 0 8px;
           background-size: contain;
+        }
+
+        .brand-image {
+          background-size: 40%;
         }
 
         .children ha-card .icon-holder {

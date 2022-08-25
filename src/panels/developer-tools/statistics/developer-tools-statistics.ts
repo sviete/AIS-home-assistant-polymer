@@ -103,6 +103,9 @@ class HaPanelDevStatistics extends SubscribeMixin(LitElement) {
       },
       fix: {
         title: "",
+        label: this.hass.localize(
+          "ui.panel.developer-tools.tabs.statistics.fix_issue.fix"
+        ),
         template: (_, data: any) =>
           html`${data.issues
             ? html`<mwc-button @click=${this._fixIssue} .data=${data.issues}>
@@ -110,7 +113,7 @@ class HaPanelDevStatistics extends SubscribeMixin(LitElement) {
                   "ui.panel.developer-tools.tabs.statistics.fix_issue.fix"
                 )}
               </mwc-button>`
-            : ""}`,
+            : "—"}`,
         width: "113px",
       },
       actions: {
@@ -278,7 +281,7 @@ class HaPanelDevStatistics extends SubscribeMixin(LitElement) {
         });
         break;
       case "unsupported_state_class":
-        showAlertDialog(this, {
+        showConfirmationDialog(this, {
           title: "Unsupported state class",
           text: html`The state class of this entity, ${issue.data.state_class}
             is not supported. <br />Statistics can not be generated until this
@@ -293,7 +296,15 @@ class HaPanelDevStatistics extends SubscribeMixin(LitElement) {
               rel="noreferrer noopener"
             >
               developer documentation</a
-            >.`,
+            >. If the state class has permanently changed, you may want to
+            remove the long term statistics of it from your database.<br /><br />Do
+            you want to permanently remove the long term statistics of
+            ${issue.data.statistic_id} from your database?`,
+          confirmText: this.hass.localize("ui.common.remove"),
+          confirm: async () => {
+            await clearStatistics(this.hass, [issue.data.statistic_id]);
+            this._validateStatistics();
+          },
         });
         break;
       case "unsupported_unit_metadata":
