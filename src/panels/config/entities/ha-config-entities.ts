@@ -68,10 +68,10 @@ import type { HomeAssistant, Route } from "../../../types";
 import { configSections } from "../ha-panel-config";
 import "../integrations/ha-integration-overflow-menu";
 
-export interface StateEntity extends Omit<EntityRegistryEntry, "unique_id"> {
+export interface StateEntity extends Omit<EntityRegistryEntry, "id"> {
   readonly?: boolean;
   selectable?: boolean;
-  unique_id?: string;
+  id?: string;
 }
 
 export interface EntityRow extends StateEntity {
@@ -373,7 +373,7 @@ export class HaConfigEntities extends SubscribeMixin(LitElement) {
         );
       }
       // ais dom
-      let aisInternalEntity = 0;
+      const aisInternalEntity = 0;
       if (!showHidden) {
         filteredEntities = filteredEntities.filter(
           (entity) => !entity.hidden_by
