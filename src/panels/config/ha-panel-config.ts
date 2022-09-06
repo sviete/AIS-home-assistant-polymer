@@ -352,7 +352,7 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       translationKey: "hardware",
       iconPath: mdiMemory,
       iconColor: "#301A8E",
-      component: "hassio",
+      components: ["hassio", "hardware"],
     },
   ],
   about: [
