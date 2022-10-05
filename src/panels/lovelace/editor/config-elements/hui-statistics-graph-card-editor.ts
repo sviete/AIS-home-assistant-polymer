@@ -32,6 +32,7 @@ import { baseLovelaceCardConfig } from "../structs/base-card-struct";
 import { entitiesConfigStruct } from "../structs/entities-struct";
 import {
   getStatisticMetadata,
+  isExternalStatistic,
   StatisticsMetaData,
   statisticsMetaHasType,
 } from "../../../../data/recorder";
@@ -132,9 +133,8 @@ export class HuiStatisticsGraphCardEditor
                     disabled:
                       period === "5minute" &&
                       // External statistics don't support 5-minute statistics.
-                      // External statistics is formatted as <domain>:<object_id>
                       statisticIds?.some((statistic_id) =>
-                        statistic_id.includes(":")
+                        isExternalStatistic(statistic_id)
                       ),
                   })),
                 },
@@ -205,7 +205,7 @@ export class HuiStatisticsGraphCardEditor
       ...this._config,
       stat_types: configured_stat_types,
     };
-    const displayUnit = this._metaDatas?.[0]?.display_unit_of_measurement;
+    const unitClass = this._metaDatas?.[0]?.unit_class;
 
     return html`
       <ha-form
@@ -223,7 +223,7 @@ export class HuiStatisticsGraphCardEditor
           .pickedStatisticLabel=${this.hass!.localize(
             "ui.panel.lovelace.editor.card.statistics-graph.picked_statistic"
           )}
-          .includeDisplayUnitOfMeasurement=${displayUnit}
+          .includeUnitClass=${unitClass}
           .ignoreRestrictionsOnFirstStatistic=${true}
           .value=${this._configEntities}
           .configValue=${"entities"}
@@ -240,7 +240,9 @@ export class HuiStatisticsGraphCardEditor
   private async _entitiesChanged(ev: CustomEvent): Promise<void> {
     const config = { ...this._config!, entities: ev.detail.value };
     if (
-      config.entities?.some((statistic_id) => statistic_id.includes(":")) &&
+      config.entities?.some((statistic_id) =>
+        isExternalStatistic(statistic_id)
+      ) &&
       config.period === "5minute"
     ) {
       delete config.period;
