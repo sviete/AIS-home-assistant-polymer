@@ -15,6 +15,7 @@ import "../cards/hui-thermostat-card";
 import "../cards/hui-weather-forecast-card";
 import "../cards/hui-ais-mini-media-player-card";
 import "../cards/hui-ais-expansion-panel-card";
+import "../cards/hui-tile-card";
 import {
   createLovelaceElement,
   getLovelaceElementClass,
@@ -38,6 +39,7 @@ const ALWAYS_LOADED_TYPES = new Set([
   "ais-zigbee2mqtt",
   "ais-mini-media-player",
   "ais-expansion-panel",
+  "tile",
 ]);
 
 const LAZY_LOAD_TYPES = {
@@ -56,6 +58,8 @@ const LAZY_LOAD_TYPES = {
   "energy-distribution": () =>
     import("../cards/energy/hui-energy-distribution-card"),
   "energy-gas-graph": () => import("../cards/energy/hui-energy-gas-graph-card"),
+  "energy-water-graph": () =>
+    import("../cards/energy/hui-energy-water-graph-card"),
   "energy-grid-neutrality-gauge": () =>
     import("../cards/energy/hui-energy-grid-neutrality-gauge-card"),
   "energy-solar-consumed-gauge": () =>
