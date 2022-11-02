@@ -1024,7 +1024,7 @@
           "clusters": "Clusters",
           "bindings": "Bindings",
           "signature": "Signature",
-          "children": "Children"
+          "neighbors": "Neighbors"
         }
       },
       "zha_device_info": {
@@ -1568,16 +1568,16 @@
             "dialog": {
               "header": "Configure water consumption",
               "paragraph": "Gas consumption is the volume of water that flows to your home.",
-              "energy_stat": "Consumed water (m³/ft³)",
+              "energy_stat": "Consumed water (m³ or gl)",
               "cost_para": "Select how Home Assistant should keep track of the costs of the consumed water.",
               "no_cost": "Do not track costs",
               "cost_stat": "Use an entity tracking the total costs",
               "cost_stat_input": "Total Costs Entity",
               "cost_entity": "Use an entity with current price",
-              "cost_entity_input": "Entity with the current price per m³",
+              "cost_entity_input": "Entity with the current price per m³ or gl",
               "cost_number": "Use a static price",
-              "cost_number_input": "Price per m³",
-              "water_usage": "Water usage (m³/ft³)"
+              "cost_number_input": "Price per m³ or gl",
+              "water_usage": "Water usage (m³ or gl)"
             }
           },
           "device_consumption": {
@@ -3304,6 +3304,12 @@
             "unbind_button_label": "Unbind Group",
             "bind_button_help": "Bind the selected group to the selected device clusters.",
             "unbind_button_help": "Unbind the selected group from the selected device clusters."
+          },
+          "neighbors": {
+            "name": "Name",
+            "lqi": "LQI",
+            "relationship": "Relationship",
+            "depth": "Depth"
           }
         },
         "zwave_js": {
