@@ -71,6 +71,7 @@ const integrationsWithPanel = {
   zha: "/config/zha/dashboard",
   zwave_js: "/config/zwave_js/dashboard",
   ais_supla_mqtt: "/config/ais_mqtt",
+  matter: "/config/matter",
 };
 
 @customElement("ha-integration-card")
