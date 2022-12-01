@@ -1,4 +1,4 @@
-import { html, LitElement } from "lit";
+import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators";
 import "../../../../../components/ha-textarea";
 import type { TemplateCondition } from "../../../../../data/automation";
@@ -10,6 +10,8 @@ export class HaTemplateCondition extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property({ attribute: false }) public condition!: TemplateCondition;
+
+  @property({ type: Boolean }) public disabled = false;
 
   public static get defaultConfig() {
     return { value_template: "" };
@@ -29,6 +31,7 @@ export class HaTemplateCondition extends LitElement {
         mode="jinja2"
         .hass=${this.hass}
         .value=${value_template}
+        .readOnly=${this.disabled}
         autocomplete-entities
         @value-changed=${this._valueChanged}
         dir="ltr"
@@ -38,6 +41,14 @@ export class HaTemplateCondition extends LitElement {
 
   private _valueChanged(ev: CustomEvent): void {
     handleChangeEvent(this, ev);
+  }
+
+  static get styles() {
+    return css`
+      p {
+        margin-top: 0;
+      }
+    `;
   }
 }
 

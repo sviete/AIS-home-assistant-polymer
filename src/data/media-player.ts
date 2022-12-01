@@ -71,7 +71,7 @@ import type {
 } from "home-assistant-js-websocket";
 import { supportsFeature } from "../common/entity/supports-feature";
 import { MediaPlayerItemId } from "../components/media-player/ha-media-player-browse";
-import type { HomeAssistant } from "../types";
+import type { HomeAssistant, TranslationDict } from "../types";
 import { UNAVAILABLE_STATES } from "./entity";
 import { isTTSMediaSource } from "./tts";
 
@@ -88,6 +88,7 @@ interface MediaPlayerEntityAttributes extends HassEntityAttributeBase {
   media_duration?: number;
   media_position?: number;
   media_title?: string;
+  media_channel?: string;
   icon?: string;
   entity_picture_local?: string;
   is_volume_muted?: boolean;
@@ -249,14 +250,14 @@ export interface MediaPlayerThumbnail {
 export interface ControlButton {
   icon: string;
   // Used as key for action as well as tooltip and aria-label translation key
-  action: string;
+  action: keyof TranslationDict["ui"]["card"]["media_player"];
 }
 
 export interface MediaPlayerItem {
   title: string;
   media_content_type: string;
   media_content_id: string;
-  media_class: string;
+  media_class: keyof TranslationDict["ui"]["components"]["media-browser"]["class"];
   children_media_class?: string;
   can_play: boolean;
   can_expand: boolean;
@@ -325,6 +326,9 @@ export const computeMediaDescription = (
           secondaryTitle += "E" + stateObj.attributes.media_episode;
         }
       }
+      break;
+    case "channel":
+      secondaryTitle = stateObj.attributes.media_channel!;
       break;
     default:
       secondaryTitle = stateObj.attributes.app_name || "";

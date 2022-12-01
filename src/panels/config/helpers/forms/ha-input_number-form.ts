@@ -33,6 +33,8 @@ class HaInputNumberForm extends LitElement {
   // eslint-disable-next-line: variable-name
   @state() private _unit_of_measurement?: string;
 
+  /* Configuring initial value is intentionally not supported because the behavior
+     compared to restoring the value after restart is hard to explain */
   set item(item: InputNumber) {
     this._item = item;
     if (item) {
@@ -87,6 +89,7 @@ class HaInputNumberForm extends LitElement {
           dialogInitialFocus
         ></ha-textfield>
         <ha-icon-picker
+          .hass=${this.hass}
           .value=${this._icon}
           .configValue=${"icon"}
           @value-changed=${this._valueChanged}
@@ -98,6 +101,7 @@ class HaInputNumberForm extends LitElement {
           .value=${this._min}
           .configValue=${"min"}
           type="number"
+          step="any"
           @input=${this._valueChanged}
           .label=${this.hass!.localize(
             "ui.dialogs.helper_settings.input_number.min"
@@ -107,6 +111,7 @@ class HaInputNumberForm extends LitElement {
           .value=${this._max}
           .configValue=${"max"}
           type="number"
+          step="any"
           @input=${this._valueChanged}
           .label=${this.hass!.localize(
             "ui.dialogs.helper_settings.input_number.max"
@@ -147,6 +152,7 @@ class HaInputNumberForm extends LitElement {
                 .value=${this._step}
                 .configValue=${"step"}
                 type="number"
+                step="any"
                 @input=${this._valueChanged}
                 .label=${this.hass!.localize(
                   "ui.dialogs.helper_settings.input_number.step"

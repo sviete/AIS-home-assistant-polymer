@@ -69,6 +69,7 @@ export interface DataTableSortColumnData {
 }
 
 export interface DataTableColumnData<T = any> extends DataTableSortColumnData {
+  main?: boolean;
   title: TemplateResult | string;
   label?: TemplateResult | string;
   type?: "numeric" | "icon" | "icon-button" | "overflow-menu";
@@ -406,7 +407,7 @@ export class HaDataTable extends LitElement {
           }
           return html`
             <div
-              role="cell"
+              role=${column.main ? "rowheader" : "cell"}
               class="mdc-data-table__cell ${classMap({
                 "mdc-data-table__cell--numeric": column.type === "numeric",
                 "mdc-data-table__cell--icon": column.type === "icon",
@@ -723,6 +724,11 @@ export class HaDataTable extends LitElement {
           width: 54px;
         }
 
+        .mdc-data-table__cell--icon img {
+          width: 24px;
+          height: 24px;
+        }
+
         .mdc-data-table__header-cell.mdc-data-table__header-cell--icon {
           text-align: center;
         }
@@ -739,6 +745,7 @@ export class HaDataTable extends LitElement {
         }
 
         .mdc-data-table__cell--icon:first-child ha-icon,
+        .mdc-data-table__cell--icon:first-child img,
         .mdc-data-table__cell--icon:first-child ha-state-icon,
         .mdc-data-table__cell--icon:first-child ha-svg-icon {
           margin-left: 8px;
@@ -747,7 +754,12 @@ export class HaDataTable extends LitElement {
         :host([dir="rtl"])
           .mdc-data-table__cell--icon:first-child
           ha-state-icon,
-        :host([dir="rtl"]) .mdc-data-table__cell--icon:first-child ha-svg-icon {
+        :host([dir="rtl"])
+          .mdc-data-table__cell--icon:first-child
+          ha-svg-icon
+          :host([dir="rtl"])
+          .mdc-data-table__cell--icon:first-child
+          img {
           margin-left: auto;
           margin-right: 8px;
         }

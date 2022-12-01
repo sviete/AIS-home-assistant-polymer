@@ -55,7 +55,7 @@ export class HaDialog extends DialogBase {
         flex: var(--primary-action-button-flex, unset);
       }
       .mdc-dialog__container {
-        align-items: var(--vertial-align-dialog, center);
+        align-items: var(--vertical-align-dialog, center);
       }
       .mdc-dialog__title {
         padding: 24px 24px 0 24px;
@@ -80,6 +80,7 @@ export class HaDialog extends DialogBase {
       .mdc-dialog .mdc-dialog__surface {
         position: var(--dialog-surface-position, relative);
         top: var(--dialog-surface-top);
+        margin-top: var(--dialog-surface-margin-top);
         min-height: var(--mdc-dialog-min-height, auto);
         border-radius: var(--ha-dialog-border-radius, 28px);
       }
@@ -90,7 +91,7 @@ export class HaDialog extends DialogBase {
       .header_button {
         position: absolute;
         right: 16px;
-        top: 10px;
+        top: 14px;
         text-decoration: none;
         color: inherit;
       }

@@ -352,7 +352,7 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       translationKey: "hardware",
       iconPath: mdiMemory,
       iconColor: "#301A8E",
-      component: "hassio",
+      components: ["hassio", "hardware"],
     },
   ],
   about: [
@@ -633,10 +633,6 @@ class HaPanelConfig extends HassRouterPage {
     this.style.setProperty(
       "--app-header-border-bottom",
       "1px solid var(--divider-color)"
-    );
-    this.style.setProperty(
-      "--ha-card-border-radius",
-      "var(--ha-config-card-border-radius, 8px)"
     );
   }
 

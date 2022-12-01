@@ -31,6 +31,7 @@ import {
 } from "lit";
 import { property, query, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
+import { ifDefined } from "lit/directives/if-defined";
 import memoizeOne from "memoize-one";
 import { isComponentLoaded } from "../../common/config/is_component_loaded";
 import { fireEvent } from "../../common/dom/fire_event";
@@ -82,7 +83,10 @@ class HUIRoot extends LitElement {
 
   @property({ type: Boolean }) public narrow = false;
 
-  @property() public route?: { path: string; prefix: string };
+  @property({ attribute: false }) public route?: {
+    path: string;
+    prefix: string;
+  };
 
   @state() private _curView?: number | "hass-unused-entities";
 
@@ -108,6 +112,11 @@ class HUIRoot extends LitElement {
   }
 
   protected render(): TemplateResult {
+    const views = this.lovelace?.config.views ?? [];
+
+    const curViewConfig =
+      typeof this._curView === "number" ? views[this._curView] : undefined;
+
     return html`
       <ha-app-layout
         class=${classMap({
@@ -140,7 +149,7 @@ class HUIRoot extends LitElement {
                     @click=${this._editModeDisable}
                   ></mwc-button>
                   <a
-                    href=${documentationUrl(this.hass, "/lovelace/")}
+                    href=${documentationUrl(this.hass, "/dashboards/")}
                     rel="noreferrer"
                     class="menu-link"
                     target="_blank"
@@ -225,11 +234,21 @@ class HUIRoot extends LitElement {
               `
             : html`
                 <app-toolbar>
-                  <ha-menu-button
-                    .hass=${this.hass}
-                    .narrow=${this.narrow}
-                  ></ha-menu-button>
-                  ${this.lovelace!.config.views.length > 1
+                  ${curViewConfig?.subview
+                    ? html`
+                        <ha-icon-button-arrow-prev
+                          @click=${this._goBack}
+                        ></ha-icon-button-arrow-prev>
+                      `
+                    : html`
+                        <ha-menu-button
+                          .hass=${this.hass}
+                          .narrow=${this.narrow}
+                        ></ha-menu-button>
+                      `}
+                  ${curViewConfig?.subview
+                    ? html`<div main-title>${curViewConfig.title}</div>`
+                    : views.filter((view) => !view.subview).length > 1
                     ? html`
                         <ha-tabs
                           scrollable
@@ -237,25 +256,27 @@ class HUIRoot extends LitElement {
                           @iron-activate=${this._handleViewSelected}
                           dir=${computeRTLDirection(this.hass!)}
                         >
-                          ${this.lovelace!.config.views.map(
+                          ${views.map(
                             (view) => html`
                               <paper-tab
-                                aria-label=${view.title}
+                                aria-label=${ifDefined(view.title)}
                                 class=${classMap({
                                   "hide-tab": Boolean(
-                                    view.visible !== undefined &&
-                                      ((Array.isArray(view.visible) &&
-                                        !view.visible.some(
-                                          (e) => e.user === this.hass!.user!.id
-                                        )) ||
-                                        view.visible === false)
+                                    view.subview ||
+                                      (view.visible !== undefined &&
+                                        ((Array.isArray(view.visible) &&
+                                          !view.visible.some(
+                                            (e) =>
+                                              e.user === this.hass!.user!.id
+                                          )) ||
+                                          view.visible === false))
                                   ),
                                 })}
                               >
                                 ${view.icon
                                   ? html`
                                       <ha-icon
-                                        title=${view.title}
+                                        title=${ifDefined(view.title)}
                                         .icon=${view.icon}
                                       ></ha-icon>
                                     `
@@ -469,10 +490,10 @@ class HUIRoot extends LitElement {
                     @iron-activate=${this._handleViewSelected}
                     dir=${computeRTLDirection(this.hass!)}
                   >
-                    ${this.lovelace!.config.views.map(
+                    ${views.map(
                       (view) => html`
                         <paper-tab
-                          aria-label=${view.title}
+                          aria-label=${ifDefined(view.title)}
                           class=${classMap({
                             "hide-tab": Boolean(
                               !this._editMode &&
@@ -501,7 +522,10 @@ class HUIRoot extends LitElement {
                           ${view.icon
                             ? html`
                                 <ha-icon
-                                  title=${view.title}
+                                  class=${classMap({
+                                    "child-view-icon": Boolean(view.subview),
+                                  })}
+                                  title=${ifDefined(view.title)}
                                   .icon=${view.icon}
                                 ></ha-icon>
                               `
@@ -524,7 +548,7 @@ class HUIRoot extends LitElement {
                                   class="edit-icon view"
                                   @click=${this._moveViewRight}
                                   ?disabled=${(this._curView! as number) + 1 ===
-                                  this.lovelace!.config.views.length}
+                                  views.length}
                                 ></ha-icon-button-arrow-next>
                               `
                             : ""}
@@ -712,8 +736,22 @@ class HUIRoot extends LitElement {
   private _showQuickBar(): void {
     showQuickBar(this, {
       commandMode: false,
-      hint: this.hass.localize("ui.dialogs.quick-bar.key_e_hint"),
+      hint: this.hass.localize("ui.tips.key_e_hint"),
     });
+  }
+
+  private _goBack(): void {
+    const views = this.lovelace?.config.views ?? [];
+    const curViewConfig =
+      typeof this._curView === "number" ? views[this._curView] : undefined;
+
+    if (curViewConfig?.back_path) {
+      navigate(curViewConfig.back_path);
+    } else if (history.length > 1) {
+      history.back();
+    } else {
+      navigate(this.route!.prefix);
+    }
   }
 
   private _handleRawEditor(ev: CustomEvent<RequestSelectedDetail>): void {
@@ -969,7 +1007,10 @@ class HUIRoot extends LitElement {
           color: var(--error-color);
         }
         #view {
-          min-height: calc(100vh - var(--header-height));
+          min-height: calc(
+            100vh - var(--header-height) - env(safe-area-inset-top) -
+              env(safe-area-inset-bottom)
+          );
           /**
           * Since we only set min-height, if child nodes need percentage
           * heights they must use absolute positioning so we need relative
@@ -984,7 +1025,10 @@ class HUIRoot extends LitElement {
          * In edit mode we have the tab bar on a new line *
          */
         .edit-mode #view {
-          min-height: calc(100vh - var(--header-height) - 48px);
+          min-height: calc(
+            100vh - var(--header-height) - 48px - env(safe-area-inset-top) -
+              env(safe-area-inset-bottom)
+          );
         }
         #view > * {
           /**
@@ -1014,6 +1058,9 @@ class HUIRoot extends LitElement {
           --mdc-theme-primary: var(--app-header-edit-text-color, #fff);
           --mdc-button-outline-color: var(--app-header-edit-text-color, #fff);
           --mdc-typography-button-font-size: 14px;
+        }
+        .child-view-icon {
+          opacity: 0.5;
         }
       `,
     ];

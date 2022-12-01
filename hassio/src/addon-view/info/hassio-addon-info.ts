@@ -40,6 +40,7 @@ import "../../../../src/components/ha-settings-row";
 import "../../../../src/components/ha-svg-icon";
 import "../../../../src/components/ha-switch";
 import {
+  AddonCapability,
   fetchHassioAddonChangelog,
   fetchHassioAddonInfo,
   HassioAddonDetails,
@@ -701,7 +702,7 @@ class HassioAddonInfo extends LitElement {
   }
 
   private _showMoreInfo(ev): void {
-    const id = ev.currentTarget.id;
+    const id = ev.currentTarget.id as AddonCapability;
     showHassioMarkdownDialog(this, {
       title: this.supervisor.localize(`addon.dashboard.capability.${id}.title`),
       content:
@@ -1023,10 +1024,13 @@ class HassioAddonInfo extends LitElement {
     button.progress = true;
 
     const confirmed = await showConfirmationDialog(this, {
-      title: this.addon.name,
-      text: "Are you sure you want to uninstall this add-on?",
-      confirmText: "uninstall add-on",
-      dismissText: "no",
+      title: this.supervisor.localize("dialog.uninstall_addon.title", {
+        name: this.addon.name,
+      }),
+      text: this.supervisor.localize("dialog.uninstall_addon.text"),
+      confirmText: this.supervisor.localize("dialog.uninstall_addon.uninstall"),
+      dismissText: this.supervisor.localize("common.cancel"),
+      destructive: true,
     });
 
     if (!confirmed) {

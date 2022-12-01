@@ -85,6 +85,13 @@ enum Protocols {
   ZWaveLongRange = 1,
 }
 
+enum NodeType {
+  Controller,
+  /** @deprecated Use `NodeType["End Node"]` instead */
+  "Routing End Node",
+  "End Node" = 1,
+}
+
 export enum FirmwareUpdateStatus {
   Error_Timeout = -1,
   Error_Checksum = 0,
@@ -142,12 +149,12 @@ export interface ZWaveJSController {
   sdk_version: string;
   type: number;
   own_node_id: number;
-  is_secondary: boolean;
+  is_primary: boolean;
   is_using_home_id_from_other_network: boolean;
   is_sis_present: boolean;
   was_real_primary: boolean;
-  is_static_update_controller: boolean;
-  is_slave: boolean;
+  is_suc: boolean;
+  node_type: NodeType;
   firmware_version: string;
   manufacturer_id: number;
   product_id: number;
@@ -299,14 +306,19 @@ export interface ZWaveJSNodeStatusUpdatedMessage {
 
 export interface ZWaveJSNodeFirmwareUpdateProgressMessage {
   event: "firmware update progress";
+  current_file: number;
+  total_files: number;
   sent_fragments: number;
   total_fragments: number;
+  progress: number;
 }
 
 export interface ZWaveJSNodeFirmwareUpdateFinishedMessage {
   event: "firmware update finished";
   status: FirmwareUpdateStatus;
-  wait_time: number;
+  success: boolean;
+  wait_time?: number;
+  reinterview: boolean;
 }
 
 export type ZWaveJSNodeFirmwareUpdateCapabilities =
@@ -665,21 +677,21 @@ export const subscribeZwaveNodeStatistics = (
     }
   );
 
-export const fetchZwaveNodeIsFirmwareUpdateInProgress = (
+export const fetchZwaveIsNodeFirmwareUpdateInProgress = (
   hass: HomeAssistant,
   device_id: string
 ): Promise<boolean> =>
   hass.callWS({
-    type: "zwave_js/get_firmware_update_progress",
+    type: "zwave_js/is_node_firmware_update_in_progress",
     device_id,
   });
 
-export const fetchZwaveIsAnyFirmwareUpdateInProgress = (
+export const fetchZwaveIsAnyOTAFirmwareUpdateInProgress = (
   hass: HomeAssistant,
   entry_id: string
 ): Promise<boolean> =>
   hass.callWS({
-    type: "zwave_js/get_any_firmware_update_progress",
+    type: "zwave_js/is_any_ota_firmware_update_in_progress",
     entry_id,
   });
 

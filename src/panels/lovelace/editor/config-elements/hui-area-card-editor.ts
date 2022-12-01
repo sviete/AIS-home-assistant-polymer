@@ -3,7 +3,7 @@ import { customElement, property, state } from "lit/decorators";
 import { assert, assign, boolean, object, optional, string } from "superstruct";
 import { fireEvent } from "../../../../common/dom/fire_event";
 import "../../../../components/ha-form/ha-form";
-import type { HaFormSchema } from "../../../../components/ha-form/types";
+import type { SchemaUnion } from "../../../../components/ha-form/types";
 import type { HomeAssistant } from "../../../../types";
 import type { AreaCardConfig } from "../../cards/types";
 import type { LovelaceCardEditor } from "../../types";
@@ -19,18 +19,22 @@ const cardConfigStruct = assign(
   })
 );
 
-const SCHEMA: HaFormSchema[] = [
+const SCHEMA = [
   { name: "area", selector: { area: {} } },
   { name: "show_camera", required: false, selector: { boolean: {} } },
   {
     name: "",
     type: "grid",
     schema: [
-      { name: "navigation_path", required: false, selector: { text: {} } },
+      {
+        name: "navigation_path",
+        required: false,
+        selector: { navigation: {} },
+      },
       { name: "theme", required: false, selector: { theme: {} } },
     ],
   },
-];
+] as const;
 
 @customElement("hui-area-card-editor")
 export class HuiAreaCardEditor
@@ -67,7 +71,7 @@ export class HuiAreaCardEditor
     fireEvent(this, "config-changed", { config });
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema) => {
+  private _computeLabelCallback = (schema: SchemaUnion<typeof SCHEMA>) => {
     switch (schema.name) {
       case "theme":
         return `${this.hass!.localize(

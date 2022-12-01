@@ -9,10 +9,12 @@ import type { HomeAssistant } from "../../types";
 import "../ha-checkbox";
 import "../ha-chip";
 import "../ha-chip-set";
+import "../ha-combo-box";
 import type { HaComboBox } from "../ha-combo-box";
 import "../ha-formfield";
 import "../ha-radio";
 import "../ha-select";
+import "../ha-input-helper-text";
 
 @customElement("ha-selector-select")
 export class HaSelectSelector extends LitElement {
@@ -35,12 +37,13 @@ export class HaSelectSelector extends LitElement {
   private _filter = "";
 
   protected render() {
-    const options = this.selector.select.options.map((option) =>
-      typeof option === "object" ? option : { value: option, label: option }
-    );
+    const options =
+      this.selector.select?.options.map((option) =>
+        typeof option === "object" ? option : { value: option, label: option }
+      ) || [];
 
-    if (!this.selector.select.custom_value && this._mode === "list") {
-      if (!this.selector.select.multiple || this.required) {
+    if (!this.selector.select?.custom_value && this._mode === "list") {
+      if (!this.selector.select?.multiple) {
         return html`
           <div>
             ${this.label}
@@ -50,7 +53,7 @@ export class HaSelectSelector extends LitElement {
                   <ha-radio
                     .checked=${item.value === this.value}
                     .value=${item.value}
-                    .disabled=${this.disabled}
+                    .disabled=${item.disabled || this.disabled}
                     @change=${this._valueChanged}
                   ></ha-radio>
                 </ha-formfield>
@@ -63,13 +66,14 @@ export class HaSelectSelector extends LitElement {
 
       return html`
         <div>
-          ${this.label}${options.map(
+          ${this.label}
+          ${options.map(
             (item: SelectOption) => html`
               <ha-formfield .label=${item.label}>
                 <ha-checkbox
                   .checked=${this.value?.includes(item.value)}
                   .value=${item.value}
-                  .disabled=${this.disabled}
+                  .disabled=${item.disabled || this.disabled}
                   @change=${this._checkboxChanged}
                 ></ha-checkbox>
               </ha-formfield>
@@ -80,7 +84,7 @@ export class HaSelectSelector extends LitElement {
       `;
     }
 
-    if (this.selector.select.multiple) {
+    if (this.selector.select?.multiple) {
       const value =
         !this.value || this.value === "" ? [] : (this.value as string[]);
 
@@ -112,14 +116,16 @@ export class HaSelectSelector extends LitElement {
           .disabled=${this.disabled}
           .required=${this.required && !value.length}
           .value=${this._filter}
-          .items=${options.filter((item) => !this.value?.includes(item.value))}
+          .items=${options.filter(
+            (option) => !option.disabled && !value?.includes(option.value)
+          )}
           @filter-changed=${this._filterChanged}
           @value-changed=${this._comboBoxValueChanged}
         ></ha-combo-box>
       `;
     }
 
-    if (this.selector.select.custom_value) {
+    if (this.selector.select?.custom_value) {
       if (
         this.value !== undefined &&
         !options.find((option) => option.value === this.value)
@@ -136,7 +142,7 @@ export class HaSelectSelector extends LitElement {
           .helper=${this.helper}
           .disabled=${this.disabled}
           .required=${this.required}
-          .items=${options}
+          .items=${options.filter((item) => !item.disabled)}
           .value=${this.value}
           @filter-changed=${this._filterChanged}
           @value-changed=${this._comboBoxValueChanged}
@@ -157,7 +163,9 @@ export class HaSelectSelector extends LitElement {
       >
         ${options.map(
           (item: SelectOption) => html`
-            <mwc-list-item .value=${item.value}>${item.label}</mwc-list-item>
+            <mwc-list-item .value=${item.value} .disabled=${item.disabled}
+              >${item.label}</mwc-list-item
+            >
           `
         )}
       </ha-select>
@@ -172,8 +180,8 @@ export class HaSelectSelector extends LitElement {
 
   private get _mode(): "list" | "dropdown" {
     return (
-      this.selector.select.mode ||
-      (this.selector.select.options.length < 6 ? "list" : "dropdown")
+      this.selector.select?.mode ||
+      ((this.selector.select?.options?.length || 0) < 6 ? "list" : "dropdown")
     );
   }
 
@@ -237,7 +245,7 @@ export class HaSelectSelector extends LitElement {
       return;
     }
 
-    if (!this.selector.select.multiple) {
+    if (!this.selector.select?.multiple) {
       fireEvent(this, "value-changed", {
         value: newValue,
       });
@@ -265,14 +273,14 @@ export class HaSelectSelector extends LitElement {
     this._filter = ev?.detail.value || "";
 
     const filteredItems = this.comboBox.items?.filter((item) => {
-      if (this.selector.select.multiple && this.value?.includes(item.value)) {
+      if (this.selector.select?.multiple && this.value?.includes(item.value)) {
         return false;
       }
       const label = item.label || item.value;
       return label.toLowerCase().includes(this._filter?.toLowerCase());
     });
 
-    if (this._filter && this.selector.select.custom_value) {
+    if (this._filter && this.selector.select?.custom_value) {
       filteredItems?.unshift({ label: this._filter, value: this._filter });
     }
 
@@ -284,6 +292,9 @@ export class HaSelectSelector extends LitElement {
     mwc-formfield,
     ha-formfield {
       display: block;
+    }
+    mwc-list-item[disabled] {
+      --mdc-theme-text-primary-on-background: var(--disabled-text-color);
     }
   `;
 }

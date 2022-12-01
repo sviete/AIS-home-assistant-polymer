@@ -1,7 +1,7 @@
 import "@material/mwc-list/mwc-list-item";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import { html, LitElement, PropertyValues, TemplateResult } from "lit";
-import { ComboBoxLitRenderer } from "lit-vaadin-helpers";
+import { ComboBoxLitRenderer } from "@vaadin/combo-box/lit";
 import { customElement, property, query, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { fireEvent } from "../../common/dom/fire_event";
@@ -221,12 +221,14 @@ export class HaDevicePicker extends SubscribeMixin(LitElement) {
     }
   );
 
-  public open() {
-    this.comboBox?.open();
+  public async open() {
+    await this.updateComplete;
+    await this.comboBox?.open();
   }
 
-  public focus() {
-    this.comboBox?.focus();
+  public async focus() {
+    await this.updateComplete;
+    await this.comboBox?.focus();
   }
 
   public hassSubscribe(): UnsubscribeFunc[] {
@@ -246,7 +248,7 @@ export class HaDevicePicker extends SubscribeMixin(LitElement) {
   protected updated(changedProps: PropertyValues) {
     if (
       (!this._init && this.devices && this.areas && this.entities) ||
-      (changedProps.has("_opened") && this._opened)
+      (this._init && changedProps.has("_opened") && this._opened)
     ) {
       this._init = true;
       (this.comboBox as any).items = this._getDevices(
@@ -262,9 +264,6 @@ export class HaDevicePicker extends SubscribeMixin(LitElement) {
   }
 
   protected render(): TemplateResult {
-    if (!this.devices || !this.areas || !this.entities) {
-      return html``;
-    }
     return html`
       <ha-combo-box
         .hass=${this.hass}

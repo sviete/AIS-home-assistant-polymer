@@ -13,6 +13,8 @@ const includeDomains = ["scene"];
 export class HaSceneAction extends LitElement implements ActionElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
+  @property({ type: Boolean }) public disabled = false;
+
   @property() public action!: SceneAction;
 
   public static get defaultConfig(): SceneAction {
@@ -37,7 +39,11 @@ export class HaSceneAction extends LitElement implements ActionElement {
     return html`
       <ha-entity-picker
         .hass=${this.hass}
+        .label=${this.hass.localize(
+          "ui.panel.config.automation.editor.actions.type.activate_scene.scene"
+        )}
         .value=${scene}
+        .disabled=${this.disabled}
         @value-changed=${this._entityPicked}
         .includeDomains=${includeDomains}
         allow-custom-entity

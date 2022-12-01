@@ -1,5 +1,6 @@
 import type { HassEntity } from "home-assistant-js-websocket";
 import { computeStateDomain } from "../common/entity/compute_state_domain";
+import { UiAction } from "../panels/lovelace/components/hui-action-editor";
 import type { DeviceRegistryEntry } from "./device_registry";
 import type { EntitySources } from "./entity_sources";
 
@@ -11,45 +12,51 @@ export type Selector =
   | BooleanSelector
   | ColorRGBSelector
   | ColorTempSelector
+  | ConfigEntrySelector
   | DateSelector
   | DateTimeSelector
   | DeviceSelector
   | DurationSelector
   | EntitySelector
+  | FileSelector
   | IconSelector
   | LocationSelector
   | MediaSelector
+  | NavigationSelector
   | NumberSelector
   | ObjectSelector
   | SelectSelector
+  | StateSelector
+  | StatisticSelector
   | StringSelector
   | TargetSelector
   | TemplateSelector
   | ThemeSelector
-  | TimeSelector;
+  | TimeSelector
+  | UiActionSelector;
 
 export interface ActionSelector {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  action: {};
+  action: {} | null;
 }
 
 export interface AddonSelector {
   addon: {
     name?: string;
     slug?: string;
-  };
+  } | null;
 }
 
 export interface SelectorDevice {
-  integration?: DeviceSelector["device"]["integration"];
-  manufacturer?: DeviceSelector["device"]["manufacturer"];
-  model?: DeviceSelector["device"]["model"];
+  integration?: NonNullable<DeviceSelector["device"]>["integration"];
+  manufacturer?: NonNullable<DeviceSelector["device"]>["manufacturer"];
+  model?: NonNullable<DeviceSelector["device"]>["model"];
 }
 
 export interface SelectorEntity {
-  integration?: EntitySelector["entity"]["integration"];
-  domain?: EntitySelector["entity"]["domain"];
-  device_class?: EntitySelector["entity"]["device_class"];
+  integration?: NonNullable<EntitySelector["entity"]>["integration"];
+  domain?: NonNullable<EntitySelector["entity"]>["domain"];
+  device_class?: NonNullable<EntitySelector["entity"]>["device_class"];
 }
 
 export interface AreaSelector {
@@ -57,40 +64,47 @@ export interface AreaSelector {
     entity?: SelectorEntity;
     device?: SelectorDevice;
     multiple?: boolean;
-  };
+  } | null;
 }
 
 export interface AttributeSelector {
   attribute: {
     entity_id?: string;
-  };
+    hide_attributes?: readonly string[];
+  } | null;
 }
 
 export interface BooleanSelector {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  boolean: {};
+  boolean: {} | null;
 }
 
 export interface ColorRGBSelector {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  color_rgb: {};
+  color_rgb: {} | null;
 }
 
 export interface ColorTempSelector {
   color_temp: {
     min_mireds?: number;
     max_mireds?: number;
-  };
+  } | null;
+}
+
+export interface ConfigEntrySelector {
+  config_entry: {
+    integration?: string;
+  } | null;
 }
 
 export interface DateSelector {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  date: {};
+  date: {} | null;
 }
 
 export interface DateTimeSelector {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  datetime: {};
+  datetime: {} | null;
 }
 
 export interface DeviceSelector {
@@ -100,35 +114,48 @@ export interface DeviceSelector {
     model?: string;
     entity?: SelectorEntity;
     multiple?: boolean;
-  };
+  } | null;
 }
 
 export interface DurationSelector {
   duration: {
     enable_day?: boolean;
-  };
+  } | null;
 }
 
 export interface EntitySelector {
   entity: {
     integration?: string;
-    domain?: string | string[];
+    domain?: string | readonly string[];
     device_class?: string;
     multiple?: boolean;
     include_entities?: string[];
     exclude_entities?: string[];
+  } | null;
+}
+
+export interface StatisticSelector {
+  statistic: {
+    device_class?: string;
+    multiple?: boolean;
   };
+}
+
+export interface FileSelector {
+  file: {
+    accept: string;
+  } | null;
 }
 
 export interface IconSelector {
   icon: {
     placeholder?: string;
     fallbackPath?: string;
-  };
+  } | null;
 }
 
 export interface LocationSelector {
-  location: { radius?: boolean; icon?: string };
+  location: { radius?: boolean; icon?: string } | null;
 }
 
 export interface LocationSelectorValue {
@@ -139,7 +166,7 @@ export interface LocationSelectorValue {
 
 export interface MediaSelector {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  media: {};
+  media: {} | null;
 }
 
 export interface MediaSelectorValue {
@@ -155,6 +182,11 @@ export interface MediaSelectorValue {
   };
 }
 
+export interface NavigationSelector {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  navigation: {} | null;
+}
+
 export interface NumberSelector {
   number: {
     min?: number;
@@ -162,17 +194,18 @@ export interface NumberSelector {
     step?: number;
     mode?: "box" | "slider";
     unit_of_measurement?: string;
-  };
+  } | null;
 }
 
 export interface ObjectSelector {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  object: {};
+  object: {} | null;
 }
 
 export interface SelectOption {
-  value: string;
+  value: any;
   label: string;
+  disabled?: boolean;
 }
 
 export interface SelectSelector {
@@ -180,8 +213,15 @@ export interface SelectSelector {
     multiple?: boolean;
     custom_value?: boolean;
     mode?: "list" | "dropdown";
-    options: string[] | SelectOption[];
-  };
+    options: readonly string[] | readonly SelectOption[];
+  } | null;
+}
+
+export interface StateSelector {
+  state: {
+    entity_id?: string;
+    attribute?: string;
+  } | null;
 }
 
 export interface StringSelector {
@@ -202,28 +242,35 @@ export interface StringSelector {
       | "datetime-local"
       | "color";
     suffix?: string;
-  };
+    autocomplete?: string;
+  } | null;
 }
 
 export interface TargetSelector {
   target: {
     entity?: SelectorEntity;
     device?: SelectorDevice;
-  };
+  } | null;
 }
 
 export interface TemplateSelector {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  template: {};
+  template: {} | null;
 }
 
 export interface ThemeSelector {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  theme: {};
+  theme: {} | null;
 }
 export interface TimeSelector {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  time: {};
+  time: {} | null;
+}
+
+export interface UiActionSelector {
+  "ui-action": {
+    actions?: UiAction[];
+  } | null;
 }
 
 export const filterSelectorDevices = (

@@ -24,13 +24,14 @@ export class HaIconSelector extends LitElement {
   protected render() {
     return html`
       <ha-icon-picker
+        .hass=${this.hass}
         .label=${this.label}
         .value=${this.value}
         .required=${this.required}
         .disabled=${this.disabled}
         .helper=${this.helper}
-        .fallbackPath=${this.selector.icon.fallbackPath}
-        .placeholder=${this.selector.icon.placeholder}
+        .fallbackPath=${this.selector.icon?.fallbackPath}
+        .placeholder=${this.selector.icon?.placeholder}
         @value-changed=${this._valueChanged}
       ></ha-icon-picker>
     `;

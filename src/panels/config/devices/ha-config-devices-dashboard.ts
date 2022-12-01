@@ -35,9 +35,11 @@ import { domainToName } from "../../../data/integration";
 import "../../../layouts/hass-tabs-subpage-data-table";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant, Route } from "../../../types";
+import { brandsUrl } from "../../../util/brands-url";
 import { configSections } from "../ha-panel-config";
 import "../integrations/ha-integration-overflow-menu";
 import { showZWaveJSAddNodeDialog } from "../integrations/integration-panels/zwave_js/show-dialog-zwave_js-add-node";
+import { showAddIntegrationDialog } from "../integrations/show-add-integration-dialog";
 
 interface DeviceRowData extends DeviceRegistryEntry {
   device?: DeviceRowData;
@@ -214,6 +216,9 @@ export class HaConfigDeviceDashboard extends LitElement {
           : this.hass.localize(
               "ui.panel.config.devices.data_table.no_integration"
             ),
+        domains: device.config_entries
+          .filter((entId) => entId in entryLookup)
+          .map((entId) => entryLookup[entId].domain),
         battery_entity: [
           this._batteryEntity(device.id, deviceEntityLookup),
           this._batteryChargingEntity(device.id, deviceEntityLookup),
@@ -234,35 +239,52 @@ export class HaConfigDeviceDashboard extends LitElement {
 
   private _columns = memoizeOne(
     (narrow: boolean, showDisabled: boolean): DataTableColumnContainer => {
-      const columns: DataTableColumnContainer = narrow
-        ? {
-            name: {
-              title: this.hass.localize(
-                "ui.panel.config.devices.data_table.device"
-              ),
-              sortable: true,
-              filterable: true,
-              direction: "asc",
-              grows: true,
-              template: (name, device: DataTableRowData) => html`
-                ${name}
-                <div class="secondary">
-                  ${device.area} | ${device.integration}
-                </div>
-              `,
-            },
-          }
-        : {
-            name: {
-              title: this.hass.localize(
-                "ui.panel.config.devices.data_table.device"
-              ),
-              sortable: true,
-              filterable: true,
-              grows: true,
-              direction: "asc",
-            },
-          };
+      const columns: DataTableColumnContainer = {
+        icon: {
+          title: "",
+          type: "icon",
+          template: (_icon, device) =>
+            device.domains.length
+              ? html`<img
+                  alt=""
+                  referrerpolicy="no-referrer"
+                  src=${brandsUrl({
+                    domain: device.domains[0],
+                    type: "icon",
+                    darkOptimized: this.hass.themes?.darkMode,
+                  })}
+                />`
+              : "",
+        },
+      };
+
+      if (narrow) {
+        columns.name = {
+          title: this.hass.localize(
+            "ui.panel.config.devices.data_table.device"
+          ),
+          main: true,
+          sortable: true,
+          filterable: true,
+          direction: "asc",
+          grows: true,
+          template: (name, device: DataTableRowData) => html`
+            ${name}
+            <div class="secondary">${device.area} | ${device.integration}</div>
+          `,
+        };
+      } else {
+        columns.name = {
+          title: this.hass.localize(
+            "ui.panel.config.devices.data_table.device"
+          ),
+          main: true,
+          sortable: true,
+          filterable: true,
+          grows: true,
+          direction: "asc",
+        };
+      }
 
       columns.manufacturer = {
         title: this.hass.localize(
@@ -363,16 +385,15 @@ export class HaConfigDeviceDashboard extends LitElement {
   }
 
   protected render(): TemplateResult {
-    const { devicesOutput, filteredConfigEntry } =
-      this._devicesAndFilterDomains(
-        this.devices,
-        this.entries,
-        this.entities,
-        this.areas,
-        this._searchParms,
-        this._showDisabled,
-        this.hass.localize
-      );
+    const { devicesOutput } = this._devicesAndFilterDomains(
+      this.devices,
+      this.entries,
+      this.entities,
+      this.areas,
+      this._searchParms,
+      this._showDisabled,
+      this.hass.localize
+    );
     const activeFilters = this._activeFilters(
       this.entries,
       this._searchParms,
@@ -405,39 +426,21 @@ export class HaConfigDeviceDashboard extends LitElement {
         @search-changed=${this._handleSearchChange}
         @row-click=${this._handleRowClicked}
         clickable
-        .hasFab=${filteredConfigEntry &&
-        (filteredConfigEntry.domain === "zha" ||
-          filteredConfigEntry.domain === "zwave_js")}
+        hasFab
       >
         <ha-integration-overflow-menu
           .hass=${this.hass}
           slot="toolbar-icon"
         ></ha-integration-overflow-menu>
-        ${!filteredConfigEntry
-          ? ""
-          : filteredConfigEntry.domain === "zwave_js"
-          ? html`
-              <ha-fab
-                slot="fab"
-                .label=${this.hass.localize("ui.panel.config.zha.add_device")}
-                extended
-                ?rtl=${computeRTL(this.hass)}
-                @click=${this._showZJSAddDeviceDialog}
-              >
-                <ha-svg-icon slot="icon" .path=${mdiPlus}></ha-svg-icon>
-              </ha-fab>
-            `
-          : filteredConfigEntry.domain === "zha"
-          ? html`<a href="/config/zha/add" slot="fab">
-              <ha-fab
-                .label=${this.hass.localize("ui.panel.config.zha.add_device")}
-                extended
-                ?rtl=${computeRTL(this.hass)}
-              >
-                <ha-svg-icon slot="icon" .path=${mdiPlus}></ha-svg-icon>
-              </ha-fab>
-            </a>`
-          : html``}
+        <ha-fab
+          slot="fab"
+          .label=${this.hass.localize("ui.panel.config.devices.add_device")}
+          extended
+          @click=${this._addDevice}
+          ?rtl=${computeRTL(this.hass)}
+        >
+          <ha-svg-icon slot="icon" .path=${mdiPlus}></ha-svg-icon>
+        </ha-fab>
         <ha-button-menu slot="filter-menu" corner="BOTTOM_START" multi>
           <ha-icon-button
             slot="trigger"
@@ -516,7 +519,7 @@ export class HaConfigDeviceDashboard extends LitElement {
     this._showDisabled = true;
   }
 
-  private _showZJSAddDeviceDialog() {
+  private _addDevice() {
     const { filteredConfigEntry } = this._devicesAndFilterDomains(
       this.devices,
       this.entries,
@@ -526,7 +529,18 @@ export class HaConfigDeviceDashboard extends LitElement {
       this._showDisabled,
       this.hass.localize
     );
+    if (filteredConfigEntry?.domain === "zha") {
+      navigate(`/config/zha/add`);
+      return;
+    }
+    if (filteredConfigEntry?.domain === "zwave_js") {
+      this._showZJSAddDeviceDialog(filteredConfigEntry);
+      return;
+    }
+    showAddIntegrationDialog(this);
+  }
 
+  private _showZJSAddDeviceDialog(filteredConfigEntry: ConfigEntry) {
     showZWaveJSAddNodeDialog(this, {
       entry_id: filteredConfigEntry!.entry_id,
     });

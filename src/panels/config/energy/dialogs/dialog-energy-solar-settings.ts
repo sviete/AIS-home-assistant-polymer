@@ -22,8 +22,7 @@ import { showConfigFlowDialog } from "../../../../dialogs/config-flow/show-dialo
 import { ConfigEntry, getConfigEntries } from "../../../../data/config_entries";
 import { brandsUrl } from "../../../../util/brands-url";
 
-const energyUnits = ["kWh"];
-const energyDeviceClasses = ["energy"];
+const energyUnitClasses = ["energy"];
 
 @customElement("dialog-energy-solar-settings")
 export class DialogEnergySolarSettings
@@ -79,8 +78,7 @@ export class DialogEnergySolarSettings
 
         <ha-statistic-picker
           .hass=${this.hass}
-          .includeUnitOfMeasurement=${energyUnits}
-          .includeDeviceClasses=${energyDeviceClasses}
+          .includeUnitClass=${energyUnitClasses}
           .value=${this._source.stat_energy_from}
           .label=${this.hass.localize(
             "ui.panel.config.energy.solar.dialog.solar_production_energy"
@@ -181,10 +179,10 @@ export class DialogEnergySolarSettings
         ? []
         : domains.length === 1
         ? await getConfigEntries(this.hass, {
-            type: "integration",
+            type: ["service"],
             domain: domains[0],
           })
-        : (await getConfigEntries(this.hass, { type: "integration" })).filter(
+        : (await getConfigEntries(this.hass, { type: ["service"] })).filter(
             (entry) => domains.includes(entry.domain)
           );
   }

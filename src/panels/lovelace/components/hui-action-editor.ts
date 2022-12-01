@@ -14,6 +14,18 @@ import {
 import { ServiceAction } from "../../../data/script";
 import { HomeAssistant } from "../../../types";
 import { EditorTarget } from "../editor/types";
+import "../../../components/ha-navigation-picker";
+
+export type UiAction = Exclude<ActionConfig["action"], "fire-dom-event">;
+
+const DEFAULT_ACTIONS: UiAction[] = [
+  "more-info",
+  "toggle",
+  "navigate",
+  "url",
+  "call-service",
+  "none",
+];
 
 @customElement("hui-action-editor")
 export class HuiActionEditor extends LitElement {
@@ -21,7 +33,7 @@ export class HuiActionEditor extends LitElement {
 
   @property() public label?: string;
 
-  @property() public actions?: string[];
+  @property() public actions?: UiAction[];
 
   @property() public tooltipText?: string;
 
@@ -51,9 +63,11 @@ export class HuiActionEditor extends LitElement {
   );
 
   protected render(): TemplateResult {
-    if (!this.hass || !this.actions) {
+    if (!this.hass) {
       return html``;
     }
+
+    const actions = this.actions ?? DEFAULT_ACTIONS;
 
     return html`
       <div class="dropdown">
@@ -71,7 +85,7 @@ export class HuiActionEditor extends LitElement {
               "ui.panel.lovelace.editor.action-editor.actions.default_action"
             )}
           </mwc-list-item>
-          ${this.actions.map(
+          ${actions.map(
             (action) => html`
               <mwc-list-item .value=${action}>
                 ${this.hass!.localize(
@@ -89,14 +103,14 @@ export class HuiActionEditor extends LitElement {
       </div>
       ${this.config?.action === "navigate"
         ? html`
-            <ha-textfield
-              label=${this.hass!.localize(
+            <ha-navigation-picker
+              .hass=${this.hass}
+              .label=${this.hass!.localize(
                 "ui.panel.lovelace.editor.action-editor.navigation_path"
               )}
               .value=${this._navigation_path}
-              .configValue=${"navigation_path"}
-              @input=${this._valueChanged}
-            ></ha-textfield>
+              @value-changed=${this._navigateValueChanged}
+            ></ha-navigation-picker>
           `
         : ""}
       ${this.config?.action === "url"
@@ -193,6 +207,16 @@ export class HuiActionEditor extends LitElement {
     fireEvent(this, "value-changed", { value });
   }
 
+  private _navigateValueChanged(ev: CustomEvent) {
+    ev.stopPropagation();
+    const value = {
+      ...this.config!,
+      navigation_path: ev.detail.value,
+    };
+
+    fireEvent(this, "value-changed", { value });
+  }
+
   static get styles(): CSSResultGroup {
     return css`
       .dropdown {
@@ -210,7 +234,13 @@ export class HuiActionEditor extends LitElement {
       ha-textfield {
         width: 100%;
       }
-      ha-textfield {
+      ha-service-control,
+      ha-navigation-picker {
+        display: block;
+      }
+      ha-textfield,
+      ha-service-control,
+      ha-navigation-picker {
         margin-top: 8px;
       }
       ha-service-control {

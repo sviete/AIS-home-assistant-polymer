@@ -8,7 +8,7 @@ import { HomeAssistant } from "../../../types";
 import {
   clearStatistics,
   updateStatisticsMetadata,
-} from "../../../data/history";
+} from "../../../data/recorder";
 import "../../../components/ha-formfield";
 import "../../../components/ha-radio";
 import type { DialogStatisticsUnitsChangedParams } from "./show-dialog-statistics-fix-units-changed";
@@ -19,7 +19,7 @@ export class DialogStatisticsFixUnitsChanged extends LitElement {
 
   @state() private _params?: DialogStatisticsUnitsChangedParams;
 
-  @state() private _action?: "update" | "clear";
+  @state() private _action?: "update" | "clear" | "change";
 
   public showDialog(params: DialogStatisticsUnitsChangedParams): void {
     this._params = params;
@@ -36,7 +36,7 @@ export class DialogStatisticsFixUnitsChanged extends LitElement {
     if (!this._params) {
       return html``;
     }
-
+    /* eslint-disable lit/quoted-expressions */
     return html`
       <ha-dialog
         open
@@ -46,11 +46,14 @@ export class DialogStatisticsFixUnitsChanged extends LitElement {
         )}
       >
         <p>
-          The unit of this entity changed, we can't store values in multiple
-          units. <br />If the historic statistic values have a wrong unit, you
-          can update the units of the old values. The values will not be
-          updated.<br />Otherwise you can choose to delete all historic
-          statistic values, and start over.
+          The unit of this entity changed to
+          '${this._params.issue.data.state_unit}' which can't be converted to
+          the previously stored unit,
+          '${this._params.issue.data.metadata_unit}'.
+          <br />If the historic statistic values have a wrong unit, you can
+          update the units of the old values. The values will not be updated.<br />Otherwise
+          you can choose to delete all historic statistic values, and start
+          over.
         </p>
 
         <h3>How do you want to fix this issue?</h3>
@@ -91,6 +94,7 @@ export class DialogStatisticsFixUnitsChanged extends LitElement {
         </mwc-button>
       </ha-dialog>
     `;
+    /* eslint-enable lit/quoted-expressions */
   }
 
   private _handleActionChanged(ev): void {
@@ -100,7 +104,7 @@ export class DialogStatisticsFixUnitsChanged extends LitElement {
   private async _fixIssue(): Promise<void> {
     if (this._action === "clear") {
       await clearStatistics(this.hass, [this._params!.issue.data.statistic_id]);
-    } else {
+    } else if (this._action === "update") {
       await updateStatisticsMetadata(
         this.hass,
         this._params!.issue.data.statistic_id,

@@ -6,12 +6,14 @@ import {
   mdiAlert,
   mdiAngleAcute,
   mdiAppleSafari,
+  mdiArrowLeftRight,
   mdiBell,
   mdiBookmark,
   mdiBrightness5,
   mdiBullhorn,
   mdiCalendar,
   mdiCalendarClock,
+  mdiCarCoolantLevel,
   mdiCash,
   mdiClock,
   mdiCloudUpload,
@@ -25,7 +27,6 @@ import {
   mdiFlower,
   mdiFormatListBulleted,
   mdiFormTextbox,
-  mdiGasCylinder,
   mdiGauge,
   mdiGestureTapButton,
   mdiGoogleAssistant,
@@ -37,23 +38,30 @@ import {
   mdiLightningBolt,
   mdiMailbox,
   mdiMapMarkerRadius,
+  mdiMeterGas,
+  mdiMicrophoneMessage,
   mdiMolecule,
   mdiMoleculeCo,
   mdiMoleculeCo2,
   mdiPalette,
+  mdiProgressClock,
   mdiRayVertex,
   mdiRemote,
   mdiRobot,
   mdiRobotVacuum,
   mdiScriptText,
   mdiSineWave,
-  mdiMicrophoneMessage,
+  mdiSpeedometer,
   mdiThermometer,
   mdiThermostat,
   mdiTimerOutline,
   mdiVideo,
+  mdiWater,
   mdiWaterPercent,
   mdiWeatherCloudy,
+  mdiWeatherPouring,
+  mdiWeatherWindy,
+  mdiWeight,
   mdiWhiteBalanceSunny,
   mdiWifi,
 } from "@mdi/js";
@@ -98,6 +106,7 @@ export const FIXED_DOMAIN_ICONS = {
   proximity: mdiAppleSafari,
   remote: mdiRemote,
   scene: mdiPalette,
+  schedule: mdiCalendarClock,
   script: mdiScriptText,
   select: mdiFormatListBulleted,
   sensor: mdiEye,
@@ -120,11 +129,14 @@ export const FIXED_DEVICE_CLASS_ICONS = {
   carbon_monoxide: mdiMoleculeCo,
   current: mdiCurrentAc,
   date: mdiCalendar,
+  distance: mdiArrowLeftRight,
+  duration: mdiProgressClock,
   energy: mdiLightningBolt,
   frequency: mdiSineWave,
-  gas: mdiGasCylinder,
+  gas: mdiMeterGas,
   humidity: mdiWaterPercent,
   illuminance: mdiBrightness5,
+  moisture: mdiWaterPercent,
   monetary: mdiCash,
   nitrogen_dioxide: mdiMolecule,
   nitrogen_monoxide: mdiMolecule,
@@ -135,14 +147,20 @@ export const FIXED_DEVICE_CLASS_ICONS = {
   pm25: mdiMolecule,
   power: mdiFlash,
   power_factor: mdiAngleAcute,
+  precipitation_intensity: mdiWeatherPouring,
   pressure: mdiGauge,
   reactive_power: mdiFlash,
   signal_strength: mdiWifi,
+  speed: mdiSpeedometer,
   sulphur_dioxide: mdiMolecule,
   temperature: mdiThermometer,
   timestamp: mdiClock,
   volatile_organic_compounds: mdiMolecule,
   voltage: mdiSineWave,
+  volume: mdiCarCoolantLevel,
+  water: mdiWater,
+  weight: mdiWeight,
+  wind_speed: mdiWeatherWindy,
 };
 
 /** Domains that have a state card. */
@@ -164,46 +182,6 @@ export const DOMAINS_WITH_CARD = [
   "timer",
   "vacuum",
   "water_heater",
-];
-
-/** Domains with separate more info dialog. */
-export const DOMAINS_WITH_MORE_INFO = [
-  "alarm_control_panel",
-  "automation",
-  "camera",
-  "climate",
-  "configurator",
-  "counter",
-  "cover",
-  "fan",
-  "group",
-  "humidifier",
-  "input_datetime",
-  "light",
-  "lock",
-  "media_player",
-  "person",
-  "remote",
-  "script",
-  "scene",
-  "sun",
-  "timer",
-  "update",
-  "vacuum",
-  "water_heater",
-  "weather",
-];
-
-/** Domains that do not show the default more info dialog content (e.g. the attribute section)
- *  and do not have a separate more info (so not in DOMAINS_WITH_MORE_INFO). */
-export const DOMAINS_HIDE_DEFAULT_MORE_INFO = [
-  "input_number",
-  "input_select",
-  "input_text",
-  "number",
-  "scene",
-  "update",
-  "select",
 ];
 
 /** Domains that render an input element instead of a text value when displayed in a row.
@@ -236,9 +214,6 @@ export const DOMAINS_INPUT_ROW = [
   "switch",
   "vacuum",
 ];
-
-/** Domains that should have the history hidden in the more info dialog. */
-export const DOMAINS_MORE_INFO_NO_HISTORY = ["camera", "configurator"];
 
 /** States that we consider "off". */
 export const STATES_OFF = ["closed", "locked", "off"];

@@ -251,14 +251,12 @@ export class HaTargetPicker extends SubscribeMixin(LitElement) {
   private async _showPicker(ev) {
     this._addMode = ev.currentTarget.type;
     await this.updateComplete;
-    setTimeout(() => {
-      this._inputElement?.open();
-      this._inputElement?.focus();
-    }, 0);
+    await this._inputElement?.focus();
+    await this._inputElement?.open();
   }
 
   private _renderChip(
-    type: string,
+    type: "area_id" | "device_id" | "entity_id",
     id: string,
     name: string,
     entityState?: HassEntity,

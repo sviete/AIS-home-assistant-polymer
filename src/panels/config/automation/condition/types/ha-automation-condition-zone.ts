@@ -18,7 +18,9 @@ const includeDomains = ["zone"];
 export class HaZoneCondition extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @property() public condition!: ZoneCondition;
+  @property({ attribute: false }) public condition!: ZoneCondition;
+
+  @property({ type: Boolean }) public disabled = false;
 
   public static get defaultConfig() {
     return {
@@ -37,6 +39,7 @@ export class HaZoneCondition extends LitElement {
         .value=${entity_id}
         @value-changed=${this._entityPicked}
         .hass=${this.hass}
+        .disabled=${this.disabled}
         allow-custom-entity
         .entityFilter=${zoneAndLocationFilter}
       ></ha-entity-picker>
@@ -47,6 +50,7 @@ export class HaZoneCondition extends LitElement {
         .value=${zone}
         @value-changed=${this._zonePicked}
         .hass=${this.hass}
+        .disabled=${this.disabled}
         allow-custom-entity
         .includeDomains=${includeDomains}
       ></ha-entity-picker>
@@ -73,7 +77,7 @@ export class HaZoneCondition extends LitElement {
   }
 
   static styles = css`
-    ha-entity-picker {
+    ha-entity-picker:first-child {
       display: block;
       margin-bottom: 24px;
     }
