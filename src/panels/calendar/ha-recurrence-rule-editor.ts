@@ -34,6 +34,8 @@ export class RecurrenceRuleEditor extends LitElement {
 
   @property({ attribute: false }) public locale!: HomeAssistant["locale"];
 
+  @property() public timezone?: string;
+
   @state() private _computedRRule = "";
 
   @state() private _freq?: RepeatFrequency = "none";
@@ -53,18 +55,21 @@ export class RecurrenceRuleEditor extends LitElement {
   protected willUpdate(changedProps: PropertyValues) {
     super.willUpdate(changedProps);
 
-    if (!changedProps.has("value") && !changedProps.has("locale")) {
+    if (changedProps.has("locale")) {
+      this._allWeekdays = getWeekdays(firstWeekdayIndex(this.locale)).map(
+        (day: Weekday) => day.toString() as WeekdayStr
+      );
+    }
+
+    if (!changedProps.has("value") || this._computedRRule === this.value) {
       return;
     }
+
     this._interval = 1;
     this._weekday.clear();
     this._end = "never";
     this._count = undefined;
     this._until = undefined;
-
-    this._allWeekdays = getWeekdays(firstWeekdayIndex(this.locale)).map(
-      (day: Weekday) => day.toString() as WeekdayStr
-    );
 
     this._computedRRule = this.value;
     if (this.value === "") {
@@ -274,6 +279,7 @@ export class RecurrenceRuleEditor extends LitElement {
   }
 
   private _onUntilChange(e: CustomEvent) {
+    e.stopPropagation();
     this._until = new Date(e.detail.value);
     this._updateRule();
   }
@@ -288,6 +294,7 @@ export class RecurrenceRuleEditor extends LitElement {
       byweekday: ruleByWeekDay(this._weekday),
       count: this._count,
       until: this._until,
+      tzid: this.timezone,
     };
     const contentline = RRule.optionsToString(options);
     return contentline.slice(6); // Strip "RRULE:" prefix
