@@ -1,3 +1,4 @@
+import "@material/mwc-list/mwc-list-item";
 import {
   mdiCog,
   mdiDelete,
@@ -13,11 +14,13 @@ import { customElement, property, state } from "lit/decorators";
 import { ifDefined } from "lit/directives/if-defined";
 import memoizeOne from "memoize-one";
 import { isComponentLoaded } from "../../../common/config/is_component_loaded";
+import { SENSOR_ENTITIES } from "../../../common/const";
 import { computeDomain } from "../../../common/entity/compute_domain";
 import { computeStateDomain } from "../../../common/entity/compute_state_domain";
 import { computeStateName } from "../../../common/entity/compute_state_name";
 import { stringCompare } from "../../../common/string/compare";
 import { slugify } from "../../../common/string/slugify";
+import { blankBeforePercent } from "../../../common/translations/blank_before_percent";
 import { groupBy } from "../../../common/util/group-by";
 import "../../../components/entity/ha-battery-icon";
 import "../../../components/ha-alert";
@@ -58,6 +61,7 @@ import {
   showConfirmationDialog,
 } from "../../../dialogs/generic/show-dialog-box";
 import "../../../layouts/hass-error-screen";
+import "../../../layouts/hass-subpage";
 import "../../../layouts/hass-tabs-subpage";
 import { haStyle } from "../../../resources/styles";
 import type { HomeAssistant } from "../../../types";
@@ -67,6 +71,7 @@ import "../../logbook/ha-logbook";
 import "../ha-config-section";
 import "./device-detail/ha-device-entities-card";
 import "./device-detail/ha-device-info-card";
+import "./device-detail/ha-device-via-devices-card";
 import { showDeviceAutomationDialog } from "./device-detail/show-dialog-device-automation";
 import {
   loadDeviceRegistryDetailDialog,
@@ -173,13 +178,7 @@ export class HaConfigDevicePage extends LitElement {
       const result = groupBy(entities, (entry) =>
         entry.entity_category
           ? entry.entity_category
-          : [
-              "sensor",
-              "binary_sensor",
-              "camera",
-              "device_tracker",
-              "weather",
-            ].includes(computeDomain(entry.entity_id))
+          : SENSOR_ENTITIES.includes(computeDomain(entry.entity_id))
           ? "sensor"
           : "control"
       ) as Record<
@@ -645,7 +644,11 @@ export class HaConfigDevicePage extends LitElement {
                     batteryState
                       ? html`
                           <div class="battery">
-                            ${batteryIsBinary ? "" : batteryState.state + " %"}
+                            ${batteryIsBinary
+                              ? ""
+                              : batteryState.state +
+                                blankBeforePercent(this.hass.locale) +
+                                "%"}
                             <ha-battery-icon
                               .hass=${this.hass!}
                               .batteryStateObj=${batteryState}
@@ -855,6 +858,10 @@ export class HaConfigDevicePage extends LitElement {
                     `
                   : ""
             )}
+            <ha-device-via-devices-card
+              .hass=${this.hass}
+              .deviceId=${this.deviceId}
+            ></ha-device-via-devices-card>
           </div>
           <div class="column">
             ${this.narrow ? [automationCard, sceneCard, scriptCard] : ""}

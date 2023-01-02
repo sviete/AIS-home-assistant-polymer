@@ -35,6 +35,10 @@ export class HaDateInput extends LitElement {
 
   @property() public value?: string;
 
+  @property() public min?: string;
+
+  @property() public max?: string;
+
   @property({ type: Boolean }) public disabled = false;
 
   @property({ type: Boolean }) public required = false;
@@ -50,9 +54,13 @@ export class HaDateInput extends LitElement {
       .disabled=${this.disabled}
       iconTrailing
       helperPersistent
+      readonly
       @click=${this._openDialog}
       .value=${this.value
-        ? formatDateNumeric(new Date(this.value), this.locale)
+        ? formatDateNumeric(
+            new Date(`${this.value.split("T")[0]}T00:00:00`),
+            this.locale
+          )
         : ""}
       .required=${this.required}
     >
@@ -65,7 +73,8 @@ export class HaDateInput extends LitElement {
       return;
     }
     showDatePickerDialog(this, {
-      min: "1970-01-01",
+      min: this.min || "1970-01-01",
+      max: this.max,
       value: this.value,
       onChange: (value) => this._valueChanged(value),
       locale: this.locale.language,
@@ -85,6 +94,9 @@ export class HaDateInput extends LitElement {
     return css`
       ha-svg-icon {
         color: var(--secondary-text-color);
+      }
+      ha-textfield {
+        display: block;
       }
     `;
   }

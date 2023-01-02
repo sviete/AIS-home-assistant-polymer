@@ -1,3 +1,4 @@
+import { HassEntity } from "home-assistant-js-websocket";
 import {
   css,
   CSSResultGroup,
@@ -8,12 +9,15 @@ import {
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { ifDefined } from "lit/directives/if-defined";
+import { styleMap } from "lit/directives/style-map";
 import { applyThemesOnElement } from "../../../common/dom/apply_themes_on_element";
 import { fireEvent } from "../../../common/dom/fire_event";
-import { computeActiveState } from "../../../common/entity/compute_active_state";
+import { CLIMATE_HVAC_ACTION_COLORS } from "../../../common/entity/color/climate_color";
 import { computeStateDisplay } from "../../../common/entity/compute_state_display";
 import { computeStateDomain } from "../../../common/entity/compute_state_domain";
 import { computeStateName } from "../../../common/entity/compute_state_name";
+import { stateActive } from "../../../common/entity/state_active";
+import { stateColorCss } from "../../../common/entity/state_color";
 import { isValidEntityId } from "../../../common/entity/valid_entity_id";
 import {
   formatNumber,
@@ -25,6 +29,7 @@ import "../../../components/ha-card";
 import "../../../components/ha-icon";
 import { UNAVAILABLE_STATES } from "../../../data/entity";
 import { formatAttributeValue } from "../../../data/entity_attributes";
+import { LightEntity } from "../../../data/light";
 import { HomeAssistant } from "../../../types";
 import { computeCardSize } from "../common/compute-card-size";
 import { findEntities } from "../common/find-entities";
@@ -71,6 +76,15 @@ export class HuiEntityCard extends LitElement implements LovelaceCard {
   @state() private _config?: EntityCardConfig;
 
   private _footerElement?: HuiErrorCard | LovelaceHeaderFooter;
+
+  private getStateColor(stateObj: HassEntity, config: EntityCardConfig) {
+    const domain = stateObj ? computeStateDomain(stateObj) : undefined;
+    return (
+      config &&
+      (config.state_color ||
+        (domain === "light" && config.state_color !== false))
+    );
+  }
 
   public setConfig(config: EntityCardConfig): void {
     if (!config.entity) {
@@ -120,6 +134,9 @@ export class HuiEntityCard extends LitElement implements LovelaceCard {
 
     const name = this._config.name || computeStateName(stateObj);
 
+    const active = stateObj && stateActive(stateObj);
+    const colored = active && this.getStateColor(stateObj, this._config);
+
     return html`
       <ha-card @click=${this._handleClick} tabindex="0">
         <div class="header">
@@ -128,13 +145,15 @@ export class HuiEntityCard extends LitElement implements LovelaceCard {
             <ha-state-icon
               .icon=${this._config.icon}
               .state=${stateObj}
-              data-domain=${ifDefined(
-                this._config.state_color ||
-                  (domain === "light" && this._config.state_color !== false)
-                  ? domain
-                  : undefined
-              )}
-              data-state=${stateObj ? computeActiveState(stateObj) : ""}
+              data-domain=${ifDefined(domain)}
+              data-state=${stateObj.state}
+              style=${styleMap({
+                color: colored ? this._computeColor(stateObj) : undefined,
+                filter: colored ? this._computeBrightness(stateObj) : undefined,
+                height: this._config.icon_height
+                  ? this._config.icon_height
+                  : "",
+              })}
             ></ha-state-icon>
           </div>
         </div>
@@ -156,7 +175,8 @@ export class HuiEntityCard extends LitElement implements LovelaceCard {
               : computeStateDisplay(
                   this.hass.localize,
                   stateObj,
-                  this.hass.locale
+                  this.hass.locale,
+                  this.hass.entities
                 )}</span
           >${showUnit
             ? html`
@@ -172,6 +192,32 @@ export class HuiEntityCard extends LitElement implements LovelaceCard {
         ${this._footerElement}
       </ha-card>
     `;
+  }
+
+  private _computeColor(stateObj: HassEntity): string | undefined {
+    if (stateObj.attributes.hvac_action) {
+      const hvacAction = stateObj.attributes.hvac_action;
+      if (["heating", "cooling", "drying"].includes(hvacAction)) {
+        return `rgb(${CLIMATE_HVAC_ACTION_COLORS[hvacAction]})`;
+      }
+      return undefined;
+    }
+    if (stateObj.attributes.rgb_color && stateActive(stateObj)) {
+      return `rgb(${stateObj.attributes.rgb_color.join(",")})`;
+    }
+    const iconColor = stateColorCss(stateObj);
+    if (iconColor) {
+      return `rgb(${iconColor})`;
+    }
+    return undefined;
+  }
+
+  private _computeBrightness(stateObj: HassEntity | LightEntity): string {
+    if (stateObj.attributes.brightness && stateActive(stateObj)) {
+      const brightness = stateObj.attributes.brightness;
+      return `brightness(${(brightness + 245) / 5}%)`;
+    }
+    return "";
   }
 
   protected shouldUpdate(changedProps: PropertyValues): boolean {

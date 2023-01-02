@@ -52,7 +52,9 @@ import {
   mdiScriptText,
   mdiSineWave,
   mdiSpeedometer,
+  mdiSunWireless,
   mdiThermometer,
+  mdiThermometerLines,
   mdiThermostat,
   mdiTimerOutline,
   mdiVideo,
@@ -60,6 +62,7 @@ import {
   mdiWaterPercent,
   mdiWeatherCloudy,
   mdiWeatherPouring,
+  mdiWeatherRainy,
   mdiWeatherWindy,
   mdiWeight,
   mdiWhiteBalanceSunny,
@@ -113,6 +116,7 @@ export const FIXED_DOMAIN_ICONS = {
   siren: mdiBullhorn,
   simple_alarm: mdiBell,
   sun: mdiWhiteBalanceSunny,
+  text: mdiFormTextbox,
   timer: mdiTimerOutline,
   updater: mdiCloudUpload,
   vacuum: mdiRobotVacuum,
@@ -124,6 +128,7 @@ export const FIXED_DOMAIN_ICONS = {
 export const FIXED_DEVICE_CLASS_ICONS = {
   apparent_power: mdiFlash,
   aqi: mdiAirFilter,
+  atmospheric_pressure: mdiThermometerLines,
   // battery: mdiBattery, => not included by design since `sensorIcon()` will dynamically determine the icon
   carbon_dioxide: mdiMoleculeCo2,
   carbon_monoxide: mdiMoleculeCo,
@@ -136,6 +141,7 @@ export const FIXED_DEVICE_CLASS_ICONS = {
   gas: mdiMeterGas,
   humidity: mdiWaterPercent,
   illuminance: mdiBrightness5,
+  irradiance: mdiSunWireless,
   moisture: mdiWaterPercent,
   monetary: mdiCash,
   nitrogen_dioxide: mdiMolecule,
@@ -147,6 +153,7 @@ export const FIXED_DEVICE_CLASS_ICONS = {
   pm25: mdiMolecule,
   power: mdiFlash,
   power_factor: mdiAngleAcute,
+  precipitation: mdiWeatherRainy,
   precipitation_intensity: mdiWeatherPouring,
   pressure: mdiGauge,
   reactive_power: mdiFlash,
@@ -180,8 +187,17 @@ export const DOMAINS_WITH_CARD = [
   "script",
   "select",
   "timer",
+  "text",
   "vacuum",
   "water_heater",
+];
+
+export const SENSOR_ENTITIES = [
+  "sensor",
+  "binary_sensor",
+  "camera",
+  "device_tracker",
+  "weather",
 ];
 
 /** Domains that render an input element instead of a text value when displayed in a row.
@@ -212,6 +228,7 @@ export const DOMAINS_INPUT_ROW = [
   "script",
   "select",
   "switch",
+  "text",
   "vacuum",
 ];
 

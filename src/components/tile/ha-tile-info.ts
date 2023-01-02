@@ -5,7 +5,7 @@ import { customElement, property } from "lit/decorators";
 export class HaTileInfo extends LitElement {
   @property() public primary?: string;
 
-  @property() public secondary?: string;
+  @property() public secondary?: string | TemplateResult<1>;
 
   protected render(): TemplateResult {
     return html`
@@ -44,7 +44,7 @@ export class HaTileInfo extends LitElement {
         font-size: 12px;
         line-height: 16px;
         letter-spacing: 0.4px;
-        color: var(--secondary-text-color);
+        color: var(--primary-text-color);
       }
     `;
   }

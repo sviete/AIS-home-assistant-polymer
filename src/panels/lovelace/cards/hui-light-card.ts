@@ -160,7 +160,8 @@ export class HuiLightCard extends LitElement implements LovelaceCard {
                     ${computeStateDisplay(
                       this.hass.localize,
                       stateObj,
-                      this.hass.locale
+                      this.hass.locale,
+                      this.hass.entities
                     )}
                   </div>
                 `
@@ -329,7 +330,7 @@ export class HuiLightCard extends LitElement implements LovelaceCard {
       }
 
       .light-button.state-on {
-        color: var(--paper-item-icon-active-color, #fdd835);
+        color: rgb(var(--rgb-state-light-color));
       }
 
       .light-button.state-unavailable {

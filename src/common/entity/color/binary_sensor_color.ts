@@ -1,20 +1,29 @@
 import { HassEntity } from "home-assistant-js-websocket";
+import { stateActive } from "../state_active";
 
-const NORMAL_DEVICE_CLASSES = new Set([
-  "battery_charging",
-  "connectivity",
-  "light",
-  "moving",
-  "plug",
-  "power",
-  "presence",
-  "running",
+const ALERTING_DEVICE_CLASSES = new Set([
+  "battery",
+  "carbon_monoxide",
+  "gas",
+  "heat",
+  "lock",
+  "moisture",
+  "problem",
+  "safety",
+  "smoke",
+  "tamper",
 ]);
 
-export const binarySensorColor = (stateObj: HassEntity): string | undefined => {
+export const binarySensorColor = (
+  stateObj: HassEntity,
+  state: string
+): string | undefined => {
   const deviceClass = stateObj?.attributes.device_class;
 
-  return deviceClass && NORMAL_DEVICE_CLASSES.has(deviceClass)
-    ? "binary-sensor"
-    : "binary-sensor-danger";
+  if (!stateActive(stateObj, state)) {
+    return undefined;
+  }
+  return deviceClass && ALERTING_DEVICE_CLASSES.has(deviceClass)
+    ? "binary-sensor-alerting"
+    : "binary-sensor";
 };

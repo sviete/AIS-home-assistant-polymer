@@ -1,4 +1,4 @@
-import { Statistic, StatisticType } from "../../../data/recorder";
+import { Statistic } from "../../../data/recorder";
 import { ActionConfig, LovelaceCardConfig } from "../../../data/lovelace";
 import { FullCalendarView, TranslationDict } from "../../../types";
 import { Condition } from "../common/validate-condition";
@@ -10,7 +10,9 @@ import {
   LovelaceRowConfig,
 } from "../entity-rows/types";
 import { LovelaceHeaderFooterConfig } from "../header-footer/types";
+import { ExtendedStatisticType } from "../../../components/chart/statistics-chart";
 import { HaDurationData } from "../../../components/ha-duration-input";
+import { LovelaceTileFeatureConfig } from "../tile-features/types";
 
 export interface AlarmPanelCardConfig extends LovelaceCardConfig {
   entity: string;
@@ -299,14 +301,16 @@ export interface HistoryGraphCardConfig extends LovelaceCardConfig {
   hours_to_show?: number;
   refresh_interval?: number;
   title?: string;
+  show_names?: boolean;
 }
 
 export interface StatisticsGraphCardConfig extends LovelaceCardConfig {
   title?: string;
   entities: Array<EntityConfig | string>;
+  unit?: string;
   days_to_show?: number;
   period?: "5minute" | "hour" | "day" | "month";
-  stat_types?: StatisticType | StatisticType[];
+  stat_types?: ExtendedStatisticType | ExtendedStatisticType[];
   chart_type?: "line" | "bar";
 }
 
@@ -500,4 +504,5 @@ export interface TileCardConfig extends LovelaceCardConfig {
   show_entity_picture?: string;
   tap_action?: ActionConfig;
   icon_tap_action?: ActionConfig;
+  features?: LovelaceTileFeatureConfig[];
 }

@@ -1,7 +1,6 @@
 import "@material/mwc-list/mwc-list-item";
 import "../../../../../components/ha-button-menu";
 import "@material/mwc-button";
-import "@polymer/paper-input/paper-input";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import "../../../../../components/ha-card";
@@ -18,6 +17,8 @@ import {
   HaAisFileDialogParams,
 } from "../../../../../dialogs/ais-files/show-dialog-ais-file";
 
+const qosLevel = ["0", "1", "2"];
+
 @customElement("mqtt-config-panel")
 class HaPanelDevMqtt extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
@@ -28,6 +29,8 @@ class HaPanelDevMqtt extends LitElement {
 
   @state() private payload = "";
 
+  @state() private qos = "0";
+
   private inited = false;
 
   protected firstUpdated() {
@@ -36,6 +39,9 @@ class HaPanelDevMqtt extends LitElement {
     }
     if (localStorage && localStorage["panel-dev-mqtt-payload"]) {
       this.payload = localStorage["panel-dev-mqtt-payload"];
+    }
+    if (localStorage && localStorage["panel-dev-mqtt-qos"]) {
+      this.qos = localStorage["panel-dev-mqtt-qos"];
     }
     this.inited = true;
   }
@@ -64,16 +70,25 @@ class HaPanelDevMqtt extends LitElement {
           </ha-card>
 
           <ha-card
-            header=${this.hass.localize(
+            .header=${this.hass.localize(
               "ui.panel.config.mqtt.description_publish"
             )}
           >
             <div class="card-content">
-              <paper-input
-                label=${this.hass.localize("ui.panel.config.mqtt.topic")}
+              <ha-textfield
+                .label=${this.hass.localize("ui.panel.config.mqtt.topic")}
                 .value=${this.topic}
-                @value-changed=${this._handleTopic}
-              ></paper-input>
+                @change=${this._handleTopic}
+              ></ha-textfield>
+              <ha-select
+                .label=${this.hass.localize("ui.panel.config.mqtt.qos")}
+                .value=${this.qos}
+                @selected=${this._handleQos}
+                >${qosLevel.map(
+                  (qos) =>
+                    html`<mwc-list-item .value=${qos}>${qos}</mwc-list-item>`
+                )}
+              </ha-select>
 
               <p>${this.hass.localize("ui.panel.config.mqtt.payload")}</p>
               <ha-code-editor
@@ -102,7 +117,7 @@ class HaPanelDevMqtt extends LitElement {
   }
 
   private _handleTopic(ev: CustomEvent) {
-    this.topic = ev.detail.value;
+    this.topic = (ev.target! as any).value;
     if (localStorage && this.inited) {
       localStorage["panel-dev-mqtt-topic"] = this.topic;
     }
@@ -115,6 +130,14 @@ class HaPanelDevMqtt extends LitElement {
     }
   }
 
+  private _handleQos(ev: CustomEvent) {
+    const newValue = (ev.target! as any).value;
+    if (newValue >= 0 && newValue !== this.qos && localStorage && this.inited) {
+      this.qos = newValue;
+      localStorage["panel-dev-mqtt-qos"] = this.qos;
+    }
+  }
+
   private _publish(): void {
     if (!this.hass) {
       return;
@@ -122,6 +145,7 @@ class HaPanelDevMqtt extends LitElement {
     this.hass.callService("mqtt", "publish", {
       topic: this.topic,
       payload_template: this.payload,
+      qos: parseInt(this.qos),
     });
   }
 
