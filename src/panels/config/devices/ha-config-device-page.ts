@@ -161,7 +161,8 @@ export class HaConfigDevicePage extends LitElement {
         .sort((ent1, ent2) =>
           stringCompare(
             ent1.stateName || `zzz${ent1.entity_id}`,
-            ent2.stateName || `zzz${ent2.entity_id}`
+            ent2.stateName || `zzz${ent2.entity_id}`,
+            this.hass.locale.language
           )
         )
   );
@@ -662,6 +663,10 @@ export class HaConfigDevicePage extends LitElement {
                     integrations.length
                       ? html`
                           <img
+                            alt=${domainToName(
+                              this.hass.localize,
+                              integrations[0].domain
+                            )}
                             src=${brandsUrl({
                               domain: integrations[0].domain,
                               type: "logo",
