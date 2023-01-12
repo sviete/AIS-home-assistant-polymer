@@ -58,10 +58,14 @@ class HaPanelDevMqtt extends LitElement {
           </mwc-list-item>
         </ha-button-menu>
         <div class="content">
-          <ha-card header="Ustawienia MQTT">
+          <ha-card
+            .header=${this.hass.localize("ui.panel.config.mqtt.settings_title")}
+          >
             <div class="card-actions">
               <mwc-button @click=${this._openOptionFlow}
-                >Re-konfiguracja połączenia MQTT</mwc-button
+                >${this.hass.localize(
+                  "ui.panel.config.mqtt.reconfigure"
+                )}</mwc-button
               >
             </div>
           </ha-card>
