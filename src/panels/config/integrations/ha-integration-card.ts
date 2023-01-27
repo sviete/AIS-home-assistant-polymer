@@ -75,11 +75,12 @@ import type { ConfigEntryExtended } from "./ha-config-integrations";
 import "./ha-integration-header";
 
 const integrationsWithPanel = {
+  matter: "/config/matter",
   mqtt: "/config/mqtt",
+  thread: "/config/thread",
   zha: "/config/zha/dashboard",
   zwave_js: "/config/zwave_js/dashboard",
   ais_supla_mqtt: "/config/ais_mqtt",
-  matter: "/config/matter",
 };
 
 @customElement("ha-integration-card")
