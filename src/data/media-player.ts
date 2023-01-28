@@ -72,7 +72,7 @@ import type {
 import { supportsFeature } from "../common/entity/supports-feature";
 import { MediaPlayerItemId } from "../components/media-player/ha-media-player-browse";
 import type { HomeAssistant, TranslationDict } from "../types";
-import { UNAVAILABLE_STATES } from "./entity";
+import { isUnavailableState } from "./entity";
 import { isTTSMediaSource } from "./tts";
 
 interface MediaPlayerEntityAttributes extends HassEntityAttributeBase {
@@ -350,7 +350,7 @@ export const computeMediaControls = (
 
   const state = stateObj.state;
 
-  if (UNAVAILABLE_STATES.includes(state)) {
+  if (isUnavailableState(state)) {
     return undefined;
   }
 
