@@ -1334,8 +1334,8 @@
             "secondary": "Ustaw godziny, w których asystent powinien być ciszej"
           },
           "ais_dom_config_logs": {
-            "main": "Logi i baza danych",
-            "secondary": "Konfiguracja logów i rejestratora DB"
+            "main": "Logi",
+            "secondary": "Konfiguracja logów"
           },
           "ais_dom_config_remote": {
             "main": "Zdalny dostęp",
@@ -1350,12 +1350,12 @@
             "secondary": "Uruchom ponownie lub wyłącz bramę"
           },
           "devices": {
-            "main": "Devices & Services",
-            "secondary": "Integrations, devices, entities and helpers"
+            "main": "Urządzenia i usługi",
+            "secondary": "Integracje, urządzenia, encje i pomocnicy"
           },
           "automations": {
-            "main": "Automations & Scenes",
-            "secondary": "Automations, scenes, scripts and blueprints"
+            "main": "Automatyzacje i sceny",
+            "secondary": "Automatyzacje, sceny, skrypty i schematy"
           },
           "backup": {
             "main": "Backup",
@@ -1366,36 +1366,36 @@
             "secondary": "Run extra applications next to Home Assistant"
           },
           "dashboards": {
-            "main": "Dashboards",
-            "secondary": "Organize how you interact with your home"
+            "main": "Pulpity nawigacyjne",
+            "secondary": "Uporządkuj sposób interakcji z domem"
           },
           "energy": {
-            "main": "Energy",
-            "secondary": "Monitor your energy production and consumption"
+            "main": "Energia",
+            "secondary": "Monitoruj produkcję i zużycie energii"
           },
           "tags": {
-            "main": "Tags",
-            "secondary": "Set up NFC tags and QR codes"
+            "main": "Tagi",
+            "secondary": "Skonfiguruj tagi NFC i kody QR"
           },
           "people": {
-            "main": "People",
-            "secondary": "Manage who can access your home"
+            "main": "Ludzie",
+            "secondary": "Zarządzaj dostępem do Twojego domu"
           },
           "areas": {
-            "main": "Areas & Zones",
-            "secondary": "Manage locations in and around your house"
+            "main": "Obszary i strefy",
+            "secondary": "Zarządzaj lokalizacjami w domu i wokół niego"
           },
           "companion": {
-            "main": "Companion App",
-            "secondary": "Location and notifications"
+            "main": "Aplikacja towarzysząca",
+            "secondary": "Lokalizacja i powiadomienia"
           },
           "system": {
             "main": "System",
-            "secondary": "Create backups, check logs or reboot your system"
+            "secondary": "Sprawdzaj dzienniki lub uruchom ponownie system"
           },
           "about": {
-            "main": "About",
-            "secondary": "Version information, credits and more"
+            "main": "O systemie",
+            "secondary": "Informacje o wersji"
           }
         },
         "common": {
