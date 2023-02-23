@@ -77,7 +77,7 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
     const step = this._curStep()!;
 
     if (this._loading || !step) {
-      return html` <onboarding-loading></onboarding-loading> `;
+      return html`<onboarding-loading></onboarding-loading> `;
     }
     if (step.step === "user") {
       return html`
@@ -353,7 +353,9 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
     // Load config strings for integrations
     (this as any)._loadFragmentTranslations(this.hass!.language, "config");
     // Make sure hass is initialized + the config/user callbacks have called.
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 0);
+    });
   }
 }
 
