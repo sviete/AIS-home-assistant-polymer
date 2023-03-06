@@ -278,7 +278,7 @@ class HaConfigHardware extends SubscribeMixin(LitElement) {
             `
           : ""}
         <div class="content">
-          ${boardName
+          ${boardName || isComponentLoaded(this.hass, "hassio")
             ? html`
                 <ha-card outlined>
                   <div class="card-content">
@@ -293,7 +293,9 @@ class HaConfigHardware extends SubscribeMixin(LitElement) {
                           : ""}
                         <span class="primary-text">
                           ${boardName ||
-                          this.hass.localize("ui.panel.config.hardware.board")}
+                          this.hass.localize(
+                            "ui.panel.config.hardware.generic_hardware"
+                          )}
                         </span>
                         ${boardId
                           ? html`
@@ -327,16 +329,21 @@ class HaConfigHardware extends SubscribeMixin(LitElement) {
                         : ""}
                     </mwc-list>
                   </div>
-                  ${boardConfigEntries.length
+                  ${boardConfigEntries.length ||
+                  isComponentLoaded(this.hass, "hassio")
                     ? html`<div class="card-actions">
-                        <mwc-button
-                          .entry=${boardConfigEntries[0]}
-                          @click=${this._openOptionsFlow}
-                        >
-                          ${this.hass.localize(
-                            "ui.panel.config.hardware.configure"
-                          )}
-                        </mwc-button>
+                        ${boardConfigEntries.length
+                          ? html`
+                              <mwc-button
+                                .entry=${boardConfigEntries[0]}
+                                @click=${this._openOptionsFlow}
+                              >
+                                ${this.hass.localize(
+                                  "ui.panel.config.hardware.configure"
+                                )}
+                              </mwc-button>
+                            `
+                          : null}
                         ${isComponentLoaded(this.hass, "hassio")
                           ? html`
                               <mwc-button @click=${this._openHardware}>
@@ -352,7 +359,7 @@ class HaConfigHardware extends SubscribeMixin(LitElement) {
               `
             : ""}
           ${dongles?.length
-            ? html`<ha-card>
+            ? html`<ha-card outlined>
                 ${dongles.map((dongle) => {
                   const configEntry = dongle.config_entries
                     .map((id) => this._configEntries?.[id])
@@ -434,6 +441,16 @@ class HaConfigHardware extends SubscribeMixin(LitElement) {
                     ></ha-chart-base>
                   </div>
                 </ha-card>`
+            : isComponentLoaded(this.hass, "hardware")
+            ? html`<ha-card outlined>
+                <div class="card-content">
+                  <div class="value">
+                    ${this.hass.localize(
+                      "ui.panel.config.hardware.loading_system_data"
+                    )}
+                  </div>
+                </div>
+              </ha-card>`
             : ""}
         </div>
       </hass-subpage>

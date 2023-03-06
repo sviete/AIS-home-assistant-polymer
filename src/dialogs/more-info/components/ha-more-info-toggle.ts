@@ -64,7 +64,9 @@ export class HaMoreInfoToggle extends LitElement {
   }
 
   protected render(): TemplateResult {
-    const color = stateColorCss(this.stateObj);
+    const onColor = stateColorCss(this.stateObj, "on");
+    const offColor = stateColorCss(this.stateObj, "off");
+
     const isOn = this.stateObj.state === "on";
     const isOff = this.stateObj.state === "off";
 
@@ -82,7 +84,7 @@ export class HaMoreInfoToggle extends LitElement {
               active: isOn,
             })}
             style=${styleMap({
-              "--color": color,
+              "--color": onColor,
             })}
           >
             <ha-svg-icon .path=${this.iconPathOn || mdiFlash}></ha-svg-icon>
@@ -97,7 +99,7 @@ export class HaMoreInfoToggle extends LitElement {
               active: isOff,
             })}
             style=${styleMap({
-              "--color": color,
+              "--color": offColor,
             })}
           >
             <ha-svg-icon .path=${this.iconPathOff || mdiFlashOff}></ha-svg-icon>
@@ -117,7 +119,8 @@ export class HaMoreInfoToggle extends LitElement {
         @change=${this._valueChanged}
         .ariaLabel=${this.hass.localize("ui.dialogs.more_info_control.toggle")}
         style=${styleMap({
-          "--control-switch-on-color": color,
+          "--control-switch-on-color": onColor,
+          "--control-switch-off-color": offColor,
         })}
         .disabled=${this.stateObj.state === UNAVAILABLE}
       >
@@ -128,7 +131,9 @@ export class HaMoreInfoToggle extends LitElement {
   static get styles(): CSSResultGroup {
     return css`
       ha-control-switch {
-        height: 320px;
+        height: 45vh;
+        max-height: 320px;
+        min-height: 200px;
         --control-switch-thickness: 100px;
         --control-switch-border-radius: 24px;
         --control-switch-padding: 6px;
@@ -138,7 +143,9 @@ export class HaMoreInfoToggle extends LitElement {
         display: flex;
         flex-direction: column;
         width: 100px;
-        height: 320px;
+        height: 45vh;
+        max-height: 320px;
+        min-height: 200px;
         padding: 6px;
         box-sizing: border-box;
       }

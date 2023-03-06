@@ -7,8 +7,8 @@ import {
   CSSResultGroup,
   html,
   LitElement,
+  nothing,
   PropertyValues,
-  TemplateResult,
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import "../../../../components/ha-button-toggle-group";
@@ -23,7 +23,6 @@ import {
   lightSupportsColor,
   lightSupportsColorMode,
 } from "../../../../data/light";
-import { haStyleDialog } from "../../../../resources/styles";
 import { HomeAssistant } from "../../../../types";
 import { LightColorPickerViewParams } from "./show-view-light-color-picker";
 
@@ -63,9 +62,9 @@ class MoreInfoViewLightColorPicker extends LitElement {
       : undefined;
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.params || !this.stateObj) {
-      return html``;
+      return nothing;
     }
 
     const supportsRgbww = lightSupportsColorMode(
@@ -78,117 +77,119 @@ class MoreInfoViewLightColorPicker extends LitElement {
       lightSupportsColorMode(this.stateObj, LightColorMode.RGBW);
 
     return html`
-      <div>
-        ${this._modes.length > 1
+      ${this._modes.length > 1
+        ? html`
+            <mwc-tab-bar
+              .activeIndex=${this._mode ? this._modes.indexOf(this._mode) : 0}
+              @MDCTabBar:activated=${this._handleTabChanged}
+            >
+              ${this._modes.map(
+                (value) =>
+                  html`<mwc-tab
+                    .label=${this.hass.localize(
+                      `ui.dialogs.more_info_control.light.color_picker.mode.${value}`
+                    )}
+                  ></mwc-tab>`
+              )}
+            </mwc-tab-bar>
+          `
+        : ""}
+      <div class="content">
+        ${this._mode === LightColorMode.COLOR_TEMP
           ? html`
-              <mwc-tab-bar
-                .activeIndex=${this._mode ? this._modes.indexOf(this._mode) : 0}
-                @MDCTabBar:activated=${this._handleTabChanged}
+              <p class="color-temp-value">
+                ${this._ctSliderValue ? `${this._ctSliderValue} K` : nothing}
+              </p>
+              <ha-control-slider
+                vertical
+                class="color-temp"
+                label=${this.hass.localize("ui.card.light.color_temperature")}
+                min="1"
+                max="100"
+                mode="cursor"
+                .value=${this._ctSliderValue}
+                @value-changed=${this._ctSliderChanged}
+                @slider-moved=${this._ctSliderMoved}
+                .min=${this.stateObj.attributes.min_color_temp_kelvin!}
+                .max=${this.stateObj.attributes.max_color_temp_kelvin!}
               >
-                ${this._modes.map(
-                  (value) =>
-                    html`<mwc-tab
-                      .label=${this.hass.localize(
-                        `ui.dialogs.more_info_control.light.color_picker.mode.${value}`
-                      )}
-                    ></mwc-tab>`
-                )}
-              </mwc-tab-bar>
+              </ha-control-slider>
             `
           : ""}
-        <div class="content">
-          ${this._mode === LightColorMode.COLOR_TEMP
-            ? html`
-                <ha-control-slider
-                  vertical
-                  class="color_temp"
-                  label=${this.hass.localize("ui.card.light.color_temperature")}
-                  min="1"
-                  max="100"
-                  mode="cursor"
-                  .value=${this._ctSliderValue}
-                  @value-changed=${this._ctSliderChanged}
-                  .min=${this.stateObj.attributes.min_color_temp_kelvin!}
-                  .max=${this.stateObj.attributes.max_color_temp_kelvin!}
+        ${this._mode === "color"
+          ? html`
+              <div class="segmentation-container">
+                <ha-color-picker
+                  class="color"
+                  @colorselected=${this._colorPicked}
+                  .desiredRgbColor=${this._colorPickerColor}
+                  throttle="500"
+                  .hueSegments=${this._hueSegments}
+                  .saturationSegments=${this._saturationSegments}
                 >
-                </ha-control-slider>
-              `
-            : ""}
-          ${this._mode === "color"
-            ? html`
-                <div class="segmentationContainer">
-                  <ha-color-picker
-                    class="color"
-                    @colorselected=${this._colorPicked}
-                    .desiredRgbColor=${this._colorPickerColor}
-                    throttle="500"
-                    .hueSegments=${this._hueSegments}
-                    .saturationSegments=${this._saturationSegments}
-                  >
-                  </ha-color-picker>
-                  <ha-icon-button
-                    .path=${mdiPalette}
-                    @click=${this._segmentClick}
-                    class="segmentationButton"
-                  ></ha-icon-button>
-                </div>
+                </ha-color-picker>
+                <ha-icon-button
+                  .path=${mdiPalette}
+                  @click=${this._segmentClick}
+                  class="segmentation-button"
+                ></ha-icon-button>
+              </div>
 
-                ${supportsRgbw || supportsRgbww
-                  ? html`<ha-labeled-slider
+              ${supportsRgbw || supportsRgbww
+                ? html`<ha-labeled-slider
+                    .caption=${this.hass.localize(
+                      "ui.card.light.color_brightness"
+                    )}
+                    icon="hass:brightness-7"
+                    max="100"
+                    .value=${this._colorBrightnessSliderValue}
+                    @change=${this._colorBrightnessSliderChanged}
+                    pin
+                  ></ha-labeled-slider>`
+                : ""}
+              ${supportsRgbw
+                ? html`
+                    <ha-labeled-slider
                       .caption=${this.hass.localize(
-                        "ui.card.light.color_brightness"
+                        "ui.card.light.white_value"
                       )}
-                      icon="hass:brightness-7"
+                      icon="hass:file-word-box"
                       max="100"
-                      .value=${this._colorBrightnessSliderValue}
-                      @change=${this._colorBrightnessSliderChanged}
+                      .name=${"wv"}
+                      .value=${this._wvSliderValue}
+                      @change=${this._wvSliderChanged}
                       pin
-                    ></ha-labeled-slider>`
-                  : ""}
-                ${supportsRgbw
-                  ? html`
-                      <ha-labeled-slider
-                        .caption=${this.hass.localize(
-                          "ui.card.light.white_value"
-                        )}
-                        icon="hass:file-word-box"
-                        max="100"
-                        .name=${"wv"}
-                        .value=${this._wvSliderValue}
-                        @change=${this._wvSliderChanged}
-                        pin
-                      ></ha-labeled-slider>
-                    `
-                  : ""}
-                ${supportsRgbww
-                  ? html`
-                      <ha-labeled-slider
-                        .caption=${this.hass.localize(
-                          "ui.card.light.cold_white_value"
-                        )}
-                        icon="hass:file-word-box-outline"
-                        max="100"
-                        .name=${"cw"}
-                        .value=${this._cwSliderValue}
-                        @change=${this._wvSliderChanged}
-                        pin
-                      ></ha-labeled-slider>
-                      <ha-labeled-slider
-                        .caption=${this.hass.localize(
-                          "ui.card.light.warm_white_value"
-                        )}
-                        icon="hass:file-word-box"
-                        max="100"
-                        .name=${"ww"}
-                        .value=${this._wwSliderValue}
-                        @change=${this._wvSliderChanged}
-                        pin
-                      ></ha-labeled-slider>
-                    `
-                  : ""}
-              `
-            : ""}
-        </div>
+                    ></ha-labeled-slider>
+                  `
+                : ""}
+              ${supportsRgbww
+                ? html`
+                    <ha-labeled-slider
+                      .caption=${this.hass.localize(
+                        "ui.card.light.cold_white_value"
+                      )}
+                      icon="hass:file-word-box-outline"
+                      max="100"
+                      .name=${"cw"}
+                      .value=${this._cwSliderValue}
+                      @change=${this._wvSliderChanged}
+                      pin
+                    ></ha-labeled-slider>
+                    <ha-labeled-slider
+                      .caption=${this.hass.localize(
+                        "ui.card.light.warm_white_value"
+                      )}
+                      icon="hass:file-word-box"
+                      max="100"
+                      .name=${"ww"}
+                      .value=${this._wwSliderValue}
+                      @change=${this._wvSliderChanged}
+                      pin
+                    ></ha-labeled-slider>
+                  `
+                : ""}
+            `
+          : ""}
       </div>
     `;
   }
@@ -209,7 +210,11 @@ class MoreInfoViewLightColorPicker extends LitElement {
           this._brightnessAdjusted = maxVal;
         }
       }
-      this._ctSliderValue = stateObj.attributes.color_temp_kelvin;
+      this._ctSliderValue =
+        stateObj.attributes.color_mode === LightColorMode.COLOR_TEMP
+          ? stateObj.attributes.color_temp_kelvin
+          : undefined;
+
       this._wvSliderValue =
         stateObj.attributes.color_mode === LightColorMode.RGBW
           ? Math.round((stateObj.attributes.rgbw_color![3] * 100) / 255)
@@ -246,7 +251,7 @@ class MoreInfoViewLightColorPicker extends LitElement {
   public willUpdate(changedProps: PropertyValues) {
     super.willUpdate(changedProps);
 
-    if (!changedProps.has("params") || !changedProps.has("hass")) {
+    if (!changedProps.has("params") && !changedProps.has("hass")) {
       return;
     }
 
@@ -267,10 +272,11 @@ class MoreInfoViewLightColorPicker extends LitElement {
       }
 
       this._modes = modes;
-      this._mode =
-        this.stateObj!.attributes.color_mode === LightColorMode.COLOR_TEMP
+      this._mode = this.stateObj!.attributes.color_mode
+        ? this.stateObj!.attributes.color_mode === LightColorMode.COLOR_TEMP
           ? LightColorMode.COLOR_TEMP
-          : "color";
+          : "color"
+        : this._modes[0];
     }
 
     this._updateSliderValues();
@@ -282,6 +288,16 @@ class MoreInfoViewLightColorPicker extends LitElement {
       return;
     }
     this._mode = newMode;
+  }
+
+  private _ctSliderMoved(ev: CustomEvent) {
+    const ct = ev.detail.value;
+
+    if (isNaN(ct)) {
+      return;
+    }
+
+    this._ctSliderValue = ct;
   }
 
   private _ctSliderChanged(ev: CustomEvent) {
@@ -482,23 +498,28 @@ class MoreInfoViewLightColorPicker extends LitElement {
 
   static get styles(): CSSResultGroup {
     return [
-      haStyleDialog,
       css`
+        :host {
+          display: flex;
+          flex-direction: column;
+        }
         .content {
           display: flex;
           flex-direction: column;
           align-items: center;
-          padding: 16px;
+          justify-content: center;
+          padding: 24px;
+          flex: 1;
         }
 
-        .segmentationContainer {
+        .segmentation-container {
           position: relative;
           max-height: 500px;
           display: flex;
           justify-content: center;
         }
 
-        .segmentationButton {
+        .segmentation-button {
           position: absolute;
           top: 5%;
           left: 0;
@@ -514,17 +535,29 @@ class MoreInfoViewLightColorPicker extends LitElement {
         }
 
         ha-control-slider {
-          height: 320px;
+          height: 45vh;
+          max-height: 320px;
+          min-height: 200px;
           margin: 20px 0;
+          --control-slider-thickness: 100px;
+          --control-slider-border-radius: 24px;
         }
 
         ha-labeled-slider {
           width: 100%;
         }
 
-        .color_temp {
-          --control-slider-thickness: 100px;
-          --control-slider-border-radius: 24px;
+        .color-temp-value {
+          font-style: normal;
+          font-weight: 500;
+          font-size: 16px;
+          height: 24px;
+          line-height: 24px;
+          letter-spacing: 0.1px;
+          margin: 0;
+        }
+
+        .color-temp {
           --control-slider-background: -webkit-linear-gradient(
             top,
             rgb(166, 209, 255) 0%,
@@ -532,6 +565,7 @@ class MoreInfoViewLightColorPicker extends LitElement {
             rgb(255, 160, 0) 100%
           );
           --control-slider-background-opacity: 1;
+          margin-bottom: 44px;
         }
 
         hr {

@@ -2,7 +2,7 @@ import {
   HassEntity,
   HassEntityAttributeBase,
 } from "home-assistant-js-websocket";
-import { EntityRegistryEntry } from "../../data/entity_registry";
+import { EntityRegistryDisplayEntry } from "../../data/entity_registry";
 import { FrontendLocaleData, NumberFormat } from "../../data/translation";
 import { round } from "./round";
 
@@ -77,6 +77,23 @@ export const formatNumber = (
       ).format(Number(num));
     }
   }
+
+  if (
+    !Number.isNaN(Number(num)) &&
+    num !== "" &&
+    localeOptions?.number_format === NumberFormat.none &&
+    Intl
+  ) {
+    // If NumberFormat is none, use en-US format without grouping.
+    return new Intl.NumberFormat(
+      "en-US",
+      getDefaultFormatOptions(num, {
+        ...options,
+        useGrouping: false,
+      })
+    ).format(Number(num));
+  }
+
   if (typeof num === "string") {
     return num;
   }
@@ -92,11 +109,9 @@ export const formatNumber = (
  */
 export const getNumberFormatOptions = (
   entityState: HassEntity,
-  entity?: EntityRegistryEntry
+  entity?: EntityRegistryDisplayEntry
 ): Intl.NumberFormatOptions | undefined => {
-  const precision =
-    entity?.options?.sensor?.display_precision ??
-    entity?.options?.sensor?.suggested_display_precision;
+  const precision = entity?.display_precision;
   if (precision != null) {
     return {
       maximumFractionDigits: precision,
