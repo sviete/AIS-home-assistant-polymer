@@ -10,13 +10,13 @@ export interface ThreadRouter {
 }
 
 export interface ThreadDataSet {
-  created;
-  dataset_id;
-  extended_pan_id;
-  network_name: string;
-  pan_id;
+  created: string;
+  dataset_id: string;
   preferred: boolean;
-  source;
+  source: string;
+  network_name: string;
+  extended_pan_id?: string;
+  pan_id?: string;
 }
 
 export interface ThreadRouterDiscoveryEvent {
@@ -26,12 +26,9 @@ export interface ThreadRouterDiscoveryEvent {
 }
 
 class DiscoveryStream {
-  hass: HomeAssistant;
-
   routers: { [key: string]: ThreadRouter };
 
-  constructor(hass: HomeAssistant) {
-    this.hass = hass;
+  constructor() {
     this.routers = {};
   }
 
@@ -49,7 +46,7 @@ export const subscribeDiscoverThreadRouters = (
   hass: HomeAssistant,
   callbackFunction: (routers: ThreadRouter[]) => void
 ) => {
-  const stream = new DiscoveryStream(hass);
+  const stream = new DiscoveryStream();
   return hass.connection.subscribeMessage<ThreadRouterDiscoveryEvent>(
     (message) => callbackFunction(stream.processEvent(message)),
     {
@@ -63,4 +60,30 @@ export const listThreadDataSets = (
 ): Promise<{ datasets: ThreadDataSet[] }> =>
   hass.callWS({
     type: "thread/list_datasets",
+  });
+
+export const getThreadDataSetTLV = (
+  hass: HomeAssistant,
+  dataset_id: string
+): Promise<{ tlv: string }> =>
+  hass.callWS({ type: "thread/get_dataset_tlv", dataset_id });
+
+export const addThreadDataSet = (
+  hass: HomeAssistant,
+  source: string,
+  tlv: string
+): Promise<void> =>
+  hass.callWS({
+    type: "thread/add_dataset_tlv",
+    source,
+    tlv,
+  });
+
+export const removeThreadDataSet = (
+  hass: HomeAssistant,
+  dataset_id: string
+): Promise<void> =>
+  hass.callWS({
+    type: "thread/delete_dataset",
+    dataset_id,
   });

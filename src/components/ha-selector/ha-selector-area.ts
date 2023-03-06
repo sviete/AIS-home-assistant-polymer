@@ -1,14 +1,10 @@
-import { HassEntity, UnsubscribeFunc } from "home-assistant-js-websocket";
-import { html, LitElement, PropertyValues, TemplateResult } from "lit";
+import { HassEntity } from "home-assistant-js-websocket";
+import { html, LitElement, PropertyValues, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { ensureArray } from "../../common/array/ensure-array";
 import type { DeviceRegistryEntry } from "../../data/device_registry";
 import { getDeviceIntegrationLookup } from "../../data/device_registry";
-import {
-  EntityRegistryEntry,
-  subscribeEntityRegistry,
-} from "../../data/entity_registry";
 import {
   EntitySources,
   fetchEntitySourcesWithCache,
@@ -18,13 +14,12 @@ import {
   filterSelectorDevices,
   filterSelectorEntities,
 } from "../../data/selector";
-import { SubscribeMixin } from "../../mixins/subscribe-mixin";
 import { HomeAssistant } from "../../types";
 import "../ha-area-picker";
 import "../ha-areas-picker";
 
 @customElement("ha-selector-area")
-export class HaAreaSelector extends SubscribeMixin(LitElement) {
+export class HaAreaSelector extends LitElement {
   @property() public hass!: HomeAssistant;
 
   @property() public selector!: AreaSelector;
@@ -41,17 +36,7 @@ export class HaAreaSelector extends SubscribeMixin(LitElement) {
 
   @state() private _entitySources?: EntitySources;
 
-  @state() private _entities?: EntityRegistryEntry[];
-
   private _deviceIntegrationLookup = memoizeOne(getDeviceIntegrationLookup);
-
-  public hassSubscribe(): UnsubscribeFunc[] {
-    return [
-      subscribeEntityRegistry(this.hass.connection!, (entities) => {
-        this._entities = entities.filter((entity) => entity.device_id !== null);
-      }),
-    ];
-  }
 
   private _hasIntegration(selector: AreaSelector) {
     return (
@@ -76,9 +61,9 @@ export class HaAreaSelector extends SubscribeMixin(LitElement) {
     }
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (this._hasIntegration(this.selector) && !this._entitySources) {
-      return html``;
+      return nothing;
     }
 
     if (!this.selector.area?.multiple) {
@@ -127,10 +112,12 @@ export class HaAreaSelector extends SubscribeMixin(LitElement) {
       return true;
     }
 
-    const deviceIntegrations =
-      this._entitySources && this._entities
-        ? this._deviceIntegrationLookup(this._entitySources, this._entities)
-        : undefined;
+    const deviceIntegrations = this._entitySources
+      ? this._deviceIntegrationLookup(
+          this._entitySources,
+          Object.values(this.hass.entities)
+        )
+      : undefined;
 
     return ensureArray(this.selector.area.device).some((filter) =>
       filterSelectorDevices(filter, device, deviceIntegrations)

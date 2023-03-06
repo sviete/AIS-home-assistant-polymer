@@ -4,7 +4,7 @@ import {
   html,
   LitElement,
   PropertyValues,
-  TemplateResult,
+  nothing,
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
@@ -20,8 +20,8 @@ import {
   string,
   union,
 } from "superstruct";
-import { fireEvent } from "../../../../common/dom/fire_event";
 import { ensureArray } from "../../../../common/array/ensure-array";
+import { fireEvent } from "../../../../common/dom/fire_event";
 import type { LocalizeFunc } from "../../../../common/translations/localize";
 import { deepEqual } from "../../../../common/util/deep-equal";
 import {
@@ -121,7 +121,9 @@ export class HuiStatisticsGraphCardEditor
       !deepEqual(this._configEntities, changedProps.get("_configEntities"))
     ) {
       this._metaDatas = undefined;
-      this._getStatisticsMetaData(this._configEntities);
+      if (this._configEntities?.length) {
+        this._getStatisticsMetaData(this._configEntities);
+      }
     }
   }
 
@@ -234,9 +236,9 @@ export class HuiStatisticsGraphCardEditor
     }
   );
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
     const schema = this._schema(
@@ -274,6 +276,7 @@ export class HuiStatisticsGraphCardEditor
         @value-changed=${this._valueChanged}
       ></ha-form>
         <ha-statistics-picker
+          allow-custom-entity
           .hass=${this.hass}
           .pickStatisticLabel=${this.hass!.localize(
             "ui.panel.lovelace.editor.card.statistics-graph.pick_statistic"

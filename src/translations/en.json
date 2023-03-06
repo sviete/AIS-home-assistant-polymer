@@ -1038,9 +1038,9 @@
         "restart": {
           "title": "Restart Home Assistant",
           "description": "Interrupts all running automations and scripts.",
-          "confirm_title": "Restart?",
+          "confirm_title": "Restart  Home Assistant?",
           "confirm_description": "This will interrupt all running automations and scripts.",
-          "confirm_action": "Restart Home Assistant",
+          "confirm_action": "Restart",
           "failed": "Failed to restart Home Assistant"
         },
         "reboot": {
@@ -1053,13 +1053,13 @@
           "failed": "Failed to reboot system"
         },
         "shutdown": {
-          "title": "Shutdown system",
-          "description": "Shutdown the system running Home Assistant and all Add-ons.",
-          "confirm_title": "Shutdown system?",
-          "confirm_description": "This will shutdown the complete system which includes Home Assistant and all Add-ons.",
-          "confirm_action": "Shutdown",
+          "title": "Shut down system",
+          "description": "Shut down the system running Home Assistant and all Add-ons.",
+          "confirm_title": "Shut down system?",
+          "confirm_description": "This will shut down the complete system which includes Home Assistant and all Add-ons.",
+          "confirm_action": "Shut down",
           "shutting_down": "Shutting down system",
-          "failed": "Failed to shutdown system"
+          "failed": "Failed to shut down system"
         }
       },
       "aliases": {
@@ -1452,6 +1452,9 @@
           "about": {
             "main": "O systemie",
             "secondary": "Informacje o wersji"
+          },
+          "cloud": {
+            "secondary": "Loading..."
           }
         },
         "common": {
@@ -1858,11 +1861,12 @@
           "reboot_moved_link": "Go to system page.",
           "processor": "Processor",
           "memory": "Memory",
-          "board": "Board",
+          "generic_hardware": "Generic Hardware",
           "documentation": "Documentation",
           "configure": "Configure",
           "documentation_description": "Find extra information about your device",
-          "restart_homeassistant": "[%key:ui::panel::config::system_dashboard::restart_homeassistant%]"
+          "restart_homeassistant": "[%key:ui::panel::config::system_dashboard::restart_homeassistant%]",
+          "loading_system_data": "Loading processor and memory data..."
         },
         "info": {
           "caption": "About",
@@ -3345,6 +3349,12 @@
           "my_network": "My network",
           "no_preferred_network": "You don't have a preferred network yet.",
           "add_open_thread_border_router": "Add an OpenThread border router",
+          "add_dataset_from_tlv": "Add dataset from TLV",
+          "add_dataset": "Add Thread dataset",
+          "add_dataset_label": "Operational dataset TLV",
+          "add_dataset_button": "Add dataset",
+          "confirm_delete_dataset": "Delete {name} dataset?",
+          "confirm_delete_dataset_text": "This network will be removed from Home Assistant.",
           "no_border_routers": "No border routers found",
           "border_routers": "{count} border {count, plural,\n  one {router}\n  other {routers}\n}",
           "managed_by_home_assistant": "Managed by Home Assistant",
@@ -3748,6 +3758,8 @@
             "warning_controller": "WARNING: Firmware updates can brick your controller if you do not use the right firmware files, or if you attempt to stop the firmware update before it completes. The Home Assistant and Z-Wave JS teams do not take any responsibility for any damages to your controller as a result of the firmware update and will not be able to help you if you brick your controller. Would you still like to continue?",
             "introduction": "Select the firmware file you would like to use to update {device}.",
             "introduction_controller": "Select the firmware file you would like to use to update {device}. Note that once you start a firmware update, you MUST wait for the update to complete.",
+            "firmware_target_intro": "Select the firmware target (0 for the Z-Wave chip, ≥1 for other chips if they exist) for this update.",
+            "firmware_target": "Firmware Target (chip)",
             "upload_firmware": "Upload Firmware",
             "upload_failed": "Upload Failed",
             "begin_update": "Begin Firmware Update",
