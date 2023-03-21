@@ -1,6 +1,6 @@
 import { HassEntity } from "home-assistant-js-websocket";
 import { UNAVAILABLE, UNKNOWN } from "../../data/entity";
-import { EntityRegistryEntry } from "../../data/entity_registry";
+import { EntityRegistryDisplayEntry } from "../../data/entity_registry";
 import { FrontendLocaleData } from "../../data/translation";
 import {
   updateIsInstallingFromAttributes,
@@ -49,6 +49,8 @@ export const computeStateDisplayFromEntityAttributes = (
     return localize(`state.default.${state}`);
   }
 
+  const entity = entities[entityId] as EntityRegistryDisplayEntry | undefined;
+
   // Entities with a `unit_of_measurement` or `state_class` are numeric values and should use `formatNumber`
   if (isNumericFromAttributes(attributes)) {
     // state is duration
@@ -69,6 +71,11 @@ export const computeStateDisplayFromEntityAttributes = (
           style: "currency",
           currency: attributes.unit_of_measurement,
           minimumFractionDigits: 2,
+          // Override monetary options with number format
+          ...getNumberFormatOptions(
+            { state, attributes } as HassEntity,
+            entity
+          ),
         });
       } catch (_err) {
         // fallback to default
@@ -82,7 +89,7 @@ export const computeStateDisplayFromEntityAttributes = (
     return `${formatNumber(
       state,
       locale,
-      getNumberFormatOptions({ state, attributes } as HassEntity)
+      getNumberFormatOptions({ state, attributes } as HassEntity, entity)
     )}${unit}`;
   }
 
@@ -160,7 +167,7 @@ export const computeStateDisplayFromEntityAttributes = (
     return formatNumber(
       state,
       locale,
-      getNumberFormatOptions({ state, attributes } as HassEntity)
+      getNumberFormatOptions({ state, attributes } as HassEntity, entity)
     );
   }
 
@@ -198,8 +205,6 @@ export const computeStateDisplayFromEntityAttributes = (
       ? attributes.latest_version ?? localize("state.default.unavailable")
       : localize("ui.card.update.up_to_date");
   }
-
-  const entity = entities[entityId] as EntityRegistryEntry | undefined;
 
   return (
     (entity?.translation_key &&

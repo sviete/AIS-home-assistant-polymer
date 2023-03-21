@@ -69,6 +69,33 @@ describe("formatNumber", () => {
     );
   });
 
+  it("Formats number with fraction digits options if number format is none", () => {
+    assert.strictEqual(
+      formatNumber(
+        1234.5,
+        { ...defaultLocale, number_format: NumberFormat.none },
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }
+      ),
+      "1234.50"
+    );
+  });
+
+  it("Do not formats number with others options if number format is none", () => {
+    assert.strictEqual(
+      formatNumber(
+        1234.5,
+        { ...defaultLocale, number_format: NumberFormat.none },
+        {
+          useGrouping: true,
+        }
+      ),
+      "1234.5"
+    );
+  });
+
   it("Sets only the maximumFractionDigits format option when none are provided for a number value", () => {
     assert.deepEqual(getDefaultFormatOptions(1234.5), {
       maximumFractionDigits: 2,
@@ -126,8 +153,7 @@ describe("formatNumber", () => {
       getNumberFormatOptions({
         state: "3.0",
         attributes: { step: 0.5 },
-      } as unknown as HassEntity),
-      undefined
+      } as unknown as HassEntity)
     );
   });
 

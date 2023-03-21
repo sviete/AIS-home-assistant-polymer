@@ -67,7 +67,8 @@ export const showOptionsFlowDialog = (
       renderShowFormStepHeader(hass, step) {
         return (
           hass.localize(
-            `component.${configEntry.domain}.options.step.${step.step_id}.title`
+            `component.${configEntry.domain}.options.step.${step.step_id}.title`,
+            step.description_placeholders
           ) || hass.localize(`ui.dialogs.options_flow.form.header`)
         );
       },
@@ -113,6 +114,19 @@ export const showOptionsFlowDialog = (
 
       renderShowFormStepFieldLocalizeValue(hass, _step, key) {
         return hass.localize(`component.${configEntry.domain}.selector.${key}`);
+      },
+
+      renderShowFormStepSubmitButton(hass, step) {
+        return (
+          hass.localize(
+            `component.${configEntry.domain}.options.step.${step.step_id}.submit`
+          ) ||
+          hass.localize(
+            `ui.panel.config.integrations.config_flow.${
+              step.last_step === false ? "next" : "submit"
+            }`
+          )
+        );
       },
 
       renderExternalStepHeader(_hass, _step) {

@@ -4,7 +4,7 @@ import {
   html,
   LitElement,
   PropertyValues,
-  TemplateResult,
+  nothing,
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
@@ -12,6 +12,7 @@ import {
   array,
   assert,
   assign,
+  boolean,
   literal,
   number,
   object,
@@ -19,8 +20,8 @@ import {
   string,
   union,
 } from "superstruct";
-import { fireEvent } from "../../../../common/dom/fire_event";
 import { ensureArray } from "../../../../common/array/ensure-array";
+import { fireEvent } from "../../../../common/dom/fire_event";
 import type { LocalizeFunc } from "../../../../common/translations/localize";
 import { deepEqual } from "../../../../common/util/deep-equal";
 import {
@@ -72,6 +73,7 @@ const cardConfigStruct = assign(
     chart_type: optional(union([literal("bar"), literal("line")])),
     stat_types: optional(union([array(statTypeStruct), statTypeStruct])),
     unit: optional(string()),
+    hide_legend: optional(boolean()),
   })
 );
 
@@ -119,7 +121,9 @@ export class HuiStatisticsGraphCardEditor
       !deepEqual(this._configEntities, changedProps.get("_configEntities"))
     ) {
       this._metaDatas = undefined;
-      this._getStatisticsMetaData(this._configEntities);
+      if (this._configEntities?.length) {
+        this._getStatisticsMetaData(this._configEntities);
+      }
     }
   }
 
@@ -204,6 +208,11 @@ export class HuiStatisticsGraphCardEditor
                 ["bar", "Bar"],
               ],
             },
+            {
+              name: "hide_legend",
+              required: false,
+              selector: { boolean: {} },
+            },
           ],
         },
       ];
@@ -227,9 +236,9 @@ export class HuiStatisticsGraphCardEditor
     }
   );
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
     const schema = this._schema(
@@ -267,6 +276,7 @@ export class HuiStatisticsGraphCardEditor
         @value-changed=${this._valueChanged}
       ></ha-form>
         <ha-statistics-picker
+          allow-custom-entity
           .hass=${this.hass}
           .pickStatisticLabel=${this.hass!.localize(
             "ui.panel.lovelace.editor.card.statistics-graph.pick_statistic"
@@ -290,18 +300,26 @@ export class HuiStatisticsGraphCardEditor
   }
 
   private async _entitiesChanged(ev: CustomEvent): Promise<void> {
-    const config = { ...this._config!, entities: ev.detail.value };
+    const newEntityIds = ev.detail.value;
+
+    // Save the EntityConfig objects from being replaced with strings
+    const newEntities = newEntityIds.map((newEnt) => {
+      const matchEntity = this._config!.entities.find(
+        (oldEnt) => typeof oldEnt !== "string" && oldEnt.entity === newEnt
+      );
+      return matchEntity ?? newEnt;
+    });
+
+    const config = { ...this._config!, entities: newEntities };
     if (
-      config.entities?.some((statistic_id) =>
-        isExternalStatistic(statistic_id)
-      ) &&
+      newEntityIds?.some((statistic_id) => isExternalStatistic(statistic_id)) &&
       config.period === "5minute"
     ) {
       delete config.period;
     }
     const metadata =
       config.stat_types || config.unit
-        ? await getStatisticMetadata(this.hass!, config.entities)
+        ? await getStatisticMetadata(this.hass!, newEntityIds)
         : undefined;
     if (config.stat_types && config.entities.length) {
       config.stat_types = ensureArray(config.stat_types).filter((stat_type) =>
@@ -334,6 +352,7 @@ export class HuiStatisticsGraphCardEditor
       case "stat_types":
       case "period":
       case "unit":
+      case "hide_legend":
         return this.hass!.localize(
           `ui.panel.lovelace.editor.card.statistics-graph.${schema.name}`
         );

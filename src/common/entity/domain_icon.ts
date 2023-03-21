@@ -15,6 +15,8 @@ import {
   mdiCheckCircleOutline,
   mdiClock,
   mdiCloseCircleOutline,
+  mdiFan,
+  mdiFanOff,
   mdiGestureTapButton,
   mdiLanConnect,
   mdiLanDisconnect,
@@ -28,6 +30,8 @@ import {
   mdiPowerPlug,
   mdiPowerPlugOff,
   mdiRestart,
+  mdiRobot,
+  mdiRobotOff,
   mdiSpeaker,
   mdiSpeakerOff,
   mdiSpeakerPause,
@@ -39,7 +43,12 @@ import {
   mdiTelevisionPlay,
   mdiToggleSwitchVariant,
   mdiToggleSwitchVariantOff,
+  mdiVideo,
+  mdiVideoOff,
+  mdiWaterBoiler,
+  mdiWaterBoilerOff,
   mdiWeatherNight,
+  mdiWhiteBalanceSunny,
 } from "@mdi/js";
 import { HassEntity } from "home-assistant-js-websocket";
 import { UpdateEntity, updateIsInstalling } from "../../data/update";
@@ -81,6 +90,9 @@ export const domainIconWithoutDefault = (
     case "alarm_control_panel":
       return alarmPanelIcon(compareState);
 
+    case "automation":
+      return compareState === "off" ? mdiRobotOff : mdiRobot;
+
     case "binary_sensor":
       return binarySensorIcon(compareState, stateObj);
 
@@ -93,6 +105,9 @@ export const domainIconWithoutDefault = (
         default:
           return mdiGestureTapButton;
       }
+
+    case "camera":
+      return compareState === "off" ? mdiVideoOff : mdiVideo;
 
     case "cover":
       return coverIcon(compareState, stateObj);
@@ -107,6 +122,9 @@ export const domainIconWithoutDefault = (
         return compareState === "home" ? mdiBluetoothConnect : mdiBluetooth;
       }
       return compareState === "not_home" ? mdiAccountArrowRight : mdiAccount;
+
+    case "fan":
+      return compareState === "off" ? mdiFanOff : mdiFan;
 
     case "humidifier":
       return compareState === "off" ? mdiAirHumidifierOff : mdiAirHumidifier;
@@ -216,7 +234,7 @@ export const domainIconWithoutDefault = (
 
     case "sun":
       return stateObj?.state === "above_horizon"
-        ? FIXED_DOMAIN_ICONS[domain]
+        ? mdiWhiteBalanceSunny
         : mdiWeatherNight;
 
     case "switch_as_x":
@@ -231,6 +249,9 @@ export const domainIconWithoutDefault = (
           ? mdiPackageDown
           : mdiPackageUp
         : mdiPackage;
+
+    case "water_heater":
+      return compareState === "off" ? mdiWaterBoilerOff : mdiWaterBoiler;
 
     case "weather":
       return weatherIcon(stateObj?.state);
