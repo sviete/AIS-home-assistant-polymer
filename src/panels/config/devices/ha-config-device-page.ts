@@ -8,7 +8,7 @@ import {
   mdiPencil,
   mdiPlusCircle,
 } from "@mdi/js";
-import "@polymer/paper-tooltip/paper-tooltip";
+import "@lrnwebcomponents/simple-tooltip/simple-tooltip";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { ifDefined } from "lit/directives/if-defined";
@@ -407,11 +407,11 @@ export class HaConfigDevicePage extends LitElement {
                             </a>
                             ${!entityState.attributes.id
                               ? html`
-                                  <paper-tooltip animation-delay="0">
+                                  <simple-tooltip animation-delay="0">
                                     ${this.hass.localize(
                                       "ui.panel.config.devices.cant_edit"
                                     )}
-                                  </paper-tooltip>
+                                  </simple-tooltip>
                                 `
                               : ""}
                           </div> `
@@ -501,11 +501,11 @@ export class HaConfigDevicePage extends LitElement {
                                 </a>
                                 ${!entityState.attributes.id
                                   ? html`
-                                      <paper-tooltip animation-delay="0">
+                                      <simple-tooltip animation-delay="0">
                                         ${this.hass.localize(
                                           "ui.panel.config.devices.cant_edit"
                                         )}
-                                      </paper-tooltip>
+                                      </simple-tooltip>
                                     `
                                   : ""}
                               </div>
