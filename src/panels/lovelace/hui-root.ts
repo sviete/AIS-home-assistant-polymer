@@ -26,7 +26,13 @@ import {
   PropertyValues,
   TemplateResult,
 } from "lit";
-import { customElement, property, query, state } from "lit/decorators";
+import {
+  customElement,
+  eventOptions,
+  property,
+  query,
+  state,
+} from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
 import { ifDefined } from "lit/directives/if-defined";
 import memoizeOne from "memoize-one";
@@ -116,9 +122,9 @@ class HUIRoot extends LitElement {
 
     return html`
       <div
-        class=" ${classMap({
+        class=${classMap({
           "edit-mode": this._editMode,
-        })}"
+        })}
       >
         <div class="header">
           <div class="toolbar">
@@ -547,9 +553,18 @@ class HUIRoot extends LitElement {
               `
             : ""}
         </div>
-        <div id="view" @ll-rebuild=${this._debouncedConfigChanged}></div>
+        <div
+          id="view"
+          @ll-rebuild=${this._debouncedConfigChanged}
+          @scroll=${this._viewScrolled}
+        ></div>
       </div>
     `;
+  }
+
+  @eventOptions({ passive: true })
+  private _viewScrolled(ev) {
+    this.toggleAttribute("scrolled", ev.currentTarget.scrollTop !== 0);
   }
 
   private _isVisible = (view: LovelaceViewConfig) =>
@@ -946,7 +961,17 @@ class HUIRoot extends LitElement {
           position: fixed;
           top: 0;
           width: var(--mdc-top-app-bar-width, 100%);
-          z-index: 2;
+          padding-top: env(safe-area-inset-top);
+          z-index: 4;
+          transition: box-shadow 200ms linear;
+        }
+        :host([scrolled]) .header {
+          box-shadow: var(
+            --mdc-top-app-bar-fixed-box-shadow,
+            0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+            0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+            0px 1px 10px 0px rgba(0, 0, 0, 0.12)
+          );
         }
         .edit-mode .header {
           background-color: var(--app-header-edit-background-color, #455a64);
@@ -957,9 +982,14 @@ class HUIRoot extends LitElement {
           display: flex;
           align-items: center;
           font-size: 20px;
-          padding: 0 16px;
+          padding: 0px 12px;
           font-weight: 400;
           box-sizing: border-box;
+        }
+        @media (max-width: 599px) {
+          .toolbar {
+            padding: 0 4px;
+          }
         }
         .main-title {
           margin: 0 0 0 24px;
@@ -1020,31 +1050,27 @@ class HUIRoot extends LitElement {
           color: var(--error-color);
         }
         #view {
-          margin-top: var(--header-height);
-          height: calc(
-            100vh - var(--header-height) - env(safe-area-inset-top) -
-              env(safe-area-inset-bottom)
+          margin-top: calc(var(--header-height) + env(safe-area-inset-top));
+          height: calc(100vh - var(--header-height) - env(safe-area-inset-top));
+          padding-left: env(safe-area-inset-left);
+          padding-right: env(safe-area-inset-right);
+          background: var(
+            --lovelace-background,
+            var(--primary-background-color)
           );
-          /**
-          * Since we only set min-height, if child nodes need percentage
-          * heights they must use absolute positioning so we need relative
-          * positioning here.
-          *
-          * https://www.w3.org/TR/CSS2/visudet.html#the-height-property
-          */
-          position: relative;
-          display: flex;
           overflow: auto;
+          transform: translateZ(0);
         }
         /**
          * In edit mode we have the tab bar on a new line *
          */
         .edit-mode #view {
           height: calc(
-            100vh - var(--header-height) - 48px - env(safe-area-inset-top) -
-              env(safe-area-inset-bottom)
+            100vh - var(--header-height) - 48px - env(safe-area-inset-top)
           );
-          margin-top: calc(var(--header-height) + 48px);
+          margin-top: calc(
+            var(--header-height) + 48px + env(safe-area-inset-top)
+          );
         }
         #view > * {
           /**
@@ -1057,18 +1083,14 @@ class HUIRoot extends LitElement {
           */
           flex: 1 1 100%;
           max-width: 100%;
+          padding-bottom: env(safe-area-inset-bottom);
+          display: block;
         }
         .hide-tab {
           display: none;
         }
         .menu-link {
           text-decoration: none;
-        }
-        hui-view {
-          background: var(
-            --lovelace-background,
-            var(--primary-background-color)
-          );
         }
         .exit-edit-mode {
           --mdc-theme-primary: var(--app-header-edit-text-color, #fff);
