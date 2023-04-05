@@ -7,11 +7,12 @@ import {
   PropertyValues,
   TemplateResult,
 } from "lit";
-import "@material/mwc-drawer/mwc-drawer";
 import { customElement, property, state } from "lit/decorators";
 import { fireEvent, HASSDomEvent } from "../common/dom/fire_event";
 import { listenMediaQuery } from "../common/dom/media_query";
 import { toggleAttribute } from "../common/dom/toggle_attribute";
+import { computeRTLDirection } from "../common/util/compute_rtl";
+import "../components/ha-drawer";
 import { showNotificationDrawer } from "../dialogs/notifications/show-notification-drawer";
 import type { HomeAssistant, Route } from "../types";
 import "./partial-panel-resolver";
@@ -19,12 +20,13 @@ import "./partial-panel-resolver";
 declare global {
   // for fire event
   interface HASSDomEvents {
-    "hass-toggle-menu": undefined;
+    "hass-toggle-menu": undefined | { open?: boolean };
     "hass-edit-sidebar": EditSideBarEvent;
     "hass-show-notifications": undefined;
   }
   interface HTMLElementEventMap {
     "hass-edit-sidebar": HASSDomEvent<EditSideBarEvent>;
+    "hass-toggle-menu": HASSDomEvent<HASSDomEvents["hass-toggle-menu"]>;
   }
 }
 
@@ -57,9 +59,10 @@ export class HomeAssistantMain extends LitElement {
     const sidebarNarrow = this._sidebarNarrow || this._externalSidebar;
 
     return html`
-      <mwc-drawer
+      <ha-drawer
         .type=${sidebarNarrow ? "modal" : ""}
         .open=${sidebarNarrow ? this._drawerOpen : undefined}
+        .direction=${computeRTLDirection(this.hass)}
         @MDCDrawer:closed=${this._drawerClosed}
       >
         <ha-sidebar
@@ -75,7 +78,7 @@ export class HomeAssistantMain extends LitElement {
           .route=${this.route}
           slot="appContent"
         ></partial-panel-resolver>
-      </mwc-drawer>
+      </ha-drawer>
     `;
   }
 
@@ -107,7 +110,7 @@ export class HomeAssistantMain extends LitElement {
       }
     );
 
-    this.addEventListener("hass-toggle-menu", () => {
+    this.addEventListener("hass-toggle-menu", (ev) => {
       if (this._sidebarEditMode) {
         return;
       }
@@ -118,10 +121,16 @@ export class HomeAssistantMain extends LitElement {
         return;
       }
       if (this._sidebarNarrow) {
-        this._drawerOpen = !this._drawerOpen;
+        this._drawerOpen = ev.detail?.open ?? !this._drawerOpen;
       } else {
         fireEvent(this, "hass-dock-sidebar", {
-          dock: this.hass.dockedSidebar === "auto" ? "docked" : "auto",
+          dock: ev.detail?.open
+            ? "docked"
+            : ev.detail?.open === false
+            ? "auto"
+            : this.hass.dockedSidebar === "auto"
+            ? "docked"
+            : "auto",
         });
       }
     });
@@ -142,10 +151,12 @@ export class HomeAssistantMain extends LitElement {
   protected updated(changedProps: PropertyValues) {
     super.updated(changedProps);
 
+    toggleAttribute(this, "expanded", this.hass.dockedSidebar === "docked");
+
     toggleAttribute(
       this,
-      "expanded",
-      this.narrow || this.hass.dockedSidebar !== "auto"
+      "modal",
+      this._sidebarNarrow || this._externalSidebar
     );
   }
 
@@ -169,15 +180,14 @@ export class HomeAssistantMain extends LitElement {
       :host([expanded]) {
         --mdc-drawer-width: calc(256px + env(safe-area-inset-left));
       }
+      :host([modal]) {
+        --mdc-drawer-width: unset;
+        --mdc-top-app-bar-width: unset;
+      }
       partial-panel-resolver,
       ha-sidebar {
         /* allow a light tap highlight on the actual interface elements  */
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
-      }
-      @media (min-width: 870px) {
-        partial-panel-resolver {
-          --mdc-top-app-bar-width: calc(100% - var(--mdc-drawer-width));
-        }
       }
     `;
   }

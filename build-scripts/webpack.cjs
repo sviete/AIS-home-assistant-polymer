@@ -4,8 +4,8 @@ const TerserPlugin = require("terser-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const log = require("fancy-log");
 const WebpackBar = require("webpackbar");
-const paths = require("./paths.js");
-const bundle = require("./bundle.js");
+const paths = require("./paths.cjs");
+const bundle = require("./bundle.cjs");
 
 class LogStartCompilePlugin {
   ignoredFirst = false;
@@ -63,6 +63,9 @@ const createWebpackConfig = ({
               cacheDirectory: !isProdBuild,
               cacheCompression: false,
             },
+          },
+          resolve: {
+            fullySpecified: false,
           },
         },
         {
@@ -149,14 +152,17 @@ const createWebpackConfig = ({
       },
     },
     output: {
-      filename: ({ chunk }) => {
-        if (!isProdBuild || isStatsBuild || dontHash.has(chunk.name)) {
-          return `${chunk.name}.js`;
-        }
-        return `${chunk.name}.${chunk.hash.substr(0, 8)}.js`;
-      },
+      filename: ({ chunk }) =>
+        !isProdBuild || isStatsBuild || dontHash.has(chunk.name)
+          ? "[name].js"
+          : "[name]-[contenthash].js",
       chunkFilename:
-        isProdBuild && !isStatsBuild ? "[chunkhash:8].js" : "[id].chunk.js",
+        isProdBuild && !isStatsBuild ? "[id]-[contenthash].js" : "[name].js",
+      assetModuleFilename:
+        isProdBuild && !isStatsBuild ? "[id]-[contenthash][ext]" : "[id][ext]",
+      hashFunction: "xxhash64",
+      hashDigest: "base64url",
+      hashDigestLength: 11, // full length of 64 bit base64url
       path: outputPath,
       publicPath,
       // To silence warning in worker plugin
