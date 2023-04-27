@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
-    <link rel="icon" href="/static/icons/favicon.ico" />
-    <link rel="mask-icon" href="/static/icons/mask-icon.svg" color="#FF9800" />
+    <title>Home Assistant Demo</title>
+    <%= renderTemplate("../../../src/html/_header.html.template") %>
+    <link rel="mask-icon" href="/static/icons/mask-icon.svg" color="#03a9f4" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -34,34 +33,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <meta name="theme-color" content="#FF9800" />
-    <meta property="fb:app_id" content="338291289691179" />
-    <meta property="og:title" content="Home Assistant Demo" />
-    <meta property="og:site_name" content="Home Assistant" />
-    <meta property="og:url" content="https://demo.home-assistant.io/" />
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:description"
-      content="Open source home automation that puts local control and privacy first."
-    />
-    <meta
-      property="og:image"
-      content="https://www.home-assistant.io/images/default-social.png"
-    />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@home_assistant" />
-
-    <meta name="twitter:title" content="Home Assistant" />
-    <meta
-      name="twitter:description"
-      content="Open source home automation that puts local control and privacy first."
-    />
-    <meta
-      name="twitter:image"
-      content="https://www.home-assistant.io/images/default-social.png"
-    />
-    <title>AI-Speaker Demo</title>
+    <meta name="theme-color" content="#03a9f4" />
+    <%= renderTemplate("_social_meta.html.template") %>
     <style>
       html {
         background-color: var(--primary-background-color, #fafafa);
@@ -104,29 +77,22 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="200mm" height="200mm" viewBox="0 0 200 320" version="1.1"><defs><filter id="a" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="b" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="c" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="d" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="e" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="f" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter></defs><g fill-rule="evenodd" stroke="#fff" stroke-width=".511" stroke-miterlimit="4" stroke-dasharray="0 5.616" stroke-dashoffset="7.56" stroke-opacity="1"><path d="M39.429 22.429C21.226 22.429 6.57 40.774 6.57 63.56v183.153h65.715V63.56c0-22.787-14.654-41.132-32.857-41.132z" transform="translate(46.109 57.663) scale(.39179)" opacity="1" fill="#d04400" fill-opacity=".929" filter="url(#a)"/><path d="M39.429 14.025C21.226 14.025 6.57 32.37 6.57 55.157v98.868h61.354c1.479 0 2.933.089 4.361.246V55.157c0-22.787-14.654-41.132-32.857-41.132z" transform="translate(92.823 93.978) scale(.39179)" opacity="1" fill="#f69562" fill-opacity="1" filter="url(#b)"/><path d="M39.429 8C21.226 8 6.57 26.346 6.57 49.133V88h65.715V49.133C72.286 26.346 57.632 8 39.43 8z" transform="translate(140.432 119.846) scale(.39179)" opacity="1" fill="#ffbd77" fill-opacity="1" filter="url(#c)"/><path d="M39.429 22.429C21.226 22.429 6.57 40.774 6.57 63.56v183.153h65.715V63.56c0-22.787-14.654-41.132-32.857-41.132z" transform="matrix(.39179 0 0 -.39179 46.109 267.13)" opacity="1" fill="#d04400" fill-opacity=".929" filter="url(#d)"/><path d="M39.429 14.025C21.226 14.025 6.57 32.37 6.57 55.157v98.868h61.354c1.479 0 2.933.089 4.361.246V55.157c0-22.787-14.654-41.132-32.857-41.132z" transform="matrix(.39179 0 0 -.39179 92.823 230.716)" opacity="1" fill="#f69562" fill-opacity="1" filter="url(#e)"/><path d="M39.429 8C21.226 8 6.57 26.346 6.57 49.133V88h65.715V49.133C72.286 26.346 57.632 8 39.43 8z" transform="matrix(.39179 0 0 -.39179 140.432 204.472)" opacity="1" fill="#ffbd77" fill-opacity="1" filter="url(#f)"/></g></svg>
       <div id="ha-launch-screen-info-box" class="ha-launch-screen-spacer"></div>
     </div>
-
     <ha-demo></ha-demo>
-
-    <%= renderTemplate('_js_base') %>
-    <%= renderTemplate('_preload_roboto') %>
-
+    <%= renderTemplate("../../../src/html/_js_base.html.template") %>
+    <%= renderTemplate("../../../src/html/_preload_roboto.html.template") %>
     <script>
-      import("<%= latestDemoJS %>");
-      window.latestJS = true;
-    </script>
-
-    <script>
-      if (!window.latestJS) {
-        <% if (useRollup) { %>
-          _ls("/static/js/s.min.js").onload = function() {
-            System.import("<%= es5DemoJS %>");
-          };
-        <% } else { %>
-          _ls("<%= es5DemoJS %>");
+      if (!window.globalThis) {
+        window.globalThis = window;
+      }
+      // Safari 12 and below does not have a compliant ES2015 implementation of template literals, so we ship ES5
+      if (!isS11_12) {
+        <% for (const entry of latestEntryJS) { %>
+          import("<%= entry %>");
         <% } %>
+        window.latestJS = true;
       }
     </script>
-
+    <%= renderTemplate("../../../src/html/_script_load_es5.html.template") %>
     <script>
       var _gaq = [["_setAccount", "UA-57927901-5"], ["_trackPageview"]];
       (function (d, t) {

@@ -815,6 +815,7 @@ class HaSidebar extends SubscribeMixin(LitElement) {
     }
     tooltip.innerHTML = item.querySelector(".item-text")!.innerHTML;
     tooltip.style.display = "block";
+    tooltip.style.position = "fixed";
     tooltip.style.top = `${top}px`;
     tooltip.style.left = `${item.offsetLeft + item.clientWidth + 4}px`;
   }
@@ -845,6 +846,7 @@ class HaSidebar extends SubscribeMixin(LitElement) {
       haStyleScrollbar,
       css`
         :host {
+          overflow: visible;
           height: 100%;
           display: block;
           overflow: hidden;
