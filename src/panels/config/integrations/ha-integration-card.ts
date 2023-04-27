@@ -1,5 +1,5 @@
 import "@material/mwc-button";
-import "@material/mwc-list/mwc-list-item";
+import "@material/mwc-list";
 import type { RequestSelectedDetail } from "@material/mwc-list/mwc-list-item";
 import {
   mdiAlertCircle,
@@ -20,8 +20,6 @@ import {
   mdiRenameBox,
   mdiStopCircleOutline,
 } from "@mdi/js";
-import "@polymer/paper-item/paper-item";
-import "@polymer/paper-listbox";
 import "@lrnwebcomponents/simple-tooltip/simple-tooltip";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
@@ -30,6 +28,7 @@ import memoizeOne from "memoize-one";
 import { shouldHandleRequestSelectedEvent } from "../../../common/mwc/handle-request-selected-event";
 import "../../../components/ha-button-menu";
 import "../../../components/ha-card";
+import "../../../components/ha-list-item";
 import "../../../components/ha-icon-button";
 import "../../../components/ha-icon-next";
 import "../../../components/ha-svg-icon";
@@ -96,9 +95,6 @@ export class HaIntegrationCard extends LitElement {
 
   @property({ attribute: false })
   public entityRegistryEntries!: EntityRegistryEntry[];
-
-  @property({ attribute: false })
-  public deviceRegistryEntries!: DeviceRegistryEntry[];
 
   @property() public selectedConfigEntryId?: string;
 
@@ -175,20 +171,19 @@ export class HaIntegrationCard extends LitElement {
 
   private _renderGroupedIntegration(): TemplateResult {
     return html`
-      <paper-listbox class="ha-scrollbar">
+      <mwc-list class="ha-scrollbar">
         ${this.items.map(
           (item) =>
-            html`<paper-item
+            html`<ha-list-item
+              hasMeta
               .entryId=${item.entry_id}
               @click=${this._selectConfigEntry}
-              ><paper-item-body
-                >${item.title ||
-                this.hass.localize(
-                  "ui.panel.config.integrations.config_entry.unnamed_entry"
-                )}</paper-item-body
-              >
+              >${item.title ||
+              this.hass.localize(
+                "ui.panel.config.integrations.config_entry.unnamed_entry"
+              )}
               ${item.state === "setup_in_progress"
-                ? html`<span>
+                ? html`<span slot="meta">
                     <ha-svg-icon
                       class="info"
                       .path=${mdiProgressHelper}
@@ -199,9 +194,8 @@ export class HaIntegrationCard extends LitElement {
                       )}
                     </simple-tooltip>
                   </span>`
-                : ""}
-              ${ERROR_STATES.includes(item.state)
-                ? html`<span>
+                : ERROR_STATES.includes(item.state)
+                ? html`<span slot="meta">
                     <ha-svg-icon
                       class="error"
                       .path=${item.state === "setup_retry"
@@ -214,17 +208,16 @@ export class HaIntegrationCard extends LitElement {
                       )}
                     </simple-tooltip>
                   </span>`
-                : ""}
-              <ha-icon-next></ha-icon-next>
-            </paper-item>`
+                : html`<ha-icon-next slot="meta"></ha-icon-next>`}
+            </ha-list-item>`
         )}
-      </paper-listbox>
+      </mwc-list>
     `;
   }
 
   private _renderSingleEntry(item: ConfigEntryExtended): TemplateResult {
-    const devices = this._getDevices(item, this.deviceRegistryEntries);
-    const services = this._getServices(item, this.deviceRegistryEntries);
+    const devices = this._getDevices(item, this.hass.devices);
+    const services = this._getServices(item, this.hass.devices);
     const entities = this._getEntities(item, this.entityRegistryEntries);
 
     let stateText: Parameters<typeof this.hass.localize> | undefined;
@@ -381,7 +374,7 @@ export class HaIntegrationCard extends LitElement {
           RECOVERABLE_STATES.includes(item.state) &&
           item.supports_unload &&
           item.source !== "system"
-            ? html`<mwc-list-item
+            ? html`<ha-list-item
                 @request-selected=${this._handleReload}
                 graphic="icon"
               >
@@ -389,22 +382,22 @@ export class HaIntegrationCard extends LitElement {
                   "ui.panel.config.integrations.config_entry.reload"
                 )}
                 <ha-svg-icon slot="graphic" .path=${mdiReload}></ha-svg-icon>
-              </mwc-list-item>`
+              </ha-list-item>`
             : ""}
 
-          <mwc-list-item @request-selected=${this._handleRename} graphic="icon">
+          <ha-list-item @request-selected=${this._handleRename} graphic="icon">
             ${this.hass.localize(
               "ui.panel.config.integrations.config_entry.rename"
             )}
             <ha-svg-icon slot="graphic" .path=${mdiRenameBox}></ha-svg-icon>
-          </mwc-list-item>
+          </ha-list-item>
           ${this.supportsDiagnostics && item.state === "loaded"
             ? html`<a
                 href=${getConfigEntryDiagnosticsDownloadUrl(item.entry_id)}
                 target="_blank"
                 @click=${this._signUrl}
               >
-                <mwc-list-item graphic="icon">
+                <ha-list-item graphic="icon">
                   ${this.hass.localize(
                     "ui.panel.config.integrations.config_entry.download_diagnostics"
                   )}
@@ -412,11 +405,11 @@ export class HaIntegrationCard extends LitElement {
                     slot="graphic"
                     .path=${mdiDownload}
                   ></ha-svg-icon>
-                </mwc-list-item>
+                </ha-list-item>
               </a>`
             : ""}
           ${this.logInfo
-            ? html`<mwc-list-item
+            ? html`<ha-list-item
                 @request-selected=${this.logInfo.level === LogSeverity.DEBUG
                   ? this._handleDisableDebugLogging
                   : this._handleEnableDebugLogging}
@@ -435,7 +428,7 @@ export class HaIntegrationCard extends LitElement {
                     ? mdiBugStop
                     : mdiBugPlay}
                 ></ha-svg-icon>
-              </mwc-list-item>`
+              </ha-list-item>`
             : ""}
           ${this.manifest &&
           (this.manifest.is_built_in ||
@@ -454,7 +447,7 @@ export class HaIntegrationCard extends LitElement {
                 rel="noreferrer"
                 target="_blank"
               >
-                <mwc-list-item graphic="icon" hasMeta>
+                <ha-list-item graphic="icon" hasMeta>
                   ${this.hass.localize(
                     "ui.panel.config.integrations.config_entry.documentation"
                   )}
@@ -463,7 +456,7 @@ export class HaIntegrationCard extends LitElement {
                     .path=${mdiBookshelf}
                   ></ha-svg-icon>
                   <ha-svg-icon slot="meta" .path=${mdiOpenInNew}></ha-svg-icon>
-                </mwc-list-item>
+                </ha-list-item>
               </a>`
             : ""}
           ${this.manifest &&
@@ -473,19 +466,19 @@ export class HaIntegrationCard extends LitElement {
                 rel="noreferrer"
                 target="_blank"
               >
-                <mwc-list-item graphic="icon" hasMeta>
+                <ha-list-item graphic="icon" hasMeta>
                   ${this.hass.localize(
                     "ui.panel.config.integrations.config_entry.known_issues"
                   )}
                   <ha-svg-icon slot="graphic" .path=${mdiBug}></ha-svg-icon>
                   <ha-svg-icon slot="meta" .path=${mdiOpenInNew}></ha-svg-icon>
-                </mwc-list-item>
+                </ha-list-item>
               </a>`
             : ""}
 
           <li divider role="separator"></li>
 
-          <mwc-list-item
+          <ha-list-item
             @request-selected=${this._handleSystemOptions}
             graphic="icon"
           >
@@ -493,9 +486,9 @@ export class HaIntegrationCard extends LitElement {
               "ui.panel.config.integrations.config_entry.system_options"
             )}
             <ha-svg-icon slot="graphic" .path=${mdiCog}></ha-svg-icon>
-          </mwc-list-item>
+          </ha-list-item>
           ${item.disabled_by === "user"
-            ? html`<mwc-list-item
+            ? html`<ha-list-item
                 @request-selected=${this._handleEnable}
                 graphic="icon"
               >
@@ -504,9 +497,9 @@ export class HaIntegrationCard extends LitElement {
                   slot="graphic"
                   .path=${mdiPlayCircleOutline}
                 ></ha-svg-icon>
-              </mwc-list-item>`
+              </ha-list-item>`
             : item.source !== "system"
-            ? html`<mwc-list-item
+            ? html`<ha-list-item
                 class="warning"
                 @request-selected=${this._handleDisable}
                 graphic="icon"
@@ -517,10 +510,10 @@ export class HaIntegrationCard extends LitElement {
                   class="warning"
                   .path=${mdiStopCircleOutline}
                 ></ha-svg-icon>
-              </mwc-list-item>`
+              </ha-list-item>`
             : ""}
           ${item.source !== "system"
-            ? html`<mwc-list-item
+            ? html`<ha-list-item
                 class="warning"
                 @request-selected=${this._handleDelete}
                 graphic="icon"
@@ -533,7 +526,7 @@ export class HaIntegrationCard extends LitElement {
                   class="warning"
                   .path=${mdiDelete}
                 ></ha-svg-icon>
-              </mwc-list-item>`
+              </ha-list-item>`
             : ""}
         </ha-button-menu>
       </div>
@@ -607,12 +600,12 @@ export class HaIntegrationCard extends LitElement {
   private _getDevices = memoizeOne(
     (
       configEntry: ConfigEntry,
-      deviceRegistryEntries: DeviceRegistryEntry[]
+      deviceRegistryEntries: HomeAssistant["devices"]
     ): DeviceRegistryEntry[] => {
       if (!deviceRegistryEntries) {
         return [];
       }
-      return deviceRegistryEntries.filter(
+      return Object.values(deviceRegistryEntries).filter(
         (device) =>
           device.config_entries.includes(configEntry.entry_id) &&
           device.entry_type !== "service"
@@ -623,12 +616,12 @@ export class HaIntegrationCard extends LitElement {
   private _getServices = memoizeOne(
     (
       configEntry: ConfigEntry,
-      deviceRegistryEntries: DeviceRegistryEntry[]
+      deviceRegistryEntries: HomeAssistant["devices"]
     ): DeviceRegistryEntry[] => {
       if (!deviceRegistryEntries) {
         return [];
       }
-      return deviceRegistryEntries.filter(
+      return Object.values(deviceRegistryEntries).filter(
         (device) =>
           device.config_entries.includes(configEntry.entry_id) &&
           device.entry_type === "service"
@@ -1002,16 +995,16 @@ export class HaIntegrationCard extends LitElement {
           color: var(--secondary-text-color);
           --mdc-menu-min-width: 200px;
         }
-        paper-listbox {
+        mwc-list {
           border-radius: 0 0 var(--ha-card-border-radius, 16px)
             var(--ha-card-border-radius, 16px);
         }
         @media (min-width: 563px) {
           ha-card.group {
             position: relative;
-            min-height: 164px;
+            min-height: 195px;
           }
-          paper-listbox {
+          mwc-list {
             position: absolute;
             top: 64px;
             left: 0;
@@ -1019,24 +1012,23 @@ export class HaIntegrationCard extends LitElement {
             bottom: 0;
             overflow: auto;
           }
-          .disabled paper-listbox {
+          .disabled mwc-list {
             top: 88px;
           }
         }
-        paper-item {
-          cursor: pointer;
-          min-height: 35px;
-        }
-        paper-item-body {
+        ha-list-item {
           word-wrap: break-word;
-          display: -webkit-box;
+          display: -webkit-flex;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        mwc-list-item ha-svg-icon {
+        ha-list-item ha-svg-icon {
           color: var(--secondary-text-color);
+        }
+        ha-icon-next {
+          width: 24px;
         }
         ha-svg-icon[slot="meta"] {
           width: 18px;
