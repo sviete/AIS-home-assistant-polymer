@@ -838,7 +838,10 @@
         "input_label": "Enter a request",
         "send_text": "Send text",
         "start_listening": "Start listening",
-        "manage_assistants": "Manage assistants"
+        "manage_assistants": "Manage assistants",
+        "not_supported_microphone": "Microphone is not supported. You need to access Home Assistant from a secure URL (HTTPS) to use it.",
+        "not_supported_microphone_documentation": "Visit {documentation_link} to learn how to use a secure URL",
+        "not_supported_microphone_documentation_link": "the documentation"
       },
       "generic": {
         "cancel": "Cancel",
@@ -1082,8 +1085,11 @@
         "expose_header": "Expose",
         "aliases_header": "Aliases",
         "aliases_description": "Aliases are supported by Assist and Google Assistant.",
+        "aliases_no_unique_id": "Aliases are not supported for entities without an unique id. See the {faq_link} for more detail.",
         "ask_pin": "Ask for PIN",
-        "manual_config": "Managed with filters in configuration.yaml"
+        "manual_config": "Managed in configuration.yaml",
+        "unsupported": "Unsupported",
+        "view_entity": "More info about entity"
       },
       "restart": {
         "heading": "Restart Home Assistant",
@@ -2096,6 +2102,8 @@
                 "add_assistant_title": "Add assistant",
                 "add_assistant_action": "Create",
                 "try_tts": "Try voice",
+                "debug": "Debug",
+                "set_as_preferred": "Set as preferred",
                 "form": {
                   "name": "Name",
                   "conversation_engine": "Conversation agent",
@@ -2130,14 +2138,14 @@
               }
             },
             "cloud": {
-              "header": "Get the best assistant with Home Assistant Cloud",
+              "title": "Get the best assistant with {home_assistant_cloud}",
               "features": {
                 "assistants": {
                   "title": "Google Assistant and Amazon Alexa",
                   "text": "Control all your Home Assistant devices via any Google Assistant-enabled or Alexa-enabled device."
                 },
                 "speech": {
-                  "title": "Better speech options",
+                  "title": "Amazing speech options for Assist",
                   "text": "Bring personality to your home by having it speak to you using our neural-network powered speech-to-text and text-to-speech services."
                 }
               },
@@ -2162,6 +2170,8 @@
             "expose_confirm_text": "Do you want to expose {entities} entities to {assistants}?",
             "unexpose_confirm_title": "Stop exposing selected entities?",
             "unexpose_confirm_text": "Do you want to stop exposing {entities} entities to {assistants}?",
+            "manually_configured": "Configured in YAML, not editable in UI",
+            "not_supported": "Not supported by this assistant",
             "expose_dialog": {
               "header": "Expose entities",
               "expose_to": "to {assistants}",
@@ -2813,7 +2823,7 @@
             "alert_password_change_required": "You need to change your password before logging in.",
             "alert_email_confirm_necessary": "You need to confirm your email before logging in.",
             "cloud_pipeline_title": "Want to use Home Assistant Cloud for your voice assistant?",
-            "cloud_pipeline_text": "We created a new assistant for you, using the great text-to-speech and speech-to-text engines from Home Assistant Cloud. Would you like to set this assistant as the preferred assistant?"
+            "cloud_pipeline_text": "We created a new assistant for you, using the superior text-to-speech and speech-to-text engines from Home Assistant Cloud. Would you like to set this assistant as the preferred assistant?"
           },
           "forgot_password": {
             "title": "Forgot password",
@@ -2865,7 +2875,7 @@
             "fetching_subscription": "Fetching subscription…",
             "tts": {
               "title": "Text-to-speech",
-              "info": "Bring personality to your home by having it speak to you by using our Text-to-Speech services. You can use this in automations and scripts by using the {service} service.",
+              "info": "Bring personality to your home by having it speak to you by using our text-to-speech services. You can use this in automations and scripts by using the {service} service.",
               "default_language": "Default language to use",
               "default_gender": "Default gender to use",
               "try": "Try",
@@ -2886,7 +2896,7 @@
               "access_is_being_prepared": "Remote control is being prepared. We will notify you when it's ready.",
               "cerificate_loading": "Your certificate is loading.",
               "cerificate_loaded": "Your certificate is loaded, waiting for validation.",
-              "cerificate_error": "There was an error generating the certficate, check your logs.",
+              "cerificate_error": "There was an error generating the certificate, check your logs.",
               "info": "Home Assistant Cloud provides a secure remote connection to your instance while away from home.",
               "instance_is_available": "Your instance is available at your",
               "instance_will_be_available": "Your instance will be available at your",
@@ -2911,19 +2921,19 @@
               "not_configured_text": "Before you can use Alexa, you need to activate the Home Assistant skill for Alexa in the Alexa app.",
               "link_learn_how_it_works": "[%key:ui::panel::config::cloud::account::remote::link_learn_how_it_works%]",
               "expose_new_entities": "[%key:ui::panel::config::cloud::account::google::expose_new_entities%]",
-              "expose_new_entities_info": "Should new entities, that are supported and have no security risks be exposed to Alexa automatically?"
+              "expose_new_entities_info": "Should new entities be exposed to Alexa automatically? Exposes supported devices that are not classified as security devices."
             },
             "google": {
               "title": "Google Assistant",
-              "info": "With the Google Assistant integration for Home Assistant Cloud you'll be able to control all your Home Assistant devices via any Google Assistant-enabled device.",
+              "info": "With the Google Assistant integration for Home Assistant Cloud, you'll be able to control all your Home Assistant devices via any Google Assistant-enabled device.",
               "http_use_ssl_warning_title": "Local communication unavailable",
-              "http_use_ssl_warning_text": "Google devices will not be able to talk locally with Home Assistant because you have configured an SSL certificate for your HTTP integration.",
+              "http_use_ssl_warning_text": "Google devices will not be able to talk locally with Home Assistant, because you have configured an SSL certificate for your HTTP integration.",
               "enable_ha_skill": "Activate the Home Assistant Cloud skill for Google Assistant",
               "config_documentation": "Configuration documentation",
-              "enable_state_reporting": "Enable State Reporting",
+              "enable_state_reporting": "Enable state reporting",
               "info_state_reporting": "If you enable state reporting, Home Assistant will send all state changes of exposed entities to Google. This speeds up voice commands and allows you to always see the latest states in the Google app.",
-              "security_devices": "Security Devices",
-              "enter_pin_info": "Please enter a PIN to interact with security devices. Security devices are doors, garage doors and locks. You will be asked to say/enter this PIN when interacting with such devices via Google Assistant.",
+              "security_devices": "Security devices",
+              "enter_pin_info": "Please enter a PIN to interact with security devices. Security devices are doors, garage doors, and locks. You will be asked to say/enter this PIN when interacting with security devices via Google Assistant.",
               "devices_pin": "Security Devices PIN",
               "enter_pin_hint": "Enter a PIN to use security devices",
               "show_entities": "Show Entities",
@@ -2934,7 +2944,7 @@
               "not_configured_text": "Before you can use Google Assistant, you need to activate the Home Assistant Cloud skill for Google Assistant in the Google Home app.",
               "link_learn_how_it_works": "[%key:ui::panel::config::cloud::account::remote::link_learn_how_it_works%]",
               "expose_new_entities": "Expose new entities",
-              "expose_new_entities_info": "Should new entities, that are supported and have no security risks be exposed to Google Assistant automatically?"
+              "expose_new_entities_info": "Should new entities be exposed to Google Assistant automatically? Exposes supported devices that are not classified as security devices."
             },
             "webhooks": {
               "title": "Webhooks",
