@@ -1,8 +1,7 @@
 import { css, html, LitElement, nothing } from "lit";
 import { customElement, property } from "lit/decorators";
 import { fireEvent } from "../../common/dom/fire_event";
-import { PolymerChangedEvent } from "../../polymer-types";
-import { HomeAssistant } from "../../types";
+import { ValueChangedEvent, HomeAssistant } from "../../types";
 import "./ha-device-picker";
 import type {
   HaDevicePickerDeviceFilterFunc,
@@ -108,14 +107,14 @@ class HaDevicesPicker extends LitElement {
     this.value = devices;
   }
 
-  private _deviceChanged(event: PolymerChangedEvent<string>) {
+  private _deviceChanged(event: ValueChangedEvent<string>) {
     event.stopPropagation();
     const curValue = (event.currentTarget as any).curValue;
     const newValue = event.detail.value;
-    if (newValue === curValue || newValue !== "") {
+    if (newValue === curValue) {
       return;
     }
-    if (newValue === "") {
+    if (newValue === undefined) {
       this._updateDevices(
         this._currentDevices.filter((dev) => dev !== curValue)
       );
@@ -126,7 +125,7 @@ class HaDevicesPicker extends LitElement {
     }
   }
 
-  private async _addDevice(event: PolymerChangedEvent<string>) {
+  private async _addDevice(event: ValueChangedEvent<string>) {
     event.stopPropagation();
     const toAdd = event.detail.value;
     (event.currentTarget as any).value = "";

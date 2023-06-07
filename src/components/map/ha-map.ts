@@ -15,7 +15,7 @@ import {
 } from "../../common/dom/setup-leaflet-map";
 import { computeStateDomain } from "../../common/entity/compute_state_domain";
 import { computeStateName } from "../../common/entity/compute_state_name";
-import { installResizeObserver } from "../../panels/lovelace/common/install-resize-observer";
+import { loadPolyfillIfNeeded } from "../../resources/resize-observer.polyfill";
 import { HomeAssistant } from "../../types";
 import "../ha-icon-button";
 import "./ha-entity-marker";
@@ -450,7 +450,7 @@ export class HaMap extends ReactiveElement {
 
   private async _attachObserver(): Promise<void> {
     if (!this._resizeObserver) {
-      await installResizeObserver();
+      await loadPolyfillIfNeeded();
       this._resizeObserver = new ResizeObserver(() => {
         this.leafletMap?.invalidateSize({ debounceMoveend: true });
       });
@@ -470,6 +470,11 @@ export class HaMap extends ReactiveElement {
       #map.dark {
         background: #090909;
         --map-filter: invert(0.9) hue-rotate(170deg) grayscale(0.7);
+      }
+      #map:active {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
       }
       .light {
         color: #000000;

@@ -320,6 +320,15 @@ export class MasonryView extends LitElement implements LovelaceViewElement {
         min-width: 0;
       }
 
+      /* Fix for safari */
+      .column:has(> *) {
+        flex-grow: 1;
+      }
+
+      .column:not(:has(> *:not([hidden]))) {
+        flex-grow: 0;
+      }
+
       .column > *:not([hidden]) {
         display: block;
         margin: var(--masonry-view-card-margin, 4px 4px 8px);
