@@ -28,8 +28,8 @@ import {
   CSSResultGroup,
   html,
   LitElement,
-  PropertyValues,
   nothing,
+  PropertyValues,
 } from "lit";
 import { customElement, eventOptions, property, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
@@ -815,6 +815,7 @@ class HaSidebar extends SubscribeMixin(LitElement) {
     }
     tooltip.innerHTML = item.querySelector(".item-text")!.innerHTML;
     tooltip.style.display = "block";
+    tooltip.style.position = "fixed";
     tooltip.style.top = `${top}px`;
     tooltip.style.left = `${item.offsetLeft + item.clientWidth + 4}px`;
   }
@@ -845,23 +846,16 @@ class HaSidebar extends SubscribeMixin(LitElement) {
       haStyleScrollbar,
       css`
         :host {
+          overflow: visible;
           height: 100%;
           display: block;
           overflow: hidden;
           -ms-user-select: none;
           -webkit-user-select: none;
           -moz-user-select: none;
-          border-right: 1px solid var(--divider-color);
           background-color: var(--sidebar-background-color);
-          width: 56px;
-        }
-        :host([expanded]) {
-          width: 256px;
-          width: calc(256px + env(safe-area-inset-left));
-        }
-        :host([rtl]) {
-          border-right: 0;
-          border-left: 1px solid var(--divider-color);
+          width: 100%;
+          box-sizing: border-box;
         }
         .menu {
           height: var(--header-height);
@@ -1075,8 +1069,8 @@ class HaSidebar extends SubscribeMixin(LitElement) {
 
         .notification-badge,
         .configuration-badge {
-          left: calc(var(--app-drawer-width) - 42px);
           position: absolute;
+          left: calc(var(--app-drawer-width, 248px) - 42px);
           min-width: 20px;
           box-sizing: border-box;
           border-radius: 50%;

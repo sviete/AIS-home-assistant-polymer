@@ -9,7 +9,6 @@ import "../../../components/search-input";
 import { LogProvider } from "../../../data/error_log";
 import { fetchHassioAddonsInfo } from "../../../data/hassio/addon";
 import "../../../layouts/hass-subpage";
-import "../../../layouts/hass-tabs-subpage";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant, Route } from "../../../types";
 import "./error-log-card";
@@ -115,7 +114,7 @@ export class HaConfigLogs extends LitElement {
         ${isComponentLoaded(this.hass, "hassio") &&
         this.hass.userData?.showAdvanced
           ? html`
-              <ha-button-menu corner="BOTTOM_START" slot="toolbar-icon">
+              <ha-button-menu slot="toolbar-icon">
                 <ha-button
                   slot="trigger"
                   .label=${this._logProviders.find(

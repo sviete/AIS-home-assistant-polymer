@@ -5,7 +5,7 @@ import {
   mdiRobot,
   mdiShareVariant,
 } from "@mdi/js";
-import "@polymer/paper-tooltip/paper-tooltip";
+import "@lrnwebcomponents/simple-tooltip/simple-tooltip";
 import {
   CSSResultGroup,
   html,
@@ -196,7 +196,7 @@ class HaBlueprintOverview extends LitElement {
         template: (_, blueprint: any) =>
           blueprint.error
             ? ""
-            : html` <ha-icon-button
+            : html`<ha-icon-button
                 .blueprint=${blueprint}
                 .label=${this.hass.localize(
                   "ui.panel.config.blueprint.overview.delete_blueprint"

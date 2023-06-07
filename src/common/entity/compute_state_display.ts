@@ -7,7 +7,10 @@ import {
   UPDATE_SUPPORT_PROGRESS,
 } from "../../data/update";
 import { HomeAssistant } from "../../types";
-import { formatDuration, UNIT_TO_SECOND_CONVERT } from "../datetime/duration";
+import {
+  formatDuration,
+  UNIT_TO_MILLISECOND_CONVERT,
+} from "../datetime/duration";
 import { formatDate } from "../datetime/format_date";
 import { formatDateTime } from "../datetime/format_date_time";
 import { formatTime } from "../datetime/format_time";
@@ -21,26 +24,47 @@ import { LocalizeFunc } from "../translations/localize";
 import { computeDomain } from "./compute_domain";
 import { supportsFeatureFromAttributes } from "./supports-feature";
 
+export const computeStateDisplaySingleEntity = (
+  localize: LocalizeFunc,
+  stateObj: HassEntity,
+  locale: FrontendLocaleData,
+  entity: EntityRegistryDisplayEntry | undefined,
+  state?: string
+): string =>
+  computeStateDisplayFromEntityAttributes(
+    localize,
+    locale,
+    entity,
+    stateObj.entity_id,
+    stateObj.attributes,
+    state !== undefined ? state : stateObj.state
+  );
+
 export const computeStateDisplay = (
   localize: LocalizeFunc,
   stateObj: HassEntity,
   locale: FrontendLocaleData,
   entities: HomeAssistant["entities"],
   state?: string
-): string =>
-  computeStateDisplayFromEntityAttributes(
+): string => {
+  const entity = entities[stateObj.entity_id] as
+    | EntityRegistryDisplayEntry
+    | undefined;
+
+  return computeStateDisplayFromEntityAttributes(
     localize,
     locale,
-    entities,
+    entity,
     stateObj.entity_id,
     stateObj.attributes,
     state !== undefined ? state : stateObj.state
   );
+};
 
 export const computeStateDisplayFromEntityAttributes = (
   localize: LocalizeFunc,
   locale: FrontendLocaleData,
-  entities: HomeAssistant["entities"],
+  entity: EntityRegistryDisplayEntry | undefined,
   entityId: string,
   attributes: any,
   state: string
@@ -49,15 +73,13 @@ export const computeStateDisplayFromEntityAttributes = (
     return localize(`state.default.${state}`);
   }
 
-  const entity = entities[entityId] as EntityRegistryDisplayEntry | undefined;
-
   // Entities with a `unit_of_measurement` or `state_class` are numeric values and should use `formatNumber`
   if (isNumericFromAttributes(attributes)) {
     // state is duration
     if (
       attributes.device_class === "duration" &&
       attributes.unit_of_measurement &&
-      UNIT_TO_SECOND_CONVERT[attributes.unit_of_measurement]
+      UNIT_TO_MILLISECOND_CONVERT[attributes.unit_of_measurement]
     ) {
       try {
         return formatDuration(state, attributes.unit_of_measurement);
@@ -171,11 +193,9 @@ export const computeStateDisplayFromEntityAttributes = (
     );
   }
 
-  // state of button is a timestamp
+  // state is a timestamp
   if (
-    domain === "button" ||
-    domain === "input_button" ||
-    domain === "scene" ||
+    ["button", "input_button", "scene", "stt", "tts"].includes(domain) ||
     (domain === "sensor" && attributes.device_class === "timestamp")
   ) {
     try {
@@ -214,10 +234,10 @@ export const computeStateDisplayFromEntityAttributes = (
     // Return device class translation
     (attributes.device_class &&
       localize(
-        `component.${domain}.state.${attributes.device_class}.${state}`
+        `component.${domain}.entity_component.${attributes.device_class}.state.${state}`
       )) ||
     // Return default translation
-    localize(`component.${domain}.state._.${state}`) ||
+    localize(`component.${domain}.entity_component._.state.${state}`) ||
     // We don't know! Return the raw state.
     state
   );

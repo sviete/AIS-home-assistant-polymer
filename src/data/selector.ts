@@ -1,5 +1,7 @@
 import type { HassEntity } from "home-assistant-js-websocket";
+import { ensureArray } from "../common/array/ensure-array";
 import { computeStateDomain } from "../common/entity/compute_state_domain";
+import { supportsFeature } from "../common/entity/supports-feature";
 import { UiAction } from "../panels/lovelace/components/hui-action-editor";
 import type { DeviceRegistryEntry } from "./device_registry";
 import type { EntitySources } from "./entity_sources";
@@ -12,7 +14,9 @@ export type Selector =
   | BooleanSelector
   | ColorRGBSelector
   | ColorTempSelector
+  | ConversationAgentSelector
   | ConfigEntrySelector
+  | ConstantSelector
   | DateSelector
   | DateTimeSelector
   | DeviceSelector
@@ -22,19 +26,24 @@ export type Selector =
   | LegacyEntitySelector
   | FileSelector
   | IconSelector
+  | LanguageSelector
   | LocationSelector
   | MediaSelector
   | NavigationSelector
   | NumberSelector
   | ObjectSelector
+  | AssistPipelineSelector
   | SelectSelector
   | StateSelector
   | StatisticSelector
   | StringSelector
+  | STTSelector
   | TargetSelector
   | TemplateSelector
   | ThemeSelector
   | TimeSelector
+  | TTSSelector
+  | TTSVoiceSelector
   | UiActionSelector
   | UiColorSelector;
 
@@ -82,9 +91,21 @@ export interface ColorTempSelector {
   } | null;
 }
 
+export interface ConversationAgentSelector {
+  conversation_agent: { language?: string } | null;
+}
+
 export interface ConfigEntrySelector {
   config_entry: {
     integration?: string;
+  } | null;
+}
+
+export interface ConstantSelector {
+  constant: {
+    value: string | number | boolean;
+    label?: string;
+    translation_key?: string;
   } | null;
 }
 
@@ -140,6 +161,7 @@ interface EntitySelectorFilter {
   integration?: string;
   domain?: string | readonly string[];
   device_class?: string | readonly string[];
+  supported_features?: number | [number];
 }
 
 export interface EntitySelector {
@@ -186,6 +208,14 @@ export interface IconSelector {
   icon: {
     placeholder?: string;
     fallbackPath?: string;
+  } | null;
+}
+
+export interface LanguageSelector {
+  language: {
+    languages?: string[];
+    native_name?: boolean;
+    no_sort?: boolean;
   } | null;
 }
 
@@ -237,6 +267,11 @@ export interface ObjectSelector {
   object: {} | null;
 }
 
+export interface AssistPipelineSelector {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  assist_pipeline: {} | null;
+}
+
 export interface SelectOption {
   value: any;
   label: string;
@@ -282,6 +317,10 @@ export interface StringSelector {
   } | null;
 }
 
+export interface STTSelector {
+  stt: { language?: string } | null;
+}
+
 export interface TargetSelector {
   target: {
     entity?: EntitySelectorFilter | readonly EntitySelectorFilter[];
@@ -303,15 +342,23 @@ export interface TimeSelector {
   time: {} | null;
 }
 
+export interface TTSSelector {
+  tts: { language?: string } | null;
+}
+
+export interface TTSVoiceSelector {
+  tts_voice: { engineId?: string; language?: string } | null;
+}
+
 export interface UiActionSelector {
-  "ui-action": {
+  ui_action: {
     actions?: UiAction[];
   } | null;
 }
 
 export interface UiColorSelector {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  "ui-color": {} | null;
+  ui_color: {} | null;
 }
 
 export const filterSelectorDevices = (
@@ -349,6 +396,7 @@ export const filterSelectorEntities = (
   const {
     domain: filterDomain,
     device_class: filterDeviceClass,
+    supported_features: filterSupportedFeature,
     integration: filterIntegration,
   } = filterEntity;
 
@@ -369,6 +417,16 @@ export const filterSelectorEntities = (
       entityDeviceClass && Array.isArray(filterDeviceClass)
         ? !filterDeviceClass.includes(entityDeviceClass)
         : entityDeviceClass !== filterDeviceClass
+    ) {
+      return false;
+    }
+  }
+
+  if (filterSupportedFeature) {
+    if (
+      !ensureArray(filterSupportedFeature).some((feature) =>
+        supportsFeature(entity, feature)
+      )
     ) {
       return false;
     }

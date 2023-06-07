@@ -232,7 +232,8 @@ export const subscribeHistoryStatesTimeWindow = (
   hoursToShow: number,
   entityIds: string[],
   minimalResponse = true,
-  significantChangesOnly = true
+  significantChangesOnly = true,
+  noAttributes?: boolean
 ): Promise<() => Promise<void>> => {
   const params = {
     type: "history/stream",
@@ -242,9 +243,11 @@ export const subscribeHistoryStatesTimeWindow = (
     ).toISOString(),
     minimal_response: minimalResponse,
     significant_changes_only: significantChangesOnly,
-    no_attributes: !entityIds.some((entityId) =>
-      entityIdHistoryNeedsAttributes(hass, entityId)
-    ),
+    no_attributes:
+      noAttributes ??
+      !entityIds.some((entityId) =>
+        entityIdHistoryNeedsAttributes(hass, entityId)
+      ),
   };
   const stream = new HistoryStream(hass, hoursToShow);
   return hass.connection.subscribeMessage<HistoryStreamMessage>(
@@ -288,7 +291,7 @@ const processTimelineEntity = (
       state_localize: computeStateDisplayFromEntityAttributes(
         localize,
         language,
-        entities,
+        entities[entityId],
         entityId,
         {
           ...(state.a || first.a),

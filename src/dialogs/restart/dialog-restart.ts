@@ -108,7 +108,6 @@ class DialogRestart extends LitElement {
                         graphic="avatar"
                         twoline
                         multiline-secondary
-                        hasMeta
                         @request-selected=${this._reload}
                       >
                         <div slot="graphic" class="icon-background reload">
@@ -126,12 +125,11 @@ class DialogRestart extends LitElement {
                         </span>
                       </ha-list-item>
                     `
-                  : null}
+                  : nothing}
                 <ha-list-item
                   graphic="avatar"
                   twoline
                   multiline-secondary
-                  hasMeta
                   @request-selected=${this._restart}
                 >
                   <div slot="graphic" class="icon-background restart">
@@ -201,7 +199,7 @@ class DialogRestart extends LitElement {
                       </mwc-list>
                     </ha-expansion-panel>
                   `
-                : null}
+                : nothing}
             `}
       </ha-dialog>
     `;

@@ -7,8 +7,8 @@ import {
   CSSResultGroup,
   html,
   LitElement,
+  nothing,
   PropertyValues,
-  TemplateResult,
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { ifDefined } from "lit/directives/if-defined";
@@ -40,10 +40,6 @@ import {
   subscribeConfigFlowInProgress,
 } from "../../../data/config_flow";
 import type { DataEntryFlowProgress } from "../../../data/data_entry_flow";
-import {
-  DeviceRegistryEntry,
-  subscribeDeviceRegistry,
-} from "../../../data/device_registry";
 import { fetchDiagnosticHandlers } from "../../../data/diagnostics";
 import {
   EntityRegistryEntry,
@@ -53,13 +49,13 @@ import {
   domainToName,
   fetchIntegrationManifest,
   fetchIntegrationManifests,
-  IntegrationManifest,
   IntegrationLogInfo,
+  IntegrationManifest,
   subscribeLogInfo,
 } from "../../../data/integration";
 import {
-  getIntegrationDescriptions,
   findIntegration,
+  getIntegrationDescriptions,
 } from "../../../data/integrations";
 import { scanUSBDevices } from "../../../data/usb";
 import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
@@ -140,9 +136,6 @@ class HaConfigIntegrations extends SubscribeMixin(LitElement) {
   private _entityRegistryEntries: EntityRegistryEntry[] = [];
 
   @state()
-  private _deviceRegistryEntries: DeviceRegistryEntry[] = [];
-
-  @state()
   private _manifests: Record<string, IntegrationManifest> = {};
 
   private _extraFetchedManifests?: Set<string>;
@@ -167,9 +160,6 @@ class HaConfigIntegrations extends SubscribeMixin(LitElement) {
     return [
       subscribeEntityRegistry(this.hass.connection, (entries) => {
         this._entityRegistryEntries = entries;
-      }),
-      subscribeDeviceRegistry(this.hass.connection, (entries) => {
-        this._deviceRegistryEntries = entries;
       }),
       subscribeConfigFlowInProgress(this.hass, async (flowsInProgress) => {
         const integrations: Set<string> = new Set();
@@ -357,7 +347,7 @@ class HaConfigIntegrations extends SubscribeMixin(LitElement) {
     }
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this._configEntries) {
       return html`<hass-loading-screen
         .hass=${this.hass}
@@ -376,13 +366,12 @@ class HaConfigIntegrations extends SubscribeMixin(LitElement) {
     );
 
     const filterMenu = html`
-      <div slot=${ifDefined(this.narrow ? "toolbar-icon" : "suffix")}>
+      <div slot=${ifDefined(this.narrow ? "toolbar-icon" : undefined)}>
         <div class="menu-badge-container">
           ${!this._showDisabled && this.narrow && disabledCount
             ? html`<span class="badge">${disabledCount}</span>`
             : ""}
           <ha-button-menu
-            corner="BOTTOM_START"
             multi
             @action=${this._handleMenuAction}
             @click=${this._preventDefault}
@@ -454,25 +443,26 @@ class HaConfigIntegrations extends SubscribeMixin(LitElement) {
                     "ui.panel.config.integrations.search"
                   )}
                 >
-                  ${!this._showDisabled && disabledCount
-                    ? html`<div
-                        class="active-filters"
-                        slot="suffix"
-                        @click=${this._preventDefault}
-                      >
-                        ${this.hass.localize(
-                          "ui.panel.config.integrations.disable.disabled_integrations",
-                          { number: disabledCount }
-                        )}
-                        <mwc-button
-                          @click=${this._toggleShowDisabled}
-                          .label=${this.hass.localize(
-                            "ui.panel.config.integrations.disable.show"
+                  <div class="filters" slot="suffix">
+                    ${!this._showDisabled && disabledCount
+                      ? html`<div
+                          class="active-filters"
+                          @click=${this._preventDefault}
+                        >
+                          ${this.hass.localize(
+                            "ui.panel.config.integrations.disable.disabled_integrations",
+                            { number: disabledCount }
                           )}
-                        ></mwc-button>
-                      </div>`
-                    : ""}
-                  ${filterMenu}
+                          <mwc-button
+                            @click=${this._toggleShowDisabled}
+                            .label=${this.hass.localize(
+                              "ui.panel.config.integrations.disable.show"
+                            )}
+                          ></mwc-button>
+                        </div>`
+                      : ""}
+                    ${filterMenu}
+                  </div>
                 </search-input>
               </div>
             `}
@@ -513,7 +503,6 @@ class HaConfigIntegrations extends SubscribeMixin(LitElement) {
                     .items=${items}
                     .manifest=${this._manifests[domain]}
                     .entityRegistryEntries=${this._entityRegistryEntries}
-                    .deviceRegistryEntries=${this._deviceRegistryEntries}
                   ></ha-integration-card> `
               )
             : ""}
@@ -527,11 +516,12 @@ class HaConfigIntegrations extends SubscribeMixin(LitElement) {
                     .items=${items}
                     .manifest=${this._manifests[domain]}
                     .entityRegistryEntries=${this._entityRegistryEntries}
-                    .deviceRegistryEntries=${this._deviceRegistryEntries}
                     .supportsDiagnostics=${this._diagnosticHandlers
                       ? this._diagnosticHandlers[domain]
                       : false}
-                    .logInfo=${this._logInfos ? this._logInfos[domain] : null}
+                    .logInfo=${this._logInfos
+                      ? this._logInfos[domain]
+                      : nothing}
                   ></ha-integration-card>`
               )
             : this._filter &&
@@ -729,13 +719,8 @@ class HaConfigIntegrations extends SubscribeMixin(LitElement) {
           }),
         })
       ) {
-        showConfigFlowDialog(this, {
-          dialogClosedCallback: () => {
-            this._handleFlowUpdated();
-          },
-          startFlowHandler: domain,
-          manifest: await fetchIntegrationManifest(this.hass, domain),
-          showAdvanced: this.hass.userData?.showAdvanced,
+        showAddIntegrationDialog(this, {
+          domain,
         });
       }
       return;
@@ -843,7 +828,6 @@ class HaConfigIntegrations extends SubscribeMixin(LitElement) {
         .container > * {
           max-width: 500px;
         }
-
         .empty-message {
           margin: auto;
           text-align: center;
@@ -881,6 +865,15 @@ class HaConfigIntegrations extends SubscribeMixin(LitElement) {
           top: 0;
           right: 0;
           left: 0;
+        }
+        .filters {
+          --mdc-text-field-fill-color: var(--input-fill-color);
+          --mdc-text-field-idle-line-color: var(--input-idle-line-color);
+          --mdc-shape-small: 4px;
+          --text-field-overflow: initial;
+          display: flex;
+          justify-content: flex-end;
+          color: var(--primary-text-color);
         }
         .active-filters {
           color: var(--primary-text-color);

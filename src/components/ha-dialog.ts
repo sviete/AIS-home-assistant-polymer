@@ -7,7 +7,7 @@ import { FOCUS_TARGET } from "../dialogs/make-dialog-manager";
 import type { HomeAssistant } from "../types";
 import "./ha-icon-button";
 
-const SUPPRESS_DEFAULT_PRESS_SELECTOR = ["button"];
+const SUPPRESS_DEFAULT_PRESS_SELECTOR = ["button", "ha-list-item"];
 
 export const createCloseHeading = (
   hass: HomeAssistant,
@@ -41,7 +41,9 @@ export class HaDialog extends DialogBase {
       SUPPRESS_DEFAULT_PRESS_SELECTOR,
     ].join(", ");
     this._updateScrolledAttribute();
-    this.contentElement?.addEventListener("scroll", this._onScroll);
+    this.contentElement?.addEventListener("scroll", this._onScroll, {
+      passive: true,
+    });
   }
 
   disconnectedCallback(): void {
@@ -90,7 +92,7 @@ export class HaDialog extends DialogBase {
         padding: 24px 24px 0 24px;
       }
       .mdc-dialog__actions {
-        padding: 0 24px 24px 24px;
+        padding: 12px 24px 12px 24px;
       }
       .mdc-dialog__title::before {
         display: block;

@@ -316,7 +316,7 @@ export class DialogHassioNetwork
       >
         <div class="radio-row">
           <ha-formfield
-            .label=${this.supervisor.localize("dialog.network.dhcp")}
+            .label=${this.supervisor.localize("dialog.network.auto")}
           >
             <ha-radio
               @change=${this._handleRadioValueChanged}
@@ -597,10 +597,6 @@ export class DialogHassioNetwork
           margin-left: 8px;
         }
 
-        :host([rtl]) app-toolbar {
-          direction: rtl;
-          text-align: right;
-        }
         .container {
           padding: 0 8px 4px;
         }

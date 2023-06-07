@@ -112,6 +112,8 @@ export const derivedStyles = {
   "mdc-button-disabled-ink-color": "var(--disabled-text-color)",
   "mdc-button-outline-color": "var(--divider-color)",
   "mdc-dialog-scroll-divider-color": "var(--divider-color)",
+  "mdc-dialog-heading-ink-color": "var(--primary-text-color)",
+  "mdc-dialog-content-ink-color": "var(--primary-text-color)",
 
   "mdc-text-field-idle-line-color": "var(--input-idle-line-color)",
   "mdc-text-field-hover-line-color": "var(--input-hover-line-color)",
@@ -173,24 +175,6 @@ export const haStyle = css`
     font-size: var(--paper-font-body1_-_font-size);
     font-weight: var(--paper-font-body1_-_font-weight);
     line-height: var(--paper-font-body1_-_line-height);
-  }
-
-  app-header-layout,
-  ha-app-layout {
-    background-color: var(--primary-background-color);
-  }
-
-  app-header,
-  app-toolbar {
-    background-color: var(--app-header-background-color);
-    font-weight: 400;
-    color: var(--app-header-text-color, white);
-  }
-
-  app-toolbar {
-    height: var(--header-height);
-    border-bottom: var(--app-header-border-bottom);
-    box-sizing: border-box;
   }
 
   app-header div[sticky] {
@@ -314,8 +298,6 @@ export const haStyleDialog = css`
   ha-dialog {
     --mdc-dialog-min-width: 400px;
     --mdc-dialog-max-width: 600px;
-    --mdc-dialog-heading-ink-color: var(--primary-text-color);
-    --mdc-dialog-content-ink-color: var(--primary-text-color);
     --justify-action-buttons: space-between;
   }
 
@@ -342,7 +324,8 @@ export const haStyleDialog = css`
       --ha-dialog-border-radius: 0px;
     }
   }
-  mwc-button.warning {
+  mwc-button.warning,
+  ha-button.warning {
     --mdc-theme-primary: var(--error-color);
   }
   .error {

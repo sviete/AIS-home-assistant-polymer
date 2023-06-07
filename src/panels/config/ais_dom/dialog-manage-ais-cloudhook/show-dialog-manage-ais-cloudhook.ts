@@ -11,8 +11,8 @@ export const showManageCloudhookDialog = (
 ): void => {
   fireEvent(element, "show-dialog", {
     dialogTag: "dialog-manage-ais-cloudhook",
-    dialogImport: () =>
-      import(/* webpackChunkName: "ais-webhook-manage-dialog" */ "./dialog-manage-ais-cloudhook"),
+    dialogImport: () => import("./dialog-manage-ais-cloudhook"),
     dialogParams: webhookDialogParams,
   });
 };
+

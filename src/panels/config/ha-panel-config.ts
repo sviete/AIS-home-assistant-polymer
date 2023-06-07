@@ -12,6 +12,7 @@ import {
   mdiMapMarkerRadius,
   mdiMathLog,
   mdiMemory,
+  mdiMicrophone,
   mdiNetwork,
   mdiNfcVariant,
   mdiPalette,
@@ -37,7 +38,6 @@ import { customElement, property, state } from "lit/decorators";
 import { isComponentLoaded } from "../../common/config/is_component_loaded";
 import { listenMediaQuery } from "../../common/dom/media_query";
 import { CloudStatus, fetchCloudStatus } from "../../data/cloud";
-import "../../layouts/hass-loading-screen";
 import { HassRouterPage, RouterOptions } from "../../layouts/hass-router-page";
 import { PageNavigation } from "../../layouts/hass-tabs-subpage";
 import { HomeAssistant, Route } from "../../types";
@@ -114,6 +114,12 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       iconPath: mdiViewDashboard,
       iconColor: "#B1345C",
       component: "lovelace",
+    },
+    {
+      path: "/config/voice-assistants",
+      translationKey: "voice_assistants",
+      iconPath: mdiMicrophone,
+      iconColor: "#3263C3",
     },
     {
       path: "/config/tags",
@@ -230,6 +236,14 @@ export const configSections: { [name: string]: PageNavigation[] } = {
       translationKey: "ui.panel.config.tag.caption",
       iconPath: mdiNfcVariant,
       iconColor: "#616161",
+    },
+  ],
+  voice_assistants: [
+    {
+      path: "/config/voice-assistants",
+      translationKey: "ui.panel.config.dashboard.voice_assistants.main",
+      iconPath: mdiMicrophone,
+      iconColor: "#3263C3",
     },
   ],
   // Not used as a tab, but this way it will stay in the quick bar
@@ -385,6 +399,10 @@ class HaPanelConfig extends HassRouterPage {
       areas: {
         tag: "ha-config-areas",
         load: () => import("./areas/ha-config-areas"),
+      },
+      "voice-assistants": {
+        tag: "ha-config-voice-assistants",
+        load: () => import("./voice-assistants/ha-config-voice-assistants"),
       },
       automation: {
         tag: "ha-config-automation",

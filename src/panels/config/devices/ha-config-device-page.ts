@@ -8,7 +8,7 @@ import {
   mdiPencil,
   mdiPlusCircle,
 } from "@mdi/js";
-import "@polymer/paper-tooltip/paper-tooltip";
+import "@lrnwebcomponents/simple-tooltip/simple-tooltip";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { ifDefined } from "lit/directives/if-defined";
@@ -62,7 +62,6 @@ import {
 } from "../../../dialogs/generic/show-dialog-box";
 import "../../../layouts/hass-error-screen";
 import "../../../layouts/hass-subpage";
-import "../../../layouts/hass-tabs-subpage";
 import { haStyle } from "../../../resources/styles";
 import type { HomeAssistant } from "../../../types";
 import { brandsUrl } from "../../../util/brands-url";
@@ -407,11 +406,11 @@ export class HaConfigDevicePage extends LitElement {
                             </a>
                             ${!entityState.attributes.id
                               ? html`
-                                  <paper-tooltip animation-delay="0">
+                                  <simple-tooltip animation-delay="0">
                                     ${this.hass.localize(
                                       "ui.panel.config.devices.cant_edit"
                                     )}
-                                  </paper-tooltip>
+                                  </simple-tooltip>
                                 `
                               : ""}
                           </div> `
@@ -501,11 +500,11 @@ export class HaConfigDevicePage extends LitElement {
                                 </a>
                                 ${!entityState.attributes.id
                                   ? html`
-                                      <paper-tooltip animation-delay="0">
+                                      <simple-tooltip animation-delay="0">
                                         ${this.hass.localize(
                                           "ui.panel.config.devices.cant_edit"
                                         )}
-                                      </paper-tooltip>
+                                      </simple-tooltip>
                                     `
                                   : ""}
                               </div>
@@ -779,7 +778,7 @@ export class HaConfigDevicePage extends LitElement {
 
                           ${actions.length
                             ? html`
-                                <ha-button-menu corner="BOTTOM_START">
+                                <ha-button-menu>
                                   <ha-icon-button
                                     slot="trigger"
                                     .label=${this.hass.localize(

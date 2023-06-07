@@ -151,26 +151,40 @@ export class MoreInfoDialog extends LitElement {
     return entity?.device_id ?? null;
   }
 
+  private setView(view: View) {
+    history.replaceState(
+      {
+        ...history.state,
+        dialogParams: {
+          ...history.state?.dialogParams,
+          view,
+        },
+      },
+      ""
+    );
+    this._currView = view;
+  }
+
   private _goBack() {
     if (this._childView) {
       this._childView = undefined;
     } else {
-      this._currView = "info";
+      this.setView("info");
     }
   }
 
   private _goToHistory() {
-    this._currView = "history";
+    this.setView("history");
   }
 
   private _goToSettings(): void {
-    this._currView = "settings";
+    this.setView("settings");
   }
 
-  private async _showChildView(ev: CustomEvent): Promise<void> {
+  private _showChildView(ev: CustomEvent): void {
     const view = ev.detail as ChildView;
     if (view.viewImport) {
-      await view.viewImport();
+      view.viewImport();
     }
     this._childView = view;
   }
@@ -206,7 +220,7 @@ export class MoreInfoDialog extends LitElement {
 
   private _goToRelated(ev): void {
     if (!shouldHandleRequestSelectedEvent(ev)) return;
-    this._currView = "related";
+    this.setView("related");
   }
 
   protected render() {
@@ -355,12 +369,14 @@ export class MoreInfoDialog extends LitElement {
           tabindex="-1"
           dialogInitialFocus
           @show-child-view=${this._showChildView}
+          @entity-entry-updated=${this._entryUpdated}
         >
           ${this._childView
             ? html`
                 <div class="child-view">
                   ${dynamicElement(this._childView.viewTag, {
                     hass: this.hass,
+                    entry: this._entry,
                     params: this._childView.viewParams,
                   })}
                 </div>
@@ -387,7 +403,6 @@ export class MoreInfoDialog extends LitElement {
                         .hass=${this.hass}
                         .entityId=${this._entityId}
                         .entry=${this._entry}
-                        @entity-entry-updated=${this._entryUpdated}
                       ></ha-more-info-settings>
                     `
                   : this._currView === "related"
@@ -437,6 +452,7 @@ export class MoreInfoDialog extends LitElement {
           --dialog-surface-position: static;
           --dialog-content-position: static;
           --dialog-content-padding: 0;
+          --chart-base-position: static;
         }
 
         ha-header-bar {
@@ -464,7 +480,7 @@ export class MoreInfoDialog extends LitElement {
 
         @media all and (max-width: 450px) {
           .child-view > * {
-            min-height: calc(100vh - 56px);
+            min-height: calc(100vh - var(--header-height));
           }
         }
 

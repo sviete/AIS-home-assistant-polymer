@@ -65,7 +65,7 @@ export class HomeAssistantAppEl extends QuickBarMixin(HassElement) {
     `;
   }
 
-  update(changedProps) {
+  update(changedProps: PropertyValues<this>) {
     if (this.hass?.states && this.hass.config && this.hass.services) {
       this.render = this.renderHass;
       this.update = super.update;
@@ -74,7 +74,7 @@ export class HomeAssistantAppEl extends QuickBarMixin(HassElement) {
     super.update(changedProps);
   }
 
-  protected firstUpdated(changedProps) {
+  protected firstUpdated(changedProps: PropertyValues<this>) {
     super.firstUpdated(changedProps);
     this._initializeHass();
     setTimeout(() => registerServiceWorker(this), 1000);
@@ -136,11 +136,13 @@ export class HomeAssistantAppEl extends QuickBarMixin(HassElement) {
   protected hassConnected() {
     super.hassConnected();
     // @ts-ignore
-    this._loadHassTranslations(this.hass!.language, "state");
-    // @ts-ignore
-    this._loadHassTranslations(this.hass!.language, "state_attributes");
+    this._loadHassTranslations(this.hass!.language, "entity_component");
     // @ts-ignore
     this._loadHassTranslations(this.hass!.language, "entity");
+
+    // Backwards compatibility for custom integrations
+    // @ts-ignore
+    this._loadHassTranslations(this.hass!.language, "state");
 
     document.addEventListener(
       "visibilitychange",

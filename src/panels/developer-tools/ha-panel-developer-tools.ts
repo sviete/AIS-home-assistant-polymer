@@ -1,12 +1,9 @@
-import "@polymer/app-layout/app-header/app-header";
-import "@polymer/app-layout/app-toolbar/app-toolbar";
 import "@polymer/paper-tabs/paper-tab";
+import "@polymer/paper-tabs/paper-tabs";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
 import { navigate } from "../../common/navigate";
 import "../../components/ha-menu-button";
-import "../../components/ha-tabs";
-import "../../layouts/ha-app-layout";
 import { haStyle } from "../../resources/styles";
 import { HomeAssistant, Route } from "../../types";
 import "./developer-tools-router";
@@ -27,96 +24,73 @@ class PanelDeveloperTools extends LitElement {
   protected render(): TemplateResult {
     const page = this._page;
     return html`
-      <ha-app-layout>
-        <app-header fixed slot="header">
-          <app-toolbar>
-            <ha-menu-button
-              .hass=${this.hass}
-              .narrow=${this.narrow}
-            ></ha-menu-button>
-            <div main-title>${this.hass.localize("panel.developer_tools")}</div>
-          </app-toolbar>
-          <ha-tabs
-            scrollable
-            attr-for-selected="page-name"
-            .selected=${page}
-            @iron-activate=${this.handlePageSelected}
-          >
-            <paper-tab page-name="yaml">
-              ${this.hass.localize("ui.panel.developer-tools.tabs.yaml.title")}
-            </paper-tab>
-            <paper-tab page-name="state">
-              <span style="color: #4a5963; text-align: center;"
-                ><ha-icon icon="hass:state-machine">></ha-icon><br />
-                ${this.hass.localize(
-                  "ui.panel.developer-tools.tabs.states.title"
-                )}
-              </span>
-            </paper-tab>
-            <paper-tab page-name="service">
-              <span style="color: #4d2ea4; text-align: center;"
-                ><ha-icon icon="hass:function-variant">></ha-icon><br />
-                ${this.hass.localize(
-                  "ui.panel.developer-tools.tabs.services.title"
-                )}
-              </span>
-            </paper-tab>
-            <paper-tab page-name="template">
-              <span style="color: #0d47a1; text-align: center;"
-                ><ha-icon icon="hass:ninja">></ha-icon><br />
-                ${this.hass.localize(
-                  "ui.panel.developer-tools.tabs.templates.title"
-                )}</span
-              >
-            </paper-tab>
-            <paper-tab page-name="event">
-              <span style="color: #4c4c4c; text-align: center;"
-                ><ha-icon icon="hass:alert-decagram">></ha-icon><br />
-                ${this.hass.localize(
-                  "ui.panel.developer-tools.tabs.events.title"
-                )}
-              </span>
-            </paper-tab>
-            <paper-tab page-name="statistics">
-              <span style="color: #b1345c; text-align: center;"
-                ><ha-icon icon="hass:counter">></ha-icon><br />
-                ${this.hass.localize(
-                  "ui.panel.developer-tools.tabs.statistics.title"
-                )}
-              </span>
-            </paper-tab>
-            <paper-tab page-name="android">
-              <span style="color: green; text-align: center;"
-                ><ha-icon icon="hass:android">></ha-icon><br />Android</span
-              >
-            </paper-tab>
-            <paper-tab page-name="console">
-              <span style="color: black; text-align: center;"
-                ><ha-icon icon="hass:console">></ha-icon><br />Terminal</span
-              >
-            </paper-tab>
-            <paper-tab page-name="webcmd">
-              <span style="color: blue; text-align: center;"
-                ><ha-icon icon="hass:folder-home">></ha-icon><br />Manager</span
-              >
-            </paper-tab>
-          </ha-tabs>
-        </app-header>
-        <developer-tools-router
-          .route=${this.route}
-          .narrow=${this.narrow}
-          .hass=${this.hass}
-        ></developer-tools-router>
-      </ha-app-layout>
+      <div class="header">
+        <div class="toolbar">
+          <ha-menu-button
+            slot="navigationIcon"
+            .hass=${this.hass}
+            .narrow=${this.narrow}
+          ></ha-menu-button>
+          <div class="main-title">
+            ${this.hass.localize("panel.developer_tools")}
+          </div>
+        </div>
+        <paper-tabs
+          scrollable
+          attr-for-selected="page-name"
+          .selected=${page}
+          @selected-changed=${this.handlePageSelected}
+        >
+          <paper-tab page-name="yaml">
+            ${this.hass.localize("ui.panel.developer-tools.tabs.yaml.title")}
+          </paper-tab>
+          <paper-tab page-name="state">
+            ${this.hass.localize("ui.panel.developer-tools.tabs.states.title")}
+          </paper-tab>
+          <paper-tab page-name="service">
+            ${this.hass.localize(
+              "ui.panel.developer-tools.tabs.services.title"
+            )}
+          </paper-tab>
+          <paper-tab page-name="template">
+            ${this.hass.localize(
+              "ui.panel.developer-tools.tabs.templates.title"
+            )}
+          </paper-tab>
+          <paper-tab page-name="event">
+            ${this.hass.localize("ui.panel.developer-tools.tabs.events.title")}
+          </paper-tab>
+          <paper-tab page-name="statistics">
+            ${this.hass.localize(
+              "ui.panel.developer-tools.tabs.statistics.title"
+            )}
+          </paper-tab>
+          <paper-tab page-name="android">
+            Android
+          </paper-tab>
+          <paper-tab page-name="console">
+            Terminal
+          </paper-tab>
+          <paper-tab page-name="webcmd">
+            Manager
+          </paper-tab>
+
+        </paper-tabs>
+      </div>
+      <developer-tools-router
+        .route=${this.route}
+        .narrow=${this.narrow}
+        .hass=${this.hass}
+      ></developer-tools-router>
     `;
   }
 
   private handlePageSelected(ev) {
-    const newPage = ev.detail.item.getAttribute("page-name");
+    const newPage = ev.detail.value;
     if (newPage !== this._page) {
       navigate(`/developer-tools/${newPage}`);
     } else {
-      scrollTo(0, 0);
+      scrollTo({ behavior: "smooth", top: 0 });
     }
   }
 
@@ -131,12 +105,48 @@ class PanelDeveloperTools extends LitElement {
         :host {
           color: var(--primary-text-color);
           --paper-card-header-color: var(--primary-text-color);
+          display: flex;
+          min-height: 100vh;
+        }
+        .header {
+          position: fixed;
+          top: 0;
+          z-index: 4;
+          background-color: var(--app-header-background-color);
+          width: var(--mdc-top-app-bar-width, 100%);
+          padding-top: env(safe-area-inset-top);
+          color: var(--app-header-text-color, white);
+          border-bottom: var(--app-header-border-bottom, none);
+        }
+        .toolbar {
+          height: var(--header-height);
+          display: flex;
+          align-items: center;
+          font-size: 20px;
+          padding: 8px 12px;
+          font-weight: 400;
+          box-sizing: border-box;
+        }
+        @media (max-width: 599px) {
+          .toolbar {
+            padding: 4px;
+          }
+        }
+        .main-title {
+          margin: 0 0 0 24px;
+          line-height: 20px;
+          flex-grow: 1;
         }
         developer-tools-router {
           display: block;
-          height: calc(100vh - 104px);
+          padding-top: calc(
+            var(--header-height) + 48px + env(safe-area-inset-top)
+          );
+          padding-bottom: calc(env(safe-area-inset-bottom));
+          flex: 1 1 100%;
+          max-width: 100%;
         }
-        ha-tabs {
+        paper-tabs {
           margin-left: max(env(safe-area-inset-left), 24px);
           margin-right: max(env(safe-area-inset-right), 24px);
           --paper-tabs-selection-bar-color: var(

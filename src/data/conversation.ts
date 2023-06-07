@@ -44,7 +44,7 @@ interface IntentResultError extends IntentResultBase {
   };
 }
 
-interface ConversationResult {
+export interface ConversationResult {
   conversation_id: string | null;
   response:
     | IntentResultActionDone
@@ -54,6 +54,12 @@ interface ConversationResult {
 
 export interface AgentInfo {
   attribution?: { name: string; url: string };
+}
+
+export interface Agent {
+  id: string;
+  name: string;
+  supported_languages: "*" | string[];
 }
 
 export const processConversationInput = (
@@ -70,9 +76,24 @@ export const processConversationInput = (
     language,
   });
 
-export const getAgentInfo = (hass: HomeAssistant): Promise<AgentInfo> =>
+export const listAgents = (
+  hass: HomeAssistant,
+  language?: string,
+  country?: string
+): Promise<{ agents: Agent[] }> =>
+  hass.callWS({
+    type: "conversation/agent/list",
+    language,
+    country,
+  });
+
+export const getAgentInfo = (
+  hass: HomeAssistant,
+  agent_id?: string
+): Promise<AgentInfo> =>
   hass.callWS({
     type: "conversation/agent/info",
+    agent_id,
   });
 
 export const prepareConversation = (
