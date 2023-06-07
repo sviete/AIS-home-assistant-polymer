@@ -3697,6 +3697,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@polymer/paper-tooltip@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@polymer/paper-tooltip@npm:3.0.1"
+  dependencies:
+    "@polymer/paper-styles": ^3.0.0-pre.26
+    "@polymer/polymer": ^3.0.0
+  checksum: 74a4328527a80a42fde9fb35def7b711251b2b40fa25a0c3609ea393bd2901f987cf5c7c1119a5e7ca35d52fdd8a02d9bb857e37b6c07399c6a10a324ba1088e
+  languageName: node
+  linkType: hard
+
 "@polymer/polymer@npm:3.5.1":
   version: 3.5.1
   resolution: "@polymer/polymer@npm:3.5.1"
@@ -9515,6 +9525,7 @@ __metadata:
     "@polymer/paper-slider": 3.0.1
     "@polymer/paper-tabs": 3.1.0
     "@polymer/paper-toast": 3.0.1
+    "@polymer/paper-tooltip": ^3.0.1
     "@polymer/polymer": 3.5.1
     "@rollup/plugin-babel": 6.0.3
     "@rollup/plugin-commonjs": 24.1.0
