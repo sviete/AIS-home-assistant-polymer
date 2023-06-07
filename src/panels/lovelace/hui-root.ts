@@ -567,7 +567,7 @@ class HUIRoot extends LitElement {
     if (searchParams.edit === "1") {
       this.lovelace!.setEditMode(true);
     } else if (searchParams.conversation === "1") {
-      showVoiceCommandDialog(this);
+      showVoiceCommandDialog(this, this.hass);
       window.history.replaceState(
         null,
         "",
@@ -793,7 +793,7 @@ class HUIRoot extends LitElement {
   }
 
   private _showVoiceCommandDialog(): void {
-    showVoiceCommandDialog(this);
+    showVoiceCommandDialog(this, this.hass);
   }
 
   private _handleEnableEditMode(ev: CustomEvent<RequestSelectedDetail>): void {
@@ -802,7 +802,7 @@ class HUIRoot extends LitElement {
     }
     if (this._yamlMode) {
       showAlertDialog(this, {
-        text: "The edit UI is not available when in YAML mode.",
+        text: this.hass!.localize("ui.panel.lovelace.editor.yaml_unsupported"),
       });
       return;
     }
