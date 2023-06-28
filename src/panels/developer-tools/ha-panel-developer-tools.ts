@@ -65,6 +65,7 @@ class PanelDeveloperTools extends LitElement {
               "ui.panel.developer-tools.tabs.statistics.title"
             )}
           </paper-tab>
+          <paper-tab page-name="assist">Assist</paper-tab>
           <paper-tab page-name="android">
             Android
           </paper-tab>
@@ -74,7 +75,6 @@ class PanelDeveloperTools extends LitElement {
           <paper-tab page-name="webcmd">
             Manager
           </paper-tab>
-
         </paper-tabs>
       </div>
       <developer-tools-router
