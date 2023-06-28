@@ -3,7 +3,7 @@ import "../../../../../components/ha-button-menu";
 import "@material/mwc-button";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators";
-import { LocalStorage } from "../../../../../common/decorators/local-storage";
+import { storage } from "../../../../../common/decorators/storage";
 import "../../../../../components/ha-card";
 import "../../../../../components/ha-code-editor";
 import "../../../../../components/ha-formfield";
@@ -28,19 +28,39 @@ class HaPanelDevMqtt extends LitElement {
 
   @property({ type: Boolean }) public narrow!: boolean;
 
-  @LocalStorage("panel-dev-mqtt-topic-ls", true, false)
+  @storage({
+    key: "panel-dev-mqtt-topic-ls",
+    state: true,
+    subscribe: false,
+  })
   private _topic = "";
 
-  @LocalStorage("panel-dev-mqtt-payload-ls", true, false)
+  @storage({
+    key: "panel-dev-mqtt-payload-ls",
+    state: true,
+    subscribe: false,
+  })
   private _payload = "";
 
-  @LocalStorage("panel-dev-mqtt-qos-ls", true, false)
+  @storage({
+    key: "panel-dev-mqtt-qos-ls",
+    state: true,
+    subscribe: false,
+  })
   private _qos = "0";
 
-  @LocalStorage("panel-dev-mqtt-retain-ls", true, false)
+  @storage({
+    key: "panel-dev-mqtt-retain-ls",
+    state: true,
+    subscribe: false,
+  })
   private _retain = false;
 
-  @LocalStorage("panel-dev-mqtt-allow-template-ls", true, false)
+  @storage({
+    key: "panel-dev-mqtt-allow-template-ls",
+    state: true,
+    subscribe: false,
+  })
   private _allowTemplate = false;
 
   protected render(): TemplateResult {
