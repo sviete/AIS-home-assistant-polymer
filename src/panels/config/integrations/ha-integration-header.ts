@@ -1,5 +1,7 @@
-import { LitElement, TemplateResult, css, html } from "lit";
+import { mdiAlertCircleOutline, mdiAlertOutline } from "@mdi/js";
+import { LitElement, TemplateResult, css, html, nothing } from "lit";
 import { customElement, property } from "lit/decorators";
+import "../../../components/ha-icon-next";
 import "../../../components/ha-svg-icon";
 import { IntegrationManifest, domainToName } from "../../../data/integration";
 import { HomeAssistant } from "../../../types";
@@ -9,9 +11,9 @@ import { brandsUrl } from "../../../util/brands-url";
 export class HaIntegrationHeader extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @property() public banner?: string;
+  @property() public error?: string;
 
-  @property() public label?: string;
+  @property() public warning?: string;
 
   @property() public localizedDomainName?: string;
 
@@ -20,25 +22,11 @@ export class HaIntegrationHeader extends LitElement {
   @property({ attribute: false }) public manifest?: IntegrationManifest;
 
   protected render(): TemplateResult {
-    let primary: string;
-    let secondary: string | undefined;
-
     const domainName =
       this.localizedDomainName ||
       domainToName(this.hass.localize, this.domain, this.manifest);
 
-    if (this.label) {
-      primary = this.label;
-      secondary =
-        primary.toLowerCase() === domainName.toLowerCase()
-          ? undefined
-          : domainName;
-    } else {
-      primary = domainName;
-    }
-
     return html`
-      ${!this.banner ? "" : html`<div class="banner">${this.banner}</div>`}
       <div class="header">
         <img
           alt=""
@@ -52,12 +40,35 @@ export class HaIntegrationHeader extends LitElement {
           @load=${this._onImageLoad}
         />
         <div class="info">
-          <div class="primary" role="heading">${primary}</div>
-          <div class="secondary">${secondary}</div>
+          <div
+            class="primary ${this.warning || this.error ? "has-secondary" : ""}"
+            role="heading"
+            aria-level="1"
+          >
+            ${domainName}
+          </div>
+          ${this.error
+            ? html`
+                <div class="secondary error">
+                  <ha-svg-icon .path=${mdiAlertCircleOutline}></ha-svg-icon>
+                  <span>${this.error}</span>
+                </div>
+              `
+            : this.warning
+            ? html`
+                <div class="secondary warning">
+                  <ha-svg-icon .path=${mdiAlertOutline}></ha-svg-icon>
+                  <span>${this.warning}</span>
+                </div>
+              `
+            : nothing}
         </div>
-        <div class="header-button">
-          <slot name="header-button"></slot>
-        </div>
+        <ha-icon-next
+          class="header-button"
+          .label=${this.hass.localize(
+            "ui.panel.config.integrations.config_entry.configure"
+          )}
+        ></ha-icon-next>
       </div>
     `;
   }
@@ -71,24 +82,17 @@ export class HaIntegrationHeader extends LitElement {
   }
 
   static styles = css`
-    .banner {
-      background-color: var(--state-color);
-      color: var(--text-on-state-color);
-      text-align: center;
-      padding: 2px;
-
-      /* Padding is subtracted for nested elements with border radiuses */
-      border-top-left-radius: calc(var(--ha-card-border-radius, 12px) - 2px);
-      border-top-right-radius: calc(var(--ha-card-border-radius, 12px) - 2px);
-    }
     .header {
       display: flex;
+      align-items: center;
       position: relative;
       padding-top: 16px;
       padding-bottom: 16px;
       padding-inline-start: 16px;
       padding-inline-end: 8px;
       direction: var(--direction);
+      box-sizing: border-box;
+      min-width: 0;
     }
     .header img {
       margin-inline-start: initial;
@@ -98,32 +102,54 @@ export class HaIntegrationHeader extends LitElement {
       direction: var(--direction);
     }
     .header .info {
+      position: relative;
+      display: flex;
+      flex-direction: column;
       flex: 1;
       align-self: center;
+      min-width: 0;
     }
-    .header .info div {
-      word-wrap: break-word;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .header-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
+    ha-icon-next {
+      color: var(--secondary-text-color);
     }
     .primary {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       font-size: 16px;
       font-weight: 400;
-      word-break: break-word;
       color: var(--primary-text-color);
     }
-    .secondary {
+    .has-secondary {
+      -webkit-line-clamp: 1;
       font-size: 14px;
-      color: var(--secondary-text-color);
+    }
+    .secondary {
+      min-width: 0;
+      --mdc-icon-size: 20px;
+      -webkit-line-clamp: 1;
+      font-size: 12px;
+      display: flex;
+      flex-direction: row;
+    }
+    .secondary > span {
+      position: relative;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .secondary > ha-svg-icon {
+      margin-right: 4px;
+      flex-shrink: 0;
+    }
+    .error ha-svg-icon {
+      color: var(--error-color);
+    }
+    .warning ha-svg-icon {
+      color: var(--warning-color);
     }
   `;
 }

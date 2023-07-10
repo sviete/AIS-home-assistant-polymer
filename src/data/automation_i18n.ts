@@ -12,6 +12,7 @@ import {
 } from "../common/entity/compute_attribute_display";
 import { computeStateDisplay } from "../common/entity/compute_state_display";
 import { computeStateName } from "../common/entity/compute_state_name";
+import "../resources/intl-polyfill";
 import type { HomeAssistant } from "../types";
 import { Condition, ForDict, Trigger } from "./automation";
 import {
@@ -21,7 +22,6 @@ import {
   localizeDeviceAutomationTrigger,
 } from "./device_automation";
 import { EntityRegistryEntry } from "./entity_registry";
-import "../resources/intl-polyfill";
 import { FrontendLocaleData } from "./translation";
 
 const triggerTranslationBaseKey =
@@ -397,12 +397,10 @@ const tryDescribeTrigger = (
   }
 
   // Time Pattern Trigger
-  if (
-    trigger.platform === "time_pattern" &&
-    (trigger.seconds !== undefined ||
-      trigger.minutes !== undefined ||
-      trigger.hours !== undefined)
-  ) {
+  if (trigger.platform === "time_pattern") {
+    if (!trigger.seconds && !trigger.minutes && !trigger.hours) {
+      return "When a time pattern matches";
+    }
     let result = "Trigger ";
     if (trigger.seconds !== undefined) {
       const seconds_all = trigger.seconds === "*";

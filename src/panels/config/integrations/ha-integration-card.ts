@@ -1,6 +1,4 @@
 import "@lrnwebcomponents/simple-tooltip/simple-tooltip";
-import "@material/mwc-button";
-import "@material/mwc-list";
 import "@material/mwc-ripple";
 import type { Ripple } from "@material/mwc-ripple";
 import { RippleHandlers } from "@material/mwc-ripple/ripple-handlers";
@@ -24,8 +22,7 @@ import { classMap } from "lit/directives/class-map";
 import memoizeOne from "memoize-one";
 import { computeRTL } from "../../../common/util/compute_rtl";
 import "../../../components/ha-card";
-import "../../../components/ha-icon-next";
-import "../../../components/ha-list-item";
+import "../../../components/ha-button";
 import "../../../components/ha-svg-icon";
 import { ConfigEntry, ERROR_STATES } from "../../../data/config_entries";
 import type { DeviceRegistryEntry } from "../../../data/device_registry";
@@ -97,7 +94,13 @@ export class HaIntegrationCard extends LitElement {
             .hass=${this.hass}
             .domain=${this.domain}
             .localizedDomainName=${this.items[0].localized_domain_name}
-            .banner=${entryState !== "loaded"
+            .error=${ERROR_STATES.includes(entryState)
+              ? this.hass.localize(
+                  `ui.panel.config.integrations.config_entry.state.${entryState}`
+                )
+              : undefined}
+            .warning=${entryState !== "loaded" &&
+            !ERROR_STATES.includes(entryState)
               ? this.hass.localize(
                   `ui.panel.config.integrations.config_entry.state.${entryState}`
                 )
@@ -108,12 +111,6 @@ export class HaIntegrationCard extends LitElement {
               : undefined}
             .manifest=${this.manifest}
           >
-            <ha-icon-next
-              slot="header-button"
-              .label=${this.hass.localize(
-                "ui.panel.config.integrations.config_entry.configure"
-              )}
-            ></ha-icon-next>
           </ha-integration-header>
         </a>
 
@@ -317,9 +314,12 @@ export class HaIntegrationCard extends LitElement {
           --text-on-state-color: var(--primary-text-color);
         }
         .state-not-loaded {
+          opacity: 0.8;
+          --state-color: var(--warning-color);
           --state-message-color: var(--primary-text-color);
         }
         .state-setup {
+          opacity: 0.8;
           --state-message-color: var(--secondary-text-color);
         }
         :host(.highlight) ha-card {
@@ -335,9 +335,6 @@ export class HaIntegrationCard extends LitElement {
         a {
           text-decoration: none;
           color: var(--primary-text-color);
-        }
-        a ha-icon-next {
-          color: var(--secondary-text-color);
         }
         .icons {
           display: flex;
