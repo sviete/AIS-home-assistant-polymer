@@ -20,6 +20,7 @@ import {
 import { customElement, property, state } from "lit/decorators";
 import { ifDefined } from "lit/directives/if-defined";
 import memoizeOne from "memoize-one";
+import { consume } from "@lit-labs/context";
 import { isComponentLoaded } from "../../../common/config/is_component_loaded";
 import { SENSOR_ENTITIES } from "../../../common/const";
 import { computeDomain } from "../../../common/entity/compute_domain";
@@ -41,6 +42,7 @@ import {
   ConfigEntry,
   disableConfigEntry,
   DisableConfigEntryResult,
+  sortConfigEntries,
 } from "../../../data/config_entries";
 import {
   computeDeviceName,
@@ -60,7 +62,7 @@ import {
   findBatteryEntity,
   updateEntityRegistryEntry,
 } from "../../../data/entity_registry";
-import { domainToName } from "../../../data/integration";
+import { IntegrationManifest, domainToName } from "../../../data/integration";
 import { SceneEntities, showSceneEditor } from "../../../data/scene";
 import { findRelated, RelatedResult } from "../../../data/search";
 import {
@@ -83,6 +85,7 @@ import {
   loadDeviceRegistryDetailDialog,
   showDeviceRegistryDetailDialog,
 } from "./device-registry-detail/show-dialog-device-registry-detail";
+import { fullEntitiesContext } from "../../../data/context";
 // ais devices
 import "../ais_dom/ais_dom_devices/ha-ais-dom-rf433-config-card";
 import "../ais_dom/ais_dom_devices/ha-ais-dom-iframe";
@@ -119,6 +122,8 @@ export class HaConfigDevicePage extends LitElement {
 
   @property({ attribute: false }) public areas!: AreaRegistryEntry[];
 
+  @property({ attribute: false }) public manifests!: IntegrationManifest[];
+
   @property() public deviceId!: string;
 
   @property({ type: Boolean, reflect: true }) public narrow!: boolean;
@@ -138,6 +143,10 @@ export class HaConfigDevicePage extends LitElement {
 
   @state() private _deviceAlerts?: DeviceAlert[];
 
+  @state()
+  @consume({ context: fullEntitiesContext, subscribe: true })
+  _entityReg!: EntityRegistryEntry[];
+
   private _logbookTime = { recent: 86400 };
 
   private _device = memoizeOne(
@@ -149,8 +158,25 @@ export class HaConfigDevicePage extends LitElement {
   );
 
   private _integrations = memoizeOne(
-    (device: DeviceRegistryEntry, entries: ConfigEntry[]): ConfigEntry[] =>
-      entries.filter((entry) => device.config_entries.includes(entry.entry_id))
+    (
+      device: DeviceRegistryEntry,
+      entries: ConfigEntry[],
+      manifests: IntegrationManifest[]
+    ): ConfigEntry[] => {
+      const entryLookup: { [entryId: string]: ConfigEntry } = {};
+      for (const entry of entries) {
+        entryLookup[entry.entry_id] = entry;
+      }
+      const manifestLookup: { [domain: string]: IntegrationManifest } = {};
+      for (const manifest of manifests) {
+        manifestLookup[manifest.domain] = manifest;
+      }
+      const deviceEntries = device.config_entries
+        .filter((entId) => entId in entryLookup)
+        .map((entry) => entryLookup[entry]);
+
+      return sortConfigEntries(deviceEntries, manifestLookup);
+    }
   );
 
   private _entities = memoizeOne(
@@ -289,7 +315,11 @@ export class HaConfigDevicePage extends LitElement {
     }
 
     const deviceName = computeDeviceName(device, this.hass);
-    const integrations = this._integrations(device, this.entries);
+    const integrations = this._integrations(
+      device,
+      this.entries,
+      this.manifests
+    );
     const entities = this._entities(this.deviceId, this.entities);
     const entitiesByCategory = this._entitiesByCategory(entities);
     const batteryEntity = this._batteryEntity(entities);
@@ -402,12 +432,13 @@ export class HaConfigDevicePage extends LitElement {
                     )
                   : this.hass.localize(
                       "ui.panel.config.devices.automation.create",
-                      "type",
-                      this.hass.localize(
-                        `ui.panel.config.devices.type.${
-                          device.entry_type || "device"
-                        }`
-                      )
+                      {
+                        type: this.hass.localize(
+                          `ui.panel.config.devices.type.${
+                            device.entry_type || "device"
+                          }`
+                        ),
+                      }
                     )}
                 .path=${mdiPlusCircle}
               ></ha-icon-button>
@@ -944,7 +975,7 @@ export class HaConfigDevicePage extends LitElement {
     }
 
     let links = await Promise.all(
-      this._integrations(device, this.entries).map(
+      this._integrations(device, this.entries, this.manifests).map(
         async (entry): Promise<boolean | { link: string; domain: string }> => {
           if (entry.state !== "loaded") {
             return false;
@@ -1007,50 +1038,55 @@ export class HaConfigDevicePage extends LitElement {
     }
 
     const buttons: DeviceAction[] = [];
-    this._integrations(device, this.entries).forEach((entry) => {
-      if (entry.state !== "loaded" || !entry.supports_remove_device) {
-        return;
+    this._integrations(device, this.entries, this.manifests).forEach(
+      (entry) => {
+        if (entry.state !== "loaded" || !entry.supports_remove_device) {
+          return;
+        }
+        buttons.push({
+          action: async () => {
+            const confirmed = await showConfirmationDialog(this, {
+              text:
+                this._integrations(device, this.entries, this.manifests)
+                  .length > 1
+                  ? this.hass.localize(
+                      `ui.panel.config.devices.confirm_delete_integration`,
+                      {
+                        integration: domainToName(
+                          this.hass.localize,
+                          entry.domain
+                        ),
+                      }
+                    )
+                  : this.hass.localize(
+                      `ui.panel.config.devices.confirm_delete`
+                    ),
+            });
+
+            if (!confirmed) {
+              return;
+            }
+
+            await removeConfigEntryFromDevice(
+              this.hass!,
+              this.deviceId,
+              entry.entry_id
+            );
+          },
+          classes: "warning",
+          icon: mdiDelete,
+          label:
+            this._integrations(device, this.entries, this.manifests).length > 1
+              ? this.hass.localize(
+                  `ui.panel.config.devices.delete_device_integration`,
+                  {
+                    integration: domainToName(this.hass.localize, entry.domain),
+                  }
+                )
+              : this.hass.localize(`ui.panel.config.devices.delete_device`),
+        });
       }
-      buttons.push({
-        action: async () => {
-          const confirmed = await showConfirmationDialog(this, {
-            text:
-              this._integrations(device, this.entries).length > 1
-                ? this.hass.localize(
-                    `ui.panel.config.devices.confirm_delete_integration`,
-                    {
-                      integration: domainToName(
-                        this.hass.localize,
-                        entry.domain
-                      ),
-                    }
-                  )
-                : this.hass.localize(`ui.panel.config.devices.confirm_delete`),
-          });
-
-          if (!confirmed) {
-            return;
-          }
-
-          await removeConfigEntryFromDevice(
-            this.hass!,
-            this.deviceId,
-            entry.entry_id
-          );
-        },
-        classes: "warning",
-        icon: mdiDelete,
-        label:
-          this._integrations(device, this.entries).length > 1
-            ? this.hass.localize(
-                `ui.panel.config.devices.delete_device_integration`,
-                {
-                  integration: domainToName(this.hass.localize, entry.domain),
-                }
-              )
-            : this.hass.localize(`ui.panel.config.devices.delete_device`),
-      });
-    });
+    );
 
     if (buttons.length > 0) {
       this._deleteButtons = buttons;
@@ -1085,9 +1121,11 @@ export class HaConfigDevicePage extends LitElement {
       });
     }
 
-    const domains = this._integrations(device, this.entries).map(
-      (int) => int.domain
-    );
+    const domains = this._integrations(
+      device,
+      this.entries,
+      this.manifests
+    ).map((int) => int.domain);
 
     if (domains.includes("mqtt")) {
       const mqtt = await import(
@@ -1127,9 +1165,11 @@ export class HaConfigDevicePage extends LitElement {
 
     const deviceAlerts: DeviceAlert[] = [];
 
-    const domains = this._integrations(device, this.entries).map(
-      (int) => int.domain
-    );
+    const domains = this._integrations(
+      device,
+      this.entries,
+      this.manifests
+    ).map((int) => int.domain);
 
     if (domains.includes("zwave_js")) {
       const zwave = await import(
@@ -1178,6 +1218,7 @@ export class HaConfigDevicePage extends LitElement {
   private _showScriptDialog() {
     showDeviceAutomationDialog(this, {
       device: this._device(this.deviceId, this.devices)!,
+      entityReg: this._entityReg,
       script: true,
     });
   }
@@ -1185,6 +1226,7 @@ export class HaConfigDevicePage extends LitElement {
   private _showAutomationDialog() {
     showDeviceAutomationDialog(this, {
       device: this._device(this.deviceId, this.devices)!,
+      entityReg: this._entityReg,
       script: false,
     });
   }
