@@ -1,29 +1,26 @@
 import "@material/mwc-button";
-import "@polymer/paper-tooltip/paper-tooltip";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import "@lrnwebcomponents/simple-tooltip/simple-tooltip";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 
 import { computeRTLDirection } from "../../../common/util/compute_rtl";
+import "../../../components/ha-chip";
+import "../../../components/ha-chip-set";
 import { createCloseHeading } from "../../../components/ha-dialog";
 import "../../../components/ha-formfield";
 import "../../../components/ha-help-tooltip";
-import "../../../components/ha-chip-set";
-import "../../../components/ha-chip";
 import "../../../components/ha-svg-icon";
-import "../../../components/ha-textfield";
 import "../../../components/ha-switch";
-import { adminChangePassword } from "../../../data/auth";
+import "../../../components/ha-textfield";
 import {
   computeUserBadges,
   SYSTEM_GROUP_ID_ADMIN,
   SYSTEM_GROUP_ID_USER,
 } from "../../../data/user";
-import {
-  showAlertDialog,
-  showPromptDialog,
-} from "../../../dialogs/generic/show-dialog-box";
+import { showAlertDialog } from "../../../dialogs/generic/show-dialog-box";
 import { haStyleDialog } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
+import { showAdminChangePasswordDialog } from "./show-dialog-admin-change-password";
 import { UserDetailDialogParams } from "./show-dialog-user-detail";
 
 @customElement("dialog-user-detail")
@@ -54,9 +51,9 @@ class DialogUserDetail extends LitElement {
     await this.updateComplete;
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this._params) {
-      return html``;
+      return nothing;
     }
     const user = this._params.entry;
     const badges = computeUserBadges(this.hass, user, true);
@@ -172,11 +169,11 @@ class DialogUserDetail extends LitElement {
           </mwc-button>
           ${user.system_generated
             ? html`
-                <paper-tooltip animation-delay="0" position="right">
+                <simple-tooltip animation-delay="0" position="right">
                   ${this.hass.localize(
                     "ui.panel.config.users.editor.system_generated_users_not_removable"
                   )}
-                </paper-tooltip>
+                </simple-tooltip>
               `
             : ""}
           ${!user.system_generated && this.hass.user?.is_owner
@@ -199,11 +196,11 @@ class DialogUserDetail extends LitElement {
           </mwc-button>
           ${user.system_generated
             ? html`
-                <paper-tooltip animation-delay="0" position="left">
+                <simple-tooltip animation-delay="0" position="left">
                   ${this.hass.localize(
                     "ui.panel.config.users.editor.system_generated_users_not_editable"
                   )}
-                </paper-tooltip>
+                </simple-tooltip>
               `
             : ""}
         </div>
@@ -268,40 +265,8 @@ class DialogUserDetail extends LitElement {
       });
       return;
     }
-    const newPassword = await showPromptDialog(this, {
-      title: this.hass.localize("ui.panel.config.users.editor.change_password"),
-      inputType: "password",
-      inputLabel: this.hass.localize(
-        "ui.panel.config.users.editor.new_password"
-      ),
-    });
-    if (!newPassword) {
-      return;
-    }
-    const confirmPassword = await showPromptDialog(this, {
-      title: this.hass.localize("ui.panel.config.users.editor.change_password"),
-      inputType: "password",
-      inputLabel: this.hass.localize(
-        "ui.panel.config.users.add_user.password_confirm"
-      ),
-    });
-    if (!confirmPassword) {
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      showAlertDialog(this, {
-        title: this.hass.localize(
-          "ui.panel.config.users.add_user.password_not_match"
-        ),
-      });
-      return;
-    }
-    await adminChangePassword(this.hass, this._params!.entry.id, newPassword);
-    showAlertDialog(this, {
-      title: this.hass.localize(
-        "ui.panel.config.users.editor.password_changed"
-      ),
-    });
+
+    showAdminChangePasswordDialog(this, { userId: this._params!.entry.id });
   }
 
   private _close(): void {

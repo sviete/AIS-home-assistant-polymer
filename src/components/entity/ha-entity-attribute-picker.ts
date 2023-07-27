@@ -1,9 +1,8 @@
 import { HassEntity } from "home-assistant-js-websocket";
-import { html, LitElement, PropertyValues, TemplateResult } from "lit";
+import { html, LitElement, PropertyValues, nothing } from "lit";
 import { customElement, property, query } from "lit/decorators";
-import { formatAttributeName } from "../../data/entity_attributes";
-import { PolymerChangedEvent } from "../../polymer-types";
-import { HomeAssistant } from "../../types";
+import { computeAttributeNameDisplay } from "../../common/entity/compute_attribute_display";
+import { ValueChangedEvent, HomeAssistant } from "../../types";
 import "../ha-combo-box";
 import type { HaComboBox } from "../ha-combo-box";
 
@@ -14,6 +13,14 @@ class HaEntityAttributePicker extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property() public entityId?: string;
+
+  /**
+   * List of attributes to be hidden.
+   * @type {Array}
+   * @attr hide-attributes
+   */
+  @property({ type: Array, attribute: "hide-attributes" })
+  public hideAttributes?: string[];
 
   @property({ type: Boolean }) public autofocus = false;
 
@@ -42,23 +49,37 @@ class HaEntityAttributePicker extends LitElement {
     if (changedProps.has("_opened") && this._opened) {
       const state = this.entityId ? this.hass.states[this.entityId] : undefined;
       (this._comboBox as any).items = state
-        ? Object.keys(state.attributes).map((key) => ({
-            value: key,
-            label: formatAttributeName(key),
-          }))
+        ? Object.keys(state.attributes)
+            .filter((key) => !this.hideAttributes?.includes(key))
+            .map((key) => ({
+              value: key,
+              label: computeAttributeNameDisplay(
+                this.hass.localize,
+                state,
+                this.hass.entities,
+                key
+              ),
+            }))
         : [];
     }
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass) {
-      return html``;
+      return nothing;
     }
 
     return html`
       <ha-combo-box
         .hass=${this.hass}
-        .value=${this.value || ""}
+        .value=${this.value
+          ? computeAttributeNameDisplay(
+              this.hass.localize,
+              this.hass.states[this.entityId!],
+              this.hass.entities,
+              this.value
+            )
+          : ""}
         .autofocus=${this.autofocus}
         .label=${this.label ??
         this.hass.localize(
@@ -77,11 +98,11 @@ class HaEntityAttributePicker extends LitElement {
     `;
   }
 
-  private _openedChanged(ev: PolymerChangedEvent<boolean>) {
+  private _openedChanged(ev: ValueChangedEvent<boolean>) {
     this._opened = ev.detail.value;
   }
 
-  private _valueChanged(ev: PolymerChangedEvent<string>) {
+  private _valueChanged(ev: ValueChangedEvent<string>) {
     this.value = ev.detail.value;
   }
 }

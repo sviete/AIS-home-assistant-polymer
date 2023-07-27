@@ -10,17 +10,11 @@ import {
   DataEntryFlowStepMenu,
   DataEntryFlowStepProgress,
 } from "../../data/data_entry_flow";
-import { IntegrationManifest } from "../../data/integration";
-import { HomeAssistant } from "../../types";
+import type { IntegrationManifest } from "../../data/integration";
+import type { HomeAssistant } from "../../types";
 
-export interface FlowHandlers {
-  integrations: string[];
-  helpers: string[];
-}
 export interface FlowConfig {
   loadDevicesAndAreas: boolean;
-
-  getFlowHandlers?: (hass: HomeAssistant) => Promise<FlowHandlers>;
 
   createFlow(hass: HomeAssistant, handler: string): Promise<DataEntryFlowStep>;
 
@@ -59,12 +53,23 @@ export interface FlowConfig {
     hass: HomeAssistant,
     step: DataEntryFlowStepForm,
     field: HaFormSchema
-  ): string;
+  ): TemplateResult | string;
 
   renderShowFormStepFieldError(
     hass: HomeAssistant,
     step: DataEntryFlowStepForm,
     error: string
+  ): string;
+
+  renderShowFormStepFieldLocalizeValue(
+    hass: HomeAssistant,
+    step: DataEntryFlowStepForm,
+    key: string
+  ): string;
+
+  renderShowFormStepSubmitButton(
+    hass: HomeAssistant,
+    step: DataEntryFlowStepForm
   ): string;
 
   renderExternalStepHeader(
@@ -131,6 +136,7 @@ export interface DataEntryFlowDialogParams {
   }) => void;
   flowConfig: FlowConfig;
   showAdvanced?: boolean;
+  dialogParentElement?: HTMLElement;
 }
 
 export const loadDataEntryFlowDialog = () => import("./dialog-data-entry-flow");
@@ -146,6 +152,7 @@ export const showFlowDialog = (
     dialogParams: {
       ...dialogParams,
       flowConfig,
+      dialogParentElement: element,
     },
   });
 };

@@ -133,6 +133,19 @@ const ENTITIES = [
     friendly_name: "Update with auto update",
     auto_update: true,
   }),
+  getEntity("update", "update20", "on", {
+    ...base_attributes,
+    in_progress: true,
+    title: undefined,
+    friendly_name: "Installing without title",
+  }),
+  getEntity("update", "update21", "on", {
+    ...base_attributes,
+    in_progress: true,
+    friendly_name: "Update with in_progress true and UPDATE_SUPPORT_PROGRESS",
+    supported_features:
+      base_attributes.supported_features + UPDATE_SUPPORT_PROGRESS,
+  }),
 ];
 
 @customElement("demo-more-info-update")

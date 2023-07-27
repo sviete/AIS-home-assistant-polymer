@@ -1,6 +1,4 @@
-import "../../../../components/entity/ha-entities-picker";
-import "../../../../components/ha-form/ha-form";
-import { css, html, LitElement, TemplateResult } from "lit";
+import { css, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import {
@@ -15,7 +13,9 @@ import {
 } from "superstruct";
 import { fireEvent } from "../../../../common/dom/fire_event";
 import { LocalizeFunc } from "../../../../common/translations/localize";
-import type { HaFormSchema } from "../../../../components/ha-form/types";
+import "../../../../components/entity/ha-entities-picker";
+import "../../../../components/ha-form/ha-form";
+import type { SchemaUnion } from "../../../../components/ha-form/types";
 import type { HomeAssistant } from "../../../../types";
 import type { CalendarCardConfig } from "../../cards/types";
 import type { LovelaceCardEditor } from "../../types";
@@ -31,7 +31,7 @@ const cardConfigStruct = assign(
   })
 );
 
-const views = ["dayGridMonth", "dayGridDay", "listWeek"];
+const views = ["dayGridMonth", "dayGridDay", "listWeek"] as const;
 
 @customElement("hui-calendar-card-editor")
 export class HuiCalendarCardEditor
@@ -47,34 +47,37 @@ export class HuiCalendarCardEditor
     this._config = config;
   }
 
-  private _schema = memoizeOne((localize: LocalizeFunc) => [
-    {
-      name: "",
-      type: "grid",
-      schema: [
-        { name: "title", required: false, selector: { text: {} } },
+  private _schema = memoizeOne(
+    (localize: LocalizeFunc) =>
+      [
         {
-          name: "initial_view",
-          required: false,
-          selector: {
-            select: {
-              options: views.map((view) => [
-                view,
-                localize(
-                  `ui.panel.lovelace.editor.card.calendar.views.${view}`
-                ),
-              ]),
+          name: "",
+          type: "grid",
+          schema: [
+            { name: "title", required: false, selector: { text: {} } },
+            {
+              name: "initial_view",
+              required: false,
+              selector: {
+                select: {
+                  options: views.map((view) => ({
+                    value: view,
+                    label: localize(
+                      `ui.panel.lovelace.editor.card.calendar.views.${view}`
+                    ),
+                  })),
+                },
+              },
             },
-          },
+          ],
         },
-      ],
-    },
-    { name: "theme", required: false, selector: { theme: {} } },
-  ]);
+        { name: "theme", required: false, selector: { theme: {} } },
+      ] as const
+  );
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
     const schema = this._schema(this.hass.localize);
@@ -116,7 +119,9 @@ export class HuiCalendarCardEditor
     fireEvent(this, "config-changed", { config });
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema) => {
+  private _computeLabelCallback = (
+    schema: SchemaUnion<ReturnType<typeof this._schema>>
+  ) => {
     if (schema.name === "title") {
       return this.hass!.localize("ui.panel.lovelace.editor.card.generic.title");
     }

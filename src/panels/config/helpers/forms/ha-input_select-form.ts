@@ -1,7 +1,7 @@
 import "@material/mwc-button/mwc-button";
 import "@material/mwc-list/mwc-list-item";
 import { mdiDelete } from "@mdi/js";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, query, state } from "lit/decorators";
 import { fireEvent } from "../../../../common/dom/fire_event";
 import "../../../../components/ha-icon-button";
@@ -50,28 +50,29 @@ class HaInputSelectForm extends LitElement {
     );
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass) {
-      return html``;
+      return nothing;
     }
-    const nameInvalid = !this._name || this._name.trim() === "";
 
     return html`
       <div class="form">
         <ha-textfield
           dialogInitialFocus
-          .errorMessage=${this.hass!.localize(
+          autoValidate
+          required
+          .validationMessage=${this.hass!.localize(
             "ui.dialogs.helper_settings.required_error_msg"
           )}
           .value=${this._name}
           .label=${this.hass!.localize(
             "ui.dialogs.helper_settings.generic.name"
           )}
-          .invalid=${nameInvalid}
           .configValue=${"name"}
           @input=${this._valueChanged}
         ></ha-textfield>
         <ha-icon-picker
+          .hass=${this.hass}
           .value=${this._icon}
           .configValue=${"icon"}
           @value-changed=${this._valueChanged}
@@ -79,9 +80,11 @@ class HaInputSelectForm extends LitElement {
             "ui.dialogs.helper_settings.generic.icon"
           )}
         ></ha-icon-picker>
-        ${this.hass!.localize(
-          "ui.dialogs.helper_settings.input_select.options"
-        )}:
+        <div class="header">
+          ${this.hass!.localize(
+            "ui.dialogs.helper_settings.input_select.options"
+          )}:
+        </div>
         ${this._options.length
           ? this._options.map(
               (option, index) => html`
@@ -127,7 +130,7 @@ class HaInputSelectForm extends LitElement {
 
   private _handleKeyAdd(ev: KeyboardEvent) {
     ev.stopPropagation();
-    if (ev.keyCode !== 13) {
+    if (ev.key !== "Enter") {
       return;
     }
     this._addOption();
@@ -205,6 +208,10 @@ class HaInputSelectForm extends LitElement {
         }
         #option_input {
           margin-top: 8px;
+        }
+        .header {
+          margin-top: 8px;
+          margin-bottom: 8px;
         }
       `,
     ];

@@ -1,5 +1,5 @@
 import "@material/mwc-button";
-import "@polymer/paper-tooltip/paper-tooltip";
+import "@lrnwebcomponents/simple-tooltip/simple-tooltip";
 import {
   css,
   CSSResultGroup,
@@ -10,16 +10,18 @@ import {
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { fireEvent } from "../../common/dom/fire_event";
+import "../../components/ha-alert";
 import "../../components/ha-circular-progress";
 import { computeInitialHaFormData } from "../../components/ha-form/compute-initial-ha-form-data";
-import type { HaFormSchema } from "../../components/ha-form/types";
 import "../../components/ha-form/ha-form";
+import type { HaFormSchema } from "../../components/ha-form/types";
 import "../../components/ha-markdown";
-import "../../components/ha-alert";
+import { autocompleteLoginFields } from "../../data/auth";
 import type { DataEntryFlowStepForm } from "../../data/data_entry_flow";
 import type { HomeAssistant } from "../../types";
 import type { FlowConfig } from "./show-dialog-data-entry-flow";
 import { configFlowContentStyles } from "./styles";
+import { isNavigationClick } from "../../common/dom/is-navigation-click";
 
 @customElement("step-flow-form")
 class StepFlowForm extends LitElement {
@@ -35,13 +37,18 @@ class StepFlowForm extends LitElement {
 
   @state() private _errorMsg?: string;
 
+  public disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener("keydown", this._handleKeyDown);
+  }
+
   protected render(): TemplateResult {
     const step = this.step;
     const stepData = this._stepDataProcessed;
 
     return html`
       <h2>${this.flowConfig.renderShowFormStepHeader(this.hass, this.step)}</h2>
-      <div class="content">
+      <div class="content" @click=${this._clickHandler}>
         ${this.flowConfig.renderShowFormStepDescription(this.hass, this.step)}
         ${this._errorMsg
           ? html`<ha-alert alert-type="error">${this._errorMsg}</ha-alert>`
@@ -51,11 +58,12 @@ class StepFlowForm extends LitElement {
           .data=${stepData}
           .disabled=${this._loading}
           @value-changed=${this._stepDataChanged}
-          .schema=${step.data_schema}
+          .schema=${autocompleteLoginFields(step.data_schema)}
           .error=${step.errors}
           .computeLabel=${this._labelCallback}
           .computeHelper=${this._helperCallback}
           .computeError=${this._errorCallback}
+          .localizeValue=${this._localizeValueCallback}
         ></ha-form>
       </div>
       <div class="buttons">
@@ -68,10 +76,9 @@ class StepFlowForm extends LitElement {
           : html`
               <div>
                 <mwc-button @click=${this._submitStep}>
-                  ${this.hass.localize(
-                    `ui.panel.config.integrations.config_flow.${
-                      this.step.last_step === false ? "next" : "submit"
-                    }`
+                  ${this.flowConfig.renderShowFormStepSubmitButton(
+                    this.hass,
+                    this.step
                   )}
                 </mwc-button>
               </div>
@@ -83,12 +90,22 @@ class StepFlowForm extends LitElement {
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
     setTimeout(() => this.shadowRoot!.querySelector("ha-form")!.focus(), 0);
-    this.addEventListener("keypress", (ev) => {
-      if (ev.keyCode === 13) {
-        this._submitStep();
-      }
-    });
+    this.addEventListener("keydown", this._handleKeyDown);
   }
+
+  private _clickHandler(ev: MouseEvent) {
+    if (isNavigationClick(ev, false)) {
+      fireEvent(this, "flow-update", {
+        step: undefined,
+      });
+    }
+  }
+
+  private _handleKeyDown = (ev: KeyboardEvent) => {
+    if (ev.key === "Enter") {
+      this._submitStep();
+    }
+  };
 
   private get _stepDataProcessed() {
     if (this._stepData !== undefined) {
@@ -167,11 +184,18 @@ class StepFlowForm extends LitElement {
   private _labelCallback = (field: HaFormSchema): string =>
     this.flowConfig.renderShowFormStepFieldLabel(this.hass, this.step, field);
 
-  private _helperCallback = (field: HaFormSchema): string =>
+  private _helperCallback = (field: HaFormSchema): string | TemplateResult =>
     this.flowConfig.renderShowFormStepFieldHelper(this.hass, this.step, field);
 
   private _errorCallback = (error: string) =>
     this.flowConfig.renderShowFormStepFieldError(this.hass, this.step, error);
+
+  private _localizeValueCallback = (key: string) =>
+    this.flowConfig.renderShowFormStepFieldLocalizeValue(
+      this.hass,
+      this.step,
+      key
+    );
 
   static get styles(): CSSResultGroup {
     return [
@@ -192,7 +216,8 @@ class StepFlowForm extends LitElement {
         }
         h2 {
           word-break: break-word;
-          padding-right: 72px;
+          padding-inline-end: 72px;
+          direction: var(--direction);
         }
       `,
     ];

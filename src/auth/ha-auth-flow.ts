@@ -5,27 +5,28 @@ import {
   CSSResultGroup,
   html,
   LitElement,
+  nothing,
   PropertyValues,
-  TemplateResult,
 } from "lit";
-import { property, state } from "lit/decorators";
+import { customElement, property, state } from "lit/decorators";
+import { LocalizeFunc } from "../common/translations/localize";
 import "../components/ha-alert";
 import "../components/ha-checkbox";
 import { computeInitialHaFormData } from "../components/ha-form/compute-initial-ha-form-data";
 import "../components/ha-form/ha-form";
 import "../components/ha-formfield";
 import "../components/ha-markdown";
-import { AuthProvider } from "../data/auth";
+import { AuthProvider, autocompleteLoginFields } from "../data/auth";
 import {
   DataEntryFlowStep,
   DataEntryFlowStepForm,
 } from "../data/data_entry_flow";
-import { litLocalizeLiteMixin } from "../mixins/lit-localize-lite-mixin";
 import "./ha-password-manager-polyfill";
 
 type State = "loading" | "error" | "step";
 
-class HaAuthFlow extends litLocalizeLiteMixin(LitElement) {
+@customElement("ha-auth-flow")
+export class HaAuthFlow extends LitElement {
   @property({ attribute: false }) public authProvider?: AuthProvider;
 
   @property() public clientId?: string;
@@ -33,6 +34,8 @@ class HaAuthFlow extends litLocalizeLiteMixin(LitElement) {
   @property() public redirectUri?: string;
 
   @property() public oauth2State?: string;
+
+  @property() public localize!: LocalizeFunc;
 
   @state() private _state: State = "loading";
 
@@ -102,7 +105,7 @@ class HaAuthFlow extends litLocalizeLiteMixin(LitElement) {
     }
 
     this.addEventListener("keypress", (ev) => {
-      if (ev.keyCode === 13) {
+      if (ev.key === "Enter") {
         this._handleSubmit(ev);
       }
     });
@@ -133,11 +136,11 @@ class HaAuthFlow extends litLocalizeLiteMixin(LitElement) {
     }, 500);
   }
 
-  private _renderForm(): TemplateResult {
+  private _renderForm() {
     switch (this._state) {
       case "step":
         if (this._step == null) {
-          return html``;
+          return nothing;
         }
         return html`
           ${this._renderStep(this._step)}
@@ -175,11 +178,11 @@ class HaAuthFlow extends litLocalizeLiteMixin(LitElement) {
           </ha-alert>
         `;
       default:
-        return html``;
+        return nothing;
     }
   }
 
-  private _renderStep(step: DataEntryFlowStep): TemplateResult {
+  private _renderStep(step: DataEntryFlowStep) {
     switch (step.type) {
       case "abort":
         return html`
@@ -201,10 +204,10 @@ class HaAuthFlow extends litLocalizeLiteMixin(LitElement) {
                   .content=${this._computeStepDescription(step)}
                 ></ha-markdown>
               `
-            : html``}
+            : nothing}
           <ha-form
             .data=${this._stepData}
-            .schema=${step.data_schema}
+            .schema=${autocompleteLoginFields(step.data_schema)}
             .error=${step.errors}
             .disabled=${this._submitting}
             .computeLabel=${this._computeLabelCallback(step)}
@@ -227,7 +230,7 @@ class HaAuthFlow extends litLocalizeLiteMixin(LitElement) {
             : ""}
         `;
       default:
-        return html``;
+        return nothing;
     }
   }
 
@@ -314,7 +317,8 @@ class HaAuthFlow extends litLocalizeLiteMixin(LitElement) {
   }
 
   private _computeStepDescription(step: DataEntryFlowStepForm) {
-    const resourceKey = `ui.panel.page-authorize.form.providers.${step.handler[0]}.step.${step.step_id}.description`;
+    const resourceKey =
+      `ui.panel.page-authorize.form.providers.${step.handler[0]}.step.${step.step_id}.description` as const;
     const args: string[] = [];
     const placeholders = step.description_placeholders || {};
     Object.keys(placeholders).forEach((key) => {
@@ -406,7 +410,6 @@ class HaAuthFlow extends litLocalizeLiteMixin(LitElement) {
     `;
   }
 }
-customElements.define("ha-auth-flow", HaAuthFlow);
 
 declare global {
   interface HTMLElementTagNameMap {

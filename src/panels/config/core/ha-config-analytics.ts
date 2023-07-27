@@ -10,7 +10,6 @@ import {
 import { customElement, property, state } from "lit/decorators";
 import { isComponentLoaded } from "../../../common/config/is_component_loaded";
 import "../../../components/ha-analytics";
-import { analyticsLearnMore } from "../../../components/ha-analytics-learn-more";
 import "../../../components/ha-card";
 import "../../../components/ha-checkbox";
 import "../../../components/ha-settings-row";
@@ -21,6 +20,7 @@ import {
 } from "../../../data/analytics";
 import { haStyle } from "../../../resources/styles";
 import type { HomeAssistant } from "../../../types";
+import { documentationUrl } from "../../../util/documentation-url";
 
 @customElement("ha-config-analytics")
 class ConfigAnalytics extends LitElement {
@@ -38,17 +38,14 @@ class ConfigAnalytics extends LitElement {
       : undefined;
 
     return html`
-      <ha-card header="Analytics">
+      <ha-card outlined>
         <div class="card-content">
           ${error ? html`<div class="error">${error}</div>` : ""}
-          <p>
-            Share anonymized information from your installation to help make
-            Home Assistant better and help us convince manufacturers to add
-            local control and privacy-focused features.
-          </p>
+          <p>${this.hass.localize("ui.panel.config.analytics.intro")}</p>
           <ha-analytics
+            translation_key_panel="config"
             @analytics-preferences-changed=${this._preferencesChanged}
-            .hass=${this.hass}
+            .localize=${this.hass.localize}
             .analytics=${this._analyticsDetails}
           ></ha-analytics>
         </div>
@@ -58,9 +55,17 @@ class ConfigAnalytics extends LitElement {
               "ui.panel.config.core.section.core.core_config.save_button"
             )}
           </mwc-button>
-          ${analyticsLearnMore(this.hass)}
         </div>
       </ha-card>
+      <div class="footer">
+        <a
+          .href=${documentationUrl(this.hass, "/integrations/analytics/")}
+          target="_blank"
+          rel="noreferrer"
+        >
+          ${this.hass.localize("ui.panel.config.analytics.learn_more")}
+        </a>
+      </div>
     `;
   }
 
@@ -110,12 +115,18 @@ class ConfigAnalytics extends LitElement {
         ha-settings-row {
           padding: 0;
         }
-
+        p {
+          margin-top: 0;
+        }
         .card-actions {
           display: flex;
           flex-direction: row-reverse;
           justify-content: space-between;
           align-items: center;
+        }
+        .footer {
+          padding: 32px 0 16px;
+          text-align: center;
         }
       `, // row-reverse so we tab first to "save"
     ];

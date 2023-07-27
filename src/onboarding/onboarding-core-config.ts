@@ -1,30 +1,39 @@
 import "@material/mwc-button/mwc-button";
-import "@polymer/paper-input/paper-input";
-import type { PaperInputElement } from "@polymer/paper-input/paper-input";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import {
+  css,
+  CSSResultGroup,
+  html,
+  LitElement,
+  nothing,
+  TemplateResult,
+} from "lit";
 import { customElement, property, query, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { fireEvent } from "../common/dom/fire_event";
 import type { LocalizeFunc } from "../common/translations/localize";
-import { createCurrencyListEl } from "../components/currency-datalist";
+import "../components/ha-alert";
+import "../components/ha-country-picker";
+import "../components/ha-currency-picker";
+import "../components/ha-formfield";
+import "../components/ha-language-picker";
+import "../components/ha-radio";
+import type { HaRadio } from "../components/ha-radio";
+import "../components/ha-textfield";
+import type { HaTextField } from "../components/ha-textfield";
+import "../components/ha-timezone-picker";
 import "../components/map/ha-locations-editor";
 import type {
   HaLocationsEditor,
   MarkerLocation,
 } from "../components/map/ha-locations-editor";
-import { createTimezoneListEl } from "../components/timezone-datalist";
 import {
   ConfigUpdateValues,
   detectCoreConfig,
   saveCoreConfig,
 } from "../data/core";
-import { SYMBOL_TO_ISO } from "../data/currency";
 import { onboardCoreConfigStep } from "../data/onboarding";
-import type { PolymerChangedEvent } from "../polymer-types";
-import type { HomeAssistant } from "../types";
-import "../components/ha-radio";
-import "../components/ha-formfield";
-import type { HaRadio } from "../components/ha-radio";
+import type { HomeAssistant, ValueChangedEvent } from "../types";
+import { getLocalLanguage } from "../util/common-translation";
 
 // AIS
 const amsterdam: [number, number] = [52.0693, 19.4803];
@@ -49,12 +58,26 @@ class OnboardingCoreConfig extends LitElement {
 
   @state() private _currency?: ConfigUpdateValues["currency"];
 
-  @state() private _timeZone?: string;
+  @state() private _timeZone? =
+    Intl.DateTimeFormat?.().resolvedOptions?.().timeZone;
+
+  @state() private _language: ConfigUpdateValues["language"] =
+    getLocalLanguage();
+
+  @state() private _country?: ConfigUpdateValues["country"];
+
+  @state() private _error?: string;
 
   @query("ha-locations-editor", true) private map!: HaLocationsEditor;
 
   protected render(): TemplateResult {
     return html`
+      ${
+        this._error
+          ? html`<ha-alert alert-type="error">${this._error}</ha-alert>`
+          : nothing
+      }
+
       <p>
         ${this.onboardingLocalize(
           "ui.panel.page-onboarding.core-config.intro",
@@ -63,15 +86,15 @@ class OnboardingCoreConfig extends LitElement {
         )}
       </p>
 
-      <paper-input
+      <ha-textfield
         .label=${this.onboardingLocalize(
           "ui.panel.page-onboarding.core-config.location_name"
         )}
         name="name"
         .disabled=${this._working}
         .value=${this._nameValue}
-        @value-changed=${this._handleChange}
-      ></paper-input>
+        @change=${this._handleChange}
+      ></ha-textfield>
 
       <div class="middle-text">
         <p>
@@ -105,19 +128,52 @@ class OnboardingCoreConfig extends LitElement {
       </div>
 
       <div class="row">
-        <paper-input
+        <ha-country-picker
           class="flex"
+          .language=${this.hass.locale.language}
+          .label=${
+            this.hass.localize(
+              "ui.panel.config.core.section.core.core_config.country"
+            ) || "Country"
+          }
+            name="country"
+            required
+            .disabled=${this._working}
+            .value=${this._countryValue}
+            @value-changed=${this._handleValueChanged}
+        >
+        </ha-country-picker>
+        <ha-language-picker
+          class="flex"
+          .hass=${this.hass}
+          nativeName
           .label=${this.hass.localize(
-            "ui.panel.config.core.section.core.core_config.time_zone"
+            "ui.panel.config.core.section.core.core_config.language"
           )}
-          name="timeZone"
-          list="timezones"
+          name="language"
+          required
+          .value=${this._languageValue}
           .disabled=${this._working}
-          .value=${this._timeZoneValue}
-          @value-changed=${this._handleChange}
-        ></paper-input>
+          @value-changed=${this._handleValueChanged}
+        >
+        </ha-language-picker>
+      </div>
 
-        <paper-input
+      <div class="row">
+      <ha-timezone-picker
+      class="flex"
+
+                .label=${this.hass.localize(
+                  "ui.panel.config.core.section.core.core_config.time_zone"
+                )}
+                name="timeZone"
+                .disabled=${this._working}
+                .value=${this._timeZoneValue}
+                @value-changed=${this._handleValueChanged}
+              >
+              </ha-timezone-picker>
+
+        <ha-textfield
           class="flex"
           .label=${this.hass.localize(
             "ui.panel.config.core.section.core.core_config.elevation"
@@ -126,14 +182,12 @@ class OnboardingCoreConfig extends LitElement {
           type="number"
           .disabled=${this._working}
           .value=${this._elevationValue}
-          @value-changed=${this._handleChange}
+          .suffix=${this.hass.localize(
+            "ui.panel.config.core.section.core.core_config.elevation_meters"
+          )}
+          @change=${this._handleChange}
         >
-          <span slot="suffix">
-            ${this.hass.localize(
-              "ui.panel.config.core.section.core.core_config.elevation_meters"
-            )}
-          </span>
-        </paper-input>
+        </ha-textfield>
       </div>
 
       <div class="row">
@@ -163,18 +217,18 @@ class OnboardingCoreConfig extends LitElement {
           </ha-formfield>
           <ha-formfield
             .label=${html`${this.hass.localize(
-                "ui.panel.config.core.section.core.core_config.unit_system_imperial"
+                "ui.panel.config.core.section.core.core_config.unit_system_us_customary"
               )}
               <div class="secondary">
                 ${this.hass.localize(
-                  "ui.panel.config.core.section.core.core_config.imperial_example"
+                  "ui.panel.config.core.section.core.core_config.us_customary_example"
                 )}
               </div>`}
           >
             <ha-radio
               name="unit_system"
-              value="imperial"
-              .checked=${this._unitSystemValue === "imperial"}
+              value="us_customary"
+              .checked=${this._unitSystemValue === "us_customary"}
               @change=${this._unitSystemChanged}
               .disabled=${this._working}
             ></ha-radio>
@@ -196,18 +250,18 @@ class OnboardingCoreConfig extends LitElement {
                 )}</a
               >
             </div>
-
-            <paper-input
-              class="flex"
-              .label=${this.hass.localize(
-                "ui.panel.config.core.section.core.core_config.currency"
-              )}
-              name="currency"
-              list="currencies"
-              .disabled=${this._working}
-              .value=${this._currencyValue}
-              @value-changed=${this._handleChange}
-            ></paper-input>
+            <ha-currency-picker
+            class="flex"
+                  .label=${this.hass.localize(
+                    "ui.panel.config.core.section.core.core_config.currency"
+                  )}
+                  name="currency"
+                  .disabled=${this._working}
+                  .value=${this._currencyValue}
+                  @value-changed=${this._handleValueChanged}
+                >
+</ha-currency-picker
+                >
           </div>
         </div>
 
@@ -224,23 +278,14 @@ class OnboardingCoreConfig extends LitElement {
   protected firstUpdated(changedProps) {
     super.firstUpdated(changedProps);
     setTimeout(
-      () => this.shadowRoot!.querySelector("paper-input")!.focus(),
+      () => this.renderRoot.querySelector("ha-textfield")!.focus(),
       100
     );
     this.addEventListener("keypress", (ev) => {
-      if (ev.keyCode === 13) {
+      if (ev.key === "Enter") {
         this._save(ev);
       }
     });
-    const tzInput = this.shadowRoot!.querySelector(
-      "[name=timeZone]"
-    ) as PaperInputElement;
-    tzInput.inputElement.appendChild(createTimezoneListEl());
-
-    const cInput = this.shadowRoot!.querySelector(
-      "[name=currency]"
-    ) as PaperInputElement;
-    cInput.inputElement.appendChild(createCurrencyListEl());
   }
 
   private get _nameValue() {
@@ -260,7 +305,15 @@ class OnboardingCoreConfig extends LitElement {
   }
 
   private get _timeZoneValue() {
-    return this._timeZone;
+    return this._timeZone || "";
+  }
+
+  private get _languageValue() {
+    return this._language || "";
+  }
+
+  private get _countryValue() {
+    return this._country || "";
   }
 
   private get _unitSystemValue() {
@@ -282,18 +335,14 @@ class OnboardingCoreConfig extends LitElement {
     ]
   );
 
-  private _handleChange(ev: PolymerChangedEvent<string>) {
-    const target = ev.currentTarget as PaperInputElement;
+  private _handleValueChanged(ev: ValueChangedEvent<string>) {
+    const target = ev.currentTarget as HTMLElement;
+    this[`_${target.getAttribute("name")}`] = ev.detail.value;
+  }
 
-    let value = target.value;
-
-    if (target.name === "currency" && value) {
-      if (value in SYMBOL_TO_ISO) {
-        value = SYMBOL_TO_ISO[value];
-      }
-    }
-
-    this[`_${target.name}`] = value;
+  private _handleChange(ev: Event) {
+    const target = ev.currentTarget as HaTextField;
+    this[`_${target.name}`] = target.value;
   }
 
   private _locationChanged(ev) {
@@ -301,7 +350,9 @@ class OnboardingCoreConfig extends LitElement {
   }
 
   private _unitSystemChanged(ev: CustomEvent) {
-    this._unitSystem = (ev.target as HaRadio).value as "metric" | "imperial";
+    this._unitSystem = (ev.target as HaRadio).value as
+      | "metric"
+      | "us_customary";
   }
 
   private async _detect() {
@@ -333,8 +384,12 @@ class OnboardingCoreConfig extends LitElement {
       if (values.currency) {
         this._currency = values.currency;
       }
+      if (values.country) {
+        this._country = values.country;
+      }
+      this._language = getLocalLanguage();
     } catch (err: any) {
-      alert(`Failed to detect location information: ${err.message}`);
+      this._error = `Failed to detect location information: ${err.message}`;
     } finally {
       this._working = false;
     }
@@ -353,6 +408,8 @@ class OnboardingCoreConfig extends LitElement {
         unit_system: this._unitSystemValue,
         time_zone: this._timeZoneValue || "UTC",
         currency: this._currencyValue || "EUR",
+        country: this._countryValue,
+        language: this._languageValue,
       });
       const result = await onboardCoreConfigStep(this.hass);
       fireEvent(this, "onboarding-step", {
@@ -361,7 +418,7 @@ class OnboardingCoreConfig extends LitElement {
       });
     } catch (err: any) {
       this._working = false;
-      alert(`Failed to save: ${err.message}`);
+      this._error = err.message;
     }
   }
 
@@ -372,10 +429,19 @@ class OnboardingCoreConfig extends LitElement {
         flex-direction: row;
         margin: 0 -8px;
         align-items: center;
+        --ha-select-min-width: 100px;
       }
 
       .secondary {
         color: var(--secondary-text-color);
+      }
+
+      ha-textfield {
+        display: block;
+      }
+
+      ha-locations-editor {
+        height: 200px;
       }
 
       .flex {
@@ -383,7 +449,11 @@ class OnboardingCoreConfig extends LitElement {
       }
 
       .middle-text {
-        margin: 24px 0;
+        margin: 16px 0;
+      }
+
+      .row {
+        margin-top: 16px;
       }
 
       .row > * {

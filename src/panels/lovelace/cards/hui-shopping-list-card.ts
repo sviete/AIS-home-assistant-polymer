@@ -6,32 +6,35 @@ import {
   html,
   LitElement,
   PropertyValues,
-  TemplateResult,
+  nothing,
 } from "lit";
-import { customElement, property, state, query } from "lit/decorators";
+import { customElement, property, query, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
 import { guard } from "lit/directives/guard";
 import { repeat } from "lit/directives/repeat";
 import { applyThemesOnElement } from "../../../common/dom/apply_themes_on_element";
 import "../../../components/ha-card";
-import "../../../components/ha-svg-icon";
 import "../../../components/ha-checkbox";
+import "../../../components/ha-svg-icon";
 import "../../../components/ha-textfield";
+import type { HaTextField } from "../../../components/ha-textfield";
 import {
   addItem,
   clearItems,
   fetchItems,
+  removeItem,
   reorderItems,
   ShoppingListItem,
   updateItem,
 } from "../../../data/shopping-list";
 import { SubscribeMixin } from "../../../mixins/subscribe-mixin";
+import {
+  loadSortable,
+  SortableInstance,
+} from "../../../resources/sortable.ondemand";
 import { HomeAssistant } from "../../../types";
 import { LovelaceCard, LovelaceCardEditor } from "../types";
 import { SensorCardConfig, ShoppingListCardConfig } from "./types";
-import type { HaTextField } from "../../../components/ha-textfield";
-
-let Sortable;
 
 @customElement("hui-shopping-list-card")
 class HuiShoppingListCard
@@ -59,7 +62,7 @@ class HuiShoppingListCard
 
   @state() private _renderEmptySortable = false;
 
-  private _sortable?;
+  private _sortable?: SortableInstance;
 
   @query("#sortable") private _sortableEl?: HTMLElement;
 
@@ -102,9 +105,9 @@ class HuiShoppingListCard
     }
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this._config || !this.hass) {
-      return html``;
+      return nothing;
     }
 
     return html`
@@ -262,9 +265,14 @@ class HuiShoppingListCard
   }
 
   private _saveEdit(ev): void {
-    updateItem(this.hass!, ev.target.itemId, {
-      name: ev.target.value,
-    }).catch(() => this._fetchData());
+    // If name is not empty, update the item otherwise remove it
+    if (ev.target.value) {
+      updateItem(this.hass!, ev.target.itemId, {
+        name: ev.target.value,
+      }).catch(() => this._fetchData());
+    } else {
+      removeItem(this.hass!, ev.target.itemId).catch(() => this._fetchData());
+    }
 
     ev.target.blur();
   }
@@ -293,18 +301,12 @@ class HuiShoppingListCard
   }
 
   private _addKeyPress(ev): void {
-    if (ev.keyCode === 13) {
+    if (ev.key === "Enter") {
       this._addItem(null);
     }
   }
 
   private async _toggleReorder() {
-    if (!Sortable) {
-      const sortableImport = await import(
-        "sortablejs/modular/sortable.core.esm"
-      );
-      Sortable = sortableImport.Sortable;
-    }
     this._reordering = !this._reordering;
     await this.updateComplete;
     if (this._reordering) {
@@ -315,18 +317,22 @@ class HuiShoppingListCard
     }
   }
 
-  private _createSortable() {
+  private async _createSortable() {
+    const Sortable = await loadSortable();
     const sortableEl = this._sortableEl;
-    this._sortable = new Sortable(sortableEl, {
+    this._sortable = new Sortable(sortableEl!, {
       animation: 150,
       fallbackClass: "sortable-fallback",
       dataIdAttr: "item-id",
       handle: "ha-svg-icon",
       onEnd: async (evt) => {
+        if (evt.newIndex === undefined || evt.oldIndex === undefined) {
+          return;
+        }
         // Since this is `onEnd` event, it's possible that
         // an item wa dragged away and was put back to its original position.
         if (evt.oldIndex !== evt.newIndex) {
-          reorderItems(this.hass!, this._sortable.toArray()).catch(() =>
+          reorderItems(this.hass!, this._sortable!.toArray()).catch(() =>
             this._fetchData()
           );
           // Move the shopping list item in memory.
@@ -372,16 +378,22 @@ class HuiShoppingListCard
 
       .addButton {
         padding-right: 16px;
+        padding-inline-end: 16px;
         cursor: pointer;
+        direction: var(--direction);
       }
 
       .reorderButton {
         padding-left: 16px;
+        padding-inline-start: 16px;
         cursor: pointer;
+        direction: var(--direction);
       }
 
       ha-checkbox {
         margin-left: -12px;
+        margin-inline-start: -12px;
+        direction: var(--direction);
       }
 
       ha-textfield {

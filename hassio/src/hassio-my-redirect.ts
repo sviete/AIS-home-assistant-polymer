@@ -1,5 +1,5 @@
 import { sanitizeUrl } from "@braintree/sanitize-url";
-import { html, LitElement, TemplateResult } from "lit";
+import { html, LitElement, TemplateResult, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { navigate } from "../../src/common/navigate";
 import {
@@ -15,7 +15,7 @@ import {
 } from "../../src/panels/my/ha-panel-my";
 import { HomeAssistant, Route } from "../../src/types";
 
-const REDIRECTS: Redirects = {
+export const REDIRECTS: Redirects = {
   supervisor: {
     redirect: "/hassio/dashboard",
   },
@@ -41,6 +41,9 @@ const REDIRECTS: Redirects = {
     redirect: "/hassio/addon",
     params: {
       addon: "string",
+    },
+    optional_params: {
+      repository_url: "url",
     },
   },
   supervisor_ingress: {
@@ -98,13 +101,13 @@ class HassioMyRedirect extends LitElement {
     navigate(url, { replace: true });
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (this._error) {
       return html`<hass-error-screen
         .error=${this._error}
       ></hass-error-screen>`;
     }
-    return html``;
+    return nothing;
   }
 
   private _createRedirectUrl(redirect: Redirect): string {
@@ -123,6 +126,14 @@ class HassioMyRedirect extends LitElement {
         throw Error();
       }
       resultParams[key] = params[key];
+    });
+    Object.entries(redirect.optional_params || {}).forEach(([key, type]) => {
+      if (params[key]) {
+        if (!this._checkParamType(type, params[key])) {
+          throw Error();
+        }
+        resultParams[key] = params[key];
+      }
     });
     return `?${createSearchParam(resultParams)}`;
   }

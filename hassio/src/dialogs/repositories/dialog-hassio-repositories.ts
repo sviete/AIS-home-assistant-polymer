@@ -1,11 +1,11 @@
-import "@polymer/paper-tooltip/paper-tooltip";
 import "@material/mwc-button/mwc-button";
 import { mdiDelete, mdiDeleteOff } from "@mdi/js";
 import "@polymer/paper-input/paper-input";
 import type { PaperInputElement } from "@polymer/paper-input/paper-input";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import "@lrnwebcomponents/simple-tooltip/simple-tooltip";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, query, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { fireEvent } from "../../../../src/common/dom/fire_event";
@@ -15,12 +15,15 @@ import "../../../../src/components/ha-circular-progress";
 import { createCloseHeading } from "../../../../src/components/ha-dialog";
 import "../../../../src/components/ha-icon-button";
 import {
-  fetchHassioAddonsInfo,
   HassioAddonInfo,
   HassioAddonRepository,
 } from "../../../../src/data/hassio/addon";
 import { extractApiErrorMessage } from "../../../../src/data/hassio/common";
-import { setSupervisorOption } from "../../../../src/data/hassio/supervisor";
+import {
+  addStoreRepository,
+  fetchStoreRepositories,
+  removeStoreRepository,
+} from "../../../../src/data/supervisor/store";
 import { haStyle, haStyleDialog } from "../../../../src/resources/styles";
 import type { HomeAssistant } from "../../../../src/types";
 import { HassioRepositoryDialogParams } from "./show-dialog-repositories";
@@ -58,8 +61,16 @@ class HassioRepositoriesDialog extends LitElement {
 
   private _filteredRepositories = memoizeOne((repos: HassioAddonRepository[]) =>
     repos
-      .filter((repo) => repo.slug !== "core" && repo.slug !== "local")
-      .sort((a, b) => caseInsensitiveStringCompare(a.name, b.name))
+      .filter(
+        (repo) =>
+          repo.slug !== "core" && // The core add-ons repository
+          repo.slug !== "local" && // Locally managed add-ons
+          repo.slug !== "a0d7b954" && // Home Assistant Community Add-ons
+          repo.slug !== "5c53de3b" // The ESPHome repository
+      )
+      .sort((a, b) =>
+        caseInsensitiveStringCompare(a.name, b.name, this.hass.locale.language)
+      )
   );
 
   private _filteredUsedRepositories = memoizeOne(
@@ -71,14 +82,14 @@ class HassioRepositoriesDialog extends LitElement {
         .map((repo) => repo.slug)
   );
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this._dialogParams?.supervisor || this._repositories === undefined) {
-      return html``;
+      return nothing;
     }
     const repositories = this._filteredRepositories(this._repositories);
     const usedRepositories = this._filteredUsedRepositories(
       repositories,
-      this._dialogParams.supervisor.supervisor.addons
+      this._dialogParams.supervisor.addon.addons
     );
     return html`
       <ha-dialog
@@ -117,7 +128,7 @@ class HassioRepositoriesDialog extends LitElement {
                         @click=${this._removeRepository}
                       >
                       </ha-icon-button>
-                      <paper-tooltip
+                      <simple-tooltip
                         animation-delay="0"
                         position="bottom"
                         offset="1"
@@ -127,7 +138,7 @@ class HassioRepositoriesDialog extends LitElement {
                             ? "dialog.repositories.used"
                             : "dialog.repositories.remove"
                         )}
-                      </paper-tooltip>
+                      </simple-tooltip>
                     </div>
                   </paper-item>
                 `
@@ -207,7 +218,7 @@ class HassioRepositoriesDialog extends LitElement {
 
   private _handleKeyAdd(ev: KeyboardEvent) {
     ev.stopPropagation();
-    if (ev.keyCode !== 13) {
+    if (ev.key !== "Enter") {
       return;
     }
     this._addRepository();
@@ -215,9 +226,7 @@ class HassioRepositoriesDialog extends LitElement {
 
   private async _loadData(): Promise<void> {
     try {
-      const addonsinfo = await fetchHassioAddonsInfo(this.hass);
-
-      this._repositories = addonsinfo.repositories;
+      this._repositories = await fetchStoreRepositories(this.hass);
 
       fireEvent(this, "supervisor-collection-refresh", { collection: "addon" });
     } catch (err: any) {
@@ -231,14 +240,9 @@ class HassioRepositoriesDialog extends LitElement {
       return;
     }
     this._processing = true;
-    const repositories = this._filteredRepositories(this._repositories!);
-    const newRepositories = repositories.map((repo) => repo.source);
-    newRepositories.push(input.value);
 
     try {
-      await setSupervisorOption(this.hass, {
-        addons_repositories: newRepositories,
-      });
+      await addStoreRepository(this.hass, input.value);
       await this._loadData();
 
       input.value = "";
@@ -250,19 +254,8 @@ class HassioRepositoriesDialog extends LitElement {
 
   private async _removeRepository(ev: Event) {
     const slug = (ev.currentTarget as any).slug;
-    const repositories = this._filteredRepositories(this._repositories!);
-    const repository = repositories.find((repo) => repo.slug === slug);
-    if (!repository) {
-      return;
-    }
-    const newRepositories = repositories
-      .map((repo) => repo.source)
-      .filter((repo) => repo !== repository.source);
-
     try {
-      await setSupervisorOption(this.hass, {
-        addons_repositories: newRepositories,
-      });
+      await removeStoreRepository(this.hass, slug);
       await this._loadData();
     } catch (err: any) {
       this._error = extractApiErrorMessage(err);

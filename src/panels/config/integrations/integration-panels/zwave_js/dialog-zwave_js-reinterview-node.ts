@@ -1,7 +1,7 @@
 import "@material/mwc-button/mwc-button";
 import { mdiCheckCircle, mdiCloseCircle } from "@mdi/js";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { fireEvent } from "../../../../../common/dom/fire_event";
 import "../../../../../components/ha-circular-progress";
@@ -15,9 +15,7 @@ import { ZWaveJSReinterviewNodeDialogParams } from "./show-dialog-zwave_js-reint
 class DialogZWaveJSReinterviewNode extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @state() private entry_id?: string;
-
-  @state() private node_id?: number;
+  @state() private device_id?: string;
 
   @state() private _status?: string;
 
@@ -29,13 +27,12 @@ class DialogZWaveJSReinterviewNode extends LitElement {
     params: ZWaveJSReinterviewNodeDialogParams
   ): Promise<void> {
     this._stages = undefined;
-    this.entry_id = params.entry_id;
-    this.node_id = params.node_id;
+    this.device_id = params.device_id;
   }
 
-  protected render(): TemplateResult {
-    if (!this.entry_id) {
-      return html``;
+  protected render() {
+    if (!this.device_id) {
+      return nothing;
     }
 
     return html`
@@ -88,7 +85,7 @@ class DialogZWaveJSReinterviewNode extends LitElement {
                 </div>
               </div>
               <mwc-button slot="primaryAction" @click=${this.closeDialog}>
-                ${this.hass.localize("ui.panel.config.zwave_js.common.close")}
+                ${this.hass.localize("ui.common.close")}
               </mwc-button>
             `
           : ``}
@@ -108,7 +105,7 @@ class DialogZWaveJSReinterviewNode extends LitElement {
                 </div>
               </div>
               <mwc-button slot="primaryAction" @click=${this.closeDialog}>
-                ${this.hass.localize("ui.panel.config.zwave_js.common.close")}
+                ${this.hass.localize("ui.common.close")}
               </mwc-button>
             `
           : ``}
@@ -128,7 +125,7 @@ class DialogZWaveJSReinterviewNode extends LitElement {
                 </div>
               </div>
               <mwc-button slot="primaryAction" @click=${this.closeDialog}>
-                ${this.hass.localize("ui.panel.config.zwave_js.common.close")}
+                ${this.hass.localize("ui.common.close")}
               </mwc-button>
             `
           : ``}
@@ -159,8 +156,7 @@ class DialogZWaveJSReinterviewNode extends LitElement {
     }
     this._subscribed = reinterviewZwaveNode(
       this.hass,
-      this.entry_id!,
-      this.node_id!,
+      this.device_id!,
       this._handleMessage.bind(this)
     );
   }
@@ -194,8 +190,7 @@ class DialogZWaveJSReinterviewNode extends LitElement {
   }
 
   public closeDialog(): void {
-    this.entry_id = undefined;
-    this.node_id = undefined;
+    this.device_id = undefined;
     this._status = undefined;
     this._stages = undefined;
 

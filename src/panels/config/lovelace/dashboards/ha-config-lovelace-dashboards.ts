@@ -1,11 +1,12 @@
 import {
   mdiCheck,
   mdiCheckCircleOutline,
+  mdiDotsVertical,
   mdiOpenInNew,
   mdiPlus,
 } from "@mdi/js";
-import "@polymer/paper-tooltip/paper-tooltip";
-import { html, LitElement, PropertyValues, TemplateResult } from "lit";
+import "@lrnwebcomponents/simple-tooltip/simple-tooltip";
+import { html, LitElement, nothing, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { ifDefined } from "lit/directives/if-defined";
 import memoize from "memoize-one";
@@ -16,6 +17,7 @@ import {
   DataTableColumnContainer,
   RowClickedEvent,
 } from "../../../../components/data-table/ha-data-table";
+import "../../../../components/ha-clickable-list-item";
 import "../../../../components/ha-fab";
 import "../../../../components/ha-icon";
 import "../../../../components/ha-icon-button";
@@ -70,12 +72,13 @@ export class HaConfigLovelaceDashboards extends LitElement {
                     )}
                   ></ha-icon>
                 `
-              : html``,
+              : nothing,
         },
         title: {
           title: this.hass.localize(
             "ui.panel.config.lovelace.dashboards.picker.headers.title"
           ),
+          main: true,
           sortable: true,
           filterable: true,
           grows: true,
@@ -85,14 +88,14 @@ export class HaConfigLovelaceDashboards extends LitElement {
               ${dashboard.default
                 ? html`
                     <ha-svg-icon
-                      style="padding-left: 10px;"
+                      style="padding-left: 10px; padding-inline-start: 10px; direction: var(--direction);"
                       .path=${mdiCheckCircleOutline}
                     ></ha-svg-icon>
-                    <paper-tooltip animation-delay="0">
+                    <simple-tooltip animation-delay="0">
                       ${this.hass.localize(
                         `ui.panel.config.lovelace.dashboards.default_dashboard`
                       )}
-                    </paper-tooltip>
+                    </simple-tooltip>
                   `
                 : ""}
             `;
@@ -216,7 +219,7 @@ export class HaConfigLovelaceDashboards extends LitElement {
     if (isComponentLoaded(this.hass, "energy")) {
       result.push({
         icon: "hass:lightning-bolt",
-        title: this.hass.localize(`ui.panel.config.dashboard.energy.title`),
+        title: this.hass.localize(`ui.panel.config.dashboard.energy.main`),
         show_in_sidebar: true,
         mode: "storage",
         url_path: "energy",
@@ -227,7 +230,9 @@ export class HaConfigLovelaceDashboards extends LitElement {
 
     result.push(
       ...dashboards
-        .sort((a, b) => stringCompare(a.title, b.title))
+        .sort((a, b) =>
+          stringCompare(a.title, b.title, this.hass.locale.language)
+        )
         .map((dashboard) => ({
           filename: "",
           ...dashboard,
@@ -237,7 +242,7 @@ export class HaConfigLovelaceDashboards extends LitElement {
     return result;
   });
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || this._dashboards === undefined) {
       return html` <hass-loading-screen></hass-loading-screen> `;
     }
@@ -260,6 +265,22 @@ export class HaConfigLovelaceDashboards extends LitElement {
         hasFab
         clickable
       >
+        ${this.hass.userData?.showAdvanced
+          ? html`
+              <ha-button-menu slot="toolbar-icon" activatable>
+                <ha-icon-button
+                  slot="trigger"
+                  .label=${this.hass.localize("ui.common.menu")}
+                  .path=${mdiDotsVertical}
+                ></ha-icon-button>
+                <ha-clickable-list-item href="/config/lovelace/resources">
+                  ${this.hass.localize(
+                    "ui.panel.config.lovelace.resources.caption"
+                  )}
+                </ha-clickable-list-item>
+              </ha-button-menu>
+            `
+          : ""}
         <ha-fab
           slot="fab"
           .label=${this.hass.localize(
@@ -313,7 +334,12 @@ export class HaConfigLovelaceDashboards extends LitElement {
       createDashboard: async (values: LovelaceDashboardCreateParams) => {
         const created = await createDashboard(this.hass!, values);
         this._dashboards = this._dashboards!.concat(created).sort(
-          (res1, res2) => stringCompare(res1.url_path, res2.url_path)
+          (res1, res2) =>
+            stringCompare(
+              res1.url_path,
+              res2.url_path,
+              this.hass.locale.language
+            )
         );
       },
       updateDashboard: async (values) => {
@@ -337,6 +363,7 @@ export class HaConfigLovelaceDashboards extends LitElement {
               "ui.panel.config.lovelace.dashboards.confirm_delete_text"
             ),
             confirmText: this.hass!.localize("ui.common.delete"),
+            destructive: true,
           }))
         ) {
           return false;

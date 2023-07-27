@@ -6,7 +6,10 @@ export const computeInitialHaFormData = (
 ): Record<string, any> => {
   const data = {};
   schema.forEach((field) => {
-    if (field.description?.suggested_value) {
+    if (
+      field.description?.suggested_value !== undefined &&
+      field.description?.suggested_value !== null
+    ) {
       data[field.name] = field.description.suggested_value;
     } else if ("default" in field) {
       data[field.name] = field.default;
@@ -36,25 +39,26 @@ export const computeInitialHaFormData = (
       const selector: Selector = field.selector;
 
       if ("device" in selector) {
-        data[field.name] = selector.device.multiple ? [] : "";
+        data[field.name] = selector.device?.multiple ? [] : "";
       } else if ("entity" in selector) {
-        data[field.name] = selector.entity.multiple ? [] : "";
+        data[field.name] = selector.entity?.multiple ? [] : "";
       } else if ("area" in selector) {
-        data[field.name] = selector.area.multiple ? [] : "";
+        data[field.name] = selector.area?.multiple ? [] : "";
       } else if ("boolean" in selector) {
         data[field.name] = false;
       } else if (
         "text" in selector ||
         "addon" in selector ||
         "attribute" in selector ||
+        "file" in selector ||
         "icon" in selector ||
         "theme" in selector
       ) {
         data[field.name] = "";
       } else if ("number" in selector) {
-        data[field.name] = selector.number.min ?? 0;
+        data[field.name] = selector.number?.min ?? 0;
       } else if ("select" in selector) {
-        if (selector.select.options.length) {
+        if (selector.select?.options.length) {
           data[field.name] = selector.select.options[0][0];
         }
       } else if ("duration" in selector) {
@@ -67,11 +71,11 @@ export const computeInitialHaFormData = (
         data[field.name] = "00:00:00";
       } else if ("date" in selector || "datetime" in selector) {
         const now = new Date().toISOString().slice(0, 10);
-        data[field.name] = `${now} 00:00:00`;
+        data[field.name] = `${now}T00:00:00`;
       } else if ("color_rgb" in selector) {
         data[field.name] = [0, 0, 0];
       } else if ("color_temp" in selector) {
-        data[field.name] = selector.color_temp.min_mireds ?? 153;
+        data[field.name] = selector.color_temp?.min_mireds ?? 153;
       } else if (
         "action" in selector ||
         "media" in selector ||

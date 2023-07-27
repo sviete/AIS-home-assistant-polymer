@@ -1,5 +1,4 @@
-import "../../../../components/ha-form/ha-form";
-import { html, LitElement, TemplateResult } from "lit";
+import { html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import {
   array,
@@ -12,11 +11,14 @@ import {
 } from "superstruct";
 import { fireEvent } from "../../../../common/dom/fire_event";
 import "../../../../components/entity/ha-entities-picker";
-import type { HaFormSchema } from "../../../../components/ha-form/types";
+import "../../../../components/ha-form/ha-form";
+import type { SchemaUnion } from "../../../../components/ha-form/types";
+import { filterLogbookCompatibleEntities } from "../../../../data/logbook";
 import type { HomeAssistant } from "../../../../types";
 import type { LogbookCardConfig } from "../../cards/types";
 import type { LovelaceCardEditor } from "../../types";
 import { baseLovelaceCardConfig } from "../structs/base-card-struct";
+import { DEFAULT_HOURS_TO_SHOW } from "../../cards/hui-logbook-card";
 
 const cardConfigStruct = assign(
   baseLovelaceCardConfig,
@@ -28,17 +30,21 @@ const cardConfigStruct = assign(
   })
 );
 
-const SCHEMA: HaFormSchema[] = [
+const SCHEMA = [
   { name: "title", selector: { text: {} } },
   {
     name: "",
     type: "grid",
     schema: [
       { name: "theme", selector: { theme: {} } },
-      { name: "hours_to_show", selector: { number: { mode: "box", min: 1 } } },
+      {
+        name: "hours_to_show",
+        default: DEFAULT_HOURS_TO_SHOW,
+        selector: { number: { mode: "box", min: 1 } },
+      },
     ],
   },
-];
+] as const;
 
 @customElement("hui-logbook-card-editor")
 export class HuiLogbookCardEditor
@@ -58,9 +64,9 @@ export class HuiLogbookCardEditor
     return this._config!.entities || [];
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
     return html`
@@ -81,6 +87,7 @@ export class HuiLogbookCardEditor
       <ha-entities-picker
         .hass=${this.hass}
         .value=${this._entities}
+        .entityFilter=${filterLogbookCompatibleEntities}
         @value-changed=${this._entitiesChanged}
       >
       </ha-entities-picker>
@@ -96,23 +103,19 @@ export class HuiLogbookCardEditor
     fireEvent(this, "config-changed", { config: ev.detail.value });
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema) => {
-    if (schema.name === "theme") {
-      return `${this.hass!.localize(
-        "ui.panel.lovelace.editor.card.generic.theme"
-      )} (${this.hass!.localize(
-        "ui.panel.lovelace.editor.card.config.optional"
-      )})`;
+  private _computeLabelCallback = (schema: SchemaUnion<typeof SCHEMA>) => {
+    switch (schema.name) {
+      case "theme":
+        return `${this.hass!.localize(
+          "ui.panel.lovelace.editor.card.generic.theme"
+        )} (${this.hass!.localize(
+          "ui.panel.lovelace.editor.card.config.optional"
+        )})`;
+      default:
+        return this.hass!.localize(
+          `ui.panel.lovelace.editor.card.generic.${schema.name}`
+        );
     }
-
-    return (
-      this.hass!.localize(
-        `ui.panel.lovelace.editor.card.generic.${schema.name}`
-      ) ||
-      this.hass!.localize(
-        `ui.panel.lovelace.editor.card.logbook.${schema.name}`
-      )
-    );
   };
 }
 

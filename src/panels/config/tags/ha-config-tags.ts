@@ -9,7 +9,6 @@ import { html, LitElement, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { DataTableColumnContainer } from "../../../components/data-table/ha-data-table";
-import "../../../components/ha-card";
 import "../../../components/ha-fab";
 import "../../../components/ha-icon-button";
 import "../../../components/ha-relative-time";
@@ -67,6 +66,7 @@ export class HaConfigTags extends SubscribeMixin(LitElement) {
         },
         display_name: {
           title: this.hass.localize("ui.panel.config.tag.headers.name"),
+          main: true,
           sortable: true,
           filterable: true,
           grows: true,

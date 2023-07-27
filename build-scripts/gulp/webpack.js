@@ -1,19 +1,20 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 // Tasks to run webpack.
-const fs = require("fs");
-const gulp = require("gulp");
-const webpack = require("webpack");
-const WebpackDevServer = require("webpack-dev-server");
-const log = require("fancy-log");
-const path = require("path");
-const paths = require("../paths");
-const {
+
+import log from "fancy-log";
+import fs from "fs";
+import gulp from "gulp";
+import path from "path";
+import webpack from "webpack";
+import WebpackDevServer from "webpack-dev-server";
+import env from "../env.cjs";
+import paths from "../paths.cjs";
+import {
   createAppConfig,
-  createDemoConfig,
   createCastConfig,
-  createHassioConfig,
+  createDemoConfig,
   createGalleryConfig,
-} = require("../webpack");
+  createHassioConfig,
+} from "../webpack.cjs";
 
 const bothBuilds = (createConfigFunc, params) => [
   createConfigFunc({ ...params, latestBuild: true }),
@@ -69,7 +70,6 @@ const doneHandler = (done) => (err, stats) => {
   }
 
   if (stats.hasErrors() || stats.hasWarnings()) {
-    // eslint-disable-next-line no-console
     console.log(stats.toString("minimal"));
   }
 
@@ -106,6 +106,8 @@ gulp.task("webpack-prod-app", () =>
   prodBuild(
     bothBuilds(createAppConfig, {
       isProdBuild: true,
+      isStatsBuild: env.isStatsBuild(),
+      isTestBuild: env.isTestBuild(),
     })
   )
 );
@@ -163,6 +165,8 @@ gulp.task("webpack-prod-hassio", () =>
   prodBuild(
     bothBuilds(createHassioConfig, {
       isProdBuild: true,
+      isStatsBuild: env.isStatsBuild(),
+      isTestBuild: env.isTestBuild(),
     })
   )
 );

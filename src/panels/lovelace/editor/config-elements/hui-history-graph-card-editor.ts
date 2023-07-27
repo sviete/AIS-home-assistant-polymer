@@ -1,25 +1,27 @@
-import "../../../../components/ha-form/ha-form";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import {
   array,
   assert,
+  assign,
+  boolean,
   number,
   object,
   optional,
   string,
-  assign,
 } from "superstruct";
 import { fireEvent } from "../../../../common/dom/fire_event";
+import "../../../../components/ha-form/ha-form";
+import type { SchemaUnion } from "../../../../components/ha-form/types";
 import type { HomeAssistant } from "../../../../types";
 import type { HistoryGraphCardConfig } from "../../cards/types";
 import "../../components/hui-entity-editor";
 import type { EntityConfig } from "../../entity-rows/types";
 import type { LovelaceCardEditor } from "../../types";
 import { processEditorEntities } from "../process-editor-entities";
-import { entitiesConfigStruct } from "../structs/entities-struct";
 import { baseLovelaceCardConfig } from "../structs/base-card-struct";
-import type { HaFormSchema } from "../../../../components/ha-form/types";
+import { entitiesConfigStruct } from "../structs/entities-struct";
+import { DEFAULT_HOURS_TO_SHOW } from "../../cards/hui-history-graph-card";
 
 const cardConfigStruct = assign(
   baseLovelaceCardConfig,
@@ -27,24 +29,25 @@ const cardConfigStruct = assign(
     entities: array(entitiesConfigStruct),
     title: optional(string()),
     hours_to_show: optional(number()),
-    refresh_interval: optional(number()),
+    refresh_interval: optional(number()), // deprecated
+    show_names: optional(boolean()),
   })
 );
 
-const SCHEMA: HaFormSchema[] = [
+const SCHEMA = [
   { name: "title", selector: { text: {} } },
   {
     name: "",
     type: "grid",
     schema: [
-      { name: "hours_to_show", selector: { number: { min: 1, mode: "box" } } },
       {
-        name: "refresh_interval",
+        name: "hours_to_show",
+        default: DEFAULT_HOURS_TO_SHOW,
         selector: { number: { min: 1, mode: "box" } },
       },
     ],
   },
-];
+] as const;
 
 @customElement("hui-history-graph-card-editor")
 export class HuiHistoryGraphCardEditor
@@ -63,9 +66,9 @@ export class HuiHistoryGraphCardEditor
     this._configEntities = processEditorEntities(config.entities);
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
     return html`
@@ -97,7 +100,7 @@ export class HuiHistoryGraphCardEditor
     fireEvent(this, "config-changed", { config });
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema) =>
+  private _computeLabelCallback = (schema: SchemaUnion<typeof SCHEMA>) =>
     this.hass!.localize(`ui.panel.lovelace.editor.card.generic.${schema.name}`);
 
   static styles: CSSResultGroup = css`

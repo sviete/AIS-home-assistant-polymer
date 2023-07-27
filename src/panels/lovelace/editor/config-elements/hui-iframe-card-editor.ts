@@ -1,9 +1,9 @@
-import "../../../../components/ha-form/ha-form";
-import { html, LitElement, TemplateResult } from "lit";
+import { html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
-import { assert, assign, object, optional, string } from "superstruct";
+import { assert, assign, boolean, object, optional, string } from "superstruct";
 import { fireEvent } from "../../../../common/dom/fire_event";
-import type { HaFormSchema } from "../../../../components/ha-form/types";
+import "../../../../components/ha-form/ha-form";
+import type { SchemaUnion } from "../../../../components/ha-form/types";
 import type { HomeAssistant } from "../../../../types";
 import type { IframeCardConfig } from "../../cards/types";
 import type { LovelaceCardEditor } from "../../types";
@@ -15,10 +15,11 @@ const cardConfigStruct = assign(
     title: optional(string()),
     url: optional(string()),
     aspect_ratio: optional(string()),
+    allow_open_top_navigation: optional(boolean()),
   })
 );
 
-const SCHEMA: HaFormSchema[] = [
+const SCHEMA = [
   { name: "title", selector: { text: {} } },
   {
     name: "",
@@ -28,7 +29,7 @@ const SCHEMA: HaFormSchema[] = [
       { name: "aspect_ratio", selector: { text: {} } },
     ],
   },
-];
+] as const;
 
 @customElement("hui-iframe-card-editor")
 export class HuiIframeCardEditor
@@ -44,9 +45,9 @@ export class HuiIframeCardEditor
     this._config = config;
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
     return html`
@@ -64,7 +65,7 @@ export class HuiIframeCardEditor
     fireEvent(this, "config-changed", { config: ev.detail.value });
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema) =>
+  private _computeLabelCallback = (schema: SchemaUnion<typeof SCHEMA>) =>
     this.hass!.localize(`ui.panel.lovelace.editor.card.generic.${schema.name}`);
 }
 

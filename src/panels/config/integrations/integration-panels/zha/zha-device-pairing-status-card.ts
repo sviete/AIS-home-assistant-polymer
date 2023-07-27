@@ -1,5 +1,5 @@
 import "@polymer/paper-input/paper-input";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
 import "../../../../../components/buttons/ha-call-service-button";
@@ -29,9 +29,9 @@ class ZHADevicePairingStatusCard extends LitElement {
 
   @state() private _showHelp = false;
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this.device) {
-      return html``;
+      return nothing;
     }
 
     return html`
@@ -66,7 +66,7 @@ class ZHADevicePairingStatusCard extends LitElement {
                   )}
                 </div>
               `
-            : html``}
+            : nothing}
           <div class="info">
             ${INCOMPLETE_PAIRING_STATUSES.includes(this.device.pairing_status!)
               ? html`
@@ -75,7 +75,7 @@ class ZHADevicePairingStatusCard extends LitElement {
                     NWK: ${formatAsPaddedHex(this.device.nwk)}
                   </div>
                 `
-              : html``}
+              : nothing}
           </div>
           ${this.device.pairing_status === INITIALIZED
             ? html`
@@ -87,7 +87,7 @@ class ZHADevicePairingStatusCard extends LitElement {
                   .showHelp=${this._showHelp}
                 ></zha-device-card>
               `
-            : html``}
+            : nothing}
         </div>
       </ha-card>
     `;
@@ -109,6 +109,13 @@ class ZHADevicePairingStatusCard extends LitElement {
           padding: 8px;
           text-align: center;
           margin-bottom: 20px;
+          /* Padding is subtracted for nested elements with border radiuses */
+          border-top-left-radius: calc(
+            var(--ha-card-border-radius, 12px) - 2px
+          );
+          border-top-right-radius: calc(
+            var(--ha-card-border-radius, 12px) - 2px
+          );
         }
         .discovered.initialized .header {
           background: var(--success-color);

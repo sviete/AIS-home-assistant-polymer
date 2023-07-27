@@ -17,7 +17,7 @@ import {
   html,
   LitElement,
   PropertyValues,
-  TemplateResult,
+  nothing,
 } from "lit";
 import { customElement, property, query, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
@@ -28,29 +28,28 @@ import { computeStateDomain } from "../../common/entity/compute_state_domain";
 import { computeStateName } from "../../common/entity/compute_state_name";
 import { domainIcon } from "../../common/entity/domain_icon";
 import { supportsFeature } from "../../common/entity/supports-feature";
+import "../../components/ha-button";
 import "../../components/ha-button-menu";
 import "../../components/ha-circular-progress";
 import "../../components/ha-icon-button";
-import { UNAVAILABLE_STATES } from "../../data/entity";
+import { UNAVAILABLE } from "../../data/entity";
 import {
   BROWSER_PLAYER,
   cleanupMediaTitle,
   computeMediaControls,
   computeMediaDescription,
+  ControlButton,
   formatMediaTime,
   getCurrentProgress,
   handleMediaControlClick,
   MediaPlayerEntity,
+  MediaPlayerEntityFeature,
   MediaPlayerItem,
   setMediaPlayerVolume,
-  SUPPORT_BROWSE_MEDIA,
-  SUPPORT_PAUSE,
-  SUPPORT_PLAY,
-  SUPPORT_STOP,
-  SUPPORT_VOLUME_SET,
 } from "../../data/media-player";
 import { ResolvedMediaSource } from "../../data/media_source";
 import { showAlertDialog } from "../../dialogs/generic/show-dialog-box";
+import { SubscribeMixin } from "../../mixins/subscribe-mixin";
 import type { HomeAssistant } from "../../types";
 import "../lovelace/components/hui-marquee";
 import {
@@ -65,7 +64,7 @@ declare global {
 }
 
 @customElement("ha-bar-media-player")
-export class BarMediaPlayer extends LitElement {
+export class BarMediaPlayer extends SubscribeMixin(LitElement) {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property({ attribute: false }) public entityId!: string;
@@ -152,13 +151,15 @@ export class BarMediaPlayer extends LitElement {
     this._newMediaExpected = false;
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (this._newMediaExpected) {
       return html`
         <div class="controls-progress">
           ${until(
             // Only show spinner after 500ms
-            new Promise((resolve) => setTimeout(resolve, 500)).then(
+            new Promise((resolve) => {
+              setTimeout(resolve, 500);
+            }).then(
               () => html`<ha-circular-progress active></ha-circular-progress>`
             )
           )}
@@ -173,16 +174,16 @@ export class BarMediaPlayer extends LitElement {
       return this._renderChoosePlayer(stateObj);
     }
 
-    const controls = !this.narrow
+    const controls: ControlButton[] | undefined = !this.narrow
       ? computeMediaControls(stateObj, true)
       : (stateObj.state === "playing" &&
-          (supportsFeature(stateObj, SUPPORT_PAUSE) ||
-            supportsFeature(stateObj, SUPPORT_STOP))) ||
+          (supportsFeature(stateObj, MediaPlayerEntityFeature.PAUSE) ||
+            supportsFeature(stateObj, MediaPlayerEntityFeature.STOP))) ||
         ((stateObj.state === "paused" || stateObj.state === "idle") &&
-          supportsFeature(stateObj, SUPPORT_PLAY)) ||
+          supportsFeature(stateObj, MediaPlayerEntityFeature.PLAY)) ||
         (stateObj.state === "on" &&
-          (supportsFeature(stateObj, SUPPORT_PLAY) ||
-            supportsFeature(stateObj, SUPPORT_PAUSE)))
+          (supportsFeature(stateObj, MediaPlayerEntityFeature.PLAY) ||
+            supportsFeature(stateObj, MediaPlayerEntityFeature.PAUSE)))
       ? [
           {
             icon:
@@ -190,22 +191,22 @@ export class BarMediaPlayer extends LitElement {
                 ? mdiPlayPause
                 : stateObj.state !== "playing"
                 ? mdiPlay
-                : supportsFeature(stateObj, SUPPORT_PAUSE)
+                : supportsFeature(stateObj, MediaPlayerEntityFeature.PAUSE)
                 ? mdiPause
                 : mdiStop,
             action:
               stateObj.state !== "playing"
                 ? "media_play"
-                : supportsFeature(stateObj, SUPPORT_PAUSE)
+                : supportsFeature(stateObj, MediaPlayerEntityFeature.PAUSE)
                 ? "media_pause"
                 : "media_stop",
           },
         ]
-      : [{}];
+      : undefined;
     const mediaDescription = computeMediaDescription(stateObj);
     const mediaDuration = formatMediaTime(stateObj.attributes.media_duration);
     const mediaTitleClean = cleanupMediaTitle(
-      stateObj.attributes.media_title || ""
+      stateObj.attributes.media_title || stateObj.attributes.media_content_id
     );
     const mediaArt =
       stateObj.attributes.entity_picture_local ||
@@ -220,12 +221,13 @@ export class BarMediaPlayer extends LitElement {
         })}
         @click=${this._openMoreInfo}
       >
-        ${mediaArt ? html`<img src=${this.hass.hassUrl(mediaArt)} />` : ""}
+        ${mediaArt
+          ? html`<img alt="" src=${this.hass.hassUrl(mediaArt)} />`
+          : ""}
         <div class="media-info">
           <hui-marquee
             .text=${mediaTitleClean ||
             mediaDescription ||
-            cleanupMediaTitle(stateObj.attributes.media_content_id) ||
             (stateObj.state !== "playing" && stateObj.state !== "on"
               ? this.hass.localize(`ui.card.media_player.nothing_playing`)
               : "")}
@@ -239,7 +241,7 @@ export class BarMediaPlayer extends LitElement {
         </div>
       </div>
       <div class="controls-progress">
-        ${this._browserPlayer?.buffering
+        ${stateObj.state === "buffering"
           ? html` <ha-circular-progress active></ha-circular-progress> `
           : html`
               <div class="controls">
@@ -260,7 +262,7 @@ export class BarMediaPlayer extends LitElement {
                     )}
               </div>
               ${stateObj.attributes.media_duration === Infinity
-                ? html``
+                ? nothing
                 : this.narrow
                 ? html`<mwc-linear-progress></mwc-linear-progress>`
                 : html`
@@ -283,9 +285,9 @@ export class BarMediaPlayer extends LitElement {
       ${
         !this.narrow &&
         stateObj &&
-        supportsFeature(stateObj, SUPPORT_VOLUME_SET)
+        supportsFeature(stateObj, MediaPlayerEntityFeature.VOLUME_SET)
           ? html`
-              <ha-button-menu corner="BOTTOM_START" y="0" x="76">
+              <ha-button-menu y="0" x="76">
                 <ha-icon-button
                   slot="trigger"
                   .path=${mdiVolumeHigh}
@@ -303,7 +305,7 @@ export class BarMediaPlayer extends LitElement {
           : ""
       }
 
-          <ha-button-menu corner="BOTTOM_START">
+          <ha-button-menu >
             ${
               this.narrow
                 ? html`
@@ -315,7 +317,7 @@ export class BarMediaPlayer extends LitElement {
                     ></ha-icon-button>
                   `
                 : html`
-                    <mwc-button
+                    <ha-button
                       slot="trigger"
                       .label=${this.narrow
                         ? ""
@@ -336,7 +338,7 @@ export class BarMediaPlayer extends LitElement {
                         slot="trailingIcon"
                         .path=${mdiChevronDown}
                       ></ha-svg-icon>
-                    </mwc-button>
+                    </ha-button>
                   `
             }
             <mwc-list-item
@@ -350,7 +352,7 @@ export class BarMediaPlayer extends LitElement {
               (source) => html`
                 <mwc-list-item
                   ?selected=${source.entity_id === this.entityId}
-                  .disabled=${UNAVAILABLE_STATES.includes(source.state)}
+                  .disabled=${source.state === UNAVAILABLE}
                   .player=${source.entity_id}
                   @click=${this._selectPlayer}
                 >
@@ -461,7 +463,8 @@ export class BarMediaPlayer extends LitElement {
     return Object.values(this.hass!.states).filter(
       (entity) =>
         computeStateDomain(entity) === "media_player" &&
-        supportsFeature(entity, SUPPORT_BROWSE_MEDIA)
+        supportsFeature(entity, MediaPlayerEntityFeature.BROWSE_MEDIA) &&
+        !this.hass.entities[entity.entity_id]?.hidden
     );
   }
 
@@ -543,6 +546,7 @@ export class BarMediaPlayer extends LitElement {
           var(--card-background-color, white)
         );
         border-top: 1px solid var(--divider-color);
+        padding-bottom: env(safe-area-inset-bottom);
       }
 
       mwc-linear-progress {
@@ -595,6 +599,7 @@ export class BarMediaPlayer extends LitElement {
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        direction: ltr;
       }
 
       .progress {
@@ -685,6 +690,12 @@ export class BarMediaPlayer extends LitElement {
 
       mwc-list-item[selected] {
         font-weight: bold;
+      }
+
+      ha-svg-icon[slot="trailingIcon"] {
+        margin-inline-start: 8px !important;
+        margin-inline-end: 0px !important;
+        direction: var(--direction);
       }
     `;
   }

@@ -50,6 +50,7 @@ class HassioAddonAudio extends LitElement {
   protected render(): TemplateResult {
     return html`
       <ha-card
+        outlined
         .header=${this.supervisor.localize("addon.configuration.audio.header")}
       >
         <div class="card-content">
@@ -112,9 +113,6 @@ class HassioAddonAudio extends LitElement {
         :host,
         ha-card {
           display: block;
-        }
-        paper-item {
-          width: 450px;
         }
         .card-actions {
           text-align: right;

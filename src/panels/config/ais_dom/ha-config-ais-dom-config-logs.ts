@@ -12,7 +12,7 @@ import {
   TemplateResult,
 } from "lit";
 import { customElement, property } from "lit/decorators";
-import { dump, load } from "js-yaml";
+import { load } from "js-yaml";
 import { HomeAssistant } from "../../../types";
 import "../../../layouts/hass-subpage";
 import "../../../resources/ha-style";
@@ -64,35 +64,7 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
   @property({ type: Number }) private logRotating = 1;
 
-  @property({ type: Boolean }) private dbConnectionValidating = false;
-
   @property({ type: String }) private logModeInfo = "";
-
-  @property({ type: String }) private dbDrive = "";
-
-  @property({ type: String }) private dbEngine = "";
-
-  @property({ type: String }) private dbUser = "";
-
-  @property({ type: String }) private dbPassword = "";
-
-  @property({ type: String }) private dbServerIp = "";
-
-  @property({ type: String }) private dbServerName = "";
-
-  @property({ type: Number }) private dbKeepDays = 10;
-
-  @property({ type: String }) private errorDbInfo = "";
-
-  @property({ type: String }) private messageDbInfo = "";
-
-  @property({ type: Boolean }) private dbShowLogbook = false;
-
-  @property({ type: Boolean }) private dbShowHistory = false;
-
-  @property() private dbInclude = "";
-
-  @property() private dbExclude = "";
 
   static get styles(): CSSResultGroup[] {
     return [
@@ -207,48 +179,6 @@ class HaConfigAisDomConfiglLogs extends LitElement {
     return "";
   }
 
-  // DB recorder
-
-  private getDbStatusIcon(dbEngine) {
-    // memory "animation: pulse 6s infinite;";
-    if (this.isNotSeleced(dbEngine)) {
-      return html``;
-    }
-    let dbIcon = "mdi:database";
-    if (dbEngine === "SQLite (memory)") {
-      dbIcon = "mdi:memory";
-    }
-    if (dbEngine === "SQLite (file)") {
-      dbIcon = "mdi:file";
-    }
-    if (dbEngine === "PostgreSQL") {
-      dbIcon = "mdi:server";
-    }
-    return html`
-      <div id="card-icon" style="animation: pulse 6s infinite;">
-        <ha-icon icon=${dbIcon}></ha-icon>
-      </div>
-    `;
-  }
-
-  private _getDbConnectionSettings() {
-    // DB
-    const dbConnectionInfo = this.hass.states["sensor.ais_db_connection_info"];
-    const dbConnInfoAttr = dbConnectionInfo.attributes;
-    this.dbEngine = dbConnInfoAttr.dbEngine;
-    this.dbDrive = dbConnInfoAttr.dbDrive;
-    this.dbPassword = dbConnInfoAttr.dbPassword;
-    this.dbUser = dbConnInfoAttr.dbUser;
-    this.dbServerIp = dbConnInfoAttr.dbServerIp;
-    this.dbServerName = dbConnInfoAttr.dbServerName;
-    this.dbKeepDays = dbConnInfoAttr.dbKeepDays;
-    this.errorDbInfo = "";
-    this.messageDbInfo = "";
-    this.dbShowLogbook = dbConnInfoAttr.dbShowLogbook;
-    this.dbShowHistory = dbConnInfoAttr.dbShowHistory;
-    this.dbInclude = dump(dbConnInfoAttr.dbInclude || "").trimRight();
-    this.dbExclude = dump(dbConnInfoAttr.dbExclude || "").trimRight();
-  }
 
   private _getLogSettings() {
     // LOG
@@ -261,9 +191,6 @@ class HaConfigAisDomConfiglLogs extends LitElement {
 
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
-    // DB
-    this._getDbConnectionSettings();
-
     // LOG
     this._getLogSettings();
   }
@@ -271,275 +198,6 @@ class HaConfigAisDomConfiglLogs extends LitElement {
   protected render(): TemplateResult {
     return html`
       <hass-subpage header="Konfiguracja bramki AIS dom">
-        <ha-config-section .is-wide=${this.isWide}>
-          <span slot="header">Konfiguracja zapisu zdarzeń systemu</span>
-          <ha-card header="Baza danych do zapisu zdarzeń">
-            <!-- show db satus  -->
-            ${this.getDbStatusIcon(this.dbEngine)}
-            ${!this.dbConnectionValidating
-              ? html`
-                  <div class="card-content">
-                    Najprostszy wybór to baza SQLite, która nie wymaga
-                    konfiguracji i może rejestrować dane w pamięci.
-                    <b>Zmiany konfiguracji bazy wymagają restartu systemu.</b>
-                    Baza w pamięci jest automatycznie używana, gdy włączysz
-                    komponent Historia lub Dziennik.
-                    <br />
-                    <br />
-                    <ha-icon icon="hass:chart-box" slot="suffix"></ha-icon>
-                    <ha-switch
-                      .checked=${this.dbShowHistory}
-                      @change=${this.dbShowHistoryChanged}
-                    ></ha-switch>
-                    Historia - prezentowanie zdarzeń zapisanych w bazie na
-                    wykresach w aplikacji
-                    <br />
-                    <br />
-
-                    <ha-icon
-                      icon="hass:format-list-bulleted-type"
-                      slot="suffix"
-                    ></ha-icon>
-                    <ha-switch
-                      .checked=${this.dbShowLogbook}
-                      @change=${this.dbShowLogbookChanged}
-                    ></ha-switch>
-                    Dziennik - prezentowanie zmian zapisanych w bazie w
-                    chronologicznej kolejności
-
-                    <br /><br />
-
-                    Wybór silnika bazy danych:
-                    <br />
-                    <ha-icon icon="mdi:database"></ha-icon>
-
-                    <mwc-select
-                      label-float="Silnik bazy danych"
-                      label="Silnik bazy danych"
-                      .value=${this.dbEngine}
-                      @selected=${this.dbEngineChanged}
-                    >
-                      <mwc-list-item value="-">-</mwc-list-item>
-                      <mwc-list-item value="SQLite (memory)"
-                        >SQLite (memory)</mwc-list-item
-                      >
-                      <mwc-list-item value="SQLite (file)"
-                        >SQLite (file)</mwc-list-item
-                      >
-                      <mwc-list-item value="PostgreSQL (local)"
-                        >PostgreSQL (local)</mwc-list-item
-                      >
-                      <mwc-list-item value="MariaDB">MariaDB</mwc-list-item>
-                      <mwc-list-item value="MySQL">MySQL</mwc-list-item>
-                      <mwc-list-item value="PostgreSQL"
-                        >PostgreSQL</mwc-list-item
-                      >
-                    </mwc-select>
-                  </div>
-
-                  <!-- MEMORY -->
-                  ${this.dbEngine === "SQLite (memory)"
-                    ? html`
-                        <div class="card-content">
-                          Żeby utrzymać system w dobrej kondycji, codziennie
-                          dokładnie o godzinie 5:15 rano, Asystent czyści pamięć
-                          i usuwa zdarzenia i stany starsze niż <b>5 dni</b>.
-                          <br /><br />
-                          <span class="inportant-info">
-                            Jeżeli zacznie brakować pamięci w systemie, to
-                            automatycznie wyczyścimy całą historię bazy, żeby
-                            zwolnić miejsce.
-                          </span>
-                          <br /><br />
-                          Gdy chcesz zapisywać większą ilość dni w historii, to
-                          zalecamy zapisywać zdarzenia w zdalnej bazie danych.
-                        </div>
-                      `
-                    : html``}
-
-                  <!-- PostgreSQL (local) -->
-                  ${this.dbEngine === "PostgreSQL (local)"
-                    ? html`
-                        <div class="card-content">
-                          Żeby utrzymać system w dobrej kondycji, codziennie
-                          dokładnie o godzinie 5:15 rano, Asystent czyści
-                          lokalną bazę i usuwa zdarzenia i stany starsze niż
-                          <b>10 dni</b>. <br /><br />
-                          <span class="inportant-info">
-                            Jeżeli zacznie brakować miejsca na dysku w systemie,
-                            to automatycznie wyczyścimy całą historię lokalnej
-                            bazy, żeby zwolnić miejsce.
-                          </span>
-                          <br /><br />
-                          Gdy chcesz zapisywać większą ilość dni w historii, to
-                          zalecamy zapisywać zdarzenia w zdalnej bazie danych.
-                        </div>
-                      `
-                    : html``}
-
-                  <!-- FILE -->
-                  ${this.dbEngine === "SQLite (file)"
-                    ? html`
-                        <div class="card-content">
-                          Wybór dysku do zapisu bazy danych: <br />
-                          <ha-icon icon="mdi:usb-flash-drive"></ha-icon>
-                          <mwc-select
-                            label-float="Dysk wymienny"
-                            label="Dysk wymienny"
-                            .value=${this.dbDrive}
-                            @selected=${this.dbDriveChanged}
-                          >
-                            ${this.hass.states[
-                              "input_select.ais_usb_flash_drives"
-                            ].attributes.options!.map(
-                              (item: string) =>
-                                html`
-                                  <mwc-list-item .value=${item}>
-                                    ${item}
-                                  </mwc-list-item>
-                                `
-                            )} </mwc-select
-                          >> <br /><br />
-                        </div>
-                      `
-                    : html``}
-                  <!-- DB -->
-                  ${this.dbEngine === "MariaDB" ||
-                  this.dbEngine === "MySQL" ||
-                  this.dbEngine === "PostgreSQL"
-                    ? html`
-                        <div class="card-content">
-                          Parametry połączenia z bazą danych: <br />
-                          <paper-input
-                            placeholder="Użytkownik"
-                            type="text"
-                            id="db_user"
-                            value=${this.dbUser}
-                            @value-changed=${this.dbUserChanged}
-                          >
-                            <ha-icon icon="mdi:account" slot="suffix"></ha-icon>
-                          </paper-input>
-                          <paper-input
-                            placeholder="Hasło"
-                            no-label-float=""
-                            type="password"
-                            id="db_password"
-                            .value=${this.dbPassword}
-                            @value-changed=${this.dbPasswordChanged}
-                          >
-                            <ha-icon
-                              icon="mdi:lastpass"
-                              slot="suffix"
-                            ></ha-icon>
-                          </paper-input>
-                          <paper-input
-                            placeholder="IP Serwera DB"
-                            no-label-float=""
-                            type="text"
-                            id="db_server_ip"
-                            value=${this.dbServerIp}
-                            @value-changed=${this.dbServerIpChanged}
-                          >
-                            <ha-icon
-                              icon="mdi:ip-network"
-                              slot="suffix"
-                            ></ha-icon>
-                          </paper-input>
-                          <paper-input
-                            placeholder="Nazwa bazy"
-                            no-label-float=""
-                            type="text"
-                            id="db_server_name"
-                            value=${this.dbServerName}
-                            @value-changed=${this.dbServerNameChanged}
-                          >
-                            <ha-icon
-                              icon="mdi:database-check"
-                              slot="suffix"
-                            ></ha-icon>
-                          </paper-input>
-                        </div>
-                      `
-                    : html``}
-                  <div class="card-content">
-                    <h1>Filtrowanie zapisu zdarzeń</h1>
-                    <ha-expansion-panel
-                      .header=${html`<ha-icon icon="mdi:filter-plus"></ha-icon>
-                        &nbsp;Wybrane do zapisywania:`}
-                    >
-                      <ha-code-editor
-                        mode="yaml"
-                        .value=${this.dbInclude}
-                        @value-changed=${this.dbIncludeChanged}
-                      >
-                      </ha-code-editor>
-                    </ha-expansion-panel>
-
-                    <ha-expansion-panel
-                      .header=${html`<ha-icon
-                          icon="mdi:filter-remove"
-                        ></ha-icon>
-                        &nbsp;Wykluczone z zapisywania:`}
-                    >
-                      <ha-code-editor
-                        mode="yaml"
-                        .value=${this.dbExclude}
-                        @value-changed=${this.dbExcludeChanged}
-                      >
-                      </ha-code-editor>
-                    </ha-expansion-panel>
-                  </div>
-
-                  <!-- KEEP DAYS -->
-                  ${this.dbEngine === "SQLite (file)" ||
-                  this.dbEngine === "MariaDB" ||
-                  this.dbEngine === "MySQL" ||
-                  this.dbEngine === "PostgreSQL"
-                    ? html`
-                  <div class="card-content">
-                    Żeby utrzymać system w dobrej kondycji, codziennie dokładnie o godzinie 5:15 rano Asystent usuwa z bazy zdarzenia i stany starsze niż <b>określona liczba dni</b>.
-                    <br /><br />
-                    W tym miejscu możesz określić liczbę dni, których historia ma być
-                    przechowywana w bazie danych.
-                    <paper-input
-                      id="db_keep_days"
-                      type="number"
-                      value=${this.dbKeepDays}
-                      @value-changed=${this.dbKeepDaysChanged}
-                      maxlength="4"
-                      max="9999"
-                      min="1"
-                      label-float="Liczba dni historii przechowywanych w bazie"
-                      label="Liczba dni historii przechowywanych w bazie"
-                    >
-                      <ha-icon icon="mdi:calendar" slot="suffix"></ha-icon>
-                    </paper-input>
-                  </div>
-                </div>
-                `
-                    : html``}
-                `
-              : html`<div style="width: 100%; text-align: center;">
-                  <ha-circular-progress active></ha-circular-progress>
-                </div>`}
-
-            <div class="center-container">
-              <mwc-button @click="${this.saveDbSettings}">
-                Sprawdź i zapisz
-              </mwc-button>
-            </div>
-
-            <div class="center-content">
-              <div class="config-invalid">
-                <span class="text"> ${this.errorDbInfo} </span>
-              </div>
-              <div class="config-valid">
-                <span class="text"> ${this.messageDbInfo} </span>
-              </div>
-            </div>
-          </ha-card>
-        </ha-config-section>
-
         <ha-config-section .is-wide=${this.isWide}>
           <span slot="header">Ustawienie zapisu logów systemu</span>
           <ha-card header=" Wybór parametrów logowania">
@@ -554,17 +212,6 @@ class HaConfigAisDomConfiglLogs extends LitElement {
             <div class="card-content">
               <ha-icon icon="mdi:bug-check"></ha-icon>
 
-              <!-- <ha-paper-dropdown-menu
-                label-float="Poziom logowania"
-                dynamic-align=""
-                label="Poziomy logowania"
-              >
-                <paper-listbox
-                  slot="dropdown-content"
-                  attr-for-selected="item-name"
-                  .selected=${this.logLevel}
-                  @iron-select=${this.logLevelChanged}
-                > -->
               <mwc-select
                 label-float="Poziomy logowania"
                 label="Poziomy logowania"
@@ -583,17 +230,6 @@ class HaConfigAisDomConfiglLogs extends LitElement {
               (USB, SD card) na którym będą zapisywane logi: <br />
               <ha-icon icon="mdi:usb-flash-drive"></ha-icon>
 
-              <!-- <ha-paper-dropdown-menu
-                label-float="Wybrany dysk"
-                dynamic-align=""
-                label="Dyski wymienne"
-              >
-                <paper-listbox
-                  slot="dropdown-content"
-                  attr-for-selected="item-name"
-                  .selected=${this.logDrive}
-                  @iron-select=${this.logDriveChanged}
-                > -->
               <mwc-select
                 label-float="Dysk wymienny"
                 label="Dysk wymienny"
@@ -692,129 +328,6 @@ class HaConfigAisDomConfiglLogs extends LitElement {
         this.logModeInfo = "Rotacja logów co " + this.logRotating + " dni.";
       }
       this.saveLoggerSettings();
-    }
-  }
-
-  private async saveDbSettings(): Promise<void> {
-    this.dbConnectionValidating = true;
-    try {
-      const result = await aisSaveDbSettings({
-        dbEngine: this.dbEngine,
-        dbDrive: this.dbDrive,
-        dbPassword: this.dbPassword,
-        dbUser: this.dbUser,
-        dbServerIp: this.dbServerIp,
-        dbServerName: this.dbServerName,
-        dbKeepDays: this.dbKeepDays,
-        dbShowLogbook: this.dbShowLogbook,
-        dbShowHistory: this.dbShowHistory,
-        dbInclude: load(this.dbInclude),
-        dbExclude: load(this.dbExclude, {}),
-      });
-
-      this.errorDbInfo = result.error;
-      this.messageDbInfo = result.info;
-    } catch (err) {
-      // eslint-disable-next-line
-      this.errorDbInfo = err;
-    }
-
-    this.dbConnectionValidating = false;
-  }
-
-  private dbShowLogbookChanged(ev) {
-    const newVal = ev.target.checked;
-    if (newVal !== this.dbShowLogbook) {
-      this.dbShowLogbook = newVal;
-      if (this.dbShowLogbook && this.isNotSeleced(this.dbEngine)) {
-        this.dbEngine = "SQLite (memory)";
-      }
-      this.saveDbSettings();
-    }
-  }
-
-  private dbShowHistoryChanged(ev) {
-    const newVal = ev.target.checked;
-    if (newVal !== this.dbShowHistory) {
-      this.dbShowHistory = newVal;
-      if (this.dbShowHistory && this.isNotSeleced(this.dbEngine)) {
-        this.dbEngine = "SQLite (memory)";
-      }
-      this.saveDbSettings();
-    }
-  }
-
-  private dbEngineChanged(ev) {
-    const newVal = ev.target!.selected.value;
-    if (newVal !== this.dbEngine) {
-      this.dbEngine = newVal;
-      if (this.isNotSeleced(newVal)) {
-        this.dbShowHistory = false;
-        this.dbShowLogbook = false;
-        this.saveDbSettings();
-      }
-      if (newVal === "SQLite (memory)") {
-        this.saveDbSettings();
-      }
-      if (newVal === "SQLite (file)") {
-        this.dbDrive = "-";
-      }
-    }
-  }
-
-  private dbDriveChanged(ev) {
-    const newVal = ev.target!.selected.value;
-    if (newVal !== this.dbDrive) {
-      this.dbDrive = newVal;
-    }
-  }
-
-  private dbUserChanged(ev) {
-    const newVal = ev.detail.value;
-    if (newVal !== this.dbUser) {
-      this.dbUser = newVal;
-    }
-  }
-
-  private dbPasswordChanged(ev) {
-    const newVal = ev.detail.value;
-    if (newVal !== this.dbPassword) {
-      this.dbPassword = newVal;
-    }
-  }
-
-  private dbServerIpChanged(ev) {
-    const newVal = ev.detail.value;
-    if (newVal !== this.dbServerIp) {
-      this.dbServerIp = newVal;
-    }
-  }
-
-  private dbServerNameChanged(ev) {
-    const newVal = ev.detail.value;
-    if (newVal !== this.dbServerName) {
-      this.dbServerName = newVal;
-    }
-  }
-
-  private dbKeepDaysChanged(ev) {
-    const newVal = ev.detail.value;
-    if (newVal !== this.dbKeepDays) {
-      this.dbKeepDays = newVal;
-    }
-  }
-
-  private dbIncludeChanged(ev) {
-    ev.stopPropagation();
-    if (ev.detail.value.replace(/\s/g, "").length > 0) {
-      this.dbInclude = ev.detail.value;
-    }
-  }
-
-  private dbExcludeChanged(ev) {
-    ev.stopPropagation();
-    if (ev.detail.value.replace(/\s/g, "").length > 0) {
-      this.dbExclude = ev.detail.value;
     }
   }
 }

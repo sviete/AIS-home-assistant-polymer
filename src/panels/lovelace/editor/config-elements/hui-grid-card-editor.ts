@@ -1,4 +1,4 @@
-import { html, TemplateResult } from "lit";
+import { html, nothing } from "lit";
 import { customElement } from "lit/decorators";
 import {
   any,
@@ -12,10 +12,11 @@ import {
   string,
 } from "superstruct";
 import { fireEvent } from "../../../../common/dom/fire_event";
-import type { HaFormSchema } from "../../../../components/ha-form/types";
+import type { SchemaUnion } from "../../../../components/ha-form/types";
 import type { GridCardConfig } from "../../cards/types";
 import { baseLovelaceCardConfig } from "../structs/base-card-struct";
 import { HuiStackCardEditor } from "./hui-stack-card-editor";
+import { DEFAULT_COLUMNS } from "../../cards/hui-grid-card";
 
 const cardConfigStruct = assign(
   baseLovelaceCardConfig,
@@ -27,16 +28,20 @@ const cardConfigStruct = assign(
   })
 );
 
-const SCHEMA: HaFormSchema[] = [
+const SCHEMA = [
   {
     type: "grid",
     name: "",
     schema: [
-      { name: "columns", selector: { number: { min: 1, mode: "box" } } },
+      {
+        name: "columns",
+        default: DEFAULT_COLUMNS,
+        selector: { number: { min: 1, mode: "box" } },
+      },
       { name: "square", selector: { boolean: {} } },
     ],
   },
-];
+] as const;
 
 @customElement("hui-grid-card-editor")
 export class HuiGridCardEditor extends HuiStackCardEditor {
@@ -45,12 +50,12 @@ export class HuiGridCardEditor extends HuiStackCardEditor {
     this._config = config;
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
-    const data = { square: true, columns: 3, ...this._config };
+    const data = { square: true, ...this._config };
 
     return html`
       <ha-form
@@ -68,7 +73,7 @@ export class HuiGridCardEditor extends HuiStackCardEditor {
     fireEvent(this, "config-changed", { config: ev.detail.value });
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema) =>
+  private _computeLabelCallback = (schema: SchemaUnion<typeof SCHEMA>) =>
     this.hass!.localize(`ui.panel.lovelace.editor.card.grid.${schema.name}`);
 }
 

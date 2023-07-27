@@ -91,7 +91,9 @@ export class SideBarView extends LitElement implements LovelaceViewElement {
 
   protected render(): TemplateResult {
     return html`
-      <div class="container"></div>
+      <div
+        class="container ${this.lovelace?.editMode ? "edit-mode" : ""}"
+      ></div>
       ${this.lovelace?.editMode
         ? html`
             <ha-fab
@@ -196,8 +198,6 @@ export class SideBarView extends LitElement implements LovelaceViewElement {
       :host {
         display: block;
         padding-top: 4px;
-        height: 100%;
-        box-sizing: border-box;
       }
 
       .container {
@@ -205,6 +205,10 @@ export class SideBarView extends LitElement implements LovelaceViewElement {
         justify-content: center;
         margin-left: 4px;
         margin-right: 4px;
+      }
+
+      .container.edit-mode {
+        margin-bottom: 72px;
       }
 
       #main {
@@ -223,7 +227,7 @@ export class SideBarView extends LitElement implements LovelaceViewElement {
         box-sizing: border-box;
       }
 
-      .container > div > * {
+      .container > div > *:not([hidden]) {
         display: block;
         margin: var(--masonry-view-card-margin, 4px 4px 8px);
       }
@@ -236,15 +240,13 @@ export class SideBarView extends LitElement implements LovelaceViewElement {
       }
 
       ha-fab {
-        position: sticky;
-        float: right;
+        position: fixed;
         right: calc(16px + env(safe-area-inset-right));
         bottom: calc(16px + env(safe-area-inset-bottom));
         z-index: 1;
       }
 
       ha-fab.rtl {
-        float: left;
         right: auto;
         left: calc(16px + env(safe-area-inset-left));
       }

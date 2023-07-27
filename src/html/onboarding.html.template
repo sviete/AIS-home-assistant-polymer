@@ -2,12 +2,8 @@
 <html>
   <head>
     <title>AI-Speaker</title>
-    <link
-      rel="modulepreload"
-      href="<%= latestPageJS %>"
-      crossorigin="use-credentials"
-    />
-    <%= renderTemplate('_header') %>
+    <%= renderTemplate("_header.html.template") %>
+    <%= renderTemplate("_style_base.html.template") %>
     <style>
       /* ais */
       body {
@@ -19,23 +15,15 @@
       }
       html {
         color: var(--primary-text-color, #212121);
+        background-color: #323232 !important;
       }
-      @media (prefers-color-scheme: dark) {
-        html {
-          background-color: #111111;
-          color: #e1e1e1;
-        }
-        ha-onboarding {
-          --primary-text-color: #e1e1e1;
-          --secondary-text-color: #9b9b9b;
-          --disabled-text-color: #6f6f6f;
-          --mdc-theme-surface: #1e1e1e;
-          --ha-card-background: #1e1e1e;
-        }
+      body {
+        height: auto;
       }
       .content {
+        box-sizing: border-box;
         padding: 20px 16px;
-        border-radius: 4px;
+        border-radius: var(--ha-card-border-radius, 12px);
         max-width: 432px;
         margin: 64px auto 0;
         box-shadow: var(
@@ -70,6 +58,7 @@
         html {
           color: #e1e1e1;
         }
+
       }
 
       @media (max-width: 450px) {
@@ -86,39 +75,22 @@
         <img src="/static/icons/favicon-192x192.png" height="52" width="52" alt="" />
         AI-Speaker
       </div>
-
       <ha-onboarding></ha-onboarding>
     </div>
-
-    <%= renderTemplate('_js_base') %>
-    <%= renderTemplate('_preload_roboto') %>
-
+    <%= renderTemplate("_js_base.html.template") %>
+    <%= renderTemplate("_preload_roboto.html.template") %>
     <script crossorigin="use-credentials">
       // Safari 12 and below does not have a compliant ES2015 implementation of template literals, so we ship ES5
       if (!isS11_12) {
-        import("<%= latestPageJS %>");
+        <% for (const entry of latestEntryJS) { %>
+          import("<%= entry %>");
+        <% } %>
         window.latestJS = true;
         window.stepsPromise = fetch("/api/onboarding", {
           credentials: "same-origin",
         });
-        if (!window.globalThis) {
-          window.globalThis = window;
-        }
       }
     </script>
-
-    <script>
-      (function() {
-        if (!window.latestJS) {
-          <% if (useRollup) { %>
-            _ls("/static/js/s.min.js").onload = function() {
-              System.import("<%= es5PageJS %>");
-            }
-          <% } else { %>
-            _ls("<%= es5PageJS %>");
-          <% } %>
-        }
-      })();
-    </script>
+    <%= renderTemplate("_script_load_es5.html.template") %>
   </body>
 </html>

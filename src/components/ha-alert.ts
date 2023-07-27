@@ -37,13 +37,10 @@ class HaAlert extends LitElement {
 
   @property({ type: Boolean }) public dismissable = false;
 
-  @property({ type: Boolean }) public rtl = false;
-
   public render() {
     return html`
       <div
         class="issue-type ${classMap({
-          rtl: this.rtl,
           [this.alertType]: true,
         })}"
         role="alert"
@@ -83,10 +80,6 @@ class HaAlert extends LitElement {
       position: relative;
       padding: 8px;
       display: flex;
-      margin: 4px 0;
-    }
-    .issue-type.rtl {
-      flex-direction: row-reverse;
     }
     .issue-type::after {
       position: absolute;
@@ -105,15 +98,12 @@ class HaAlert extends LitElement {
     .icon.no-title {
       align-self: center;
     }
-    .issue-type.rtl > .content {
-      flex-direction: row-reverse;
-      text-align: right;
-    }
     .content {
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: 100%;
+      text-align: var(--float-start);
     }
     .action {
       z-index: 1;
@@ -125,10 +115,9 @@ class HaAlert extends LitElement {
       word-break: break-word;
       margin-left: 8px;
       margin-right: 0;
-    }
-    .issue-type.rtl > .content > .main-content {
-      margin-left: 0;
-      margin-right: 8px;
+      margin-inline-start: 8px;
+      margin-inline-end: 0;
+      direction: var(--direction);
     }
     .title {
       margin-top: 2px;

@@ -1,4 +1,4 @@
-import { html, LitElement, PropertyDeclarations } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyDeclarations } from "lit";
 import {property} from 'lit/decorators';
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
@@ -8,6 +8,8 @@ import { HomeAssistant } from "../../../types";
 import { Webhook, fetchWebhooks } from "../../../data/webhook";
 
 import { showManageCloudhookDialog } from "./dialog-manage-ais-cloudhook/show-dialog-manage-ais-cloudhook";
+import { haStyle } from "../../../resources/styles";
+import { isComponentLoaded } from "../../../common/config/is_component_loaded";
 
 export class AisWebhooks extends LitElement {
   @property() public hass?: HomeAssistant;
@@ -28,7 +30,6 @@ export class AisWebhooks extends LitElement {
 
   protected render() {
     return html`
-      ${this.renderStyle()}
       <ha-card header="Wywołania zwrotne HTTP">
         <div class="card-content">
           Wywołania zwrotne HTTP (Webhook) używane są do udostępniania
@@ -38,7 +39,7 @@ export class AisWebhooks extends LitElement {
           dowolnego miejsca. ${this._renderBody()}
 
           <div class="footer">
-            <a href="https://www.ai-speaker.com/" target="_blank">
+            <a href="https://www.home-assistant.io/docs/automation/trigger/#webhook-trigger" target="_blank">
               Dowiedz się więcej o zwrotnym wywołaniu HTTP.
             </a>
           </div>
@@ -61,7 +62,7 @@ export class AisWebhooks extends LitElement {
             integracji opartej na wywołaniu zwrotnym
           </a>
           lub przez tworzenie
-          <a href="/config/automation/new"> automatyzacji typu webhook </a>.
+          <a href="/config/automation/new"> automatyzacji opartej na wyzwalaczu webhook </a>.
         </div>
       `;
     }
@@ -71,7 +72,7 @@ export class AisWebhooks extends LitElement {
         ${entry.webhook_id === "aisdomprocesscommandfromframe"
           ? html` <div></div> `
           : html`
-              <div class="webhook" .entry="${entry}">
+              <div class="webhook" .entry=${entry}>
                 <paper-item-body two-line>
                   <div>
                     ${entry.name}
@@ -81,7 +82,7 @@ export class AisWebhooks extends LitElement {
                   </div>
                   <div secondary>${entry.webhook_id}</div>
                 </paper-item-body>
-                <mwc-button @click="${this._handleManageButton}">
+                <mwc-button @click=${this._handleManageButton}>
                   Pokaż
                 </mwc-button>
               </div>
@@ -94,7 +95,9 @@ export class AisWebhooks extends LitElement {
     const webhook = this._localHooks!.find(
       (ent) => ent.webhook_id === webhookId
     )!;
-    showManageCloudhookDialog(this, { webhook });
+    showManageCloudhookDialog(this, {
+      webhook,
+    });
   }
 
   private _handleManageButton(ev: MouseEvent) {
@@ -103,12 +106,24 @@ export class AisWebhooks extends LitElement {
   }
 
   private async _fetchData() {
-    this._localHooks = await fetchWebhooks(this.hass!);
+    if (!isComponentLoaded(this.hass!, "webhook")) {
+      this._localHooks = [];
+      return;
+    }
+    const hooks = await fetchWebhooks(this.hass!);
+    this._localHooks = hooks.filter(
+      (hook) =>
+        // Only hooks that are not limited to local requests are relevant
+        !hook.local_only &&
+        // Deleted webhooks -> nobody cares :)
+        (hook.domain !== "mobile_app" || hook.name !== "Deleted Webhook")
+    );
   }
 
-  private renderStyle() {
-    return html`
-      <style>
+  static get styles(): CSSResultGroup {
+    return [
+      haStyle,
+      css`
         .body-text {
           padding: 8px 0;
         }
@@ -129,9 +144,9 @@ export class AisWebhooks extends LitElement {
         .footer a {
           color: var(--primary-color);
         }
-      </style>
-    `;
-  }
+        `,
+      ];
+    }
 }
 
 declare global {

@@ -8,6 +8,9 @@ import { BlueprintInput } from "./blueprint";
 import { DeviceCondition, DeviceTrigger } from "./device_automation";
 import { Action, MODES } from "./script";
 
+export const AUTOMATION_DEFAULT_MODE: (typeof MODES)[number] = "single";
+export const AUTOMATION_DEFAULT_MAX = 10;
+
 export interface AutomationEntity extends HassEntityBase {
   attributes: HassEntityAttributeBase & {
     id?: string;
@@ -26,7 +29,7 @@ export interface ManualAutomationConfig {
   trigger: Trigger | Trigger[];
   condition?: Condition | Condition[];
   action: Action | Action[];
-  mode?: typeof MODES[number];
+  mode?: (typeof MODES)[number];
   max?: number;
   max_exceeded?:
     | "silent"
@@ -60,14 +63,16 @@ export interface ContextConstraint {
 }
 
 export interface BaseTrigger {
+  alias?: string;
   platform: string;
   id?: string;
   variables?: Record<string, unknown>;
+  enabled?: boolean;
 }
 
 export interface StateTrigger extends BaseTrigger {
   platform: "state";
-  entity_id: string;
+  entity_id: string | string[];
   attribute?: string;
   from?: string | number;
   to?: string | string[] | number;
@@ -102,6 +107,11 @@ export interface NumericStateTrigger extends BaseTrigger {
   for?: string | number | ForDict;
 }
 
+export interface ConversationTrigger extends BaseTrigger {
+  platform: "conversation";
+  command: string | string[];
+}
+
 export interface SunTrigger extends BaseTrigger {
   platform: "sun";
   offset: number;
@@ -118,6 +128,14 @@ export interface TimePatternTrigger extends BaseTrigger {
 export interface WebhookTrigger extends BaseTrigger {
   platform: "webhook";
   webhook_id: string;
+  allowed_methods?: string[];
+  local_only?: boolean;
+}
+
+export interface PersistentNotificationTrigger extends BaseTrigger {
+  platform: "persistent_notification";
+  notification_id?: string;
+  update_type?: string[];
 }
 
 export interface ZoneTrigger extends BaseTrigger {
@@ -141,6 +159,7 @@ export interface TimeTrigger extends BaseTrigger {
 export interface TemplateTrigger extends BaseTrigger {
   platform: "template";
   value_template: string;
+  for?: string | number | ForDict;
 }
 
 export interface EventTrigger extends BaseTrigger {
@@ -150,6 +169,13 @@ export interface EventTrigger extends BaseTrigger {
   context?: ContextConstraint;
 }
 
+export interface CalendarTrigger extends BaseTrigger {
+  platform: "calendar";
+  event: "start" | "end";
+  entity_id: string;
+  offset: string;
+}
+
 export type Trigger =
   | StateTrigger
   | MqttTrigger
@@ -157,18 +183,22 @@ export type Trigger =
   | HassTrigger
   | NumericStateTrigger
   | SunTrigger
+  | ConversationTrigger
   | TimePatternTrigger
   | WebhookTrigger
+  | PersistentNotificationTrigger
   | ZoneTrigger
   | TagTrigger
   | TimeTrigger
   | TemplateTrigger
   | EventTrigger
-  | DeviceTrigger;
+  | DeviceTrigger
+  | CalendarTrigger;
 
 interface BaseCondition {
   condition: string;
   alias?: string;
+  enabled?: boolean;
 }
 
 export interface LogicalCondition extends BaseCondition {
@@ -182,6 +212,7 @@ export interface StateCondition extends BaseCondition {
   attribute?: string;
   state: string | number | string[];
   for?: string | number | ForDict;
+  match?: "all" | "any";
 }
 
 export interface NumericStateCondition extends BaseCondition {
@@ -224,6 +255,24 @@ export interface TriggerCondition extends BaseCondition {
   id: string;
 }
 
+type ShorthandBaseCondition = Omit<BaseCondition, "condition">;
+
+export interface ShorthandAndConditionList extends ShorthandBaseCondition {
+  condition: Condition[];
+}
+
+export interface ShorthandAndCondition extends ShorthandBaseCondition {
+  and: Condition[];
+}
+
+export interface ShorthandOrCondition extends ShorthandBaseCondition {
+  or: Condition[];
+}
+
+export interface ShorthandNotCondition extends ShorthandBaseCondition {
+  not: Condition[];
+}
+
 export type Condition =
   | StateCondition
   | NumericStateCondition
@@ -234,6 +283,35 @@ export type Condition =
   | DeviceCondition
   | LogicalCondition
   | TriggerCondition;
+
+export type ConditionWithShorthand =
+  | Condition
+  | ShorthandAndConditionList
+  | ShorthandAndCondition
+  | ShorthandOrCondition
+  | ShorthandNotCondition;
+
+export const expandConditionWithShorthand = (
+  cond: ConditionWithShorthand
+): Condition => {
+  if ("condition" in cond && Array.isArray(cond.condition)) {
+    return {
+      condition: "and",
+      conditions: cond.condition,
+    };
+  }
+
+  for (const condition of ["and", "or", "not"]) {
+    if (condition in cond) {
+      return {
+        condition,
+        conditions: cond[condition],
+      } as Condition;
+    }
+  }
+
+  return cond as Condition;
+};
 
 export const triggerAutomationActions = (
   hass: HomeAssistant,
@@ -250,12 +328,35 @@ export const deleteAutomation = (hass: HomeAssistant, id: string) =>
 
 let inititialAutomationEditorData: Partial<AutomationConfig> | undefined;
 
-export const getAutomationConfig = (hass: HomeAssistant, id: string) =>
+export const fetchAutomationFileConfig = (hass: HomeAssistant, id: string) =>
   hass.callApi<AutomationConfig>("GET", `config/automation/config/${id}`);
+
+export const getAutomationStateConfig = (
+  hass: HomeAssistant,
+  entity_id: string
+) =>
+  hass.callWS<{ config: AutomationConfig }>({
+    type: "automation/config",
+    entity_id,
+  });
+
+export const saveAutomationConfig = (
+  hass: HomeAssistant,
+  id: string,
+  config: AutomationConfig
+) => hass.callApi<void>("POST", `config/automation/config/${id}`, config);
 
 export const showAutomationEditor = (data?: Partial<AutomationConfig>) => {
   inititialAutomationEditorData = data;
   navigate("/config/automation/edit/new");
+};
+
+export const duplicateAutomation = (config: AutomationConfig) => {
+  showAutomationEditor({
+    ...config,
+    id: undefined,
+    alias: undefined,
+  });
 };
 
 export const getAutomationEditorInitData = () => {
@@ -291,3 +392,9 @@ export const testCondition = (
     condition,
     variables,
   });
+
+export type AutomationClipboard = {
+  trigger?: Trigger;
+  condition?: Condition;
+  action?: Action;
+};

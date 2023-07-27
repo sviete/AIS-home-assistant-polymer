@@ -2,15 +2,19 @@ import type {
   Completion,
   CompletionContext,
   CompletionResult,
+  CompletionSource,
 } from "@codemirror/autocomplete";
+import type { Extension } from "@codemirror/state";
 import type { EditorView, KeyBinding, ViewUpdate } from "@codemirror/view";
 import { HassEntities } from "home-assistant-js-websocket";
 import { css, CSSResultGroup, PropertyValues, ReactiveElement } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { fireEvent } from "../common/dom/fire_event";
+import { stopPropagation } from "../common/dom/stop_propagation";
 import { loadCodeMirror } from "../resources/codemirror.ondemand";
 import { HomeAssistant } from "../types";
+import "./ha-icon";
 
 declare global {
   interface HASSDomEvents {
@@ -24,6 +28,12 @@ const saveKeyBinding: KeyBinding = {
     fireEvent(view.dom, "editor-save");
     return true;
   },
+};
+
+const renderIcon = (completion: Completion) => {
+  const icon = document.createElement("ha-icon");
+  icon.icon = completion.label;
+  return icon;
 };
 
 @customElement("ha-code-editor")
@@ -41,11 +51,16 @@ export class HaCodeEditor extends ReactiveElement {
   @property({ type: Boolean, attribute: "autocomplete-entities" })
   public autocompleteEntities = false;
 
+  @property({ type: Boolean, attribute: "autocomplete-icons" })
+  public autocompleteIcons = false;
+
   @property() public error = false;
 
   @state() private _value = "";
 
   private _loadedCodeMirror?: typeof import("../resources/codemirror");
+
+  private _iconList?: Completion[];
 
   public set value(value: string) {
     this._value = value;
@@ -59,21 +74,27 @@ export class HaCodeEditor extends ReactiveElement {
     if (!this.codemirror || !this._loadedCodeMirror) {
       return false;
     }
-    const className = this._loadedCodeMirror.HighlightStyle.get(
+    const className = this._loadedCodeMirror.highlightingFor(
       this.codemirror.state,
-      this._loadedCodeMirror.tags.comment
+      [this._loadedCodeMirror.tags.comment]
     );
     return !!this.shadowRoot!.querySelector(`span.${className}`);
   }
 
   public connectedCallback() {
     super.connectedCallback();
+    this.addEventListener("keydown", stopPropagation);
     if (!this.codemirror) {
       return;
     }
     if (this.autofocus !== false) {
       this.codemirror.focus();
     }
+  }
+
+  public disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener("keydown", stopPropagation);
   }
 
   protected update(changedProps: PropertyValues): void {
@@ -113,7 +134,6 @@ export class HaCodeEditor extends ReactiveElement {
 
   protected firstUpdated(changedProps: PropertyValues): void {
     super.firstUpdated(changedProps);
-    this._blockKeyboardShortcuts();
     this._load();
   }
 
@@ -123,7 +143,7 @@ export class HaCodeEditor extends ReactiveElement {
 
   private async _load(): Promise<void> {
     this._loadedCodeMirror = await loadCodeMirror();
-    const extensions = [
+    const extensions: Extension[] = [
       this._loadedCodeMirror.lineNumbers(),
       this._loadedCodeMirror.EditorState.allowMultipleSelections.of(true),
       this._loadedCodeMirror.history(),
@@ -139,10 +159,8 @@ export class HaCodeEditor extends ReactiveElement {
         saveKeyBinding,
       ] as KeyBinding[]),
       this._loadedCodeMirror.langCompartment.of(this._mode),
-      this._loadedCodeMirror.theme,
-      this._loadedCodeMirror.Prec.fallback(
-        this._loadedCodeMirror.highlightStyle
-      ),
+      this._loadedCodeMirror.haTheme,
+      this._loadedCodeMirror.haSyntaxHighlighting,
       this._loadedCodeMirror.readonlyCompartment.of(
         this._loadedCodeMirror.EditorView.editable.of(!this.readOnly)
       ),
@@ -151,13 +169,22 @@ export class HaCodeEditor extends ReactiveElement {
       ),
     ];
 
-    if (!this.readOnly && this.autocompleteEntities && this.hass) {
-      extensions.push(
-        this._loadedCodeMirror.autocompletion({
-          override: [this._entityCompletions.bind(this)],
-          maxRenderedOptions: 10,
-        })
-      );
+    if (!this.readOnly) {
+      const completionSources: CompletionSource[] = [];
+      if (this.autocompleteEntities && this.hass) {
+        completionSources.push(this._entityCompletions.bind(this));
+      }
+      if (this.autocompleteIcons) {
+        completionSources.push(this._mdiCompletions.bind(this));
+      }
+      if (completionSources.length > 0) {
+        extensions.push(
+          this._loadedCodeMirror.autocompletion({
+            override: completionSources,
+            maxRenderedOptions: 10,
+          })
+        );
+      }
     }
 
     this.codemirror = new this._loadedCodeMirror.EditorView({
@@ -187,7 +214,7 @@ export class HaCodeEditor extends ReactiveElement {
   private _entityCompletions(
     context: CompletionContext
   ): CompletionResult | null | Promise<CompletionResult | null> {
-    const entityWord = context.matchBefore(/[a-z_]{3,}\./);
+    const entityWord = context.matchBefore(/[a-z_]{3,}\.\w*/);
 
     if (
       !entityWord ||
@@ -205,12 +232,49 @@ export class HaCodeEditor extends ReactiveElement {
     return {
       from: Number(entityWord.from),
       options: states,
-      span: /^\w*.\w*$/,
+      validFor: /^[a-z_]{3,}\.\w*$/,
     };
   }
 
-  private _blockKeyboardShortcuts() {
-    this.addEventListener("keydown", (ev) => ev.stopPropagation());
+  private _getIconItems = async (): Promise<Completion[]> => {
+    if (!this._iconList) {
+      let iconList: {
+        name: string;
+        keywords: string[];
+      }[];
+      if (__SUPERVISOR__) {
+        iconList = [];
+      } else {
+        iconList = (await import("../../build/mdi/iconList.json")).default;
+      }
+
+      this._iconList = iconList.map((icon) => ({
+        type: "variable",
+        label: `mdi:${icon.name}`,
+        detail: icon.keywords.join(", "),
+        info: renderIcon,
+      }));
+    }
+
+    return this._iconList;
+  };
+
+  private async _mdiCompletions(
+    context: CompletionContext
+  ): Promise<CompletionResult | null> {
+    const match = context.matchBefore(/mdi:\S*/);
+
+    if (!match || (match.from === match.to && !context.explicit)) {
+      return null;
+    }
+
+    const iconItems = await this._getIconItems();
+
+    return {
+      from: Number(match.from),
+      options: iconItems,
+      validFor: /^mdi:\S*$/,
+    };
   }
 
   private _onUpdate(update: ViewUpdate): void {

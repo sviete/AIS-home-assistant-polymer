@@ -5,6 +5,7 @@ import {
   LitElement,
   PropertyValues,
   TemplateResult,
+  nothing,
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { ifDefined } from "lit/directives/if-defined";
@@ -13,6 +14,7 @@ import { computeDomain } from "../../../common/entity/compute_domain";
 import { computeStateDisplay } from "../../../common/entity/compute_state_display";
 import { computeStateName } from "../../../common/entity/compute_state_name";
 import "../../../components/ha-card";
+import { computeImageUrl, ImageEntity } from "../../../data/image";
 import { ActionHandlerEvent } from "../../../data/lovelace";
 import { HomeAssistant } from "../../../types";
 import { actionHandler } from "../common/directives/action-handler-directive";
@@ -67,7 +69,7 @@ class HuiPictureEntityCard extends LitElement implements LovelaceCard {
     }
 
     if (
-      computeDomain(config.entity) !== "camera" &&
+      !["camera", "image"].includes(computeDomain(config.entity)) &&
       !config.image &&
       !config.state_image &&
       !config.camera_image
@@ -102,9 +104,9 @@ class HuiPictureEntityCard extends LitElement implements LovelaceCard {
     }
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this._config || !this.hass) {
-      return html``;
+      return nothing;
     }
 
     const stateObj = this.hass.states[this._config.entity];
@@ -121,7 +123,9 @@ class HuiPictureEntityCard extends LitElement implements LovelaceCard {
     const entityState = computeStateDisplay(
       this.hass!.localize,
       stateObj,
-      this.hass.locale
+      this.hass.locale,
+      this.hass.config,
+      this.hass.entities
     );
 
     let footer: TemplateResult | string = "";
@@ -138,14 +142,18 @@ class HuiPictureEntityCard extends LitElement implements LovelaceCard {
       footer = html`<div class="footer single">${entityState}</div>`;
     }
 
+    const domain = computeDomain(this._config.entity);
+
     return html`
       <ha-card>
         <hui-image
           .hass=${this.hass}
-          .image=${this._config.image}
+          .image=${domain === "image"
+            ? computeImageUrl(stateObj as ImageEntity)
+            : this._config.image}
           .stateImage=${this._config.state_image}
           .stateFilter=${this._config.state_filter}
-          .cameraImage=${computeDomain(this._config.entity) === "camera"
+          .cameraImage=${domain === "camera"
             ? this._config.entity
             : this._config.camera_image}
           .cameraView=${this._config.camera_view}
@@ -200,6 +208,7 @@ class HuiPictureEntityCard extends LitElement implements LovelaceCard {
         font-size: 16px;
         line-height: 16px;
         color: var(--ha-picture-card-text-color, white);
+        pointer-events: none;
       }
 
       .both {

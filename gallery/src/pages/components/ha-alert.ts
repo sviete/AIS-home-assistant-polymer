@@ -98,7 +98,9 @@ const alerts: {
     description: "Alert with slotted image",
     type: "warning",
     iconSlot: html`<span slot="icon" class="image"
-      ><img src="https://www.home-assistant.io/images/home-assistant-logo.svg"
+      ><img
+        alt="Home Assistant logo"
+        src="https://www.home-assistant.io/images/home-assistant-logo.svg"
     /></span>`,
   },
   {
@@ -159,13 +161,19 @@ export class DemoHaAlert extends LitElement {
 
   firstUpdated(changedProps) {
     super.firstUpdated(changedProps);
-    applyThemesOnElement(this.shadowRoot!.querySelector(".dark"), {
-      default_theme: "default",
-      default_dark_theme: "default",
-      themes: {},
-      darkMode: true,
-      theme: "default",
-    });
+    applyThemesOnElement(
+      this.shadowRoot!.querySelector(".dark"),
+      {
+        default_theme: "default",
+        default_dark_theme: "default",
+        themes: {},
+        darkMode: true,
+        theme: "default",
+      },
+      undefined,
+      undefined,
+      true
+    );
   }
 
   static get styles() {

@@ -5,7 +5,11 @@ import {
   FrontendLocaleData,
   NumberFormat,
   TimeFormat,
+  FirstWeekday,
+  DateFormat,
+  TimeZone,
 } from "../../../src/data/translation";
+import { demoConfig } from "../../../src/fake_data/demo_config";
 
 let localeData: FrontendLocaleData;
 
@@ -19,6 +23,9 @@ describe("computeStateDisplay", () => {
       language: "en",
       number_format: NumberFormat.comma_decimal,
       time_format: TimeFormat.am_pm,
+      date_format: DateFormat.language,
+      time_zone: TimeZone.local,
+      first_weekday: FirstWeekday.language,
     };
   });
 
@@ -29,8 +36,8 @@ describe("computeStateDisplay", () => {
       attributes: {},
     };
     assert.strictEqual(
-      computeStateDisplay(localize, stateObj, localeData),
-      "component.binary_sensor.state._.off"
+      computeStateDisplay(localize, stateObj, localeData, demoConfig, {}),
+      "component.binary_sensor.entity_component._.state.off"
     );
   });
 
@@ -43,7 +50,7 @@ describe("computeStateDisplay", () => {
       },
     };
     assert.strictEqual(
-      computeStateDisplay(localize, stateObj, localeData),
+      computeStateDisplay(localize, stateObj, localeData, demoConfig, {}),
       "component.binary_sensor.state.moisture.off"
     );
   });
@@ -63,7 +70,7 @@ describe("computeStateDisplay", () => {
       },
     };
     assert.strictEqual(
-      computeStateDisplay(altLocalize, stateObj, localeData),
+      computeStateDisplay(altLocalize, stateObj, localeData, demoConfig, {}),
       "component.binary_sensor.state.invalid_device_class.off"
     );
   });
@@ -77,7 +84,7 @@ describe("computeStateDisplay", () => {
       },
     };
     assert.strictEqual(
-      computeStateDisplay(localize, stateObj, localeData),
+      computeStateDisplay(localize, stateObj, localeData, demoConfig, {}),
       "123 m"
     );
   });
@@ -91,7 +98,7 @@ describe("computeStateDisplay", () => {
       },
     };
     assert.strictEqual(
-      computeStateDisplay(localize, stateObj, localeData),
+      computeStateDisplay(localize, stateObj, localeData, demoConfig, {}),
       "1,234.5 m"
     );
   });
@@ -105,8 +112,8 @@ describe("computeStateDisplay", () => {
       },
     };
     assert.strictEqual(
-      computeStateDisplay(localize, stateObj, localeData),
-      "1,234.5 m"
+      computeStateDisplay(localize, stateObj, localeData, demoConfig, {}),
+      "1,234.5"
     );
   });
 
@@ -125,7 +132,7 @@ describe("computeStateDisplay", () => {
       },
     };
     assert.strictEqual(
-      computeStateDisplay(altLocalize, stateObj, localeData),
+      computeStateDisplay(altLocalize, stateObj, localeData, demoConfig, {}),
       "state.default.unknown"
     );
   });
@@ -145,14 +152,16 @@ describe("computeStateDisplay", () => {
       },
     };
     assert.strictEqual(
-      computeStateDisplay(altLocalize, stateObj, localeData),
+      computeStateDisplay(altLocalize, stateObj, localeData, demoConfig, {}),
       "state.default.unavailable"
     );
   });
 
   it("Localizes sensor value with component translation", () => {
     const altLocalize = (message, ...args) => {
-      if (message !== "component.sensor.state._.custom_state") {
+      if (
+        message !== "component.sensor.entity_component._.state.custom_state"
+      ) {
         return "";
       }
       return localize(message, ...args);
@@ -163,15 +172,15 @@ describe("computeStateDisplay", () => {
       attributes: {},
     };
     assert.strictEqual(
-      computeStateDisplay(altLocalize, stateObj, localeData),
-      "component.sensor.state._.custom_state"
+      computeStateDisplay(altLocalize, stateObj, localeData, demoConfig, {}),
+      "component.sensor.entity_component._.state.custom_state"
     );
   });
 
   describe("Localizes input_datetime with full date time", () => {
     const stateObj: any = {
       entity_id: "input_datetime.test",
-      state: "123",
+      state: "2017-11-18 23:12:00",
       attributes: {
         has_date: true,
         has_time: true,
@@ -185,14 +194,14 @@ describe("computeStateDisplay", () => {
     };
     it("Uses am/pm time format", () => {
       assert.strictEqual(
-        computeStateDisplay(localize, stateObj, localeData),
+        computeStateDisplay(localize, stateObj, localeData, demoConfig, {}),
         "November 18, 2017 at 11:12 PM"
       );
     });
     it("Uses 24h time format", () => {
       localeData.time_format = TimeFormat.twenty_four;
       assert.strictEqual(
-        computeStateDisplay(localize, stateObj, localeData),
+        computeStateDisplay(localize, stateObj, localeData, demoConfig, {}),
         "November 18, 2017 at 23:12"
       );
     });
@@ -201,7 +210,7 @@ describe("computeStateDisplay", () => {
   it("Localizes input_datetime with date", () => {
     const stateObj: any = {
       entity_id: "input_datetime.test",
-      state: "123",
+      state: "2017-11-18",
       attributes: {
         has_date: true,
         has_time: false,
@@ -214,7 +223,7 @@ describe("computeStateDisplay", () => {
       },
     };
     assert.strictEqual(
-      computeStateDisplay(localize, stateObj, localeData),
+      computeStateDisplay(localize, stateObj, localeData, demoConfig, {}),
       "November 18, 2017"
     );
   });
@@ -222,7 +231,7 @@ describe("computeStateDisplay", () => {
   describe("Localizes input_datetime with time", () => {
     const stateObj: any = {
       entity_id: "input_datetime.test",
-      state: "123",
+      state: "23:12:00",
       attributes: {
         has_date: false,
         has_time: true,
@@ -237,14 +246,14 @@ describe("computeStateDisplay", () => {
     it("Uses am/pm time format", () => {
       localeData.time_format = TimeFormat.am_pm;
       assert.strictEqual(
-        computeStateDisplay(localize, stateObj, localeData),
+        computeStateDisplay(localize, stateObj, localeData, demoConfig, {}),
         "11:12 PM"
       );
     });
     it("Uses 24h time format", () => {
       localeData.time_format = TimeFormat.twenty_four;
       assert.strictEqual(
-        computeStateDisplay(localize, stateObj, localeData),
+        computeStateDisplay(localize, stateObj, localeData, demoConfig, {}),
         "23:12"
       );
     });
@@ -271,6 +280,8 @@ describe("computeStateDisplay", () => {
           localize,
           stateObj,
           localeData,
+          demoConfig,
+          {},
           "2021-07-04 15:40:03"
         ),
         "July 4, 2021 at 3:40 PM"
@@ -283,6 +294,8 @@ describe("computeStateDisplay", () => {
           localize,
           stateObj,
           localeData,
+          demoConfig,
+          {},
           "2021-07-04 15:40:03"
         ),
         "July 4, 2021 at 15:40"
@@ -306,7 +319,14 @@ describe("computeStateDisplay", () => {
       },
     };
     assert.strictEqual(
-      computeStateDisplay(localize, stateObj, localeData, "2021-07-04"),
+      computeStateDisplay(
+        localize,
+        stateObj,
+        localeData,
+        demoConfig,
+        {},
+        "2021-07-04"
+      ),
       "July 4, 2021"
     );
   });
@@ -329,14 +349,28 @@ describe("computeStateDisplay", () => {
     it("Uses am/pm time format", () => {
       localeData.time_format = TimeFormat.am_pm;
       assert.strictEqual(
-        computeStateDisplay(localize, stateObj, localeData, "17:05:07"),
+        computeStateDisplay(
+          localize,
+          stateObj,
+          localeData,
+          demoConfig,
+          {},
+          "17:05:07"
+        ),
         "5:05 PM"
       );
     });
     it("Uses 24h time format", () => {
       localeData.time_format = TimeFormat.twenty_four;
       assert.strictEqual(
-        computeStateDisplay(localize, stateObj, localeData, "17:05:07"),
+        computeStateDisplay(
+          localize,
+          stateObj,
+          localeData,
+          demoConfig,
+          {},
+          "17:05:07"
+        ),
         "17:05"
       );
     });
@@ -355,7 +389,7 @@ describe("computeStateDisplay", () => {
       attributes: {},
     };
     assert.strictEqual(
-      computeStateDisplay(altLocalize, stateObj, localeData),
+      computeStateDisplay(altLocalize, stateObj, localeData, demoConfig, {}),
       "state.default.unavailable"
     );
   });
@@ -370,8 +404,26 @@ describe("computeStateDisplay", () => {
       attributes: {},
     };
     assert.strictEqual(
-      computeStateDisplay(altLocalize, stateObj, localeData),
+      computeStateDisplay(altLocalize, stateObj, localeData, demoConfig, {}),
       "My Custom State"
+    );
+  });
+
+  it("Localizes using translation key", () => {
+    const stateObj: any = {
+      entity_id: "sensor.test",
+      state: "custom_state",
+      attributes: {},
+    };
+    const entities: any = {
+      "sensor.test": {
+        translation_key: "custom_translation",
+        platform: "custom_integration",
+      },
+    };
+    assert.strictEqual(
+      computeStateDisplay(localize, stateObj, localeData, demoConfig, entities),
+      "component.custom_integration.entity.sensor.custom_translation.state.custom_state"
     );
   });
 });

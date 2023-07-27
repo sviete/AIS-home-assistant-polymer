@@ -12,12 +12,16 @@ import "../../../../components/ha-icon-next";
 import type { HaTextField } from "../../../../components/ha-textfield";
 import "../../../../components/ha-textfield";
 import { cloudLogin } from "../../../../data/cloud";
-import { showAlertDialog } from "../../../../dialogs/generic/show-dialog-box";
+import {
+  showAlertDialog,
+  showConfirmationDialog,
+} from "../../../../dialogs/generic/show-dialog-box";
 import "../../../../layouts/hass-subpage";
 import { haStyle } from "../../../../resources/styles";
 import "../../../../styles/polymer-ha-style";
 import { HomeAssistant } from "../../../../types";
 import "../../ha-config-section";
+import { setAssistPipelinePreferred } from "../../../../data/assist_pipeline";
 
 @customElement("cloud-login")
 export class CloudLogin extends LitElement {
@@ -99,6 +103,7 @@ export class CloudLogin extends LitElement {
               : ""}
 
             <ha-card
+              outlined
               .header=${this.hass.localize(
                 "ui.panel.config.cloud.login.sign_in"
               )}
@@ -112,7 +117,9 @@ export class CloudLogin extends LitElement {
                     "ui.panel.config.cloud.login.email"
                   )}
                   id="email"
+                  name="username"
                   type="email"
+                  autocomplete="username"
                   required
                   .value=${this.email}
                   @keydown=${this._keyDown}
@@ -123,11 +130,13 @@ export class CloudLogin extends LitElement {
                 ></ha-textfield>
                 <ha-textfield
                   id="password"
+                  name="password"
                   .label=${this.hass.localize(
                     "ui.panel.config.cloud.login.password"
                   )}
                   .value=${this._password || ""}
                   type="password"
+                  autocomplete="current-password"
                   required
                   minlength="8"
                   @keydown=${this._keyDown}
@@ -157,7 +166,7 @@ export class CloudLogin extends LitElement {
               </div>
             </ha-card>
 
-            <ha-card>
+            <ha-card outlined>
               <paper-item @click=${this._handleRegister}>
                 <paper-item-body two-line>
                   ${this.hass.localize(
@@ -205,10 +214,24 @@ export class CloudLogin extends LitElement {
     this._requestInProgress = true;
 
     try {
-      await cloudLogin(this.hass, email, password);
+      const result = await cloudLogin(this.hass, email, password);
       fireEvent(this, "ha-refresh-cloud-status");
       this.email = "";
       this._password = "";
+      if (result.cloud_pipeline) {
+        if (
+          await showConfirmationDialog(this, {
+            title: this.hass.localize(
+              "ui.panel.config.cloud.login.cloud_pipeline_title"
+            ),
+            text: this.hass.localize(
+              "ui.panel.config.cloud.login.cloud_pipeline_text"
+            ),
+          })
+        ) {
+          setAssistPipelinePreferred(this.hass, result.cloud_pipeline);
+        }
+      }
     } catch (err: any) {
       const errCode = err && err.body && err.body.code;
       if (errCode === "PasswordChangeRequired") {

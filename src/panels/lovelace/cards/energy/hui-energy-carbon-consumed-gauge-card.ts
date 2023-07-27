@@ -1,7 +1,7 @@
 import { mdiInformation } from "@mdi/js";
-import "@polymer/paper-tooltip";
+import "@lrnwebcomponents/simple-tooltip/simple-tooltip";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { styleMap } from "lit/directives/style-map";
 import { round } from "../../../../common/number/round";
@@ -13,13 +13,17 @@ import {
   energySourcesByType,
   getEnergyDataCollection,
 } from "../../../../data/energy";
-import { calculateStatisticsSumGrowth } from "../../../../data/history";
+import { calculateStatisticsSumGrowth } from "../../../../data/recorder";
 import { SubscribeMixin } from "../../../../mixins/subscribe-mixin";
 import type { HomeAssistant } from "../../../../types";
 import { createEntityNotFoundWarning } from "../../components/hui-warning";
 import type { LovelaceCard } from "../../types";
 import { severityMap } from "../hui-gauge-card";
 import type { EnergyCarbonGaugeCardConfig } from "../types";
+
+const FORMAT_OPTIONS = {
+  maximumFractionDigits: 0,
+};
 
 @customElement("hui-energy-carbon-consumed-gauge-card")
 class HuiEnergyCarbonGaugeCard
@@ -52,9 +56,9 @@ class HuiEnergyCarbonGaugeCard
     ];
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this._config || !this.hass) {
-      return html``;
+      return nothing;
     }
 
     if (!this._data) {
@@ -64,7 +68,7 @@ class HuiEnergyCarbonGaugeCard
     }
 
     if (!this._data.co2SignalEntity) {
-      return html``;
+      return nothing;
     }
 
     const co2State = this.hass.states[this._data.co2SignalEntity];
@@ -84,10 +88,6 @@ class HuiEnergyCarbonGaugeCard
     );
 
     let value: number | undefined;
-
-    if (totalGridConsumption === 0) {
-      value = 100;
-    }
 
     if (this._data.fossilEnergyConsumption && totalGridConsumption) {
       const highCarbonEnergy = this._data.fossilEnergyConsumption
@@ -122,18 +122,19 @@ class HuiEnergyCarbonGaugeCard
         ${value !== undefined
           ? html`
               <ha-svg-icon id="info" .path=${mdiInformation}></ha-svg-icon>
-              <paper-tooltip animation-delay="0" for="info" position="left">
+              <simple-tooltip animation-delay="0" for="info" position="left">
                 <span>
                   ${this.hass.localize(
                     "ui.panel.lovelace.cards.energy.carbon_consumed_gauge.card_indicates_energy_used"
                   )}
                 </span>
-              </paper-tooltip>
+              </simple-tooltip>
               <ha-gauge
                 min="0"
                 max="100"
                 .value=${value}
-                .locale=${this.hass!.locale}
+                .formatOptions=${FORMAT_OPTIONS}
+                .locale=${this.hass.locale}
                 label="%"
                 style=${styleMap({
                   "--gauge-color": this._computeSeverity(value),
@@ -141,12 +142,12 @@ class HuiEnergyCarbonGaugeCard
               ></ha-gauge>
               <div class="name">
                 ${this.hass.localize(
-                  "ui.panel.lovelace.cards.energy.carbon_consumed_gauge.non_fossil_energy_consumed"
+                  "ui.panel.lovelace.cards.energy.carbon_consumed_gauge.low_carbon_energy_consumed"
                 )}
               </div>
             `
           : html`${this.hass.localize(
-              "ui.panel.lovelace.cards.energy.carbon_consumed_gauge.non_fossil_energy_not_calculated"
+              "ui.panel.lovelace.cards.energy.carbon_consumed_gauge.low_carbon_energy_not_calculated"
             )}`}
       </ha-card>
     `;
@@ -198,11 +199,11 @@ class HuiEnergyCarbonGaugeCard
         top: 4px;
         color: var(--secondary-text-color);
       }
-      paper-tooltip > span {
+      simple-tooltip > span {
         font-size: 12px;
         line-height: 12px;
       }
-      paper-tooltip {
+      simple-tooltip {
         width: 80%;
         max-width: 250px;
         top: 8px !important;

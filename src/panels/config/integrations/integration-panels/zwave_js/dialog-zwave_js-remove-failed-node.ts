@@ -1,7 +1,7 @@
 import "@material/mwc-button/mwc-button";
 import { mdiCheckCircle, mdiCloseCircle, mdiRobotDead } from "@mdi/js";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { fireEvent } from "../../../../../common/dom/fire_event";
 import "../../../../../components/ha-circular-progress";
@@ -18,9 +18,7 @@ import { ZWaveJSRemoveFailedNodeDialogParams } from "./show-dialog-zwave_js-remo
 class DialogZWaveJSRemoveFailedNode extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @state() private entry_id?: string;
-
-  @state() private node_id?: number;
+  @state() private device_id?: string;
 
   @state() private _status = "";
 
@@ -38,13 +36,12 @@ class DialogZWaveJSRemoveFailedNode extends LitElement {
   public async showDialog(
     params: ZWaveJSRemoveFailedNodeDialogParams
   ): Promise<void> {
-    this.entry_id = params.entry_id;
-    this.node_id = params.node_id;
+    this.device_id = params.device_id;
   }
 
   public closeDialog(): void {
     this._unsubscribe();
-    this.entry_id = undefined;
+    this.device_id = undefined;
     this._status = "";
 
     fireEvent(this, "dialog-closed", { dialog: this.localName });
@@ -55,9 +52,9 @@ class DialogZWaveJSRemoveFailedNode extends LitElement {
     this.closeDialog();
   }
 
-  protected render(): TemplateResult {
-    if (!this.entry_id || !this.node_id) {
-      return html``;
+  protected render() {
+    if (!this.device_id) {
+      return nothing;
     }
 
     return html`
@@ -166,8 +163,7 @@ class DialogZWaveJSRemoveFailedNode extends LitElement {
     this._status = "started";
     this._subscribed = removeFailedZwaveNode(
       this.hass,
-      this.entry_id!,
-      this.node_id!,
+      this.device_id!,
       (message: any) => this._handleMessage(message)
     ).catch((error) => {
       this._status = "failed";

@@ -14,7 +14,7 @@ class DeveloperToolsRouter extends HassRouterPage {
     beforeRender: (page) => {
       if (!page || page === "not_found") {
         // If we can, we are going to restore the last visited page.
-        return this._currentPage ? this._currentPage : "state";
+        return this._currentPage ? this._currentPage : "yaml";
       }
       return undefined;
     },
@@ -52,6 +52,14 @@ class DeveloperToolsRouter extends HassRouterPage {
       webcmd: {
         tag: "developer-tools-webcmd",
         load: () => import("./webcmd/developer-tools-webcmd"),
+      },
+      yaml: {
+        tag: "developer-yaml-config",
+        load: () => import("./yaml_configuration/developer-yaml-config"),
+      },
+      assist: {
+        tag: "developer-tools-assist",
+        load: () => import("./assist/developer-tools-assist"),
       },
     },
   };

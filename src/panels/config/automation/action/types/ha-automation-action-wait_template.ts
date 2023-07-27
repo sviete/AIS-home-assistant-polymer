@@ -1,18 +1,16 @@
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators";
-import type { HaFormSchema } from "../../../../../components/ha-form/types";
 import type { WaitAction } from "../../../../../data/script";
 import type { HomeAssistant } from "../../../../../types";
 import type { ActionElement } from "../ha-automation-action-row";
 import "../../../../../components/ha-form/ha-form";
+import type { SchemaUnion } from "../../../../../components/ha-form/types";
 
-const SCHEMA: HaFormSchema[] = [
+const SCHEMA = [
   {
     name: "wait_template",
     selector: {
-      text: {
-        multiline: true,
-      },
+      template: {},
     },
   },
   {
@@ -26,7 +24,7 @@ const SCHEMA: HaFormSchema[] = [
     name: "continue_on_timeout",
     selector: { boolean: {} },
   },
-];
+] as const;
 
 @customElement("ha-automation-action-wait_template")
 export class HaWaitAction extends LitElement implements ActionElement {
@@ -34,8 +32,10 @@ export class HaWaitAction extends LitElement implements ActionElement {
 
   @property({ attribute: false }) public action!: WaitAction;
 
+  @property({ type: Boolean }) public disabled = false;
+
   public static get defaultConfig() {
-    return { wait_template: "" };
+    return { wait_template: "", continue_on_timeout: true };
   }
 
   protected render() {
@@ -44,12 +44,15 @@ export class HaWaitAction extends LitElement implements ActionElement {
         .hass=${this.hass}
         .data=${this.action}
         .schema=${SCHEMA}
+        .disabled=${this.disabled}
         .computeLabel=${this._computeLabelCallback}
       ></ha-form>
     `;
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema): string =>
+  private _computeLabelCallback = (
+    schema: SchemaUnion<typeof SCHEMA>
+  ): string =>
     this.hass.localize(
       `ui.panel.config.automation.editor.actions.type.wait_template.${
         schema.name === "continue_on_timeout" ? "continue_timeout" : schema.name

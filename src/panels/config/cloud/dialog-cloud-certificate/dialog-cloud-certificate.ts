@@ -1,8 +1,9 @@
 import "@material/mwc-button";
-import { css, CSSResultGroup, html, LitElement } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property } from "lit/decorators";
 import { formatDateTime } from "../../../../common/datetime/format_date_time";
 import { fireEvent } from "../../../../common/dom/fire_event";
+import { createCloseHeading } from "../../../../components/ha-dialog";
 import { haStyleDialog } from "../../../../resources/styles";
 import type { HomeAssistant } from "../../../../types";
 import type { CloudCertificateParams as CloudCertificateDialogParams } from "./show-dialog-cloud-certificate";
@@ -25,15 +26,20 @@ class DialogCloudCertificate extends LitElement {
 
   protected render() {
     if (!this._params) {
-      return html``;
+      return nothing;
     }
     const { certificateInfo } = this._params;
 
     return html`
       <ha-dialog
         open
-        .heading=${this.hass!.localize(
-          "ui.panel.config.cloud.dialog_certificate.certificate_information"
+        hideActions
+        @closed=${this.closeDialog}
+        .heading=${createCloseHeading(
+          this.hass,
+          this.hass.localize(
+            "ui.panel.config.cloud.dialog_certificate.certificate_information"
+          )
         )}
       >
         <div>
@@ -43,7 +49,8 @@ class DialogCloudCertificate extends LitElement {
             )}
             ${formatDateTime(
               new Date(certificateInfo.expire_date),
-              this.hass!.locale
+              this.hass!.locale,
+              this.hass!.config
             )}<br />
             (${this.hass!.localize(
               "ui.panel.config.cloud.dialog_certificate.will_be_auto_renewed"
@@ -75,6 +82,13 @@ class DialogCloudCertificate extends LitElement {
         }
         .break-word {
           overflow-wrap: break-word;
+        }
+        p {
+          margin-top: 0;
+          margin-bottom: 12px;
+        }
+        p:last-child {
+          margin-bottom: 0;
         }
       `,
     ];

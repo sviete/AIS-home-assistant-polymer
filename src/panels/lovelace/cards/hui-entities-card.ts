@@ -5,6 +5,7 @@ import {
   LitElement,
   PropertyValues,
   TemplateResult,
+  nothing,
 } from "lit";
 import { customElement, state } from "lit/decorators";
 import { DOMAINS_TOGGLE } from "../../../common/const";
@@ -178,9 +179,9 @@ class HuiEntitiesCard extends LitElement implements LovelaceCard {
     }
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this._config || !this._hass) {
-      return html``;
+      return nothing;
     }
 
     return html`
@@ -204,7 +205,7 @@ class HuiEntitiesCard extends LitElement implements LovelaceCard {
                   ${this._config.title}
                 </div>
                 ${!this._showHeaderToggle
-                  ? html``
+                  ? nothing
                   : html`
                       <hui-entities-toggle
                         .hass=${this._hass}
@@ -278,15 +279,15 @@ class HuiEntitiesCard extends LitElement implements LovelaceCard {
       }
 
       .header {
-        border-top-left-radius: var(--ha-card-border-radius, 2px);
-        border-top-right-radius: var(--ha-card-border-radius, 2px);
+        border-top-left-radius: var(--ha-card-border-radius, 12px);
+        border-top-right-radius: var(--ha-card-border-radius, 12px);
         margin-bottom: 16px;
         overflow: hidden;
       }
 
       .footer {
-        border-bottom-left-radius: var(--ha-card-border-radius, 2px);
-        border-bottom-right-radius: var(--ha-card-border-radius, 2px);
+        border-bottom-left-radius: var(--ha-card-border-radius, 12px);
+        border-bottom-right-radius: var(--ha-card-border-radius, 12px);
         margin-top: -16px;
         overflow: hidden;
       }

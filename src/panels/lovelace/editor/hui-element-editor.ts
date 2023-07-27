@@ -8,13 +8,13 @@ import {
   PropertyValues,
   TemplateResult,
 } from "lit";
-import { property, state, query } from "lit/decorators";
+import { property, query, state } from "lit/decorators";
 import { fireEvent } from "../../../common/dom/fire_event";
 import { handleStructError } from "../../../common/structs/handle-errors";
 import { deepEqual } from "../../../common/util/deep-equal";
+import "../../../components/ha-alert";
 import "../../../components/ha-circular-progress";
 import "../../../components/ha-code-editor";
-import "../../../components/ha-alert";
 import type { HaCodeEditor } from "../../../components/ha-code-editor";
 import type {
   LovelaceCardConfig,
@@ -23,13 +23,22 @@ import type {
 import type { HomeAssistant } from "../../../types";
 import type { LovelaceRowConfig } from "../entity-rows/types";
 import { LovelaceHeaderFooterConfig } from "../header-footer/types";
-import type { LovelaceGenericElementEditor } from "../types";
+import { LovelaceTileFeatureConfig } from "../tile-features/types";
+import type {
+  LovelaceConfigForm,
+  LovelaceGenericElementEditor,
+} from "../types";
+import type { HuiFormEditor } from "./config-elements/hui-form-editor";
 import "./config-elements/hui-generic-entity-row-editor";
 import { GUISupportError } from "./gui-support-error";
 import { EditSubElementEvent, GUIModeChangedEvent } from "./types";
 
 export interface ConfigChangedEvent {
-  config: LovelaceCardConfig | LovelaceRowConfig | LovelaceHeaderFooterConfig;
+  config:
+    | LovelaceCardConfig
+    | LovelaceRowConfig
+    | LovelaceHeaderFooterConfig
+    | LovelaceTileFeatureConfig;
   error?: string;
   guiModeAvailable?: boolean;
 }
@@ -44,14 +53,20 @@ declare global {
 
 export interface UIConfigChangedEvent extends Event {
   detail: {
-    config: LovelaceCardConfig | LovelaceRowConfig | LovelaceHeaderFooterConfig;
+    config:
+      | LovelaceCardConfig
+      | LovelaceRowConfig
+      | LovelaceHeaderFooterConfig
+      | LovelaceTileFeatureConfig;
   };
 }
 
-export abstract class HuiElementEditor<T> extends LitElement {
+export abstract class HuiElementEditor<T, C = any> extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property({ attribute: false }) public lovelace?: LovelaceConfig;
+
+  @property({ attribute: false }) public context?: C;
 
   @state() private _yaml?: string;
 
@@ -171,6 +186,10 @@ export abstract class HuiElementEditor<T> extends LitElement {
     return undefined;
   }
 
+  protected async getConfigForm(): Promise<LovelaceConfigForm | undefined> {
+    return undefined;
+  }
+
   protected get configElementType(): string | undefined {
     return this.value ? (this.value as any).type : undefined;
   }
@@ -198,6 +217,7 @@ export abstract class HuiElementEditor<T> extends LitElement {
                   mode="yaml"
                   autofocus
                   autocomplete-entities
+                  autocomplete-icons
                   .hass=${this.hass}
                   .value=${this.yaml}
                   .error=${Boolean(this._errors)}
@@ -265,11 +285,19 @@ export abstract class HuiElementEditor<T> extends LitElement {
     ) {
       this._configElement.lovelace = this.lovelace;
     }
+    if (this._configElement && changedProperties.has("context")) {
+      this._configElement.context = this.context;
+    }
   }
 
   private _handleUIConfigChanged(ev: UIConfigChangedEvent) {
     ev.stopPropagation();
     const config = ev.detail.config;
+    Object.keys(config).forEach((key) => {
+      if (config[key] === undefined) {
+        delete config[key];
+      }
+    });
     this.value = config as unknown as T;
   }
 
@@ -308,11 +336,31 @@ export abstract class HuiElementEditor<T> extends LitElement {
         this._loading = true;
         configElement = await this.getConfigElement();
 
+        if (!configElement) {
+          const form = await this.getConfigForm();
+          if (form) {
+            await import("./config-elements/hui-form-editor");
+            configElement = document.createElement("hui-form-editor");
+            const { schema, assertConfig, computeLabel, computeHelper } = form;
+            (configElement as HuiFormEditor).schema = schema;
+            if (computeLabel) {
+              (configElement as HuiFormEditor).computeLabel = computeLabel;
+            }
+            if (computeHelper) {
+              (configElement as HuiFormEditor).computeHelper = computeHelper;
+            }
+            if (assertConfig) {
+              (configElement as HuiFormEditor).assertConfig = assertConfig;
+            }
+          }
+        }
+
         if (configElement) {
           configElement.hass = this.hass;
           if ("lovelace" in configElement) {
             configElement.lovelace = this.lovelace;
           }
+          configElement.context = this.context;
           configElement.addEventListener("config-changed", (ev) =>
             this._handleUIConfigChanged(ev as UIConfigChangedEvent)
           );

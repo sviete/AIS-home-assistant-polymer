@@ -1,7 +1,7 @@
 import "@material/mwc-button/mwc-button";
 import { mdiCheckCircle, mdiCloseCircle } from "@mdi/js";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { fireEvent } from "../../../../../common/dom/fire_event";
 import "../../../../../components/ha-circular-progress";
@@ -12,7 +12,7 @@ import {
   Cluster,
   ClusterConfigurationEvent,
   ClusterConfigurationStatus,
-  fetchClustersForZhaNode,
+  fetchClustersForZhaDevice,
   reconfigureNode,
   ZHA_CHANNEL_CFG_DONE,
   ZHA_CHANNEL_MSG_BIND,
@@ -59,9 +59,9 @@ class DialogZHAReconfigureDevice extends LitElement {
     fireEvent(this, "dialog-closed", { dialog: this.localName });
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this._params) {
-      return html``;
+      return nothing;
     }
 
     return html`
@@ -72,7 +72,7 @@ class DialogZHAReconfigureDevice extends LitElement {
           this.hass,
           this.hass.localize(`ui.dialogs.zha_reconfigure_device.heading`) +
             ": " +
-            (this._params?.device.user_given_name || this._params?.device.name)
+            (this._params.device.user_given_name || this._params.device.name)
         )}
       >
         ${!this._status
@@ -321,16 +321,16 @@ class DialogZHAReconfigureDevice extends LitElement {
       return;
     }
     this._clusterConfigurationStatuses = new Map(
-      (await fetchClustersForZhaNode(this.hass, this._params.device.ieee)).map(
-        (cluster: Cluster) => [
-          cluster.id,
-          {
-            cluster: cluster,
-            bindSuccess: undefined,
-            attributes: new Map<number, AttributeConfigurationStatus>(),
-          },
-        ]
-      )
+      (
+        await fetchClustersForZhaDevice(this.hass, this._params.device.ieee)
+      ).map((cluster: Cluster) => [
+        cluster.id,
+        {
+          cluster: cluster,
+          bindSuccess: undefined,
+          attributes: new Map<number, AttributeConfigurationStatus>(),
+        },
+      ])
     );
     this._subscribe(this._params);
     this._status = "started";

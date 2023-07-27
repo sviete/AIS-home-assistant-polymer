@@ -1,11 +1,10 @@
-import "@polymer/iron-icon/iron-icon";
 import {
   css,
   CSSResultGroup,
   html,
   LitElement,
   PropertyValues,
-  TemplateResult,
+  nothing,
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { fireEvent } from "../common/dom/fire_event";
@@ -61,12 +60,13 @@ export class HaIcon extends LitElement {
     }
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.icon) {
-      return html``;
+      return nothing;
     }
     if (this._legacy) {
-      return html`<iron-icon .icon=${this.icon}></iron-icon>`;
+      return html`<!-- @ts-ignore we don't provice the iron-icon element -->
+        <iron-icon .icon=${this.icon}></iron-icon>`;
     }
     return html`<ha-svg-icon
       .path=${this._path}
@@ -88,8 +88,8 @@ export class HaIcon extends LitElement {
     }
 
     if (!MDI_PREFIXES.includes(iconPrefix)) {
-      if (iconPrefix in customIcons) {
-        const customIcon = customIcons[iconPrefix];
+      const customIcon = customIcons[iconPrefix];
+      if (customIcon) {
         if (customIcon && typeof customIcon.getIcon === "function") {
           this._setCustomPath(customIcon.getIcon(iconName), requestedIcon);
         }

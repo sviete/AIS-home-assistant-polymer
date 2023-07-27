@@ -1,3 +1,4 @@
+import { consume } from "@lit-labs/context";
 import { css, html, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
@@ -5,12 +6,14 @@ import { fireEvent } from "../../../../../common/dom/fire_event";
 import "../../../../../components/device/ha-device-condition-picker";
 import "../../../../../components/device/ha-device-picker";
 import "../../../../../components/ha-form/ha-form";
+import { fullEntitiesContext } from "../../../../../data/context";
 import {
   deviceAutomationsEqual,
   DeviceCapabilities,
   DeviceCondition,
   fetchDeviceConditionCapabilities,
 } from "../../../../../data/device_automation";
+import { EntityRegistryEntry } from "../../../../../data/entity_registry";
 import type { HomeAssistant } from "../../../../../types";
 
 @customElement("ha-automation-condition-device")
@@ -19,9 +22,15 @@ export class HaDeviceCondition extends LitElement {
 
   @property({ type: Object }) public condition!: DeviceCondition;
 
+  @property({ type: Boolean }) public disabled = false;
+
   @state() private _deviceId?: string;
 
   @state() private _capabilities?: DeviceCapabilities;
+
+  @state()
+  @consume({ context: fullEntitiesContext, subscribe: true })
+  _entityReg!: EntityRegistryEntry[];
 
   private _origCondition?: DeviceCondition;
 
@@ -53,7 +62,8 @@ export class HaDeviceCondition extends LitElement {
         .value=${deviceId}
         @value-changed=${this._devicePicked}
         .hass=${this.hass}
-        label=${this.hass.localize(
+        .disabled=${this.disabled}
+        .label=${this.hass.localize(
           "ui.panel.config.automation.editor.conditions.type.device.label"
         )}
       ></ha-device-picker>
@@ -62,7 +72,8 @@ export class HaDeviceCondition extends LitElement {
         .deviceId=${deviceId}
         @value-changed=${this._deviceConditionPicked}
         .hass=${this.hass}
-        label=${this.hass.localize(
+        .disabled=${this.disabled}
+        .label=${this.hass.localize(
           "ui.panel.config.automation.editor.conditions.type.device.condition"
         )}
       ></ha-device-condition-picker>
@@ -72,6 +83,7 @@ export class HaDeviceCondition extends LitElement {
               .hass=${this.hass}
               .data=${this._extraFieldsData(this.condition, this._capabilities)}
               .schema=${this._capabilities.extra_fields}
+              .disabled=${this.disabled}
               .computeLabel=${this._extraFieldsComputeLabelCallback(
                 this.hass.localize
               )}
@@ -95,7 +107,7 @@ export class HaDeviceCondition extends LitElement {
     const prevCondition = changedPros.get("condition");
     if (
       prevCondition &&
-      !deviceAutomationsEqual(prevCondition, this.condition)
+      !deviceAutomationsEqual(this._entityReg, prevCondition, this.condition)
     ) {
       this._getCapabilities();
     }
@@ -124,7 +136,7 @@ export class HaDeviceCondition extends LitElement {
     let condition = ev.detail.value;
     if (
       this._origCondition &&
-      deviceAutomationsEqual(this._origCondition, condition)
+      deviceAutomationsEqual(this._entityReg, this._origCondition, condition)
     ) {
       condition = this._origCondition;
     }
@@ -153,6 +165,10 @@ export class HaDeviceCondition extends LitElement {
     ha-device-picker {
       display: block;
       margin-bottom: 24px;
+    }
+
+    ha-form {
+      margin-top: 24px;
     }
   `;
 }

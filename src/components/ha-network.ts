@@ -1,5 +1,5 @@
 import { mdiStar } from "@mdi/js";
-import "@polymer/paper-tooltip/paper-tooltip";
+import "@lrnwebcomponents/simple-tooltip/simple-tooltip";
 import {
   css,
   CSSResultGroup,
@@ -54,9 +54,9 @@ export class HaNetwork extends LitElement {
 
   @state() private _expanded?: boolean;
 
-  protected render(): TemplateResult {
+  protected render() {
     if (this.networkConfig === undefined) {
-      return html``;
+      return nothing;
     }
     const configured_adapters = this.networkConfig.configured_adapters || [];
     return html`
@@ -163,6 +163,9 @@ export class HaNetwork extends LitElement {
 
         ha-settings-row {
           padding: 0;
+          --paper-time-input-justify-content: flex-end;
+          --settings-row-content-display: contents;
+          --settings-row-prefix-display: contents;
         }
 
         span[slot="heading"],

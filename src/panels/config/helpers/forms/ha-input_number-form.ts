@@ -1,14 +1,14 @@
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { fireEvent } from "../../../../common/dom/fire_event";
+import "../../../../components/ha-formfield";
 import "../../../../components/ha-icon-picker";
+import "../../../../components/ha-radio";
+import type { HaRadio } from "../../../../components/ha-radio";
 import "../../../../components/ha-textfield";
 import { InputNumber } from "../../../../data/input_number";
 import { haStyle } from "../../../../resources/styles";
 import { HomeAssistant } from "../../../../types";
-import "../../../../components/ha-formfield";
-import "../../../../components/ha-radio";
-import type { HaRadio } from "../../../../components/ha-radio";
 
 @customElement("ha-input_number-form")
 class HaInputNumberForm extends LitElement {
@@ -33,6 +33,8 @@ class HaInputNumberForm extends LitElement {
   // eslint-disable-next-line: variable-name
   @state() private _unit_of_measurement?: string;
 
+  /* Configuring initial value is intentionally not supported because the behavior
+     compared to restoring the value after restart is hard to explain */
   set item(item: InputNumber) {
     this._item = item;
     if (item) {
@@ -65,11 +67,10 @@ class HaInputNumberForm extends LitElement {
     );
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass) {
-      return html``;
+      return nothing;
     }
-    const nameInvalid = !this._name || this._name.trim() === "";
 
     return html`
       <div class="form">
@@ -80,13 +81,15 @@ class HaInputNumberForm extends LitElement {
           .label=${this.hass!.localize(
             "ui.dialogs.helper_settings.generic.name"
           )}
-          .errorMessage=${this.hass!.localize(
+          autoValidate
+          required
+          .validationMessage=${this.hass!.localize(
             "ui.dialogs.helper_settings.required_error_msg"
           )}
-          .invalid=${nameInvalid}
           dialogInitialFocus
         ></ha-textfield>
         <ha-icon-picker
+          .hass=${this.hass}
           .value=${this._icon}
           .configValue=${"icon"}
           @value-changed=${this._valueChanged}
@@ -98,6 +101,7 @@ class HaInputNumberForm extends LitElement {
           .value=${this._min}
           .configValue=${"min"}
           type="number"
+          step="any"
           @input=${this._valueChanged}
           .label=${this.hass!.localize(
             "ui.dialogs.helper_settings.input_number.min"
@@ -107,6 +111,7 @@ class HaInputNumberForm extends LitElement {
           .value=${this._max}
           .configValue=${"max"}
           type="number"
+          step="any"
           @input=${this._valueChanged}
           .label=${this.hass!.localize(
             "ui.dialogs.helper_settings.input_number.max"
@@ -147,6 +152,7 @@ class HaInputNumberForm extends LitElement {
                 .value=${this._step}
                 .configValue=${"step"}
                 type="number"
+                step="any"
                 @input=${this._valueChanged}
                 .label=${this.hass!.localize(
                   "ui.dialogs.helper_settings.input_number.step"

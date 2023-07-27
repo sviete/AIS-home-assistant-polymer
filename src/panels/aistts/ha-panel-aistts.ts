@@ -227,12 +227,6 @@ export class HaPanelAisTts extends LitElement {
                 ></paper-textarea>
                 ${this.hass.user!.is_admin
                   ? html`
-                      <!-- <paper-listbox
-                            slot="dropdown-content"
-                            attr-for-selected="voice"
-                            .selected=${this._selectedVoice}
-                            @iron-select=${this._setVoice}
-                          > -->
                       <div class="AisTtsLang">
                         <mwc-select
                           label="Głos"
@@ -409,7 +403,8 @@ export class HaPanelAisTts extends LitElement {
                     `
                   : ""}
               </ha-card>`
-            : html``}
+            : html`
+            `}
         </div>
       </ha-app-layout>
     `;
@@ -441,7 +436,8 @@ export class HaPanelAisTts extends LitElement {
 
   private _renderItems(items: AisTtsItem[]) {
     if (items === undefined) {
-      return html``;
+      return html`
+      `;
     }
 
     return html` ${this.hass.user!.is_admin
@@ -453,7 +449,8 @@ export class HaPanelAisTts extends LitElement {
               ></ha-icon-button>
             </div>
             <div class="divider"></div>`
-        : html``}
+        : html`
+        `}
       <div class="checked">
         <span> Dostępne pozycje </span>
       </div>

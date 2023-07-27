@@ -1,5 +1,5 @@
 /* eslint-disable lit/no-template-arrow */
-import { LitElement, TemplateResult, html } from "lit";
+import { LitElement, TemplateResult, html, css } from "lit";
 import { customElement, state } from "lit/decorators";
 import { provideHass } from "../../../../src/fake_data/provide_hass";
 import type { HomeAssistant } from "../../../../src/types";
@@ -19,11 +19,13 @@ import { HaTemplateTrigger } from "../../../../src/panels/config/automation/trig
 import { HaTimeTrigger } from "../../../../src/panels/config/automation/trigger/types/ha-automation-trigger-time";
 import { HaTimePatternTrigger } from "../../../../src/panels/config/automation/trigger/types/ha-automation-trigger-time_pattern";
 import { HaWebhookTrigger } from "../../../../src/panels/config/automation/trigger/types/ha-automation-trigger-webhook";
+import { HaPersistentNotificationTrigger } from "../../../../src/panels/config/automation/trigger/types/ha-automation-trigger-persistent_notification";
 import { HaZoneTrigger } from "../../../../src/panels/config/automation/trigger/types/ha-automation-trigger-zone";
 import { HaDeviceTrigger } from "../../../../src/panels/config/automation/trigger/types/ha-automation-trigger-device";
 import { HaStateTrigger } from "../../../../src/panels/config/automation/trigger/types/ha-automation-trigger-state";
 import { HaMQTTTrigger } from "../../../../src/panels/config/automation/trigger/types/ha-automation-trigger-mqtt";
 import "../../../../src/panels/config/automation/trigger/ha-automation-trigger";
+import { HaConversationTrigger } from "../../../../src/panels/config/automation/trigger/types/ha-automation-trigger-conversation";
 
 const SCHEMAS: { name: string; triggers: Trigger[] }[] = [
   {
@@ -73,6 +75,16 @@ const SCHEMAS: { name: string; triggers: Trigger[] }[] = [
   },
 
   {
+    name: "Persistent Notification",
+    triggers: [
+      {
+        platform: "persistent_notification",
+        ...HaPersistentNotificationTrigger.defaultConfig,
+      },
+    ],
+  },
+
+  {
     name: "Zone",
     triggers: [{ platform: "zone", ...HaZoneTrigger.defaultConfig }],
   },
@@ -101,11 +113,23 @@ const SCHEMAS: { name: string; triggers: Trigger[] }[] = [
     name: "Device Trigger",
     triggers: [{ platform: "device", ...HaDeviceTrigger.defaultConfig }],
   },
+  {
+    name: "Sentence",
+    triggers: [
+      { platform: "conversation", ...HaConversationTrigger.defaultConfig },
+      {
+        platform: "conversation",
+        command: ["Turn on the lights", "Turn the lights on"],
+      },
+    ],
+  },
 ];
 
 @customElement("demo-automation-editor-trigger")
 class DemoHaAutomationEditorTrigger extends LitElement {
   @state() private hass!: HomeAssistant;
+
+  @state() private _disabled = false;
 
   private data: any = SCHEMAS.map((info) => info.triggers);
 
@@ -127,6 +151,15 @@ class DemoHaAutomationEditorTrigger extends LitElement {
       this.requestUpdate();
     };
     return html`
+      <div class="options">
+        <ha-formfield label="Disabled">
+          <ha-switch
+            .name=${"disabled"}
+            .checked=${this._disabled}
+            @change=${this._handleOptionChange}
+          ></ha-switch>
+        </ha-formfield>
+      </div>
       ${SCHEMAS.map(
         (info, sampleIdx) => html`
           <demo-black-white-row
@@ -141,6 +174,7 @@ class DemoHaAutomationEditorTrigger extends LitElement {
                     .hass=${this.hass}
                     .triggers=${this.data[sampleIdx]}
                     .sampleIdx=${sampleIdx}
+                    .disabled=${this._disabled}
                     @value-changed=${valueChanged}
                   ></ha-automation-trigger>
                 `
@@ -150,6 +184,20 @@ class DemoHaAutomationEditorTrigger extends LitElement {
       )}
     `;
   }
+
+  private _handleOptionChange(ev) {
+    this[`_${ev.target.name}`] = ev.target.checked;
+  }
+
+  static styles = css`
+    .options {
+      max-width: 800px;
+      margin: 16px auto;
+    }
+    .options ha-formfield {
+      margin-right: 16px;
+    }
+  `;
 }
 
 declare global {

@@ -1,15 +1,16 @@
-import "../../../components/ha-alert";
-import "../../../components/ha-faded";
 import "@material/mwc-button/mwc-button";
 import "@material/mwc-linear-progress/mwc-linear-progress";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
+import { BINARY_STATE_OFF } from "../../../common/const";
 import { supportsFeature } from "../../../common/entity/supports-feature";
+import "../../../components/ha-alert";
 import "../../../components/ha-checkbox";
 import "../../../components/ha-circular-progress";
+import "../../../components/ha-faded";
 import "../../../components/ha-formfield";
 import "../../../components/ha-markdown";
-import { UNAVAILABLE_STATES } from "../../../data/entity";
+import { isUnavailableState } from "../../../data/entity";
 import {
   UpdateEntity,
   updateIsInstalling,
@@ -32,13 +33,13 @@ class MoreInfoUpdate extends LitElement {
 
   @state() private _error?: string;
 
-  protected render(): TemplateResult {
+  protected render() {
     if (
       !this.hass ||
       !this.stateObj ||
-      UNAVAILABLE_STATES.includes(this.stateObj.state)
+      isUnavailableState(this.stateObj.state)
     ) {
-      return html``;
+      return nothing;
     }
 
     const skippedVersion =
@@ -56,13 +57,10 @@ class MoreInfoUpdate extends LitElement {
             ></mwc-linear-progress>`
           : html`<mwc-linear-progress indeterminate></mwc-linear-progress>`
         : ""}
-      ${this.stateObj.attributes.title
-        ? html`<h3>${this.stateObj.attributes.title}</h3>`
-        : ""}
+      <h3>${this.stateObj.attributes.title}</h3>
       ${this._error
         ? html`<ha-alert alert-type="error">${this._error}</ha-alert>`
         : ""}
-
       <div class="row">
         <div class="key">
           ${this.hass.localize(
@@ -132,11 +130,20 @@ class MoreInfoUpdate extends LitElement {
       <div class="actions">
         ${this.stateObj.attributes.auto_update
           ? ""
+          : this.stateObj.state === BINARY_STATE_OFF &&
+            this.stateObj.attributes.skipped_version
+          ? html`
+              <mwc-button @click=${this._handleClearSkipped}>
+                ${this.hass.localize(
+                  "ui.dialogs.more_info_control.update.clear_skipped"
+                )}
+              </mwc-button>
+            `
           : html`
               <mwc-button
                 @click=${this._handleSkip}
                 .disabled=${skippedVersion ||
-                this.stateObj.state === "off" ||
+                this.stateObj.state === BINARY_STATE_OFF ||
                 updateIsInstalling(this.stateObj)}
               >
                 ${this.hass.localize(
@@ -148,7 +155,7 @@ class MoreInfoUpdate extends LitElement {
           ? html`
               <mwc-button
                 @click=${this._handleInstall}
-                .disabled=${(this.stateObj.state === "off" &&
+                .disabled=${(this.stateObj.state === BINARY_STATE_OFF &&
                   !skippedVersion) ||
                 updateIsInstalling(this.stateObj)}
               >
@@ -210,6 +217,12 @@ class MoreInfoUpdate extends LitElement {
     });
   }
 
+  private _handleClearSkipped(): void {
+    this.hass.callService("update", "clear_skipped", {
+      entity_id: this.stateObj!.entity_id,
+    });
+  }
+
   static get styles(): CSSResultGroup {
     return css`
       hr {
@@ -244,8 +257,11 @@ class MoreInfoUpdate extends LitElement {
         justify-content: center;
       }
       mwc-linear-progress {
-        margin-bottom: -10px;
-        margin-top: -10px;
+        margin-bottom: -8px;
+        margin-top: 4px;
+      }
+      ha-markdown {
+        direction: ltr;
       }
     `;
   }

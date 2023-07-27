@@ -1,4 +1,4 @@
-import { addHours } from "date-fns";
+import { addHours } from "date-fns/esm";
 import "@material/mwc-button";
 import {
   mdiClipboardTextMultipleOutline,
@@ -18,6 +18,7 @@ import "../../../components/ha-code-editor";
 import "../../../components/ha-icon-button";
 import "../../../components/ha-svg-icon";
 import "../../../components/ha-checkbox";
+import "../../../components/ha-tip";
 import "../../../components/search-input";
 import "../../../components/ha-expansion-panel";
 import { showAlertDialog } from "../../../dialogs/generic/show-dialog-box";
@@ -40,6 +41,10 @@ class HaPanelDevState extends EventsMixin(LocalizeMixin(PolymerElement)) {
           -moz-user-select: initial;
           display: block;
           padding: 16px;
+          padding: max(16px, env(safe-area-inset-top))
+            max(16px, env(safe-area-inset-right))
+            max(16px, env(safe-area-inset-bottom))
+            max(16px, env(safe-area-inset-left));
         }
 
         ha-textfield {
@@ -90,6 +95,10 @@ class HaPanelDevState extends EventsMixin(LocalizeMixin(PolymerElement)) {
           display: block;
           --mdc-text-field-fill-color: transparent;
         }
+        ha-tip {
+          display: flex;
+          padding: 8px 0;
+        }
 
         th.attributes {
           position: relative;
@@ -102,6 +111,10 @@ class HaPanelDevState extends EventsMixin(LocalizeMixin(PolymerElement)) {
 
         :host([rtl]) .entities th {
           text-align: right;
+          direction: rtl;
+        }
+
+        :host([rtl]) .filters {
           direction: rtl;
         }
 
@@ -180,7 +193,9 @@ class HaPanelDevState extends EventsMixin(LocalizeMixin(PolymerElement)) {
               value="{{_entityId}}"
               on-change="entityIdChanged"
               allow-custom-entity
+              item-label-path="entity_id"
             ></ha-entity-picker>
+            <ha-tip hass="[[hass]]">[[localize('ui.tips.key_e_hint')]]</ha-tip>
             <ha-textfield
               label="[[localize('ui.panel.developer-tools.tabs.states.state')]]"
               required
@@ -613,14 +628,16 @@ class HaPanelDevState extends EventsMixin(LocalizeMixin(PolymerElement)) {
   lastChangedString(entity) {
     return formatDateTimeWithSeconds(
       new Date(entity.last_changed),
-      this.hass.locale
+      this.hass.locale,
+      this.hass.config
     );
   }
 
   lastUpdatedString(entity) {
     return formatDateTimeWithSeconds(
       new Date(entity.last_updated),
-      this.hass.locale
+      this.hass.locale,
+      this.hass.config
     );
   }
 

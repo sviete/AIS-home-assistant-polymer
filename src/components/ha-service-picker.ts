@@ -1,6 +1,6 @@
 import { html, LitElement } from "lit";
-import { ComboBoxLitRenderer } from "lit-vaadin-helpers";
-import { property, state } from "lit/decorators";
+import { ComboBoxLitRenderer } from "@vaadin/combo-box/lit";
+import { customElement, property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { fireEvent } from "../common/dom/fire_event";
 import { LocalizeFunc } from "../common/translations/localize";
@@ -17,8 +17,11 @@ const rowRenderer: ComboBoxLitRenderer<{ service: string; name: string }> = (
   >
 </mwc-list-item>`;
 
+@customElement("ha-service-picker")
 class HaServicePicker extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
+
+  @property({ type: Boolean }) public disabled = false;
 
   @property() public value?: string;
 
@@ -35,6 +38,7 @@ class HaServicePicker extends LitElement {
           this._filter
         )}
         .value=${this.value}
+        .disabled=${this.disabled}
         .renderer=${rowRenderer}
         item-value-path="service"
         item-label-path="name"
@@ -109,8 +113,6 @@ class HaServicePicker extends LitElement {
     fireEvent(this, "value-changed", { value: this.value });
   }
 }
-
-customElements.define("ha-service-picker", HaServicePicker);
 
 declare global {
   interface HTMLElementTagNameMap {

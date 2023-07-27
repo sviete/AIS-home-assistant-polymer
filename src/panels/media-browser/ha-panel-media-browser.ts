@@ -1,6 +1,4 @@
 import { mdiArrowLeft } from "@mdi/js";
-import "@polymer/app-layout/app-header/app-header";
-import "@polymer/app-layout/app-toolbar/app-toolbar";
 import "@material/mwc-button";
 import {
   css,
@@ -11,11 +9,12 @@ import {
   TemplateResult,
 } from "lit";
 import { customElement, property, query, state } from "lit/decorators";
-import { LocalStorage } from "../../common/decorators/local-storage";
+import { storage } from "../../common/decorators/storage";
 import { fireEvent, HASSDomEvent } from "../../common/dom/fire_event";
 import { navigate } from "../../common/navigate";
 import "../../components/ha-menu-button";
 import "../../components/ha-icon-button";
+import "../../components/ha-icon-button-arrow-prev";
 import "../../components/media-player/ha-media-player-browse";
 import "../../components/media-player/ha-media-manage-button";
 import type {
@@ -26,12 +25,12 @@ import {
   BROWSER_PLAYER,
   MediaPickedEvent,
   MediaPlayerItem,
+  mediaPlayerPlayMedia,
 } from "../../data/media-player";
 import {
   ResolvedMediaSource,
   resolveMediaSource,
 } from "../../data/media_source";
-import "../../layouts/ha-app-layout";
 import { haStyle } from "../../resources/styles";
 import type { HomeAssistant, Route } from "../../types";
 import "./ha-bar-media-player";
@@ -42,6 +41,7 @@ import {
   getEntityIdFromCameraMediaSource,
   isCameraMediaSource,
 } from "../../data/camera";
+import "../../components/ha-top-app-bar-fixed";
 
 const createMediaPanelUrl = (entityId: string, items: MediaPlayerItemId[]) => {
   let path = `/media-browser/${entityId}`;
@@ -71,7 +71,11 @@ class PanelMediaBrowser extends LitElement {
     },
   ];
 
-  @LocalStorage("mediaBrowseEntityId", true, false)
+  @storage({
+    key: "mediaBrowseEntityId",
+    state: true,
+    subscribe: false,
+  })
   private _entityId = BROWSER_PLAYER;
 
   @query("ha-media-player-browse") private _browser!: HaMediaPlayerBrowse;
@@ -80,36 +84,35 @@ class PanelMediaBrowser extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <ha-app-layout>
-        <app-header fixed slot="header">
-          <app-toolbar>
-            ${this._navigateIds.length > 1
-              ? html`
-                  <ha-icon-button
-                    .path=${mdiArrowLeft}
-                    @click=${this._goBack}
-                  ></ha-icon-button>
-                `
-              : html`
-                  <ha-menu-button
-                    .hass=${this.hass}
-                    .narrow=${this.narrow}
-                  ></ha-menu-button>
-                `}
-            <div main-title>
-              ${!this._currentItem
-                ? this.hass.localize(
-                    "ui.components.media-browser.media-player-browser"
-                  )
-                : this._currentItem.title}
-            </div>
-            <ha-media-manage-button
-              .hass=${this.hass}
-              .currentItem=${this._currentItem}
-              @media-refresh=${this._refreshMedia}
-            ></ha-media-manage-button>
-          </app-toolbar>
-        </app-header>
+      <ha-top-app-bar-fixed>
+        ${this._navigateIds.length > 1
+          ? html`
+              <ha-icon-button-arrow-prev
+                slot="navigationIcon"
+                .path=${mdiArrowLeft}
+                @click=${this._goBack}
+              ></ha-icon-button-arrow-prev>
+            `
+          : html`
+              <ha-menu-button
+                slot="navigationIcon"
+                .hass=${this.hass}
+                .narrow=${this.narrow}
+              ></ha-menu-button>
+            `}
+        <div slot="title">
+          ${!this._currentItem
+            ? this.hass.localize(
+                "ui.components.media-browser.media-player-browser"
+              )
+            : this._currentItem.title}
+        </div>
+        <ha-media-manage-button
+          slot="actionItems"
+          .hass=${this.hass}
+          .currentItem=${this._currentItem}
+          @media-refresh=${this._refreshMedia}
+        ></ha-media-manage-button>
         <ha-media-player-browse
           .hass=${this.hass}
           .entityId=${this._entityId}
@@ -117,7 +120,7 @@ class PanelMediaBrowser extends LitElement {
           @media-picked=${this._mediaPicked}
           @media-browsed=${this._mediaBrowsed}
         ></ha-media-player-browse>
-      </ha-app-layout>
+      </ha-top-app-bar-fixed>
       <ha-bar-media-player
         .hass=${this.hass}
         .entityId=${this._entityId}
@@ -170,11 +173,12 @@ class PanelMediaBrowser extends LitElement {
         media_content_id: undefined,
       },
       ...navigateIdsEncoded.map((navigateId) => {
-        const [media_content_type, media_content_id] =
-          decodeURIComponent(navigateId).split(",");
+        const decoded = decodeURIComponent(navigateId);
+        // Don't use split because media_content_id could contain commas
+        const delimiter = decoded.indexOf(",");
         return {
-          media_content_type,
-          media_content_id,
+          media_content_type: decoded.substring(0, delimiter),
+          media_content_id: decoded.substring(delimiter + 1),
         };
       }),
     ];
@@ -206,11 +210,12 @@ class PanelMediaBrowser extends LitElement {
     if (this._entityId !== BROWSER_PLAYER) {
       this._player.showResolvingNewMediaPicked();
       try {
-        await this.hass!.callService("media_player", "play_media", {
-          entity_id: this._entityId,
-          media_content_id: item.media_content_id,
-          media_content_type: item.media_content_type,
-        });
+        await mediaPlayerPlayMedia(
+          this.hass,
+          this._entityId,
+          item.media_content_id,
+          item.media_content_type
+        );
       } catch (err) {
         this._player.hideResolvingNewMediaPicked();
       }
@@ -271,12 +276,13 @@ class PanelMediaBrowser extends LitElement {
     return [
       haStyle,
       css`
-        app-toolbar {
+        ha-media-manage-button {
           --mdc-theme-primary: var(--app-header-text-color);
         }
 
         ha-media-player-browse {
           height: calc(100vh - (100px + var(--header-height)));
+          direction: ltr;
         }
 
         :host([narrow]) ha-media-player-browse {
@@ -284,10 +290,8 @@ class PanelMediaBrowser extends LitElement {
         }
 
         ha-bar-media-player {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
+          position: fixed;
+          width: var(--mdc-top-app-bar-width, 100%);
         }
       `,
     ];

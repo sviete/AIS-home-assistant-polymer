@@ -1,6 +1,7 @@
 import { PropertyValues, ReactiveElement } from "lit";
 import { property } from "lit/decorators";
 import { navigate, NavigateOptions } from "../../common/navigate";
+import { deepEqual } from "../../common/util/deep-equal";
 import { CustomPanelInfo } from "../../data/panel_custom";
 import { HomeAssistant, Route } from "../../types";
 import { createCustomPanelElement } from "../../util/custom-panel/create-custom-panel-element";
@@ -11,6 +12,9 @@ import {
 import { setCustomPanelProperties } from "../../util/custom-panel/set-custom-panel-properties";
 
 declare global {
+  interface HTMLElementTagNameMap {
+    "ha-panel-custom": HaPanelCustom;
+  }
   interface Window {
     customPanel: HaPanelCustom | undefined;
   }
@@ -54,12 +58,15 @@ export class HaPanelCustom extends ReactiveElement {
   protected update(changedProps: PropertyValues) {
     super.update(changedProps);
     if (changedProps.has("panel")) {
-      // Clean up old things if we had a panel
-      if (changedProps.get("panel")) {
-        this._cleanupPanel();
+      // Clean up old things if we had a panel and the new one is different.
+      const oldPanel = changedProps.get("panel") as CustomPanelInfo | undefined;
+      if (!deepEqual(oldPanel, this.panel)) {
+        if (oldPanel) {
+          this._cleanupPanel();
+        }
+        this._createPanel(this.panel);
+        return;
       }
-      this._createPanel(this.panel);
-      return;
     }
     if (!this._setProperties) {
       return;
@@ -136,18 +143,18 @@ export class HaPanelCustom extends ReactiveElement {
     }
 
     window.customPanel = this;
+    const titleAttr = this.panel.title ? `title="${this.panel.title}"` : "";
     this.innerHTML = `
-    <style>
-      iframe {
-        border: 0;
-        width: 100%;
-        height: 100%;
-        display: block;
-        background-color: var(--primary-background-color);
-      }
-    </style>
-    <iframe></iframe>
-    `.trim();
+      <style>
+        iframe {
+          border: 0;
+          width: 100%;
+          height: 100%;
+          display: block;
+          background-color: var(--primary-background-color);
+        }
+      </style>
+      <iframe ${titleAttr}></iframe>`.trim();
     const iframeDoc = this.querySelector("iframe")!.contentWindow!.document;
     iframeDoc.open();
     iframeDoc.write(

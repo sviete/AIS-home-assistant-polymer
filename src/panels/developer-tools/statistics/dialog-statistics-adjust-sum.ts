@@ -7,6 +7,7 @@ import {
   CSSResultGroup,
   html,
   LitElement,
+  nothing,
   PropertyValues,
   TemplateResult,
 } from "lit";
@@ -23,8 +24,9 @@ import "../../../components/ha-svg-icon";
 import {
   adjustStatisticsSum,
   fetchStatistics,
+  getDisplayUnit,
   StatisticValue,
-} from "../../../data/history";
+} from "../../../data/recorder";
 import type { DateTimeSelector, NumberSelector } from "../../../data/selector";
 import { showAlertDialog } from "../../../dialogs/generic/show-dialog-box";
 import { haStyle, haStyleDialog } from "../../../resources/styles";
@@ -59,7 +61,7 @@ export class DialogStatisticsFixUnsupportedUnitMetadata extends LitElement {
   };
 
   private _amountSelector = memoizeOne(
-    (unit_of_measurement: string): NumberSelector => ({
+    (unit_of_measurement: string | undefined): NumberSelector => ({
       number: {
         step: 0.01,
         unit_of_measurement,
@@ -90,9 +92,9 @@ export class DialogStatisticsFixUnsupportedUnitMetadata extends LitElement {
     fireEvent(this, "dialog-closed", { dialog: this.localName });
   }
 
-  protected render(): TemplateResult | void {
+  protected render() {
     if (!this._params) {
-      return html``;
+      return nothing;
     }
 
     let content: TemplateResult;
@@ -135,7 +137,11 @@ export class DialogStatisticsFixUnsupportedUnitMetadata extends LitElement {
     } else {
       const data =
         this._stats5min.length >= 2 ? this._stats5min : this._statsHour;
-      const unit = this._params!.statistic.unit_of_measurement;
+      const unit = getDisplayUnit(
+        this.hass,
+        this._params!.statistic.statistic_id,
+        this._params!.statistic
+      );
       const rows: TemplateResult[] = [];
       for (let i = 1; i < data.length; i++) {
         const stat = data[i];
@@ -152,7 +158,11 @@ export class DialogStatisticsFixUnsupportedUnitMetadata extends LitElement {
           >
             <span>${growth} ${unit}</span>
             <span slot="secondary">
-              ${formatDateTime(new Date(stat.start), this.hass.locale)}
+              ${formatDateTime(
+                new Date(stat.start),
+                this.hass.locale,
+                this.hass.config
+              )}
             </span>
             <ha-svg-icon slot="meta" .path=${mdiChevronRight}></ha-svg-icon>
           </mwc-list-item>
@@ -192,6 +202,11 @@ export class DialogStatisticsFixUnsupportedUnitMetadata extends LitElement {
   }
 
   private _renderAdjustStat() {
+    const unit = getDisplayUnit(
+      this.hass,
+      this._params!.statistic.statistic_id,
+      this._params!.statistic
+    );
     return html`
       <div class="text-content">
         <b>Statistic:</b> ${this._params!.statistic.statistic_id}
@@ -202,7 +217,8 @@ export class DialogStatisticsFixUnsupportedUnitMetadata extends LitElement {
         <span
           >${formatDateTime(
             new Date(this._chosenStat!.start),
-            this.hass.locale
+            this.hass.locale,
+            this.hass.config
           )}</span
         >
       </div>
@@ -212,7 +228,8 @@ export class DialogStatisticsFixUnsupportedUnitMetadata extends LitElement {
         <span
           >${formatDateTime(
             new Date(this._chosenStat!.end),
-            this.hass.locale
+            this.hass.locale,
+            this.hass.config
           )}</span
         >
       </div>
@@ -220,9 +237,7 @@ export class DialogStatisticsFixUnsupportedUnitMetadata extends LitElement {
       <ha-selector-number
         label="New Value"
         .hass=${this.hass}
-        .selector=${this._amountSelector(
-          this._params!.statistic.unit_of_measurement
-        )}
+        .selector=${this._amountSelector(unit || undefined)}
         .value=${this._amount}
         .disabled=${this._busy}
         @value-changed=${(ev) => {
@@ -299,13 +314,19 @@ export class DialogStatisticsFixUnsupportedUnitMetadata extends LitElement {
   }
 
   private async _fixIssue(): Promise<void> {
+    const unit = getDisplayUnit(
+      this.hass,
+      this._params!.statistic.statistic_id,
+      this._params!.statistic
+    );
     this._busy = true;
     try {
       await adjustStatisticsSum(
         this.hass,
         this._params!.statistic.statistic_id,
         this._chosenStat!.start,
-        this._amount! - this._origAmount!
+        this._amount! - this._origAmount!,
+        unit || null
       );
     } catch (err: any) {
       this._busy = false;

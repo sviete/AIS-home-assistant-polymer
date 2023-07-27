@@ -6,6 +6,7 @@ import {
   mdiProgressWrench,
   mdiRecordCircleOutline,
 } from "@mdi/js";
+import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import {
   css,
   CSSResultGroup,
@@ -13,24 +14,34 @@ import {
   LitElement,
   PropertyValues,
   TemplateResult,
+  nothing,
 } from "lit";
-import { customElement, property } from "lit/decorators";
+import { customElement, property, state } from "lit/decorators";
 import { ifDefined } from "lit/directives/if-defined";
 import { formatDateTimeWithSeconds } from "../../common/datetime/format_date_time";
 import { relativeTime } from "../../common/datetime/relative_time";
 import { fireEvent } from "../../common/dom/fire_event";
 import { toggleAttribute } from "../../common/dom/toggle_attribute";
+import {
+  EntityRegistryEntry,
+  subscribeEntityRegistry,
+} from "../../data/entity_registry";
 import { LogbookEntry } from "../../data/logbook";
 import {
   ChooseAction,
   ChooseActionChoice,
   getActionType,
+  IfAction,
+  ParallelAction,
+  RepeatAction,
 } from "../../data/script";
 import { describeAction } from "../../data/script_i18n";
 import {
+  ActionTraceStep,
   AutomationTraceExtended,
   ChooseActionTraceStep,
   getDataFromPath,
+  IfActionTraceStep,
   isTriggerPath,
   TriggerTraceStep,
 } from "../../data/trace";
@@ -105,13 +116,13 @@ class LogbookRenderer {
   }
 
   get hasNext() {
-    return this.curIndex !== this.logbookEntries.length;
+    return this.curIndex < this.logbookEntries.length;
   }
 
   maybeRenderItem() {
     const logbookEntry = this.curItem;
     this.curIndex++;
-    const entryDate = new Date(logbookEntry.when);
+    const entryDate = new Date(logbookEntry.when * 1000);
 
     if (this.pendingItems.length === 0) {
       this.pendingItems.push([entryDate, logbookEntry]);
@@ -188,6 +199,7 @@ class ActionRenderer {
 
   constructor(
     private hass: HomeAssistant,
+    private entityReg: EntityRegistryEntry[],
     private entries: TemplateResult[],
     private trace: AutomationTraceExtended,
     private logbookRenderer: LogbookRenderer,
@@ -201,7 +213,7 @@ class ActionRenderer {
   }
 
   get hasNext() {
-    return this.curIndex !== this.keys.length;
+    return this.curIndex < this.keys.length;
   }
 
   renderItem() {
@@ -214,20 +226,36 @@ class ActionRenderer {
 
   private _renderItem(
     index: number,
-    actionType?: ReturnType<typeof getActionType>
+    actionType?: ReturnType<typeof getActionType>,
+    renderAllIterations?: boolean
   ): number {
     const value = this._getItem(index);
 
-    if (isTriggerPath(value[0].path)) {
-      return this._handleTrigger(index, value[0] as TriggerTraceStep);
+    if (renderAllIterations) {
+      let i;
+      value.forEach((item) => {
+        i = this._renderIteration(index, item, actionType);
+      });
+      return i;
+    }
+    return this._renderIteration(index, value[0], actionType);
+  }
+
+  private _renderIteration(
+    index: number,
+    value: ActionTraceStep,
+    actionType?: ReturnType<typeof getActionType>
+  ) {
+    if (isTriggerPath(value.path)) {
+      return this._handleTrigger(index, value as TriggerTraceStep);
     }
 
-    const timestamp = new Date(value[0].timestamp);
+    const timestamp = new Date(value.timestamp);
 
     // Render all logbook items that are in front of this item.
     while (
       this.logbookRenderer.hasNext &&
-      new Date(this.logbookRenderer.curItem.when) < timestamp
+      new Date(this.logbookRenderer.curItem.when * 1000) < timestamp
     ) {
       this.logbookRenderer.maybeRenderItem();
     }
@@ -235,7 +263,7 @@ class ActionRenderer {
     this.logbookRenderer.flush();
     this.timeTracker.maybeRenderTime(timestamp);
 
-    const path = value[0].path;
+    const path = value.path;
     let data;
     try {
       data = getDataFromPath(this.trace.config, path);
@@ -263,7 +291,24 @@ class ActionRenderer {
       return this._handleChoose(index);
     }
 
-    this._renderEntry(path, describeAction(this.hass, data, actionType));
+    if (actionType === "repeat") {
+      return this._handleRepeat(index);
+    }
+
+    if (actionType === "if") {
+      return this._handleIf(index);
+    }
+
+    if (actionType === "parallel") {
+      return this._handleParallel(index);
+    }
+
+    this._renderEntry(
+      path,
+      describeAction(this.hass, this.entityReg, data, actionType),
+      undefined,
+      data.enabled === false
+    );
 
     let i = index + 1;
 
@@ -279,14 +324,19 @@ class ActionRenderer {
   private _handleTrigger(index: number, triggerStep: TriggerTraceStep): number {
     this._renderEntry(
       triggerStep.path,
-      `Triggered ${
+      `${
+        triggerStep.changed_variables.trigger.alias
+          ? `${triggerStep.changed_variables.trigger.alias} triggered`
+          : "Triggered"
+      } ${
         triggerStep.path === "trigger"
           ? "manually"
           : `by the ${this.trace.trigger}`
       } at
     ${formatDateTimeWithSeconds(
       new Date(triggerStep.timestamp),
-      this.hass.locale
+      this.hass.locale,
+      this.hass.config
     )}`,
       mdiCircle
     );
@@ -316,10 +366,16 @@ class ActionRenderer {
     const chooseConfig = this._getDataFromPath(
       this.keys[index]
     ) as ChooseAction;
+    const disabled = chooseConfig.enabled === false;
     const name = chooseConfig.alias || "Choose";
 
     if (defaultExecuted) {
-      this._renderEntry(choosePath, `${name}: Default action executed`);
+      this._renderEntry(
+        choosePath,
+        `${name}: Default action executed`,
+        undefined,
+        disabled
+      );
     } else if (chooseTrace.result) {
       const choiceNumeric =
         chooseTrace.result.choice !== "default"
@@ -331,9 +387,19 @@ class ActionRenderer {
       const choiceName = choiceConfig
         ? `${choiceConfig.alias || `Option ${choiceNumeric}`} executed`
         : `Error: ${chooseTrace.error}`;
-      this._renderEntry(choosePath, `${name}: ${choiceName}`);
+      this._renderEntry(
+        choosePath,
+        `${name}: ${choiceName}`,
+        undefined,
+        disabled
+      );
     } else {
-      this._renderEntry(choosePath, `${name}: No action taken`);
+      this._renderEntry(
+        choosePath,
+        `${name}: No action taken`,
+        undefined,
+        disabled
+      );
     }
 
     let i;
@@ -374,14 +440,132 @@ class ActionRenderer {
     return i;
   }
 
+  private _handleRepeat(index: number): number {
+    const repeatPath = this.keys[index];
+    const startLevel = repeatPath.split("/").length;
+
+    const repeatConfig = this._getDataFromPath(
+      this.keys[index]
+    ) as RepeatAction;
+    const disabled = repeatConfig.enabled === false;
+
+    const name =
+      repeatConfig.alias ||
+      describeAction(this.hass, this.entityReg, repeatConfig);
+
+    this._renderEntry(repeatPath, name, undefined, disabled);
+
+    let i;
+
+    for (i = index + 1; i < this.keys.length; i++) {
+      const path = this.keys[i];
+      const parts = path.split("/");
+
+      // We're done if no more sequence in current level
+      if (parts.length <= startLevel) {
+        return i;
+      }
+
+      i = this._renderItem(i, getActionType(this._getDataFromPath(path)), true);
+    }
+
+    return i;
+  }
+
+  private _handleIf(index: number): number {
+    const ifPath = this.keys[index];
+    const startLevel = ifPath.split("/").length;
+
+    const ifTrace = this._getItem(index)[0] as IfActionTraceStep;
+    const ifConfig = this._getDataFromPath(this.keys[index]) as IfAction;
+    const disabled = ifConfig.enabled === false;
+    const name = ifConfig.alias || "If";
+
+    if (ifTrace.result?.choice) {
+      const choiceConfig = this._getDataFromPath(
+        `${this.keys[index]}/${ifTrace.result.choice}/`
+      ) as any;
+      const choiceName = choiceConfig
+        ? `${choiceConfig.alias || `${ifTrace.result.choice} action executed`}`
+        : `Error: ${ifTrace.error}`;
+      this._renderEntry(ifPath, `${name}: ${choiceName}`, undefined, disabled);
+    } else {
+      this._renderEntry(
+        ifPath,
+        `${name}: No action taken`,
+        undefined,
+        disabled
+      );
+    }
+
+    let i;
+
+    // Skip over conditions
+    for (i = index + 1; i < this.keys.length; i++) {
+      const path = this.keys[i];
+      const parts = this.keys[i].split("/");
+
+      // We're done if no more sequence in current level
+      if (parts.length <= startLevel) {
+        return i;
+      }
+
+      // We're going to skip all conditions
+      if (
+        parts[startLevel + 1] === "condition" ||
+        parts.length < startLevel + 2
+      ) {
+        continue;
+      }
+
+      i = this._renderItem(i, getActionType(this._getDataFromPath(path)));
+    }
+
+    return i;
+  }
+
+  private _handleParallel(index: number): number {
+    const parallelPath = this.keys[index];
+    const startLevel = parallelPath.split("/").length;
+
+    const parallelConfig = this._getDataFromPath(
+      this.keys[index]
+    ) as ParallelAction;
+
+    const disabled = parallelConfig.enabled === false;
+
+    const name = parallelConfig.alias || "Execute in parallel";
+
+    this._renderEntry(parallelPath, name, undefined, disabled);
+
+    let i;
+
+    for (i = index + 1; i < this.keys.length; i++) {
+      const path = this.keys[i];
+      const parts = path.split("/");
+
+      // We're done if no more sequence in current level
+      if (parts.length <= startLevel) {
+        return i;
+      }
+
+      i = this._renderItem(i, getActionType(this._getDataFromPath(path)));
+    }
+
+    return i;
+  }
+
   private _renderEntry(
     path: string,
     description: string,
-    icon = mdiRecordCircleOutline
+    icon = mdiRecordCircleOutline,
+    disabled = false
   ) {
     this.entries.push(html`
-      <ha-timeline .icon=${icon} data-path=${path}>
-        ${description}
+      <ha-timeline .icon=${icon} data-path=${path} .notEnabled=${disabled}>
+        ${description}${disabled
+          ? html`<span class="disabled"> (disabled)</span>`
+          : ""}
       </ha-timeline>
     `);
   }
@@ -403,9 +587,19 @@ export class HaAutomationTracer extends LitElement {
 
   @property({ type: Boolean }) public allowPick = false;
 
-  protected render(): TemplateResult {
+  @state() private _entityReg: EntityRegistryEntry[] = [];
+
+  public hassSubscribe(): UnsubscribeFunc[] {
+    return [
+      subscribeEntityRegistry(this.hass.connection!, (entities) => {
+        this._entityReg = entities;
+      }),
+    ];
+  }
+
+  protected render() {
     if (!this.trace) {
-      return html``;
+      return nothing;
     }
 
     const entries: TemplateResult[] = [];
@@ -418,6 +612,7 @@ export class HaAutomationTracer extends LitElement {
     );
     const actionRenderer = new ActionRenderer(
       this.hass,
+      this._entityReg,
       entries,
       this.trace,
       logbookRenderer,
@@ -438,7 +633,8 @@ export class HaAutomationTracer extends LitElement {
     const renderFinishedAt = () =>
       formatDateTimeWithSeconds(
         new Date(this.trace!.timestamp.finish!),
-        this.hass.locale
+        this.hass.locale,
+        this.hass.config
       );
     const renderRuntime = () => `(runtime:
       ${(

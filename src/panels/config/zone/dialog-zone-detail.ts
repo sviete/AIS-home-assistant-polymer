@@ -1,12 +1,12 @@
 import "@material/mwc-button";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { fireEvent } from "../../../common/dom/fire_event";
 import { addDistanceToCoord } from "../../../common/location/add_distance_to_coord";
 import { createCloseHeading } from "../../../components/ha-dialog";
 import "../../../components/ha-form/ha-form";
-import { HaFormSchema } from "../../../components/ha-form/types";
+import { SchemaUnion } from "../../../components/ha-form/types";
 import { getZoneEditorInitData, ZoneMutableParams } from "../../../data/zone";
 import { haStyleDialog } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
@@ -55,9 +55,9 @@ class DialogZoneDetail extends LitElement {
     fireEvent(this, "dialog-closed", { dialog: this.localName });
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this._params || !this._data) {
-      return html``;
+      return nothing;
     }
     const nameInvalid = this._data.name.trim() === "";
     const iconInvalid = Boolean(
@@ -109,7 +109,7 @@ class DialogZoneDetail extends LitElement {
                 ${this.hass!.localize("ui.panel.config.zone.detail.delete")}
               </mwc-button>
             `
-          : html``}
+          : nothing}
         <mwc-button
           slot="primaryAction"
           @click=${this._updateEntry}
@@ -123,51 +123,54 @@ class DialogZoneDetail extends LitElement {
     `;
   }
 
-  private _schema = memoizeOne((icon?: string): HaFormSchema[] => [
-    {
-      name: "name",
-      required: true,
-      selector: {
-        text: {},
-      },
-    },
-    {
-      name: "icon",
-      required: false,
-      selector: {
-        icon: {},
-      },
-    },
-    {
-      name: "location",
-      required: true,
-      selector: { location: { radius: true, icon } },
-    },
-    {
-      name: "",
-      type: "grid",
-      schema: [
+  private _schema = memoizeOne(
+    (icon?: string) =>
+      [
         {
-          name: "latitude",
+          name: "name",
           required: true,
-          selector: { text: {} },
+          selector: {
+            text: {},
+          },
         },
         {
-          name: "longitude",
+          name: "icon",
+          required: false,
+          selector: {
+            icon: {},
+          },
+        },
+        {
+          name: "location",
           required: true,
+          selector: { location: { radius: true, icon } },
+        },
+        {
+          name: "",
+          type: "grid",
+          schema: [
+            {
+              name: "latitude",
+              required: true,
+              selector: { text: {} },
+            },
+            {
+              name: "longitude",
+              required: true,
 
-          selector: { text: {} },
+              selector: { text: {} },
+            },
+          ],
         },
-      ],
-    },
-    { name: "passive_note", type: "constant" },
-    { name: "passive", selector: { boolean: {} } },
-    {
-      name: "radius",
-      required: false,
-      selector: { number: { min: 0, max: 999999, mode: "box" } },
-    },
-  ]);
+        { name: "passive_note", type: "constant" },
+        { name: "passive", selector: { boolean: {} } },
+        {
+          name: "radius",
+          required: false,
+          selector: { number: { min: 0, max: 999999, mode: "box" } },
+        },
+      ] as const
+  );
 
   private _formData = memoizeOne((data: ZoneMutableParams) => ({
     ...data,
@@ -197,8 +200,9 @@ class DialogZoneDetail extends LitElement {
     this._data = value;
   }
 
-  private _computeLabel = (entry: HaFormSchema): string =>
-    this.hass.localize(`ui.panel.config.zone.detail.${entry.name}`);
+  private _computeLabel = (
+    entry: SchemaUnion<ReturnType<typeof this._schema>>
+  ): string => this.hass.localize(`ui.panel.config.zone.detail.${entry.name}`);
 
   private async _updateEntry() {
     this._submitting = true;

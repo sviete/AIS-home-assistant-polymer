@@ -1,6 +1,15 @@
-import { html, LitElement, PropertyValues, TemplateResult } from "lit";
+import {
+  CSSResultGroup,
+  LitElement,
+  PropertyValues,
+  css,
+  html,
+  nothing,
+} from "lit";
 import { customElement, property } from "lit/decorators";
 import "../../../components/entity/ha-entity-toggle";
+import "../../../components/ha-humidifier-state";
+import { HumidifierEntity } from "../../../data/humidifier";
 import { HomeAssistant } from "../../../types";
 import { hasConfigOrEntityChanged } from "../common/has-changed";
 import "../components/hui-generic-entity-row";
@@ -25,12 +34,12 @@ class HuiHumidifierEntityRow extends LitElement implements LovelaceRow {
     return hasConfigOrEntityChanged(this, changedProps);
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
-    const stateObj = this.hass.states[this._config.entity];
+    const stateObj = this.hass.states[this._config.entity] as HumidifierEntity;
 
     if (!stateObj) {
       return html`
@@ -41,27 +50,18 @@ class HuiHumidifierEntityRow extends LitElement implements LovelaceRow {
     }
 
     return html`
-      <hui-generic-entity-row
-        .hass=${this.hass}
-        .config=${this._config}
-        .secondaryText=${stateObj.attributes.humidity
-          ? `${this.hass!.localize("ui.card.humidifier.humidity")}:
-            ${stateObj.attributes.humidity} %${
-              stateObj.attributes.mode
-                ? ` (${
-                    this.hass!.localize(
-                      `state_attributes.humidifier.mode.${stateObj.attributes.mode}`
-                    ) || stateObj.attributes.mode
-                  })`
-                : ""
-            }`
-          : ""}
-      >
-        <ha-entity-toggle
-          .hass=${this.hass}
-          .stateObj=${stateObj}
-        ></ha-entity-toggle>
+      <hui-generic-entity-row .hass=${this.hass} .config=${this._config}>
+        <ha-humidifier-state .hass=${this.hass} .stateObj=${stateObj}>
+        </ha-humidifier-state>
       </hui-generic-entity-row>
+    `;
+  }
+
+  static get styles(): CSSResultGroup {
+    return css`
+      ha-humidifier-state {
+        text-align: right;
+      }
     `;
   }
 }

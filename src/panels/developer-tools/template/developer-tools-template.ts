@@ -1,6 +1,6 @@
 import "@material/mwc-button/mwc-button";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
-import { css, CSSResultGroup, html, LitElement } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
 import { debounce } from "../../../common/util/debounce";
@@ -10,6 +10,7 @@ import {
   RenderTemplateResult,
   subscribeRenderTemplate,
 } from "../../../data/ws-templates";
+import { showConfirmationDialog } from "../../../dialogs/generic/show-dialog-box";
 import { haStyle } from "../../../resources/styles";
 import { HomeAssistant } from "../../../types";
 import { documentationUrl } from "../../../util/documentation-url";
@@ -133,6 +134,7 @@ class HaPanelDevTemplate extends LitElement {
             .error=${this._error}
             autofocus
             autocomplete-entities
+            autocomplete-icons
             @value-changed=${this._templateChanged}
             dir="ltr"
           ></ha-code-editor>
@@ -140,6 +142,9 @@ class HaPanelDevTemplate extends LitElement {
             ${this.hass.localize(
               "ui.panel.developer-tools.tabs.templates.reset"
             )}
+          </mwc-button>
+          <mwc-button @click=${this._clear}>
+            ${this.hass.localize("ui.common.clear")}
           </mwc-button>
         </div>
 
@@ -230,7 +235,7 @@ class HaPanelDevTemplate extends LitElement {
                   "ui.panel.developer-tools.tabs.templates.no_listeners"
                 )}
               </span>`
-            : html``}
+            : nothing}
         </div>
       </div>
     `;
@@ -248,11 +253,17 @@ class HaPanelDevTemplate extends LitElement {
 
         .content {
           padding: 16px;
-          direction: ltr;
+          padding: max(16px, env(safe-area-inset-top))
+            max(16px, env(safe-area-inset-right))
+            max(16px, env(safe-area-inset-bottom))
+            max(16px, env(safe-area-inset-left));
         }
 
         .edit-pane {
           margin-right: 16px;
+          margin-inline-start: initial;
+          margin-inline-end: 16px;
+          direction: var(--direction);
         }
 
         .edit-pane a {
@@ -280,6 +291,7 @@ class HaPanelDevTemplate extends LitElement {
           white-space: pre-wrap;
           background-color: var(--secondary-background-color);
           padding: 8px;
+          direction: ltr;
         }
 
         .all_listeners {
@@ -329,6 +341,7 @@ class HaPanelDevTemplate extends LitElement {
         {
           template: this._template,
           timeout: 3,
+          strict: true,
         }
       );
       await this._unsubRenderTemplate;
@@ -369,10 +382,41 @@ class HaPanelDevTemplate extends LitElement {
     localStorage["panel-dev-template-template"] = this._template;
   }
 
-  private _restoreDemo() {
+  private async _restoreDemo() {
+    if (
+      !(await showConfirmationDialog(this, {
+        text: this.hass.localize(
+          "ui.panel.developer-tools.tabs.templates.confirm_reset"
+        ),
+        warning: true,
+      }))
+    ) {
+      return;
+    }
     this._template = DEMO_TEMPLATE;
     this._subscribeTemplate();
     delete localStorage["panel-dev-template-template"];
+  }
+
+  private async _clear() {
+    if (
+      !(await showConfirmationDialog(this, {
+        text: this.hass.localize(
+          "ui.panel.developer-tools.tabs.templates.confirm_clear"
+        ),
+        warning: true,
+      }))
+    ) {
+      return;
+    }
+    this._unsubscribeTemplate();
+    this._template = "";
+    // Reset to empty result. Setting to 'undefined' results in a different visual
+    // behaviour compared to manually emptying the template input box.
+    this._templateResult = {
+      result: "",
+      listeners: { all: false, entities: [], domains: [], time: false },
+    };
   }
 }
 

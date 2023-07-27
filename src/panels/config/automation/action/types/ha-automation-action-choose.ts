@@ -1,24 +1,30 @@
-import { mdiDelete } from "@mdi/js";
-import { css, CSSResultGroup, html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators";
+import { mdiDelete, mdiPlus } from "@mdi/js";
+import { CSSResultGroup, LitElement, css, html } from "lit";
+import { customElement, property, state } from "lit/decorators";
+import { ensureArray } from "../../../../../common/array/ensure-array";
 import { fireEvent } from "../../../../../common/dom/fire_event";
-import { ensureArray } from "../../../../../common/ensure-array";
+import "../../../../../components/ha-button";
 import "../../../../../components/ha-icon-button";
 import { Condition } from "../../../../../data/automation";
 import { Action, ChooseAction } from "../../../../../data/script";
 import { haStyle } from "../../../../../resources/styles";
 import { HomeAssistant } from "../../../../../types";
 import { ActionElement } from "../ha-automation-action-row";
-import "../../../../../components/ha-form/ha-form";
 
 @customElement("ha-automation-action-choose")
 export class HaChooseAction extends LitElement implements ActionElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
+  @property({ type: Boolean }) public disabled = false;
+
   @property() public action!: ChooseAction;
 
+  @property({ type: Boolean }) public reOrderMode = false;
+
+  @state() private _showDefault = false;
+
   public static get defaultConfig() {
-    return { choose: [{ conditions: [], sequence: [] }], default: [] };
+    return { choose: [{ conditions: [], sequence: [] }] };
   }
 
   protected render() {
@@ -29,6 +35,7 @@ export class HaChooseAction extends LitElement implements ActionElement {
         (option, idx) => html`<ha-card>
           <ha-icon-button
             .idx=${idx}
+            .disabled=${this.disabled}
             @click=${this._removeOption}
             .label=${this.hass.localize(
               "ui.panel.config.automation.editor.actions.type.choose.remove_option"
@@ -49,7 +56,10 @@ export class HaChooseAction extends LitElement implements ActionElement {
               )}:
             </h3>
             <ha-automation-condition
-              .conditions=${option.conditions}
+              nested
+              .conditions=${ensureArray<string | Condition>(option.conditions)}
+              .reOrderMode=${this.reOrderMode}
+              .disabled=${this.disabled}
               .hass=${this.hass}
               .idx=${idx}
               @value-changed=${this._conditionChanged}
@@ -59,36 +69,60 @@ export class HaChooseAction extends LitElement implements ActionElement {
                 "ui.panel.config.automation.editor.actions.type.choose.sequence"
               )}:
             </h3>
-            <ha-form
+            <ha-automation-action
+              nested
+              .actions=${ensureArray(option.sequence) || []}
+              .reOrderMode=${this.reOrderMode}
+              .disabled=${this.disabled}
               .hass=${this.hass}
-              .schema=${[{ name: "sequence", selector: { action: {} } }]}
-              .data=${option}
               .idx=${idx}
               @value-changed=${this._actionChanged}
-            ></ha-form>
+            ></ha-automation-action>
           </div>
         </ha-card>`
       )}
-      <ha-card>
-        <div class="card-actions add-card">
-          <mwc-button @click=${this._addOption}>
-            ${this.hass.localize(
-              "ui.panel.config.automation.editor.actions.type.choose.add_option"
-            )}
-          </mwc-button>
-        </div>
-      </ha-card>
-      <h2>
-        ${this.hass.localize(
-          "ui.panel.config.automation.editor.actions.type.choose.default"
-        )}:
-      </h2>
-      <ha-automation-action
-        .actions=${action.default || []}
-        @value-changed=${this._defaultChanged}
-        .hass=${this.hass}
-      ></ha-automation-action>
+      <ha-button
+        outlined
+        .label=${this.hass.localize(
+          "ui.panel.config.automation.editor.actions.type.choose.add_option"
+        )}
+        .disabled=${this.disabled}
+        @click=${this._addOption}
+      >
+        <ha-svg-icon .path=${mdiPlus} slot="icon"></ha-svg-icon>
+      </ha-button>
+      ${this._showDefault || action.default
+        ? html`
+            <h2>
+              ${this.hass.localize(
+                "ui.panel.config.automation.editor.actions.type.choose.default"
+              )}:
+            </h2>
+            <ha-automation-action
+              nested
+              .actions=${ensureArray(action.default) || []}
+              .reOrderMode=${this.reOrderMode}
+              .disabled=${this.disabled}
+              @value-changed=${this._defaultChanged}
+              .hass=${this.hass}
+            ></ha-automation-action>
+          `
+        : html`<div class="link-button-row">
+            <button
+              class="link"
+              @click=${this._addDefault}
+              .disabled=${this.disabled}
+            >
+              ${this.hass.localize(
+                "ui.panel.config.automation.editor.actions.type.choose.add_default"
+              )}
+            </button>
+          </div>`}
     `;
+  }
+
+  private _addDefault() {
+    this._showDefault = true;
   }
 
   private _conditionChanged(ev: CustomEvent) {
@@ -106,7 +140,7 @@ export class HaChooseAction extends LitElement implements ActionElement {
 
   private _actionChanged(ev: CustomEvent) {
     ev.stopPropagation();
-    const value = ev.detail.value.sequence as Action[];
+    const value = ev.detail.value as Action[];
     const index = (ev.target as any).idx;
     const choose = this.action.choose
       ? [...ensureArray(this.action.choose)]
@@ -154,7 +188,7 @@ export class HaChooseAction extends LitElement implements ActionElement {
       haStyle,
       css`
         ha-card {
-          margin-top: 16px;
+          margin: 16px 0;
         }
         .add-card mwc-button {
           display: block;
@@ -163,10 +197,16 @@ export class HaChooseAction extends LitElement implements ActionElement {
         ha-icon-button {
           position: absolute;
           right: 0;
+          inset-inline-start: initial;
+          inset-inline-end: 0;
+          direction: var(--direction);
           padding: 4px;
         }
-        ha-form::part(root) {
-          overflow: visible;
+        ha-svg-icon {
+          height: 20px;
+        }
+        .link-button-row {
+          padding: 14px;
         }
       `,
     ];

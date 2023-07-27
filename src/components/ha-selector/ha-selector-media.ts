@@ -8,20 +8,20 @@ import { getSignedPath } from "../../data/auth";
 import {
   MediaClassBrowserSettings,
   MediaPickedEvent,
-  SUPPORT_BROWSE_MEDIA,
+  MediaPlayerEntityFeature,
 } from "../../data/media-player";
 import type { MediaSelector, MediaSelectorValue } from "../../data/selector";
 import type { HomeAssistant } from "../../types";
 import { brandsUrl, extractDomainFromBrandUrl } from "../../util/brands-url";
 import "../ha-alert";
 import "../ha-form/ha-form";
-import type { HaFormSchema } from "../ha-form/types";
+import type { SchemaUnion } from "../ha-form/types";
 import { showMediaBrowserDialog } from "../media-player/show-media-browser-dialog";
 
 const MANUAL_SCHEMA = [
   { name: "media_content_id", required: false, selector: { text: {} } },
   { name: "media_content_type", required: false, selector: { text: {} } },
-];
+] as const;
 
 @customElement("ha-selector-media")
 export class HaMediaSelector extends LitElement {
@@ -80,7 +80,8 @@ export class HaMediaSelector extends LitElement {
 
     const supportsBrowse =
       !this.value?.entity_id ||
-      (stateObj && supportsFeature(stateObj, SUPPORT_BROWSE_MEDIA));
+      (stateObj &&
+        supportsFeature(stateObj, MediaPlayerEntityFeature.BROWSE_MEDIA));
 
     return html`<ha-entity-picker
         .hass=${this.hass}
@@ -163,7 +164,9 @@ export class HaMediaSelector extends LitElement {
           </ha-card>`}`;
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema): string =>
+  private _computeLabelCallback = (
+    schema: SchemaUnion<typeof MANUAL_SCHEMA>
+  ): string =>
     this.hass.localize(`ui.components.selectors.media.${schema.name}`);
 
   private _entityChanged(ev: CustomEvent) {

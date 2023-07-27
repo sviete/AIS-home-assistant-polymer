@@ -1,42 +1,42 @@
 import { mdiPencilOff, mdiPlus } from "@mdi/js";
-import "@polymer/paper-tooltip/paper-tooltip";
+import "@lrnwebcomponents/simple-tooltip/simple-tooltip";
 import { HassEntity, UnsubscribeFunc } from "home-assistant-js-websocket";
 import { html, LitElement, PropertyValues, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { computeStateDomain } from "../../../common/entity/compute_state_domain";
 import { domainIcon } from "../../../common/entity/domain_icon";
+import { navigate } from "../../../common/navigate";
 import { LocalizeFunc } from "../../../common/translations/localize";
+import { extractSearchParam } from "../../../common/url/search-params";
 import {
   DataTableColumnContainer,
   RowClickedEvent,
 } from "../../../components/data-table/ha-data-table";
 import "../../../components/ha-fab";
-import "../../../components/ha-icon-overflow-menu";
 import "../../../components/ha-icon";
 import "../../../components/ha-svg-icon";
 import { ConfigEntry, getConfigEntries } from "../../../data/config_entries";
+import { getConfigFlowHandlers } from "../../../data/config_flow";
 import {
   EntityRegistryEntry,
   subscribeEntityRegistry,
 } from "../../../data/entity_registry";
 import { domainToName } from "../../../data/integration";
-import "../../../layouts/hass-loading-screen";
-import "../../../layouts/hass-tabs-subpage-data-table";
-import { SubscribeMixin } from "../../../mixins/subscribe-mixin";
-import { HomeAssistant, Route } from "../../../types";
-import { showEntityEditorDialog } from "../entities/show-dialog-entity-editor";
-import { configSections } from "../ha-panel-config";
-import { HELPER_DOMAINS } from "./const";
-import { showHelperDetailDialog } from "./show-dialog-helper-detail";
-import { navigate } from "../../../common/navigate";
-import { extractSearchParam } from "../../../common/url/search-params";
-import { getConfigFlowHandlers } from "../../../data/config_flow";
 import { showConfigFlowDialog } from "../../../dialogs/config-flow/show-dialog-config-flow";
 import {
   showAlertDialog,
   showConfirmationDialog,
 } from "../../../dialogs/generic/show-dialog-box";
+import { showMoreInfoDialog } from "../../../dialogs/more-info/show-ha-more-info-dialog";
+import "../../../layouts/hass-loading-screen";
+import "../../../layouts/hass-tabs-subpage-data-table";
+import { SubscribeMixin } from "../../../mixins/subscribe-mixin";
+import { HomeAssistant, Route } from "../../../types";
+import { configSections } from "../ha-panel-config";
+import "../integrations/ha-integration-overflow-menu";
+import { HelperDomain, isHelperDomain } from "./const";
+import { showHelperDetailDialog } from "./show-dialog-helper-detail";
 
 // This groups items by a key but only returns last entry per key.
 const groupByOne = <T>(
@@ -91,6 +91,7 @@ export class HaConfigHelpers extends SubscribeMixin(LitElement) {
         },
         name: {
           title: localize("ui.panel.config.helpers.picker.headers.name"),
+          main: true,
           sortable: true,
           filterable: true,
           grows: true,
@@ -117,7 +118,7 @@ export class HaConfigHelpers extends SubscribeMixin(LitElement) {
         sortable: true,
         width: "25%",
         filterable: true,
-        template: (type, row) =>
+        template: (type: HelperDomain, row) =>
           row.configEntry
             ? domainToName(localize, type)
             : html`
@@ -138,11 +139,11 @@ export class HaConfigHelpers extends SubscribeMixin(LitElement) {
                   style="display:inline-block; position: relative;"
                 >
                   <ha-svg-icon .path=${mdiPencilOff}></ha-svg-icon>
-                  <paper-tooltip animation-delay="0" position="left">
+                  <simple-tooltip animation-delay="0" position="left">
                     ${this.hass.localize(
                       "ui.panel.config.entities.picker.status.readonly"
                     )}
-                  </paper-tooltip>
+                  </simple-tooltip>
                 </div>
               `
             : ""}
@@ -196,7 +197,7 @@ export class HaConfigHelpers extends SubscribeMixin(LitElement) {
         .narrow=${this.narrow}
         back-path="/config"
         .route=${this.route}
-        .tabs=${configSections.automations}
+        .tabs=${configSections.devices}
         .columns=${this._columns(this.narrow, this.hass.localize)}
         .data=${this._getItems(
           this._stateItems,
@@ -210,10 +211,14 @@ export class HaConfigHelpers extends SubscribeMixin(LitElement) {
           "ui.panel.config.helpers.picker.no_helpers"
         )}
       >
+        <ha-integration-overflow-menu
+          .hass=${this.hass}
+          slot="toolbar-icon"
+        ></ha-integration-overflow-menu>
         <ha-fab
           slot="fab"
           .label=${this.hass.localize(
-            "ui.panel.config.helpers.picker.add_helper"
+            "ui.panel.config.helpers.picker.create_helper"
           )}
           extended
           @click=${this._createHelpler}
@@ -238,19 +243,20 @@ export class HaConfigHelpers extends SubscribeMixin(LitElement) {
     if (!domain) {
       return;
     }
-    if (HELPER_DOMAINS.includes(domain)) {
+    if (isHelperDomain(domain)) {
       showHelperDetailDialog(this, {
         domain,
       });
       return;
     }
-    const handlers = await getConfigFlowHandlers(this.hass, "helper");
+    const handlers = await getConfigFlowHandlers(this.hass, ["helper"]);
 
     if (!handlers.includes(domain)) {
-      const integrations = await getConfigFlowHandlers(
-        this.hass,
-        "integration"
-      );
+      const integrations = await getConfigFlowHandlers(this.hass, [
+        "device",
+        "hub",
+        "service",
+      ]);
       if (integrations.includes(domain)) {
         navigate(`/config/integrations/add?domain=${domain}`, {
           replace: true,
@@ -324,7 +330,7 @@ export class HaConfigHelpers extends SubscribeMixin(LitElement) {
     const newStates = Object.values(this.hass!.states).filter(
       (entity) =>
         extraEntities.has(entity.entity_id) ||
-        HELPER_DOMAINS.includes(computeStateDomain(entity))
+        isHelperDomain(computeStateDomain(entity))
     );
 
     if (
@@ -345,16 +351,14 @@ export class HaConfigHelpers extends SubscribeMixin(LitElement) {
 
   private async _getConfigEntries() {
     this._configEntries = groupByOne(
-      await getConfigEntries(this.hass, { type: "helper" }),
+      await getConfigEntries(this.hass, { type: ["helper"] }),
       (entry) => entry.entry_id
     );
   }
 
   private async _openEditDialog(ev: CustomEvent): Promise<void> {
     const entityId = (ev.detail as RowClickedEvent).id;
-    showEntityEditorDialog(this, {
-      entity_id: entityId,
-    });
+    showMoreInfoDialog(this, { entityId });
   }
 
   private _createHelpler() {

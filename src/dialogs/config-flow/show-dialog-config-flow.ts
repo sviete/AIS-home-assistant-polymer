@@ -3,7 +3,6 @@ import {
   createConfigFlow,
   deleteConfigFlow,
   fetchConfigFlow,
-  getConfigFlowHandlers,
   handleConfigFlowStep,
 } from "../../data/config_flow";
 import { domainToName } from "../../data/integration";
@@ -21,18 +20,11 @@ export const showConfigFlowDialog = (
 ): void =>
   showFlowDialog(element, dialogParams, {
     loadDevicesAndAreas: true,
-    getFlowHandlers: async (hass) => {
-      const [integrations, helpers] = await Promise.all([
-        getConfigFlowHandlers(hass, "integration"),
-        getConfigFlowHandlers(hass, "helper"),
-        hass.loadBackendTranslation("title", undefined, true),
-      ]);
-      return { integrations, helpers };
-    },
     createFlow: async (hass, handler) => {
       const [step] = await Promise.all([
         createConfigFlow(hass, handler),
         hass.loadBackendTranslation("config", handler),
+        hass.loadBackendTranslation("selector", handler),
         // Used as fallback if no header defined for step
         hass.loadBackendTranslation("title", handler),
       ]);
@@ -41,6 +33,7 @@ export const showConfigFlowDialog = (
     fetchFlow: async (hass, flowId) => {
       const step = await fetchConfigFlow(hass, flowId);
       await hass.loadBackendTranslation("config", step.handler);
+      await hass.loadBackendTranslation("selector", step.handler);
       return step;
     },
     handleFlowStep: handleConfigFlowStep,
@@ -62,7 +55,8 @@ export const showConfigFlowDialog = (
     renderShowFormStepHeader(hass, step) {
       return (
         hass.localize(
-          `component.${step.handler}.config.step.${step.step_id}.title`
+          `component.${step.handler}.config.step.${step.step_id}.title`,
+          step.description_placeholders
         ) || hass.localize(`component.${step.handler}.title`)
       );
     },
@@ -86,15 +80,38 @@ export const showConfigFlowDialog = (
     },
 
     renderShowFormStepFieldHelper(hass, step, field) {
-      return hass.localize(
-        `component.${step.handler}.config.step.${step.step_id}.data_description.${field.name}`
+      const description = hass.localize(
+        `component.${step.handler}.config.step.${step.step_id}.data_description.${field.name}`,
+        step.description_placeholders
       );
+      return description
+        ? html`<ha-markdown breaks .content=${description}></ha-markdown>`
+        : "";
     },
 
     renderShowFormStepFieldError(hass, step, error) {
-      return hass.localize(
-        `component.${step.handler}.config.error.${error}`,
-        step.description_placeholders
+      return (
+        hass.localize(
+          `component.${step.handler}.config.error.${error}`,
+          step.description_placeholders
+        ) || error
+      );
+    },
+
+    renderShowFormStepFieldLocalizeValue(hass, step, key) {
+      return hass.localize(`component.${step.handler}.selector.${key}`);
+    },
+
+    renderShowFormStepSubmitButton(hass, step) {
+      return (
+        hass.localize(
+          `component.${step.handler}.config.step.${step.step_id}.submit`
+        ) ||
+        hass.localize(
+          `ui.panel.config.integrations.config_flow.${
+            step.last_step === false ? "next" : "submit"
+          }`
+        )
       );
     },
 
@@ -209,7 +226,7 @@ export const showConfigFlowDialog = (
     },
 
     renderLoadingDescription(hass, reason, handler, step) {
-      if (!["loading_flow", "loading_step"].includes(reason)) {
+      if (reason !== "loading_flow" && reason !== "loading_step") {
         return "";
       }
       const domain = step?.handler || handler;

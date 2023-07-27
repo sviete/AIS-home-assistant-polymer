@@ -9,7 +9,6 @@ import {
 import { CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { fireEvent } from "../../../../common/dom/fire_event";
-import { computeStateName } from "../../../../common/entity/compute_state_name";
 import "../../../../components/ha-card";
 import "../../../../components/ha-icon-button";
 import {
@@ -28,6 +27,10 @@ import {
   GridSourceTypeEnergyPreference,
   saveEnergyPreferences,
 } from "../../../../data/energy";
+import {
+  StatisticsMetaData,
+  getStatisticLabel,
+} from "../../../../data/recorder";
 import { showConfigFlowDialog } from "../../../../dialogs/config-flow/show-dialog-config-flow";
 import {
   showAlertDialog,
@@ -50,6 +53,9 @@ export class EnergyGridSettings extends LitElement {
 
   @property({ attribute: false })
   public preferences!: EnergyPreferences;
+
+  @property({ attribute: false })
+  public statsMetadata?: Record<string, StatisticsMetaData>;
 
   @property({ attribute: false })
   public validationResult?: EnergyPreferencesValidation;
@@ -80,7 +86,7 @@ export class EnergyGridSettings extends LitElement {
     }
 
     return html`
-      <ha-card>
+      <ha-card outlined>
         <h1 class="card-header">
           <ha-svg-icon .path=${mdiTransmissionTower}></ha-svg-icon>
           ${this.hass.localize("ui.panel.config.energy.grid.title")}
@@ -127,15 +133,23 @@ export class EnergyGridSettings extends LitElement {
                       .path=${mdiHomeImportOutline}
                     ></ha-svg-icon>`}
                 <span class="content"
-                  >${entityState
-                    ? computeStateName(entityState)
-                    : flow.stat_energy_from}</span
+                  >${getStatisticLabel(
+                    this.hass,
+                    flow.stat_energy_from,
+                    this.statsMetadata?.[flow.stat_energy_from]
+                  )}</span
                 >
                 <ha-icon-button
+                  .label=${this.hass.localize(
+                    "ui.panel.config.energy.grid.edit_consumption"
+                  )}
                   @click=${this._editFromSource}
                   .path=${mdiPencil}
                 ></ha-icon-button>
                 <ha-icon-button
+                  .label=${this.hass.localize(
+                    "ui.panel.config.energy.grid.delete_consumption"
+                  )}
                   @click=${this._deleteFromSource}
                   .path=${mdiDelete}
                 ></ha-icon-button>
@@ -166,15 +180,23 @@ export class EnergyGridSettings extends LitElement {
                       .path=${mdiHomeExportOutline}
                     ></ha-svg-icon>`}
                 <span class="content"
-                  >${entityState
-                    ? computeStateName(entityState)
-                    : flow.stat_energy_to}</span
+                  >${getStatisticLabel(
+                    this.hass,
+                    flow.stat_energy_to,
+                    this.statsMetadata?.[flow.stat_energy_to]
+                  )}</span
                 >
                 <ha-icon-button
+                  .label=${this.hass.localize(
+                    "ui.panel.config.energy.grid.edit_return"
+                  )}
                   @click=${this._editToSource}
                   .path=${mdiPencil}
                 ></ha-icon-button>
                 <ha-icon-button
+                  .label=${this.hass.localize(
+                    "ui.panel.config.energy.grid.delete_return"
+                  )}
                   @click=${this._deleteToSource}
                   .path=${mdiDelete}
                 ></ha-icon-button>
@@ -198,6 +220,7 @@ export class EnergyGridSettings extends LitElement {
           ${this._co2ConfigEntry
             ? html`<div class="row" .entry=${this._co2ConfigEntry}>
                 <img
+                  alt=""
                   referrerpolicy="no-referrer"
                   src=${brandsUrl({
                     domain: "co2signal",
@@ -207,11 +230,14 @@ export class EnergyGridSettings extends LitElement {
                 />
                 <span class="content">${this._co2ConfigEntry.title}</span>
                 <a
-                  href=${`/config/integrations#config_entry=${this._co2ConfigEntry.entry_id}`}
+                  href=${`/config/integrations/integration/${this._co2ConfigEntry?.domain}`}
                 >
                   <ha-icon-button .path=${mdiPencil}></ha-icon-button>
                 </a>
                 <ha-icon-button
+                  .label=${this.hass.localize(
+                    "ui.panel.config.energy.grid.remove_co2_signal"
+                  )}
                   @click=${this._removeCO2Sensor}
                   .path=${mdiDelete}
                 ></ha-icon-button>
@@ -219,6 +245,7 @@ export class EnergyGridSettings extends LitElement {
             : html`
                 <div class="row border-bottom">
                   <img
+                    alt=""
                     referrerpolicy="no-referrer"
                     src=${brandsUrl({
                       domain: "co2signal",
@@ -339,6 +366,7 @@ export class EnergyGridSettings extends LitElement {
       ev.currentTarget.closest(".row").source;
     showEnergySettingsGridFlowFromDialog(this, {
       source: { ...origSource },
+      metadata: this.statsMetadata?.[origSource.stat_energy_from],
       saveCallback: async (source) => {
         const flowFrom = energySourcesByType(this.preferences).grid![0]
           .flow_from;
@@ -366,6 +394,7 @@ export class EnergyGridSettings extends LitElement {
       ev.currentTarget.closest(".row").source;
     showEnergySettingsGridFlowToDialog(this, {
       source: { ...origSource },
+      metadata: this.statsMetadata?.[origSource.stat_energy_to],
       saveCallback: async (source) => {
         const flowTo = energySourcesByType(this.preferences).grid![0].flow_to;
 

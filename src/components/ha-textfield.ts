@@ -1,7 +1,7 @@
 import { TextFieldBase } from "@material/mwc-textfield/mwc-textfield-base";
 import { styles } from "@material/mwc-textfield/mwc-textfield.css";
 import { TemplateResult, html, PropertyValues, css } from "lit";
-import { customElement, property } from "lit/decorators";
+import { customElement, property, query } from "lit/decorators";
 
 @customElement("ha-textfield")
 export class HaTextField extends TextFieldBase {
@@ -15,6 +15,10 @@ export class HaTextField extends TextFieldBase {
   // @ts-ignore
   @property({ type: Boolean }) public iconTrailing?: boolean;
 
+  @property() public autocomplete?: string;
+
+  @query("input") public formElement!: HTMLInputElement;
+
   override updated(changedProperties: PropertyValues) {
     super.updated(changedProperties);
     if (
@@ -26,6 +30,13 @@ export class HaTextField extends TextFieldBase {
         this.invalid ? this.errorMessage || "Invalid" : ""
       );
       this.reportValidity();
+    }
+    if (changedProperties.has("autocomplete")) {
+      if (this.autocomplete) {
+        this.formElement.setAttribute("autocomplete", this.autocomplete);
+      } else {
+        this.formElement.removeAttribute("autocomplete");
+      }
     }
   }
 
@@ -57,8 +68,22 @@ export class HaTextField extends TextFieldBase {
       .mdc-text-field__affix--suffix {
         padding-left: var(--text-field-suffix-padding-left, 12px);
         padding-right: var(--text-field-suffix-padding-right, 0px);
+        padding-inline-start: var(--text-field-suffix-padding-left, 12px);
+        padding-inline-end: var(--text-field-suffix-padding-right, 0px);
+        direction: var(--direction);
+      }
+      .mdc-text-field--with-leading-icon {
+        padding-inline-start: var(--text-field-suffix-padding-left, 0px);
+        padding-inline-end: var(--text-field-suffix-padding-right, 16px);
+        direction: var(--direction);
       }
 
+      .mdc-text-field--with-leading-icon.mdc-text-field--with-trailing-icon {
+        padding-left: var(--text-field-suffix-padding-left, 0px);
+        padding-right: var(--text-field-suffix-padding-right, 0px);
+        padding-inline-start: var(--text-field-suffix-padding-left, 0px);
+        padding-inline-end: var(--text-field-suffix-padding-right, 0px);
+      }
       .mdc-text-field:not(.mdc-text-field--disabled)
         .mdc-text-field__affix--suffix {
         color: var(--secondary-text-color);
@@ -68,8 +93,28 @@ export class HaTextField extends TextFieldBase {
         color: var(--secondary-text-color);
       }
 
+      .mdc-text-field__icon--leading {
+        margin-inline-start: 16px;
+        margin-inline-end: 8px;
+        direction: var(--direction);
+      }
+
+      .mdc-text-field__icon--trailing {
+        padding: var(--textfield-icon-trailing-padding, 12px);
+      }
+
+      .mdc-floating-label:not(.mdc-floating-label--float-above) {
+        text-overflow: ellipsis;
+        width: inherit;
+        padding-right: 30px;
+        padding-inline-end: 30px;
+        padding-inline-start: initial;
+        box-sizing: border-box;
+        direction: var(--direction);
+      }
+
       input {
-        text-align: var(--text-field-text-align);
+        text-align: var(--text-field-text-align, start);
       }
 
       /* Chrome, Safari, Edge, Opera */
@@ -91,7 +136,53 @@ export class HaTextField extends TextFieldBase {
       .mdc-text-field {
         overflow: var(--text-field-overflow);
       }
+
+      .mdc-floating-label {
+        inset-inline-start: 16px !important;
+        inset-inline-end: initial !important;
+        transform-origin: var(--float-start);
+        direction: var(--direction);
+        text-align: var(--float-start);
+      }
+
+      .mdc-text-field--with-leading-icon.mdc-text-field--filled
+        .mdc-floating-label {
+        max-width: calc(
+          100% - 48px - var(--text-field-suffix-padding-left, 0px)
+        );
+        inset-inline-start: calc(
+          48px + var(--text-field-suffix-padding-left, 0px)
+        ) !important;
+        inset-inline-end: initial !important;
+        direction: var(--direction);
+      }
+
+      .mdc-text-field__input[type="number"] {
+        direction: var(--direction);
+      }
+      .mdc-text-field__affix--prefix {
+        padding-right: var(--text-field-prefix-padding-right, 2px);
+      }
+
+      .mdc-text-field:not(.mdc-text-field--disabled)
+        .mdc-text-field__affix--prefix {
+        color: var(--mdc-text-field-label-ink-color);
+      }
     `,
+    // safari workaround - must be explicit
+    document.dir === "rtl"
+      ? css`
+          .mdc-text-field__affix--suffix,
+          .mdc-text-field--with-leading-icon,
+          .mdc-text-field__icon--leading,
+          .mdc-floating-label,
+          .mdc-text-field--with-leading-icon.mdc-text-field--filled
+            .mdc-floating-label,
+          .mdc-text-field__input[type="number"] {
+            direction: rtl;
+          }
+        `
+      : css``,
   ];
 }
 

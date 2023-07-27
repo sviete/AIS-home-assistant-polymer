@@ -1,14 +1,16 @@
 import {
-  object,
-  string,
-  union,
-  boolean,
-  optional,
   array,
-  literal,
+  boolean,
+  dynamic,
   enums,
+  literal,
+  object,
+  optional,
+  string,
   type,
+  union,
 } from "superstruct";
+import { BaseActionConfig } from "../../../../data/lovelace";
 
 const actionConfigStructUser = object({
   user: string(),
@@ -32,6 +34,7 @@ const actionConfigStructService = object({
   action: literal("call-service"),
   service: string(),
   service_data: optional(object()),
+  data: optional(object()),
   target: optional(
     object({
       entity_id: optional(union([string(), array(string())])),
@@ -48,6 +51,12 @@ const actionConfigStructNavigate = object({
   confirmation: optional(actionConfigStructConfirmation),
 });
 
+const actionConfigStructAssist = type({
+  action: literal("assist"),
+  pipeline_id: optional(string()),
+  start_listening: optional(boolean()),
+});
+
 const actionConfigStructCustom = type({
   action: literal("fire-dom-event"),
 });
@@ -60,14 +69,31 @@ export const actionConfigStructType = object({
     "call-service",
     "url",
     "navigate",
+    "assist",
   ]),
   confirmation: optional(actionConfigStructConfirmation),
 });
 
-export const actionConfigStruct = union([
-  actionConfigStructType,
-  actionConfigStructUrl,
-  actionConfigStructNavigate,
-  actionConfigStructService,
-  actionConfigStructCustom,
-]);
+export const actionConfigStruct = dynamic<any>((value) => {
+  if (value && typeof value === "object" && "action" in value) {
+    switch ((value as BaseActionConfig).action!) {
+      case "call-service": {
+        return actionConfigStructService;
+      }
+      case "fire-dom-event": {
+        return actionConfigStructCustom;
+      }
+      case "navigate": {
+        return actionConfigStructNavigate;
+      }
+      case "url": {
+        return actionConfigStructUrl;
+      }
+      case "assist": {
+        return actionConfigStructAssist;
+      }
+    }
+  }
+
+  return actionConfigStructType;
+});

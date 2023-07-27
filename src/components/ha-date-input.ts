@@ -1,8 +1,11 @@
 import { mdiCalendar } from "@mdi/js";
+import { HassConfig } from "home-assistant-js-websocket";
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators";
+import { firstWeekdayIndex } from "../common/datetime/first_weekday";
 import { formatDateNumeric } from "../common/datetime/format_date";
 import { fireEvent } from "../common/dom/fire_event";
+import { TimeZone } from "../data/translation";
 import { HomeAssistant } from "../types";
 import "./ha-svg-icon";
 import "./ha-textfield";
@@ -14,6 +17,7 @@ export interface datePickerDialogParams {
   min?: string;
   max?: string;
   locale?: string;
+  firstWeekday?: number;
   onChange: (value: string) => void;
 }
 
@@ -33,6 +37,10 @@ export class HaDateInput extends LitElement {
 
   @property() public value?: string;
 
+  @property() public min?: string;
+
+  @property() public max?: string;
+
   @property({ type: Boolean }) public disabled = false;
 
   @property({ type: Boolean }) public required = false;
@@ -48,9 +56,17 @@ export class HaDateInput extends LitElement {
       .disabled=${this.disabled}
       iconTrailing
       helperPersistent
+      readonly
       @click=${this._openDialog}
       .value=${this.value
-        ? formatDateNumeric(new Date(this.value), this.locale)
+        ? formatDateNumeric(
+            new Date(`${this.value.split("T")[0]}T00:00:00`),
+            {
+              ...this.locale,
+              time_zone: TimeZone.local,
+            },
+            {} as HassConfig
+          )
         : ""}
       .required=${this.required}
     >
@@ -63,10 +79,12 @@ export class HaDateInput extends LitElement {
       return;
     }
     showDatePickerDialog(this, {
-      min: "1970-01-01",
+      min: this.min || "1970-01-01",
+      max: this.max,
       value: this.value,
       onChange: (value) => this._valueChanged(value),
       locale: this.locale.language,
+      firstWeekday: firstWeekdayIndex(this.locale),
     });
   }
 
@@ -82,6 +100,9 @@ export class HaDateInput extends LitElement {
     return css`
       ha-svg-icon {
         color: var(--secondary-text-color);
+      }
+      ha-textfield {
+        display: block;
       }
     `;
   }

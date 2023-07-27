@@ -1,9 +1,9 @@
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { HomeAssistant } from "../../../../types";
-import { LovelaceCard } from "../../types";
-import { EnergyDevicesGraphCardConfig } from "../types";
 import "../../components/hui-energy-period-selector";
+import { LovelaceCard } from "../../types";
+import { EnergyCardBaseConfig } from "../types";
 
 @customElement("hui-energy-date-selection-card")
 export class HuiEnergyDateSelectionCard
@@ -12,19 +12,19 @@ export class HuiEnergyDateSelectionCard
 {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
-  @state() private _config?: EnergyDevicesGraphCardConfig;
+  @state() private _config?: EnergyCardBaseConfig;
 
   public getCardSize(): Promise<number> | number {
     return 1;
   }
 
-  public setConfig(config: EnergyDevicesGraphCardConfig): void {
+  public setConfig(config: EnergyCardBaseConfig): void {
     this._config = config;
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
     return html`
@@ -33,10 +33,6 @@ export class HuiEnergyDateSelectionCard
         .collectionKey=${this._config.collection_key}
       ></hui-energy-period-selector>
     `;
-  }
-
-  static get styles(): CSSResultGroup {
-    return css``;
   }
 }
 

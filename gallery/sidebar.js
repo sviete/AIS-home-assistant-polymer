@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   {
     // This section has no header and so all page links are shown directly in the sidebar
     category: "concepts",
@@ -8,7 +8,7 @@ module.exports = [
   {
     category: "lovelace",
     // Label for in the sidebar
-    header: "Lovelace",
+    header: "Dashboards",
     // Specify order of pages. Any pages in the category folder but not listed here will
     // automatically be added after the pages listed here.
     pages: ["introduction"],
@@ -34,7 +34,7 @@ module.exports = [
   },
   {
     category: "misc",
-    header: "Miscelaneous",
+    header: "Miscellaneous",
   },
   {
     category: "brand",
@@ -44,6 +44,10 @@ module.exports = [
     category: "user-test",
     header: "Users",
     pages: ["user-types", "configuration-menu"],
+  },
+  {
+    category: "date-time",
+    header: "Date and Time",
   },
   {
     category: "design.home-assistant.io",

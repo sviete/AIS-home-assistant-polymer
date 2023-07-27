@@ -1,12 +1,13 @@
 import { HassEntity } from "home-assistant-js-websocket";
-import { html, LitElement, PropertyValues } from "lit";
+import { html, LitElement, PropertyValues, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
-import { computeStateDomain } from "../../common/entity/compute_state_domain";
+import { ensureArray } from "../../common/array/ensure-array";
 import {
   EntitySources,
   fetchEntitySourcesWithCache,
 } from "../../data/entity_sources";
-import { EntitySelector } from "../../data/selector";
+import type { EntitySelector } from "../../data/selector";
+import { filterSelectorEntities } from "../../data/selector";
 import { HomeAssistant } from "../../types";
 import "../entity/ha-entities-picker";
 import "../entity/ha-entity-picker";
@@ -29,15 +30,26 @@ export class HaEntitySelector extends LitElement {
 
   @property({ type: Boolean }) public required = true;
 
+  private _hasIntegration(selector: EntitySelector) {
+    return (
+      selector.entity?.filter &&
+      ensureArray(selector.entity.filter).some((filter) => filter.integration)
+    );
+  }
+
   protected render() {
-    if (!this.selector.entity.multiple) {
+    if (this._hasIntegration(this.selector) && !this._entitySources) {
+      return nothing;
+    }
+
+    if (!this.selector.entity?.multiple) {
       return html`<ha-entity-picker
         .hass=${this.hass}
         .value=${this.value}
         .label=${this.label}
         .helper=${this.helper}
-        .includeEntities=${this.selector.entity.include_entities}
-        .excludeEntities=${this.selector.entity.exclude_entities}
+        .includeEntities=${this.selector.entity?.include_entities}
+        .excludeEntities=${this.selector.entity?.exclude_entities}
         .entityFilter=${this._filterEntities}
         .disabled=${this.disabled}
         .required=${this.required}
@@ -51,9 +63,10 @@ export class HaEntitySelector extends LitElement {
         .hass=${this.hass}
         .value=${this.value}
         .helper=${this.helper}
-        .entityFilter=${this._filterEntities}
         .includeEntities=${this.selector.entity.include_entities}
         .excludeEntities=${this.selector.entity.exclude_entities}
+        .entityFilter=${this._filterEntities}
+        .disabled=${this.disabled}
         .required=${this.required}
       ></ha-entities-picker>
     `;
@@ -63,7 +76,7 @@ export class HaEntitySelector extends LitElement {
     super.updated(changedProps);
     if (
       changedProps.has("selector") &&
-      this.selector.entity.integration &&
+      this._hasIntegration(this.selector) &&
       !this._entitySources
     ) {
       fetchEntitySourcesWithCache(this.hass).then((sources) => {
@@ -73,35 +86,12 @@ export class HaEntitySelector extends LitElement {
   }
 
   private _filterEntities = (entity: HassEntity): boolean => {
-    const {
-      domain: filterDomain,
-      device_class: filterDeviceClass,
-      integration: filterIntegration,
-    } = this.selector.entity;
-
-    if (filterDomain) {
-      const entityDomain = computeStateDomain(entity);
-      if (
-        Array.isArray(filterDomain)
-          ? !filterDomain.includes(entityDomain)
-          : entityDomain !== filterDomain
-      ) {
-        return false;
-      }
+    if (!this.selector?.entity?.filter) {
+      return true;
     }
-    if (
-      filterDeviceClass &&
-      entity.attributes.device_class !== filterDeviceClass
-    ) {
-      return false;
-    }
-    if (
-      filterIntegration &&
-      this._entitySources?.[entity.entity_id]?.domain !== filterIntegration
-    ) {
-      return false;
-    }
-    return true;
+    return ensureArray(this.selector.entity.filter).some((filter) =>
+      filterSelectorEntities(filter, entity, this._entitySources)
+    );
   };
 }
 

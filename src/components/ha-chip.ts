@@ -1,13 +1,6 @@
 // @ts-ignore
 import chipStyles from "@material/chips/dist/mdc.chips.min.css";
-import {
-  css,
-  CSSResultGroup,
-  html,
-  LitElement,
-  TemplateResult,
-  unsafeCSS,
-} from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators";
 
 @customElement("ha-chip")
@@ -18,14 +11,14 @@ export class HaChip extends LitElement {
 
   @property({ type: Boolean }) public noText = false;
 
-  protected render(): TemplateResult {
+  protected render() {
     return html`
       <div class="mdc-chip ${this.noText ? "no-text" : ""}">
         ${this.hasIcon
           ? html`<div class="mdc-chip__icon mdc-chip__icon--leading">
               <slot name="icon"></slot>
             </div>`
-          : null}
+          : nothing}
         <div class="mdc-chip__ripple"></div>
         <span role="gridcell">
           <span role="button" tabindex="0" class="mdc-chip__primary-action">
@@ -36,7 +29,7 @@ export class HaChip extends LitElement {
           ? html`<div class="mdc-chip__icon mdc-chip__icon--trailing">
               <slot name="trailing-icon"></slot>
             </div>`
-          : null}
+          : nothing}
       </div>
     `;
   }
@@ -66,13 +59,20 @@ export class HaChip extends LitElement {
         line-height: 14px;
         color: var(--ha-chip-icon-color, var(--ha-chip-text-color));
       }
-      .mdc-chip.no-text
-        .mdc-chip__icon--leading:not(.mdc-chip__icon--leading-hidden) {
+      .mdc-chip.mdc-chip--selected .mdc-chip__checkmark,
+      .mdc-chip .mdc-chip__icon--leading:not(.mdc-chip__icon--leading-hidden) {
         margin-right: -4px;
+        margin-inline-start: -4px;
+        margin-inline-end: 4px;
+        direction: var(--direction);
       }
 
       span[role="gridcell"] {
         line-height: 14px;
+      }
+
+      :host {
+        outline: none;
       }
     `;
   }

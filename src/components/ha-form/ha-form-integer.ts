@@ -3,15 +3,15 @@ import {
   CSSResultGroup,
   html,
   LitElement,
-  TemplateResult,
   PropertyValues,
+  TemplateResult,
 } from "lit";
 import { customElement, property, query } from "lit/decorators";
 import { fireEvent } from "../../common/dom/fire_event";
 import { HaCheckbox } from "../ha-checkbox";
-import { HaFormElement, HaFormIntegerData, HaFormIntegerSchema } from "./types";
 import "../ha-slider";
 import { HaTextField } from "../ha-textfield";
+import { HaFormElement, HaFormIntegerData, HaFormIntegerSchema } from "./types";
 
 @customElement("ha-form-integer")
 export class HaFormInteger extends LitElement implements HaFormElement {
@@ -20,6 +20,8 @@ export class HaFormInteger extends LitElement implements HaFormElement {
   @property({ attribute: false }) public data?: HaFormIntegerData;
 
   @property() public label?: string;
+
+  @property() public helper?: string;
 
   @property({ type: Boolean }) public disabled = false;
 
@@ -65,6 +67,9 @@ export class HaFormInteger extends LitElement implements HaFormElement {
               @change=${this._valueChanged}
             ></ha-slider>
           </div>
+          ${this.helper
+            ? html`<ha-input-helper-text>${this.helper}</ha-input-helper-text>`
+            : ""}
         </div>
       `;
     }
@@ -74,6 +79,8 @@ export class HaFormInteger extends LitElement implements HaFormElement {
         type="number"
         inputMode="numeric"
         .label=${this.label}
+        .helper=${this.helper}
+        helperPersistent
         .value=${this.data !== undefined ? this.data : ""}
         .disabled=${this.disabled}
         .required=${this.schema.required}
@@ -105,7 +112,8 @@ export class HaFormInteger extends LitElement implements HaFormElement {
     }
 
     return (
-      this.schema.description?.suggested_value ||
+      (this.schema.description?.suggested_value !== undefined &&
+        this.schema.description?.suggested_value !== null) ||
       this.schema.default ||
       this.schema.valueMin ||
       0

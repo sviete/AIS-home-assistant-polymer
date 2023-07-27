@@ -1,9 +1,9 @@
-import "../../../../components/ha-form/ha-form";
-import { html, LitElement, TemplateResult } from "lit";
+import { html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { assert, assign, object, optional, string } from "superstruct";
 import { fireEvent } from "../../../../common/dom/fire_event";
-import type { HaFormSchema } from "../../../../components/ha-form/types";
+import "../../../../components/ha-form/ha-form";
+import type { SchemaUnion } from "../../../../components/ha-form/types";
 import type { HomeAssistant } from "../../../../types";
 import type { MarkdownCardConfig } from "../../cards/types";
 import type { LovelaceCardEditor } from "../../types";
@@ -18,11 +18,11 @@ const cardConfigStruct = assign(
   })
 );
 
-const SCHEMA: HaFormSchema[] = [
+const SCHEMA = [
   { name: "title", selector: { text: {} } },
-  { name: "content", required: true, selector: { text: { multiline: true } } },
+  { name: "content", required: true, selector: { template: {} } },
   { name: "theme", selector: { theme: {} } },
-];
+] as const;
 
 @customElement("hui-markdown-card-editor")
 export class HuiMarkdownCardEditor
@@ -38,9 +38,9 @@ export class HuiMarkdownCardEditor
     this._config = config;
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
     return html`
@@ -58,22 +58,23 @@ export class HuiMarkdownCardEditor
     fireEvent(this, "config-changed", { config: ev.detail.value });
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema) => {
-    if (schema.name === "theme") {
-      return `${this.hass!.localize(
-        "ui.panel.lovelace.editor.card.generic.theme"
-      )} (${this.hass!.localize(
-        "ui.panel.lovelace.editor.card.config.optional"
-      )})`;
+  private _computeLabelCallback = (schema: SchemaUnion<typeof SCHEMA>) => {
+    switch (schema.name) {
+      case "theme":
+        return `${this.hass!.localize(
+          "ui.panel.lovelace.editor.card.generic.theme"
+        )} (${this.hass!.localize(
+          "ui.panel.lovelace.editor.card.config.optional"
+        )})`;
+      case "content":
+        return this.hass!.localize(
+          `ui.panel.lovelace.editor.card.markdown.${schema.name}`
+        );
+      default:
+        return this.hass!.localize(
+          `ui.panel.lovelace.editor.card.generic.${schema.name}`
+        );
     }
-    return (
-      this.hass!.localize(
-        `ui.panel.lovelace.editor.card.generic.${schema.name}`
-      ) ||
-      this.hass!.localize(
-        `ui.panel.lovelace.editor.card.markdown.${schema.name}`
-      )
-    );
   };
 }
 

@@ -3,10 +3,10 @@ import {
   CSSResultGroup,
   html,
   LitElement,
+  nothing,
   PropertyValues,
-  TemplateResult,
 } from "lit";
-import { customElement, property, state, query } from "lit/decorators";
+import { customElement, property, query, state } from "lit/decorators";
 import { isComponentLoaded } from "../../../../../common/config/is_component_loaded";
 import { dynamicElement } from "../../../../../common/dom/dynamic-element-directive";
 import { fireEvent } from "../../../../../common/dom/fire_event";
@@ -16,6 +16,7 @@ import {
 } from "../../../../../data/entity_registry";
 import { HELPERS_CRUD } from "../../../../../data/helpers_crud";
 import { showConfirmationDialog } from "../../../../../dialogs/generic/show-dialog-box";
+import { hideMoreInfoDialog } from "../../../../../dialogs/more-info/show-ha-more-info-dialog";
 import { haStyle } from "../../../../../resources/styles";
 import type { HomeAssistant } from "../../../../../types";
 import type { Helper } from "../../../helpers/const";
@@ -26,9 +27,11 @@ import "../../../helpers/forms/ha-input_datetime-form";
 import "../../../helpers/forms/ha-input_number-form";
 import "../../../helpers/forms/ha-input_select-form";
 import "../../../helpers/forms/ha-input_text-form";
+import "../../../helpers/forms/ha-schedule-form";
 import "../../../helpers/forms/ha-timer-form";
-import "../../entity-registry-basic-editor";
-import type { HaEntityRegistryBasicEditor } from "../../entity-registry-basic-editor";
+import "../../../voice-assistants/entity-voice-settings";
+import "../../entity-registry-settings-editor";
+import type { EntityRegistrySettingsEditor } from "../../entity-registry-settings-editor";
 
 @customElement("entity-settings-helper-tab")
 export class EntityRegistrySettingsHelper extends LitElement {
@@ -44,8 +47,8 @@ export class EntityRegistrySettingsHelper extends LitElement {
 
   @state() private _componentLoaded?: boolean;
 
-  @query("ha-registry-basic-editor")
-  private _registryEditor?: HaEntityRegistryBasicEditor;
+  @query("entity-registry-settings-editor")
+  private _registryEditor?: EntityRegistrySettingsEditor;
 
   protected firstUpdated(changedProperties: PropertyValues) {
     super.firstUpdated(changedProperties);
@@ -56,19 +59,27 @@ export class EntityRegistrySettingsHelper extends LitElement {
     super.updated(changedProperties);
     if (changedProperties.has("entry")) {
       this._error = undefined;
-      this._item = undefined;
+      if (
+        this.entry.unique_id !==
+        (changedProperties.get("entry") as ExtEntityRegistryEntry)?.unique_id
+      ) {
+        this._item = undefined;
+      }
+
       this._getItem();
     }
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (this._item === undefined) {
-      return html``;
+      return nothing;
     }
     const stateObj = this.hass.states[this.entry.entity_id];
     return html`
       <div class="form">
-        ${this._error ? html` <div class="error">${this._error}</div> ` : ""}
+        ${this._error
+          ? html`<ha-alert alert-type="error">${this._error}</ha-alert>`
+          : ""}
         ${!this._componentLoaded
           ? this.hass.localize(
               "ui.dialogs.helper_settings.platform_not_loaded",
@@ -86,10 +97,14 @@ export class EntityRegistrySettingsHelper extends LitElement {
                 })}
               </span>
             `}
-        <ha-registry-basic-editor
+        <entity-registry-settings-editor
           .hass=${this.hass}
           .entry=${this.entry}
-        ></ha-registry-basic-editor>
+          .disabled=${this._submitting}
+          @change=${this._entityRegistryChanged}
+          hideName
+          hideIcon
+        ></entity-registry-settings-editor>
       </div>
       <div class="buttons">
         <mwc-button
@@ -108,6 +123,10 @@ export class EntityRegistrySettingsHelper extends LitElement {
         </mwc-button>
       </div>
     `;
+  }
+
+  private _entityRegistryChanged() {
+    this._error = undefined;
   }
 
   private _valueChanged(ev: CustomEvent): void {
@@ -130,8 +149,10 @@ export class EntityRegistrySettingsHelper extends LitElement {
           this._item
         );
       }
-      await this._registryEditor?.updateEntry();
-      fireEvent(this, "close-dialog");
+      const result = await this._registryEditor!.updateEntry();
+      if (result.close) {
+        hideMoreInfoDialog(this);
+      }
     } catch (err: any) {
       this._error = err.message || "Unknown error";
     } finally {
@@ -181,18 +202,12 @@ export class EntityRegistrySettingsHelper extends LitElement {
         }
         .form {
           padding: 20px 24px;
-          margin-bottom: 53px;
         }
         .buttons {
-          position: absolute;
-          bottom: 0;
-          width: 100%;
           box-sizing: border-box;
-          border-top: 1px solid
-            var(--mdc-dialog-scroll-divider-color, rgba(0, 0, 0, 0.12));
           display: flex;
           justify-content: space-between;
-          padding: 8px;
+          padding: 0 24px 24px 24px;
           background-color: var(--mdc-theme-surface, #fff);
         }
         .error {

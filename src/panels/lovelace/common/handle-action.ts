@@ -4,6 +4,7 @@ import { forwardHaptic } from "../../../data/haptics";
 import { domainToName } from "../../../data/integration";
 import { ActionConfig } from "../../../data/lovelace";
 import { showConfirmationDialog } from "../../../dialogs/generic/show-dialog-box";
+import { showVoiceCommandDialog } from "../../../dialogs/voice-command-dialog/show-ha-voice-command-dialog";
 import { HomeAssistant } from "../../../types";
 import { showToast } from "../../../util/toast";
 import { toggleEntity } from "./entity/toggle-entity";
@@ -14,16 +15,19 @@ declare global {
   }
 }
 
+export type ActionConfigParams = {
+  entity?: string;
+  camera_image?: string;
+  image_entity?: string;
+  hold_action?: ActionConfig;
+  tap_action?: ActionConfig;
+  double_tap_action?: ActionConfig;
+};
+
 export const handleAction = async (
   node: HTMLElement,
   hass: HomeAssistant,
-  config: {
-    entity?: string;
-    camera_image?: string;
-    hold_action?: ActionConfig;
-    tap_action?: ActionConfig;
-    double_tap_action?: ActionConfig;
-  },
+  config: ActionConfigParams,
   action: string
 ): Promise<void> => {
   let actionConfig: ActionConfig | undefined;
@@ -46,7 +50,7 @@ export const handleAction = async (
     actionConfig.confirmation &&
     (!actionConfig.confirmation.exemptions ||
       !actionConfig.confirmation.exemptions.some(
-        (e) => e.user === hass!.user!.id
+        (e) => e.user === hass!.user?.id
       ))
   ) {
     forwardHaptic("warning");
@@ -72,8 +76,7 @@ export const handleAction = async (
             "action",
             serviceName ||
               hass.localize(
-                "ui.panel.lovelace.editor.action-editor.actions." +
-                  actionConfig.action
+                `ui.panel.lovelace.editor.action-editor.actions.${actionConfig.action}`
               ) ||
               actionConfig.action
           ),
@@ -85,9 +88,11 @@ export const handleAction = async (
 
   switch (actionConfig.action) {
     case "more-info": {
-      if (config.entity || config.camera_image) {
+      if (config.entity || config.camera_image || config.image_entity) {
         fireEvent(node, "hass-more-info", {
-          entityId: config.entity ? config.entity : config.camera_image!,
+          entityId: (config.entity ||
+            config.camera_image ||
+            config.image_entity)!,
         });
       } else {
         showToast(node, {
@@ -148,10 +153,17 @@ export const handleAction = async (
       hass.callService(
         domain,
         service,
-        actionConfig.service_data,
+        actionConfig.data ?? actionConfig.service_data,
         actionConfig.target
       );
       forwardHaptic("light");
+      break;
+    }
+    case "assist": {
+      showVoiceCommandDialog(node, hass, {
+        start_listening: actionConfig.start_listening,
+        pipeline_id: actionConfig.pipeline_id,
+      });
       break;
     }
     case "fire-dom-event": {

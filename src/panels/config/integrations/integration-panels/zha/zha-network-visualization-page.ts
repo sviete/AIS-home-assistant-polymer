@@ -21,7 +21,7 @@ import {
   ZHADevice,
 } from "../../../../../data/zha";
 import "../../../../../layouts/hass-tabs-subpage";
-import { PolymerChangedEvent } from "../../../../../polymer-types";
+import { ValueChangedEvent } from "../../../../../types";
 import type { HomeAssistant, Route } from "../../../../../types";
 import { formatAsPaddedHex } from "./functions";
 import { zhaTabs } from "./zha-config-dashboard";
@@ -37,7 +37,10 @@ export class ZHANetworkVisualizationPage extends LitElement {
   @property({ type: Boolean }) public isWide!: boolean;
 
   @property()
-  public zoomedDeviceId?: string;
+  public zoomedDeviceIdFromURL?: string;
+
+  @state()
+  private zoomedDeviceId?: string;
 
   @query("#visualization", true)
   private _visualization?: HTMLElement;
@@ -63,6 +66,11 @@ export class ZHANetworkVisualizationPage extends LitElement {
 
   protected firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
+
+    // prevent zoomedDeviceIdFromURL from being restored to zoomedDeviceId after the user clears it
+    if (this.zoomedDeviceIdFromURL) {
+      this.zoomedDeviceId = this.zoomedDeviceIdFromURL;
+    }
 
     if (this.hass) {
       this._fetchData();
@@ -331,7 +339,7 @@ export class ZHANetworkVisualizationPage extends LitElement {
     }
   }
 
-  private _onZoomToDevice(event: PolymerChangedEvent<string>) {
+  private _onZoomToDevice(event: ValueChangedEvent<string>) {
     event.stopPropagation();
     this.zoomedDeviceId = event.detail.value;
     if (!this._network) {

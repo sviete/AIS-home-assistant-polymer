@@ -1,4 +1,4 @@
-export const isNavigationClick = (e: MouseEvent) => {
+export const isNavigationClick = (e: MouseEvent, preventDefault = true) => {
   // Taken from polymer/pwa-helpers. BSD-3 licensed
   if (
     e.defaultPrevented ||
@@ -12,7 +12,7 @@ export const isNavigationClick = (e: MouseEvent) => {
 
   const anchor = e
     .composedPath()
-    .filter((n) => (n as HTMLElement).tagName === "A")[0] as
+    .find((n) => (n as HTMLElement).tagName === "A") as
     | HTMLAnchorElement
     | undefined;
   if (
@@ -40,6 +40,8 @@ export const isNavigationClick = (e: MouseEvent) => {
     return undefined;
   }
 
-  e.preventDefault();
+  if (preventDefault) {
+    e.preventDefault();
+  }
   return href;
 };

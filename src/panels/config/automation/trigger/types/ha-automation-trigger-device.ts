@@ -1,3 +1,4 @@
+import { consume } from "@lit-labs/context";
 import { css, html, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import memoizeOne from "memoize-one";
@@ -5,12 +6,14 @@ import { fireEvent } from "../../../../../common/dom/fire_event";
 import "../../../../../components/device/ha-device-picker";
 import "../../../../../components/device/ha-device-trigger-picker";
 import "../../../../../components/ha-form/ha-form";
+import { fullEntitiesContext } from "../../../../../data/context";
 import {
   deviceAutomationsEqual,
   DeviceCapabilities,
   DeviceTrigger,
   fetchDeviceTriggerCapabilities,
 } from "../../../../../data/device_automation";
+import { EntityRegistryEntry } from "../../../../../data/entity_registry";
 import { HomeAssistant } from "../../../../../types";
 
 @customElement("ha-automation-trigger-device")
@@ -19,9 +22,15 @@ export class HaDeviceTrigger extends LitElement {
 
   @property({ type: Object }) public trigger!: DeviceTrigger;
 
+  @property({ type: Boolean }) public disabled = false;
+
   @state() private _deviceId?: string;
 
   @state() private _capabilities?: DeviceCapabilities;
+
+  @state()
+  @consume({ context: fullEntitiesContext, subscribe: true })
+  _entityReg!: EntityRegistryEntry[];
 
   private _origTrigger?: DeviceTrigger;
 
@@ -53,7 +62,8 @@ export class HaDeviceTrigger extends LitElement {
         .value=${deviceId}
         @value-changed=${this._devicePicked}
         .hass=${this.hass}
-        label=${this.hass.localize(
+        .disabled=${this.disabled}
+        .label=${this.hass.localize(
           "ui.panel.config.automation.editor.triggers.type.device.label"
         )}
       ></ha-device-picker>
@@ -62,7 +72,8 @@ export class HaDeviceTrigger extends LitElement {
         .deviceId=${deviceId}
         @value-changed=${this._deviceTriggerPicked}
         .hass=${this.hass}
-        label=${this.hass.localize(
+        .disabled=${this.disabled}
+        .label=${this.hass.localize(
           "ui.panel.config.automation.editor.triggers.type.device.trigger"
         )}
       ></ha-device-trigger-picker>
@@ -72,6 +83,7 @@ export class HaDeviceTrigger extends LitElement {
               .hass=${this.hass}
               .data=${this._extraFieldsData(this.trigger, this._capabilities)}
               .schema=${this._capabilities.extra_fields}
+              .disabled=${this.disabled}
               .computeLabel=${this._extraFieldsComputeLabelCallback(
                 this.hass.localize
               )}
@@ -91,12 +103,15 @@ export class HaDeviceTrigger extends LitElement {
     }
   }
 
-  protected updated(changedPros) {
-    if (!changedPros.has("trigger")) {
+  protected updated(changedProps) {
+    if (!changedProps.has("trigger")) {
       return;
     }
-    const prevTrigger = changedPros.get("trigger");
-    if (prevTrigger && !deviceAutomationsEqual(prevTrigger, this.trigger)) {
+    const prevTrigger = changedProps.get("trigger");
+    if (
+      prevTrigger &&
+      !deviceAutomationsEqual(this._entityReg, prevTrigger, this.trigger)
+    ) {
       this._getCapabilities();
     }
   }
@@ -124,7 +139,7 @@ export class HaDeviceTrigger extends LitElement {
     let trigger = ev.detail.value;
     if (
       this._origTrigger &&
-      deviceAutomationsEqual(this._origTrigger, trigger)
+      deviceAutomationsEqual(this._entityReg, this._origTrigger, trigger)
     ) {
       trigger = this._origTrigger;
     }
@@ -156,6 +171,10 @@ export class HaDeviceTrigger extends LitElement {
     ha-device-picker {
       display: block;
       margin-bottom: 24px;
+    }
+
+    ha-form {
+      margin-top: 24px;
     }
   `;
 }

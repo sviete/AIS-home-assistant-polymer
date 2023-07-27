@@ -1,8 +1,19 @@
-import { html, LitElement } from "lit";
+import { HassEntity } from "home-assistant-js-websocket";
+import { html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
-import { ConfigEntry, getConfigEntries } from "../../data/config_entries";
+import memoizeOne from "memoize-one";
+import { ensureArray } from "../../common/array/ensure-array";
 import type { DeviceRegistryEntry } from "../../data/device_registry";
+import { getDeviceIntegrationLookup } from "../../data/device_registry";
+import {
+  EntitySources,
+  fetchEntitySourcesWithCache,
+} from "../../data/entity_sources";
 import type { DeviceSelector } from "../../data/selector";
+import {
+  filterSelectorDevices,
+  filterSelectorEntities,
+} from "../../data/selector";
 import type { HomeAssistant } from "../../types";
 import "../device/ha-device-picker";
 import "../device/ha-devices-picker";
@@ -13,33 +24,52 @@ export class HaDeviceSelector extends LitElement {
 
   @property() public selector!: DeviceSelector;
 
+  @state() private _entitySources?: EntitySources;
+
   @property() public value?: any;
 
   @property() public label?: string;
 
   @property() public helper?: string;
 
-  @state() public _configEntries?: ConfigEntry[];
-
   @property({ type: Boolean }) public disabled = false;
 
   @property({ type: Boolean }) public required = true;
 
-  protected updated(changedProperties) {
-    if (changedProperties.has("selector")) {
-      const oldSelector = changedProperties.get("selector");
-      if (oldSelector !== this.selector && this.selector.device?.integration) {
-        getConfigEntries(this.hass, {
-          domain: this.selector.device.integration,
-        }).then((entries) => {
-          this._configEntries = entries;
-        });
-      }
+  private _deviceIntegrationLookup = memoizeOne(getDeviceIntegrationLookup);
+
+  private _hasIntegration(selector: DeviceSelector) {
+    return (
+      (selector.device?.filter &&
+        ensureArray(selector.device.filter).some(
+          (filter) => filter.integration
+        )) ||
+      (selector.device?.entity &&
+        ensureArray(selector.device.entity).some(
+          (device) => device.integration
+        ))
+    );
+  }
+
+  protected updated(changedProperties): void {
+    super.updated(changedProperties);
+    if (
+      changedProperties.has("selector") &&
+      this._hasIntegration(this.selector) &&
+      !this._entitySources
+    ) {
+      fetchEntitySourcesWithCache(this.hass).then((sources) => {
+        this._entitySources = sources;
+      });
     }
   }
 
   protected render() {
-    if (!this.selector.device.multiple) {
+    if (this._hasIntegration(this.selector) && !this._entitySources) {
+      return nothing;
+    }
+
+    if (!this.selector.device?.multiple) {
       return html`
         <ha-device-picker
           .hass=${this.hass}
@@ -47,11 +77,8 @@ export class HaDeviceSelector extends LitElement {
           .label=${this.label}
           .helper=${this.helper}
           .deviceFilter=${this._filterDevices}
-          .includeDeviceClasses=${this.selector.device.entity?.device_class
-            ? [this.selector.device.entity.device_class]
-            : undefined}
-          .includeDomains=${this.selector.device.entity?.domain
-            ? [this.selector.device.entity.domain]
+          .entityFilter=${this.selector.device?.entity
+            ? this._filterEntities
             : undefined}
           .disabled=${this.disabled}
           .required=${this.required}
@@ -66,42 +93,36 @@ export class HaDeviceSelector extends LitElement {
         .hass=${this.hass}
         .value=${this.value}
         .helper=${this.helper}
-        .includeDeviceClasses=${this.selector.device.entity?.device_class
-          ? [this.selector.device.entity.device_class]
+        .deviceFilter=${this._filterDevices}
+        .entityFilter=${this.selector.device?.entity
+          ? this._filterEntities
           : undefined}
-        .includeDomains=${this.selector.device.entity?.domain
-          ? [this.selector.device.entity.domain]
-          : undefined}
+        .disabled=${this.disabled}
         .required=${this.required}
       ></ha-devices-picker>
     `;
   }
 
   private _filterDevices = (device: DeviceRegistryEntry): boolean => {
-    if (
-      this.selector.device?.manufacturer &&
-      device.manufacturer !== this.selector.device.manufacturer
-    ) {
-      return false;
+    if (!this.selector.device?.filter) {
+      return true;
     }
-    if (
-      this.selector.device?.model &&
-      device.model !== this.selector.device.model
-    ) {
-      return false;
-    }
-    if (this.selector.device?.integration) {
-      if (
-        this._configEntries &&
-        !this._configEntries.some((entry) =>
-          device.config_entries.includes(entry.entry_id)
+    const deviceIntegrations = this._entitySources
+      ? this._deviceIntegrationLookup(
+          this._entitySources,
+          Object.values(this.hass.entities)
         )
-      ) {
-        return false;
-      }
-    }
-    return true;
+      : undefined;
+
+    return ensureArray(this.selector.device.filter).some((filter) =>
+      filterSelectorDevices(filter, device, deviceIntegrations)
+    );
   };
+
+  private _filterEntities = (entity: HassEntity): boolean =>
+    ensureArray(this.selector.device!.entity).some((filter) =>
+      filterSelectorEntities(filter, entity, this._entitySources)
+    );
 }
 
 declare global {

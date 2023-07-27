@@ -93,6 +93,8 @@ export interface LovelaceViewConfig {
   panel?: boolean;
   background?: string;
   visible?: boolean | ShowViewConfig[];
+  subview?: boolean;
+  back_path?: string;
 }
 
 export interface LovelaceViewElement extends HTMLElement {
@@ -131,9 +133,9 @@ export interface CallServiceActionConfig extends BaseActionConfig {
   action: "call-service";
   service: string;
   target?: HassServiceTarget;
-  service_data?: {
-    [key: string]: any;
-  };
+  // "service_data" is kept for backwards compatibility. Replaced by "data".
+  service_data?: Record<string, unknown>;
+  data?: Record<string, unknown>;
 }
 
 export interface NavigateActionConfig extends BaseActionConfig {
@@ -150,6 +152,12 @@ export interface MoreInfoActionConfig extends BaseActionConfig {
   action: "more-info";
 }
 
+export interface AssistActionConfig extends BaseActionConfig {
+  action: "assist";
+  pipeline_id?: string;
+  start_listening?: boolean;
+}
+
 export interface NoActionConfig extends BaseActionConfig {
   action: "none";
 }
@@ -159,6 +167,7 @@ export interface CustomActionConfig extends BaseActionConfig {
 }
 
 export interface BaseActionConfig {
+  action: string;
   confirmation?: ConfirmationRestrictionConfig;
 }
 
@@ -177,6 +186,7 @@ export type ActionConfig =
   | NavigateActionConfig
   | UrlActionConfig
   | MoreInfoActionConfig
+  | AssistActionConfig
   | NoActionConfig
   | CustomActionConfig;
 

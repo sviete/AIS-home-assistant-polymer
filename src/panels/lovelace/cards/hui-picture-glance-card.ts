@@ -3,6 +3,7 @@ import {
   CSSResultGroup,
   html,
   LitElement,
+  nothing,
   PropertyValues,
   TemplateResult,
 } from "lit";
@@ -17,6 +18,7 @@ import { computeStateName } from "../../../common/entity/compute_state_name";
 import "../../../components/ha-card";
 import "../../../components/ha-icon-button";
 import "../../../components/ha-state-icon";
+import { computeImageUrl, ImageEntity } from "../../../data/image";
 import { ActionHandlerEvent } from "../../../data/lovelace";
 import { HomeAssistant } from "../../../types";
 import { actionHandler } from "../common/directives/action-handler-directive";
@@ -62,7 +64,7 @@ class HuiPictureGlanceCard extends LitElement implements LovelaceCard {
     };
   }
 
-  @property({ attribute: false }) public hass?: HomeAssistant;
+  @property({ attribute: false }) public hass!: HomeAssistant;
 
   @state() private _config?: PictureGlanceCardConfig;
 
@@ -79,7 +81,12 @@ class HuiPictureGlanceCard extends LitElement implements LovelaceCard {
       !config ||
       !config.entities ||
       !Array.isArray(config.entities) ||
-      !(config.image || config.camera_image || config.state_image) ||
+      !(
+        config.image ||
+        config.image_entity ||
+        config.camera_image ||
+        config.state_image
+      ) ||
       (config.state_image && !config.entity)
     ) {
       throw new Error("Invalid configuration");
@@ -107,25 +114,35 @@ class HuiPictureGlanceCard extends LitElement implements LovelaceCard {
   }
 
   protected shouldUpdate(changedProps: PropertyValues): boolean {
-    if (hasConfigOrEntityChanged(this, changedProps)) {
+    if (!this._config || hasConfigOrEntityChanged(this, changedProps)) {
       return true;
+    }
+
+    if (!changedProps.has("hass")) {
+      return false;
     }
 
     const oldHass = changedProps.get("hass") as HomeAssistant | undefined;
 
     if (
       !oldHass ||
-      oldHass.themes !== this.hass!.themes ||
-      oldHass.locale !== this.hass!.locale
+      oldHass.themes !== this.hass.themes ||
+      oldHass.locale !== this.hass.locale
+    ) {
+      return true;
+    }
+
+    if (
+      this._config.image_entity &&
+      oldHass.states[this._config.image_entity] !==
+        this.hass.states[this._config.image_entity]
     ) {
       return true;
     }
 
     if (this._entitiesDialog) {
       for (const entity of this._entitiesDialog) {
-        if (
-          oldHass!.states[entity.entity] !== this.hass!.states[entity.entity]
-        ) {
+        if (oldHass.states[entity.entity] !== this.hass.states[entity.entity]) {
           return true;
         }
       }
@@ -133,9 +150,7 @@ class HuiPictureGlanceCard extends LitElement implements LovelaceCard {
 
     if (this._entitiesToggle) {
       for (const entity of this._entitiesToggle) {
-        if (
-          oldHass!.states[entity.entity] !== this.hass!.states[entity.entity]
-        ) {
+        if (oldHass.states[entity.entity] !== this.hass.states[entity.entity]) {
           return true;
         }
       }
@@ -164,9 +179,14 @@ class HuiPictureGlanceCard extends LitElement implements LovelaceCard {
     }
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this._config || !this.hass) {
-      return html``;
+      return nothing;
+    }
+
+    let stateObj: ImageEntity | undefined;
+    if (this._config.image_entity) {
+      stateObj = this.hass.states[this._config.image_entity] as ImageEntity;
     }
 
     return html`
@@ -176,7 +196,8 @@ class HuiPictureGlanceCard extends LitElement implements LovelaceCard {
             clickable: Boolean(
               this._config.tap_action ||
                 this._config.hold_action ||
-                this._config.camera_image
+                this._config.camera_image ||
+                this._config.image_entity
             ),
           })}
           @action=${this._handleAction}
@@ -189,7 +210,7 @@ class HuiPictureGlanceCard extends LitElement implements LovelaceCard {
           )}
           .config=${this._config}
           .hass=${this.hass}
-          .image=${this._config.image}
+          .image=${stateObj ? computeImageUrl(stateObj) : this._config.image}
           .stateImage=${this._config.state_image}
           .stateFilter=${this._config.state_filter}
           .cameraImage=${this._config.camera_image}
@@ -199,7 +220,7 @@ class HuiPictureGlanceCard extends LitElement implements LovelaceCard {
         ></hui-image>
         <div class="box">
           ${this._config.title
-            ? html` <div class="title">${this._config.title}</div> `
+            ? html`<div class="title">${this._config.title}</div>`
             : ""}
           <div class="row">
             ${this._entitiesDialog!.map((entityConf) =>
@@ -255,7 +276,9 @@ class HuiPictureGlanceCard extends LitElement implements LovelaceCard {
           title=${`${computeStateName(stateObj)} : ${computeStateDisplay(
             this.hass!.localize,
             stateObj,
-            this.hass!.locale
+            this.hass!.locale,
+            this.hass!.config,
+            this.hass!.entities
           )}`}
         >
           <ha-state-icon
@@ -277,7 +300,9 @@ class HuiPictureGlanceCard extends LitElement implements LovelaceCard {
                   : computeStateDisplay(
                       this.hass!.localize,
                       stateObj,
-                      this.hass!.locale
+                      this.hass!.locale,
+                      this.hass!.config,
+                      this.hass!.entities
                     )}
               </div>
             `}

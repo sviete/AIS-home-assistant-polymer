@@ -1,13 +1,14 @@
 import "@material/mwc-button/mwc-button";
 import { mdiAlertOutline } from "@mdi/js";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
-import { customElement, property, state } from "lit/decorators";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
+import { customElement, property, query, state } from "lit/decorators";
+import { classMap } from "lit/directives/class-map";
+import { ifDefined } from "lit/directives/if-defined";
 import { fireEvent } from "../../common/dom/fire_event";
 import "../../components/ha-dialog";
 import "../../components/ha-svg-icon";
 import "../../components/ha-switch";
-import "../../components/ha-textfield";
-import { haStyleDialog } from "../../resources/styles";
+import { HaTextField } from "../../components/ha-textfield";
 import { HomeAssistant } from "../../types";
 import { DialogBoxParams } from "./show-dialog-box";
 
@@ -17,13 +18,10 @@ class DialogBox extends LitElement {
 
   @state() private _params?: DialogBoxParams;
 
-  @state() private _value?: string;
+  @query("ha-textfield") private _textField?: HaTextField;
 
   public async showDialog(params: DialogBoxParams): Promise<void> {
     this._params = params;
-    if (params.prompt) {
-      this._value = params.defaultValue;
-    }
   }
 
   public closeDialog(): boolean {
@@ -37,9 +35,9 @@ class DialogBox extends LitElement {
     return true;
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this._params) {
-      return html``;
+      return nothing;
     }
 
     const confirmPrompt = this._params.confirmation || this._params.prompt;
@@ -75,15 +73,16 @@ class DialogBox extends LitElement {
             ? html`
                 <ha-textfield
                   dialogInitialFocus
-                  .value=${this._value || ""}
-                  @keyup=${this._handleKeyUp}
-                  @change=${this._valueChanged}
+                  value=${ifDefined(this._params.defaultValue)}
+                  .placeholder=${ifDefined(this._params.placeholder)}
                   .label=${this._params.inputLabel
                     ? this._params.inputLabel
                     : ""}
                   .type=${this._params.inputType
                     ? this._params.inputType
                     : "text"}
+                  .min=${this._params.inputMin}
+                  .max=${this._params.inputMax}
                 ></ha-textfield>
               `
             : ""}
@@ -100,6 +99,9 @@ class DialogBox extends LitElement {
           @click=${this._confirm}
           ?dialogInitialFocus=${!this._params.prompt}
           slot="primaryAction"
+          class=${classMap({
+            destructive: this._params.destructive || false,
+          })}
         >
           ${this._params.confirmText
             ? this._params.confirmText
@@ -109,10 +111,6 @@ class DialogBox extends LitElement {
     `;
   }
 
-  private _valueChanged(ev) {
-    this._value = ev.target.value;
-  }
-
   private _dismiss(): void {
     if (this._params?.cancel) {
       this._params.cancel();
@@ -120,15 +118,9 @@ class DialogBox extends LitElement {
     this._close();
   }
 
-  private _handleKeyUp(ev: KeyboardEvent) {
-    if (ev.keyCode === 13) {
-      this._confirm();
-    }
-  }
-
   private _confirm(): void {
     if (this._params!.confirm) {
-      this._params!.confirm(this._value);
+      this._params!.confirm(this._textField?.value);
     }
     this._close();
   }
@@ -149,34 +141,40 @@ class DialogBox extends LitElement {
   }
 
   static get styles(): CSSResultGroup {
-    return [
-      haStyleDialog,
-      css`
-        :host([inert]) {
-          pointer-events: initial !important;
-          cursor: initial !important;
-        }
-        a {
-          color: var(--primary-color);
-        }
-        p {
-          margin: 0;
-          padding-top: 6px;
-          padding-bottom: 24px;
-          color: var(--primary-text-color);
-        }
-        .no-bottom-padding {
-          padding-bottom: 0;
-        }
-        .secondary {
-          color: var(--secondary-text-color);
-        }
+    return css`
+      :host([inert]) {
+        pointer-events: initial !important;
+        cursor: initial !important;
+      }
+      a {
+        color: var(--primary-color);
+      }
+      p {
+        margin: 0;
+        color: var(--primary-text-color);
+      }
+      .no-bottom-padding {
+        padding-bottom: 0;
+      }
+      .secondary {
+        color: var(--secondary-text-color);
+      }
+      .destructive {
+        --mdc-theme-primary: var(--error-color);
+      }
+      ha-dialog {
+        /* Place above other dialogs */
+        --dialog-z-index: 104;
+      }
+      @media all and (min-width: 600px) {
         ha-dialog {
-          /* Place above other dialogs */
-          --dialog-z-index: 104;
+          --mdc-dialog-min-width: 400px;
         }
-      `,
-    ];
+      }
+      ha-textfield {
+        width: 100%;
+      }
+    `;
   }
 }
 

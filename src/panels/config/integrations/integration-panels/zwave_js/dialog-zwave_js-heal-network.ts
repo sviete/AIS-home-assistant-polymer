@@ -1,8 +1,8 @@
 import "@material/mwc-button/mwc-button";
 import "@material/mwc-linear-progress/mwc-linear-progress";
-import { mdiStethoscope, mdiCheckCircle, mdiCloseCircle } from "@mdi/js";
+import { mdiCheckCircle, mdiCloseCircle, mdiStethoscope } from "@mdi/js";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { fireEvent } from "../../../../../common/dom/fire_event";
 import { createCloseHeading } from "../../../../../components/ha-dialog";
@@ -50,9 +50,9 @@ class DialogZWaveJSHealNetwork extends LitElement {
     fireEvent(this, "dialog-closed", { dialog: this.localName });
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.entry_id) {
-      return html``;
+      return nothing;
     }
 
     return html`
@@ -120,7 +120,7 @@ class DialogZWaveJSHealNetwork extends LitElement {
                 )}
               </mwc-button>
               <mwc-button slot="primaryAction" @click=${this.closeDialog}>
-                ${this.hass.localize("ui.panel.config.zwave_js.common.close")}
+                ${this.hass.localize("ui.common.close")}
               </mwc-button>
             `
           : ``}
@@ -140,7 +140,7 @@ class DialogZWaveJSHealNetwork extends LitElement {
                 </div>
               </div>
               <mwc-button slot="primaryAction" @click=${this.closeDialog}>
-                ${this.hass.localize("ui.panel.config.zwave_js.common.close")}
+                ${this.hass.localize("ui.common.close")}
               </mwc-button>
             `
           : ``}
@@ -160,7 +160,7 @@ class DialogZWaveJSHealNetwork extends LitElement {
                 </div>
               </div>
               <mwc-button slot="primaryAction" @click=${this.closeDialog}>
-                ${this.hass.localize("ui.panel.config.zwave_js.common.close")}
+                ${this.hass.localize("ui.common.close")}
               </mwc-button>
             `
           : ``}
@@ -180,7 +180,7 @@ class DialogZWaveJSHealNetwork extends LitElement {
                 </div>
               </div>
               <mwc-button slot="primaryAction" @click=${this.closeDialog}>
-                ${this.hass.localize("ui.panel.config.zwave_js.common.close")}
+                ${this.hass.localize("ui.common.close")}
               </mwc-button>
             `
           : ``}
@@ -202,10 +202,9 @@ class DialogZWaveJSHealNetwork extends LitElement {
     if (!this.hass) {
       return;
     }
-    const network: ZWaveJSNetwork = await fetchZwaveNetworkStatus(
-      this.hass!,
-      this.entry_id!
-    );
+    const network: ZWaveJSNetwork = await fetchZwaveNetworkStatus(this.hass!, {
+      entry_id: this.entry_id!,
+    });
     if (network.controller.is_heal_network_active) {
       this._status = "started";
       this._subscribed = subscribeHealZwaveNetworkProgress(

@@ -21,19 +21,21 @@ import "@polymer/paper-item/paper-icon-item";
 import type { PaperIconItemElement } from "@polymer/paper-item/paper-icon-item";
 import "@polymer/paper-item/paper-item";
 import "@polymer/paper-listbox/paper-listbox";
+import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import {
-  css,
   CSSResult,
   CSSResultGroup,
-  html,
   LitElement,
   PropertyValues,
+  css,
+  html,
+  nothing,
 } from "lit";
 import { customElement, eventOptions, property, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
 import { guard } from "lit/directives/guard";
 import memoizeOne from "memoize-one";
-import { LocalStorage } from "../common/decorators/local-storage";
+import { storage } from "../common/decorators/storage";
 import { fireEvent } from "../common/dom/fire_event";
 import { toggleAttribute } from "../common/dom/toggle_attribute";
 import { stringCompare } from "../common/string/compare";
@@ -44,8 +46,11 @@ import {
   PersistentNotification,
   subscribeNotifications,
 } from "../data/persistent_notification";
-import { updateCanInstall, UpdateEntity } from "../data/update";
+import { subscribeRepairsIssueRegistry } from "../data/repairs";
+import { UpdateEntity, updateCanInstall } from "../data/update";
+import { SubscribeMixin } from "../mixins/subscribe-mixin";
 import { actionHandler } from "../panels/lovelace/common/directives/action-handler-directive";
+import { SortableInstance, loadSortable } from "../resources/sortable.ondemand";
 import { haStyleScrollbar } from "../resources/styles";
 import type { HomeAssistant, PanelInfo, Route } from "../types";
 import "./ha-icon";
@@ -88,7 +93,8 @@ const panelSorter = (
   reverseSort: string[],
   defaultPanel: string,
   a: PanelInfo,
-  b: PanelInfo
+  b: PanelInfo,
+  language: string
 ) => {
   const indexA = reverseSort.indexOf(a.url_path);
   const indexB = reverseSort.indexOf(b.url_path);
@@ -98,13 +104,14 @@ const panelSorter = (
     }
     return -1;
   }
-  return defaultPanelSorter(defaultPanel, a, b);
+  return defaultPanelSorter(defaultPanel, a, b, language);
 };
 
 const defaultPanelSorter = (
   defaultPanel: string,
   a: PanelInfo,
-  b: PanelInfo
+  b: PanelInfo,
+  language: string
 ) => {
   // Put all the Lovelace at the top.
   const aLovelace = a.component_name === "lovelace";
@@ -118,7 +125,7 @@ const defaultPanelSorter = (
   }
 
   if (aLovelace && bLovelace) {
-    return stringCompare(a.title!, b.title!);
+    return stringCompare(a.title!, b.title!, language);
   }
   if (aLovelace && !bLovelace) {
     return -1;
@@ -140,7 +147,7 @@ const defaultPanelSorter = (
     return 1;
   }
   // both not built in, sort by title
-  return stringCompare(a.title!, b.title!);
+  return stringCompare(a.title!, b.title!, language);
 };
 
 const computePanels = memoizeOne(
@@ -148,7 +155,8 @@ const computePanels = memoizeOne(
     panels: HomeAssistant["panels"],
     defaultPanel: HomeAssistant["defaultPanel"],
     panelsOrder: string[],
-    hiddenPanels: string[]
+    hiddenPanels: string[],
+    locale: HomeAssistant["locale"]
   ): [PanelInfo[], PanelInfo[]] => {
     if (!panels) {
       return [[], []];
@@ -172,17 +180,19 @@ const computePanels = memoizeOne(
 
     const reverseSort = [...panelsOrder].reverse();
 
-    beforeSpacer.sort((a, b) => panelSorter(reverseSort, defaultPanel, a, b));
-    afterSpacer.sort((a, b) => panelSorter(reverseSort, defaultPanel, a, b));
+    beforeSpacer.sort((a, b) =>
+      panelSorter(reverseSort, defaultPanel, a, b, locale.language)
+    );
+    afterSpacer.sort((a, b) =>
+      panelSorter(reverseSort, defaultPanel, a, b, locale.language)
+    );
 
     return [beforeSpacer, afterSpacer];
   }
 );
 
-let Sortable;
-
 @customElement("ha-sidebar")
-class HaSidebar extends LitElement {
+class HaSidebar extends SubscribeMixin(LitElement) {
   @property({ attribute: false }) public hass!: HomeAssistant;
 
   @property({ type: Boolean, reflect: true }) public narrow!: boolean;
@@ -197,6 +207,8 @@ class HaSidebar extends LitElement {
 
   @state() private _updatesCount = 0;
 
+  @state() private _issuesCount = 0;
+
   @state() private _renderEmptySortable = false;
 
   private _mouseLeaveTimeout?: number;
@@ -205,23 +217,39 @@ class HaSidebar extends LitElement {
 
   private _recentKeydownActiveUntil = 0;
 
-  // @ts-ignore
-  @LocalStorage("sidebarPanelOrder", true, {
-    attribute: false,
+  private sortableStyleLoaded = false;
+
+  @storage({
+    key: "sidebarPanelOrder",
+    state: true,
+    subscribe: true,
   })
   private _panelOrder: string[] = [];
 
-  // @ts-ignore
-  @LocalStorage("sidebarHiddenPanels", true, {
-    attribute: false,
+  @storage({
+    key: "sidebarHiddenPanels",
+    state: true,
+    subscribe: true,
   })
   private _hiddenPanels: string[] = [];
 
-  private _sortable?;
+  private _sortable?: SortableInstance;
+
+  public hassSubscribe(): UnsubscribeFunc[] {
+    return this.hass.user?.is_admin
+      ? [
+          subscribeRepairsIssueRegistry(this.hass.connection!, (repairs) => {
+            this._issuesCount = repairs.issues.filter(
+              (issue) => !issue.ignored
+            ).length;
+          }),
+        ]
+      : [];
+  }
 
   protected render() {
     if (!this.hass) {
-      return html``;
+      return nothing;
     }
 
     // prettier-ignore
@@ -243,6 +271,7 @@ class HaSidebar extends LitElement {
       changedProps.has("alwaysExpand") ||
       changedProps.has("_externalConfig") ||
       changedProps.has("_updatesCount") ||
+      changedProps.has("_issuesCount") ||
       changedProps.has("_notifications") ||
       changedProps.has("editMode") ||
       changedProps.has("_renderEmptySortable") ||
@@ -360,7 +389,8 @@ class HaSidebar extends LitElement {
       this.hass.panels,
       this.hass.defaultPanel,
       this._panelOrder,
-      this._hiddenPanels
+      this._hiddenPanels,
+      this.hass.locale
     );
 
     // Show the supervisor as beeing part of configuration
@@ -505,7 +535,7 @@ class HaSidebar extends LitElement {
   }
 
   private _renderConfiguration(title: string | null) {
-    return html` <a
+    return html`<a
       class="configuration-container"
       role="option"
       href="/config"
@@ -516,17 +546,20 @@ class HaSidebar extends LitElement {
     >
       <paper-icon-item class="configuration" role="option">
         <ha-svg-icon slot="item-icon" .path=${mdiCog}></ha-svg-icon>
-        ${!this.alwaysExpand && this._updatesCount > 0
+        ${!this.alwaysExpand &&
+        (this._updatesCount > 0 || this._issuesCount > 0)
           ? html`
               <span class="configuration-badge" slot="item-icon">
-                ${this._updatesCount}
+                ${this._updatesCount + this._issuesCount}
               </span>
             `
           : ""}
         <span class="item-text">${title}</span>
-        ${this.alwaysExpand && this._updatesCount > 0
+        ${this.alwaysExpand && (this._updatesCount > 0 || this._issuesCount > 0)
           ? html`
-              <span class="configuration-badge">${this._updatesCount}</span>
+              <span class="configuration-badge"
+                >${this._updatesCount + this._issuesCount}</span
+              >
             `
           : ""}
       </paper-icon-item>
@@ -644,36 +677,36 @@ class HaSidebar extends LitElement {
   }
 
   private async _activateEditMode() {
-    if (!Sortable) {
-      const [sortableImport, sortStylesImport] = await Promise.all([
-        import("sortablejs/modular/sortable.core.esm"),
-        import("../resources/ha-sortable-style"),
-      ]);
-
-      const style = document.createElement("style");
-      style.innerHTML = (sortStylesImport.sortableStyles as CSSResult).cssText;
-      this.shadowRoot!.appendChild(style);
-
-      Sortable = sortableImport.Sortable;
-      Sortable.mount(sortableImport.OnSpill);
-      Sortable.mount(sortableImport.AutoScroll());
-    }
-
-    await this.updateComplete;
-
-    this._createSortable();
+    await Promise.all([this._loadSortableStyle(), this._createSortable()]);
   }
 
-  private _createSortable() {
-    this._sortable = new Sortable(this.shadowRoot!.getElementById("sortable"), {
-      animation: 150,
-      fallbackClass: "sortable-fallback",
-      dataIdAttr: "data-panel",
-      handle: "paper-icon-item",
-      onSort: async () => {
-        this._panelOrder = this._sortable.toArray();
-      },
-    });
+  private async _loadSortableStyle() {
+    if (this.sortableStyleLoaded) return;
+
+    const sortStylesImport = await import("../resources/ha-sortable-style");
+
+    const style = document.createElement("style");
+    style.innerHTML = (sortStylesImport.sortableStyles as CSSResult).cssText;
+    this.shadowRoot!.appendChild(style);
+
+    this.sortableStyleLoaded = true;
+    await this.updateComplete;
+  }
+
+  private async _createSortable() {
+    const Sortable = await loadSortable();
+    this._sortable = new Sortable(
+      this.shadowRoot!.getElementById("sortable")!,
+      {
+        animation: 150,
+        fallbackClass: "sortable-fallback",
+        dataIdAttr: "data-panel",
+        handle: "paper-icon-item",
+        onSort: async () => {
+          this._panelOrder = this._sortable!.toArray();
+        },
+      }
+    );
   }
 
   private _deactivateEditMode() {
@@ -784,6 +817,7 @@ class HaSidebar extends LitElement {
     }
     tooltip.innerHTML = item.querySelector(".item-text")!.innerHTML;
     tooltip.style.display = "block";
+    tooltip.style.position = "fixed";
     tooltip.style.top = `${top}px`;
     tooltip.style.left = `${item.offsetLeft + item.clientWidth + 4}px`;
   }
@@ -814,23 +848,16 @@ class HaSidebar extends LitElement {
       haStyleScrollbar,
       css`
         :host {
+          overflow: visible;
           height: 100%;
           display: block;
           overflow: hidden;
           -ms-user-select: none;
           -webkit-user-select: none;
           -moz-user-select: none;
-          border-right: 1px solid var(--divider-color);
           background-color: var(--sidebar-background-color);
-          width: 56px;
-        }
-        :host([expanded]) {
-          width: 256px;
-          width: calc(256px + env(safe-area-inset-left));
-        }
-        :host([rtl]) {
-          border-right: 0;
-          border-left: 1px solid var(--divider-color);
+          width: 100%;
+          box-sizing: border-box;
         }
         .menu {
           height: var(--header-height);
@@ -1044,6 +1071,8 @@ class HaSidebar extends LitElement {
 
         .notification-badge,
         .configuration-badge {
+          position: absolute;
+          left: calc(var(--app-drawer-width, 248px) - 42px);
           min-width: 20px;
           box-sizing: border-box;
           border-radius: 50%;
@@ -1053,9 +1082,6 @@ class HaSidebar extends LitElement {
           text-align: center;
           padding: 0px 6px;
           color: var(--text-accent-color, var(--text-primary-color));
-        }
-        .configuration-badge {
-          background-color: var(--primary-color);
         }
         ha-svg-icon + .notification-badge,
         ha-svg-icon + .configuration-badge {

@@ -33,9 +33,9 @@ export class HaFormGrid extends LitElement implements HaFormElement {
 
   @property() public computeHelper?: (schema: HaFormSchema) => string;
 
-  protected firstUpdated(changedProps: PropertyValues) {
-    super.firstUpdated(changedProps);
-    this.setAttribute("own-margin", "");
+  public async focus() {
+    await this.updateComplete;
+    this.renderRoot.querySelector("ha-form")?.focus();
   }
 
   protected updated(changedProps: PropertyValues): void {
@@ -78,11 +78,11 @@ export class HaFormGrid extends LitElement implements HaFormElement {
           var(--form-grid-column-count, auto-fit),
           minmax(var(--form-grid-min-width, 200px), 1fr)
         );
-        grid-gap: 8px;
+        grid-column-gap: 8px;
+        grid-row-gap: 24px;
       }
       :host > ha-form {
         display: block;
-        margin-bottom: 24px;
       }
     `;
   }

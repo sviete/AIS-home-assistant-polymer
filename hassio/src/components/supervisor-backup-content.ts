@@ -1,6 +1,14 @@
 import { mdiFolder, mdiHomeAssistant, mdiPuzzle } from "@mdi/js";
-import { PaperInputElement } from "@polymer/paper-input/paper-input";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import "@polymer/paper-input/paper-input";
+import type { PaperInputElement } from "@polymer/paper-input/paper-input";
+import {
+  css,
+  CSSResultGroup,
+  html,
+  LitElement,
+  nothing,
+  TemplateResult,
+} from "lit";
 import { customElement, property, query } from "lit/decorators";
 import { atLeastVersion } from "../../../src/common/config/version";
 import { formatDate } from "../../../src/common/datetime/format_date";
@@ -11,14 +19,20 @@ import "../../../src/components/ha-formfield";
 import "../../../src/components/ha-radio";
 import type { HaRadio } from "../../../src/components/ha-radio";
 import {
+  HassioBackupDetail,
   HassioFullBackupCreateParams,
   HassioPartialBackupCreateParams,
-  HassioBackupDetail,
 } from "../../../src/data/hassio/backup";
 import { Supervisor } from "../../../src/data/supervisor/supervisor";
-import { PolymerChangedEvent } from "../../../src/polymer-types";
-import { HomeAssistant } from "../../../src/types";
+import {
+  HomeAssistant,
+  TranslationDict,
+  ValueChangedEvent,
+} from "../../../src/types";
 import "./supervisor-formfield-label";
+
+type BackupOrRestoreKey = keyof TranslationDict["supervisor"]["backup"] &
+  keyof TranslationDict["ui"]["panel"]["page-onboarding"]["restore"];
 
 interface CheckboxItem {
   slug: string;
@@ -96,7 +110,7 @@ export class SupervisorBackupContent extends LitElement {
           : ["ssl", "share", "media", "addons/local"]
       );
       this.addons = _computeAddons(
-        this.backup ? this.backup.addons : this.supervisor?.supervisor.addons
+        this.backup ? this.backup.addons : this.supervisor?.addon.addons
       );
       this.backupType = this.backup?.type || "full";
       this.backupName = this.backup?.name || "";
@@ -108,13 +122,13 @@ export class SupervisorBackupContent extends LitElement {
     this._focusTarget?.focus();
   }
 
-  private _localize = (string: string) =>
-    this.supervisor?.localize(`backup.${string}`) ||
-    this.localize!(`ui.panel.page-onboarding.restore.${string}`);
+  private _localize = (key: BackupOrRestoreKey) =>
+    this.supervisor?.localize(`backup.${key}`) ||
+    this.localize!(`ui.panel.page-onboarding.restore.${key}`);
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.onboarding && !this.supervisor) {
-      return html``;
+      return nothing;
     }
     const foldersSection =
       this.backupType === "partial" ? this._getSection("folders") : undefined;
@@ -129,7 +143,11 @@ export class SupervisorBackupContent extends LitElement {
               : this._localize("partial_backup")}
             (${Math.ceil(this.backup.size * 10) / 10 + " MB"})<br />
             ${this.hass
-              ? formatDateTime(new Date(this.backup.date), this.hass.locale)
+              ? formatDateTime(
+                  new Date(this.backup.date),
+                  this.hass.locale,
+                  this.hass.config
+                )
               : this.backup.date}
           </div>`
         : html`<paper-input
@@ -168,23 +186,24 @@ export class SupervisorBackupContent extends LitElement {
         : ""}
       ${this.backupType === "partial"
         ? html`<div class="partial-picker">
-            <ha-formfield
-              .label=${html`<supervisor-formfield-label
-                label="Home Assistant"
-                .iconPath=${mdiHomeAssistant}
-                .version=${this.backup
-                  ? this.backup.homeassistant
-                  : this.hass.config.version}
-              >
-              </supervisor-formfield-label>`}
-            >
-              <ha-checkbox
-                .checked=${this.homeAssistant}
-                @change=${this.toggleHomeAssistant}
-              >
-              </ha-checkbox>
-            </ha-formfield>
-
+            ${!this.backup || this.backup.homeassistant
+              ? html`<ha-formfield
+                  .label=${html`<supervisor-formfield-label
+                    label="Home Assistant"
+                    .iconPath=${mdiHomeAssistant}
+                    .version=${this.backup
+                      ? this.backup.homeassistant
+                      : this.hass.config.version}
+                  >
+                  </supervisor-formfield-label>`}
+                >
+                  <ha-checkbox
+                    .checked=${this.homeAssistant}
+                    @change=${this.toggleHomeAssistant}
+                  >
+                  </ha-checkbox>
+                </ha-formfield>`
+              : ""}
             ${foldersSection?.templates.length
               ? html`
                   <ha-formfield
@@ -321,7 +340,9 @@ export class SupervisorBackupContent extends LitElement {
     const data: any = {};
 
     if (!this.backup) {
-      data.name = this.backupName || formatDate(new Date(), this.hass.locale);
+      data.name =
+        this.backupName ||
+        formatDate(new Date(), this.hass.locale, this.hass.config);
     }
 
     if (this.backupHasPassword) {
@@ -405,7 +426,7 @@ export class SupervisorBackupContent extends LitElement {
     this[input.name] = input.value;
   }
 
-  private _handleTextValueChanged(ev: PolymerChangedEvent<string>) {
+  private _handleTextValueChanged(ev: ValueChangedEvent<string>) {
     const input = ev.currentTarget as PaperInputElement;
     this[input.name!] = ev.detail.value;
   }

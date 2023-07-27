@@ -1,23 +1,25 @@
 import {
+  addDays,
   addHours,
+  addMilliseconds,
+  addMonths,
   differenceInDays,
-  endOfToday,
-  endOfYesterday,
-  startOfToday,
-  startOfYesterday,
-} from "date-fns";
+  endOfDay,
+  startOfDay,
+} from "date-fns/esm";
 import { Collection, getCollection } from "home-assistant-js-websocket";
+import { calcDate } from "../common/datetime/calc_date";
+import { formatTime24h } from "../common/datetime/format_time";
 import { groupBy } from "../common/util/group-by";
-import { subscribeOne } from "../common/util/subscribe-one";
 import { HomeAssistant } from "../types";
 import { ConfigEntry, getConfigEntries } from "./config_entries";
-import { subscribeEntityRegistry } from "./entity_registry";
 import {
   fetchStatistics,
+  getStatisticMetadata,
   Statistics,
   StatisticsMetaData,
-  getStatisticMetadata,
-} from "./history";
+  StatisticsUnitConfiguration,
+} from "./recorder";
 
 const energyCollectionKeys: (string | undefined)[] = [];
 
@@ -25,7 +27,6 @@ export const emptyFlowFromGridSourceEnergyPreference =
   (): FlowFromGridSourceEnergyPreference => ({
     stat_energy_from: "",
     stat_cost: null,
-    entity_energy_from: null,
     entity_energy_price: null,
     number_energy_price: null,
   });
@@ -34,7 +35,6 @@ export const emptyFlowToGridSourceEnergyPreference =
   (): FlowToGridSourceEnergyPreference => ({
     stat_energy_to: "",
     stat_compensation: null,
-    entity_energy_to: null,
     entity_energy_price: null,
     number_energy_price: null,
   });
@@ -60,14 +60,23 @@ export const emptyBatteryEnergyPreference =
     stat_energy_from: "",
     stat_energy_to: "",
   });
+
 export const emptyGasEnergyPreference = (): GasSourceTypeEnergyPreference => ({
   type: "gas",
   stat_energy_from: "",
   stat_cost: null,
-  entity_energy_from: null,
   entity_energy_price: null,
   number_energy_price: null,
 });
+
+export const emptyWaterEnergyPreference =
+  (): WaterSourceTypeEnergyPreference => ({
+    type: "water",
+    stat_energy_from: "",
+    stat_cost: null,
+    entity_energy_price: null,
+    number_energy_price: null,
+  });
 
 interface EnergySolarForecast {
   wh_hours: Record<string, number>;
@@ -89,7 +98,6 @@ export interface FlowFromGridSourceEnergyPreference {
   stat_cost: string | null;
 
   // Can be used to generate costs if stat_cost omitted
-  entity_energy_from: string | null;
   entity_energy_price: string | null;
   number_energy_price: number | null;
 }
@@ -101,8 +109,7 @@ export interface FlowToGridSourceEnergyPreference {
   // $ meter
   stat_compensation: string | null;
 
-  // Can be used to generate costs if stat_cost omitted
-  entity_energy_to: string | null;
+  // Can be used to generate costs if stat_compensation omitted
   entity_energy_price: string | null;
   number_energy_price: number | null;
 }
@@ -131,14 +138,28 @@ export interface BatterySourceTypeEnergyPreference {
 export interface GasSourceTypeEnergyPreference {
   type: "gas";
 
-  // kWh meter
+  // kWh/volume meter
   stat_energy_from: string;
 
   // $ meter
   stat_cost: string | null;
 
   // Can be used to generate costs if stat_cost omitted
-  entity_energy_from: string | null;
+  entity_energy_price: string | null;
+  number_energy_price: number | null;
+  unit_of_measurement?: string | null;
+}
+
+export interface WaterSourceTypeEnergyPreference {
+  type: "water";
+
+  // volume meter
+  stat_energy_from: string;
+
+  // $ meter
+  stat_cost: string | null;
+
+  // Can be used to generate costs if stat_cost omitted
   entity_energy_price: string | null;
   number_energy_price: number | null;
   unit_of_measurement?: string | null;
@@ -148,7 +169,8 @@ type EnergySource =
   | SolarSourceTypeEnergyPreference
   | GridSourceTypeEnergyPreference
   | BatterySourceTypeEnergyPreference
-  | GasSourceTypeEnergyPreference;
+  | GasSourceTypeEnergyPreference
+  | WaterSourceTypeEnergyPreference;
 
 export interface EnergyPreferences {
   energy_sources: EnergySource[];
@@ -162,8 +184,8 @@ export interface EnergyInfo {
 
 export interface EnergyValidationIssue {
   type: string;
-  identifier: string;
-  value?: unknown;
+  affected_entities: [string, unknown][];
+  translation_placeholders: Record<string, string>;
 }
 
 export interface EnergyPreferencesValidation {
@@ -176,10 +198,12 @@ export const getEnergyInfo = (hass: HomeAssistant) =>
     type: "energy/info",
   });
 
-export const getEnergyPreferenceValidation = (hass: HomeAssistant) =>
-  hass.callWS<EnergyPreferencesValidation>({
+export const getEnergyPreferenceValidation = async (hass: HomeAssistant) => {
+  await hass.loadBackendTranslation("issues", "energy");
+  return hass.callWS<EnergyPreferencesValidation>({
     type: "energy/validate",
   });
+};
 
 export const getEnergyPreferences = (hass: HomeAssistant) =>
   hass.callWS<EnergyPreferences>({
@@ -224,6 +248,7 @@ interface EnergySourceByType {
   solar?: SolarSourceTypeEnergyPreference[];
   battery?: BatterySourceTypeEnergyPreference[];
   gas?: GasSourceTypeEnergyPreference[];
+  water?: WaterSourceTypeEnergyPreference[];
 }
 
 export const energySourcesByType = (prefs: EnergyPreferences) =>
@@ -232,83 +257,39 @@ export const energySourcesByType = (prefs: EnergyPreferences) =>
 export interface EnergyData {
   start: Date;
   end?: Date;
+  startCompare?: Date;
+  endCompare?: Date;
   prefs: EnergyPreferences;
   info: EnergyInfo;
   stats: Statistics;
+  statsMetadata: Record<string, StatisticsMetaData>;
+  statsCompare: Statistics;
   co2SignalConfigEntry?: ConfigEntry;
   co2SignalEntity?: string;
   fossilEnergyConsumption?: FossilEnergyConsumption;
+  fossilEnergyConsumptionCompare?: FossilEnergyConsumption;
 }
 
-const getEnergyData = async (
-  hass: HomeAssistant,
+export const getReferencedStatisticIds = (
   prefs: EnergyPreferences,
-  start: Date,
-  end?: Date
-): Promise<EnergyData> => {
-  const [configEntries, entityRegistryEntries, info] = await Promise.all([
-    getConfigEntries(hass, { domain: "co2signal" }),
-    subscribeOne(hass.connection, subscribeEntityRegistry),
-    getEnergyInfo(hass),
-  ]);
-
-  const co2SignalConfigEntry = configEntries.length
-    ? configEntries[0]
-    : undefined;
-
-  let co2SignalEntity: string | undefined;
-
-  if (co2SignalConfigEntry) {
-    for (const entry of entityRegistryEntries) {
-      if (entry.config_entry_id !== co2SignalConfigEntry.entry_id) {
-        continue;
-      }
-
-      // The integration offers 2 entities. We want the % one.
-      const co2State = hass.states[entry.entity_id];
-      if (!co2State || co2State.attributes.unit_of_measurement !== "%") {
-        continue;
-      }
-
-      co2SignalEntity = co2State.entity_id;
-      break;
-    }
-  }
-
-  const consumptionStatIDs: string[] = [];
+  info: EnergyInfo,
+  includeTypes?: string[]
+): string[] => {
   const statIDs: string[] = [];
-  const gasSources: GasSourceTypeEnergyPreference[] =
-    prefs.energy_sources.filter(
-      (source) => source.type === "gas"
-    ) as GasSourceTypeEnergyPreference[];
-  const gasStatisticIdsWithMeta: StatisticsMetaData[] =
-    await getStatisticMetadata(
-      hass,
-      gasSources.map((source) => source.stat_energy_from)
-    );
 
   for (const source of prefs.energy_sources) {
+    if (includeTypes && !includeTypes.includes(source.type)) {
+      continue;
+    }
+
     if (source.type === "solar") {
       statIDs.push(source.stat_energy_from);
       continue;
     }
 
-    if (source.type === "gas") {
+    if (source.type === "gas" || source.type === "water") {
       statIDs.push(source.stat_energy_from);
-      const entity = hass.states[source.stat_energy_from];
-      if (!entity) {
-        for (const statisticIdWithMeta of gasStatisticIdsWithMeta) {
-          if (
-            statisticIdWithMeta?.statistic_id === source.stat_energy_from &&
-            statisticIdWithMeta?.unit_of_measurement
-          ) {
-            source.unit_of_measurement =
-              statisticIdWithMeta?.unit_of_measurement === "Wh"
-                ? "kWh"
-                : statisticIdWithMeta?.unit_of_measurement;
-          }
-        }
-      }
+
       if (source.stat_cost) {
         statIDs.push(source.stat_cost);
       }
@@ -327,7 +308,6 @@ const getEnergyData = async (
 
     // grid source
     for (const flowFrom of source.flow_from) {
-      consumptionStatIDs.push(flowFrom.stat_energy_from);
       statIDs.push(flowFrom.stat_energy_from);
       if (flowFrom.stat_cost) {
         statIDs.push(flowFrom.stat_cost);
@@ -349,23 +329,130 @@ const getEnergyData = async (
     }
   }
 
+  return statIDs;
+};
+
+const getEnergyData = async (
+  hass: HomeAssistant,
+  prefs: EnergyPreferences,
+  start: Date,
+  end?: Date,
+  compare?: boolean
+): Promise<EnergyData> => {
+  const [configEntries, info] = await Promise.all([
+    getConfigEntries(hass, { domain: "co2signal" }),
+    getEnergyInfo(hass),
+  ]);
+
+  const co2SignalConfigEntry = configEntries.length
+    ? configEntries[0]
+    : undefined;
+
+  let co2SignalEntity: string | undefined;
+  if (co2SignalConfigEntry) {
+    for (const entity of Object.values(hass.entities)) {
+      if (entity.platform !== "co2signal") {
+        continue;
+      }
+
+      // The integration offers 2 entities. We want the % one.
+      const co2State = hass.states[entity.entity_id];
+      if (!co2State || co2State.attributes.unit_of_measurement !== "%") {
+        continue;
+      }
+
+      co2SignalEntity = co2State.entity_id;
+      break;
+    }
+  }
+
+  const consumptionStatIDs: string[] = [];
+  for (const source of prefs.energy_sources) {
+    // grid source
+    if (source.type === "grid") {
+      for (const flowFrom of source.flow_from) {
+        consumptionStatIDs.push(flowFrom.stat_energy_from);
+      }
+    }
+  }
+  const energyStatIds = getReferencedStatisticIds(prefs, info, [
+    "grid",
+    "solar",
+    "battery",
+    "gas",
+  ]);
+  const waterStatIds = getReferencedStatisticIds(prefs, info, ["water"]);
+
+  const allStatIDs = [...energyStatIds, ...waterStatIds];
+
   const dayDifference = differenceInDays(end || new Date(), start);
+  const period =
+    dayDifference > 35 ? "month" : dayDifference > 2 ? "day" : "hour";
 
-  // Subtract 1 hour from start to get starting point data
-  const startMinHour = addHours(start, -1);
+  const lengthUnit = hass.config.unit_system.length || "";
+  const energyUnits: StatisticsUnitConfiguration = {
+    energy: "kWh",
+    volume: lengthUnit === "km" ? "m³" : "ft³",
+  };
+  const waterUnits: StatisticsUnitConfiguration = {
+    volume: lengthUnit === "km" ? "L" : "gal",
+  };
 
-  const stats = await fetchStatistics(
-    hass!,
-    startMinHour,
-    end,
-    statIDs,
-    dayDifference > 35 ? "month" : dayDifference > 2 ? "day" : "hour"
-  );
+  const _energyStats: Statistics | Promise<Statistics> = energyStatIds.length
+    ? fetchStatistics(hass!, start, end, energyStatIds, period, energyUnits, [
+        "change",
+      ])
+    : {};
+  const _waterStats: Statistics | Promise<Statistics> = waterStatIds.length
+    ? fetchStatistics(hass!, start, end, waterStatIds, period, waterUnits, [
+        "change",
+      ])
+    : {};
 
-  let fossilEnergyConsumption: FossilEnergyConsumption | undefined;
+  let statsCompare;
+  let startCompare;
+  let endCompare;
+  let _energyStatsCompare: Statistics | Promise<Statistics> = {};
+  let _waterStatsCompare: Statistics | Promise<Statistics> = {};
 
+  if (compare) {
+    if (dayDifference > 27 && dayDifference < 32) {
+      // When comparing a month, we want to start at the begining of the month
+      startCompare = addMonths(start, -1);
+    } else {
+      startCompare = addDays(start, (dayDifference + 1) * -1);
+    }
+    endCompare = addMilliseconds(start, -1);
+    if (energyStatIds.length) {
+      _energyStatsCompare = fetchStatistics(
+        hass!,
+        startCompare,
+        endCompare,
+        energyStatIds,
+        period,
+        energyUnits,
+        ["change"]
+      );
+    }
+    if (waterStatIds.length) {
+      _waterStatsCompare = fetchStatistics(
+        hass!,
+        startCompare,
+        endCompare,
+        waterStatIds,
+        period,
+        waterUnits,
+        ["change"]
+      );
+    }
+  }
+
+  let _fossilEnergyConsumption: undefined | Promise<FossilEnergyConsumption>;
+  let _fossilEnergyConsumptionCompare:
+    | undefined
+    | Promise<FossilEnergyConsumption>;
   if (co2SignalEntity !== undefined) {
-    fossilEnergyConsumption = await getFossilEnergyConsumption(
+    _fossilEnergyConsumption = getFossilEnergyConsumption(
       hass!,
       start,
       consumptionStatIDs,
@@ -373,30 +460,65 @@ const getEnergyData = async (
       end,
       dayDifference > 35 ? "month" : dayDifference > 2 ? "day" : "hour"
     );
+    if (compare) {
+      _fossilEnergyConsumptionCompare = getFossilEnergyConsumption(
+        hass!,
+        startCompare,
+        consumptionStatIDs,
+        co2SignalEntity,
+        endCompare,
+        dayDifference > 35 ? "month" : dayDifference > 2 ? "day" : "hour"
+      );
+    }
   }
 
-  Object.values(stats).forEach((stat) => {
-    // if the start of the first value is after the requested period, we have the first data point, and should add a zero point
-    if (stat.length && new Date(stat[0].start) > startMinHour) {
-      stat.unshift({
-        ...stat[0],
-        start: startMinHour.toISOString(),
-        end: startMinHour.toISOString(),
-        sum: 0,
-        state: 0,
-      });
-    }
-  });
+  const statsMetadata: Record<string, StatisticsMetaData> = {};
+  const _getStatisticMetadata:
+    | Promise<StatisticsMetaData[]>
+    | StatisticsMetaData[] = allStatIDs.length
+    ? getStatisticMetadata(hass, allStatIDs)
+    : [];
+  const [
+    energyStats,
+    waterStats,
+    energyStatsCompare,
+    waterStatsCompare,
+    statsMetadataArray,
+    fossilEnergyConsumption,
+    fossilEnergyConsumptionCompare,
+  ] = await Promise.all([
+    _energyStats,
+    _waterStats,
+    _energyStatsCompare,
+    _waterStatsCompare,
+    _getStatisticMetadata,
+    _fossilEnergyConsumption,
+    _fossilEnergyConsumptionCompare,
+  ]);
+  const stats = { ...energyStats, ...waterStats };
+  if (compare) {
+    statsCompare = { ...energyStatsCompare, ...waterStatsCompare };
+  }
+  if (allStatIDs.length) {
+    statsMetadataArray.forEach((x) => {
+      statsMetadata[x.statistic_id] = x;
+    });
+  }
 
-  const data = {
+  const data: EnergyData = {
     start,
     end,
+    startCompare,
+    endCompare,
     info,
     prefs,
     stats,
+    statsMetadata,
+    statsCompare,
     co2SignalConfigEntry,
     co2SignalEntity,
     fossilEnergyConsumption,
+    fossilEnergyConsumptionCompare,
   };
 
   return data;
@@ -405,9 +527,11 @@ const getEnergyData = async (
 export interface EnergyCollection extends Collection<EnergyData> {
   start: Date;
   end?: Date;
+  compare?: boolean;
   prefs?: EnergyPreferences;
   clearPrefs(): void;
   setPeriod(newStart: Date, newEnd?: Date): void;
+  setCompare(compare: boolean): void;
   _refreshTimeout?: number;
   _updatePeriodTimeout?: number;
   _active: number;
@@ -478,7 +602,8 @@ export const getEnergyDataCollection = (
         hass,
         collection.prefs,
         collection.start,
-        collection.end
+        collection.end,
+        collection.compare
       );
     }
   ) as EnergyCollection;
@@ -501,18 +626,40 @@ export const getEnergyDataCollection = (
   collection._active = 0;
   collection.prefs = options.prefs;
   const now = new Date();
+  const hour = formatTime24h(now, hass.locale, hass.config).split(":")[0];
   // Set start to start of today if we have data for today, otherwise yesterday
-  collection.start = now.getHours() > 0 ? startOfToday() : startOfYesterday();
-  collection.end = now.getHours() > 0 ? endOfToday() : endOfYesterday();
+  collection.start = calcDate(
+    hour === "0" ? addDays(now, -1) : now,
+    startOfDay,
+    hass.locale,
+    hass.config
+  );
+  collection.end = calcDate(
+    hour === "0" ? addDays(now, -1) : now,
+    endOfDay,
+    hass.locale,
+    hass.config
+  );
 
   const scheduleUpdatePeriod = () => {
     collection._updatePeriodTimeout = window.setTimeout(
       () => {
-        collection.start = startOfToday();
-        collection.end = endOfToday();
+        collection.start = calcDate(
+          new Date(),
+          startOfDay,
+          hass.locale,
+          hass.config
+        );
+        collection.end = calcDate(
+          new Date(),
+          endOfDay,
+          hass.locale,
+          hass.config
+        );
         scheduleUpdatePeriod();
       },
-      addHours(endOfToday(), 1).getTime() - Date.now() // Switch to next day an hour after the day changed
+      addHours(calcDate(now, endOfDay, hass.locale, hass.config), 1).getTime() -
+        Date.now() // Switch to next day an hour after the day changed
     );
   };
   scheduleUpdatePeriod();
@@ -524,8 +671,10 @@ export const getEnergyDataCollection = (
     collection.start = newStart;
     collection.end = newEnd;
     if (
-      collection.start.getTime() === startOfToday().getTime() &&
-      collection.end?.getTime() === endOfToday().getTime() &&
+      collection.start.getTime() ===
+        calcDate(new Date(), startOfDay, hass.locale, hass.config).getTime() &&
+      collection.end?.getTime() ===
+        calcDate(new Date(), endOfDay, hass.locale, hass.config).getTime() &&
       !collection._updatePeriodTimeout
     ) {
       scheduleUpdatePeriod();
@@ -533,6 +682,9 @@ export const getEnergyDataCollection = (
       clearTimeout(collection._updatePeriodTimeout);
       collection._updatePeriodTimeout = undefined;
     }
+  };
+  collection.setCompare = (compare: boolean) => {
+    collection.compare = compare;
   };
   return collection;
 };
@@ -542,31 +694,28 @@ export const getEnergySolarForecasts = (hass: HomeAssistant) =>
     type: "energy/solar_forecast",
   });
 
-export const ENERGY_GAS_VOLUME_UNITS = ["m³", "ft³"];
-export const ENERGY_GAS_ENERGY_UNITS = ["kWh"];
-export const ENERGY_GAS_UNITS = [
-  ...ENERGY_GAS_VOLUME_UNITS,
-  ...ENERGY_GAS_ENERGY_UNITS,
-];
+const energyGasUnitClass = ["volume", "energy"] as const;
+export type EnergyGasUnitClass = (typeof energyGasUnitClass)[number];
 
-export type EnergyGasUnit = "volume" | "energy";
-
-export const getEnergyGasUnitCategory = (
-  hass: HomeAssistant,
-  prefs: EnergyPreferences
-): EnergyGasUnit | undefined => {
+export const getEnergyGasUnitClass = (
+  prefs: EnergyPreferences,
+  statisticsMetaData: Record<string, StatisticsMetaData> = {},
+  excludeSource?: string
+): EnergyGasUnitClass | undefined => {
   for (const source of prefs.energy_sources) {
     if (source.type !== "gas") {
       continue;
     }
-
-    const entity = hass.states[source.stat_energy_from];
-    if (entity) {
-      return ENERGY_GAS_VOLUME_UNITS.includes(
-        entity.attributes.unit_of_measurement!
+    if (excludeSource && excludeSource === source.stat_energy_from) {
+      continue;
+    }
+    const statisticIdWithMeta = statisticsMetaData[source.stat_energy_from];
+    if (
+      energyGasUnitClass.includes(
+        statisticIdWithMeta?.unit_class as EnergyGasUnitClass
       )
-        ? "volume"
-        : "energy";
+    ) {
+      return statisticIdWithMeta.unit_class as EnergyGasUnitClass;
     }
   }
   return undefined;
@@ -574,23 +723,19 @@ export const getEnergyGasUnitCategory = (
 
 export const getEnergyGasUnit = (
   hass: HomeAssistant,
-  prefs: EnergyPreferences
+  prefs: EnergyPreferences,
+  statisticsMetaData: Record<string, StatisticsMetaData> = {}
 ): string | undefined => {
-  for (const source of prefs.energy_sources) {
-    if (source.type !== "gas") {
-      continue;
-    }
-
-    const entity = hass.states[source.stat_energy_from];
-    if (entity?.attributes.unit_of_measurement) {
-      // Wh is normalized to kWh by stats generation
-      return entity.attributes.unit_of_measurement === "Wh"
-        ? "kWh"
-        : entity.attributes.unit_of_measurement;
-    }
-    if (source.unit_of_measurement) {
-      return source.unit_of_measurement;
-    }
+  const unitClass = getEnergyGasUnitClass(prefs, statisticsMetaData);
+  if (unitClass === undefined) {
+    return undefined;
   }
-  return undefined;
+  return unitClass === "energy"
+    ? "kWh"
+    : hass.config.unit_system.length === "km"
+    ? "m³"
+    : "ft³";
 };
+
+export const getEnergyWaterUnit = (hass: HomeAssistant): string | undefined =>
+  hass.config.unit_system.length === "km" ? "L" : "gal";

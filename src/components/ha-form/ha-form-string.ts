@@ -60,6 +60,8 @@ export class HaFormString extends LitElement implements HaFormElement {
         .disabled=${this.disabled}
         .required=${this.schema.required}
         .autoValidate=${this.schema.required}
+        .name=${this.schema.name}
+        .autocomplete=${this.schema.autocomplete}
         .suffix=${isPassword
           ? // reserve some space for the icon.
             html`<div style="width: 24px"></div>`
@@ -131,6 +133,12 @@ export class HaFormString extends LitElement implements HaFormElement {
         right: 12px;
         --mdc-icon-button-size: 24px;
         color: var(--secondary-text-color);
+      }
+
+      ha-icon-button {
+        inset-inline-start: initial;
+        inset-inline-end: 12px;
+        direction: var(--direction);
       }
     `;
   }

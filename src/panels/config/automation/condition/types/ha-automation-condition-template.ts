@@ -1,6 +1,6 @@
-import "../../../../../components/ha-textarea";
 import { css, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators";
+import "../../../../../components/ha-textarea";
 import type { TemplateCondition } from "../../../../../data/automation";
 import type { HomeAssistant } from "../../../../../types";
 import { handleChangeEvent } from "../ha-automation-condition-row";
@@ -11,6 +11,8 @@ export class HaTemplateCondition extends LitElement {
 
   @property({ attribute: false }) public condition!: TemplateCondition;
 
+  @property({ type: Boolean }) public disabled = false;
+
   public static get defaultConfig() {
     return { value_template: "" };
   }
@@ -18,16 +20,22 @@ export class HaTemplateCondition extends LitElement {
   protected render() {
     const { value_template } = this.condition;
     return html`
-      <ha-textarea
-        name="value_template"
-        .label=${this.hass.localize(
+      <p>
+        ${this.hass.localize(
           "ui.panel.config.automation.editor.conditions.type.template.value_template"
         )}
+        *
+      </p>
+      <ha-code-editor
+        .name=${"value_template"}
+        mode="jinja2"
+        .hass=${this.hass}
         .value=${value_template}
-        @input=${this._valueChanged}
+        .readOnly=${this.disabled}
+        autocomplete-entities
+        @value-changed=${this._valueChanged}
         dir="ltr"
-        autogrow
-      ></ha-textarea>
+      ></ha-code-editor>
     `;
   }
 
@@ -35,11 +43,13 @@ export class HaTemplateCondition extends LitElement {
     handleChangeEvent(this, ev);
   }
 
-  static styles = css`
-    ha-textarea {
-      display: block;
-    }
-  `;
+  static get styles() {
+    return css`
+      p {
+        margin-top: 0;
+      }
+    `;
+  }
 }
 
 declare global {

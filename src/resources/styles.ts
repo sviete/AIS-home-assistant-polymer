@@ -3,7 +3,7 @@ import { css } from "lit";
 export const darkStyles = {
   "primary-background-color": "#111111",
   "card-background-color": "#1c1c1c",
-  "secondary-background-color": "#202020",
+  "secondary-background-color": "#282828",
   "primary-text-color": "#e1e1e1",
   "secondary-text-color": "#9b9b9b",
   "disabled-text-color": "#6f6f6f",
@@ -46,6 +46,9 @@ export const darkStyles = {
   "codemirror-qualifier": "#DECB6B",
   "codemirror-type": "#DECB6B",
   "energy-grid-return-color": "#a280db",
+  "map-filter":
+    "invert(.9) hue-rotate(170deg) brightness(1.5) contrast(1.2) saturate(.3)",
+  "disabled-color": "#464646",
 };
 
 export const derivedStyles = {
@@ -72,6 +75,7 @@ export const derivedStyles = {
   "paper-listbox-background-color": "var(--card-background-color)",
   "paper-item-icon-color": "var(--state-icon-color)",
   "paper-item-icon-active-color": "var(--state-icon-active-color)",
+  "table-header-background-color": "var(--input-fill-color)",
   "table-row-background-color": "var(--primary-background-color)",
   "table-row-alternative-background-color": "var(--secondary-background-color)",
   "paper-slider-knob-color": "var(--slider-color)",
@@ -108,6 +112,8 @@ export const derivedStyles = {
   "mdc-button-disabled-ink-color": "var(--disabled-text-color)",
   "mdc-button-outline-color": "var(--divider-color)",
   "mdc-dialog-scroll-divider-color": "var(--divider-color)",
+  "mdc-dialog-heading-ink-color": "var(--primary-text-color)",
+  "mdc-dialog-content-ink-color": "var(--primary-text-color)",
 
   "mdc-text-field-idle-line-color": "var(--input-idle-line-color)",
   "mdc-text-field-hover-line-color": "var(--input-hover-line-color)",
@@ -158,6 +164,7 @@ export const buttonLinkStyle = css`
     text-align: left;
     text-decoration: underline;
     cursor: pointer;
+    outline: none;
   }
 `;
 
@@ -168,24 +175,6 @@ export const haStyle = css`
     font-size: var(--paper-font-body1_-_font-size);
     font-weight: var(--paper-font-body1_-_font-weight);
     line-height: var(--paper-font-body1_-_line-height);
-  }
-
-  app-header-layout,
-  ha-app-layout {
-    background-color: var(--primary-background-color);
-  }
-
-  app-header,
-  app-toolbar {
-    background-color: var(--app-header-background-color);
-    font-weight: 400;
-    color: var(--app-header-text-color, white);
-  }
-
-  app-toolbar {
-    height: var(--header-height);
-    border-bottom: var(--app-header-border-bottom);
-    box-sizing: border-box;
   }
 
   app-header div[sticky] {
@@ -309,13 +298,10 @@ export const haStyleDialog = css`
   ha-dialog {
     --mdc-dialog-min-width: 400px;
     --mdc-dialog-max-width: 600px;
-    --mdc-dialog-heading-ink-color: var(--primary-text-color);
-    --mdc-dialog-content-ink-color: var(--primary-text-color);
     --justify-action-buttons: space-between;
   }
 
   ha-dialog .form {
-    padding-bottom: 24px;
     color: var(--primary-text-color);
   }
 
@@ -334,11 +320,12 @@ export const haStyleDialog = css`
       );
       --mdc-dialog-min-height: 100%;
       --mdc-dialog-max-height: 100%;
-      --vertial-align-dialog: flex-end;
-      --ha-dialog-border-radius: 0px;
+      --vertical-align-dialog: flex-end;
+      --ha-dialog-border-radius: 0;
     }
   }
-  mwc-button.warning {
+  mwc-button.warning,
+  ha-button.warning {
     --mdc-theme-primary: var(--error-color);
   }
   .error {

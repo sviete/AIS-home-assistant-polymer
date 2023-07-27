@@ -1,4 +1,6 @@
-import { HomeAssistant } from "../types";
+import type { UnsubscribeFunc } from "home-assistant-js-websocket";
+import type { HomeAssistant } from "../types";
+import type { IntegrationManifest, IntegrationType } from "./integration";
 
 export interface ConfigEntry {
   entry_id: string;
@@ -11,7 +13,8 @@ export interface ConfigEntry {
     | "migration_error"
     | "setup_retry"
     | "not_loaded"
-    | "failed_unload";
+    | "failed_unload"
+    | "setup_in_progress";
   supports_options: boolean;
   supports_remove_device: boolean;
   supports_unload: boolean;
@@ -28,30 +31,74 @@ export type ConfigEntryMutableParams = Partial<
   >
 >;
 
+// https://github.com/home-assistant/core/blob/2286dea636fda001f03433ba14d7adbda43979e5/homeassistant/config_entries.py#L81
 export const ERROR_STATES: ConfigEntry["state"][] = [
   "migration_error",
   "setup_error",
   "setup_retry",
 ];
 
-export const getConfigEntries = (
+// https://github.com/home-assistant/core/blob/2286dea636fda001f03433ba14d7adbda43979e5/homeassistant/config_entries.py#L81
+export const RECOVERABLE_STATES: ConfigEntry["state"][] = [
+  "not_loaded",
+  "loaded",
+  "setup_error",
+  "setup_retry",
+];
+
+export interface ConfigEntryUpdate {
+  // null means no update as is the current state
+  type: null | "added" | "removed" | "updated";
+  entry: ConfigEntry;
+}
+
+export const subscribeConfigEntries = (
   hass: HomeAssistant,
-  filters?: { type?: "helper" | "integration"; domain?: string }
-): Promise<ConfigEntry[]> => {
-  const params = new URLSearchParams();
-  if (filters) {
-    if (filters.type) {
-      params.append("type", filters.type);
-    }
-    if (filters.domain) {
-      params.append("domain", filters.domain);
-    }
+  callbackFunction: (message: ConfigEntryUpdate[]) => void,
+  filters?: {
+    type?: IntegrationType[];
+    domain?: string;
   }
-  return hass.callApi<ConfigEntry[]>(
-    "GET",
-    `config/config_entries/entry?${params.toString()}`
+): Promise<UnsubscribeFunc> => {
+  const params: any = {
+    type: "config_entries/subscribe",
+  };
+  if (filters && filters.type) {
+    params.type_filter = filters.type;
+  }
+  return hass.connection.subscribeMessage<ConfigEntryUpdate[]>(
+    (message) => callbackFunction(message),
+    params
   );
 };
+
+export const getConfigEntries = (
+  hass: HomeAssistant,
+  filters?: {
+    type?: IntegrationType[];
+    domain?: string;
+  }
+): Promise<ConfigEntry[]> => {
+  const params: any = {};
+  if (filters) {
+    if (filters.type) {
+      params.type_filter = filters.type;
+    }
+    if (filters.domain) {
+      params.domain = filters.domain;
+    }
+  }
+  return hass.callWS<ConfigEntry[]>({
+    type: "config_entries/get",
+    ...params,
+  });
+};
+
+export const getConfigEntry = (hass: HomeAssistant, configEntryId: string) =>
+  hass.callWS<{ config_entry: ConfigEntry }>({
+    type: "config_entries/get_single",
+    entry_id: configEntryId,
+  });
 
 export const updateConfigEntry = (
   hass: HomeAssistant,
@@ -96,3 +143,23 @@ export const enableConfigEntry = (hass: HomeAssistant, configEntryId: string) =>
     entry_id: configEntryId,
     disabled_by: null,
   });
+
+export const sortConfigEntries = (
+  configEntries: ConfigEntry[],
+  manifestLookup: { [domain: string]: IntegrationManifest }
+): ConfigEntry[] => {
+  const sortedConfigEntries = [...configEntries];
+
+  const getScore = (entry: ConfigEntry) => {
+    const manifest = manifestLookup[entry.domain] as
+      | IntegrationManifest
+      | undefined;
+    const isHelper = manifest?.integration_type === "helper";
+    return isHelper ? -1 : 1;
+  };
+
+  const configEntriesCompare = (a: ConfigEntry, b: ConfigEntry) =>
+    getScore(b) - getScore(a);
+
+  return sortedConfigEntries.sort(configEntriesCompare);
+};

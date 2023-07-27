@@ -1,5 +1,5 @@
 import "@material/mwc-button/mwc-button";
-import { CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { fireEvent } from "../../../../common/dom/fire_event";
 import "../../../../components/ha-dialog";
@@ -10,6 +10,7 @@ import {
   fetchDeviceActions,
   fetchDeviceConditions,
   fetchDeviceTriggers,
+  sortDeviceAutomations,
 } from "../../../../data/device_automation";
 import { haStyleDialog } from "../../../../resources/styles";
 import { HomeAssistant } from "../../../../types";
@@ -63,22 +64,22 @@ export class DialogDeviceAutomation extends LitElement {
     const { device, script } = this._params;
 
     fetchDeviceActions(this.hass, device.id).then((actions) => {
-      this._actions = actions;
+      this._actions = actions.sort(sortDeviceAutomations);
     });
     if (script) {
       return;
     }
     fetchDeviceTriggers(this.hass, device.id).then((triggers) => {
-      this._triggers = triggers;
+      this._triggers = triggers.sort(sortDeviceAutomations);
     });
     fetchDeviceConditions(this.hass, device.id).then((conditions) => {
-      this._conditions = conditions;
+      this._conditions = conditions.sort(sortDeviceAutomations);
     });
   }
 
-  protected render(): TemplateResult | void {
+  protected render() {
     if (!this._params) {
-      return html``;
+      return nothing;
     }
 
     return html`
@@ -108,6 +109,7 @@ export class DialogDeviceAutomation extends LitElement {
                       <ha-device-triggers-card
                         .hass=${this.hass}
                         .automations=${this._triggers}
+                        .entityReg=${this._params.entityReg}
                       ></ha-device-triggers-card>
                     `
                   : ""}
@@ -116,6 +118,7 @@ export class DialogDeviceAutomation extends LitElement {
                       <ha-device-conditions-card
                         .hass=${this.hass}
                         .automations=${this._conditions}
+                        .entityReg=${this._params.entityReg}
                       ></ha-device-conditions-card>
                     `
                   : ""}
@@ -125,6 +128,7 @@ export class DialogDeviceAutomation extends LitElement {
                         .hass=${this.hass}
                         .automations=${this._actions}
                         .script=${this._params.script}
+                        .entityReg=${this._params.entityReg}
                       ></ha-device-actions-card>
                     `
                   : ""}

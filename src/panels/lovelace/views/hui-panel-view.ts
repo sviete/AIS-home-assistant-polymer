@@ -121,6 +121,7 @@ export class PanelView extends LitElement implements LovelaceViewElement {
     wrapper.hass = this.hass;
     wrapper.lovelace = this.lovelace;
     wrapper.path = [this.index!, 0];
+    wrapper.hidePosition = true;
     card.editMode = true;
     wrapper.appendChild(card);
     this._card = wrapper;
@@ -134,8 +135,7 @@ export class PanelView extends LitElement implements LovelaceViewElement {
       }
 
       ha-fab {
-        position: sticky;
-        float: right;
+        position: fixed;
         right: calc(16px + env(safe-area-inset-right));
         bottom: calc(16px + env(safe-area-inset-bottom));
         z-index: 1;

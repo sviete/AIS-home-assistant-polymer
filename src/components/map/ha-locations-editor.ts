@@ -19,9 +19,9 @@ import memoizeOne from "memoize-one";
 import { fireEvent } from "../../common/dom/fire_event";
 import type { LeafletModuleType } from "../../common/dom/setup-leaflet-map";
 import type { HomeAssistant } from "../../types";
+import "../ha-input-helper-text";
 import "./ha-map";
 import type { HaMap } from "./ha-map";
-import "../ha-input-helper-text";
 
 declare global {
   // for fire event
@@ -67,23 +67,28 @@ export class HaLocationsEditor extends LitElement {
 
   private Leaflet?: LeafletModuleType;
 
+  private _loadPromise: Promise<boolean | void>;
+
   constructor() {
     super();
 
-    import("leaflet").then((module) => {
+    this._loadPromise = import("leaflet").then((module) =>
       import("leaflet-draw").then(() => {
         this.Leaflet = module.default as LeafletModuleType;
         this._updateMarkers();
-        this.updateComplete.then(() => this.fitMap());
-      });
-    });
+        return this.updateComplete.then(() => this.fitMap());
+      })
+    );
   }
 
   public fitMap(): void {
     this.map.fitMap();
   }
 
-  public fitMarker(id: string): void {
+  public async fitMarker(id: string): Promise<void> {
+    if (!this.Leaflet) {
+      await this._loadPromise;
+    }
     if (!this.map.leafletMap || !this._locationMarkers) {
       return;
     }
@@ -297,7 +302,7 @@ export class HaLocationsEditor extends LitElement {
     return css`
       ha-map {
         display: block;
-        height: 300px;
+        height: 100%;
       }
     `;
   }

@@ -1,10 +1,14 @@
 import { Connection, createCollection } from "home-assistant-js-websocket";
-import { Store } from "home-assistant-js-websocket/dist/store";
+import type { Store } from "home-assistant-js-websocket/dist/store";
 import { computeStateName } from "../common/entity/compute_state_name";
 import { caseInsensitiveStringCompare } from "../common/string/compare";
 import { debounce } from "../common/util/debounce";
-import { HomeAssistant } from "../types";
-import { EntityRegistryEntry } from "./entity_registry";
+import type { HomeAssistant } from "../types";
+import type {
+  EntityRegistryDisplayEntry,
+  EntityRegistryEntry,
+} from "./entity_registry";
+import type { EntitySources } from "./entity_sources";
 
 export interface DeviceRegistryEntry {
   id: string;
@@ -20,8 +24,12 @@ export interface DeviceRegistryEntry {
   area_id: string | null;
   name_by_user: string | null;
   entry_type: "service" | null;
-  disabled_by: string | null;
+  disabled_by: "user" | "integration" | "config_entry" | null;
   configuration_url: string | null;
+}
+
+export interface DeviceEntityDisplayLookup {
+  [deviceId: string]: EntityRegistryDisplayEntry[];
 }
 
 export interface DeviceEntityLookup {
@@ -122,7 +130,62 @@ export const subscribeDeviceRegistry = (
     onChange
   );
 
-export const sortDeviceRegistryByName = (entries: DeviceRegistryEntry[]) =>
+export const sortDeviceRegistryByName = (
+  entries: DeviceRegistryEntry[],
+  language: string
+) =>
   entries.sort((entry1, entry2) =>
-    caseInsensitiveStringCompare(entry1.name || "", entry2.name || "")
+    caseInsensitiveStringCompare(entry1.name || "", entry2.name || "", language)
   );
+
+export const getDeviceEntityLookup = (
+  entities: EntityRegistryEntry[]
+): DeviceEntityLookup => {
+  const deviceEntityLookup: DeviceEntityLookup = {};
+  for (const entity of entities) {
+    if (!entity.device_id) {
+      continue;
+    }
+    if (!(entity.device_id in deviceEntityLookup)) {
+      deviceEntityLookup[entity.device_id] = [];
+    }
+    deviceEntityLookup[entity.device_id].push(entity);
+  }
+  return deviceEntityLookup;
+};
+
+export const getDeviceEntityDisplayLookup = (
+  entities: EntityRegistryDisplayEntry[]
+): DeviceEntityDisplayLookup => {
+  const deviceEntityLookup: DeviceEntityDisplayLookup = {};
+  for (const entity of entities) {
+    if (!entity.device_id) {
+      continue;
+    }
+    if (!(entity.device_id in deviceEntityLookup)) {
+      deviceEntityLookup[entity.device_id] = [];
+    }
+    deviceEntityLookup[entity.device_id].push(entity);
+  }
+  return deviceEntityLookup;
+};
+
+export const getDeviceIntegrationLookup = (
+  entitySources: EntitySources,
+  entities: EntityRegistryDisplayEntry[]
+): Record<string, string[]> => {
+  const deviceIntegrations: Record<string, string[]> = {};
+
+  for (const entity of entities) {
+    const source = entitySources[entity.entity_id];
+    if (!source?.domain || entity.device_id === null) {
+      continue;
+    }
+
+    if (!deviceIntegrations[entity.device_id!]) {
+      deviceIntegrations[entity.device_id!] = [];
+    }
+    deviceIntegrations[entity.device_id!].push(source.domain);
+  }
+  return deviceIntegrations;
+};

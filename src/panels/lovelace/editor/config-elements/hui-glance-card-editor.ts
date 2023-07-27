@@ -1,26 +1,26 @@
-import "../../../../components/ha-form/ha-form";
-import { html, LitElement, TemplateResult } from "lit";
+import { html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import {
   array,
   assert,
+  assign,
   boolean,
   number,
   object,
   optional,
   string,
   union,
-  assign,
 } from "superstruct";
 import { fireEvent } from "../../../../common/dom/fire_event";
+import "../../../../components/ha-form/ha-form";
+import type { SchemaUnion } from "../../../../components/ha-form/types";
 import type { HomeAssistant } from "../../../../types";
 import { ConfigEntity, GlanceCardConfig } from "../../cards/types";
 import "../../components/hui-entity-editor";
 import type { LovelaceCardEditor } from "../../types";
 import { processEditorEntities } from "../process-editor-entities";
-import { entitiesConfigStruct } from "../structs/entities-struct";
 import { baseLovelaceCardConfig } from "../structs/base-card-struct";
-import type { HaFormSchema } from "../../../../components/ha-form/types";
+import { entitiesConfigStruct } from "../structs/entities-struct";
 
 const cardConfigStruct = assign(
   baseLovelaceCardConfig,
@@ -36,7 +36,7 @@ const cardConfigStruct = assign(
   })
 );
 
-const SCHEMA: HaFormSchema[] = [
+const SCHEMA = [
   { name: "title", selector: { text: {} } },
   {
     name: "",
@@ -57,7 +57,7 @@ const SCHEMA: HaFormSchema[] = [
     ],
   },
   { name: "state_color", selector: { boolean: {} } },
-];
+] as const;
 
 @customElement("hui-glance-card-editor")
 export class HuiGlanceCardEditor
@@ -76,9 +76,9 @@ export class HuiGlanceCardEditor
     this._configEntities = processEditorEntities(config.entities);
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
     const data = {
@@ -117,22 +117,23 @@ export class HuiGlanceCardEditor
     fireEvent(this, "config-changed", { config });
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema) => {
-    if (schema.name === "theme") {
-      return `${this.hass!.localize(
-        "ui.panel.lovelace.editor.card.generic.theme"
-      )} (${this.hass!.localize(
-        "ui.panel.lovelace.editor.card.config.optional"
-      )})`;
+  private _computeLabelCallback = (schema: SchemaUnion<typeof SCHEMA>) => {
+    switch (schema.name) {
+      case "theme":
+        return `${this.hass!.localize(
+          "ui.panel.lovelace.editor.card.generic.theme"
+        )} (${this.hass!.localize(
+          "ui.panel.lovelace.editor.card.config.optional"
+        )})`;
+      case "columns":
+        return this.hass!.localize(
+          `ui.panel.lovelace.editor.card.glance.${schema.name}`
+        );
+      default:
+        return this.hass!.localize(
+          `ui.panel.lovelace.editor.card.generic.${schema.name}`
+        );
     }
-    return (
-      this.hass!.localize(
-        `ui.panel.lovelace.editor.card.glance.${schema.name}`
-      ) ||
-      this.hass!.localize(
-        `ui.panel.lovelace.editor.card.generic.${schema.name}`
-      )
-    );
   };
 }
 

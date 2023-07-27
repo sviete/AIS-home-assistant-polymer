@@ -1,5 +1,5 @@
 import { DEFAULT_SCHEMA, dump, load, Schema } from "js-yaml";
-import { html, LitElement, TemplateResult } from "lit";
+import { html, LitElement, nothing, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { fireEvent } from "../common/dom/fire_event";
 import type { HomeAssistant } from "../types";
@@ -31,6 +31,8 @@ export class HaYamlEditor extends LitElement {
 
   @property() public label?: string;
 
+  @property({ type: Boolean }) public autoUpdate = false;
+
   @property({ type: Boolean }) public readOnly = false;
 
   @property({ type: Boolean }) public required = false;
@@ -41,7 +43,11 @@ export class HaYamlEditor extends LitElement {
     try {
       this._yaml =
         value && !isEmpty(value)
-          ? dump(value, { schema: this.yamlSchema })
+          ? dump(value, {
+              schema: this.yamlSchema,
+              quotingType: '"',
+              noRefs: true,
+            })
           : "";
     } catch (err: any) {
       // eslint-disable-next-line no-console
@@ -56,18 +62,28 @@ export class HaYamlEditor extends LitElement {
     }
   }
 
-  protected render(): TemplateResult {
+  protected willUpdate(changedProperties: PropertyValues<this>): void {
+    super.willUpdate(changedProperties);
+    if (this.autoUpdate && changedProperties.has("value")) {
+      this.setValue(this.value);
+    }
+  }
+
+  protected render() {
     if (this._yaml === undefined) {
-      return html``;
+      return nothing;
     }
     return html`
-      ${this.label ? html`<p>${this.label}${this.required ? "*" : ""}</p>` : ""}
+      ${this.label
+        ? html`<p>${this.label}${this.required ? " *" : ""}</p>`
+        : ""}
       <ha-code-editor
         .hass=${this.hass}
         .value=${this._yaml}
         .readOnly=${this.readOnly}
         mode="yaml"
         autocomplete-entities
+        autocomplete-icons
         .error=${this.isValid === false}
         @value-changed=${this._onChange}
         dir="ltr"

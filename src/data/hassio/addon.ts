@@ -1,13 +1,19 @@
 import { atLeastVersion } from "../../common/config/version";
 import type { HaFormSchema } from "../../components/ha-form/types";
-import { HomeAssistant } from "../../types";
-import { SupervisorArch } from "../supervisor/supervisor";
+import { HomeAssistant, TranslationDict } from "../../types";
+import { supervisorApiCall } from "../supervisor/common";
+import { StoreAddonDetails } from "../supervisor/store";
+import { Supervisor, SupervisorArch } from "../supervisor/supervisor";
 import {
   extractApiErrorMessage,
   hassioApiResultExtractor,
   HassioResponse,
 } from "./common";
 
+export type AddonCapability = Exclude<
+  keyof TranslationDict["supervisor"]["addon"]["dashboard"]["capability"],
+  "label" | "role" | "stages"
+>;
 export type AddonStage = "stable" | "experimental" | "deprecated";
 export type AddonAppArmour = "disable" | "default" | "profile";
 export type AddonRole = "default" | "homeassistant" | "manager" | "admin";
@@ -17,11 +23,18 @@ export type AddonStartup =
   | "services"
   | "application"
   | "once";
-export type AddonState = "started" | "stopped" | null;
+export type AddonState =
+  | "startup"
+  | "started"
+  | "stopped"
+  | "unknown"
+  | "error"
+  | null;
 export type AddonRepository = "core" | "local" | string;
 
 interface AddonTranslations {
-  [key: string]: Record<string, Record<string, Record<string, string>>>;
+  network?: Record<string, string>;
+  configuration?: Record<string, { name?: string; description?: string }>;
 }
 
 export interface HassioAddonInfo {
@@ -91,7 +104,7 @@ export interface HassioAddonDetails extends HassioAddonInfo {
   slug: string;
   startup: AddonStartup;
   stdin: boolean;
-  translations: AddonTranslations;
+  translations: Record<string, AddonTranslations>;
   watchdog: null | boolean;
   webui: null | string;
 }
@@ -361,4 +374,36 @@ export const uninstallHassioAddon = async (
     "POST",
     `hassio/addons/${slug}/uninstall`
   );
+};
+
+export const fetchAddonInfo = (
+  hass: HomeAssistant,
+  supervisor: Supervisor,
+  addonSlug: string
+): Promise<HassioAddonDetails | StoreAddonDetails> =>
+  supervisorApiCall(
+    hass,
+    !supervisor.addon?.addons.find((addon) => addon.slug === addonSlug)
+      ? `/store/addons/${addonSlug}` // Use /store/addons when add-on is not installed
+      : `/addons/${addonSlug}/info` // Use /addons when add-on is installed
+  );
+
+export const rebuildLocalAddon = async (
+  hass: HomeAssistant,
+  slug: string
+): Promise<void> => {
+  if (atLeastVersion(hass.config.version, 2021, 2, 4)) {
+    return hass.callWS<void>({
+      type: "supervisor/api",
+      endpoint: `/addons/${slug}/rebuild`,
+      method: "post",
+      timeout: null,
+    });
+  }
+  return (
+    await hass.callApi<HassioResponse<void>>(
+      "POST",
+      `hassio/addons/${slug}rebuild`
+    )
+  ).data;
 };

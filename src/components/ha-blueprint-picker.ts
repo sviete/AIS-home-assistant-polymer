@@ -1,13 +1,18 @@
 import "@material/mwc-list/mwc-list-item";
-import "./ha-select";
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property } from "lit/decorators";
 import memoizeOne from "memoize-one";
 import { fireEvent } from "../common/dom/fire_event";
 import { stopPropagation } from "../common/dom/stop_propagation";
 import { stringCompare } from "../common/string/compare";
-import { Blueprint, Blueprints, fetchBlueprints } from "../data/blueprint";
+import {
+  Blueprint,
+  BlueprintDomain,
+  Blueprints,
+  fetchBlueprints,
+} from "../data/blueprint";
 import { HomeAssistant } from "../types";
+import "./ha-select";
 
 @customElement("ha-blueprint-picker")
 class HaBluePrintPicker extends LitElement {
@@ -17,7 +22,7 @@ class HaBluePrintPicker extends LitElement {
 
   @property() public value = "";
 
-  @property() public domain = "automation";
+  @property() public domain: BlueprintDomain = "automation";
 
   @property() public blueprints?: Blueprints;
 
@@ -36,22 +41,24 @@ class HaBluePrintPicker extends LitElement {
       return [];
     }
     const result = Object.entries(blueprints)
-      .filter(([_path, blueprint]) => !("error" in blueprint))
+      .filter((entry): entry is [string, Blueprint] => !("error" in entry[1]))
       .map(([path, blueprint]) => ({
-        ...(blueprint as Blueprint).metadata,
+        ...blueprint.metadata,
         path,
       }));
-    return result.sort((a, b) => stringCompare(a.name, b.name));
+    return result.sort((a, b) =>
+      stringCompare(a.name, b.name, this.hass!.locale.language)
+    );
   });
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass) {
-      return html``;
+      return nothing;
     }
     return html`
       <ha-select
         .label=${this.label ||
-        this.hass.localize("ui.components.blueprint-picker.label")}
+        this.hass.localize("ui.components.blueprint-picker.select_blueprint")}
         fixedMenuPosition
         naturalMenuWidth
         .value=${this.value}
@@ -59,11 +66,6 @@ class HaBluePrintPicker extends LitElement {
         @selected=${this._blueprintChanged}
         @closed=${stopPropagation}
       >
-        <mwc-list-item value="">
-          ${this.hass.localize(
-            "ui.components.blueprint-picker.select_blueprint"
-          )}
-        </mwc-list-item>
         ${this._processedBlueprints(this.blueprints).map(
           (blueprint) => html`
             <mwc-list-item .value=${blueprint.path}>

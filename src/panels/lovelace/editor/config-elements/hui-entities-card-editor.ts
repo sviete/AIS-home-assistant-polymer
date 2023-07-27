@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import {
   any,
@@ -17,21 +17,18 @@ import {
   union,
 } from "superstruct";
 import { fireEvent, HASSDomEvent } from "../../../../common/dom/fire_event";
-import {
-  customType,
-  isCustomType,
-} from "../../../../common/structs/is-custom-type";
-import { entityId } from "../../../../common/structs/is-entity-id";
+import { customType } from "../../../../common/structs/is-custom-type";
 import { computeRTLDirection } from "../../../../common/util/compute_rtl";
 import "../../../../components/entity/state-badge";
 import "../../../../components/ha-card";
 import "../../../../components/ha-formfield";
-import "../../../../components/ha-textfield";
 import "../../../../components/ha-icon";
 import "../../../../components/ha-switch";
+import "../../../../components/ha-textfield";
+import "../../../../components/ha-theme-picker";
+import { isCustomType } from "../../../../data/lovelace_custom_cards";
 import type { HomeAssistant } from "../../../../types";
 import type { EntitiesCardConfig } from "../../cards/types";
-import "../../../../components/ha-theme-picker";
 import { TIMESTAMP_RENDERING_FORMATS } from "../../components/types";
 import type { LovelaceRowConfig } from "../../entity-rows/types";
 import { headerFooterConfigStructs } from "../../header-footer/structs";
@@ -42,6 +39,7 @@ import "../hui-sub-element-editor";
 import { processEditorEntities } from "../process-editor-entities";
 import { actionConfigStruct } from "../structs/action-struct";
 import { baseLovelaceCardConfig } from "../structs/base-card-struct";
+import { buttonEntityConfigStruct } from "../structs/button-entity-struct";
 import { entitiesConfigStruct } from "../structs/entities-struct";
 import {
   EditorTarget,
@@ -63,7 +61,7 @@ const buttonEntitiesRowConfigStruct = object({
 
 const castEntitiesRowConfigStruct = object({
   type: literal("cast"),
-  view: union([string(), number()]),
+  view: optional(union([string(), number()])),
   dashboard: optional(string()),
   name: optional(string()),
   icon: optional(string()),
@@ -76,7 +74,9 @@ const callServiceEntitiesRowConfigStruct = object({
   service: string(),
   icon: optional(string()),
   action_name: optional(string()),
+  // "service_data" is kept for backwards compatibility. Replaced by "data".
   service_data: optional(any()),
+  data: optional(any()),
 });
 
 const conditionalEntitiesRowConfigStruct = object({
@@ -110,22 +110,7 @@ const webLinkEntitiesRowConfigStruct = object({
 
 const buttonsEntitiesRowConfigStruct = object({
   type: literal("buttons"),
-  entities: array(
-    union([
-      object({
-        entity: string(),
-        name: optional(string()),
-        icon: optional(string()),
-        image: optional(string()),
-        show_name: optional(boolean()),
-        show_icon: optional(boolean()),
-        tap_action: optional(actionConfigStruct),
-        hold_action: optional(actionConfigStruct),
-        double_tap_action: optional(actionConfigStruct),
-      }),
-      string(),
-    ])
-  ),
+  entities: array(buttonEntityConfigStruct),
 });
 
 const attributeEntitiesRowConfigStruct = object({
@@ -198,7 +183,7 @@ const cardConfigStruct = assign(
   baseLovelaceCardConfig,
   object({
     title: optional(union([string(), boolean()])),
-    entity: optional(entityId()),
+    entity: optional(string()),
     theme: optional(string()),
     icon: optional(string()),
     show_header_toggle: optional(boolean()),
@@ -236,9 +221,9 @@ export class HuiEntitiesCardEditor
     return this._config!.theme || "";
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
     if (this._subElementEditorConfig) {

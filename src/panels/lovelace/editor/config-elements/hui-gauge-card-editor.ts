@@ -1,7 +1,8 @@
-import "../../../../components/ha-form/ha-form";
-import { html, LitElement, TemplateResult } from "lit";
+import { html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
+import memoizeOne from "memoize-one";
 import {
+  array,
   assert,
   assign,
   boolean,
@@ -10,13 +11,20 @@ import {
   optional,
   string,
 } from "superstruct";
-import memoizeOne from "memoize-one";
 import { fireEvent } from "../../../../common/dom/fire_event";
-import type { HaFormSchema } from "../../../../components/ha-form/types";
+import "../../../../components/ha-form/ha-form";
+import type { SchemaUnion } from "../../../../components/ha-form/types";
 import type { HomeAssistant } from "../../../../types";
 import type { GaugeCardConfig } from "../../cards/types";
 import type { LovelaceCardEditor } from "../../types";
 import { baseLovelaceCardConfig } from "../structs/base-card-struct";
+import { DEFAULT_MIN, DEFAULT_MAX } from "../../cards/hui-gauge-card";
+
+const gaugeSegmentStruct = object({
+  from: number(),
+  color: string(),
+  label: optional(string()),
+});
 
 const cardConfigStruct = assign(
   baseLovelaceCardConfig,
@@ -29,6 +37,7 @@ const cardConfigStruct = assign(
     severity: optional(object()),
     theme: optional(string()),
     needle: optional(boolean()),
+    segments: optional(array(gaugeSegmentStruct)),
   })
 );
 
@@ -46,61 +55,78 @@ export class HuiGaugeCardEditor
     this._config = config;
   }
 
-  private _schema = memoizeOne((showSeverity: boolean) => {
-    const schema = [
-      {
-        name: "entity",
-        selector: {
-          entity: {
-            domain: ["counter", "input_number", "number", "sensor"],
+  private _schema = memoizeOne(
+    (showSeverity: boolean) =>
+      [
+        {
+          name: "entity",
+          selector: {
+            entity: {
+              domain: ["counter", "input_number", "number", "sensor"],
+            },
           },
         },
-      },
-      {
-        name: "",
-        type: "grid",
-        schema: [
-          { name: "name", selector: { text: {} } },
-          { name: "unit", selector: { text: {} } },
-        ],
-      },
-      { name: "theme", selector: { theme: {} } },
-      {
-        name: "",
-        type: "grid",
-        schema: [
-          { name: "min", selector: { number: { min: 1, mode: "box" } } },
-          { name: "max", selector: { number: { min: 1, mode: "box" } } },
-        ],
-      },
-      {
-        name: "",
-        type: "grid",
-        schema: [
-          { name: "needle", selector: { boolean: {} } },
-          { name: "show_severity", selector: { boolean: {} } },
-        ],
-      },
-    ];
+        {
+          name: "",
+          type: "grid",
+          schema: [
+            { name: "name", selector: { text: {} } },
+            { name: "unit", selector: { text: {} } },
+          ],
+        },
+        { name: "theme", selector: { theme: {} } },
+        {
+          name: "",
+          type: "grid",
+          schema: [
+            {
+              name: "min",
+              default: DEFAULT_MIN,
+              selector: { number: { mode: "box", step: "any" } },
+            },
+            {
+              name: "max",
+              default: DEFAULT_MAX,
+              selector: { number: { mode: "box", step: "any" } },
+            },
+          ],
+        },
+        {
+          name: "",
+          type: "grid",
+          schema: [
+            { name: "needle", selector: { boolean: {} } },
+            { name: "show_severity", selector: { boolean: {} } },
+          ],
+        },
+        ...(showSeverity
+          ? ([
+              {
+                name: "severity",
+                type: "grid",
+                schema: [
+                  {
+                    name: "green",
+                    selector: { number: { mode: "box", step: "any" } },
+                  },
+                  {
+                    name: "yellow",
+                    selector: { number: { mode: "box", step: "any" } },
+                  },
+                  {
+                    name: "red",
+                    selector: { number: { mode: "box", step: "any" } },
+                  },
+                ],
+              },
+            ] as const)
+          : []),
+      ] as const
+  );
 
-    if (showSeverity) {
-      schema.push({
-        name: "",
-        type: "grid",
-        schema: [
-          { name: "green", selector: { number: { min: 0, mode: "box" } } },
-          { name: "yellow", selector: { number: { min: 0, mode: "box" } } },
-          { name: "red", selector: { number: { min: 0, mode: "box" } } },
-        ],
-      });
-    }
-
-    return schema;
-  });
-
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
     const schema = this._schema(this._config!.severity !== undefined);
@@ -144,7 +170,9 @@ export class HuiGaugeCardEditor
     fireEvent(this, "config-changed", { config });
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema) => {
+  private _computeLabelCallback = (
+    schema: SchemaUnion<ReturnType<typeof this._schema>>
+  ) => {
     switch (schema.name) {
       case "name":
         return this.hass!.localize(
@@ -178,18 +206,16 @@ export class HuiGaugeCardEditor
         )} (${this.hass!.localize(
           "ui.panel.lovelace.editor.card.config.optional"
         )})`;
+      case "unit":
+        return this.hass!.localize(
+          "ui.panel.lovelace.editor.card.generic.unit"
+        );
+      default:
+        // "green" | "yellow" | "red"
+        return this.hass!.localize(
+          `ui.panel.lovelace.editor.card.gauge.severity.${schema.name}`
+        );
     }
-    return (
-      this.hass!.localize(
-        `ui.panel.lovelace.editor.card.gauge.${schema.name}`
-      ) ||
-      this.hass!.localize(
-        `ui.panel.lovelace.editor.card.generic.${schema.name}`
-      ) ||
-      this.hass!.localize(
-        `ui.panel.lovelace.editor.card.gauge.severity.${schema.name}`
-      )
-    );
   };
 }
 

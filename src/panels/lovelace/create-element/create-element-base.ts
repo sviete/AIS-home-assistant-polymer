@@ -5,12 +5,16 @@ import {
   LovelaceViewConfig,
   LovelaceViewElement,
 } from "../../../data/lovelace";
-import { CUSTOM_TYPE_PREFIX } from "../../../data/lovelace_custom_cards";
+import {
+  isCustomType,
+  stripCustomPrefix,
+} from "../../../data/lovelace_custom_cards";
 import type { HuiErrorCard } from "../cards/hui-error-card";
 import type { ErrorCardConfig } from "../cards/types";
 import { LovelaceElement, LovelaceElementConfig } from "../elements/types";
 import { LovelaceRow, LovelaceRowConfig } from "../entity-rows/types";
 import { LovelaceHeaderFooterConfig } from "../header-footer/types";
+import { LovelaceTileFeatureConfig } from "../tile-features/types";
 import {
   LovelaceBadge,
   LovelaceCard,
@@ -18,6 +22,8 @@ import {
   LovelaceHeaderFooter,
   LovelaceHeaderFooterConstructor,
   LovelaceRowConstructor,
+  LovelaceTileFeature,
+  LovelaceTileFeatureConstructor,
 } from "../types";
 
 const TIMEOUT = 2000;
@@ -52,6 +58,11 @@ interface CreateElementConfigTypes {
     config: LovelaceViewConfig;
     element: LovelaceViewElement;
     constructor: unknown;
+  };
+  "tile-feature": {
+    config: LovelaceTileFeatureConfig;
+    element: LovelaceTileFeature;
+    constructor: LovelaceTileFeatureConstructor;
   };
 }
 
@@ -145,9 +156,7 @@ const _lazyCreate = <T extends keyof CreateElementConfigTypes>(
 };
 
 const _getCustomTag = (type: string) =>
-  type.startsWith(CUSTOM_TYPE_PREFIX)
-    ? type.substr(CUSTOM_TYPE_PREFIX.length)
-    : undefined;
+  isCustomType(type) ? stripCustomPrefix(type) : undefined;
 
 export const createLovelaceElement = <T extends keyof CreateElementConfigTypes>(
   tagSuffix: T,

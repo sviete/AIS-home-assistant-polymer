@@ -1,14 +1,13 @@
-const gulp = require("gulp");
-
-const env = require("../env");
-
-require("./clean.js");
-require("./gen-icons-json.js");
-require("./webpack.js");
-require("./compress.js");
-require("./rollup.js");
-require("./gather-static.js");
-require("./translations.js");
+import gulp from "gulp";
+import env from "../env.cjs";
+import "./clean.js";
+import "./compress.js";
+import "./entry-html.js";
+import "./gather-static.js";
+import "./gen-icons-json.js";
+import "./rollup.js";
+import "./translations.js";
+import "./webpack.js";
 
 gulp.task(
   "develop-hassio",
@@ -17,11 +16,12 @@ gulp.task(
       process.env.NODE_ENV = "development";
     },
     "clean-hassio",
-    "gen-index-hassio-dev",
+    "gen-dummy-icons-json",
+    "gen-pages-hassio-dev",
     "build-supervisor-translations",
     "copy-translations-supervisor",
     "build-locale-data",
-    "copy-locale-data-supervisor",
+    "copy-static-supervisor",
     env.useRollup() ? "rollup-watch-hassio" : "webpack-watch-hassio"
   )
 );
@@ -33,13 +33,14 @@ gulp.task(
       process.env.NODE_ENV = "production";
     },
     "clean-hassio",
+    "gen-dummy-icons-json",
     "build-supervisor-translations",
     "copy-translations-supervisor",
     "build-locale-data",
-    "copy-locale-data-supervisor",
+    "copy-static-supervisor",
     env.useRollup() ? "rollup-prod-hassio" : "webpack-prod-hassio",
-    "gen-index-hassio-prod",
+    "gen-pages-hassio-prod",
     ...// Don't compress running tests
-    (env.isTest() ? [] : ["compress-hassio"])
+    (env.isTestBuild() ? [] : ["compress-hassio"])
   )
 );

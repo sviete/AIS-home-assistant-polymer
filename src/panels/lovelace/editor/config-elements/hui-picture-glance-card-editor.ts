@@ -1,13 +1,12 @@
-import { CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { CSSResultGroup, html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { array, assert, assign, object, optional, string } from "superstruct";
 import { fireEvent } from "../../../../common/dom/fire_event";
 import "../../../../components/ha-form/ha-form";
-import type { HaFormSchema } from "../../../../components/ha-form/types";
+import type { SchemaUnion } from "../../../../components/ha-form/types";
 import type { ActionConfig } from "../../../../data/lovelace";
 import type { HomeAssistant } from "../../../../types";
 import type { PictureGlanceCardConfig } from "../../cards/types";
-import "../../components/hui-action-editor";
 import "../../components/hui-entity-editor";
 import type { EntityConfig } from "../../entity-rows/types";
 import type { LovelaceCardEditor } from "../../types";
@@ -15,7 +14,6 @@ import { processEditorEntities } from "../process-editor-entities";
 import { actionConfigStruct } from "../structs/action-struct";
 import { baseLovelaceCardConfig } from "../structs/base-card-struct";
 import { entitiesConfigStruct } from "../structs/entities-struct";
-import type { EditorTarget } from "../types";
 import { configElementStyle } from "./config-elements-style";
 
 const cardConfigStruct = assign(
@@ -24,6 +22,7 @@ const cardConfigStruct = assign(
     title: optional(string()),
     entity: optional(string()),
     image: optional(string()),
+    image_entity: optional(string()),
     camera_image: optional(string()),
     camera_view: optional(string()),
     aspect_ratio: optional(string()),
@@ -34,11 +33,10 @@ const cardConfigStruct = assign(
   })
 );
 
-const actions = ["more-info", "toggle", "navigate", "call-service", "none"];
-
-const SCHEMA: HaFormSchema[] = [
+const SCHEMA = [
   { name: "title", selector: { text: {} } },
   { name: "image", selector: { text: {} } },
+  { name: "image_entity", selector: { entity: { domain: "image" } } },
   { name: "camera_image", selector: { entity: { domain: "camera" } } },
   {
     name: "",
@@ -53,7 +51,15 @@ const SCHEMA: HaFormSchema[] = [
   },
   { name: "entity", selector: { entity: {} } },
   { name: "theme", selector: { theme: {} } },
-];
+  {
+    name: "tap_action",
+    selector: { ui_action: {} },
+  },
+  {
+    name: "hold_action",
+    selector: { ui_action: {} },
+  },
+] as const;
 
 @customElement("hui-picture-glance-card-editor")
 export class HuiPictureGlanceCardEditor
@@ -80,9 +86,9 @@ export class HuiPictureGlanceCardEditor
     return this._config!.hold_action || { action: "more-info" };
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
     const data = { camera_view: "auto", ...this._config };
@@ -96,26 +102,6 @@ export class HuiPictureGlanceCardEditor
         @value-changed=${this._valueChanged}
       ></ha-form>
       <div class="card-config">
-        <hui-action-editor
-          .label=${this.hass.localize(
-            "ui.panel.lovelace.editor.card.generic.tap_action"
-          )}
-          .hass=${this.hass}
-          .config=${this._tap_action}
-          .actions=${actions}
-          .configValue=${"tap_action"}
-          @value-changed=${this._valueChanged}
-        ></hui-action-editor>
-        <hui-action-editor
-          .label=${this.hass.localize(
-            "ui.panel.lovelace.editor.card.generic.hold_action"
-          )}
-          .hass=${this.hass}
-          .config=${this._hold_action}
-          .actions=${actions}
-          .configValue=${"hold_action"}
-          @value-changed=${this._valueChanged}
-        ></hui-action-editor>
         <hui-entity-editor
           .hass=${this.hass}
           .entities=${this._configEntities}
@@ -133,54 +119,33 @@ export class HuiPictureGlanceCardEditor
     if (!this._config || !this.hass) {
       return;
     }
-    const target = ev.target! as EditorTarget;
-    const value = ev.detail.value;
-
     if (ev.detail && ev.detail.entities) {
       this._config = { ...this._config, entities: ev.detail.entities };
 
       this._configEntities = processEditorEntities(this._config.entities);
-    } else if (target.configValue) {
-      if (this[`_${target.configValue}`] === value) {
-        return;
-      }
-
-      if (value !== false && !value) {
-        this._config = { ...this._config };
-        delete this._config[target.configValue!];
-      } else {
-        this._config = {
-          ...this._config,
-          [target.configValue!]: value,
-        };
-      }
     }
     fireEvent(this, "config-changed", { config: this._config });
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema) => {
-    if (schema.name === "entity") {
-      return this.hass!.localize(
-        "ui.panel.lovelace.editor.card.picture-glance.state_entity"
-      );
+  private _computeLabelCallback = (schema: SchemaUnion<typeof SCHEMA>) => {
+    switch (schema.name) {
+      case "theme":
+      case "tap_action":
+      case "hold_action":
+        return `${this.hass!.localize(
+          `ui.panel.lovelace.editor.card.generic.${schema.name}`
+        )} (${this.hass!.localize(
+          "ui.panel.lovelace.editor.card.config.optional"
+        )})`;
+      case "entity":
+        return this.hass!.localize(
+          "ui.panel.lovelace.editor.card.picture-glance.state_entity"
+        );
+      default:
+        return this.hass!.localize(
+          `ui.panel.lovelace.editor.card.generic.${schema.name}`
+        );
     }
-
-    if (schema.name === "theme") {
-      return `${this.hass!.localize(
-        "ui.panel.lovelace.editor.card.generic.theme"
-      )} (${this.hass!.localize(
-        "ui.panel.lovelace.editor.card.config.optional"
-      )})`;
-    }
-
-    return (
-      this.hass!.localize(
-        `ui.panel.lovelace.editor.card.generic.${schema.name}`
-      ) ||
-      this.hass!.localize(
-        `ui.panel.lovelace.editor.card.picture-glance.${schema.name}`
-      )
-    );
   };
 
   static styles: CSSResultGroup = configElementStyle;

@@ -32,6 +32,7 @@ export const showOptionsFlowDialog = (
         const [step] = await Promise.all([
           createOptionsFlow(hass, handler),
           hass.loadBackendTranslation("options", configEntry.domain),
+          hass.loadBackendTranslation("selector", configEntry.domain),
         ]);
         return step;
       },
@@ -39,6 +40,7 @@ export const showOptionsFlowDialog = (
         const [step] = await Promise.all([
           fetchOptionsFlow(hass, flowId),
           hass.loadBackendTranslation("options", configEntry.domain),
+          hass.loadBackendTranslation("selector", configEntry.domain),
         ]);
         return step;
       },
@@ -65,7 +67,8 @@ export const showOptionsFlowDialog = (
       renderShowFormStepHeader(hass, step) {
         return (
           hass.localize(
-            `component.${configEntry.domain}.options.step.${step.step_id}.title`
+            `component.${configEntry.domain}.options.step.${step.step_id}.title`,
+            step.description_placeholders
           ) || hass.localize(`ui.dialogs.options_flow.form.header`)
         );
       },
@@ -93,15 +96,36 @@ export const showOptionsFlowDialog = (
       },
 
       renderShowFormStepFieldHelper(hass, step, field) {
-        return hass.localize(
-          `component.${configEntry.domain}.options.step.${step.step_id}.data_description.${field.name}`
+        const description = hass.localize(
+          `component.${configEntry.domain}.options.step.${step.step_id}.data_description.${field.name}`,
+          step.description_placeholders
         );
+        return description
+          ? html`<ha-markdown breaks .content=${description}></ha-markdown>`
+          : "";
       },
 
       renderShowFormStepFieldError(hass, step, error) {
         return hass.localize(
           `component.${configEntry.domain}.options.error.${error}`,
           step.description_placeholders
+        );
+      },
+
+      renderShowFormStepFieldLocalizeValue(hass, _step, key) {
+        return hass.localize(`component.${configEntry.domain}.selector.${key}`);
+      },
+
+      renderShowFormStepSubmitButton(hass, step) {
+        return (
+          hass.localize(
+            `component.${configEntry.domain}.options.step.${step.step_id}.submit`
+          ) ||
+          hass.localize(
+            `ui.panel.config.integrations.config_flow.${
+              step.last_step === false ? "next" : "submit"
+            }`
+          )
         );
       },
 
@@ -146,14 +170,14 @@ export const showOptionsFlowDialog = (
       renderMenuHeader(hass, step) {
         return (
           hass.localize(
-            `component.${step.handler}.option.step.${step.step_id}.title`
-          ) || hass.localize(`component.${step.handler}.title`)
+            `component.${configEntry.domain}.options.step.${step.step_id}.title`
+          ) || hass.localize(`component.${configEntry.domain}.title`)
         );
       },
 
       renderMenuDescription(hass, step) {
         const description = hass.localize(
-          `component.${step.handler}.option.step.${step.step_id}.description`,
+          `component.${configEntry.domain}.options.step.${step.step_id}.description`,
           step.description_placeholders
         );
         return description
@@ -169,7 +193,7 @@ export const showOptionsFlowDialog = (
 
       renderMenuOption(hass, step, option) {
         return hass.localize(
-          `component.${step.handler}.options.step.${step.step_id}.menu_options.${option}`,
+          `component.${configEntry.domain}.options.step.${step.step_id}.menu_options.${option}`,
           step.description_placeholders
         );
       },
@@ -177,9 +201,11 @@ export const showOptionsFlowDialog = (
       renderLoadingDescription(hass, reason) {
         return (
           hass.localize(`component.${configEntry.domain}.options.loading`) ||
-          hass.localize(`ui.dialogs.options_flow.loading.${reason}`, {
-            integration: domainToName(hass.localize, configEntry.domain),
-          })
+          (reason === "loading_flow" || reason === "loading_step"
+            ? hass.localize(`ui.dialogs.options_flow.loading.${reason}`, {
+                integration: domainToName(hass.localize, configEntry.domain),
+              })
+            : "")
         );
       },
     }

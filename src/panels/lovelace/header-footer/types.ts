@@ -2,7 +2,7 @@ import { ActionConfig } from "../../../data/lovelace";
 import { EntitiesCardEntityConfig } from "../cards/types";
 
 export interface LovelaceHeaderFooterConfig {
-  type: string;
+  type: "buttons" | "graph" | "picture";
 }
 
 export interface ButtonsHeaderFooterConfig extends LovelaceHeaderFooterConfig {
@@ -27,4 +27,5 @@ export interface PictureHeaderFooterConfig extends LovelaceHeaderFooterConfig {
   tap_action?: ActionConfig;
   hold_action?: ActionConfig;
   double_tap_action?: ActionConfig;
+  alt_text?: string;
 }

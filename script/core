@@ -15,7 +15,7 @@ if [ -z $(which hass) ]; then
   echo "Installing Home Asstant core from dev."
   python3 -m pip install --upgrade \
     colorlog \
-    git+git://github.com/home-assistant/home-assistant.git@dev
+    git+https://github.com/home-assistant/home-assistant.git@dev
 fi
 
 if [ ! -d "${WD}/config" ]; then
@@ -46,6 +46,14 @@ frontend:
 #   development_repo: ${WD}" >> "${WD}/config/configuration.yaml"
   fi
 
+  if [ ! -z "${CODESPACES}" ]; then
+  echo "
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1
+" >> "${WD}/config/configuration.yaml"
+  fi
 fi
 
 hass -c "${WD}/config"

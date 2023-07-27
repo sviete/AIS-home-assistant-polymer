@@ -30,7 +30,7 @@ interface ActionHandlerElement extends HTMLElement {
     options: ActionHandlerOptions;
     start?: (ev: Event) => void;
     end?: (ev: Event) => void;
-    handleEnter?: (ev: KeyboardEvent) => void;
+    handleKeyDown?: (ev: KeyboardEvent) => void;
   };
 }
 
@@ -63,7 +63,7 @@ class ActionHandler extends HTMLElement implements ActionHandler {
 
   public connectedCallback() {
     Object.assign(this.style, {
-      position: "absolute",
+      position: "fixed",
       width: isTouch ? "100px" : "50px",
       height: isTouch ? "100px" : "50px",
       transform: "translate(-50%, -50%)",
@@ -117,7 +117,10 @@ class ActionHandler extends HTMLElement implements ActionHandler {
       element.removeEventListener("mousedown", element.actionHandler.start!);
       element.removeEventListener("click", element.actionHandler.end!);
 
-      element.removeEventListener("keyup", element.actionHandler.handleEnter!);
+      element.removeEventListener(
+        "keydown",
+        element.actionHandler.handleKeyDown!
+      );
     } else {
       element.addEventListener("contextmenu", (ev: Event) => {
         const e = ev || window.event;
@@ -144,11 +147,11 @@ class ActionHandler extends HTMLElement implements ActionHandler {
       let x;
       let y;
       if ((ev as TouchEvent).touches) {
-        x = (ev as TouchEvent).touches[0].pageX;
-        y = (ev as TouchEvent).touches[0].pageY;
+        x = (ev as TouchEvent).touches[0].clientX;
+        y = (ev as TouchEvent).touches[0].clientY;
       } else {
-        x = (ev as MouseEvent).pageX;
-        y = (ev as MouseEvent).pageY;
+        x = (ev as MouseEvent).clientX;
+        y = (ev as MouseEvent).clientY;
       }
 
       if (options.hasHold) {
@@ -196,8 +199,8 @@ class ActionHandler extends HTMLElement implements ActionHandler {
       }
     };
 
-    element.actionHandler.handleEnter = (ev: KeyboardEvent) => {
-      if (ev.keyCode !== 13) {
+    element.actionHandler.handleKeyDown = (ev: KeyboardEvent) => {
+      if (!["Enter", " "].includes(ev.key)) {
         return;
       }
       (ev.currentTarget as ActionHandlerElement).actionHandler!.end!(ev);
@@ -214,7 +217,7 @@ class ActionHandler extends HTMLElement implements ActionHandler {
     });
     element.addEventListener("click", element.actionHandler.end);
 
-    element.addEventListener("keyup", element.actionHandler.handleEnter);
+    element.addEventListener("keydown", element.actionHandler.handleKeyDown);
   }
 
   private startAnimation(x: number, y: number) {

@@ -82,7 +82,6 @@ export class HaFormMultiSelect extends LitElement implements HaFormElement {
       <ha-button-menu
         .disabled=${this.disabled}
         fixed
-        corner="BOTTOM_START"
         @opened=${this._handleOpen}
         @closed=${this._handleClose}
         multi
@@ -205,6 +204,9 @@ export class HaFormMultiSelect extends LitElement implements HaFormElement {
       ha-formfield {
         display: block;
         padding-right: 16px;
+        padding-inline-end: 16px;
+        padding-inline-start: initial;
+        direction: var(--direction);
       }
       ha-textfield {
         display: block;
@@ -216,6 +218,9 @@ export class HaFormMultiSelect extends LitElement implements HaFormElement {
         right: 1em;
         top: 1em;
         cursor: pointer;
+        inset-inline-end: 1em;
+        inset-inline-start: initial;
+        direction: var(--direction);
       }
       :host([opened]) ha-svg-icon {
         color: var(--primary-color);

@@ -52,13 +52,22 @@ export class EnergyStrategy {
     );
     const hasGas = prefs.energy_sources.some((source) => source.type === "gas");
 
-    if (info.narrow) {
+    const hasWater = prefs.energy_sources.some(
+      (source) => source.type === "water"
+    );
+
+    if (info.narrow || info.view.strategy?.options?.show_date_selection) {
       view.cards!.push({
         type: "energy-date-selection",
         collection_key: "energy_dashboard",
         view_layout: { position: "sidebar" },
       });
     }
+
+    view.cards!.push({
+      type: "energy-compare",
+      collection_key: "energy_dashboard",
+    });
 
     // Only include if we have a grid source.
     if (hasGrid) {
@@ -83,6 +92,15 @@ export class EnergyStrategy {
       view.cards!.push({
         title: hass.localize("ui.panel.energy.cards.energy_gas_graph_title"),
         type: "energy-gas-graph",
+        collection_key: "energy_dashboard",
+      });
+    }
+
+    // Only include if we have a water source.
+    if (hasWater) {
+      view.cards!.push({
+        title: hass.localize("ui.panel.energy.cards.energy_water_graph_title"),
+        type: "energy-water-graph",
         collection_key: "energy_dashboard",
       });
     }
@@ -120,6 +138,11 @@ export class EnergyStrategy {
     if (hasSolar && hasReturn) {
       view.cards!.push({
         type: "energy-solar-consumed-gauge",
+        view_layout: { position: "sidebar" },
+        collection_key: "energy_dashboard",
+      });
+      view.cards!.push({
+        type: "energy-self-sufficiency-gauge",
         view_layout: { position: "sidebar" },
         collection_key: "energy_dashboard",
       });

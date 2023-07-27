@@ -11,24 +11,24 @@ import {
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { computeDomain } from "../../../../common/entity/compute_domain";
+import { computeStateName } from "../../../../common/entity/compute_state_name";
 import { domainIcon } from "../../../../common/entity/domain_icon";
+import { stripPrefixFromEntityName } from "../../../../common/entity/strip_prefix_from_entity_name";
 import "../../../../components/entity/state-badge";
 import "../../../../components/ha-card";
 import "../../../../components/ha-icon";
-import type { LovelaceRowConfig } from "../../../lovelace/entity-rows/types";
-import type { HomeAssistant } from "../../../../types";
-import type { HuiErrorCard } from "../../../lovelace/cards/hui-error-card";
-import { createRowElement } from "../../../lovelace/create-element/create-row-element";
-import { addEntitiesToLovelaceView } from "../../../lovelace/editor/add-entities-to-view";
-import { LovelaceRow } from "../../../lovelace/entity-rows/types";
-import { showEntityEditorDialog } from "../../entities/show-dialog-entity-editor";
-import { EntityRegistryStateEntry } from "../ha-config-device-page";
-import { computeStateName } from "../../../../common/entity/compute_state_name";
-import { stripPrefixFromEntityName } from "../../../../common/entity/strip_prefix_from_entity_name";
 import {
   ExtEntityRegistryEntry,
   getExtendedEntityRegistryEntry,
 } from "../../../../data/entity_registry";
+import { showMoreInfoDialog } from "../../../../dialogs/more-info/show-ha-more-info-dialog";
+import type { HomeAssistant } from "../../../../types";
+import type { HuiErrorCard } from "../../../lovelace/cards/hui-error-card";
+import { createRowElement } from "../../../lovelace/create-element/create-row-element";
+import { addEntitiesToLovelaceView } from "../../../lovelace/editor/add-entities-to-view";
+import type { LovelaceRowConfig } from "../../../lovelace/entity-rows/types";
+import { LovelaceRow } from "../../../lovelace/entity-rows/types";
+import { EntityRegistryStateEntry } from "../ha-config-device-page";
 
 @customElement("ha-device-entities-card")
 export class HaDeviceEntitiesCard extends LitElement {
@@ -62,7 +62,7 @@ export class HaDeviceEntitiesCard extends LitElement {
   protected render(): TemplateResult {
     if (!this.entities.length) {
       return html`
-        <ha-card .header=${this.header}>
+        <ha-card outlined .header=${this.header}>
           <div class="empty card-content">
             ${this.hass.localize("ui.panel.config.devices.entities.none")}
           </div>
@@ -89,8 +89,8 @@ export class HaDeviceEntitiesCard extends LitElement {
     });
 
     return html`
-      <ha-card .header=${this.header}>
-        <div id="entities" @hass-more-info=${this._overrideMoreInfo}>
+      <ha-card outlined .header=${this.header}>
+        <div id="entities">
           ${shownEntities.map((entry) =>
             this.hass.states[entry.entity_id]
               ? this._renderEntity(entry)
@@ -163,17 +163,27 @@ export class HaDeviceEntitiesCard extends LitElement {
     if (this.hass) {
       element.hass = this.hass;
       const stateObj = this.hass.states[entry.entity_id];
-      const name = stripPrefixFromEntityName(
-        computeStateName(stateObj),
-        this.deviceName.toLowerCase()
-      );
-      if (entry.hidden_by) {
-        config.name = `${
-          name || computeStateName(stateObj)
-        } (${this.hass.localize("ui.panel.config.devices.entities.hidden")})`;
-      } else if (name) {
-        config.name = name;
+
+      let name = entry.name
+        ? stripPrefixFromEntityName(entry.name, this.deviceName.toLowerCase())
+        : entry.has_entity_name
+        ? entry.original_name || this.deviceName
+        : stripPrefixFromEntityName(
+            computeStateName(stateObj),
+            this.deviceName.toLowerCase()
+          );
+
+      if (!name) {
+        name = computeStateName(stateObj);
       }
+
+      if (entry.hidden_by) {
+        name += ` (${this.hass.localize(
+          "ui.panel.config.devices.entities.hidden"
+        )})`;
+      }
+
+      config.name = name;
     }
     // @ts-ignore
     element.entry = entry;
@@ -211,21 +221,9 @@ export class HaDeviceEntitiesCard extends LitElement {
     `;
   }
 
-  private _overrideMoreInfo(ev: Event): void {
-    ev.stopPropagation();
-    const entry = (ev.target! as any).entry;
-    showEntityEditorDialog(this, {
-      entry,
-      entity_id: entry.entity_id,
-    });
-  }
-
   private _openEditEntry(ev: Event): void {
     const entry = (ev.currentTarget! as any).entry;
-    showEntityEditorDialog(this, {
-      entry,
-      entity_id: entry.entity_id,
-    });
+    showMoreInfoDialog(this, { entityId: entry.entity_id });
   }
 
   private _addToLovelaceView(): void {

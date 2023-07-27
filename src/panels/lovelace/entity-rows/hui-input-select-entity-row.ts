@@ -1,10 +1,11 @@
 import "@material/mwc-list/mwc-list-item";
-import { css, html, LitElement, PropertyValues, TemplateResult } from "lit";
-import { customElement, property, state } from "lit/decorators";
+import { css, html, LitElement, PropertyValues, nothing } from "lit";
+import { customElement, property, query, state } from "lit/decorators";
 import { stopPropagation } from "../../../common/dom/stop_propagation";
 import { computeStateName } from "../../../common/entity/compute_state_name";
 import "../../../components/ha-select";
-import { UNAVAILABLE_STATES } from "../../../data/entity";
+import type { HaSelect } from "../../../components/ha-select";
+import { UNAVAILABLE } from "../../../data/entity";
 import { forwardHaptic } from "../../../data/haptics";
 import {
   InputSelectEntity,
@@ -23,6 +24,8 @@ class HuiInputSelectEntityRow extends LitElement implements LovelaceRow {
 
   @state() private _config?: EntitiesCardEntityConfig;
 
+  @query("ha-select") private _haSelect!: HaSelect;
+
   public setConfig(config: EntitiesCardEntityConfig): void {
     if (!config || !config.entity) {
       throw new Error("Entity must be specified");
@@ -35,9 +38,25 @@ class HuiInputSelectEntityRow extends LitElement implements LovelaceRow {
     return hasConfigOrEntityChanged(this, changedProps);
   }
 
-  protected render(): TemplateResult {
+  protected updated(changedProps: PropertyValues) {
+    super.updated(changedProps);
+    if (changedProps.has("hass")) {
+      const oldHass = changedProps.get("hass");
+      if (
+        this.hass &&
+        oldHass &&
+        this._config?.entity &&
+        this.hass.states[this._config.entity].attributes.options !==
+          oldHass.states[this._config.entity].attributes.options
+      ) {
+        this._haSelect.layoutOptions();
+      }
+    }
+  }
+
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
     const stateObj = this.hass.states[this._config.entity] as
@@ -61,7 +80,9 @@ class HuiInputSelectEntityRow extends LitElement implements LovelaceRow {
         <ha-select
           .label=${this._config.name || computeStateName(stateObj)}
           .value=${stateObj.state}
-          .disabled=${UNAVAILABLE_STATES.includes(stateObj.state)}
+          .disabled=${
+            stateObj.state === UNAVAILABLE /* UNKNOWN state is allowed */
+          }
           naturalMenuWidth
           @selected=${this._selectedChanged}
           @click=${stopPropagation}
@@ -92,9 +113,14 @@ class HuiInputSelectEntityRow extends LitElement implements LovelaceRow {
   `;
 
   private _selectedChanged(ev): void {
-    const stateObj = this.hass!.states[this._config!.entity];
+    const stateObj = this.hass!.states[
+      this._config!.entity
+    ] as InputSelectEntity;
     const option = ev.target.value;
-    if (option === stateObj.state) {
+    if (
+      option === stateObj.state ||
+      !stateObj.attributes.options.includes(option)
+    ) {
       return;
     }
 

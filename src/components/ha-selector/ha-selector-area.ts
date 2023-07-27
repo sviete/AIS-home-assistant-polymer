@@ -1,9 +1,19 @@
-import { html, LitElement } from "lit";
+import { HassEntity } from "home-assistant-js-websocket";
+import { html, LitElement, PropertyValues, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
-import { ConfigEntry, getConfigEntries } from "../../data/config_entries";
-import { DeviceRegistryEntry } from "../../data/device_registry";
-import { EntityRegistryEntry } from "../../data/entity_registry";
-import { AreaSelector } from "../../data/selector";
+import memoizeOne from "memoize-one";
+import { ensureArray } from "../../common/array/ensure-array";
+import type { DeviceRegistryEntry } from "../../data/device_registry";
+import { getDeviceIntegrationLookup } from "../../data/device_registry";
+import {
+  EntitySources,
+  fetchEntitySourcesWithCache,
+} from "../../data/entity_sources";
+import type { AreaSelector } from "../../data/selector";
+import {
+  filterSelectorDevices,
+  filterSelectorEntities,
+} from "../../data/selector";
 import { HomeAssistant } from "../../types";
 import "../ha-area-picker";
 import "../ha-areas-picker";
@@ -20,30 +30,43 @@ export class HaAreaSelector extends LitElement {
 
   @property() public helper?: string;
 
-  @state() public _configEntries?: ConfigEntry[];
-
   @property({ type: Boolean }) public disabled = false;
 
   @property({ type: Boolean }) public required = true;
 
-  protected updated(changedProperties) {
-    if (changedProperties.has("selector")) {
-      const oldSelector = changedProperties.get("selector");
-      if (
-        oldSelector !== this.selector &&
-        this.selector.area.device?.integration
-      ) {
-        getConfigEntries(this.hass, {
-          domain: this.selector.area.device.integration,
-        }).then((entries) => {
-          this._configEntries = entries;
-        });
-      }
+  @state() private _entitySources?: EntitySources;
+
+  private _deviceIntegrationLookup = memoizeOne(getDeviceIntegrationLookup);
+
+  private _hasIntegration(selector: AreaSelector) {
+    return (
+      (selector.area?.entity &&
+        ensureArray(selector.area.entity).some(
+          (filter) => filter.integration
+        )) ||
+      (selector.area?.device &&
+        ensureArray(selector.area.device).some((device) => device.integration))
+    );
+  }
+
+  protected updated(changedProperties: PropertyValues): void {
+    if (
+      changedProperties.has("selector") &&
+      this._hasIntegration(this.selector) &&
+      !this._entitySources
+    ) {
+      fetchEntitySourcesWithCache(this.hass).then((sources) => {
+        this._entitySources = sources;
+      });
     }
   }
 
   protected render() {
-    if (!this.selector.area.multiple) {
+    if (this._hasIntegration(this.selector) && !this._entitySources) {
+      return nothing;
+    }
+
+    if (!this.selector.area?.multiple) {
       return html`
         <ha-area-picker
           .hass=${this.hass}
@@ -53,12 +76,6 @@ export class HaAreaSelector extends LitElement {
           no-add
           .deviceFilter=${this._filterDevices}
           .entityFilter=${this._filterEntities}
-          .includeDeviceClasses=${this.selector.area.entity?.device_class
-            ? [this.selector.area.entity.device_class]
-            : undefined}
-          .includeDomains=${this.selector.area.entity?.domain
-            ? [this.selector.area.entity.domain]
-            : undefined}
           .disabled=${this.disabled}
           .required=${this.required}
         ></ha-area-picker>
@@ -74,51 +91,37 @@ export class HaAreaSelector extends LitElement {
         no-add
         .deviceFilter=${this._filterDevices}
         .entityFilter=${this._filterEntities}
-        .includeDeviceClasses=${this.selector.area.entity?.device_class
-          ? [this.selector.area.entity.device_class]
-          : undefined}
-        .includeDomains=${this.selector.area.entity?.domain
-          ? [this.selector.area.entity.domain]
-          : undefined}
         .disabled=${this.disabled}
         .required=${this.required}
       ></ha-areas-picker>
     `;
   }
 
-  private _filterEntities = (entity: EntityRegistryEntry): boolean => {
-    if (this.selector.area.entity?.integration) {
-      if (entity.platform !== this.selector.area.entity.integration) {
-        return false;
-      }
+  private _filterEntities = (entity: HassEntity): boolean => {
+    if (!this.selector.area?.entity) {
+      return true;
     }
-    return true;
+
+    return ensureArray(this.selector.area.entity).some((filter) =>
+      filterSelectorEntities(filter, entity, this._entitySources)
+    );
   };
 
   private _filterDevices = (device: DeviceRegistryEntry): boolean => {
-    if (
-      this.selector.area.device?.manufacturer &&
-      device.manufacturer !== this.selector.area.device.manufacturer
-    ) {
-      return false;
+    if (!this.selector.area?.device) {
+      return true;
     }
-    if (
-      this.selector.area.device?.model &&
-      device.model !== this.selector.area.device.model
-    ) {
-      return false;
-    }
-    if (this.selector.area.device?.integration) {
-      if (
-        this._configEntries &&
-        !this._configEntries.some((entry) =>
-          device.config_entries.includes(entry.entry_id)
+
+    const deviceIntegrations = this._entitySources
+      ? this._deviceIntegrationLookup(
+          this._entitySources,
+          Object.values(this.hass.entities)
         )
-      ) {
-        return false;
-      }
-    }
-    return true;
+      : undefined;
+
+    return ensureArray(this.selector.area.device).some((filter) =>
+      filterSelectorDevices(filter, device, deviceIntegrations)
+    );
   };
 }
 

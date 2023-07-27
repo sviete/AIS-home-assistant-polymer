@@ -1,18 +1,18 @@
-import "../../../../components/ha-form/ha-form";
-import { html, LitElement, TemplateResult } from "lit";
+import { html, LitElement, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
-import { assert, boolean, object, optional, string, assign } from "superstruct";
-import { memoize } from "@fullcalendar/common";
+import memoizeOne from "memoize-one";
+import { assert, assign, boolean, object, optional, string } from "superstruct";
 import { fireEvent } from "../../../../common/dom/fire_event";
+import type { LocalizeFunc } from "../../../../common/translations/localize";
+import "../../../../components/ha-form/ha-form";
+import type { SchemaUnion } from "../../../../components/ha-form/types";
+import { UNAVAILABLE } from "../../../../data/entity";
+import type { WeatherEntity } from "../../../../data/weather";
 import type { HomeAssistant } from "../../../../types";
 import type { WeatherForecastCardConfig } from "../../cards/types";
 import type { LovelaceCardEditor } from "../../types";
 import { actionConfigStruct } from "../structs/action-struct";
 import { baseLovelaceCardConfig } from "../structs/base-card-struct";
-import { UNAVAILABLE } from "../../../../data/entity";
-import type { WeatherEntity } from "../../../../data/weather";
-import type { LocalizeFunc } from "../../../../common/translations/localize";
-import type { HaFormSchema } from "../../../../components/ha-form/types";
 
 const cardConfigStruct = assign(
   baseLovelaceCardConfig,
@@ -65,13 +65,9 @@ export class HuiWeatherForecastCardEditor
     return undefined;
   }
 
-  private _schema = memoize(
-    (
-      entity: string,
-      localize: LocalizeFunc,
-      hasForecast?: boolean
-    ): HaFormSchema[] => {
-      const schema: HaFormSchema[] = [
+  private _schema = memoizeOne(
+    (localize: LocalizeFunc, hasForecast?: boolean) =>
+      [
         {
           name: "entity",
           required: true,
@@ -84,55 +80,52 @@ export class HuiWeatherForecastCardEditor
           schema: [
             {
               name: "secondary_info_attribute",
-              selector: { attribute: { entity_id: entity } },
+              selector: { attribute: {} },
+              context: { filter_entity: "entity" },
             },
             { name: "theme", selector: { theme: {} } },
           ],
         },
-      ];
-      if (hasForecast) {
-        schema.push({
-          name: "forecast",
-          selector: {
-            select: {
-              options: [
-                {
-                  value: "show_both",
-                  label: localize(
-                    "ui.panel.lovelace.editor.card.weather-forecast.show_both"
-                  ),
+        ...(hasForecast
+          ? ([
+              {
+                name: "forecast",
+                selector: {
+                  select: {
+                    options: [
+                      {
+                        value: "show_both",
+                        label: localize(
+                          "ui.panel.lovelace.editor.card.weather-forecast.show_both"
+                        ),
+                      },
+                      {
+                        value: "show_current",
+                        label: localize(
+                          "ui.panel.lovelace.editor.card.weather-forecast.show_only_current"
+                        ),
+                      },
+                      {
+                        value: "show_forecast",
+                        label: localize(
+                          "ui.panel.lovelace.editor.card.weather-forecast.show_only_forecast"
+                        ),
+                      },
+                    ],
+                  },
                 },
-                {
-                  value: "show_current",
-                  label: localize(
-                    "ui.panel.lovelace.editor.card.weather-forecast.show_only_current"
-                  ),
-                },
-                {
-                  value: "show_forecast",
-                  label: localize(
-                    "ui.panel.lovelace.editor.card.weather-forecast.show_only_forecast"
-                  ),
-                },
-              ],
-            },
-          },
-        });
-      }
-      return schema;
-    }
+              },
+            ] as const)
+          : []),
+      ] as const
   );
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.hass || !this._config) {
-      return html``;
+      return nothing;
     }
 
-    const schema = this._schema(
-      this._config.entity,
-      this.hass.localize,
-      this._has_forecast
-    );
+    const schema = this._schema(this.hass.localize, this._has_forecast);
 
     const data: WeatherForecastCardConfig = {
       show_current: true,
@@ -175,31 +168,31 @@ export class HuiWeatherForecastCardEditor
     fireEvent(this, "config-changed", { config });
   }
 
-  private _computeLabelCallback = (schema: HaFormSchema) => {
-    if (schema.name === "entity") {
-      return `${this.hass!.localize(
-        "ui.panel.lovelace.editor.card.generic.entity"
-      )} (${this.hass!.localize(
-        "ui.panel.lovelace.editor.card.config.required"
-      )})`;
+  private _computeLabelCallback = (
+    schema: SchemaUnion<ReturnType<typeof this._schema>>
+  ) => {
+    switch (schema.name) {
+      case "entity":
+        return `${this.hass!.localize(
+          "ui.panel.lovelace.editor.card.generic.entity"
+        )} (${this.hass!.localize(
+          "ui.panel.lovelace.editor.card.config.required"
+        )})`;
+      case "theme":
+        return `${this.hass!.localize(
+          "ui.panel.lovelace.editor.card.generic.theme"
+        )} (${this.hass!.localize(
+          "ui.panel.lovelace.editor.card.config.optional"
+        )})`;
+      case "forecast":
+        return this.hass!.localize(
+          "ui.panel.lovelace.editor.card.weather-forecast.weather_to_show"
+        );
+      default:
+        return this.hass!.localize(
+          `ui.panel.lovelace.editor.card.generic.${schema.name}`
+        );
     }
-
-    if (schema.name === "theme") {
-      return `${this.hass!.localize(
-        "ui.panel.lovelace.editor.card.generic.theme"
-      )} (${this.hass!.localize(
-        "ui.panel.lovelace.editor.card.config.optional"
-      )})`;
-    }
-
-    return (
-      this.hass!.localize(
-        `ui.panel.lovelace.editor.card.generic.${schema.name}`
-      ) ||
-      this.hass!.localize(
-        `ui.panel.lovelace.editor.card.weather_forecast.${schema.name}`
-      )
-    );
   };
 }
 

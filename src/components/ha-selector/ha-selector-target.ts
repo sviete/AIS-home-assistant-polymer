@@ -1,23 +1,33 @@
+import { HassEntity, HassServiceTarget } from "home-assistant-js-websocket";
 import {
-  HassEntity,
-  HassServiceTarget,
-  UnsubscribeFunc,
-} from "home-assistant-js-websocket";
-import { css, CSSResultGroup, html, LitElement } from "lit";
+  css,
+  CSSResultGroup,
+  html,
+  LitElement,
+  PropertyValues,
+  nothing,
+} from "lit";
 import { customElement, property, state } from "lit/decorators";
-import { ConfigEntry, getConfigEntries } from "../../data/config_entries";
-import { DeviceRegistryEntry } from "../../data/device_registry";
+import memoizeOne from "memoize-one";
+import { ensureArray } from "../../common/array/ensure-array";
 import {
-  EntityRegistryEntry,
-  subscribeEntityRegistry,
-} from "../../data/entity_registry";
-import { TargetSelector } from "../../data/selector";
-import { SubscribeMixin } from "../../mixins/subscribe-mixin";
-import { HomeAssistant } from "../../types";
+  DeviceRegistryEntry,
+  getDeviceIntegrationLookup,
+} from "../../data/device_registry";
+import {
+  EntitySources,
+  fetchEntitySourcesWithCache,
+} from "../../data/entity_sources";
+import {
+  filterSelectorDevices,
+  filterSelectorEntities,
+  TargetSelector,
+} from "../../data/selector";
+import type { HomeAssistant } from "../../types";
 import "../ha-target-picker";
 
 @customElement("ha-selector-target")
-export class HaTargetSelector extends SubscribeMixin(LitElement) {
+export class HaTargetSelector extends LitElement {
   @property() public hass!: HomeAssistant;
 
   @property() public selector!: TargetSelector;
@@ -28,119 +38,79 @@ export class HaTargetSelector extends SubscribeMixin(LitElement) {
 
   @property() public helper?: string;
 
-  @state() private _entityPlaformLookup?: Record<string, string>;
-
-  @state() private _configEntries?: ConfigEntry[];
-
   @property({ type: Boolean }) public disabled = false;
 
-  public hassSubscribe(): UnsubscribeFunc[] {
-    return [
-      subscribeEntityRegistry(this.hass.connection!, (entities) => {
-        const entityLookup = {};
-        for (const confEnt of entities) {
-          if (!confEnt.platform) {
-            continue;
-          }
-          entityLookup[confEnt.entity_id] = confEnt.platform;
-        }
-        this._entityPlaformLookup = entityLookup;
-      }),
-    ];
+  @state() private _entitySources?: EntitySources;
+
+  private _deviceIntegrationLookup = memoizeOne(getDeviceIntegrationLookup);
+
+  private _hasIntegration(selector: TargetSelector) {
+    return (
+      (selector.target?.entity &&
+        ensureArray(selector.target.entity).some(
+          (filter) => filter.integration
+        )) ||
+      (selector.target?.device &&
+        ensureArray(selector.target.device).some(
+          (device) => device.integration
+        ))
+    );
   }
 
-  protected updated(changedProperties) {
-    if (changedProperties.has("selector")) {
-      const oldSelector = changedProperties.get("selector");
-      if (
-        oldSelector !== this.selector &&
-        (this.selector.target.device?.integration ||
-          this.selector.target.entity?.integration)
-      ) {
-        this._loadConfigEntries();
-      }
+  protected updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    if (
+      changedProperties.has("selector") &&
+      this._hasIntegration(this.selector) &&
+      !this._entitySources
+    ) {
+      fetchEntitySourcesWithCache(this.hass).then((sources) => {
+        this._entitySources = sources;
+      });
     }
   }
 
   protected render() {
+    if (this._hasIntegration(this.selector) && !this._entitySources) {
+      return nothing;
+    }
+
     return html`<ha-target-picker
       .hass=${this.hass}
       .value=${this.value}
       .helper=${this.helper}
       .deviceFilter=${this._filterDevices}
-      .entityRegFilter=${this._filterRegEntities}
       .entityFilter=${this._filterEntities}
-      .includeDeviceClasses=${this.selector.target.entity?.device_class
-        ? [this.selector.target.entity.device_class]
-        : undefined}
-      .includeDomains=${this.selector.target.entity?.domain
-        ? [this.selector.target.entity.domain]
-        : undefined}
       .disabled=${this.disabled}
     ></ha-target-picker>`;
   }
 
   private _filterEntities = (entity: HassEntity): boolean => {
-    if (
-      this.selector.target.entity?.integration ||
-      this.selector.target.device?.integration
-    ) {
-      if (
-        !this._entityPlaformLookup ||
-        this._entityPlaformLookup[entity.entity_id] !==
-          (this.selector.target.entity?.integration ||
-            this.selector.target.device?.integration)
-      ) {
-        return false;
-      }
+    if (!this.selector.target?.entity) {
+      return true;
     }
-    return true;
-  };
 
-  private _filterRegEntities = (entity: EntityRegistryEntry): boolean => {
-    if (this.selector.target.entity?.integration) {
-      if (entity.platform !== this.selector.target.entity.integration) {
-        return false;
-      }
-    }
-    return true;
+    return ensureArray(this.selector.target.entity).some((filter) =>
+      filterSelectorEntities(filter, entity, this._entitySources)
+    );
   };
 
   private _filterDevices = (device: DeviceRegistryEntry): boolean => {
-    if (
-      this.selector.target.device?.manufacturer &&
-      device.manufacturer !== this.selector.target.device.manufacturer
-    ) {
-      return false;
+    if (!this.selector.target?.device) {
+      return true;
     }
-    if (
-      this.selector.target.device?.model &&
-      device.model !== this.selector.target.device.model
-    ) {
-      return false;
-    }
-    if (
-      this.selector.target.device?.integration ||
-      this.selector.target.entity?.integration
-    ) {
-      if (
-        !this._configEntries?.some((entry) =>
-          device.config_entries.includes(entry.entry_id)
-        )
-      ) {
-        return false;
-      }
-    }
-    return true;
-  };
 
-  private async _loadConfigEntries() {
-    this._configEntries = (await getConfigEntries(this.hass)).filter(
-      (entry) =>
-        entry.domain === this.selector.target.device?.integration ||
-        entry.domain === this.selector.target.entity?.integration
+    const deviceIntegrations = this._entitySources
+      ? this._deviceIntegrationLookup(
+          this._entitySources,
+          Object.values(this.hass.entities)
+        )
+      : undefined;
+
+    return ensureArray(this.selector.target.device).some((filter) =>
+      filterSelectorDevices(filter, device, deviceIntegrations)
     );
-  }
+  };
 
   static get styles(): CSSResultGroup {
     return css`

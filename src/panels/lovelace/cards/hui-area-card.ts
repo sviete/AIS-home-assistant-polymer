@@ -3,8 +3,10 @@ import {
   mdiLightbulbMultiple,
   mdiLightbulbMultipleOff,
   mdiRun,
+  mdiThermometer,
   mdiToggleSwitch,
   mdiToggleSwitchOff,
+  mdiWaterAlert,
   mdiWaterPercent,
 } from "@mdi/js";
 import type { HassEntity, UnsubscribeFunc } from "home-assistant-js-websocket";
@@ -15,6 +17,7 @@ import {
   LitElement,
   PropertyValues,
   TemplateResult,
+  nothing,
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
@@ -31,7 +34,6 @@ import "../../../components/ha-card";
 import "../../../components/ha-icon-button";
 import "../../../components/ha-state-icon";
 import "../../../components/ha-svg-icon";
-import "../components/hui-image";
 import {
   AreaRegistryEntry,
   subscribeAreaRegistry,
@@ -40,7 +42,7 @@ import {
   DeviceRegistryEntry,
   subscribeDeviceRegistry,
 } from "../../../data/device_registry";
-import { UNAVAILABLE_STATES } from "../../../data/entity";
+import { isUnavailableState } from "../../../data/entity";
 import {
   EntityRegistryEntry,
   subscribeEntityRegistry,
@@ -48,6 +50,7 @@ import {
 import { forwardHaptic } from "../../../data/haptics";
 import { SubscribeMixin } from "../../../mixins/subscribe-mixin";
 import { HomeAssistant } from "../../../types";
+import "../components/hui-image";
 import "../components/hui-warning";
 import { LovelaceCard, LovelaceCardEditor } from "../types";
 import { AreaCardConfig } from "./types";
@@ -61,17 +64,21 @@ const TOGGLE_DOMAINS = ["light", "switch", "fan"];
 const OTHER_DOMAINS = ["camera"];
 
 const DEVICE_CLASSES = {
-  sensor: ["temperature"],
-  binary_sensor: ["motion"],
+  sensor: ["temperature", "humidity"],
+  binary_sensor: ["motion", "moisture"],
 };
 
 const DOMAIN_ICONS = {
   light: { on: mdiLightbulbMultiple, off: mdiLightbulbMultipleOff },
   switch: { on: mdiToggleSwitch, off: mdiToggleSwitchOff },
   fan: { on: domainIcon("fan"), off: domainIcon("fan") },
-  sensor: { humidity: mdiWaterPercent },
+  sensor: {
+    temperature: mdiThermometer,
+    humidity: mdiWaterPercent,
+  },
   binary_sensor: {
     motion: mdiRun,
+    moisture: mdiWaterAlert,
   },
 };
 
@@ -113,6 +120,7 @@ export class HuiAreaCard
         .filter(
           (entry) =>
             !entry.entity_category &&
+            !entry.hidden_by &&
             (entry.area_id
               ? entry.area_id === areaId
               : entry.device_id && devicesInArea.has(entry.device_id))
@@ -174,8 +182,7 @@ export class HuiAreaCard
         : entities
     ).some(
       (entity) =>
-        !UNAVAILABLE_STATES.includes(entity.state) &&
-        !STATES_OFF.includes(entity.state)
+        !isUnavailableState(entity.state) && !STATES_OFF.includes(entity.state)
     );
   }
 
@@ -312,7 +319,7 @@ export class HuiAreaCard
     return false;
   }
 
-  protected render(): TemplateResult {
+  protected render() {
     if (
       !this._config ||
       !this.hass ||
@@ -320,7 +327,7 @@ export class HuiAreaCard
       !this._devices ||
       !this._entities
     ) {
-      return html``;
+      return nothing;
     }
 
     const entitiesByDomain = this._entitiesByDomain(
@@ -557,7 +564,7 @@ export class HuiAreaCard
         --mdc-icon-button-size: 44px;
       }
       .on {
-        color: var(--paper-item-icon-active-color, #fdd835);
+        color: var(--state-light-active-color);
       }
     `;
   }

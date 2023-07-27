@@ -2,13 +2,15 @@ import type { ChartData, ChartDataset, ChartOptions } from "chart.js";
 import { html, LitElement, PropertyValues } from "lit";
 import { property, state } from "lit/decorators";
 import { getGraphColorByIndex } from "../../common/color/colors";
+import { fireEvent } from "../../common/dom/fire_event";
+import { computeRTL } from "../../common/util/compute_rtl";
 import {
   formatNumber,
   numberFormatToLocale,
 } from "../../common/number/format_number";
 import { LineChartEntity, LineChartState } from "../../data/history";
 import { HomeAssistant } from "../../types";
-import "./ha-chart-base";
+import { MIN_TIME_BETWEEN_UPDATES } from "./ha-chart-base";
 
 const safeParseFloat = (value) => {
   const parsed = parseFloat(value);
@@ -20,43 +22,67 @@ class StateHistoryChartLine extends LitElement {
 
   @property({ attribute: false }) public data: LineChartEntity[] = [];
 
-  @property() public names: boolean | Record<string, string> = false;
+  @property() public names?: Record<string, string>;
 
   @property() public unit?: string;
 
   @property() public identifier?: string;
 
-  @property({ type: Boolean }) public isSingleDevice = false;
+  @property({ type: Boolean }) public showNames = true;
 
-  @property({ attribute: false }) public endTime?: Date;
+  @property({ attribute: false }) public startTime!: Date;
+
+  @property({ attribute: false }) public endTime!: Date;
+
+  @property({ type: Number }) public paddingYAxis = 0;
+
+  @property({ type: Number }) public chartIndex?;
 
   @state() private _chartData?: ChartData<"line">;
 
-  @state() private _chartOptions?: ChartOptions<"line">;
+  @state() private _chartOptions?: ChartOptions;
+
+  @state() private _yWidth = 0;
+
+  private _chartTime: Date = new Date();
 
   protected render() {
     return html`
       <ha-chart-base
+        .hass=${this.hass}
         .data=${this._chartData}
         .options=${this._chartOptions}
+        .paddingYAxis=${this.paddingYAxis - this._yWidth}
         chart-type="line"
       ></ha-chart-base>
     `;
   }
 
   public willUpdate(changedProps: PropertyValues) {
-    if (!this.hasUpdated) {
+    if (
+      !this.hasUpdated ||
+      changedProps.has("showNames") ||
+      changedProps.has("startTime") ||
+      changedProps.has("endTime")
+    ) {
       this._chartOptions = {
         parsing: false,
         animation: false,
+        interaction: {
+          mode: "nearest",
+          axis: "xy",
+        },
         scales: {
           x: {
             type: "time",
             adapters: {
               date: {
                 locale: this.hass.locale,
+                config: this.hass.config,
               },
             },
+            suggestedMin: this.startTime,
+            suggestedMax: this.endTime,
             ticks: {
               maxRotation: 0,
               sampleSize: 5,
@@ -81,11 +107,20 @@ class StateHistoryChartLine extends LitElement {
               display: true,
               text: this.unit,
             },
+            afterUpdate: (y) => {
+              if (this._yWidth !== Math.floor(y.width)) {
+                this._yWidth = Math.floor(y.width);
+                fireEvent(this, "y-width-changed", {
+                  value: this._yWidth,
+                  chartIndex: this.chartIndex,
+                });
+              }
+            },
+            position: computeRTL(this.hass) ? "right" : "left",
           },
         },
         plugins: {
           tooltip: {
-            mode: "nearest",
             callbacks: {
               label: (context) =>
                 `${context.dataset.label}: ${formatNumber(
@@ -98,14 +133,11 @@ class StateHistoryChartLine extends LitElement {
             propagate: true,
           },
           legend: {
-            display: !this.isSingleDevice,
+            display: this.showNames,
             labels: {
               usePointStyle: true,
             },
           },
-        },
-        hover: {
-          mode: "nearest",
         },
         elements: {
           line: {
@@ -113,14 +145,22 @@ class StateHistoryChartLine extends LitElement {
             borderWidth: 1.5,
           },
           point: {
-            hitRadius: 5,
+            hitRadius: 50,
           },
         },
         // @ts-expect-error
         locale: numberFormatToLocale(this.hass.locale),
       };
     }
-    if (changedProps.has("data")) {
+    if (
+      changedProps.has("data") ||
+      changedProps.has("startTime") ||
+      changedProps.has("endTime") ||
+      this._chartTime <
+        new Date(this.endTime.getTime() - MIN_TIME_BETWEEN_UPDATES)
+    ) {
+      // If the line is more than 5 minutes old, re-gen it
+      // so the X axis grows even if there is no new data
       this._generateData();
     }
   }
@@ -130,28 +170,12 @@ class StateHistoryChartLine extends LitElement {
     const computedStyles = getComputedStyle(this);
     const entityStates = this.data;
     const datasets: ChartDataset<"line">[] = [];
-    let endTime: Date;
-
     if (entityStates.length === 0) {
       return;
     }
 
-    endTime =
-      this.endTime ||
-      // Get the highest date from the last date of each device
-      new Date(
-        Math.max(
-          ...entityStates.map((devSts) =>
-            new Date(
-              devSts.states[devSts.states.length - 1].last_changed
-            ).getTime()
-          )
-        )
-      );
-    if (endTime > new Date()) {
-      endTime = new Date();
-    }
-
+    this._chartTime = new Date();
+    const endTime = this.endTime;
     const names = this.names || {};
     entityStates.forEach((states) => {
       const domain = states.domain;
@@ -362,6 +386,9 @@ class StateHistoryChartLine extends LitElement {
             lastNullDate = date;
           }
         });
+        if (lastNullDate !== null) {
+          pushData(lastNullDate, [null]);
+        }
       }
 
       // Add an entry for final values

@@ -1,14 +1,14 @@
 import "@material/mwc-button";
 import { ActionDetail } from "@material/mwc-list";
 import "@material/mwc-list/mwc-list-item";
-import { mdiDelete, mdiDotsVertical, mdiPlus } from "@mdi/js";
+import { mdiBackupRestore, mdiDelete, mdiDotsVertical, mdiPlus } from "@mdi/js";
 import {
-  css,
   CSSResultGroup,
-  html,
   LitElement,
   PropertyValues,
-  TemplateResult,
+  css,
+  html,
+  nothing,
 } from "lit";
 import { customElement, property, query, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map";
@@ -26,9 +26,9 @@ import "../../../src/components/ha-fab";
 import "../../../src/components/ha-icon-button";
 import "../../../src/components/ha-svg-icon";
 import {
+  HassioBackup,
   fetchHassioBackups,
   friendlyFolderName,
-  HassioBackup,
   reloadHassioBackups,
   removeBackup,
 } from "../../../src/data/hassio/backup";
@@ -43,6 +43,7 @@ import type { HaTabsSubpageDataTable } from "../../../src/layouts/hass-tabs-subp
 import { haStyle } from "../../../src/resources/styles";
 import { HomeAssistant, Route } from "../../../src/types";
 import { showBackupUploadDialog } from "../dialogs/backup/show-dialog-backup-upload";
+import { showHassioBackupLocationDialog } from "../dialogs/backup/show-dialog-hassio-backu-location";
 import { showHassioBackupDialog } from "../dialogs/backup/show-dialog-hassio-backup";
 import { showHassioCreateBackupDialog } from "../dialogs/backup/show-dialog-hassio-create-backup";
 import { supervisorTabs } from "../hassio-tabs";
@@ -98,9 +99,8 @@ export class HassioBackups extends LitElement {
     if (backup.content.addons.length !== 0) {
       for (const addon of backup.content.addons) {
         content.push(
-          this.supervisor.supervisor.addons.find(
-            (entry) => entry.slug === addon
-          )?.name || addon
+          this.supervisor.addon.addons.find((entry) => entry.slug === addon)
+            ?.name || addon
         );
       }
     }
@@ -120,6 +120,7 @@ export class HassioBackups extends LitElement {
     (narrow: boolean): DataTableColumnContainer => ({
       name: {
         title: this.supervisor.localize("backup.name"),
+        main: true,
         sortable: true,
         filterable: true,
         grows: true,
@@ -134,6 +135,15 @@ export class HassioBackups extends LitElement {
         filterable: true,
         sortable: true,
         template: (entry: number) => Math.ceil(entry * 10) / 10 + " MB",
+      },
+      location: {
+        title: this.supervisor.localize("backup.location"),
+        width: "15%",
+        hidden: narrow,
+        filterable: true,
+        sortable: true,
+        template: (entry: string | null) =>
+          entry || this.supervisor.localize("backup.data_disk"),
       },
       date: {
         title: this.supervisor.localize("backup.created"),
@@ -160,16 +170,24 @@ export class HassioBackups extends LitElement {
     }))
   );
 
-  protected render(): TemplateResult {
+  protected render() {
     if (!this.supervisor) {
-      return html``;
+      return nothing;
     }
     return html`
       <hass-tabs-subpage-data-table
-        .tabs=${supervisorTabs(this.hass)}
+        .tabs=${atLeastVersion(this.hass.config.version, 2022, 5)
+          ? [
+              {
+                translationKey: "panel.backups",
+                path: `/hassio/backups`,
+                iconPath: mdiBackupRestore,
+              },
+            ]
+          : supervisorTabs(this.hass)}
         .hass=${this.hass}
         .localizeFunc=${this.supervisor.localize}
-        .searchLabel=${this.supervisor.localize("search")}
+        .searchLabel=${this.supervisor.localize("backup.search")}
         .noDataText=${this.supervisor.localize("backup.no_backups")}
         .narrow=${this.narrow}
         .route=${this.route}
@@ -182,14 +200,12 @@ export class HassioBackups extends LitElement {
         selectable
         hasFab
         .mainPage=${!atLeastVersion(this.hass.config.version, 2021, 12)}
-        back-path="/config"
+        back-path=${atLeastVersion(this.hass.config.version, 2022, 5)
+          ? "/config/system"
+          : "/config"}
         supervisor
       >
-        <ha-button-menu
-          corner="BOTTOM_START"
-          slot="toolbar-icon"
-          @action=${this._handleAction}
-        >
+        <ha-button-menu slot="toolbar-icon" @action=${this._handleAction}>
           <ha-icon-button
             .label=${this.supervisor?.localize("common.menu")}
             .path=${mdiDotsVertical}
@@ -197,6 +213,9 @@ export class HassioBackups extends LitElement {
           ></ha-icon-button>
           <mwc-list-item>
             ${this.supervisor.localize("common.reload")}
+          </mwc-list-item>
+          <mwc-list-item>
+            ${this.supervisor.localize("dialog.backup_location.title")}
           </mwc-list-item>
           ${atLeastVersion(this.hass.config.version, 0, 116)
             ? html`<mwc-list-item>
@@ -231,16 +250,16 @@ export class HassioBackups extends LitElement {
                   : html`
                       <ha-icon-button
                         .label=${this.supervisor.localize(
-                          "snapshot.delete_selected"
+                          "backup.delete_selected"
                         )}
                         .path=${mdiDelete}
                         id="delete-btn"
                         class="warning"
                         @click=${this._deleteSelected}
                       ></ha-icon-button>
-                      <paper-tooltip animation-delay="0" for="delete-btn">
+                      <simple-tooltip animation-delay="0" for="delete-btn">
                         ${this.supervisor.localize("backup.delete_selected")}
-                      </paper-tooltip>
+                      </simple-tooltip>
                     `}
               </div>
             </div> `
@@ -264,6 +283,9 @@ export class HassioBackups extends LitElement {
         this.refreshData();
         break;
       case 1:
+        showHassioBackupLocationDialog(this, { supervisor: this.supervisor });
+        break;
+      case 2:
         this._showUploadBackupDialog();
         break;
     }

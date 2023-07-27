@@ -66,7 +66,7 @@ class HassioHostInfo extends LitElement {
       },
     ];
     return html`
-      <ha-card header="Host">
+      <ha-card header="Host" outlined>
         <div class="card-content">
           <div>
             ${this.supervisor.host.features.includes("hostname")
@@ -184,7 +184,7 @@ class HassioHostInfo extends LitElement {
               `
             : ""}
 
-          <ha-button-menu corner="BOTTOM_START">
+          <ha-button-menu>
             <ha-icon-button
               .label=${this.supervisor.localize("common.menu")}
               .path=${mdiDotsVertical}

@@ -5,7 +5,7 @@ import {
   getAuth,
   subscribeConfig,
 } from "home-assistant-js-websocket";
-import { html, PropertyValues, TemplateResult } from "lit";
+import { html, PropertyValues, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators";
 import { applyThemesOnElement } from "../common/dom/apply_themes_on_element";
 import { HASSDomEvent } from "../common/dom/fire_event";
@@ -73,11 +73,11 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
 
   @state() private _steps?: OnboardingStep[];
 
-  protected render(): TemplateResult {
+  protected render() {
     const step = this._curStep()!;
 
     if (this._loading || !step) {
-      return html` <onboarding-loading></onboarding-loading> `;
+      return html`<onboarding-loading></onboarding-loading> `;
     }
     if (step.step === "user") {
       return html`
@@ -134,13 +134,12 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
         ></onboarding-mob-integrations>
       `;
     }
-    return html``;
+    return nothing;
   }
 
   protected firstUpdated(changedProps: PropertyValues) {
     super.firstUpdated(changedProps);
     this._fetchOnboardingSteps();
-    this._fetchInstallationType();
     import("./onboarding-integrations");
     import("./onboarding-core-config");
     import("./onboarding-mob-integrations");
@@ -159,21 +158,6 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
         theme: "default",
       });
     }
-    if (matchMedia("(prefers-color-scheme: dark)").matches) {
-      applyThemesOnElement(
-        document.documentElement,
-        {
-          default_theme: "default",
-          default_dark_theme: null,
-          themes: {},
-          darkMode: true,
-          theme: "default",
-        },
-        undefined,
-        undefined,
-        true
-      );
-    }
   }
 
   protected updated(changedProps: PropertyValues) {
@@ -182,10 +166,25 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
       document.querySelector("html")!.setAttribute("lang", this.language!);
     }
     if (changedProps.has("hass")) {
-      this.hassChanged(
-        this.hass!,
-        changedProps.get("hass") as HomeAssistant | undefined
-      );
+      const oldHass = changedProps.get("hass") as HomeAssistant | undefined;
+      this.hassChanged(this.hass!, oldHass);
+      if (oldHass?.themes !== this.hass!.themes) {
+        if (matchMedia("(prefers-color-scheme: dark)").matches) {
+          applyThemesOnElement(
+            document.documentElement,
+            {
+              default_theme: "default",
+              default_dark_theme: null,
+              themes: {},
+              darkMode: true,
+              theme: "default",
+            },
+            undefined,
+            undefined,
+            true
+          );
+        }
+      }
     }
   }
 
@@ -242,6 +241,9 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
         });
         history.replaceState(null, "", location.pathname);
         await this._connectHass(auth);
+      } else {
+        // User creating screen needs to know the installation type.
+        this._fetchInstallationType();
       }
 
       this._steps = steps;
@@ -275,7 +277,7 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
       // We do nothing
     } else if (stepResult.type === "integration") {
       // We do nothing
-      this._loading = false;
+      // this._loading = false;
     } else if (stepResult.type === "mob_integration") {
       this._loading = true;
 
@@ -351,7 +353,9 @@ class HaOnboarding extends litLocalizeLiteMixin(HassElement) {
     // Load config strings for integrations
     (this as any)._loadFragmentTranslations(this.hass!.language, "config");
     // Make sure hass is initialized + the config/user callbacks have called.
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 0);
+    });
   }
 }
 

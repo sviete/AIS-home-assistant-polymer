@@ -1,5 +1,5 @@
 import "@material/mwc-button/mwc-button";
-import "@polymer/paper-tooltip/paper-tooltip";
+import "@lrnwebcomponents/simple-tooltip/simple-tooltip";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators";
 import { fireEvent } from "../common/dom/fire_event";
@@ -130,7 +130,7 @@ export class HaTabsSubpageDataTable extends LitElement {
    * Array of tabs to show on the page.
    * @type {Array}
    */
-  @property() public tabs!: PageNavigation[];
+  @property() public tabs: PageNavigation[] = [];
 
   /**
    * Force hides the filter menu.
@@ -283,6 +283,9 @@ export class HaTabsSubpageDataTable extends LitElement {
         height: calc(100vh - 1px - var(--header-height));
         display: block;
       }
+      :host([narrow]) hass-tabs-subpage {
+        --main-title-margin: 0;
+      }
       .table-header {
         display: flex;
         align-items: center;
@@ -320,7 +323,6 @@ export class HaTabsSubpageDataTable extends LitElement {
         --text-field-overflow: initial;
         display: flex;
         justify-content: flex-end;
-        margin-right: 8px;
         color: var(--primary-text-color);
       }
       .active-filters {
@@ -330,15 +332,21 @@ export class HaTabsSubpageDataTable extends LitElement {
         align-items: center;
         padding: 2px 2px 2px 8px;
         margin-left: 4px;
+        margin-inline-start: 4px;
+        margin-inline-end: initial;
         font-size: 14px;
         width: max-content;
         cursor: initial;
+        direction: var(--direction);
       }
       .active-filters ha-svg-icon {
         color: var(--primary-color);
       }
       .active-filters mwc-button {
         margin-left: 8px;
+        margin-inline-start: 8px;
+        margin-inline-end: initial;
+        direction: var(--direction);
       }
       .active-filters::before {
         background-color: var(--primary-color);
@@ -370,5 +378,11 @@ export class HaTabsSubpageDataTable extends LitElement {
         position: relative;
       }
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "hass-tabs-subpage-data-table": HaTabsSubpageDataTable;
   }
 }
