@@ -31,7 +31,7 @@ import {
   searchPlaces,
 } from "../data/openstreetmap";
 
-const AMSTERDAM: [number, number] = [52.3731339, 4.8903147];
+const AMSTERDAM: [number, number] = [52.2297700, 21.0117800];
 const mql = matchMedia("(prefers-color-scheme: dark)");
 const LOCATION_MARKER_ID = "location";
 
