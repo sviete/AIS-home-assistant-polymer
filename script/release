@@ -1,5 +1,6 @@
 #!/bin/sh
 # Pushes a new version to PyPi.
+export NODE_OPTIONS=--max_old_space_size=4096
 
 # Stop on errors
 set -e
