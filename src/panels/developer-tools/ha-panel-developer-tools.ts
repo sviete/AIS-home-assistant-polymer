@@ -75,6 +75,9 @@ class PanelDeveloperTools extends LitElement {
           <paper-tab page-name="webcmd">
             Manager
           </paper-tab>
+          <paper-tab page-name="code">
+            Code
+          </paper-tab>
         </paper-tabs>
       </div>
       <developer-tools-router
