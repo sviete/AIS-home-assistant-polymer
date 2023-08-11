@@ -6,10 +6,8 @@ import "../../components/ha-dialog";
 import { createCloseHeading } from "../../components/ha-dialog";
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property } from "lit/decorators";
-import { HomeAssistant } from "../../types";
+import { ValueChangedEvent, HomeAssistant } from "../../types";
 import { haStyleDialog } from "../../resources/styles";
-
-import { PolymerChangedEvent } from "../../polymer-types";
 
 import "../../components/ha-picture-upload";
 import type { HaPictureUpload } from "../../components/ha-picture-upload";
@@ -98,7 +96,7 @@ export class HaDialogAisgalery extends LitElement {
     `;
   }
 
-  private _pictureChanged(ev: PolymerChangedEvent<string | null>) {
+  private _pictureChanged(ev: ValueChangedEvent<string | null>) {
     this._error = undefined;
     this._picture = (ev.target as HaPictureUpload).value;
     if (this._name.trim() === "") {
@@ -130,7 +128,7 @@ export class HaDialogAisgalery extends LitElement {
     this._params?.jsCallback();
   }
 
-  private _nameChanged(ev: PolymerChangedEvent<string>) {
+  private _nameChanged(ev: ValueChangedEvent<string>) {
     this._error = undefined;
     this._name = ev.detail.value;
   }

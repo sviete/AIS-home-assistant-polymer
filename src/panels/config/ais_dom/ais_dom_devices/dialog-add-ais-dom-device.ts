@@ -6,9 +6,8 @@ import "@material/mwc-button";
 import "../../../../components/ha-dialog";
 import "../../../../components/entity/ha-entities-picker";
 import "../../../../components/user/ha-user-picker";
-import { PolymerChangedEvent } from "../../../../polymer-types";
 import { haStyleDialog } from "../../../../resources/styles";
-import { HomeAssistant } from "../../../../types";
+import {  ValueChangedEvent, HomeAssistant } from "../../../../types";
 
 class DialogPersonDetail extends LitElement {
   @property() public hass!: HomeAssistant;
@@ -80,15 +79,15 @@ class DialogPersonDetail extends LitElement {
     `;
   }
 
-  private _nameChanged(ev: PolymerChangedEvent<string>) {
+  private _nameChanged(ev: ValueChangedEvent<string>) {
     this._name = ev.detail.value;
   }
 
-  private _userChanged(ev: PolymerChangedEvent<string>) {
+  private _userChanged(ev: ValueChangedEvent<string>) {
     this._userId = ev.detail.value;
   }
 
-  private _deviceTrackersChanged(ev: PolymerChangedEvent<string[]>) {
+  private _deviceTrackersChanged(ev: ValueChangedEvent<string[]>) {
     this._deviceTrackers = ev.detail.value;
   }
 

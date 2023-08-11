@@ -4,13 +4,12 @@ import "@polymer/paper-item/paper-item";
 import "@polymer/paper-item/paper-item-body";
 import "../components/ha-icon";
 import "../components/ha-expansion-panel";
+import {property, customElement} from 'lit/decorators';
+import {css, CSSResultGroup, html, LitElement, PropertyValues, TemplateResult} from "lit";
 import { makeDialogManager } from "../dialogs/make-dialog-manager";
 import { ProvideHassLitMixin } from "../mixins/provide-hass-lit-mixin";
-import {css, CSSResultGroup, html, LitElement, PropertyValues, TemplateResult} from "lit";
-import {property, customElement} from 'lit/decorators';
 import { LocalizeFunc } from "../common/translations/localize";
-import { PolymerChangedEvent } from "../polymer-types";
-import type { HomeAssistant } from "../types";
+import type {ValueChangedEvent, HomeAssistant } from "../types";
 import { showAisRestoreBackupDialog } from "../../hassio/src/dialogs/ais/show-ais-dialog-restore-backup";
 import { handleFetchPromise } from "../util/hass-call-api";
 
@@ -229,7 +228,7 @@ class OnboardingAisRestoreBackup extends ProvideHassLitMixin(LitElement) {
     });
   }
 
-  private _handleValueChanged(ev: PolymerChangedEvent<string>): void {
+  private _handleValueChanged(ev: ValueChangedEvent<string>): void {
     const name = (ev.target as any).name;
     this[`_${name}`] = ev.detail.value;
   }

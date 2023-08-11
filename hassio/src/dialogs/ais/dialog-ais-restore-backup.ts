@@ -6,11 +6,10 @@ import { fireEvent } from "../../../../src/common/dom/fire_event";
 import "../../../../src/components/ha-header-bar";
 import { HassDialog } from "../../../../src/dialogs/make-dialog-manager";
 import { haStyleDialog } from "../../../../src/resources/styles";
-import type { HomeAssistant } from "../../../../src/types";
+import type { ValueChangedEvent, HomeAssistant } from "../../../../src/types";
 import "../../components/hassio-upload-backup";
 import { AisRestoreBackupDialogParams } from "./show-ais-dialog-restore-backup";
 import { LocalizeFunc } from "../../../../src/common/translations/localize";
-import { PolymerChangedEvent } from "../../../../src/polymer-types";
 import { handleFetchPromise } from "../../../../src/util/hass-call-api";
 import "../../../../src/components/ha-expansion-panel";
 
@@ -169,7 +168,7 @@ export class DialogAisRestoreBackup
     }
   }
 
-  private _handleValueChanged(ev: PolymerChangedEvent<string>): void {
+  private _handleValueChanged(ev: ValueChangedEvent<string>): void {
     const name = (ev.target as any).name;
     this[`_${name}`] = ev.detail.value;
   }
