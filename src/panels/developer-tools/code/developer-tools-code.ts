@@ -18,7 +18,7 @@ class HaPanelDevCode extends LitElement {
 
     this.url =
       window.location.protocol + "//" + window.location.hostname + ":8080";
-    this.localConection = false;
+    this.localConection = true;
     if (
       window.location.hostname.startsWith("dom-") ||
       window.location.hostname.startsWith("demo.")
