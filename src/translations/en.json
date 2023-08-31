@@ -5919,7 +5919,7 @@
           "addons": "[%key:supervisor::backup::addons%]",
           "password_protection": "[%key:supervisor::backup::password_protection%]",
           "password": "[%key:supervisor::backup::password%]",
-          "confirm_password": "[%key:supervisor::backup::confirm_password%]",
+          "confirm_password": "[%key:supervisor::backup::confirm_password%]"
         },
         "ais-restore-backup": {
           "ais_restore_intro": "Do you want to restore your system configuration from a backup?",
