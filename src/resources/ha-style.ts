@@ -41,10 +41,11 @@ documentContainer.innerHTML = `<custom-style>
       --success-color: #43a047;
       --info-color: #039be5;
 
-      /* background and sidebar */
+      /* backgrounds */
       --card-background-color: #323232;
       --primary-background-color: #4c4c4c;
       --secondary-background-color: #4c4c4c; /* behind the cards on state */
+      --clear-background-color: #ffffff;
 
       /* for header */
       --header-height: 56px;
@@ -108,7 +109,7 @@ documentContainer.innerHTML = `<custom-style>
       --yellow-color: #ffeb3b;
       --amber-color: #ffc107;
       --orange-color: #ff9800;
-      --deep-orange-color: #ff5722;
+      --deep-orange-color: #ff6f22;
       --brown-color: #795548;
       --light-grey-color: #bdbdbd;
       --grey-color: #9e9e9e;
@@ -157,6 +158,8 @@ documentContainer.innerHTML = `<custom-style>
       --state-device_tracker-home-color: var(--green-color);
       --state-fan-active-color: var(--cyan-color);
       --state-humidifier-on-color: var(--blue-color);
+      --state-lawn_mower-error-color: var(--red-color);
+      --state-lawn_mower-mowing-color: var(--teal-color);
       --state-light-active-color: var(--amber-color);
       --state-lock-jammed-color: var(--red-color);
       --state-lock-locked-color: var(--green-color);
@@ -175,6 +178,12 @@ documentContainer.innerHTML = `<custom-style>
       --state-sensor-battery-high-color: var(--green-color);
       --state-sensor-battery-low-color: var(--red-color);
       --state-sensor-battery-medium-color: var(--orange-color);
+      --state-water_heater-eco-color: var(--green-color);
+      --state-water_heater-electric-color: var(--orange-color);
+      --state-water_heater-gas-color: var(--orange-color);
+      --state-water_heater-heat_pump-color: var(--orange-color);
+      --state-water_heater-high_demand-color: var(--deep-orange-color);
+      --state-water_heater-performance-color: var(--deep-orange-color);
 
       /* history colors */
       --history-unavailable-color: transparent;

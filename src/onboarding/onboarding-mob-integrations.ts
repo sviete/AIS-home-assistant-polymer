@@ -6,7 +6,6 @@ import { LocalizeFunc } from "../common/translations/localize";
 import { HomeAssistant } from "../types";
 import { onboardMobIntegrationStep } from "../data/onboarding";
 
-import "./action-badge";
 import "./integration-badge";
 
 @customElement("onboarding-mob-integrations")

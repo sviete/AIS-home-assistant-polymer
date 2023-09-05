@@ -61,7 +61,7 @@ class PanelAisAudio extends LitElement {
   }
 
   private _showVoiceCommandDialog(): void {
-    showVoiceCommandDialog(this, this.hass);
+    showVoiceCommandDialog(this, this.hass, { pipeline_id: "last_used" });
   }
 
   protected render(): TemplateResult {
