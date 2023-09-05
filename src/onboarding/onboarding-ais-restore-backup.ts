@@ -154,32 +154,32 @@ class OnboardingAisRestoreBackup extends ProvideHassLitMixin(LitElement) {
           )
         : html` <paper-input
               name="username"
-              label="${this.localize(
+              label=${this.localize(
                 "ui.panel.page-onboarding.user.data.username"
-              )}"
+              )}
               value=${this._username}
               @value-changed=${this._handleValueChanged}
               required
               auto-validate
               autocapitalize="none"
-              .errorMessage="${this.localize(
+              .errorMessage=${this.localize(
                 "ui.panel.page-onboarding.user.required_field"
-              )}"
+              )}
             ></paper-input>
 
             <paper-input
               name="password"
-              label="${this.localize(
+              label=${this.localize(
                 "ui.panel.page-onboarding.user.data.password"
-              )}"
+              )}
               value=${this._password}
               @value-changed=${this._handleValueChanged}
               required
               type="password"
               auto-validate
-              .errorMessage="${this.localize(
+              .errorMessage=${this.localize(
                 "ui.panel.page-onboarding.user.required_field"
-              )}"
+              )}
             ></paper-input>`
     }
 
