@@ -1,11 +1,23 @@
-import { css, CSSResultGroup, LitElement, svg, SVGTemplateResult } from "lit";
+import { css, CSSResultGroup, LitElement, html, TemplateResult } from "lit";
 import { customElement } from "lit/decorators";
 
 @customElement("ha-logo-svg")
 export class HaLogoSvg extends LitElement {
   protected render(): SVGTemplateResult {
-    return svg`
-      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="48.43 66.19 120.58 192.4"><defs><filter id="a" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="b" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="c" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="d" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="e" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter><filter id="f" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0.51 0.5" result="blur"/></filter></defs><g fill-rule="evenodd" stroke="#fff" stroke-width=".511" stroke-miterlimit="4" stroke-dasharray="0 5.616" stroke-dashoffset="7.56" stroke-opacity="1"><path d="M39.429 22.429C21.226 22.429 6.57 40.774 6.57 63.56v183.153h65.715V63.56c0-22.787-14.654-41.132-32.857-41.132z" transform="translate(46.109 57.663) scale(.39179)" opacity="1" fill="#d04400" fill-opacity=".929" filter="url(#a)"/><path d="M39.429 14.025C21.226 14.025 6.57 32.37 6.57 55.157v98.868h61.354c1.479 0 2.933.089 4.361.246V55.157c0-22.787-14.654-41.132-32.857-41.132z" transform="translate(92.823 93.978) scale(.39179)" opacity="1" fill="#f69562" fill-opacity="1" filter="url(#b)"/><path d="M39.429 8C21.226 8 6.57 26.346 6.57 49.133V88h65.715V49.133C72.286 26.346 57.632 8 39.43 8z" transform="translate(140.432 119.846) scale(.39179)" opacity="1" fill="#ffbd77" fill-opacity="1" filter="url(#c)"/><path d="M39.429 22.429C21.226 22.429 6.57 40.774 6.57 63.56v183.153h65.715V63.56c0-22.787-14.654-41.132-32.857-41.132z" transform="matrix(.39179 0 0 -.39179 46.109 267.13)" opacity="1" fill="#d04400" fill-opacity=".929" filter="url(#d)"/><path d="M39.429 14.025C21.226 14.025 6.57 32.37 6.57 55.157v98.868h61.354c1.479 0 2.933.089 4.361.246V55.157c0-22.787-14.654-41.132-32.857-41.132z" transform="matrix(.39179 0 0 -.39179 92.823 230.716)" opacity="1" fill="#f69562" fill-opacity="1" filter="url(#e)"/><path d="M39.429 8C21.226 8 6.57 26.346 6.57 49.133V88h65.715V49.133C72.286 26.346 57.632 8 39.43 8z" transform="matrix(.39179 0 0 -.39179 140.432 204.472)" opacity="1" fill="#ffbd77" fill-opacity="1" filter="url(#f)"/></g></svg>`;
+    return svg`<svg
+      viewBox="0 0 240 240"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M240 224.762C240 233.012 233.25 239.762 225 239.762H15C6.75 239.762 0 233.012 0 224.762V134.762C0 126.512 4.77 114.993 10.61 109.153L109.39 10.3725C115.22 4.5425 124.77 4.5425 130.6 10.3725L229.39 109.162C235.22 114.992 240 126.522 240 134.772V224.772V224.762Z"
+        fill="#F2F4F9"
+      />
+      <path
+        d="M229.39 109.153L130.61 10.3725C124.78 4.5425 115.23 4.5425 109.4 10.3725L10.61 109.153C4.78 114.983 0 126.512 0 134.762V224.762C0 233.012 6.75 239.762 15 239.762H107.27L66.64 199.132C64.55 199.852 62.32 200.262 60 200.262C48.7 200.262 39.5 191.062 39.5 179.762C39.5 168.462 48.7 159.262 60 159.262C71.3 159.262 80.5 168.462 80.5 179.762C80.5 182.092 80.09 184.322 79.37 186.412L111 218.042V102.162C104.2 98.8225 99.5 91.8425 99.5 83.7725C99.5 72.4725 108.7 63.2725 120 63.2725C131.3 63.2725 140.5 72.4725 140.5 83.7725C140.5 91.8425 135.8 98.8225 129 102.162V183.432L160.46 151.972C159.84 150.012 159.5 147.932 159.5 145.772C159.5 134.472 168.7 125.272 180 125.272C191.3 125.272 200.5 134.472 200.5 145.772C200.5 157.072 191.3 166.272 180 166.272C177.5 166.272 175.12 165.802 172.91 164.982L129 208.892V239.772H225C233.25 239.772 240 233.022 240 224.772V134.772C240 126.522 235.23 115.002 229.39 109.162V109.153Z"
+        fill="#18BCF2"
+      />
+    </svg>`;
   }
 
   static get styles(): CSSResultGroup {

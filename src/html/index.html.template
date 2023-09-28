@@ -3,10 +3,9 @@
   <head>
     <title>AI-Speaker</title>
     <%= renderTemplate("_header.html.template") %>
-    <link rel="mask-icon" href="/static/icons/mask-icon.svg" color="#03a9f4" />
+    <link rel="mask-icon" href="/static/icons/mask-icon.svg" color="#18bcf2" />
     <link
       rel="apple-touch-icon"
-      sizes="180x180"
       href="/static/icons/favicon-apple-180x180.png"
     />
     <meta name="apple-itunes-app" content="app-id=1099568401" />
@@ -31,6 +30,7 @@
     />
     <meta name="msapplication-TileColor" content="#ff9800ff" />
     <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Home Assistant">
     <meta name="referrer" content="same-origin" />
     <meta name="theme-color" content="{{ theme_color }}" />
     <meta name="color-scheme" content="dark light" />
