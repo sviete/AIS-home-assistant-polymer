@@ -1,4 +1,3 @@
-import "../../layouts/ha-app-layout";
 import "@polymer/app-layout/app-header/app-header";
 import "@polymer/app-layout/app-toolbar/app-toolbar";
 import "../../components/ha-icon-button";
@@ -156,7 +155,7 @@ export class HaPanelAisTts extends LitElement {
 
   protected render() {
     return html`
-      <ha-app-layout>
+      <ha-top-app-bar-fixed>
         <app-header slot="header" fixed>
           <app-toolbar>
             <ha-menu-button
@@ -406,7 +405,7 @@ export class HaPanelAisTts extends LitElement {
             : html`
             `}
         </div>
-      </ha-app-layout>
+      </ha-top-app-bar-fixed>
     `;
   }
 

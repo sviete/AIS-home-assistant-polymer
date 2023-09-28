@@ -11,6 +11,8 @@ import "@polymer/paper-tooltip/paper-tooltip";
 import { css, html, LitElement, PropertyValues, TemplateResult } from "lit";
 import { property, customElement } from "lit/decorators";
 import "@polymer/polymer/lib/elements/dom-repeat";
+import memoizeOne from "memoize-one";
+import { HassEntityBase } from "home-assistant-js-websocket";
 import { fireEvent } from "../../common/dom/fire_event";
 import { navigate } from "../../common/navigate";
 import "../../components/entity/ha-entity-toggle";
@@ -22,8 +24,6 @@ import { haStyle } from "../../resources/styles";
 import { computeStateDomain } from "../../common/entity/compute_state_domain";
 import { HomeAssistant } from "../../types";
 import { formatDateTime } from "../../common/datetime/format_date_time";
-import memoizeOne from "memoize-one";
-import { HassEntityBase } from "home-assistant-js-websocket";
 import { HaCheckbox } from "../../components/ha-checkbox";
 // eslint-disable-next-line import/no-duplicates
 import "../../components/data-table/ha-data-table";
@@ -174,7 +174,7 @@ class HaPanelAisTtsAuto extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <ha-app-layout>
+      <ha-top-app-bar-fixed>
         <app-header slot="header" fixed>
           <app-toolbar>
             <ha-menu-button
@@ -200,7 +200,7 @@ class HaPanelAisTtsAuto extends LitElement {
             noDataText="Brak danych"
           ></ha-data-table>
         </ha-card>
-      </ha-app-layout>
+        <ha-top-app-bar-fixed>
     `;
   }
 
