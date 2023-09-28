@@ -18,22 +18,24 @@
         max-width: 360px;
         margin: 0 auto;
       }
-
       .header {
-        font-size: 1.96em;
         display: flex;
-        align-items: center;
         justify-content: center;
-        font-weight: 300;
+        height: 73px;
       }
-
-      .header img {
-        margin-right: 16px;
+      .logomark {
+        fill: #F2F4F9;
+      }
+      .wordmark {
+        fill: #1D2126;
       }
       @media (prefers-color-scheme: dark) {
         html {
           background-color: #111111;
           color: #e1e1e1;
+        }
+        .wordmark {
+          fill: #F2F4F9;
         }
       }
     </style>
@@ -44,7 +46,7 @@
         <img src="/static/icons/favicon-192x192.png" height="52" alt="" />
         AI-Speaker
       </div>
-      <ha-authorize><p>Initializing</p></ha-authorize>
+      <ha-authorize></ha-authorize>
     </div>
     <%= renderTemplate("_js_base.html.template") %>
     <%= renderTemplate("_preload_roboto.html.template") %>
