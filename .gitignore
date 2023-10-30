@@ -48,3 +48,6 @@ src/cast/dev_const.ts
 
 # Home Assistant config
 /config/
+
+# Jetbrains
+/.idea/
