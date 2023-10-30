@@ -357,6 +357,7 @@ export class HaConfigDevicePage extends LitElement {
                 type: "icon",
                 darkOptimized: this.hass.themes?.darkMode,
               })}
+              crossorigin="anonymous"
               referrerpolicy="no-referrer"
             />
 
@@ -745,6 +746,7 @@ export class HaConfigDevicePage extends LitElement {
                               type: "logo",
                               darkOptimized: this.hass.themes?.darkMode,
                             })}
+                            crossorigin="anonymous"
                             referrerpolicy="no-referrer"
                             @load=${this._onImageLoad}
                             @error=${this._onImageError}

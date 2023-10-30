@@ -34,8 +34,7 @@ const COMPONENTS = {
   map: () => import("../panels/map/ha-panel-map"),
   my: () => import("../panels/my/ha-panel-my"),
   profile: () => import("../panels/profile/ha-panel-profile"),
-  "shopping-list": () =>
-    import("../panels/shopping-list/ha-panel-shopping-list"),
+  todo: () => import("../panels/todo/ha-panel-todo"),
   aishelp: () => import("../panels/aishelp/ha-panel-aishelp"),
   aisdocs: () => import("../panels/aisdocs/ha-panel-aisdocs"),
   aisaudio: () => import("../panels/aisaudio/ha-panel-aisaudio"),
