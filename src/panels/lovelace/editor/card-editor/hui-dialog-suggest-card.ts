@@ -4,7 +4,7 @@ import { customElement, property, query, state } from "lit/decorators";
 import { fireEvent } from "../../../../common/dom/fire_event";
 import "../../../../components/ha-yaml-editor";
 import type { HaYamlEditor } from "../../../../components/ha-yaml-editor";
-import { LovelaceCardConfig } from "../../../../data/lovelace";
+import { LovelaceCardConfig } from "../../../../data/lovelace/config/card";
 import { haStyleDialog } from "../../../../resources/styles";
 import { HomeAssistant } from "../../../../types";
 import { showSaveSuccessToast } from "../../../../util/toast-saved-success";
@@ -110,8 +110,8 @@ export class HuiDialogSuggestCard extends LitElement {
                 ${this._saving
                   ? html`
                       <ha-circular-progress
-                        active
-                        title="Saving"
+                        indeterminate
+                        aria-label="Saving"
                         size="small"
                       ></ha-circular-progress>
                     `

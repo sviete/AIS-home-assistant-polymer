@@ -36,19 +36,30 @@ import "../../../components/tile/ha-tile-image";
 import "../../../components/tile/ha-tile-info";
 import { cameraUrlWithWidthHeight } from "../../../data/camera";
 import { isUnavailableState } from "../../../data/entity";
-import type { ActionHandlerEvent } from "../../../data/lovelace";
+import type { ActionHandlerEvent } from "../../../data/lovelace/action_handler";
 import { SENSOR_DEVICE_CLASS_TIMESTAMP } from "../../../data/sensor";
 import { HomeAssistant } from "../../../types";
 import { actionHandler } from "../common/directives/action-handler-directive";
 import { findEntities } from "../common/find-entities";
 import { handleAction } from "../common/handle-action";
+import { hasAction } from "../common/has-action";
 import "../components/hui-timestamp-display";
-import "../tile-features/hui-tile-features";
+import "../card-features/hui-card-features";
 import type { LovelaceCard, LovelaceCardEditor } from "../types";
 import { computeTileBadge } from "./tile/badges/tile-badge";
 import type { ThermostatCardConfig, TileCardConfig } from "./types";
+import { UpdateEntity, computeUpdateStateDisplay } from "../../../data/update";
 
 const TIMESTAMP_STATE_DOMAINS = ["button", "input_button", "scene"];
+
+export const getEntityDefaultTileIconAction = (entityId: string) => {
+  const domain = computeDomain(entityId);
+  const supportsIconAction =
+    DOMAINS_TOGGLE.has(domain) ||
+    ["button", "input_button", "scene"].includes(domain);
+
+  return supportsIconAction ? "toggle" : "more-info";
+};
 
 @customElement("hui-tile-card")
 export class HuiTileCard extends LitElement implements LovelaceCard {
@@ -87,17 +98,12 @@ export class HuiTileCard extends LitElement implements LovelaceCard {
       throw new Error("Specify an entity");
     }
 
-    const domain = computeDomain(config.entity);
-    const supportsIconAction =
-      DOMAINS_TOGGLE.has(domain) ||
-      ["button", "input_button", "scene"].includes(domain);
-
     this._config = {
       tap_action: {
         action: "more-info",
       },
       icon_tap_action: {
-        action: supportsIconAction ? "toggle" : "more-info",
+        action: getEntityDefaultTileIconAction(config.entity),
       },
       ...config,
     };
@@ -256,6 +262,13 @@ export class HuiTileCard extends LitElement implements LovelaceCard {
       ]);
     }
 
+    if (domain === "update") {
+      return html`${computeUpdateStateDisplay(
+        stateObj as UpdateEntity,
+        this.hass!
+      )}`;
+    }
+
     return this._renderStateContent(stateObj, "state");
   }
 
@@ -297,24 +310,22 @@ export class HuiTileCard extends LitElement implements LovelaceCard {
     if (!stateObj) {
       return html`
         <ha-card>
-          <div class="tile">
-            <div class="content ${classMap(contentClasses)}">
-              <div class="icon-container">
-                <ha-tile-icon class="icon" .iconPath=${mdiHelp}></ha-tile-icon>
-                <ha-tile-badge
-                  class="badge"
-                  .iconPath=${mdiExclamationThick}
-                  style=${styleMap({
-                    "--tile-badge-background-color": `var(--red-color)`,
-                  })}
-                ></ha-tile-badge>
-              </div>
-              <ha-tile-info
-                class="info"
-                .primary=${entityId}
-                secondary=${this.hass.localize("ui.card.tile.not_found")}
-              ></ha-tile-info>
+          <div class="content ${classMap(contentClasses)}">
+            <div class="icon-container">
+              <ha-tile-icon class="icon" .iconPath=${mdiHelp}></ha-tile-icon>
+              <ha-tile-badge
+                class="badge"
+                .iconPath=${mdiExclamationThick}
+                style=${styleMap({
+                  "--tile-badge-background-color": `var(--red-color)`,
+                })}
+              ></ha-tile-badge>
             </div>
+            <ha-tile-info
+              class="info"
+              .primary=${entityId}
+              secondary=${this.hass.localize("ui.card.tile.not_found")}
+            ></ha-tile-info>
           </div>
         </ha-card>
       `;
@@ -328,8 +339,8 @@ export class HuiTileCard extends LitElement implements LovelaceCard {
     const localizedState = this._config.hide_state
       ? nothing
       : this._config.state_content
-      ? this._renderStateContent(stateObj, this._config.state_content)
-      : this._renderState(stateObj);
+        ? this._renderStateContent(stateObj, this._config.state_content)
+        : this._renderState(stateObj);
 
     const active = stateActive(stateObj);
     const color = this._computeStateColor(stateObj, this._config.color);
@@ -346,74 +357,78 @@ export class HuiTileCard extends LitElement implements LovelaceCard {
 
     return html`
       <ha-card style=${styleMap(style)} class=${classMap({ active })}>
-        ${this._shouldRenderRipple ? html`<mwc-ripple></mwc-ripple>` : nothing}
-        <div class="tile">
+        <div
+          class="background"
+          @action=${this._handleAction}
+          .actionHandler=${actionHandler({
+            hasHold: hasAction(this._config!.hold_action),
+            hasDoubleClick: hasAction(this._config!.double_tap_action),
+          })}
+          role="button"
+          tabindex="0"
+          aria-labelledby="info"
+          @mousedown=${this.handleRippleActivate}
+          @mouseup=${this.handleRippleDeactivate}
+          @mouseenter=${this.handleRippleMouseEnter}
+          @mouseleave=${this.handleRippleMouseLeave}
+          @touchstart=${this.handleRippleActivate}
+          @touchend=${this.handleRippleDeactivate}
+          @touchcancel=${this.handleRippleDeactivate}
+        >
+          ${this._shouldRenderRipple
+            ? html`<mwc-ripple></mwc-ripple>`
+            : nothing}
+        </div>
+        <div class="content ${classMap(contentClasses)}">
           <div
-            class="background"
-            @action=${this._handleAction}
-            .actionHandler=${actionHandler()}
+            class="icon-container"
             role="button"
             tabindex="0"
-            aria-labelledby="info"
-            @mousedown=${this.handleRippleActivate}
-            @mouseup=${this.handleRippleDeactivate}
-            @mouseenter=${this.handleRippleMouseEnter}
-            @mouseleave=${this.handleRippleMouseLeave}
-            @touchstart=${this.handleRippleActivate}
-            @touchend=${this.handleRippleDeactivate}
-            @touchcancel=${this.handleRippleDeactivate}
-          ></div>
-          <div class="content ${classMap(contentClasses)}">
-            <div
-              class="icon-container"
-              role="button"
-              tabindex="0"
-              @action=${this._handleIconAction}
-              .actionHandler=${actionHandler()}
-            >
-              ${imageUrl
-                ? html`
-                    <ha-tile-image
-                      class="icon"
-                      .imageUrl=${imageUrl}
-                    ></ha-tile-image>
-                  `
-                : html`
-                    <ha-tile-icon
-                      data-domain=${ifDefined(domain)}
-                      data-state=${ifDefined(stateObj?.state)}
-                      class="icon"
-                      .icon=${icon}
-                      .iconPath=${iconPath}
-                    ></ha-tile-icon>
-                  `}
-              ${badge
-                ? html`
-                    <ha-tile-badge
-                      class="badge"
-                      .icon=${badge.icon}
-                      .iconPath=${badge.iconPath}
-                      style=${styleMap({
-                        "--tile-badge-background-color": badge.color,
-                      })}
-                    ></ha-tile-badge>
-                  `
-                : nothing}
-            </div>
-            <ha-tile-info
-              id="info"
-              class="info"
-              .primary=${name}
-              .secondary=${localizedState}
-            ></ha-tile-info>
+            @action=${this._handleIconAction}
+            .actionHandler=${actionHandler()}
+          >
+            ${imageUrl
+              ? html`
+                  <ha-tile-image
+                    class="icon"
+                    .imageUrl=${imageUrl}
+                  ></ha-tile-image>
+                `
+              : html`
+                  <ha-tile-icon
+                    data-domain=${ifDefined(domain)}
+                    data-state=${ifDefined(stateObj?.state)}
+                    class="icon"
+                    .icon=${icon}
+                    .iconPath=${iconPath}
+                  ></ha-tile-icon>
+                `}
+            ${badge
+              ? html`
+                  <ha-tile-badge
+                    class="badge"
+                    .icon=${badge.icon}
+                    .iconPath=${badge.iconPath}
+                    style=${styleMap({
+                      "--tile-badge-background-color": badge.color,
+                    })}
+                  ></ha-tile-badge>
+                `
+              : nothing}
           </div>
+          <ha-tile-info
+            id="info"
+            class="info"
+            .primary=${name}
+            .secondary=${localizedState}
+          ></ha-tile-info>
         </div>
-        <hui-tile-features
+        <hui-card-features
           .hass=${this.hass}
           .stateObj=${stateObj}
           .color=${this._config.color}
           .features=${this._config.features}
-        ></hui-tile-features>
+        ></hui-card-features>
       </ha-card>
     `;
   }
@@ -433,7 +448,6 @@ export class HuiTileCard extends LitElement implements LovelaceCard {
       ha-card {
         --mdc-ripple-color: var(--tile-color);
         height: 100%;
-        overflow: hidden;
         transition:
           box-shadow 180ms ease-in-out,
           border-color 180ms ease-in-out;
@@ -453,6 +467,9 @@ export class HuiTileCard extends LitElement implements LovelaceCard {
         left: 0;
         bottom: 0;
         right: 0;
+        border-radius: var(--ha-card-border-radius, 12px);
+        margin: calc(-1 * var(--ha-card-border-width, 1px));
+        overflow: hidden;
       }
       .content {
         display: flex;
@@ -506,8 +523,8 @@ export class HuiTileCard extends LitElement implements LovelaceCard {
         box-sizing: border-box;
         pointer-events: none;
       }
-      .features {
-        position: relative;
+      hui-card-features {
+        --feature-color: var(--tile-color);
       }
 
       ha-tile-icon[data-domain="alarm_control_panel"][data-state="pending"],
