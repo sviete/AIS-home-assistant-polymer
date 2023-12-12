@@ -33,7 +33,6 @@ import {
   mdiWifi,
   mdiZWave,
 } from "@mdi/js";
-import { PolymerElement } from "@polymer/polymer";
 import { UnsubscribeFunc } from "home-assistant-js-websocket";
 import { PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators";
@@ -697,24 +696,12 @@ class HaPanelConfig extends SubscribeMixin(HassRouterPage) {
     const isWide =
       this.hass.dockedSidebar === "docked" ? this._wideSidebar : this._wide;
 
-    if ("setProperties" in el) {
-      // As long as we have Polymer panels
-      (el as PolymerElement).setProperties({
-        route: this.routeTail,
-        hass: this.hass,
-        showAdvanced: Boolean(this.hass.userData?.showAdvanced),
-        isWide,
-        narrow: this.narrow,
-        cloudStatus: this._cloudStatus,
-      });
-    } else {
-      el.route = this.routeTail;
-      el.hass = this.hass;
-      el.showAdvanced = Boolean(this.hass.userData?.showAdvanced);
-      el.isWide = isWide;
-      el.narrow = this.narrow;
-      el.cloudStatus = this._cloudStatus;
-    }
+    el.route = this.routeTail;
+    el.hass = this.hass;
+    el.showAdvanced = Boolean(this.hass.userData?.showAdvanced);
+    el.isWide = isWide;
+    el.narrow = this.narrow;
+    el.cloudStatus = this._cloudStatus;
   }
 
   private async _updateCloudStatus() {

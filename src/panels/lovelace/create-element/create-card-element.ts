@@ -1,4 +1,5 @@
-import { LovelaceCardConfig } from "../../../data/lovelace";
+import { LovelaceCardConfig } from "../../../data/lovelace/config/card";
+
 import "../cards/hui-ais-easy-picker-card";
 import "../cards/hui-ais-button-card";
 import "../cards/hui-ais-files-list-card";
@@ -16,6 +17,7 @@ import "../cards/hui-weather-forecast-card";
 import "../cards/hui-ais-mini-media-player-card";
 import "../cards/hui-ais-expansion-panel-card";
 import "../cards/hui-tile-card";
+import "../cards/hui-weather-forecast-card";
 import {
   createLovelaceElement,
   getLovelaceElementClass,
